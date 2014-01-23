@@ -1,0 +1,217 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd  ">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />   
+    <constant name="struts.custom.i18n.resources" value="global"></constant>
+    <!--<constant name="struts.convention.action.packages" value="org.aepscolombia.platform.controllers"/>-->
+    <!--    <package name="default" extends="struts-default,json-default" namespace="/">
+        <interceptors>
+           <interceptor name="jsonValidationWorkflowStack" class="org.apache.struts2.convention.annotation.InterceptorRef"/>
+       </interceptors>
+       <action name="crearProductor" method="guardar" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+            <result name = "success">/views/view-productor.jsp</result>
+            <result name="input">/views/view-productor.jsp</result>
+       </action>
+    </package>-->      
+    <package name="principal" extends="struts-default,json-default" namespace="/">
+        <interceptors>
+            <interceptor name="requireUser" class="org.aepscolombia.platform.interceptors.RequireUserInterceptor"/>
+            <!--<interceptor name="jcaptchaDefaultStack" class="com.google.code.jcaptcha4struts2.core.interceptors.JCaptchaValidationIntercepter"/>-->
+            <interceptor-stack name="defaultStackAeps">    
+                <interceptor-ref name="requireUser" />
+                <interceptor-ref name="defaultStack" />        
+                <!--<interceptor-ref name="jcaptchaDefaultStack" />-->               
+                <!--<interceptor-ref name="timer" />
+                <interceptor-ref name="logger" />-->
+            </interceptor-stack>
+        </interceptors>
+        <default-action-ref name="principal" />
+
+        <global-results>
+            <result name="401">
+                /views/401.jsp                
+            </result>
+            <result name="403">
+                /views/403.jsp
+            </result>
+            <result name="404">
+                /views/404.jsp
+            </result>
+        </global-results>
+<!--        <action name="defaultAction" class="org.cgiar.ccafs.ap.action.home.LoginAction" method="login">
+            <result name="success">/WEB-INF/home/home.ftl</result>
+            <result name="input">/WEB-INF/home/login.ftl</result>
+        </action>-->
+<!--        <action name="home" method="home" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <result>/index.jsp</result>
+        </action>     -->
+        <action name="principal">
+            <result>/layout.jsp</result>
+        </action>     
+        <action name="home">
+            <result>/views/home.jsp</result>
+        </action>     
+        <action name="signin" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/views/layoutPrivate.jsp</result>
+            <result name="input">/views/login.jsp</result>
+        </action>
+        <action name="login"  method="login" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <!--<result name = "states" type="json"></result>-->
+<!--            <result type="redirectAction">
+                <param name="actionName">verify</param>
+                <param name="namespace">/</param>
+            </result>-->
+            <result>/views/layoutPrivate.jsp</result>
+            <!--<result type="redirect">/views/dashboard.jsp</result>-->
+            <result name="input">/views/login.jsp</result>
+        </action>     
+<!--        <action name="verify">
+            <result>/views/dashboard.jsp</result>
+        </action>-->
+        <action name="about">
+            <result>/views/aboutUs.jsp</result>
+        </action>     
+<!--        <action name="contact"  method="contact" class="org.aepscolombia.platform.controllers.ActionContact">
+            <result>/views/contacts.jsp</result>
+        </action>-->
+        <action name="contact">
+            <result>/views/contacts.jsp</result>
+        </action>
+        <action name="verifyUser"  method="verifyUser" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/layoutPrivate.jsp</result>
+        </action>         
+        <action name="dashboard">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/views/layoutPrivate.jsp</result>
+        </action>
+        <action name="getting">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/getting.jsp</result>
+        </action> 
+        <action name="saveUser" method="saveData" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name="states" type="json"></result>
+            <result name="input">/views/login.jsp</result>
+            <!--<result>/views/view-productor.jsp</result>-->
+            <!--<result name="input">/views/form-producer.jsp</result>-->
+        </action>
+    </package>  
+    
+    <package name="producer" extends="struts-default,json-default" namespace="/">
+        <action name="comboDocumentsTypes" method="comboDocumentsTypes" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="comboDepartments" method="comboDepartments" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="comboMunicipalities" method="comboMunicipalities" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="searchProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/list-producer.jsp</result>
+            <!--<result>/views/prueba.jsp</result>-->
+        </action>
+        <action name="showProducer" method="show" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/form-producer.jsp</result>
+        </action>
+        <action name="saveProducer" method="saveData" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+            <result name = "success">/views/form-producer.jsp</result>
+            <!--<result name="input">/views/view-productor.jsp</result>-->
+        </action>
+        <!--        <action name="modificarProductor" method="modificar" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <result>/views/login.jsp</result>
+        </action>-->
+        <action name="deleteProducer" method="delete" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result name = "states" type="json"></result>
+        </action>        
+    </package>
+    
+    <package name="farm" extends="struts-default,json-default" namespace="/">       
+        <action name="comboDepartments" method="comboDepartments" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="comboMunicipalities" method="comboMunicipalities" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="searchFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/list-farm.jsp</result>
+        </action>
+        <action name="showFarm" method="show" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/form-farm.jsp</result>
+        </action>
+        <action name="saveFarm" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+            <result name = "success">/views/form-farm.jsp</result>
+        </action>
+        <action name="deleteFarm" method="delete" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result name = "states" type="json"></result>
+        </action>
+    </package>
+    
+    <package name="field" extends="struts-default,json-default" namespace="/"> 
+        <action name="comboFieldTypes" method="comboFieldTypes" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>     
+        <action name="searchField" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/list-field.jsp</result>
+        </action>
+        <action name="showField" method="show" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result>/views/form-field.jsp</result>
+        </action>
+        <action name="saveField" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+            <result name = "success">/views/form-field.jsp</result>
+        </action>
+        <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
+            <result name = "states" type="json"></result>
+        </action>          
+<!--        <action name="listarTiposLotes" method="listar" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <result type="json">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>-->
+    </package>
+</struts>

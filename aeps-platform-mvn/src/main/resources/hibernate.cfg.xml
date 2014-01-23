@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- Database connection settings -->
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/madr_bd10</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">nbuser</property>
+    <!-- JDBC connection pool (use the built-in) -->
+    <property name="hibernate.connection.pool_size">1</property>
+    <!-- Echo all executed SQL to stdout -->
+    <property name="hibernate.show_sql">false</property>
+    <!-- Mapping files -->
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalElements"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Status"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Farms"/>
+    <mapping class="org.aepscolombia.platform.models.entity.FieldsProducersId"/>
+    <mapping class="org.aepscolombia.platform.models.entity.DoseUnits"/>
+    <mapping class="org.aepscolombia.platform.models.entity.IncomesSourcesMarkets"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Production"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Sowing"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Profiles"/>
+    <mapping class="org.aepscolombia.platform.models.entity.TreatmentTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.GrowingEnvironment"/>
+    <mapping class="org.aepscolombia.platform.models.entity.LandUsesMarkets"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Irrigation"/>
+    <mapping class="org.aepscolombia.platform.models.entity.SowingTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.DocumentsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Worldclim"/>
+    <mapping class="org.aepscolombia.platform.models.entity.FertilizationsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalsControls"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ResultingProducts"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Entities"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ControlsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.HorizontesRasta"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Markets"/>
+    <mapping class="org.aepscolombia.platform.models.entity.HarvestMethods"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Diseases"/>
+    <mapping class="org.aepscolombia.platform.models.entity.SeedsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Clusters"/>
+    <mapping class="org.aepscolombia.platform.models.entity.EntitiesTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Producers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.FieldsProducers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.MeasureUnits"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ReasonsSoilAnalysis"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Preparations"/>
+    <mapping class="org.aepscolombia.platform.models.entity.IrrigationsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalFertilizations"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ResistenciasRompimiento"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Monitoring"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Intercropping"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Flowering"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Cassavas"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ResidualsClasification"/>
+    <mapping class="org.aepscolombia.platform.models.entity.GenotypesSowing"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Harvests"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Fields"/>
+    <mapping class="org.aepscolombia.platform.models.entity.AmendmentsFertilizers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.OrganicControls"/>
+    <mapping class="org.aepscolombia.platform.models.entity.SeedsOrigins"/>
+    <mapping class="org.aepscolombia.platform.models.entity.SeedsInoculations"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Communes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.PhysiologicalMonitoring"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Rains"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Privileges"/>
+    <mapping class="org.aepscolombia.platform.models.entity.FieldTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.UserEntity"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Controls"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Weeds"/>
+    <mapping class="org.aepscolombia.platform.models.entity.WaterSourcesTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.AmendmentsFertilizations"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Statistics"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Departments"/>
+    <mapping class="org.aepscolombia.platform.models.entity.SeedsColors"/>
+    <mapping class="org.aepscolombia.platform.models.entity.PreparationsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Textures"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Genotypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.OrganicFertilizers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Municipalities"/>
+    <mapping class="org.aepscolombia.platform.models.entity.CropsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Pests"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalFertilzerComposition"/>
+    <mapping class="org.aepscolombia.platform.models.entity.MonitoringPad"/>
+    <mapping class="org.aepscolombia.platform.models.entity.LogEntities"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Fertilizations"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ExtensionAgents"/>
+    <mapping class="org.aepscolombia.platform.models.entity.UsersProfilesId"/>
+    <mapping class="org.aepscolombia.platform.models.entity.CropMainProblem"/>
+    <mapping class="org.aepscolombia.platform.models.entity.TargetsTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Quality"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Distircts"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Users"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalFertilizers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Maize"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Rastas"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalsSowing"/>
+    <mapping class="org.aepscolombia.platform.models.entity.MonitoringTypes"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Beans"/>
+    <mapping class="org.aepscolombia.platform.models.entity.MarketsReasons"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ProductionEvents"/>
+    <mapping class="org.aepscolombia.platform.models.entity.UsersProfiles"/>
+    <mapping class="org.aepscolombia.platform.models.entity.OrganicFertilizations"/>
+  </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,171 @@
+/* Estilos Base */
+/* *{ */
+    /* color: #262626;
+    font: 12px sans-serif; */
+/* } */
+
+/* body { */
+    /* background: #F4F4F4; */
+/* } */
+
+/* Estilos del formulario */
+/* form { */
+   /*  margin: 25px auto 0;
+    width: 440px; */
+/* } */
+
+ fieldset {
+  background: 0 0 white;
+  /* border: 1px solid #E1E1E1; */
+/*   box-shadow: 0 0 10px 0 #DADADA; */
+  box-shadow: 2px 2px 3px 2px #DADADA;
+  /* -webkit-box-shadow: 0 0 10px 0 #DADADA;
+  -moz-box-shadow: 0 0 10px 0 #DADADA; */
+  margin-bottom: 10px;
+  padding: 25px;
+}
+
+ form fieldset div {
+  /* span2 span3 span2 span4 */
+  /* clear: both; */
+   /*  margin-bottom: 20px;
+    overflow: hidden; */
+}
+
+ fieldset div label {
+  display: block;
+  float: left;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 5px;
+ /*  text-align: right;
+  text-transform: uppercase; */
+  width: 200px;
+}
+
+/* form input[type="text"], form textarea { */
+ input[type="text"], textarea {
+    background: #F5F5F5;
+    /* border: 1px solid #E8E8E8;
+    color: #626262;
+    display: block;
+    float: left; */
+    padding: 8px;
+    resize: none;
+    width: 265px;
+		height: auto;
+	/* -webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear; */
+}
+
+/* form input[type="password"], form textarea { */
+ input[type="password"], textarea {
+    background: #F5F5F5;
+    padding: 8px;
+    resize: none;
+		height: auto;
+    width: 265px;
+}
+
+/* form select { */
+ select {
+    background: #F5F5F5;
+    width: 283px;
+}
+
+
+ form input[type="text"]:focus, form textarea:focus {
+	/* background: #F9F9F9;
+	border: 1px solid #D3D3D3;
+	outline: none; */
+}
+
+/* form .ultimo{
+    margin-bottom: 0;
+    position: relative
+} */
+
+ button.btn_per {
+	background: #444444;
+    /* border: 0 none; */
+    color: #FFFFFF;
+    /* float: right; */
+    /* font-weight: bold; */
+    height: 32px;
+    /* padding: 0 10px; */
+    /* position: relative; */
+    /* text-transform: uppercase;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear; */
+}
+
+ button.btn_per:hover{
+	background: #9A9A9A;
+	/* float: right; 
+	position: relative; 
+	top: -48px; */
+}
+
+.centered {
+  position: fixed;
+  left: 25%;
+  /* margin-left: -200px;
+	margin-top: 250px; */
+	top: 20%;
+}
+
+/* AJAX Gif y mensajes de exito o fracaso */
+.hide{
+	display: none;
+}
+
+.ajaxgif{
+	/* position: absolute; */
+	margin-bottom: 10px;
+    right: 150px;
+    top: 5px;	
+}
+
+/*Verificar codigo CSS siguiente*/
+.msg{
+    color: white;
+    font-weight: bold;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px;
+    /* position: absolute; */
+	right: -155px;
+    text-transform: uppercase;
+	min-width: 121px;
+}
+
+.msg_ok{
+	background: #589D05;
+}
+
+.msg_error{
+	background: red;
+}
+
+/* .error{
+    background-color: #BC1010;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    margin-left: 16px;
+    margin-top: 6px;
+    position: absolute;
+} */
+
+ /* Este es un truco para crear una flechita */
+/* .error:before{
+    content: '';
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #BC1010;
+    border-left: 8px solid transparent;
+    left: -16px;
+    position: absolute;
+    top: 5px;
+} */
