@@ -95,10 +95,10 @@ public class UsersDao
         sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
         sql += " from users usr";
         sql += " where usr.status_usr=1";
-        if (username!=null) {
+        if (username!=null && username!="") {
             sql += " and usr.name_user_usr='"+username+"'";
         }  
-        if (password!=null) {
+        if (password!=null && password!="") {
             sql += " and usr.password_usr='"+password+"'";
         }  
 //        System.out.println("sql->"+sql);
@@ -132,15 +132,17 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.status_usr ";
-        sql += "from users usr";
-        sql += "where usr.status_usr=1 ";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr ";
+        sql += "from users usr ";
+        sql += "where usr.status_usr=2 ";
         if (username!=null) {
             sql += " and usr.name_user_usr='"+username+"'";
         }  
         if (codValidation!=null) {
-            sql += " and usr.cod_validacion='"+codValidation+"'";
+            sql += " and usr.cod_validation_usr='"+codValidation+"'";
         }  
+        
+//        System.out.println("sql->"+sql);
         
         try {
             tx = session.beginTransaction();
@@ -233,12 +235,18 @@ public class UsersDao
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
+        String sql  = "";        
         Users event = null;
         Transaction tx = null;
-
+        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr ";
+        sql += "from users usr ";
+        sql += "where usr.id_usr="+id;
         try {
             tx = session.beginTransaction();
-            event = (Users) session.load(Users.class, id);
+//            Query query  = session.createSQLQuery(sql);
+//            event = (Users) session.load(Users.class, id);
+            Query query = session.createSQLQuery(sql).addEntity("usr", Users.class);
+            event = (Users)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -262,13 +270,13 @@ public class UsersDao
         String sql = "";        
         
         sql += "select usr.id_usr, usr.name_user_usr, ent.email_ent, ";
-        sql += "ent.cellphone_ent, ent.entity_type_ent, ent.document_number_ent, ent.document_type_ent, ent.name_ent";
-        sql += "from users usr";
-        sql += "inner join user_entity usrEnt on usrEnt.id_usr_ent=usr.id_usr";
-        sql += "inner join users_profiles usrPer on usrPer.id_users_usr_pro=usr.id_usr";
-        sql += "inner join profiles per on per.id_pro=usrPer.id_profile_usr_pro";
-        sql += "inner join entities ent on ent.id_ent=usrEnt.id_entity_usr_ent";
-        sql += "where usr.status_usr=1 and per.status_pro=1";
+        sql += "ent.cellphone_ent, ent.entity_type_ent, ent.document_number_ent, ent.document_type_ent, ent.name_ent ";
+        sql += "from users usr ";
+        sql += "inner join user_entity usrEnt on usrEnt.id_usr_ent=usr.id_usr ";
+        sql += "inner join users_profiles usrPer on usrPer.id_users_usr_pro=usr.id_usr ";
+        sql += "inner join profiles per on per.id_pro=usrPer.id_profile_usr_pro ";
+        sql += "inner join entities ent on ent.id_ent=usrEnt.id_entity_usr_ent ";
+        sql += "where usr.status_usr=1 and per.status_pro=1 ";
         sql += "and usrEnt.status_usr_ent=1 and ent.status_ent=1";
         if (id!=null) {
             sql += " and usr.id_usr="+id;
