@@ -248,4 +248,27 @@ public class GlobalFunctions {
                 + "</html>";
         return msg;
     }
+    
+    /**
+     * Encargado de generar la descripcion del correo en formato HTML, que va a
+     * ser al usuario cuando se va a recuperar una contraseña
+     *
+     * @param nameUser Nombre del usuario registrado en el sistema
+     * @param codValidation Codigo de validacion generado por el sistema para
+     * restaurar un usuario
+     * @return representacion del mensaje en HTML
+     */
+    public static String messageToRestoreUser(String nameUser, String codValidation) {
+        String msg = "<html> \n"
+//                + "<head> \n"
+//                + "<title>Validación de usuario registrado</title> \n"
+//                + "</head> \n"
+                + "<body> \n"
+                + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
+                + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
+                + "http://localhost:8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "</body> \n"
+                + "</html>";
+        return msg;
+    }
 }

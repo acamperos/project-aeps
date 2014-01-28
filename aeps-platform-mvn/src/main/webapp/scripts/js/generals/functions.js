@@ -835,6 +835,14 @@ function autenticateUser(url, formId, message)
     });
 }
 
+function setTimerToMessage(fade) 
+{
+    var html  = '<script type="text/javascript">';
+        html += "  $(\".s2_validation_errors\").fadeOut("+(fade*1000)+");";
+        html += '</script>';
+    return html;    
+}
+
 function completeForm(dialogId, formId, information) 
 {
 //    bootstrapValidation(form, errors);
@@ -849,7 +857,7 @@ function completeForm(dialogId, formId, information)
 //            errorDiv.append('<p>' + value + '</p>\n');
 //        });
 //    }
-    alert(123456)    
+//    alert(123456)    
     var json = jQuery.parseJSON(information);
     if (dialogId!='') {
         $('#'+dialogId).find("div.alert-info").remove();
@@ -866,17 +874,19 @@ function completeForm(dialogId, formId, information)
     if (json.state == 'failure') {
         var errorDiv = $("<div class='alert alert-error s2_validation_errors'></div>");
         $('#'+formId).prepend(errorDiv);
-        $.each(json.info, function(index, value) {
-            errorDiv.append('<p>' + value + '</p>\n');
-        });
-        $(errorDiv).focus();
+        errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+        errorDiv.append('<p>' + json.info + '</p>\n');
+//        $.each(json.infoR, function(index, value) {
+//            errorDiv.append('<p>' + value + '</p>\n');
+//        }); // Estructura de arreglo
+        $(errorDiv).focus();        
+        $('#'+formId).append(setTimerToMessage(4));
     } else if (json.state == 'success') {
         var errorDiv = $("<div class='alert alert-info'></div>");
         $('#'+formId).prepend(errorDiv);
+        errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
         errorDiv.append('<p>' + json.info + '</p>\n');
-//        $.each(json.info, function(index, value) {
-//            errorDiv.append('<p>' + value + '</p>\n');
-//        });
+        $('#'+formId).append(setTimerToMessage(4));
         $('#'+formId)[0].reset();
     }
 }
@@ -892,9 +902,11 @@ function validationForm(form, errors)
     if (errors.errors && errors.errors.length > 0) {
         var errorDiv = $("<div class='alert alert-error s2_validation_errors'></div>");
         form.prepend(errorDiv);
+        errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
         $.each(errors.errors, function(index, value) {
             errorDiv.append('<p>' + value + '</p>\n');
         });
+        form.append(setTimerToMessage(4));
     }
 
     //Handle field errors
@@ -924,21 +936,21 @@ function validationForm(form, errors)
 //            errorDiv.append('<p>' + value + '</p>\n');
 //        });
 //    }
-    if (errors.state == 'failure') {
-        var errorDiv = $("<div class='alert alert-error s2_validation_errors'></div>");
-        form.prepend(errorDiv);
-        $.each(errors.info, function(index, value) {
-            errorDiv.append('<p>' + value + '</p>\n');
-        });
-        $(errorDiv).focus();
-    } else if (errors.state == 'success') {
-        var errorDiv = $("<div class='alert alert-info s2_validation_info'></div>");
-        form.prepend(errorDiv);
-        $.each(errors.info, function(index, value) {
-            errorDiv.append('<p>' + value + '</p>\n');
-        });
-        $(form)[0].reset();
-    }
+//    if (errors.state == 'failure') {
+//        var errorDiv = $("<div class='alert alert-error s2_validation_errors'></div>");
+//        form.prepend(errorDiv);
+//        $.each(errors.info, function(index, value) {
+//            errorDiv.append('<p>' + value + '</p>\n');
+//        });
+//        $(errorDiv).focus();
+//    } else if (errors.state == 'success') {
+//        var errorDiv = $("<div class='alert alert-info s2_validation_info'></div>");
+//        form.prepend(errorDiv);
+//        $.each(errors.info, function(index, value) {
+//            errorDiv.append('<p>' + value + '</p>\n');
+//        });
+//        $(form)[0].reset();
+//    }
 }
 
 

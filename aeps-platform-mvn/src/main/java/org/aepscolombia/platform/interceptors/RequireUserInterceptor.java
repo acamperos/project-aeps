@@ -33,6 +33,7 @@ public class RequireUserInterceptor extends AbstractInterceptor
   public String intercept(ActionInvocation invocation) throws Exception {
     String result = BaseAction.NOT_LOGGED;
     String actionActual = (String)invocation.getInvocationContext().getContext().get(invocation.getInvocationContext().ACTION_NAME);
+//    invocation.getProxy().getConfig().getPackageName()
     if (actionActual.equals("signin")) {
         result = Action.INPUT;  
     }    

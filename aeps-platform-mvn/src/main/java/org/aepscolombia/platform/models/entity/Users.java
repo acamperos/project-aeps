@@ -72,7 +72,7 @@ public class Users  implements java.io.Serializable {
     
     @Column(name="cod_validation_usr", nullable=false, length=120)
     public String getCodValidationUsr() {
-        return this.passwordUsr;
+        return this.codValidationUsr;
     }
     
     public void setCodValidationUsr(String codValidationUsr) {
