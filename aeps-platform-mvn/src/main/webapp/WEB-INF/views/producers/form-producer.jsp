@@ -151,13 +151,17 @@
             </div>
         </s:form>
         <script>
-                        $.subscribe('completeProducer', function(event, data) {
-                            //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
-                            //     '\n\nThe output div should have already been updated with the responseText.');
-                            //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);
-                            //        alert('responseText: \n' + json.info);
-                            completeForm('dialog-form', 'formProducer', event.originalEvent.request.responseText);
-                        });
+            $.mask.definitions['h'] = "[3]";
+            $("#formProducer_dig_ver_producer").mask("9",{placeholder:""});
+            $("#formProducer_telephone_producer").mask("9999999",{placeholder:""});
+            $("#formProducer_celphone_producer").mask("h999999999",{placeholder:""});
+            $.subscribe('completeProducer', function(event, data) {
+                //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
+                //     '\n\nThe output div should have already been updated with the responseText.');
+                //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);
+                //        alert('responseText: \n' + json.info);
+                completeForm('dialog-form', 'formProducer', event.originalEvent.request.responseText);
+            });
         </script>
     </body>
 </html>

@@ -95,7 +95,7 @@
                     <div id="confirm_dialog_property" class="cbox_content">
                         <div class="sepH_c"><strong>Desea borrar esta(s) finca(s)?</strong></div>
                         <div>
-                            <a href="#" class="btn btn-small btn-beoro-3 confirm_yes">Si</a>
+                            <a href="#" class="btn btn-small btn-primary confirm_yes">Si</a>
                             <a href="#" class="btn btn-small confirm_no">No</a>
                         </div>
                     </div>

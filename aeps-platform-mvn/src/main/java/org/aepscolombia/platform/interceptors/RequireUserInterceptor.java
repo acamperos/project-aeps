@@ -13,6 +13,7 @@ import org.aepscolombia.platform.models.entity.Users;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import java.util.Map;
+import org.aepscolombia.platform.models.dao.UsersDao;
 
 /**
  * Clase RequireUserInterceptor
@@ -42,6 +43,8 @@ public class RequireUserInterceptor extends AbstractInterceptor
 //    
 //    System.out.println("action->"+actionActual);
     if (user != null) {
+//        Integer userAsign = new UsersDao().getEntitySystem(user.getIdUsr());
+//        System.out.println("user asig->"+userAsign);
         result = invocation.invoke();
     }    
 //    } else {

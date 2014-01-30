@@ -88,7 +88,7 @@
                     <div id="confirm_dialog_lot" class="cbox_content">
                         <div class="sepH_c"><strong>Desea borrar este(s) lote(s)?</strong></div>
                         <div>
-                            <a href="#" class="btn btn-small btn-beoro-3 confirm_yes">Si</a>
+                            <a href="#" class="btn btn-small btn-primary confirm_yes">Si</a>
                             <a href="#" class="btn btn-small confirm_no">No</a>
                         </div>
                     </div>

@@ -870,7 +870,7 @@ function completeForm(dialogId, formId, information)
 //        $('#' + message).html(json.info);
 //        $('#' + message).focus();
 //        $("#" + formId)[0].reset();
-//    }       
+//    }         
     if (json.state == 'failure') {
         var errorDiv = $("<div class='alert alert-error s2_validation_errors'></div>");
         $('#'+formId).prepend(errorDiv);
@@ -880,13 +880,13 @@ function completeForm(dialogId, formId, information)
 //            errorDiv.append('<p>' + value + '</p>\n');
 //        }); // Estructura de arreglo
         $(errorDiv).focus();        
-        $('#'+formId).append(setTimerToMessage(4));
+        $('#'+formId).append(setTimerToMessage(8));
     } else if (json.state == 'success') {
         var errorDiv = $("<div class='alert alert-info'></div>");
         $('#'+formId).prepend(errorDiv);
         errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
         errorDiv.append('<p>' + json.info + '</p>\n');
-        $('#'+formId).append(setTimerToMessage(4));
+        $('#'+formId).append(setTimerToMessage(8));
         $('#'+formId)[0].reset();
     }
 }
@@ -897,6 +897,7 @@ function validationForm(form, errors)
     form.find("div.error").removeClass("error");
     form.find("span.s2_help_inline").remove();
     form.find("div.s2_validation_errors").remove();
+//    Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
 
     //Handle non field errors
     if (errors.errors && errors.errors.length > 0) {
@@ -906,7 +907,7 @@ function validationForm(form, errors)
         $.each(errors.errors, function(index, value) {
             errorDiv.append('<p>' + value + '</p>\n');
         });
-        form.append(setTimerToMessage(4));
+        form.append(setTimerToMessage(8));
     }
 
     //Handle field errors

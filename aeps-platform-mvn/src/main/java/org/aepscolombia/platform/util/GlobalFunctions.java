@@ -100,43 +100,6 @@ public class GlobalFunctions {
     }
 
     /**
-     * Añade el contenido base al multipart
-     *
-     * @param htmlText contenido html que se muestra en el mensaje de correo
-     * @throws Exception Excepcion levantada en caso de error
-     */
-//    public void addContent(String htmlText, MimeMultipart multipart) throws Exception {
-//// first part (the html)
-//        BodyPart messageBodyPart = new MimeBodyPart();
-//        messageBodyPart.setContent(htmlText, "text/html");
-//// add it
-//        this.multipart.addBodyPart(messageBodyPart);
-//    }
-// ----
-
-    /**
-     * Envia un correo multipart
-     *
-     * @throws Exception Excepcion levantada en caso de error
-     */
-//    public void sendMultipart() throws Exception {
-////        Session mailSession = Session.getDefaultInstance(this.props, null);
-////        mailSession.setDebug(true);
-//        Transport transport = mailSession.getTransport();
-//        MimeMessage message = new MimeMessage(mailSession);
-//        message.setSubject(this.getSubject());
-//        message.setFrom(new InternetAddress(this.getFrom()));
-//        message.addRecipient(Message.RecipientType.TO,
-//                new InternetAddress(this.getTo()));
-//// put everything together
-//        message.setContent(multipart);
-//        transport.connect();
-//        transport.sendMessage(message,
-//                message.getRecipients(Message.RecipientType.TO));
-//        transport.close();
-//    }
-
-    /**
      * Encargado de generar transformar la contraseña en codigo MD5
      *
      * @param password Password en formato original
@@ -228,12 +191,13 @@ public class GlobalFunctions {
      * Encargado de generar la descripcion del correo en formato HTML, que va a
      * ser al usuario cuando este se crea por primera vez
      *
+     * @param host Nombre del host en que se encuentra el usuario
      * @param nameUser Nombre del usuario registrado en el sistema
      * @param codValidation Codigo de validacion generado por el sistema para
      * verificar un nuevo usuario
      * @return representacion del mensaje en HTML
      */
-    public static String messageToNewUser(String nameUser, String codValidation) {
+    public static String messageToNewUser(String host, String nameUser, String codValidation) {
         String msg = "<html> \n"
 //                + "<head> \n"
 //                + "<title>Validación de usuario registrado</title> \n"
@@ -243,7 +207,7 @@ public class GlobalFunctions {
                 + "<p>Bienvenido a la plataforma AEPS.</p> \n"
                 + "<p>Para validar su registro por favor dar click en el siguiente enlace:</p> "
 //                + "<a href='http://localhost:8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'> \n"
-                + "http://localhost:8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
                 + "</body> \n"
                 + "</html>";
         return msg;
@@ -253,12 +217,13 @@ public class GlobalFunctions {
      * Encargado de generar la descripcion del correo en formato HTML, que va a
      * ser al usuario cuando se va a recuperar una contraseña
      *
+     * @param host Nombre del host en que se encuentra el usuario
      * @param nameUser Nombre del usuario registrado en el sistema
      * @param codValidation Codigo de validacion generado por el sistema para
      * restaurar un usuario
      * @return representacion del mensaje en HTML
      */
-    public static String messageToRestoreUser(String nameUser, String codValidation) {
+    public static String messageToRestoreUser(String host, String nameUser, String codValidation) {
         String msg = "<html> \n"
 //                + "<head> \n"
 //                + "<title>Validación de usuario registrado</title> \n"
@@ -266,7 +231,7 @@ public class GlobalFunctions {
                 + "<body> \n"
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
-                + "http://localhost:8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
                 + "</body> \n"
                 + "</html>";
         return msg;

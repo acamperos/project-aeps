@@ -1,10 +1,5 @@
 package org.aepscolombia.platform.models.dao;
 
-import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -14,17 +9,8 @@ import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.aepscolombia.platform.util.GlobalFunctions;
-import org.hibernate.Criteria;
-
-//import org.cgiar.ccafs.ap.util.MD5Convert;
-
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Map;
-
-//import com.google.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aepscolombia.platform.models.entity.UserEntity;
 
 /**
  * Clase UsersDao
@@ -49,7 +35,6 @@ public class UsersDao
      * @param username:  Nombre del usuario
      * @return Objeto del usuario o vacio (NULL) en caso de no encontrar nada
      */
-//    @Override
     public Users checkUsername(String username) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
@@ -77,6 +62,44 @@ public class UsersDao
         }
         return events;
     }
+    
+    /**
+     * Encargado de obtener la entidad del usuario que se encuentra registrado en el sistema
+     * @param idUser:  Identificacion del usuario
+     * @return Identificacion (Int) de la entidad
+     */
+    public static Integer getEntitySystem(Integer idUser) 
+	{
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session  = sessions.openSession();
+        Integer idEnt    = null;
+        UserEntity user  = null;
+        Transaction tx = null;
+        String sql = "";        
+        sql  = "select ue.id_usr_ent, ue.id_project_usr_ent, ue.id_user_usr_ent, ue.id_entity_usr_ent, ue.status_usr_ent";
+        sql += " from user_entity ue";
+//		sql += " inner join users u on u.id_usr=ue.id_user_usr_ent"; 
+		sql += " where ue.status_usr_ent=1";		
+        sql += " and ue.id_user_usr_ent="+idUser;
+//        System.out.println("sql->"+sql);
+        
+        try {
+            tx    = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("ue", UserEntity.class);
+            user  = (UserEntity) query.uniqueResult();
+            idEnt = user.getEntities().getIdEnt();
+            System.out.println("id usuario->"+idEnt);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return idUser;
+	}
 
     /**
      * Encargado de obtener la informacion de un usuario apartir del nombre de usuario y/o su contraseña

@@ -42,13 +42,13 @@
     </head>
     <body>
         <div class="header">
-            <%@ include file="WEB-INF/views/header.jsp" %>
+            <%@ include file="WEB-INF/views/generals/header.jsp" %>
         </div>
         <div class="body" id="divBodyLayout">
-            <%@ include file="WEB-INF/views/home.jsp" %>
+            <%@ include file="WEB-INF/views/generals/home.jsp" %>
         </div>
         <div class="footer">
-            <%@ include file="WEB-INF/views/footer.jsp" %>            
+            <%@ include file="WEB-INF/views/generals/footer.jsp" %>            
         </div>
     </body>
 </html>

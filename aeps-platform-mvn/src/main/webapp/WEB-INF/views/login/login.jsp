@@ -12,10 +12,12 @@
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 
-        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet'> -->
+        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet'> -->        
         <sj:head jqueryui="true"/>
-        <sb:head includeScripts="true" includeScriptsValidation="true"/>	
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
+        <sb:head includeScripts="true" includeScriptsValidation="true"/>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
+        <!--<link rel="stylesheet" href="scripts/css/generals/beoro.css">-->
         <link rel="stylesheet" href="scripts/css/generals/login.css">
         <style>
             body {
@@ -24,7 +26,7 @@
             }
         </style>				
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
-        <script type="text/javascript">
+        <script type="text/javascript">            
             (function(a) {
                 a.fn.vAlign = function() {
                     return this.each(function() {
@@ -113,7 +115,7 @@
         <div id="login-wrapper" class="clearfix">            
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
-                <h3 class="logo_img">AEPS</h3>
+                <h3 class="logo_img"><a href="initial.action">AEPS</a></h3>
                 <s:actionerror theme="bootstrap"/>
                 <s:actionmessage theme="bootstrap"/>
                 <s:fielderror theme="bootstrap"/>        
@@ -144,7 +146,6 @@
                             <!-- <div class="login_links"> -->
                             <div class="login_links span6">
                                 <a href="javascript:void(0)" id="remPass">
-                                    <!-- <span>Â¿Olvido su usuario y/o contrase&ntilde;a?</span> -->
                                     <span>¿Olvido su contrase&ntilde;a?</span>
                                 </a>
                             </div>
@@ -156,9 +157,9 @@
                             <!-- </div> -->
                             <div class="submit_sect">
                                 <%--<sj:submit cssClass="btn btn-beoro-3" targets="result" value="Iniciar sesión" validate="true" validateFunction="bootstrapValidation"/>--%>
-                                <sj:submit cssClass="btn btn-beoro-3" replaceTarget="true" value="Iniciar sesión" validate="true" validateFunction="validationForm"/>
-                                <%--<sj:submit cssClass="btn btn-beoro-3" validate="true" value="Iniciar sesion"/>--%>
-                                <!--<button type="submit" class="btn btn-beoro-3">Iniciar sesi&oacute;n</button>-->
+                                <sj:submit cssClass="btn btn-primary" replaceTarget="true" value="Iniciar sesión" validate="true" validateFunction="validationForm"/>
+                                <%--<sj:submit cssClass="btn btn-primary" validate="true" value="Iniciar sesion"/>--%>
+                                <!--<button type="submit" class="btn btn-primary">Iniciar sesi&oacute;n</button>-->
                             </div>
                         </div>									
                     </s:form>
@@ -189,8 +190,8 @@
                                 </a>
                             </div>
                             <div class="submit_sect">
-                                <!--<button type="submit" class="btn btn-beoro-3">Recordar</button>-->
-                                <sj:submit cssClass="btn btn-beoro-3" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
+                                <!--<button type="submit" class="btn btn-primary">Recordar</button>-->
+                                <sj:submit cssClass="btn btn-primary" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>
                     </s:form>
@@ -236,33 +237,28 @@
                             <div class="span4 control-group">
                                 <label class="control-label" for="formNewUser_celphoneUser">Celular *:</label>
                                 <div class="controls">
-                                    <s:textfield class="form-control" id="formNewUser_celphone" name="celphone"/>                                    
+                                    <!--<input id="formNewUser_celphone" type="text" class="numeric" name="celphoneUser" />-->
+                                    <s:textfield class="form-control" id="formNewUser_celphoneUser" name="celphoneUser"/>                                   
                                 </div>
                             </div>
-                            <!--                            <div class="span6">
-                                                            <label for="formNewUser_telephone">Telefono :</label>
-                                                            <input class="form-control" id="formNewUser_telephone">
-                                                        </div>-->
                             <div class="login_links span6">
                                 <a href="javascript:void(0)" id="accessSystemUser">
                                     <span>Ingreso al sistema</span>
                                 </a>
                             </div>
                             <div class="span4">
-                                <script type="text/javascript"
-                                src="http://api.recaptcha.net/challenge?k=6LflSe0SAAAAAKRNMJfAcEmedhkzuSBFjGr8cbCA">
-                                </script>
-                                <noscript>
-                                    <iframe src="http://api.recaptcha.net/noscript?k=6LflSe0SAAAAAKRNMJfAcEmedhkzuSBFjGr8cbCA"
-                                    height="300" width="500" frameborder="0"></iframe>
-                                    <br>
-                                    <s:textarea name="recaptcha_challenge_field" rows="3" cols="40"/>
-                                    <s:hidden name="recaptcha_response_field" value="manual_challenge"/>
-                                </noscript>
+                                <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+                                <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+                                <%
+                                    ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6LexyO0SAAAAAK3fHMGdzVHpGSRR2-w7M2KnRK-E", "6LexyO0SAAAAAHVvbzskaZSXHNcBvMHLWyIUdPEi", false);
+                                    String captchaScript = captcha.createRecaptchaHtml(null, null);
+
+                                    out.print(captchaScript);
+                                %>
                             </div>
                             <div class="span4">
-                                <!--<button type="submit" class="btn btn-beoro-3">Crear usuario</button>-->
-                                <sj:submit cssClass="btn btn-beoro-3" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
+                                <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
+                                <sj:submit cssClass="btn btn-primary" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>                            
                     </s:form>
@@ -273,12 +269,11 @@
                     </script>
                 </div>
             </div>
-            <!-- <div class="login_links">
-                <a href="javascript:void(0)" id="pass_login"><span>Forgot password?</span><span style="display:none">Account login</span></a>
-            </div> -->
         </div>
         <% String logSel = String.valueOf(request.getParameter("logSel"));%>
-        <script>
+        <script>            
+            $.mask.definitions['h'] = "[3]";
+            $('#formNewUser_celphoneUser').mask("h999999999",{placeholder:""});
             var val = "<%=logSel%>";
             if (val == 'new') {
                 $('#divRegisterUser').slideUp();
