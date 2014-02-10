@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group control-group">
                             <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
-                            <sj:submit cssClass="btn btn-primary" targets="divMessage" onCompleteTopics="completeRestore" value="Restaurar contraseña" validate="true" validateFunction="validationForm"/>
+                            <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Restaurar contraseña" validate="true" validateFunction="validationForm"/>
                         </div>                            
                     </s:form>
                     <script>

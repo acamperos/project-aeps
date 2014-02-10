@@ -42,9 +42,10 @@
                             </div>					 
                             <div class="row">
                                 <div class="span6">
-                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                    <!--<button type="submit" class="btn btn-primary">Enviar</button>-->
                                     <!-- <button class="btn btn-default" data-href="home.action">Volver</button> -->
-                                    <a href="home.action" class="btn btn-default">Volver</a>
+                                <sj:a href="home.action" cssClass="btn btn-default" targets="divBodyLayout">Volver</sj:a>
+                                    <!--<a href="home.action" class="btn btn-default">Volver</a>-->
                                 </div>  
                             </div>  
                         </fieldset>

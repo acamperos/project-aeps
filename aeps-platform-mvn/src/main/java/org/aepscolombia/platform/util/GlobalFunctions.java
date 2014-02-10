@@ -202,12 +202,13 @@ public class GlobalFunctions {
 //                + "<head> \n"
 //                + "<title>Validación de usuario registrado</title> \n"
 //                + "</head> \n"
-                + "<body> \n"
+                + "<body> \n"   
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Bienvenido a la plataforma AEPS.</p> \n"
                 + "<p>Para validar su registro por favor dar click en el siguiente enlace:</p> "
-//                + "<a href='http://localhost:8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'> \n"
-                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>AQUI</a>\n"
+//                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "<p>Si usted no se ha registrado a este sistema por favor ignorar este mensaje</p> "
                 + "</body> \n"
                 + "</html>";
         return msg;
@@ -231,7 +232,7 @@ public class GlobalFunctions {
                 + "<body> \n"
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
-                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>AQUI</a> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;

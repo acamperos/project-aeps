@@ -93,7 +93,7 @@
         <action name="saveUser" method="saveData" class="org.aepscolombia.platform.controllers.ActionLogin">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="states" type="json"></result>
-            <!--<result name="input">/WEB-INF/views/form-producer.jsp</result>-->
+            <!--<result name="input">/WEB-INF/views/login/login.jsp</result>-->
         </action>
         <!-- End public part -->
         
@@ -125,7 +125,7 @@
         <!-- End private part -->
     </package>  
     
-    <package name="producer" extends="principal" namespace="/">
+    <package name="producer" extends="principal,struts-default,json-default" namespace="/">
         <action name="comboDocumentsTypes" method="comboDocumentsTypes" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
             <result type="json" name="combo">
@@ -138,38 +138,50 @@
                 <param name="contentType">text/html</param>
             </result>
         </action>
-        <action name="comboMunicipalities" method="comboMunicipalities" class="org.aepscolombia.platform.controllers.ActionProducer">
+        <action name="comboProducer" method="comboMunicipalities" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
             <result type="json" name="combo">
                 <param name="contentType">text/html</param>
             </result>
         </action>
-        <action name="searchProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
+        <action name="listProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/producers/list-producer.jsp</result>
+            <!--<result>/WEB-INF/views/prueba.jsp</result>-->
+        </action>
+        <action name="searchProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/WEB-INF/views/producers/info-producer.jsp</result>
             <!--<result>/WEB-INF/views/prueba.jsp</result>-->
         </action>
         <action name="showProducer" method="show" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/producers/form-producer.jsp</result>
         </action>
-        <action name="saveProducer" method="saveData" class="org.aepscolombia.platform.controllers.ActionProducer">
-            <interceptor-ref name="defaultStackAeps"/>
+        <action name="saveProducer" method="saveData" class="org.aepscolombia.platform.controllers.ActionProducer">            
             <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>  
             <result name = "states" type="json"></result>
-            <result name = "success">/WEB-INF/views/producers/form-producer.jsp</result>
+<!--            <result name = "list" type="redirectAction">
+                <param name="actionName">searchProducer</param>
+                <param name="namespace">/</param>
+            </result>-->
+            <!--<result name = "list">/WEB-INF/views/producers/list-producer.jsp</result>-->
+            <!--<result name = "row">/WEB-INF/views/producers/row-producer.jsp</result>-->
+            <!--<result name = "success">/WEB-INF/views/producers/form-producer.jsp</result>-->
             <!--<result name="input">/WEB-INF/views/view-productor.jsp</result>-->
         </action>
         <!--        <action name="modifyProducer" method="modify" class="org.aepscolombia.platform.controllers.ActionProducer">
             <result>/WEB-INF/views/login.jsp</result>
         </action>-->
         <action name="deleteProducer" method="delete" class="org.aepscolombia.platform.controllers.ActionProducer">
-            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <!--<interceptor-ref name="defaultStackAeps"/>-->
             <result name = "states" type="json"></result>
         </action>        
     </package>
     
-    <package name="farm" extends="principal" namespace="/">       
+    <package name="farm" extends="principal,producer,json-default" namespace="/">       
         <action name="comboDepartments" method="comboDepartments" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
             <result type="json" name="combo">
@@ -182,17 +194,21 @@
                 <param name="contentType">text/html</param>
             </result>
         </action>
-        <action name="searchFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+        <action name="listFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/farms/list-farm.jsp</result>
+        </action>
+        <action name="searchFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/WEB-INF/views/farms/info-farm.jsp</result>
         </action>
         <action name="showFarm" method="show" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/farms/form-farm.jsp</result>
         </action>
         <action name="saveFarm" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
-            <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
             <result name = "success">/WEB-INF/views/farms/form-farm.jsp</result>
         </action>
@@ -202,28 +218,36 @@
         </action>
     </package>
     
-    <package name="field" extends="principal" namespace="/"> 
-        <action name="comboFieldTypes" method="comboFieldTypes" class="org.aepscolombia.platform.controllers.ActionFarm">
+    <package name="field" extends="principal,farm,producer,json-default" namespace="/"> 
+        <action name="comboFieldTypes" method="comboFieldTypes" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <result type="json" name="combo">
                 <param name="contentType">text/html</param>
             </result>
         </action>     
-        <action name="searchField" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+<!--        <action name="searchFarmField" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/WEB-INF/views/farms/list-farm.jsp</result>
+        </action>-->
+        <action name="listField" method="search" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/fields/list-field.jsp</result>
         </action>
-        <action name="showField" method="show" class="org.aepscolombia.platform.controllers.ActionFarm">
+        <action name="searchField" method="search" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/WEB-INF/views/fields/info-field.jsp</result>
+        </action>
+        <action name="showField" method="show" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/fields/form-field.jsp</result>
         </action>
-        <action name="saveField" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
-            <interceptor-ref name="defaultStackAeps"/>
+        <action name="saveField" method="saveData" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
             <result name = "states" type="json"></result>
             <result name = "success">/WEB-INF/views/fields/form-field.jsp</result>
         </action>
-        <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionFarm">
+        <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>       

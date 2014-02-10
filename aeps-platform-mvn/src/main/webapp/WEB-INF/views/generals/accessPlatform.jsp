@@ -27,9 +27,9 @@
     <body>
         <div id="divMessage" style="display:none"></div>        
         <div id="login-wrapper" class="clearfix">            
-            <div class="main-col">
-                <p>Se ha validado correctamente la contraseña! Será dirigido automáticamente en diez segundos. En caso contrario, puedes acceder haciendo click 
-                    <a href="signin.action" class="btn btn-primary btn-success btn-lg">Ingresar</a></p>
+            <div class="heading_main">
+                <p>Se ha validado correctamente la contraseña! Será dirigido automáticamente en diez segundos. </p> 
+                <p>En caso contrario, puedes acceder haciendo click <a href="signin.action" class="btn btn-primary btn-success btn-lg">Ingresar</a></p>
             </div>
         </div>
     </body>

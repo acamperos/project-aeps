@@ -27,6 +27,54 @@ function setPropertyVal(url, nameData, valData, valName, valId, title, width, he
     }
 }
 
+function setLotVal(url, optSel, nameProd, valProd, nameProp, valProp, valName, valId, title, width, height) {
+    var valAdd = $("#" + optSel).val();
+    // if(valAdd == "") {
+    // alert("Complete la opcion 'El lote es'");
+    // } else 
+// 		if(valAdd == 1) {
+    if ($("#" + valProp).val() == "") {
+        alert("Debe tener una finca seleccionada previamente");
+    } else {
+        listInfo(url, nameProp, valProp, valName, valId, title, width, height);
+    }
+// 		} else {
+//       if($("#"+valProd).val() == "") {
+//         alert("Debe tener un productor seleccionado previamente");  
+//       } else { 
+//         listInfo(url, nameProd, valProd, valName, valId, title, width, height);
+//       }  
+//     }
+}
+
+function getListVal(url, nameData, valData, title, width, height) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: nameData + '=' + valData,
+        success: function(information) {
+            // $('.ajaxgif').hide();
+            var obj = jQuery.parseJSON(information);
+            if (obj.state == 'failure') {
+                $('#' + message).html(obj.info);
+                // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);
+            } else if (obj.state == 'success') {
+                // alert(obj.info);
+                showWindow(title, width, height, obj.info);
+            }
+        }
+    });
+}
+
+function selLot(valSel, divShow) {
+//     var valAdd = $("#"+field).val();
+    if (valSel == 1) {
+        $("#" + divShow).removeClass("hide");
+    } else {
+        $("#" + divShow).addClass("hide");
+    }
+}
+
 function setLabelsObj(valSel, labSetObj, labSetNew) {
     if (valSel == 1) {
         $("#" + labSetObj).html("Plaga que mas lo afecta");
@@ -39,6 +87,7 @@ function setLabelsObj(valSel, labSetObj, labSetNew) {
         $("#" + labSetNew).html("Nueva enfermedad que mas lo afecta");
     }
 }
+
 
 function showElement(valSel, divShow) {
     if (valSel != '' && valSel != '1000000') {
@@ -135,7 +184,7 @@ function showEnabled(valSel, divShowA, divShowB) {
     }
 }
 
-function showTypeFertilizer(valSel, divShowA, divShowB, divShowC) {
+function showTipoAbono(valSel, divShowA, divShowB, divShowC) {
     if (valSel == 1) {
         $("#" + divShowA).show();
         $("#" + divShowB).hide();
@@ -518,11 +567,11 @@ function viewInfo(url, title, divShow, divHide)
 function getInfo(url, valName, valId, divShow, message)
 {
     $('#' + message).html('');
-    var data = valName + '=' + $('#' + valId).val();
+    var datos = valName + '=' + $('#' + valId).val();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -540,11 +589,11 @@ function getInfo(url, valName, valId, divShow, message)
 function viewInfoCropNew(url, elTiCul, idEvent, divShow, divShowB, message)
 {
     $('#' + message).html('');
-    var data = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
+    var datos = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -564,11 +613,11 @@ function viewInfoCropNew(url, elTiCul, idEvent, divShow, divShowB, message)
 function viewInfoCrop(url, elTiCul, idEvent, divShow, message)
 {
     $('#' + message).html('');
-    var data = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
+    var datos = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -588,11 +637,11 @@ function viewInfoList(url, divShow, message)
 {
     // $('#'+divShow).html('<h1>Hola Mundo</h1>');
     $('#' + message).html('');
-    // var data  = 'tipoCul='+$('#'+elTiCul).val()+'&idEvent='+idEvent;
+    // var datos  = 'tipoCul='+$('#'+elTiCul).val()+'&idEvent='+idEvent;
     $.ajax({
         type: "POST",
         url: url,
-        // data: data,
+        // data: datos,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -610,15 +659,15 @@ function viewInfoList(url, divShow, message)
 
 function chargeValues(url, valName, valSend, valFill, formId)
 {
-    var data;
+    var datos;
     // if (valSend) {
-    data = '&' + valName + '=' + valSend;
+    datos = '&' + valName + '=' + valSend;
     // }
     $('#' + valFill).html('');
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             var json = jQuery.parseJSON(information);
             if (json.state == 'failure') {
@@ -684,19 +733,18 @@ function showDialogDelete(divDialog, hRef, url, urlAction, divTable, divShow) {
     });       
 }
 
-function changePage(url, valName, valSend, valFill, formId, message)
+function changePage(url, valName, valSend, valFill, message)
 {
-//    alert(formId);
-//    var data = $('#'+formId).serializeArray();
+//     alert(11)
+    var datos;
     // if (valSend) {
-    var data = '&' + valName + '=' + valSend;
-    var dataForm = $('#'+formId).serializeArray();
+    datos = '&' + valName + '=' + valSend;
     // }
     $('#' + valFill).html('');
     $.ajax({
         type: "POST",
-        url: url+data,
-        data: dataForm,
+        url: url,
+        data: datos,
         success: function(information) {
 //            alert(information);
             $('#' + valFill).html(information);
@@ -715,15 +763,15 @@ function changePage(url, valName, valSend, valFill, formId, message)
 function chargeValuesMercado(url, valName, valSend, valFill, divShow, message)
 {
 //     alert(11)
-    var data;
+    var datos;
     // if (valSend) {
-    data = '&' + valName + '=' + valSend;
+    datos = '&' + valName + '=' + valSend;
     // }
     $('#' + valFill).html('');
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             // $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -754,16 +802,16 @@ function showInfoVende(valSel, divShow) {
 function chargeValuesObjective(url, valName, valSend, valFill, valFillAdd, message)
 {
 //     alert(11)
-    var data;
+    var datos;
     // if (valSend) {
-    data = '&' + valName + '=' + valSend;
+    datos = '&' + valName + '=' + valSend;
     // }
     $('#' + valFill).html('');
     $('#' + valFillAdd).html('');
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             // $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -833,11 +881,11 @@ function autenticateUser(url, formId, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
 //         $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -956,7 +1004,7 @@ function addMessageProcess()
             opacity: .5, 
             color: '#fff' 
         },
-        message: '<div class="view-process"><h3>Procesando....</h3></div>' 
+        message: '<h1><img src="img/ajax.gif" />Procesando....</h1>' 
     }); 
 //    $.blockUI({ 
 //        message: '<img src="img/ajax.gif" />Procesando....' 
@@ -1031,11 +1079,11 @@ function validationForm(form, errors)
 
 function saveData(url, urlAction, formId, divShow)
 {
-    var data = $('#'+formId).serializeArray();
+    var datos = $('#'+formId).serializeArray();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         complete: function(information) {
             validationForm($('#'+formId),information);
             completeFormGetting('dialog-form', formId, divShow, information);
@@ -1096,7 +1144,7 @@ function sendForm(url, formId, message)
     // return false;
     // } else {
     // $('.ajaxgif').removeClass('hide');
-    // var data  = $('.'+formClass).serializeArray();
+    // var datos  = $('.'+formClass).serializeArray();
     // $('#'+message).text('');
     $('#' + message).html('');
     // $('#'+formId).toggleClass('error');
@@ -1108,13 +1156,13 @@ function sendForm(url, formId, message)
     // alert(fieldErrors[i])
     // // $(fieldErrors[i]).removeClass('error');
     // }
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     // $('.msg').text('Hubo un error!').addClass('msg_error').animate({ 'right' : '130px' }, 300);
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -1159,12 +1207,12 @@ function sendFormRasta(url, formId, divTable, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -1215,13 +1263,13 @@ function sendFormProtection(url, formId, divHide, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     // $('.msg').text('Hubo un error!').addClass('msg_error').animate({ 'right' : '130px' }, 300);
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -1267,12 +1315,12 @@ function sendFormCrop(url, formId, divHide, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -1309,12 +1357,12 @@ function sendFormHarvest(url, formId, divShow, divHide, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
@@ -1352,12 +1400,12 @@ function sendFormHarvestChange(url, formId, divShowA, divShowB, divHide, message
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var data = $('#' + formId).serializeArray();
+    var datos = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: datos,
         success: function(information) {
             $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);

@@ -43,20 +43,20 @@
                     <div class="navbar-inner">
                         <div class="container">
                             <ul class="nav" id="ulOptionsMenu">
-                                <li class="active homeCls">
-                                    <sj:a href="home.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Inicio</sj:a>
-                                </li>
+                                <!--<li class="active homeCls">-->
+                                    <%--<sj:a href="home.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Inicio</sj:a>--%>
+                                <!--</li>-->
                                 <% if (user != null) { %>
                                     <li class="dashCls">
                                         <sj:a href="resume.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Resumen General</sj:a>
                                     </li>
                                 <% } %>
-                                <li class="aboutCls">
-                                    <sj:a href="about.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Quienes Somos</sj:a>
-                                </li>
-                                <li class="contactCls">
-                                    <sj:a href="contact.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Contactenos</sj:a>
-                                </li>
+                                <!--<li class="aboutCls">-->
+                                    <%--<sj:a href="about.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Quienes Somos</sj:a>--%>
+                                <!--</li>-->
+                                <!--<li class="contactCls">-->
+                                    <%--<sj:a href="contact.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Contactenos</sj:a>--%>
+                                <!--</li>-->
                             </ul>
                         </div>
                     </div>

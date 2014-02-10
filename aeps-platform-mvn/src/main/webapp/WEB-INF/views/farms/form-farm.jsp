@@ -1,6 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head></head>
     <body>
@@ -9,7 +10,6 @@
         <s:fielderror theme="bootstrap"/>
         <div class="row-fluid" id="divFarmsForm">
             <div class="span6">	
-                <%--<form method="post" class="formClassProperty" id="formProperty" onsubmit="return false;">--%>	
                 <s:form id="formFarm" theme="bootstrap" action="saveFarm.action" cssClass="form-horizontal formClassProperty" label="Formulario de una finca">
                     <fieldset>
                         <div>
@@ -18,10 +18,11 @@
                             <s:textfield
                                 label="Productor:"
                                 name="name_producer"
-                                class="input-xlarge uneditable-input"                        
+                                class="input-xlarge uneditable-input"          
+                                requiredLabel="true"
                                 tooltip="Seleccione un productor en la lupa a la derecha"                        
                                 />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/searchProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
+                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/listProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
 
                             <%-- <s:textfield
                                 name="id_producer"
@@ -34,7 +35,8 @@
                         <div>
                             <s:textfield
                                 label="Nombre de Finca:"
-                                name="name_property"                    
+                                name="name_property"        
+                                requiredLabel="true"
                                 tooltip="Ingrese el nombre de la finca asociada al productor seleccionado"                        
                                 />
                             <%--<img src="../img/search_icon.gif" onclick="setPropertyVal('/aeps-plataforma-mvn/buscarFinca.action&selected=property', 'idProductor', 'formFarm_idProductor', 'formFarm_name_property', 'formFarm_idFinca', 'Listado de Fincas', 1050, 550)" />--%>
@@ -69,14 +71,16 @@
                             <div>
                                 <s:textfield
                                     label="Latitud de la Finca:"
-                                    name="latitude_property"                    
+                                    name="latitude_property"       
+                                    requiredLabel="true"
                                     tooltip="Ingrese la latitud de la finca"                        
                                     />
                             </div>
                             <div>
                                 <s:textfield
                                     label="Longitud de la Finca:"
-                                    name="length_property"                    
+                                    name="length_property"           
+                                    requiredLabel="true"
                                     tooltip="Ingrese la longitud de la finca"                        
                                     />
                             </div>                
@@ -120,7 +124,8 @@
                         <div>
                             <s:textfield
                                 label="Altitud de la Finca (metros):"
-                                name="altitude_property"                    
+                                name="altitude_property"                 
+                                requiredLabel="true"
                                 tooltip="Ingrese la altitud de la finca en metros"                        
                                 />
                         </div>
@@ -135,64 +140,71 @@
                             <s:select
                                 tooltip="Seleccione un departamento"
                                 label="Departamento"
-                                name="depFin" 
+                                name="depFar" 
                                 list="department_property" 
                                 listKey="idDep" 
-                                listValue="nameDep"              
+                                listValue="nameDep"          
+                                requiredLabel="true"
                                 headerKey=" " 
                                 headerValue="---"
-                                onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFin', 'divMessage')"
+                                onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'formFarm')"
                                 />
                         </div>
                         <div>
                             <s:select
-                                tooltip="Seleccione un municipio"
-                                label="Municipio:"
-                                name="cityFin"
+                                tooltip="Seleccione un municipio:"
+                                label="Municipio"
                                 list="city_property" 
                                 listKey="idMun" 
                                 listValue="nameMun" 
+                                requiredLabel="true"
                                 headerKey=" " 
-                                headerValue="---"                        
-                                />
+                                headerValue="---"
+                                name="cityFar" />
                         </div>
                         <div>
                             <s:textfield
                                 label="Vereda:"
-                                name="lane_property"                    
+                                name="lane_property"                
+                                requiredLabel="true"
                                 tooltip="Ingrese la vereda"                        
                                 />
                         </div>          
                     </fieldset>
                     <div> 
+                        <s:hidden name="page"/>
                         <s:hidden name="actExe"/>
-                        <sj:submit cssClass="btn btn-inverse" value="Guardar" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm" onclick="$(\"#formFarm_actExe\").val(\"save\")"/>                   
+                        <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" value="Guardar Finca" validate="true" validateFunction="validationForm"/>
                         <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')">Guardar informaci&oacute;n</button>-->
-                        <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formFarm');
-                                    closeWindow();">Cancelar</button>
+                        <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formFarm'); closeWindow();">Cancelar</button>
                     </div>    
                 </s:form>        
                 <script>
-                                //For property
-                                // $.mask.definitions['i'] = "[-0-9]";
-                                $.mask.definitions['f'] = "[-.0-9]";
-                                $("#formFarm_latitude_property").numeric();
-                                $("#formFarm_length_property").numeric();
-                                $("#formFarm_altitude_property").numeric({decimal: false, negative: false});
-                                $("#formFarm_length_degrees_property").numeric({decimal: false});
-                                $("#formFarm_length_minutes_property").numeric({decimal: false});
-                                $("#formFarm_length_seconds_property").numeric();
-                                $("#formFarm_latitude_degrees_property").numeric({decimal: false});
-                                $("#formFarm_latitude_minutes_property").numeric({decimal: false});
-                                $("#formFarm_latitude_seconds_property").numeric();
-                                $.subscribe('completeFarm', function(event, data) {
-                                    //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
-                                    //     '\n\nThe output div should have already been updated with the responseText.');
-                                    //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);
-                                    //        alert('responseText: \n' + json.info);
-                                    completeForm('dialog-form', 'formFarm', event.originalEvent.request.responseText);
-                                });
-                                //chargeValues('../actions/Actions.php?action=ListarDeps', 'depId', '', 'params_department_property', 'divMessage');
+                    var page   = $("#formFarm_page").val();
+                    //For property
+                    // $.mask.definitions['i'] = "[-0-9]";
+                    $.mask.definitions['f'] = "[-.0-9]";
+                    $("#formFarm_latitude_property").numeric();
+                    $("#formFarm_length_property").numeric();
+                    $("#formFarm_altitude_property").numeric({decimal: false, negative: false});
+                    $("#formFarm_length_degrees_property").numeric({decimal: false});
+                    $("#formFarm_length_minutes_property").numeric({decimal: false});
+                    $("#formFarm_length_seconds_property").numeric();
+                    $("#formFarm_latitude_degrees_property").numeric({decimal: false});
+                    $("#formFarm_latitude_minutes_property").numeric({decimal: false});
+                    $("#formFarm_latitude_seconds_property").numeric();
+                    $.subscribe('completeFarm', function(event, data) {
+                        //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
+                        //     '\n\nThe output div should have already been updated with the responseText.');
+                        //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);
+                        //        alert('responseText: \n' + json.info);
+//                        completeForm('dialog-form', 'formFarm', event.originalEvent.request.responseText);
+                        completeFormGetting('dialog-form', 'formFarm', 'divFarms', event.originalEvent.request.responseText);
+                        setTimeout( function() {
+                            showInfo("searchFarm.action?page="+page, "divConListFarms");
+                        }, 2000);
+                    });
+                    //chargeValues('../actions/Actions.php?action=ListarDeps', 'depId', '', 'params_department_property', 'divMessage');
                 </script>
             </div>
             <div class="span6">

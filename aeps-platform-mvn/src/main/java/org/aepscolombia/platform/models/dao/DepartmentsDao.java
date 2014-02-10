@@ -75,7 +75,8 @@ public class DepartmentsDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from Departments");
+            String hql  = "from Departments order by nameDep ASC";
+            Query query = session.createQuery(hql);
             eventos = query.list();
             tx.commit();
         } catch (HibernateException e) {

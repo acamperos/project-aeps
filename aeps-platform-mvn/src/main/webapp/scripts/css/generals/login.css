@@ -36,6 +36,7 @@
     .main-col label.error + label.checkbox {margin-top:4px}
     /* .login_links {position:absolute;bottom:-30px;left:0;text-align:center;font-size:12px;width:100%} */
     .login_links {/* left:0;text-align:center; */font-size:12px;/* width:100% */padding-bottom:10px;}
+    .view-process h3 {font-size:100%;font:inherit;background: url(../../../img/ajax.gif) no-repeat !important;cursor: pointer;}
     .alert-error {
         background-color: #F2DEDE;
         border-color: #EED3D7;

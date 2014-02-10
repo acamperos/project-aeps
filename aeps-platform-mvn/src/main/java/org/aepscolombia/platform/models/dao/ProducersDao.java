@@ -18,7 +18,7 @@ import org.hibernate.Criteria;
 /**
  * Clase ProducersDao
  *
- * Contiene los metodos para interactuar con la tabla Producers de la base de datos (BD)
+ * Contiene los metodos para interactuar con la tabla Producers de la base de data (BD)
  *
  * @author Juan Felipe Rodriguez
  * @version 1.0
@@ -37,8 +37,8 @@ public class ProducersDao
         String sql = "";
         
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
-        sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.nombre_mun, e.email_ent,";
-        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent, e.validation_number_ent, m.id_departamento_mun,";
+        sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
+        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent, e.validation_number_ent, m.id_departament_mun,";
         sql += " m.id_mun, e.first_name_1_ent, e.first_name_2_ent, e.last_name_1_ent, e.last_name_2_ent";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";	
@@ -63,38 +63,38 @@ public class ProducersDao
             
             events = query.list();         
             
-            for (Object[] datos : events) {
-//                System.out.println(datos);
+            for (Object[] data : events) {
+//                System.out.println(data);
                 HashMap temp = new HashMap();
-                temp.put("id_producer", datos[0]);
-                temp.put("id_entity", datos[1]);
-                temp.put("document", datos[2]);
-                temp.put("type_document", datos[3]);
-                temp.put("name", datos[4]);
-                temp.put("site_document", datos[5]);
-                temp.put("cellphone", datos[6]);
-                temp.put("cellphone_2", datos[7]);
-                temp.put("phone", datos[8]);
-                temp.put("direction", datos[9]);
-                temp.put("city", datos[10]);
-                temp.put("e_mail_1", datos[11]);
-                temp.put("e_mail_2", datos[12]);
-                temp.put("associate", datos[13]);
-//                temp.put("fecha_in", datos[14]);
-                temp.put("id_project", datos[14]);
-                temp.put("status", datos[15]);
-                temp.put("digit", datos[16]);
-                temp.put("id_dep", datos[17]);                
-                temp.put("id_mun", datos[18]);                
-                temp.put("name_1", datos[19]);
-                temp.put("name_2", datos[20]);
-                temp.put("last_name_1", datos[21]);
-                temp.put("last_name_2", datos[22]);                
+                temp.put("id_producer", data[0]);
+                temp.put("id_entity", data[1]);
+                temp.put("document", data[2]);
+                temp.put("type_document", data[3]);
+                temp.put("name", data[4]);
+                temp.put("site_document", data[5]);
+                temp.put("cellphone", data[6]);
+                temp.put("cellphone_2", data[7]);
+                temp.put("phone", data[8]);
+                temp.put("direction", data[9]);
+                temp.put("city", data[10]);
+                temp.put("e_mail_1", data[11]);
+                temp.put("e_mail_2", data[12]);
+                temp.put("associate", data[13]);
+//                temp.put("fecha_in", data[14]);
+                temp.put("id_project", data[14]);
+                temp.put("status", data[15]);
+                temp.put("digit", data[16]);
+                temp.put("id_dep", data[17]);                
+                temp.put("id_mun", data[18]);                
+                temp.put("name_1", data[19]);
+                temp.put("name_2", data[20]);
+                temp.put("last_name_1", data[21]);
+                temp.put("last_name_2", data[22]);                
                 result = (temp);
             }
 //            System.out.println(result);
-//            for (HashMap datos : result) {
-//                System.out.println(datos.get("id_productor")+" "+datos.get("id_entidad")+" "+datos.get("cedula"));
+//            for (HashMap data : result) {
+//                System.out.println(data.get("id_productor")+" "+data.get("id_entidad")+" "+data.get("cedula"));
 //            }
             tx.commit();
         } catch (HibernateException e) {
@@ -162,8 +162,8 @@ public class ProducersDao
         sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";		
-        sql += " inner join municipios m on (m.id_mun=e.id_municipality_ent)";		
-        sql += " inner join log_entidades le on (le.id_object_log_ent=e.id_ent and le.table_log_ent='entities')";		
+        sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";		
+        sql += " inner join log_entities le on (le.id_object_log_ent=e.id_ent and le.table_log_ent='entities' and le.action_type_log_ent='C')";		
         sql += " where e.status_ent=1 and e.entity_type_ent=2";        
         if (args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
@@ -176,9 +176,30 @@ public class ProducersDao
         if(valIni!=1){
             valIni = (valIni-1)*maxResults+1;
         }    
+        if (args.containsKey("typeIdent")) {
+            String valType = String.valueOf(args.get("typeIdent"));
+            if(!valType.equals(" ") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent='"+args.get("typeIdent")+"'";
+        }
         if (args.containsKey("identProducer")) {
             String valIdent = String.valueOf(args.get("identProducer"));
-            if(!valIdent.equals("null")) sql += " and (e.document_number_ent!='"+args.get("identProductor")+"' OR e.name_ent not like '%"+args.get("identProducer")+"%')";
+//            if(!valIdent.equals("null")) sql += " and (e.document_number_ent!='"+args.get("identProductor")+"' OR e.name_ent not like '%"+args.get("identProducer")+"%')";
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.document_number_ent='"+args.get("identProducer")+"'";
+        }
+        if (args.containsKey("names_producer_1")) {
+            String valIdent = String.valueOf(args.get("names_producer_1"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.first_name_1_ent='"+args.get("names_producer_1")+"'";
+        }
+        if (args.containsKey("last_names_producer_1")) {
+            String valIdent = String.valueOf(args.get("last_names_producer_1"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.last_name_1_ent='"+args.get("last_names_producer_1")+"'";
+        }
+        if (args.containsKey("depPro")) {
+            String valIdent = String.valueOf(args.get("depPro"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_departament_mun="+args.get("depPro");
+        }
+        if (args.containsKey("cityPro")) {
+            String valIdent = String.valueOf(args.get("cityPro"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_mun="+args.get("cityPro");
         }
         sql += " order by e.name_ent ASC";
 //        events.toArray();
@@ -191,8 +212,10 @@ public class ProducersDao
             HashMap tempTotal = new HashMap();
             tempTotal.put("countTotal", query.list().size());
             result.add(tempTotal);
-            query.setFirstResult(valIni);
-            query.setMaxResults(maxResults);
+            if(query.list().size()>maxResults) {
+                query.setFirstResult(valIni);
+                query.setMaxResults(maxResults);
+            }
 //                         .addEntity("p", Productores.class)
 //                         .addEntity("e", Entidades.class);
 //                         .addJoin("e", "inner join entidades e on p.id_entidad_pro=e.id_ent")
@@ -202,32 +225,30 @@ public class ProducersDao
 
             
             events = query.list();         
-            
-            for (Object[] datos : events) {
-//                System.out.println(datos);
+            for (Object[] data : events) {
                 HashMap temp = new HashMap();
-                temp.put("id_producer", datos[0]);
-                temp.put("id_entity", datos[1]);
-                temp.put("document", datos[2]);
-                temp.put("type_document", datos[3]);
-                temp.put("name", datos[4]);
-                temp.put("site_document", datos[5]);
-                temp.put("cellphone", datos[6]);
-                temp.put("cellphone_2", datos[7]);
-                temp.put("phone", datos[8]);
-                temp.put("direction", datos[9]);
-                temp.put("city", datos[10]);
-                temp.put("e_mail_1", datos[11]);
-                temp.put("e_mail_2", datos[12]);
-                temp.put("associate", datos[13]);
-//                temp.put("fecha_in", datos[14]);
-                temp.put("id_project", datos[14]);
-                temp.put("status", datos[15]);
+                temp.put("id_producer", data[0]);
+                temp.put("id_entity", data[1]);
+                temp.put("document", data[2]);
+                temp.put("type_document", data[3]);
+                temp.put("name", data[4]);
+                temp.put("site_document", data[5]);
+                temp.put("cellphone", data[6]);
+                temp.put("cellphone_2", data[7]);
+                temp.put("phone", data[8]);
+                temp.put("direction", data[9]);
+                temp.put("city", data[10]);
+                temp.put("e_mail_1", data[11]);
+                temp.put("e_mail_2", data[12]);
+                temp.put("associate", data[13]);
+//                temp.put("fecha_in", data[14]);
+                temp.put("id_project", data[14]);
+                temp.put("status", data[15]);
                 result.add(temp);
             }
 //            System.out.println(result);
-//            for (HashMap datos : result) {
-//                System.out.println(datos.get("id_productor")+" "+datos.get("id_entidad")+" "+datos.get("cedula"));
+//            for (HashMap data : result) {
+//                System.out.println(data.get("id_producer")+" "+data.get("id_entity")+" "+data.get("document"));
 //            }
             tx.commit();
         } catch (HibernateException e) {
@@ -250,7 +271,11 @@ public class ProducersDao
 
         try {
             tx = session.beginTransaction();
-            event = (Producers) session.load(Producers.class, id);
+            String hql  = "FROM Producers E WHERE E.idPro = :id_pro";
+            Query query = session.createQuery(hql);
+            query.setParameter("id_pro", id);
+            event = (Producers)query.uniqueResult();
+//            event = (Producers) session.load(Producers.class, id);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

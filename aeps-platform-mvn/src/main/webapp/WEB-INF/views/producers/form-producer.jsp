@@ -22,8 +22,8 @@
                     label="Tipo de documento:"
                     name="typeIdent" 
                     list="type_ident_producer" 
-                    listKey="acronimoTipDoc" 
-                    listValue="nombreTipDoc"             
+                    listKey="acronymDocTyp" 
+                    listValue="nameDocTyp" 
                     headerKey=" " 
                     headerValue="---"
                     requiredLabel="true"
@@ -89,16 +89,17 @@
                     />
             </div>
             <div>
+                <%--<s:url id="remoteurl" action="comboProducer.action"/>--%> 
                 <s:select
                     tooltip="Seleccione un departamento:"
                     requiredLabel="true"
                     label="Departamento"
                     list="department_producer" 
                     listKey="idDep" 
-                    listValue="nombreDep" 
+                    listValue="nameDep" 
                     headerKey=" " 
                     headerValue="---"
-                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipios.action', 'depId', this.value, 'formProducer_cityPro', 'divMessage')"
+                    onchange="chargeValues('/aeps-plataforma-mvn/comboProducer.action', 'depId', this.value, 'formProducer_cityPro', 'divMessage')"
                     name="depPro"/>
                 <!--            <select onchange="chargeValues('../actions/Actions.php?action=ListarMunXDep', 'depId', this.value, 'params_city_producer', 'divMessage')" name="params[department_producer]" id="params_department_producer">
                             </select>-->
@@ -111,7 +112,7 @@
                     label="Municipio"
                     list="city_producer" 
                     listKey="idMun" 
-                    listValue="nombreMun" 
+                    listValue="nameMun" 
                     headerKey=" " 
                     headerValue="---"
                     name="cityPro" />
@@ -142,15 +143,47 @@
                     />
             </div>  
             <div>   
+                <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
+                <script>
+//                    var idPro  = $("#formProducer_idProducer").val();
+//                    var action = $("#formProducer_actExe").val();
+//                    var target = "divBodyLayout";
+//                    if (action=="modify") {
+//                        target = "trProducer"+idPro;
+//                    }
+                </script>
                 <%--<s:hidden name="actExe" value=""/>--%>
                 <s:hidden name="actExe"/>
-                <sj:submit cssClass="btn btn-inverse" value="Guardar" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"/>
-                <!--<button class="btn btn_per bt_send_producer" onclick="sendForm('/aeps-plataforma-mvn/crearProducer.action', 'formProducer', 'divMessage')">Guardar informaci&oacute;n</button>-->
-                <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formProducer');
-                            closeWindow();">Cancelar</button>
+                <s:hidden name="page"/>
+                <!--<input type="submit" class="btn btn-primary" value="Guardar productor" id="submit_492662557">-->
+                <%--<sj:submit cssClass="btn btn-inverse" targets="divBodyLayout" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>--%>
+                <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>
+                <!--<button class="btn btn-inverse" onclick="saveData('saveProducer.action','searchProducer.action?page=<%=pageNow%>','formProducer');">Guardar productor</button>-->
+                <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();">Cancelar</button>
             </div>
         </s:form>
         <script>
+            var idPro  = $("#formProducer_idProducer").val();
+            var action = $("#formProducer_actExe").val();
+            var page   = $("#formProducer_page").val();
+            var target = "divBodyLayout";
+            if (action=="modify") {
+                //target = "trProducer"+idPro;
+            }
+//            alert(target);
+//            jQuery(document).ready(function () {
+//                var options_submit_492662557 = {};
+//                options_submit_492662557.jqueryaction = "button";
+//                options_submit_492662557.id    = "submit_492662557";
+//                options_submit_492662557.oncom = "completeProducer";
+////                options_submit_492662557.targets = ""+target;
+//                options_submit_492662557.href  = "#";
+//                options_submit_492662557.formids = "formProducer";
+//                options_submit_492662557.validateFunction = validationForm;
+//                options_submit_492662557.validate = true;
+//                jQuery.struts2_jquery.bind(jQuery('#submit_492662557'),options_submit_492662557);
+//            }); 
+//            var requestSent = false;
             $.mask.definitions['h'] = "[3]";
             $("#formProducer_dig_ver_producer").mask("9",{placeholder:""});
             $("#formProducer_telephone_producer").mask("9999999",{placeholder:""});
@@ -160,7 +193,14 @@
                 //     '\n\nThe output div should have already been updated with the responseText.');
                 //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);
                 //        alert('responseText: \n' + json.info);
-                completeForm('dialog-form', 'formProducer', event.originalEvent.request.responseText);
+//                if(!requestSent) {
+//                    requestSent = true;
+                    completeFormGetting('dialog-form', 'formProducer', 'divProducers', event.originalEvent.request.responseText);
+                    setTimeout( function() {
+                        showInfo("searchProducer.action?page="+page, "divConListProducers");
+    //                        if(requestSent) $.ajax().abort();  // abort request
+                    }, 2000);
+//                }
             });
         </script>
     </body>

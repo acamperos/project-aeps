@@ -33,47 +33,68 @@ public class JavascriptHelper {
      * @param  divUpdate  Elemento (DIV) a actualizar cuando se pagine
      * @param  divMessage  Mensaje a ser mostrado en caso de fallar la carga de registros a paginar
      * @param  params  Parametros adicionales a considerar
+     * @param  formId  Identificacion del formulario de busqueda
      * @return representacion en Html de la estructura de paginacion
      */
-    public static String pager_params_ajax(int page, int countTotal, int maxResults, String url, String divUpdate, String divMessage, String params) {
+    public static String pager_params_ajax(int page, int countTotal, int maxResults, String url, String divUpdate, String divMessage, String params, String formId) {
         int linksTotals = (int) Math.ceil((double)countTotal / maxResults);
-
+        
         String script = "changePage('/aeps-plataforma-mvn/buscarPersonas.action', 'page', '', 'divTabPersons', 'divMessage');";
         String navigation = "";
         navigation += "<div class=\"pagination pagination-centered\"><ul>";
-
+        String links = "";
         // Primera y pagina previa
         if (page != 1) {
-            navigation += "<li>" + link_to_remote("&laquo;", "changePage('" + url + "', 'page', '" + (page - 1) + "', '" + divUpdate + "', '" + divMessage + "');", "") + "</li>";
+            navigation += "<li>" + link_to_remote("&laquo;", "changePage('" + url + "', 'page', '" + (page - 1) + "', '" + divUpdate + "', '" + formId + "', '" + divMessage + "');", "") + "</li>";
         } else {
             navigation += "<li class=\"disabled\"><span>&laquo;</span></li>";
         }
-        // Paginas una por una
-        String links = "";
-        for (int i = 1; i <= linksTotals; i++) {
-            if (page == i) {
-                links += "<li class=\"active\"><a href=\"#\">" + page + "</a></li>";
-            } else {
-                links += "<li>" + link_to_remote(String.valueOf(i), "changePage('" + url + "', 'page', '" + i + "', '" + divUpdate + "', '" + divMessage + "');", "") + "</li>";
+        
+        if (linksTotals<7) {            
+            // Paginas una por una
+            for (int i = 1; i <= linksTotals; i++) {
+                if (page == i) {
+                    links += "<li class=\"active\"><a href=\"#\">" + page + "</a></li>";
+                } else {
+                    links += "<li>" + link_to_remote(String.valueOf(i), "changePage('" + url + "', 'page', '" + i + "', '" + divUpdate + "', '" + formId + "', '" + divMessage + "');", "") + "</li>";
+                }
+            }       
+        } else {                
+            int max = 7;
+            int sp  = 0;
+            if(page < max) {
+                sp = 1;
+            } else if(page >= (linksTotals - Math.floor(max / 2))) {
+                sp = linksTotals - max + 1;
+            } else if(page >= max) {
+                sp =  page - ((int)Math.floor(max/2));
             }
+            
+            // Paginas una por una            
+            for(int i = sp; i <= (sp + max -1); i++) {
+                if (page == i) {
+                    links += "<li class=\"active\"><a href=\"#\">" + page + "</a></li>";
+                } else {
+                    links += "<li>" + link_to_remote(String.valueOf(i), "changePage('" + url + "', 'page', '" + i + "', '" + divUpdate + "', '" + formId + "', '" + divMessage + "');", "") + "</li>";
+                }
+            }           
         }
         navigation += links;
+        // Ultima y pagina siguiente
         if (page != linksTotals) {
-            navigation += "<li>" + link_to_remote("&raquo;", "changePage('" + url + "', 'page', '" + (page + 1) + "', '" + divUpdate + "', '" + divMessage + "');", "") + "</li>";
+            navigation += "<li>" + link_to_remote("&raquo;", "changePage('" + url + "', 'page', '" + (page + 1) + "', '" + divUpdate + "', '" + formId + "', '" + divMessage + "');", "") + "</li>";
         } else {
             navigation += "<li class=\"disabled\"><span>&raquo;</span></li>";
         }
         navigation += "</ul></div>";
-//      }
-
         int numPage = page;
         int init = maxResults * (numPage - 1) + 1;
         int end  = maxResults * numPage;
         if (end > countTotal) {
             end  = countTotal;
         }
-         String header  = "Resultados:"+" "+init+" a ";
-         header += end+" de "+countTotal;
+        String header  = "Resultados:"+" "+init+" a ";
+        header += end+" de "+countTotal;
         return "<div style=\"font-weight: bold\">"+header+"</div>"+navigation;
 //        return navigation;
     }

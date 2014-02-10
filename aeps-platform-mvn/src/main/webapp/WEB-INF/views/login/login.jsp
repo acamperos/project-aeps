@@ -15,8 +15,12 @@
         <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet'> -->        
         <sj:head jqueryui="true"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
+        <link rel="stylesheet" href="scripts/css/jquery/jquery.validate.password.css"/>
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>
         <!--<link rel="stylesheet" href="scripts/css/generals/beoro.css">-->
         <link rel="stylesheet" href="scripts/css/generals/login.css">
         <style>
@@ -118,7 +122,7 @@
                 <h3 class="logo_img"><a href="initial.action">AEPS</a></h3>
                 <s:actionerror theme="bootstrap"/>
                 <s:actionmessage theme="bootstrap"/>
-                <s:fielderror theme="bootstrap"/>        
+                <s:fielderror theme="bootstrap"/>      
                 <div class="panel" id="divRegisterUser">
                     <p class="heading_main">Ingreso al Sistema</p>
                     <s:form id="formLogin" action="login.action" method="post" theme="simple">
@@ -157,11 +161,15 @@
                             <!-- </div> -->
                             <div class="submit_sect">
                                 <%--<sj:submit cssClass="btn btn-beoro-3" targets="result" value="Iniciar sesión" validate="true" validateFunction="bootstrapValidation"/>--%>
-                                <sj:submit cssClass="btn btn-primary" replaceTarget="true" value="Iniciar sesión" validate="true" validateFunction="validationForm"/>
+                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" onCompleteTopics="completeLogin" value="Iniciar sesión" validate="true" validateFunction="validationForm" />
                                 <%--<sj:submit cssClass="btn btn-primary" validate="true" value="Iniciar sesion"/>--%>
-                                <!--<button type="submit" class="btn btn-primary">Iniciar sesi&oacute;n</button>-->
                             </div>
-                        </div>									
+                        </div>				
+                        <script>
+                            $.subscribe('completeLogin', function(event,data) {
+                                $.unblockUI();
+                            });
+                        </script>
                     </s:form>
                 </div>
                 <!--<div id="result"></div>-->
@@ -191,7 +199,7 @@
                             </div>
                             <div class="submit_sect">
                                 <!--<button type="submit" class="btn btn-primary">Recordar</button>-->
-                                <sj:submit cssClass="btn btn-primary" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
+                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>
                     </s:form>
@@ -222,7 +230,7 @@
                             </div>
                         </div>
                         <div class="form-group control-group">
-                            <label class="control-label" for="formNewUser_passwordUser">Contrasena *:</label>
+                            <label class="control-label password required" for="formNewUser_passwordUser">Contrasena *:</label>
                             <div class="controls">
                                 <s:password class="form-control" id="formNewUser_passwordUser" name="passwordUser"/>
                             </div>
@@ -235,9 +243,8 @@
                         </div>
                         <div class="row">
                             <div class="span4 control-group">
-                                <label class="control-label" for="formNewUser_celphoneUser">Celular *:</label>
+                                <label class="control-label" for="formNewUser_celphoneUser">Celular:</label>
                                 <div class="controls">
-                                    <!--<input id="formNewUser_celphone" type="text" class="numeric" name="celphoneUser" />-->
                                     <s:textfield class="form-control" id="formNewUser_celphoneUser" name="celphoneUser"/>                                   
                                 </div>
                             </div>
@@ -250,15 +257,15 @@
                                 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
                                 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
                                 <%
-                                    ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6LexyO0SAAAAAK3fHMGdzVHpGSRR2-w7M2KnRK-E", "6LexyO0SAAAAAHVvbzskaZSXHNcBvMHLWyIUdPEi", false);
-                                    String captchaScript = captcha.createRecaptchaHtml(null, null);
+                                    //ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6Lfh2O0SAAAAANN4PftAGB-KQF26H4qUoyUMH69F", "6Lfh2O0SAAAAANtqQ1zF9uKjryu-9EZZnlCU_d76", false);
+                                    //String captchaScript = captcha.createRecaptchaHtml(null, null);
 
-                                    out.print(captchaScript);
+                                    //out.print(captchaScript);
                                 %>
                             </div>
                             <div class="span4">
                                 <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
-                                <sj:submit cssClass="btn btn-primary" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
+                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>                            
                     </s:form>
@@ -274,6 +281,9 @@
         <script>            
             $.mask.definitions['h'] = "[3]";
             $('#formNewUser_celphoneUser').mask("h999999999",{placeholder:""});
+            $('#formNewUser_passwordRepUser').bind("cut copy paste",function(e) {
+                e.preventDefault();
+            });
             var val = "<%=logSel%>";
             if (val == 'new') {
                 $('#divRegisterUser').slideUp();

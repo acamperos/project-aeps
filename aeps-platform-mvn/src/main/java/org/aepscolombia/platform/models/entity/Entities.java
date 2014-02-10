@@ -39,7 +39,7 @@ public class Entities  implements java.io.Serializable {
      private String emailEnt;
      private String email2Ent;
      private String addressEnt;
-     private Integer cellphone2Ent;
+     private Long cellphone2Ent;
      private Integer phoneEnt;
      private Long cellphoneEnt;
      private boolean statusEnt;
@@ -67,7 +67,7 @@ public class Entities  implements java.io.Serializable {
         this.addressEnt = addressEnt;
         this.statusEnt = statusEnt;
     }
-    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, EntitiesTypes entitiesTypes, Integer idProjectEnt, String documentNumberEnt, String documentIssuePlaceEnt, String nameEnt, Boolean inAssociationEnt, String emailEnt, String email2Ent, String addressEnt, Integer cellphone2Ent, Integer phoneEnt, Long cellphoneEnt, boolean statusEnt, String genderEnt, String civilStatusEnt, Integer validationNumberEnt, String educationLevelEnt, Date dateOfBirthEnt, String firstName1Ent, String firstName2Ent, String lastName1Ent, String lastName2Ent) {
+    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, EntitiesTypes entitiesTypes, Integer idProjectEnt, String documentNumberEnt, String documentIssuePlaceEnt, String nameEnt, Boolean inAssociationEnt, String emailEnt, String email2Ent, String addressEnt, Long cellphone2Ent, Integer phoneEnt, Long cellphoneEnt, boolean statusEnt, String genderEnt, String civilStatusEnt, Integer validationNumberEnt, String educationLevelEnt, Date dateOfBirthEnt, String firstName1Ent, String firstName2Ent, String lastName1Ent, String lastName2Ent) {
        this.municipalities = municipalities;
        this.documentsTypes = documentsTypes;
        this.entitiesTypes = entitiesTypes;
@@ -205,11 +205,11 @@ public class Entities  implements java.io.Serializable {
     }
     
     @Column(name="cellphone2_ent")
-    public Integer getCellphone2Ent() {
+    public Long getCellphone2Ent() {
         return this.cellphone2Ent;
     }
     
-    public void setCellphone2Ent(Integer cellphone2Ent) {
+    public void setCellphone2Ent(Long cellphone2Ent) {
         this.cellphone2Ent = cellphone2Ent;
     }
     

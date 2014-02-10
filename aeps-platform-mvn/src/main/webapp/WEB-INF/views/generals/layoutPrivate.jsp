@@ -20,11 +20,13 @@
         <link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery.ui.all.css" />
         <link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery-ui.css" />
         <link rel="stylesheet" href="scripts/css/generals/beoro.css">
+        <link rel="stylesheet" href="scripts/css/generals/main.css">
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>		
         <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery-ui/ui/jquery-ui.js"></script>	
         <script type="text/javascript" src="scripts/js/jquery/jquery-ui/ui/jquery.ui.dialog.js"></script>
         <script type="text/javascript" src="scripts/js/colorbox/jquery.colorbox.min.js"></script>
@@ -38,6 +40,7 @@
         <script src="scripts/js/generals/responsiveslides.js"></script>
     </head>
     <body>
+        <div id="dialog-form"></div>
         <div class="header">
             <%@ include file="header-private.jsp" %>
         </div>

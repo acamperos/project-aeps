@@ -6,46 +6,37 @@
 <html>
     <head></head>
     <body>
-        <%--<sj:head jqueryui="false"/>
-        <sb:head includeScripts="true" includeScriptsValidation="true"/>--%>
-
-        <!--    <style type="text/css">
-                body {
-                    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-                }
-            </style>-->
-
-        <%--<s:form id="formProductor" action="crearProductor" theme="bootstrap" onsubmit="return false;" cssClass="form-horizontal formClassProductor" label="Formulario de un productor">--%>
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
         <div class="row-fluid" id="divFieldsForm">
             <div class="span6">	
-                <%--<form method="post" class="formClassProperty" id="formProperty" submit="return false;">--%>	
                 <s:form id="formField" theme="bootstrap" action="saveField.action" cssClass="form-horizontal formClassLot" label="Formulario de un lote">
                     <fieldset>
                         <div>
-                            <s:hidden name="idProducer"/>
-                            <s:hidden name="idFarm"/>
+                            <s:hidden name="idProducer"/>                            
                             <s:hidden name="idField"/>
                             <s:textfield
                                 label="Productor:"
                                 name="name_producer_lot"
-                                class="input-xlarge uneditable-input"                        
+                                requiredLabel="true"              
                                 tooltip="Seleccione un productor con la lupa a la derecha"                        
                                 />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/searchProducer.action?selected=property', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />
+                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/searchProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />
                             <%-- <a href="#" data-toggle="tooltip" data-placement="right" title="Seleccione el productor">
                                                         
                                                 </a>--%>
                         </div>                          
                         <div id="divPropertyLot">
+                            <s:hidden name="idFarm"/>
                             <s:textfield
                                 label="Seleccione la Finca:"
-                                name="name_property_lot"                    
+                                name="name_property_lot"   
+                                requiredLabel="true"
                                 tooltip="Seleccione la finca en la lupa a la derecha"                        
                                 />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" onclick="setPropertyGeneral('/aeps-plataforma-mvn/searchFarm.action&selected=property', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
+                            <!--<img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione la finca" onclick="listInfo('/aeps-plataforma-mvn/searchFarm.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />-->
+                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" onclick="setPropertyGeneral('/aeps-plataforma-mvn/searchFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
                             <%--<img src="../img/search_icon.gif" onclick="setPropertyVal('../actions/Actions.php?action=BuscarFincasXPro&selected=property', 'producer', 'params_id_producer', 'params_name_property', 'params_name_property', 'Listado de Fincas', 1050, 550)" />--%>
                         </div>
                         <div>
@@ -53,10 +44,11 @@
                                 tooltip="Seleccione que tipo de lote es"
                                 label="El lote es:"
                                 name="typeLot"
+                                requiredLabel="true"
                                 list="type_property_lot" 
                                 listKey="idFieTyp" 
                                 listValue="nameFieTyp"              
-                                headerKey=" " 
+                                headerKey="-1" 
                                 headerValue="---" />
                         </div>
                         <div>
@@ -78,14 +70,16 @@
                             <div>
                                 <s:textfield
                                     label="Latitud del Lote:"
-                                    name="latitude_lot"                    
+                                    name="latitude_lot"           
+                                    requiredLabel="true"
                                     tooltip="Ingrese la latitud del lote"                        
                                     />
                             </div>
                             <div>
                                 <s:textfield
                                     label="Longitud del Lote:"
-                                    name="length_lot"                    
+                                    name="length_lot"      
+                                    requiredLabel="true"
                                     tooltip="Ingrese la longitud del lote"                        
                                     />
                             </div>                
@@ -129,7 +123,8 @@
                         <div>
                             <s:textfield
                                 label="Altitud del Lote (metros):"
-                                name="altitude_lot"                    
+                                name="altitude_lot"              
+                                requiredLabel="true"
                                 tooltip="Ingrese la altitud del lote en metros"                        
                                 />
                         </div>
@@ -137,44 +132,49 @@
                             <s:textfield
                                 label="Area del Lote (hectarea):"
                                 name="area_lot"                    
+                                requiredLabel="true"
                                 tooltip="Ingrese el area del lote"                        
                                 />
                         </div>         
                     </fieldset>				
                     <div> 
-                        <s:hidden name="actExe"/>
-                        <sj:submit cssClass="btn btn-inverse" value="Guardar" onCompleteTopics="completeField" validate="true" validateFunction="validationForm" />
+                        <s:hidden name="page"/>
+                        <s:hidden name="actExe"/>    
+                        <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" value="Guardar Lote" validate="true" validateFunction="validationForm"/>
                         <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')">Guardar informaci&oacute;n</button>-->
-                        <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formField');
-                                    closeWindow();">Cancelar</button>
+                        <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formField'); closeWindow();">Cancelar</button>
                     </div>    
                 </s:form>        
                 <script>
-                                //For Lot
-                                $.mask.definitions['i'] = "[-0-9]";
-                                $.mask.definitions['f'] = "[-.0-9]";
-                                /*$("#params_latitude_lot").mask("f?9fffffff",{placeholder:" "});
-                                 $("#params_length_lot").mask("f9?fffffff",{placeholder:" "});
-                                 $("#params_altitude_lot").mask("9?999",{placeholder:" "});
-                                 $("#params_area_lot").mask("9?999",{placeholder:" "});*/
+                        var page = $("#formField_page").val();
+                        //For Lot
+                        $.mask.definitions['i'] = "[-0-9]";
+                        $.mask.definitions['f'] = "[-.0-9]";
+                        /*$("#params_latitude_lot").mask("f?9fffffff",{placeholder:" "});
+                         $("#params_length_lot").mask("f9?fffffff",{placeholder:" "});
+                         $("#params_altitude_lot").mask("9?999",{placeholder:" "});
+                         $("#params_area_lot").mask("9?999",{placeholder:" "});*/
 
-                                $("#formField_latitude_lot").numeric();
-                                $("#formField_length_lot").numeric();
-                                $("#formField_altitude_lot").numeric({decimal: false, negative: false});
-                                $("#formField_area_lot").numeric();
+                        $("#formField_latitude_lot").numeric();
+                        $("#formField_length_lot").numeric();
+                        $("#formField_altitude_lot").numeric({decimal: false, negative: false});
+                        $("#formField_area_lot").numeric();
 
-                                /*$("#params_length_degrees_lot").mask("9?fffffff",{placeholder:" "});
-                                 $("#params_length_minutes_lot").mask("9?fffffff",{placeholder:" "});
-                                 $("#params_length_seconds_lot").mask("9?fffffff",{placeholder:" "});*/
-                                $("#formField_length_degrees_lot").numeric({decimal: false});
-                                $("#formField_length_minutes_lot").numeric({decimal: false});
-                                $("#formField_length_seconds_lot").numeric();
-                                $("#formField_latitude_degrees_lot").numeric({decimal: false});
-                                $("#formField_latitude_minutes_lot").numeric({decimal: false});
-                                $("#formField_latitude_seconds_lot").numeric();
-                                $.subscribe('completeField', function(event, data) {
-                                    completeForm('dialog-form', 'formField', event.originalEvent.request.responseText);
-                                });
+                        /*$("#params_length_degrees_lot").mask("9?fffffff",{placeholder:" "});
+                         $("#params_length_minutes_lot").mask("9?fffffff",{placeholder:" "});
+                         $("#params_length_seconds_lot").mask("9?fffffff",{placeholder:" "});*/
+                        $("#formField_length_degrees_lot").numeric({decimal: false});
+                        $("#formField_length_minutes_lot").numeric({decimal: false});
+                        $("#formField_length_seconds_lot").numeric();
+                        $("#formField_latitude_degrees_lot").numeric({decimal: false});
+                        $("#formField_latitude_minutes_lot").numeric({decimal: false});
+                        $("#formField_latitude_seconds_lot").numeric();
+                        $.subscribe('completeField', function(event, data) {
+                            completeFormGetting('dialog-form', 'formField', 'divFields', event.originalEvent.request.responseText);
+                            setTimeout( function() {
+                                showInfo("searchField.action?page="+page, "divConListFields");
+                            }, 2000);
+                        });
                                 //            chargeValues('/aeps-plataforma-mvn/templates/listarTiposFields.action', 'proId', '', 'formField_type_property_lot', 'divMessage');
                 </script>
             </div>

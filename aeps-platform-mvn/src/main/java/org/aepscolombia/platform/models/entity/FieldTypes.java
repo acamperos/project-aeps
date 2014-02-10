@@ -27,7 +27,10 @@ public class FieldTypes  implements java.io.Serializable {
 
     public FieldTypes() {
     }
-
+    
+    public FieldTypes(Integer idFieTyp) {
+        this.idFieTyp = idFieTyp;
+    }
 	
     public FieldTypes(String nameFieTyp, boolean statusFieTyp) {
         this.nameFieTyp = nameFieTyp;

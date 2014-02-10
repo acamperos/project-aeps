@@ -66,8 +66,8 @@ public class DocumentsTypesDao {
             tx = session.beginTransaction();
             Query query = session.createSQLQuery("select acronym_doc_typ, name_doc_typ from documents_types");
             events = query.list();
-//            for (Object[] datos : events) {
-//                System.out.println(datos[0] + "-" + datos[1]);
+//            for (Object[] data : events) {
+//                System.out.println(data[0] + "-" + data[1]);
 //            }
 //            System.out.println(JSONUtil.serialize(events));
             tx.commit();

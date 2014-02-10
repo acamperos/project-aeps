@@ -52,7 +52,7 @@ public class HibernateUtil {
                 System.out.println(e.getMessage());
             }
         }
-        System.out.println(conn);
+//        System.out.println(conn);
         return conn;
     }
     
@@ -61,7 +61,7 @@ public class HibernateUtil {
             if (conn instanceof Connection) {
                 conn.close();
                 conn = null;
-                System.out.println("Se ha cerrado la conexi�n de BD con exito.");
+                System.out.println("Se ha cerrado la conexion de BD con exito.");
             }
 
         } catch (SQLException se) {

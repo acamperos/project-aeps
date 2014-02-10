@@ -194,7 +194,9 @@ public class ActionLogin extends BaseAction {
 //          LOG.info("User " + user.getEmail() + " tried to logged in but failed.");
                 this.setUsername("");
                 this.setPassword("");
-                addActionError("El usuario ingresado no se encuentra registrado");
+//                addFieldError("username", username);
+//                addFieldError("password", password);
+                addActionError("La informacion ingresada es invalida");
 //                return INPUT;
                 return INPUT;
             }
@@ -414,16 +416,18 @@ public class ActionLogin extends BaseAction {
          * 4) changepass: Al momento de recuperar la contraseña
          */
 //        System.out.println("ingress->"+this.getIngress());
-        if (actExe.equals("login")) {
-            addActionError("Se han ingresado datos invalidos");
+        if (actExe.equals("login")) {            
             if (this.getUsername()==null || this.getUsername().isEmpty()) {
                 addFieldError("username", "Campo obligatorio");
             }
             if (this.getPassword()==null || this.getPassword().isEmpty()) {
                 addFieldError("password", "Campo obligatorio");
             }
+            if (!getFieldErrors().isEmpty()) {
+                addActionError("Se han ingresado datos invalidos");
+            }
         } else if (actExe.equals("newuser")) {           
-            if ((this.getEmailUser()==null || this.getEmailUser().isEmpty()) && (this.getCelphoneUser()==null || this.getCelphoneUser().isEmpty())) {
+            if ((this.getEmailUser()==null || this.getEmailUser().isEmpty()) || (this.getCelphoneUser()==null || this.getCelphoneUser().isEmpty())) {
                 addFieldError("emailUser", "Campo obligatorio");
                 addFieldError("celphoneUser", "Campo obligatorio");
                 addActionError("Se debe ingresar por lo menos correo electronico o celular para el registro");
@@ -448,11 +452,13 @@ public class ActionLogin extends BaseAction {
             
 //            System.out.println("datos->"+this.getRequest().getLocalAddr()+" datos1->"+this.getRequest().getLocalName()+" datos2->"+this.getRequest().getMethod());
 //            this.getRequest().getRemoteAddr()
-            ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6LexyO0SAAAAAK3fHMGdzVHpGSRR2-w7M2KnRK-E", "6LexyO0SAAAAAHVvbzskaZSXHNcBvMHLWyIUdPEi", false);
-            ReCaptchaResponse response = captcha.checkAnswer(this.getRequest().getLocalAddr(), recaptcha_challenge_field, recaptcha_response_field);
-            if (!response.isValid()) {
-                addActionError("El codigo ingresado es incorrecto, intentelo nuevamente y recargue la imagen");
-            }
+//            ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6Lfh2O0SAAAAANN4PftAGB-KQF26H4qUoyUMH69F", "6Lfh2O0SAAAAANtqQ1zF9uKjryu-9EZZnlCU_d76", false);
+//            ReCaptchaResponse response = captcha.checkAnswer(this.getRequest().getRemoteAddr(), recaptcha_challenge_field, recaptcha_response_field);
+//            if (!response.isValid()) {
+//            boolean resVerify = ValidatorUtil.verifyCaptcha(this.getRequest().getRemoteAddr(), recaptcha_challenge_field, recaptcha_response_field);
+//            if (!resVerify) {
+//                addActionError("El codigo ingresado es incorrecto, intentelo nuevamente y recargue la imagen");
+//            } 
             
             if ((this.getPasswordRepUser()==null || this.getPasswordRepUser().isEmpty()) || !this.getPasswordUser().equals(this.getPasswordRepUser())) {
                 addFieldError("passwordUser", "");
@@ -509,7 +515,12 @@ public class ActionLogin extends BaseAction {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx  = session.beginTransaction();
-
+        
+//        state = "success";
+//        info  = "El usuario ha sido agregado con exito, confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
+//        System.out.println("entreeeeeeaaaaa");
+//        return "states";
+        
         try {
             String codValidation = GlobalFunctions.getSalt();
             String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
@@ -518,7 +529,8 @@ public class ActionLogin extends BaseAction {
             ent.setIdEnt(null);
 //            ent.setEntityTypeEnt(1);
             ent.setEntitiesTypes(new EntitiesTypes(1));
-            ent.setCellphoneEnt((long) Integer.parseInt(this.getCelphoneUser()));
+            if(this.getCelphoneUser()!=null) ent.setCellphoneEnt(Long.parseLong(this.getCelphoneUser()));
+//            ent.setCellphoneEnt((long) Integer.parseInt(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long)317524765);
             ent.setEmailEnt(this.getEmailUser());
             ent.setStatusEnt(true);

@@ -15,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Farms;
+import org.aepscolombia.platform.models.entity.FarmsProducers;
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.hibernate.Criteria;
 
@@ -39,10 +40,10 @@ public class FarmsDao
         
         String sql = "";
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
-        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_departament_mun, f.estado_fin";
-        sql += " from fincas f";
+        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_departament_mun, f.status_far";
+        sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
-        sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms'";   
+        sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
@@ -58,20 +59,20 @@ public class FarmsDao
             Query query  = session.createSQLQuery(sql);            
             events = query.list();         
             
-            for (Object[] datos : events) {
-//                System.out.println(datos);
+            for (Object[] data : events) {
+//                System.out.println(data);
                 HashMap temp = new HashMap();
-                temp.put("id_producer", datos[0]);
-                temp.put("id_farm", datos[1]);
-                temp.put("name_producer", datos[2]);
-                temp.put("name_farm", datos[3]);
-                temp.put("dir_farm", datos[4]);                
-                temp.put("latitude_farm", datos[8]);
-                temp.put("length_farm", datos[9]);
-                temp.put("altitude_farm", datos[10]);                
-                temp.put("lane_farm", datos[11]);
-                temp.put("id_mun", datos[13]);
-                temp.put("id_dep", datos[14]);        
+                temp.put("id_producer", data[0]);
+                temp.put("id_farm", data[1]);
+                temp.put("name_producer", data[2]);
+                temp.put("name_farm", data[3]);
+                temp.put("dir_farm", data[4]);                
+                temp.put("latitude_farm", data[8]);
+                temp.put("length_farm", data[9]);
+                temp.put("altitude_farm", data[10]);                
+                temp.put("lane_farm", data[11]);
+                temp.put("id_mun", data[13]);
+                temp.put("id_dep", data[14]);        
                 result = (temp);
             }
             tx.commit();
@@ -84,6 +85,38 @@ public class FarmsDao
             session.close();
         }
         return result;
+    }
+    
+    public FarmsProducers checkFarmProducer(Integer idFarm, Integer idProducer) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        FarmsProducers event = null;
+        Transaction tx = null;
+        String sql = "";
+
+        sql += "select fp.id_farm_far_pro, fp.id_producer_far_pro ";
+        
+//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
+        sql += " from farms_producers fp";
+        sql += " where fp.id_farm_far_pro="+idFarm;
+        sql += " and fp.id_producer_far_pro="+idProducer;
+//        System.out.println("sql->"+sql);
+        
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("usr", FarmsProducers.class);
+            event = (FarmsProducers)query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return event;
     }
     
     public List<Farms> findAll() {
@@ -118,10 +151,10 @@ public class FarmsDao
         String sql = "";       
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
         sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status_far";
-        sql += " from fincas f";
+        sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join departments dep on (dep.id_dep=m.id_departament_mun)";
-        sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms'";   
+        sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
@@ -137,6 +170,39 @@ public class FarmsDao
         if (args.containsKey("idFar")) {
             sql += " and f.id_far="+args.get("idFar");
         }
+        
+        if (args.containsKey("name_producer")) {
+            String valIdent = String.valueOf(args.get("name_producer"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and e.name_ent like '%"+args.get("name_producer")+"%'";
+        }
+        if (args.containsKey("name_property")) {
+            String valIdent = String.valueOf(args.get("name_property"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and f.name_far like '%"+args.get("name_property")+"%'";
+        }
+        if (args.containsKey("depFar")) {
+            String valIdent = String.valueOf(args.get("depFar"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_departament_mun="+args.get("depFar");
+        }
+        if (args.containsKey("cityFar")) {
+            String valIdent = String.valueOf(args.get("cityFar"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_mun="+args.get("cityFar");
+        }
+        if (args.containsKey("lane_property")) {
+            String valIdent = String.valueOf(args.get("lane_property"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and f.name_commune_far like '%"+args.get("lane_property")+"%'";
+        }
+        if (args.containsKey("altitude_property")) {
+            String valIdent = String.valueOf(args.get("altitude_property"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.altitude_far="+args.get("altitude_property");
+        }
+        if (args.containsKey("latitude_property")) {
+            String valIdent = String.valueOf(args.get("latitude_property"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.latitude_far="+args.get("latitude_property");
+        }
+        if (args.containsKey("length_property")) {
+            String valIdent = String.valueOf(args.get("length_property"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.longitude_far="+args.get("length_property");
+        }
 //        args.get("countTotal");
         
         int valIni = Integer.parseInt(String.valueOf(args.get("pageNow")));
@@ -145,7 +211,8 @@ public class FarmsDao
         if(valIni!=1){
             valIni = (valIni-1)*maxResults+1;
         }    
-        sql += " order by e.name_ent ASC";
+//        sql += " order by e.name_ent ASC";
+        sql += " order by f.name_far ASC";
 //        events.toArray();
 //        System.out.println("sql->"+sql);
         try {
@@ -156,26 +223,28 @@ public class FarmsDao
             HashMap tempTotal = new HashMap();
             tempTotal.put("countTotal", query.list().size());
             result.add(tempTotal);
-            query.setFirstResult(valIni);
-            query.setMaxResults(maxResults);      
+            if(query.list().size()>maxResults) {
+                query.setFirstResult(valIni);
+                query.setMaxResults(maxResults);      
+            }
             events = query.list();     
             
-            for (Object[] datos : events) {
-//                System.out.println(datos);
+            for (Object[] data : events) {
+//                System.out.println(data);
                 HashMap temp = new HashMap();
-                temp.put("id_producer", datos[0]);
-                temp.put("id_farm", datos[1]);
-                temp.put("name_producer", datos[2]);
-                temp.put("name_farm", datos[3]);
-                temp.put("dir_farm", datos[4]);                
-                temp.put("latitude_farm", datos[8]);
-                temp.put("length_farm", datos[9]);
-                temp.put("altitude_farm", datos[10]);                
-                temp.put("lane_farm", datos[11]);
-                temp.put("id_mun", datos[12]);
-                temp.put("name_mun", datos[13]);
-                temp.put("name_dep", datos[15]);                
-                temp.put("status", datos[16]);
+                temp.put("id_producer", data[0]);
+                temp.put("id_farm", data[1]);
+                temp.put("name_producer", data[2]);
+                temp.put("name_farm", data[3]);
+                temp.put("dir_farm", data[4]);                
+                temp.put("latitude_farm", data[8]);
+                temp.put("length_farm", data[9]);
+                temp.put("altitude_farm", data[10]);                
+                temp.put("lane_farm", data[11]);
+                temp.put("id_mun", data[12]);
+                temp.put("name_mun", data[13]);
+                temp.put("name_dep", data[15]);                
+                temp.put("status", data[16]);
                 result.add(temp);
             }
 //            System.out.println(result);
@@ -203,7 +272,11 @@ public class FarmsDao
 
         try {
             tx = session.beginTransaction();
-            event = (Farms) session.load(Farms.class, id);
+            String hql  = "FROM Farms E WHERE E.idFar = :id_far";
+            Query query = session.createQuery(hql);
+            query.setParameter("id_far", id);
+            event = (Farms)query.uniqueResult();
+//            event = (Farms) session.load(Farms.class, id);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -28,7 +28,7 @@
                         <div class="jumbotron">
                             <div class="row">
                                 <div class="span6">
-                                    <h1>Imagen Plataformaasdfsadfsdafasdf</h1>
+                                    <h1>Imagen Plataforma</h1>
                                 </div>
                                 <div class="span6">
                                     <p class="text-left lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
@@ -77,7 +77,7 @@
             </div>
             <div class="row">
                 <div class="span12">
-                    <h3>Que es AEPS 33¿? (Agricultura Espec&iacute;fica Por Sitio)</h3><!-- Replace all text with what you want -->
+                    <h3>Que es AEPS 33 (Agricultura Espec&iacute;fica Por Sitio)</h3><!-- Replace all text with what you want -->
                     <p>Hey there, my name is &quot;Your Name&quot; and I am a photographer and web developer! This is my brand new portfolio. It's super cool because it's completely responsive! That means you can re-size it to whatever size you like and it always looks great. Have a look around and enjoy.</p>
                 </div>
             </div>

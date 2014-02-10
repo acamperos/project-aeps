@@ -4,23 +4,25 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import com.opensymphony.xwork2.validator.annotations.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import org.aepscolombia.platform.models.dao.DepartmentsDao;
 
 import org.aepscolombia.platform.models.entity.Farms;
-import org.aepscolombia.platform.models.dao.FarmsDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.FieldsDao;
-import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
 import org.aepscolombia.platform.models.dao.FieldTypesDao;
+import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.UsersDao;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Fields;
 import org.aepscolombia.platform.models.entity.FieldTypes;
+import org.aepscolombia.platform.models.entity.FieldsProducers;
+import org.aepscolombia.platform.models.entity.FieldsProducersId;
+import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.util.APConstants;
 
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.apache.commons.lang.StringUtils;
@@ -50,18 +52,20 @@ public class ActionField extends BaseAction {
     private String name_property_lot;
     private int typeLot;
     private String name_lot;
-    private double latitude_lot;
-    private double length_lot;
+    private String latitude_lot;
+    private String length_lot;
     private double latitude_degrees_lot;
     private double latitude_minutes_lot;
     private double latitude_seconds_lot;
     private double length_degrees_lot;
     private double length_minutes_lot;
     private double length_seconds_lot;
-    private double altitude_lot;
-    private double area_lot;
+    private String altitude_lot;
+    private String area_lot;
     public List<HashMap> listLot;    
     private List<FieldTypes> type_property_lot;   
+    private Users user;
+    private Integer idEntSystem;
 
     
     //Metodos getter y setter por cada variable del formulario 
@@ -91,7 +95,7 @@ public class ActionField extends BaseAction {
     public void setIdField(int idField) {
         this.idField = idField;
     }
-
+    
     public String getName_producer_lot() {
         return name_producer_lot;
     }
@@ -116,19 +120,19 @@ public class ActionField extends BaseAction {
         this.name_lot = name_lot;
     }
 
-    public double getLatitude_lot() {
+    public String getLatitude_lot() {
         return latitude_lot;
     }
 
-    public void setLatitude_lot(double latitude_lot) {
+    public void setLatitude_lot(String latitude_lot) {
         this.latitude_lot = latitude_lot;
     }
 
-    public double getLength_lot() {
+    public String getLength_lot() {
         return length_lot;
     }
 
-    public void setLength_lot(double length_lot) {
+    public void setLength_lot(String length_lot) {
         this.length_lot = length_lot;
     }
 
@@ -180,19 +184,19 @@ public class ActionField extends BaseAction {
         this.length_seconds_lot = length_seconds_lot;
     }
 
-    public double getAltitude_lot() {
+    public String getAltitude_lot() {
         return altitude_lot;
     }
 
-    public void setAltitude_lot(double altitude_lot) {
+    public void setAltitude_lot(String altitude_lot) {
         this.altitude_lot = altitude_lot;
     }
 
-    public double getArea_lot() {
+    public String getArea_lot() {
         return area_lot;
     }
 
-    public void setArea_lot(double area_lot) {
+    public void setArea_lot(String area_lot) {
         this.area_lot = area_lot;
     }
 
@@ -303,7 +307,15 @@ public class ActionField extends BaseAction {
     public String execute() throws Exception {
 //        this.setType_ident_producer(new TiposDocumentosDao().findAll());
 //        this.setDepartment_producer(new DepartamentosDao().findAll());
+//        this.setType_property_lot(new FieldTypesDao().findAll());
         return SUCCESS;
+    }
+    
+    @Override
+    public void prepare() throws Exception {
+        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+        this.setType_property_lot(new FieldTypesDao().findAll());
     }
     
     
@@ -315,13 +327,16 @@ public class ActionField extends BaseAction {
 //        super.validate();
         /*
          * Se evalua dependiendo a la accion realizada:
-         * 1) save: Al momento de guardar un registro por primera ves
+         * 1) create: Al momento de guardar un registro por primera ves
          * 2) modify: Al momento de modificar un registro
          * 3) delete: Al momento de borrar un registro
          */
-        if (actExe.equals("save")) {
+//        System.out.println("11111111111111111111");
+        if (actExe.equals("create") || actExe.equals("modify")) {
+//            System.out.println("entreeeeeeeeeeeeeeeeeeeeez");
             HashMap required = new HashMap();
-            required.put("name_producer", name_lot);
+            required.put("name_producer_lot", name_producer_lot);
+            required.put("name_property_lot", name_property_lot);
             required.put("typeLot", typeLot);
             required.put("altitude_lot", altitude_lot);
             required.put("area_lot", area_lot);
@@ -338,6 +353,8 @@ public class ActionField extends BaseAction {
                 required.put("length_seconds_property", length_seconds_lot);
             }
             
+//            System.out.println("required->"+required);
+            
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = String.valueOf(required.get(sK));
@@ -347,28 +364,34 @@ public class ActionField extends BaseAction {
                     addFieldError(sK, "El campo es requerido");
                 }
             }
+            
+            double altLot = Double.parseDouble(altitude_lot);
+            double latLot = Double.parseDouble(latitude_lot);
+            double lonLot = Double.parseDouble(length_lot);
+            double areaLot = Double.parseDouble(area_lot);
+            
 //            if (altitude_property) {    
-                if (altitude_lot<0 || altitude_lot>9000) {
+                if (altLot<0 || altLot>9000) {
                     addFieldError("altitude_lot", "Dato invalido");
                     addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
                 }
 //            }
                 
-            if (area_lot<0 || area_lot>3000) {
+            if (areaLot<0 || areaLot>3000) {
                 addFieldError("area_lot", "Dato invalido");
                 addActionError("Se ingreso un area invalida, por favor ingresar un valor entre 0 y 3000");
             }
 
             if (option_geo_lot == 1) {
 //                if (latitude_property!=null) { 
-                    if (latitude_lot<(-4.3) || latitude_lot>(13.5)) {
+                    if (latLot<(-4.3) || latLot>(13.5)) {
                         addFieldError("latitude_lot", "Dato invalido");
                         addActionError("Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5");                        
                     }
 //                }
 
 //                if (length_property) {    
-                    if (length_lot<(-81.8) || length_lot>(-66)) {
+                    if (lonLot<(-81.8) || lonLot>(-66)) {
                         addFieldError("length_lot", "Dato invalido");
                         addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
                     }
@@ -444,7 +467,15 @@ public class ActionField extends BaseAction {
         additionals = new HashMap();
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
-        findParams.put("name_lot", this.getName_lot());
+//        findParams.put("name_lot", this.getName_lot());
+        findParams.put("idEntUser", idEntSystem);
+        findParams.put("name_producer_lot", name_producer_lot);
+        findParams.put("name_property_lot", name_property_lot);
+        findParams.put("typeLot", typeLot);
+        findParams.put("altitude_lot", altitude_lot);
+        findParams.put("area_lot", area_lot);
+        findParams.put("latitude_property", latitude_lot);
+        findParams.put("length_property", length_lot);
         int pageReq;
         if (this.getRequest().getParameter("page") == null) {
             pageReq = this.getPage();
@@ -454,10 +485,8 @@ public class ActionField extends BaseAction {
         findParams.put("pageNow", pageReq);
         findParams.put("maxResults", this.getMaxResults());
 //        FarmsDao eventDao = new FarmsDao();
-//        System.out.println("entreeee");
         listLot = lotDao.findByParams(findParams);
 //        this.setCountTotal(100);
-//        System.out.println("entreeee->"+listProperties.get(0).get("countTotal"));
         this.setCountTotal(Integer.parseInt(String.valueOf(listLot.get(0).get("countTotal"))));
         this.setPage(page);
         listLot.remove(0);
@@ -471,15 +500,17 @@ public class ActionField extends BaseAction {
      * @return Informacion del lote
      */
     public String show() {
+        actExe = (String)(this.getRequest().getParameter("action"));
+        int pageReq;
+        if (this.getRequest().getParameter("page") != null) {
+            pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
+            this.setPage(pageReq);
+        }
         try {
-            // If there is a parameter take its values
             this.setIdField(Integer.parseInt(this.getRequest().getParameter("idField")));
         } catch (NumberFormatException e) {
-            // If there was an error trying to parse the URL parameter
 //            LOG.error("There was an error trying to parse the activityId parameter");
-            // Set an invalid value to the activityId to prevent the page load in execute function
             this.setIdField(-1);
-//            return;
         }
 
         this.setType_property_lot(new FieldTypesDao().findAll());
@@ -494,16 +525,17 @@ public class ActionField extends BaseAction {
 //            this.setIdProductor(Integer.parseInt(String.valueOf(fieldInfo.get("id_productor"))));
             this.setIdFarm(Integer.parseInt(String.valueOf(fieldInfo.get("id_farm"))));
             this.setIdField(Integer.parseInt(String.valueOf(fieldInfo.get("id_lot"))));
+            this.setIdProducer(Integer.parseInt(String.valueOf(fieldInfo.get("id_producer"))));
             this.setTypeLot(Integer.parseInt(String.valueOf(fieldInfo.get("type_lot"))));
             this.setName_producer_lot(String.valueOf(fieldInfo.get("name_producer")));
             this.setName_property_lot(String.valueOf(fieldInfo.get("name_farm")));
             this.setName_lot(String.valueOf(fieldInfo.get("name_lot")));
-            this.setLatitude_lot(Double.parseDouble(String.valueOf(fieldInfo.get("latitude_lot"))));
-            this.setLength_lot(Double.parseDouble(String.valueOf(fieldInfo.get("length_lot"))));
+            this.setLatitude_lot(String.valueOf(fieldInfo.get("latitude_lot")));
+            this.setLength_lot(String.valueOf(fieldInfo.get("length_lot")));
 //            this.setOption_geo(1);
             
-            this.setAltitude_lot(Double.parseDouble(String.valueOf(fieldInfo.get("altitude_lot"))));
-            this.setArea_lot(Double.parseDouble(String.valueOf(fieldInfo.get("area_lot"))));
+            this.setAltitude_lot(String.valueOf(fieldInfo.get("altitude_lot")));
+            this.setArea_lot(String.valueOf(fieldInfo.get("area_lot")));
         }
         return SUCCESS;
     }    
@@ -516,62 +548,95 @@ public class ActionField extends BaseAction {
         String action = "";
         /*
          * Se evalua dependiendo a la accion realizada:
-         * 1) save: Al momento de guardar un registro por primera ves
+         * 1) create: Al momento de guardar un registro por primera ves
          * 2) modify: Al momento de modificar un registro
          * 3) delete: Al momento de borrar un registro
          */
-        if (actExe.equals("save")) {
+        if (actExe.equals("create")) {
             action = "C";
         } else if (actExe.equals("modify")) {
             action = "M";
         }
 
+        ProducersDao proDao = new ProducersDao();
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx = null;
         
+        double altLot = Double.parseDouble(altitude_lot);
+        double latLot = Double.parseDouble(latitude_lot);
+        double lonLot = Double.parseDouble(length_lot);
+        double areaLot = Double.parseDouble(area_lot);
+        
         if (option_geo_lot == 2) {
-            latitude_lot = (latitude_minutes_lot/60) + (latitude_seconds_lot/3600);
-            latitude_lot = (latitude_degrees_lot<0) ? ((Math.abs(latitude_degrees_lot))+latitude_lot)*-1 : (latitude_degrees_lot+latitude_lot);
+            latLot = (latitude_minutes_lot/60) + (latitude_seconds_lot/3600);
+            latLot = (latitude_degrees_lot<0) ? ((Math.abs(latitude_degrees_lot))+latLot)*-1 : (latitude_degrees_lot+latLot);
 
-            length_lot = (length_minutes_lot/60) + (length_seconds_lot/3600);
-            length_lot = (length_degrees_lot<0) ? ((Math.abs(length_degrees_lot))+length_lot)*-1 : (length_degrees_lot+length_lot);
+            lonLot = (length_minutes_lot/60) + (length_seconds_lot/3600);
+            lonLot = (length_degrees_lot<0) ? ((Math.abs(length_degrees_lot))+lonLot)*-1 : (length_degrees_lot+lonLot);
         }  
 
         try {
+            int idProOld = 0;
             tx = session.beginTransaction();
-            Fields lot = new Fields();
-            lot.setIdFie(idField);
+            Fields lot = null;
+            if (idField<=0) {
+                lot = new Fields();
+                lot.setIdFie(null);
+                lot.setIdProjectFie("1");
+                lot.setStatusFie(true); 
+                lot.setMeasureUnitFie("1");
+            } else {
+                HashMap fieldInfo = lotDao.findById(idField);
+                idProOld = Integer.parseInt(String.valueOf(fieldInfo.get("id_producer")));
+                lot = lotDao.objectById(idField);
+            }
 //            lot.setIdFarmFie(idFarm);
-            lot.setFarms(new Farms(idFarm));
+            if(idFarm>0) lot.setFarms(new Farms(idFarm));
             lot.setNameFie(name_lot);
-            lot.setAltitudeFie(altitude_lot);
-            lot.setLatitudeFie(latitude_lot);
-            lot.setLongitudeFie(length_lot);
-            lot.setAreaFie(area_lot);
-            lot.setMeasureUnitFie("1");
+            lot.setAltitudeFie(altLot);
+            lot.setLatitudeFie(latLot);
+            lot.setLongitudeFie(lonLot);
+            lot.setAreaFie(areaLot);            
 //            lot.setControlPlagasLot(true);
-//            lot.setControlEnfermedadesLot(true);
-            lot.setIdProjectFie("1");
-            lot.setStatusFie(true);            
-            lotDao.save(lot);
-            
-            if (String.valueOf(idField)!=null) {            
-                lotDao.saveLotPro(idField, idProducer, typeLot);
+//            lot.setControlEnfermedadesLot(true);       
+            session.saveOrUpdate(lot);
+//            lotDao.save(lot);
+            FieldsProducers fiePro = new FieldsProducers();
+            fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
+            fiePro.setFields(lot);   
+            fiePro.setProducers(proDao.objectById(idProducer));
+            fiePro.setFieldTypes(new FieldTypes(typeLot));
+            session.saveOrUpdate(fiePro);
+            if(lot.getIdFie()>0 && action.equals("M")) {
+                FieldsProducers fieTemp = lotDao.checkFieldProducer(lot.getIdFie(), idProOld);
+                session.delete(fieTemp);
+//                System.out.println("id field->"+fiePro.getFields().getIdFie());
+//                fiePro = new FieldsProducers();
+//                fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
+//                fiePro.setFields(lot);   
+//                fiePro.setProducers(proDao.objectById(idProducer));
+//                fiePro.setFieldTypes(new FieldTypes(typeLot));
+//                session.saveOrUpdate(fiePro);
             }
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(300); //Colocar el usuario registrado en el sistema
+            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(lot.getIdFie());
             log.setTableLogEnt("fields");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            logDao.save(log);            
+            session.saveOrUpdate(log);
+//            logDao.save(log);            
             
             tx.commit();           
             state = "success";
-            info  = "El lote ha sido agregado con exito";
+            if (action.equals("C")) {
+                info = "El lote ha sido agregado con exito";
+            } else if (action.equals("M")) {
+                info  = "El lote ha sido modificado con exito";
+            }            
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -595,7 +660,7 @@ public class ActionField extends BaseAction {
     public String delete() {
         Integer idField = 0;
         try {
-            idField = Integer.parseInt(this.getRequest().getParameter("idField"));
+            idField = Integer.parseInt(this.getRequest().getParameter("idFar"));
         } catch (NumberFormatException e) {
             idField = -1;
         }
@@ -612,17 +677,19 @@ public class ActionField extends BaseAction {
 
         try {
             tx = session.beginTransaction();
-            Fields lot = lotDao.objectById(idField);           
-            lotDao.delete(lot);            
+            Fields lot = lotDao.objectById(idField);      
+            session.delete(lot);
+//            lotDao.delete(lot);            
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(300); //Colocar el usuario registrado en el sistema
+            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(lot.getIdFie());
             log.setTableLogEnt("fields");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt("D");
-            logDao.save(log);
+            session.saveOrUpdate(log);
+//            logDao.save(log);
             tx.commit();         
             state = "success";
             info  = "El lote ha sido borrado con exito";

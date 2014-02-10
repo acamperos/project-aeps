@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="span12">
-                    <h3>Resumen General (<s:property value="#user.getNameUserUsr()" />)</h3><!-- Replace all text with what you want -->
+                    <h3>Resumen General</h3>
                 </div>
             </div>
             <div class="row">

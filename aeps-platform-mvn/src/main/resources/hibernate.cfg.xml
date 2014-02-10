@@ -67,6 +67,8 @@
     <mapping class="org.aepscolombia.platform.models.entity.Privileges"/>
     <mapping class="org.aepscolombia.platform.models.entity.FieldTypes"/>
     <mapping class="org.aepscolombia.platform.models.entity.UserEntity"/>
+    <mapping class="org.aepscolombia.platform.models.entity.FarmsProducers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.FarmsProducersId"/>
     <mapping class="org.aepscolombia.platform.models.entity.Controls"/>
     <mapping class="org.aepscolombia.platform.models.entity.Weeds"/>
     <mapping class="org.aepscolombia.platform.models.entity.WaterSourcesTypes"/>

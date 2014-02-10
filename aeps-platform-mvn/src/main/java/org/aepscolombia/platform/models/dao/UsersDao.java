@@ -88,7 +88,6 @@ public class UsersDao
             Query query = session.createSQLQuery(sql).addEntity("ue", UserEntity.class);
             user  = (UserEntity) query.uniqueResult();
             idEnt = user.getEntities().getIdEnt();
-            System.out.println("id usuario->"+idEnt);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -98,7 +97,7 @@ public class UsersDao
         } finally {
             session.close();
         }
-        return idUser;
+        return idEnt;
 	}
 
     /**
@@ -312,17 +311,17 @@ public class UsersDao
             Query query  = session.createSQLQuery(sql);            
             events = query.list();         
             
-            for (Object[] datos : events) {
-//                System.out.println(datos);
+            for (Object[] data : events) {
+//                System.out.println(data);
                 HashMap temp = new HashMap();
-                temp.put("id_user", datos[0]);
-                temp.put("name_user", datos[1]);
-                temp.put("email_user", datos[2]);
-                temp.put("cel_user", datos[3]);
-                temp.put("type_ent_user", datos[4]);                
-                temp.put("num_doc_user", datos[5]);
-                temp.put("type_doc_user", datos[6]);
-                temp.put("name_ent_user", datos[7]);                
+                temp.put("id_user", data[0]);
+                temp.put("name_user", data[1]);
+                temp.put("email_user", data[2]);
+                temp.put("cel_user", data[3]);
+                temp.put("type_ent_user", data[4]);                
+                temp.put("num_doc_user", data[5]);
+                temp.put("type_doc_user", data[6]);
+                temp.put("name_ent_user", data[7]);                
                 result = (temp);
             }
             tx.commit();

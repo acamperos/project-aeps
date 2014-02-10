@@ -16,7 +16,7 @@
                     <div class="span6">
                         <div class="formIngress">
                             <% if (user != null) { %>
-                                <!--<p style="margin-bottom:0px">Ya te encuentras registrado</p>-->
+                                <p style="margin-bottom:0px">Ya te encuentras registrado</p>
                                 <a style="float: right" href="signin.action" class="btn btn-primary btn-success btn-lg">Ingresar</a>
                             <% } else { %>
                                 <a href="signin.action" class="btn btn-primary btn-success btn-lg">Ingresar</a>

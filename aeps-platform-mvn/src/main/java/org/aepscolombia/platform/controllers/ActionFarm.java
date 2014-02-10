@@ -4,7 +4,8 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import com.opensymphony.xwork2.validator.annotations.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,10 +16,16 @@ import org.aepscolombia.platform.models.entity.Farms;
 import org.aepscolombia.platform.models.dao.FarmsDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
+import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.UsersDao;
 
 import org.aepscolombia.platform.models.entity.Departments;
+import org.aepscolombia.platform.models.entity.FarmsProducers;
+import org.aepscolombia.platform.models.entity.FarmsProducersId;
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Municipalities;
+import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.util.APConstants;
 
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.apache.commons.lang.StringUtils;
@@ -45,15 +52,15 @@ public class ActionFarm extends BaseAction {
     private int idFarm;
     private String name_producer;
     private String name_property;
-    private double latitude_property;
-    private double length_property;
+    private String latitude_property;
+    private String length_property;
     private double latitude_degrees_property;
     private double latitude_minutes_property;
     private double latitude_seconds_property;
     private double length_degrees_property;
     private double length_minutes_property;
     private double length_seconds_property;
-    private double altitude_property;
+    private String altitude_property;
     private String direction_property;
     private List<Departments> department_property;
     private List<Municipalities> city_property;
@@ -63,7 +70,8 @@ public class ActionFarm extends BaseAction {
     private String identProducer;    
     public List<HashMap> listProducers;
     public List<HashMap> listProperties;
-    
+    private Users user;
+    private Integer idEntSystem;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -97,19 +105,19 @@ public class ActionFarm extends BaseAction {
         this.name_property = name_property;
     }
 
-    public double getLatitude_property() {
+    public String getLatitude_property() {
         return latitude_property;
     }
 
-    public void setLatitude_property(double latitude_property) {
+    public void setLatitude_property(String latitude_property) {
         this.latitude_property = latitude_property;
     }
 
-    public double getLength_property() {
+    public String getLength_property() {
         return length_property;
     }
 
-    public void setLength_property(double length_property) {
+    public void setLength_property(String length_property) {
         this.length_property = length_property;
     }
 
@@ -161,11 +169,11 @@ public class ActionFarm extends BaseAction {
         this.length_seconds_property = length_seconds_property;
     }
 
-    public double getAltitude_property() {
+    public String getAltitude_property() {
         return altitude_property;
     }
 
-    public void setAltitude_property(double altitude_property) {
+    public void setAltitude_property(String altitude_property) {
         this.altitude_property = altitude_property;
     }
 
@@ -201,17 +209,17 @@ public class ActionFarm extends BaseAction {
         this.lane_property = lane_property;
     }
 
-    public List<Departments> getDepartamentos_property() {
+    public List<Departments> getDepartment_property() {
         return department_property;
+    }
+    
+    public void setDepartment_property(List<Departments> department_property) {
+        this.department_property = department_property;
     }
 
     public List<Municipalities> getCity_property() {
         return city_property;
-    }
-
-    public void setDepartamentos_property(List<Departments> department_property) {
-        this.department_property = department_property;
-    }
+    }    
 
     public void setCity_property(List<Municipalities> city_property) {
         this.city_property = city_property;
@@ -325,11 +333,21 @@ public class ActionFarm extends BaseAction {
     public HashMap getAdditionals() {
         return additionals;
     }   
+    
+    @Override
+    public void prepare() throws Exception {
+        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+        this.setDepartment_property(new DepartmentsDao().findAll());
+        List<Municipalities> mun = new ArrayList<Municipalities>();
+        mun.add(new Municipalities());           
+        this.setCity_property(mun);
+    }
 
     @Override
     public String execute() throws Exception {
 //        this.setType_ident_producer(new TiposDocumentosDao().findAll());
-//        this.setDepartamentos_producer(new DepartamentosDao().findAll());
+//        this.setDepartment_property(new DepartmentsDao().findAll());
         return SUCCESS;
     }
 
@@ -341,11 +359,11 @@ public class ActionFarm extends BaseAction {
 //        super.validate();
         /*
          * Se evalua dependiendo a la accion realizada:
-         * 1) save: Al momento de guardar un registro por primera ves
+         * 1) create: Al momento de guardar un registro por primera ves
          * 2) modify: Al momento de modificar un registro
          * 3) delete: Al momento de borrar un registro
          */
-        if (actExe.equals("save")) {
+        if (actExe.equals("create") || actExe.equals("modify")) {
             HashMap required = new HashMap();
             required.put("name_producer", name_producer);
             required.put("name_property", name_property);
@@ -353,7 +371,6 @@ public class ActionFarm extends BaseAction {
             required.put("cityFar", cityFar);
             required.put("lane_property", lane_property);
             required.put("altitude_property", altitude_property);
-
             if (option_geo == 1) {
                 required.put("latitude_property", latitude_property);
                 required.put("length_property", length_property);
@@ -365,7 +382,6 @@ public class ActionFarm extends BaseAction {
                 required.put("length_minutes_property", length_minutes_property);
                 required.put("length_seconds_property", length_seconds_property);
             }
-
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = String.valueOf(required.get(sK));
@@ -375,23 +391,28 @@ public class ActionFarm extends BaseAction {
                     addFieldError(sK, "El campo es requerido");
                 }
             }
+            
+            double altPro = Double.parseDouble(altitude_property);
+            double latPro = Double.parseDouble(latitude_property);
+            double lonPro = Double.parseDouble(length_property);
+            
 //            if (altitude_property) {    
-            if (altitude_property < 0 || altitude_property > 9000) {
+            if (altPro < 0 || altPro > 9000) {
                 addFieldError("altitude_property", "Dato invalido");
                 addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
             }
 //            }
 
             if (option_geo == 1) {
-//                if (latitude_property!=null) { 
-                if (latitude_property < (-4.3) || latitude_property > (13.5)) {
+//                if (latPro!=null) { 
+                if (latPro < (-4.3) || latPro > (13.5)) {
                     addFieldError("latitude_property", "Dato invalido");
                     addActionError("Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5");
                 }
 //                }
 
 //                if (length_property) {    
-                if (length_property < (-81.8) || length_property > (-66)) {
+                if (lonPro < (-81.8) || lonPro > (-66)) {
                     addFieldError("length_property", "Dato invalido");
                     addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
                 }
@@ -437,9 +458,6 @@ public class ActionFarm extends BaseAction {
             }
         }
     }
-//    public String crear() {    
-//        return SUCCESS;
-//    }        
     
     /**
      * Se obtiene la lista de opciones de cada uno de los departamentos registrados en BD
@@ -463,8 +481,8 @@ public class ActionFarm extends BaseAction {
         city_property = eventoDao.findAll(depId);
         String cadena = "<option value=\"\">---</option>";
 //        int i = 0;
-        for (Municipalities datos : city_property) {
-            cadena += "<option value=\"" + datos.getIdMun() + "\">" + datos.getNameMun()+ "</option>";
+        for (Municipalities data : city_property) {
+            cadena += "<option value=\"" + data.getIdMun() + "\">" + data.getNameMun()+ "</option>";
         }
         city_property = null;
         state = "success";
@@ -484,24 +502,32 @@ public class ActionFarm extends BaseAction {
         valName     = (String) (this.getRequest().getParameter("valName"));
         valId       = (String) (this.getRequest().getParameter("valId"));
         selected    = (String) (this.getRequest().getParameter("selected"));
-        if (selected == null) {
-            selected = "property";
-        }
+        if (selected == null) selected = "property";
         additionals = new HashMap();
         additionals.put("selected", selected);
-        HashMap fardParams = new HashMap();
-        fardParams.put("nameProperty", this.getName_property());
+        HashMap findParams = new HashMap();
+//        fardParams.put("nameProperty", this.getName_property());
+//        System.out.println("this.getAltitude_property()->"+this.getAltitude_property());
+        findParams.put("idEntUser", idEntSystem);
+        findParams.put("name_producer", name_producer);
+        findParams.put("name_property", name_property);
+        findParams.put("depFar", depFar);
+        findParams.put("cityFar", cityFar);
+        findParams.put("lane_property", lane_property);
+        findParams.put("altitude_property", altitude_property);
+        findParams.put("latitude_property", latitude_property);
+        findParams.put("length_property", length_property);
         int pageReq;
         if (this.getRequest().getParameter("page") == null) {
             pageReq = this.getPage();
         } else {
             pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
         }
-        fardParams.put("pageNow", pageReq);
-        fardParams.put("maxResults", this.getMaxResults());
+        findParams.put("pageNow", pageReq);
+        findParams.put("maxResults", this.getMaxResults());
         FarmsDao eventoDao = new FarmsDao();
 //        System.out.println("entreeee");
-        listProperties = eventoDao.findByParams(fardParams);
+        listProperties = eventoDao.findByParams(findParams);
 //        this.setCountTotal(100);
 //        System.out.println("entreeee->"+listProperties.get(0).get("countTotal"));
         this.setCountTotal(Integer.parseInt(String.valueOf(listProperties.get(0).get("countTotal"))));
@@ -517,6 +543,12 @@ public class ActionFarm extends BaseAction {
      * @return Informacion de la finca
      */
     public String show() {
+        actExe = (String)(this.getRequest().getParameter("action"));
+        int pageReq;
+        if (this.getRequest().getParameter("page") != null) {
+            pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
+            this.setPage(pageReq);
+        }
         try {
             this.setIdFarm(Integer.parseInt(this.getRequest().getParameter("idFar")));
         } catch (NumberFormatException e) {
@@ -524,8 +556,8 @@ public class ActionFarm extends BaseAction {
 //            return;
         }
 
-        this.setDepartamentos_property(new DepartmentsDao().findAll());
-
+        this.setDepartment_property(new DepartmentsDao().findAll());
+//        System.out.println("id farm->"+this.getIdFarm());
         if (this.getIdFarm() != -1) {
             FarmsDao eventoDao = new FarmsDao();
 //            System.out.println("id_producer->"+this.getIdProducer());
@@ -537,16 +569,20 @@ public class ActionFarm extends BaseAction {
             this.setIdFarm(Integer.parseInt(String.valueOf(farmInfo.get("id_farm"))));
             this.setName_producer(String.valueOf(farmInfo.get("name_producer")));
             this.setName_property(String.valueOf(farmInfo.get("name_farm")));
-            this.setLatitude_property(Double.parseDouble(String.valueOf(farmInfo.get("latitud_farm"))));
-            this.setLength_property(Double.parseDouble(String.valueOf(farmInfo.get("longitud_farm"))));
+            this.setLatitude_property(String.valueOf(farmInfo.get("latitude_farm")));
+            this.setLength_property(String.valueOf(farmInfo.get("length_farm")));
 //            this.setOption_geo(1);
 
-            this.setAltitude_property(Double.parseDouble(String.valueOf(farmInfo.get("altitud_farm"))));
+            this.setAltitude_property(String.valueOf(farmInfo.get("altitude_farm")));
             this.setDirection_property(String.valueOf(farmInfo.get("dir_farm")));
-            this.setLane_property(String.valueOf(farmInfo.get("vereda_farm")));
+            this.setLane_property(String.valueOf(farmInfo.get("lane_farm")));
             this.setDepFar(String.valueOf(farmInfo.get("id_dep")));
             this.setCityFar(String.valueOf(farmInfo.get("id_mun")));
             this.setCity_property(new MunicipalitiesDao().findAll(Integer.parseInt(String.valueOf(farmInfo.get("id_dep")))));
+        } else {
+            List<Municipalities> mun = new ArrayList<Municipalities>();
+            mun.add(new Municipalities());           
+            this.setCity_property(mun);
         }
         return SUCCESS;
     }
@@ -555,63 +591,99 @@ public class ActionFarm extends BaseAction {
      * Encargado de guardar la informacion suministrada por el usuario para una finca
      * @return Estado del proceso
      */
-    public String saveData() {
+    public String saveData() throws SQLException {
         String action = "";
         /*
          * Se evalua dependiendo a la accion realizada:
-         * 1) save: Al momento de guardar un registro por primera ves
+         * 1) create: Al momento de guardar un registro por primera ves
          * 2) modify: Al momento de modificar un registro
          * 3) delete: Al momento de borrar un registro
          */
-        if (actExe.equals("save")) {
+        if (actExe.equals("create")) {
             action = "C";
         } else if (actExe.equals("modify")) {
             action = "M";
         }
-
+        
+        ProducersDao proDao = new ProducersDao();
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx = null;
 
+        double altPro = Double.parseDouble(altitude_property);
+        double latPro = Double.parseDouble(latitude_property);
+        double lonPro = Double.parseDouble(length_property);
+        
         if (option_geo == 2) {
-            latitude_property = (latitude_minutes_property / 60) + (latitude_seconds_property / 3600);
-            latitude_property = (latitude_degrees_property < 0) ? ((Math.abs(latitude_degrees_property)) + latitude_property) * -1 : (latitude_degrees_property + latitude_property);
+            latPro = (latitude_minutes_property / 60) + (latitude_seconds_property / 3600);
+            latPro = (latitude_degrees_property < 0) ? ((Math.abs(latitude_degrees_property)) + latPro) * -1 : (latitude_degrees_property + latPro);
 
-            length_property = (length_minutes_property / 60) + (length_seconds_property / 3600);
-            length_property = (length_degrees_property < 0) ? ((Math.abs(length_degrees_property)) + length_property) * -1 : (length_degrees_property + length_property);
+            lonPro = (length_minutes_property / 60) + (length_seconds_property / 3600);
+            lonPro = (length_degrees_property < 0) ? ((Math.abs(length_degrees_property)) + lonPro) * -1 : (length_degrees_property + lonPro);
         }
 
         try {
             tx = session.beginTransaction();
-            Farms far = new Farms();
-            far.setIdFar(idFarm);
+            Farms far = null;
+            int idProOld = 0;
+            if (idFarm<=0) {
+                far = new Farms();
+                far.setIdFar(null);
+                far.setGeorefFar(true);
+                far.setIdProjectFar("1");
+                far.setStatusFar(true);
+            } else {
+                HashMap fieldInfo = farDao.findById(idFarm);
+                idProOld = Integer.parseInt(String.valueOf(fieldInfo.get("id_producer")));
+                far = farDao.objectById(idFarm);
+            }     
             far.setNameFar(name_property);
-            far.setAddressFar(direction_property);
-            far.setGeorefFar(true);
-            far.setLatitudeFar(latitude_property);
-            far.setLongitudeFar(length_property);
-            far.setAltitudeFar(altitude_property);
-            far.setIdProjectFar("1");
-            far.setNameCommuneFar(lane_property);
-            far.setStatusFar(true);
-            farDao.save(far);
+            far.setAddressFar(direction_property);            
+            far.setLatitudeFar(latPro);
+            far.setLongitudeFar(lonPro);
+            far.setAltitudeFar(altPro);            
+            far.setNameCommuneFar(lane_property);     
+            far.setMunicipalities(new Municipalities(Integer.parseInt(cityFar)));
+            session.saveOrUpdate(far);
+//            farDao.save(far);
+//            System.out.println("valId->"+far.getIdFar());
 
-            if (String.valueOf(idFarm) != null) {
-                farDao.saveFarPro(idFarm, idProducer);
+            
+            FarmsProducers farPro = new FarmsProducers();
+            farPro.setId(new FarmsProducersId(far.getIdFar(), idProducer));
+            farPro.setFarms(far);   
+            farPro.setProducers(proDao.objectById(idProducer));
+            session.saveOrUpdate(farPro);
+            if(far.getIdFar()>0 && action.equals("M")) {
+                FarmsProducers farTemp = farDao.checkFarmProducer(far.getIdFar(), idProOld);
+                session.delete(farTemp);
+//                System.out.println("id field->"+fiePro.getFields().getIdFie());
+//                fiePro = new FieldsProducers();
+//                fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
+//                fiePro.setFields(lot);   
+//                fiePro.setProducers(proDao.objectById(idProducer));
+//                fiePro.setFieldTypes(new FieldTypes(typeLot));
+//                session.saveOrUpdate(fiePro);
             }
 
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(300); //Colocar el usuario registrado en el sistema
+            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(far.getIdFar());
             log.setTableLogEnt("farms");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            logDao.save(log);
+            session.saveOrUpdate(log);
+//            logDao.save(log);
 
             tx.commit();
             state = "success";
-            info = "La farm ha sido agregada con exito";
+            if (action.equals("C")) {
+                info = "La finca ha sido agregada con exito";
+//                return "list";
+            } else if (action.equals("M")) {
+                info = "La finca ha sido modificada con exito";
+            }            
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -653,26 +725,28 @@ public class ActionFarm extends BaseAction {
         try {
             tx = session.beginTransaction();
             Farms far = farDao.objectById(idFar);
-            farDao.delete(far);
+            session.delete(far);
+//            farDao.delete(far);
 
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(300); //Colocar el usuario registrado en el sistema
+            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(far.getIdFar());
             log.setTableLogEnt("farms");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt("D");
-            logDao.save(log);
+            session.saveOrUpdate(log);
+//            logDao.save(log);
             tx.commit();
             state = "success";
-            info = "La farm ha sido borrado con exito";
+            info = "La finca ha sido borrada con exito";
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
             e.printStackTrace();
             state = "failure";
-            info = "Fallo al momento de borrar una farm";
+            info  = "Fallo al momento de borrar una finca";
         } finally {
             session.close();
         }

@@ -41,7 +41,8 @@ public class ValidatorUtil {
     
     public static boolean verifyCaptcha(String remoteAddr, String recaptChallenge, String recaptResponse) {
         ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-        reCaptcha.setPrivateKey("6LflSe0SAAAAAJdGyUcUw3jL56wtYISB3CHbopu0");
+//        reCaptcha.setPublicKey("6Lfh2O0SAAAAANN4PftAGB-KQF26H4qUoyUMH69F");
+        reCaptcha.setPrivateKey("66Lfh2O0SAAAAANtqQ1zF9uKjryu-9EZZnlCU_d76");
         ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, recaptChallenge, recaptResponse);
         return reCaptchaResponse.isValid();
     }

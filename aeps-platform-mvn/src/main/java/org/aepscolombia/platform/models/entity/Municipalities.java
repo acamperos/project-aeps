@@ -33,6 +33,10 @@ public class Municipalities  implements java.io.Serializable {
 
     public Municipalities() {
     }
+    
+    public Municipalities(Integer idMun) {
+        this.idMun = idMun;
+    }
 
 	
     public Municipalities(Departments departments, String codeMun, String nameMun) {
