@@ -21,8 +21,10 @@
                 padding-top: 50px;
                 padding-bottom: 20px;
             }
-        </style>				
-        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
+        </style>	
+        <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
+        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	        
     </head>
     <body>
         <s:actionerror theme="bootstrap"/>
@@ -57,7 +59,12 @@
                     </s:form>
                     <script>
                         $.subscribe('completeRestore', function(event, data) {
-                            completeForm('', 'formRestCon', event.originalEvent.request.responseText);
+                            $.unblockUI();
+                            completeFormChange('', 'formRestCon', event.originalEvent.request.responseText);
+                            setTimeout( function() {
+                                document.location = "signin.action";
+//                                showInfo("signin.action", "divConListFarms");
+                            }, 3000);
                         });
                     </script>
                 </div>

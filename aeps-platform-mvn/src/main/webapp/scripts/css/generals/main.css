@@ -1,4 +1,68 @@
-    .view-process h3 {font-size:100%;font:inherit;background: url(../../../img/ajax.gif) no-repeat !important;cursor: pointer;}
+    .view-process h3 {font-size:100%;font:inherit;background: url(../img/ajax.gif) no-repeat !important;cursor: pointer;}
+    .labelRequire {
+        font-weight: normal;
+        font-style: italic;
+        /*background-color:#FFFF66;*/
+        padding: 2px;
+    }
+    .required_field_mark span {
+        color: #D10000;
+    }
+    .required {
+        color: #D10000;
+    }
+    .titlePrin {
+        position: absolute; 
+        font-size: 30px; 
+        color: green; 
+        padding-top: 30px; 
+        /*z-index: 1;*/ 
+        font-family: Tahoma;        
+    }
+    .titleOptions {
+        /*position: absolute;*/ 
+        /*font-size: 30px;*/ 
+        /*color: green;*/ 
+        /*padding-top: 10px;*/ 
+        /*z-index: 1;*/ 
+        /*font-family: Tahoma;*/        
+    }
+    
+    .tabs-left > .nav-tabs {
+        border-right: none;
+        float: left;
+        margin-right: 0;
+    }
+    
+    .btn-breadcrumb .btn:not(:last-child):after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 17px solid transparent;
+        border-bottom: 17px solid transparent;
+        border-left: 10px solid white;
+        position: absolute;
+        top: 50%;
+        margin-top: -17px;
+        left: 100%;
+        z-index: 3;
+    }
+    .btn-breadcrumb .btn:not(:last-child):before {
+      content: " ";
+      display: block;
+      width: 0;
+      height: 0;
+      border-top: 17px solid transparent;
+      border-bottom: 17px solid transparent;
+      border-left: 10px solid rgb(173, 173, 173);
+      position: absolute;
+      top: 50%;
+      margin-top: -17px;
+      margin-left: 1px;
+      left: 100%;
+      z-index: 3;
+    }
 
 
 

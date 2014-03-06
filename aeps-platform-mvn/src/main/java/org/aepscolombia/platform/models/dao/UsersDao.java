@@ -162,7 +162,9 @@ public class UsersDao
         }  
         if (codValidation!=null) {
             sql += " and usr.cod_validation_usr='"+codValidation+"'";
-        }  
+        } else {
+            sql += " and usr.cod_validation_usr=''";
+        } 
         
 //        System.out.println("sql->"+sql);
         

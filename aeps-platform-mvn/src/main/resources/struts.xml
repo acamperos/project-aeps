@@ -9,6 +9,8 @@
     <package name="principal" extends="struts-default,json-default" namespace="/">
         <interceptors>
             <interceptor name="requireUser" class="org.aepscolombia.platform.interceptors.RequireUserInterceptor"/>
+            <interceptor name="validateI18n" class="org.aepscolombia.platform.interceptors.ChangeI18n"/>
+            <interceptor name="viewAction" class="org.aepscolombia.platform.interceptors.ViewActionInterceptor"/>
             <!--<interceptor name="jcaptchaDefaultStack" class="com.google.code.jcaptcha4struts2.core.interceptors.JCaptchaValidationIntercepter"/>-->
             <interceptor-stack name="defaultStackAeps">    
                 <interceptor-ref name="requireUser" />
@@ -17,9 +19,15 @@
                 <!--<interceptor-ref name="timer" />
                 <interceptor-ref name="logger" />-->
             </interceptor-stack>
+            <interceptor-stack name="defaultI18n">    
+                <interceptor-ref name="timer" />
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="logger" />
+                <interceptor-ref name="validateI18n" />
+            </interceptor-stack>
         </interceptors>
         <!--<default-action-ref name="initial" />-->
-
+        <!--<default-interceptor-ref name="defaultI18n"></default-interceptor-ref>-->
         <global-results>
             <result name="400">
                 /WEB-INF/views/errors/400.jsp                
@@ -35,22 +43,47 @@
             </result>
         </global-results>
         <!-- Public part -->
-        <action name="initial">
-            <result>/layout.jsp</result>
-        </action>     
-        <action name="home">
-            <result>/WEB-INF/views/generals/home.jsp</result>
-        </action>     
-        <action name="about">
-            <result>/WEB-INF/views/generals/aboutUs.jsp</result>
-        </action>     
         <action name="*" class="org.aepscolombia.platform.controllers.BaseAction">
             <result name="input">/WEB-INF/views/errors/404.jsp</result>
         </action>
+        <action name="locale" class="org.aepscolombia.platform.controllers.LocaleAction">
+            <!--<result name="states" type="json"></result>-->
+            <result>/layout.jsp</result>
+        </action>
+        
+        <action name="localeLogin" class="org.aepscolombia.platform.controllers.LocaleAction">
+            <result>/WEB-INF/views/login/login.jsp</result>
+        </action>
+        
+        <action name="localePrivate" class="org.aepscolombia.platform.controllers.LocaleAction">
+            <result>/WEB-INF/views/generals/layoutPrivate.jsp</result>
+        </action>
+        
+        <action name="initial">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page" type="redirectAction">locale</result>
+            <!--<result>/layout.jsp</result>-->
+        </action>             
+        <action name="home">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/layout.jsp</result>
+            <result>/WEB-INF/views/generals/home.jsp</result>
+        </action>     
+        <action name="about">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/layout.jsp</result>
+            <result>/WEB-INF/views/generals/aboutUs.jsp</result>
+        </action>           
 <!--        <action name="contact"  method="contact" class="org.aepscolombia.platform.controllers.ActionContact">
             <result>/WEB-INF/views/contacts.jsp</result>
         </action>-->
         <action name="contact">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/layout.jsp</result>
             <result>/WEB-INF/views/generals/contacts.jsp</result>
         </action>
         <action name="verifyUser"  method="verifyUser" class="org.aepscolombia.platform.controllers.ActionLogin">
@@ -66,8 +99,16 @@
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="states" type="json"></result>
         </action>
+        
+        <action name="sendInformation"  method="sendInformation" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name="states" type="json"></result>
+        </action>
+        
+        
         <action name="verifyUserToRestore"  method="verifyUserToRestore" class="org.aepscolombia.platform.controllers.ActionLogin">
-            <result>/WEB-INF/views/login/restorePass.jsp</result>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/login/restorePass.jsp</result>            
 <!--            <result name="error" type="redirectAction">400</result>
             <result name="input" type="redirectAction">
                 <param name="actionName">404</param>
@@ -78,20 +119,26 @@
         <action name="changePassUser"  method="changePassUser" class="org.aepscolombia.platform.controllers.ActionLogin">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="states" type="json"></result>
+            <!--<result type="redirectAction">signin</result>-->
         </action>
         <action name="login"  method="login" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <!--<result name = "states" type="json"></result>-->
 <!--            <result type="redirectAction">
                 <param name="actionName">verify</param>
                 <param name="namespace">/</param>
             </result>-->
-            <result>/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <!--<result>/WEB-INF/views/generals/layoutPrivate.jsp</result>-->            
+            <result type="redirectAction">dashboard</result>            
             <!--<result type="redirect">/WEB-INF/views/dashboard.jsp</result>-->
             <result name="input">/WEB-INF/views/login/login.jsp</result>
         </action>
-        <action name="saveUser" method="saveData" class="org.aepscolombia.platform.controllers.ActionLogin">
+        <action name="saveUser" method="saveData" class="org.aepscolombia.platform.controllers.ActionLogin">    
             <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="validateI18n"/> 
+            <interceptor-ref name="defaultStack" />               
             <result name="states" type="json"></result>
             <!--<result name="input">/WEB-INF/views/login/login.jsp</result>-->
         </action>
@@ -99,8 +146,11 @@
         
         <!-- Private part -->
         <action name="signin" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result>/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <interceptor-ref name="viewAction"/>
+            <result type="redirectAction">dashboard</result>
+            <!--<result>/WEB-INF/views/generals/layoutPrivate.jsp</result>-->
             <result name="input">/WEB-INF/views/login/login.jsp</result>
         </action>                           
         <action name="logout" method="logout" class="org.aepscolombia.platform.controllers.ActionLogin">
@@ -111,17 +161,31 @@
             </result>
         </action>    
         <action name="dashboard">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="defaultStackAeps"/>                        
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+        </action>
+<!--        <action name="resume">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
             <result>/WEB-INF/views/generals/layoutPrivate.jsp</result>
-        </action>
-        <action name="resume">
-            <interceptor-ref name="defaultStackAeps"/>
-            <result>/WEB-INF/views/generals/dashboard.jsp</result>
-        </action>
+            <result name="page">/WEB-INF/views/generals/dashboard.jsp</result>
+        </action>-->
         <action name="getting">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/generals/getting.jsp</result>
-        </action>         
+        </action>  
+        <action name="configuration" method="getInformation" class="org.aepscolombia.platform.controllers.ActionProfile">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/profile/form-profile.jsp</result>
+        </action>          
         <!-- End private part -->
     </package>  
     
@@ -146,16 +210,21 @@
         </action>
         <action name="listProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/producers/list-producer.jsp</result>
             <!--<result>/WEB-INF/views/prueba.jsp</result>-->
         </action>
         <action name="searchProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
             <result>/WEB-INF/views/producers/info-producer.jsp</result>
             <!--<result>/WEB-INF/views/prueba.jsp</result>-->
         </action>
         <action name="showProducer" method="show" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/producers/form-producer.jsp</result>
         </action>
         <action name="saveProducer" method="saveData" class="org.aepscolombia.platform.controllers.ActionProducer">            
@@ -196,21 +265,26 @@
         </action>
         <action name="listFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/farms/list-farm.jsp</result>
         </action>
         <action name="searchFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/farms/info-farm.jsp</result>
         </action>
         <action name="showFarm" method="show" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
             <result>/WEB-INF/views/farms/form-farm.jsp</result>
         </action>
         <action name="saveFarm" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
-            <result name = "success">/WEB-INF/views/farms/form-farm.jsp</result>
+            <!--<result>/WEB-INF/views/farms/form-farm.jsp</result>-->
         </action>
         <action name="deleteFarm" method="delete" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
@@ -231,21 +305,26 @@
         </action>-->
         <action name="listField" method="search" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/fields/list-field.jsp</result>
         </action>
         <action name="searchField" method="search" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/fields/info-field.jsp</result>
         </action>
         <action name="showField" method="show" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/fields/form-field.jsp</result>
         </action>
         <action name="saveField" method="saveData" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
             <result name = "states" type="json"></result>
-            <result name = "success">/WEB-INF/views/fields/form-field.jsp</result>
+            <!--<result>/WEB-INF/views/fields/form-field.jsp</result>-->
         </action>
         <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>

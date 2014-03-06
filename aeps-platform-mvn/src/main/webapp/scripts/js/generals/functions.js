@@ -608,6 +608,20 @@ function viewInfoList(url, divShow, message)
     });
 }
 
+function showInfoPage(url, valFill)
+{
+    var data;
+    $('#' + valFill).html('');
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {
+            $('#' + valFill).html(information);
+        }
+    });
+}
+
 function chargeValues(url, valName, valSend, valFill, formId)
 {
     var data;
@@ -886,8 +900,10 @@ function completeForm(dialogId, formId, information)
 //        });
 //    }
 //    alert(123456)    
-//    Recaptcha.reload();
+    Recaptcha.reload();
     $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
     if (dialogId!='') {
         $('#'+dialogId).find("div.alert-info").remove();
@@ -917,11 +933,34 @@ function completeForm(dialogId, formId, information)
     }  
 }
 
+function completeFormChange(dialogId, formId, information) 
+{
+    $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
+    var json = jQuery.parseJSON(information);
+    if (dialogId!='') {
+        $('#'+dialogId).find("div.alert-info").remove();
+    }    
+    if (json.state == 'failure') {
+        showMessError(formId, json.info);
+        $('#'+formId).append(setTimerToMessage(8));
+    } else if (json.state == 'success') {
+        showMessInfo(formId, json.info);
+        $('#'+formId)[0].reset();
+    }
+    if (dialogId!='') {
+        $('#'+dialogId).dialog("close");
+    }  
+}
+
 function completeFormGetting(dialogId, formId, divId, information) 
 {
     $('#'+divId).find("div.alert-info").remove();
     $('#'+divId).find("div.alert-error").remove();
     $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
 //    if (dialogId!='') {
 //        $('#'+dialogId).find("div.alert-info").remove();
@@ -971,11 +1010,11 @@ function validationForm(form, errors)
     form.find("div.alert-info").remove();
     form.find("div.alert-error").remove();
     form.find("span.s2_help_inline").remove();
-    form.find("div.s2_validation_errors").remove();
-//    Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
+    form.find("div.s2_validation_errors").remove();    
     $.unblockUI();
     //Handle non field errors
-    if (errors.errors && errors.errors.length > 0) {        
+    if (errors.errors && errors.errors.length > 0) { 
+//        Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
         var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'></div>");
         form.prepend(errorDiv);
         errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
@@ -987,6 +1026,7 @@ function validationForm(form, errors)
 
     //Handle field errors
     if (errors.fieldErrors) {
+//        Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
         $.each(errors.fieldErrors, function(index, value) {
             var element = form.find(":input[name=\"" + index + "\"]"), controlGroup, controls;
             if (element && element.length > 0) {
@@ -1390,21 +1430,41 @@ function sendFormHarvestChange(url, formId, divShowA, divShowB, divHide, message
     });
 }
 
-function activeOption(ulId) 
+function activeOption(ulId, classId) 
 {
+//    alert(classId)
     $('#'+ulId).find("li.active").removeClass("active");
-    $(document.activeElement).parent('li').addClass("active");
-//    $('#'+ulId+' li').addClass(function(index, currentClass ) {
-//        var addedClass;
-//        alert(currentClass)
-//        if (currentClass === "homeCls") {
-//          addedClass = "active";
-//        } else if (currentClass === "aboutCls") {
-//          addedClass = "active";
-//        } else if (currentClass === "contactCls") {
-//          addedClass = "active";
-//        } 
-//        return addedClass;
-//    });
+    $('.'+classId).addClass("active");    
+}
+
+//function activeOption(ulId) 
+//{
+//    $('#'+ulId).find("li.active").removeClass("active");
+//    $(document.activeElement).parent('li').addClass("active");
+////    $('#'+ulId+' li').addClass(function(index, currentClass ) {
+////        var addedClass;
+////        alert(currentClass)
+////        if (currentClass === "homeCls") {
+////          addedClass = "active";
+////        } else if (currentClass === "aboutCls") {
+////          addedClass = "active";
+////        } else if (currentClass === "contactCls") {
+////          addedClass = "active";
+////        } 
+////        return addedClass;
+////    });
+//    
+//}
+
+function showInfoPassword(divId, fieldId) 
+{
+    var valAdd = $("#"+fieldId).val();
+    if (valAdd=="false") {
+        $('#'+divId).show();
+        $("#"+fieldId).val("true");
+    } else if (valAdd=="true") {
+        $('#'+divId).hide();
+        $("#"+fieldId).val("false");
+    }
     
 }

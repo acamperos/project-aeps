@@ -1,8 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<% HashMap addAss    = (HashMap) request.getAttribute("additionals");%>
-<% String valueAss   = (String) (addAss.get("selected"));%>
 <s:form id="formProducerSearch" action="searchProducer.action?selected=%{selected}" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="Buscar productor">
     <div class="row-fluid">
         <div class="span5">

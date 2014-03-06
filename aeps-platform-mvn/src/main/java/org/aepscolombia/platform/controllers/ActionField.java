@@ -602,15 +602,15 @@ public class ActionField extends BaseAction {
 //            lot.setControlEnfermedadesLot(true);       
             session.saveOrUpdate(lot);
 //            lotDao.save(lot);
-            FieldsProducers fiePro = new FieldsProducers();
-            fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
-            fiePro.setFields(lot);   
-            fiePro.setProducers(proDao.objectById(idProducer));
-            fiePro.setFieldTypes(new FieldTypes(typeLot));
-            session.saveOrUpdate(fiePro);
+            
             if(lot.getIdFie()>0 && action.equals("M")) {
                 FieldsProducers fieTemp = lotDao.checkFieldProducer(lot.getIdFie(), idProOld);
-                session.delete(fieTemp);
+                if(idProOld!=idProducer) {                    
+                    session.delete(fieTemp);
+                } else {
+                    fieTemp.setFieldTypes(new FieldTypes(typeLot));
+                    session.saveOrUpdate(fieTemp);
+                }
 //                System.out.println("id field->"+fiePro.getFields().getIdFie());
 //                fiePro = new FieldsProducers();
 //                fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
@@ -618,6 +618,15 @@ public class ActionField extends BaseAction {
 //                fiePro.setProducers(proDao.objectById(idProducer));
 //                fiePro.setFieldTypes(new FieldTypes(typeLot));
 //                session.saveOrUpdate(fiePro);
+            }
+            
+            if(idProOld!=idProducer) {
+                FieldsProducers fiePro = new FieldsProducers();
+                fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
+                fiePro.setFields(lot);   
+                fiePro.setProducers(proDao.objectById(idProducer));
+                fiePro.setFieldTypes(new FieldTypes(typeLot));
+                session.saveOrUpdate(fiePro);
             }
             
             LogEntities log = new LogEntities();

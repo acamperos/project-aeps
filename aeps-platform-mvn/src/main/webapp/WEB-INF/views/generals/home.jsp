@@ -28,13 +28,13 @@
                         <div class="jumbotron">
                             <div class="row">
                                 <div class="span6">
-                                    <h1>Imagen Plataforma</h1>
+                                    <h1><s:property value="getText('image.platform')" /></h1>
                                 </div>
                                 <div class="span6">
-                                    <p class="text-left lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+                                    <p class="text-left lead"><s:property value="getText('text.description.platform')" /></p>
                                     <p>
-                                        <a href="login.action" class="btn btn-primary btn-success btn-lg">Ingresar</a>
-                                        <a href="login.action?user=new" class="btn btn-default btn-lg">Registrarse</a>
+                                        <a href="login.action" class="btn btn-primary btn-success btn-lg"><s:property value="getText('button.ingress.platform')" /></a>
+                                        <a href="login.action?user=new" class="btn btn-default btn-lg"><s:property value="getText('button.register.platform')" /></a>
                                     </p>
                                 </div>
                             </div>								
@@ -44,12 +44,12 @@
                         <div class="jumbotron">
                             <div class="row">
                                 <div class="span6">
-                                    <h1>Imagen Blog</h1>
+                                    <h1><s:property value="getText('image.blog')" /></h1>
                                 </div>
                                 <div class="span6">
-                                    <p class="text-left lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+                                    <p class="text-left lead"><s:property value="getText('text.description.blog')" /></p>
                                     <p>
-                                        <button type="button" class="btn btn-primary btn-success btn-lg">Ir al Blog</button>
+                                        <button type="button" class="btn btn-primary btn-success btn-lg"><s:property value="getText('button.go.blog')" /></button>
                                     </p>
                                 </div>
                             </div>
@@ -59,14 +59,14 @@
                         <div class="jumbotron">
                             <div class="row">
                                 <div class="span6">
-                                    <h1>Imagen Movil</h1>
+                                    <h1><s:property value="getText('image.mobile')" /></h1>
                                 </div>
                                 <div class="span6">
-                                    <p class="text-left lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+                                    <p class="text-left lead"><s:property value="getText('text.description.mobile')" /></p>
                                     <!--<p>-->
                                     <div id="img_container">
                                         <!-- <img src="img/logo-google-play-vetor.png"/> -->
-                                        <button type="button" class="btn btn-primary btn-lg">Ir a Google Play</button>
+                                        <button type="button" class="btn btn-primary btn-lg"><s:property value="getText('button.go.mobile')" /></button>
                                     </div>
                                     <!--</p>-->
                                 </div>
@@ -77,20 +77,20 @@
             </div>
             <div class="row">
                 <div class="span12">
-                    <h3>Que es AEPS 33 (Agricultura Espec&iacute;fica Por Sitio)</h3><!-- Replace all text with what you want -->
-                    <p>Hey there, my name is &quot;Your Name&quot; and I am a photographer and web developer! This is my brand new portfolio. It's super cool because it's completely responsive! That means you can re-size it to whatever size you like and it always looks great. Have a look around and enjoy.</p>
+                    <h3><s:property value="getText('text.title.group')" /></h3><!-- Replace all text with what you want -->
+                    <p><s:property value="getText('text.description.group')" /></p>
                 </div>
             </div>
             <div class="row">
                 <div class="span12">
                     <div class="tabbable tabs-left tabbable-bordered">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tb3_a" data-toggle="tab">Reportes Generales</a></li>
-                            <li><a href="#tb3_b" data-toggle="tab">Como usar el sistema</a></li>
+                            <li class="active"><a href="#tb3_a" data-toggle="tab"><s:property value="getText('text.link.report')" /></a></li>
+                            <li><a href="#tb3_b" data-toggle="tab"><s:property value="getText('text.link.info')" /></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tb3_a">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.</p>
+                                <p><s:property value="getText('text.description.report')" /></p>
                             </div>
                         </div>
                     </div>

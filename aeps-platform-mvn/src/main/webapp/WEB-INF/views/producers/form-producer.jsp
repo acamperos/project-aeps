@@ -28,14 +28,14 @@
                     headerValue="---"
                     requiredLabel="true"
                     onchange="selValue(this, 'divDigVerPro');
-                            selConf(this.value, 'formProducer_num_ident_producer');"
+                                selConf(this.value, 'formProducer_num_ident_producer');"
                     />
             </div>
             <div>
                 <s:textfield
                     label="Numero de cedula:"
                     requiredLabel="true"
-                    name="num_ident_producer"         
+                    name="num_ident_producer"       
                     tooltip="Ingrese su numero de cedula"
                     />
                 <!--<img src="../img/search_icon.gif" onclick="listInfo('/aeps-plataforma-mvn/buscarProducer.action&selected=producer', 'identObj', 'params_num_ident_producer', 'params_num_ident_producer', 'params_num_ident_producer', 'Listado de Productores', 1050, 550)" />-->
@@ -48,7 +48,7 @@
                     />
             </div>     
             <div class="row-fluid">
-                <div class="span4">
+                <div class="span5">
                     <s:textfield
                         label="Primer nombre:"
                         requiredLabel="true"
@@ -65,7 +65,7 @@
                 </div>
             </div> 
             <div class="row-fluid">
-                <div class="span4">
+                <div class="span5">
                     <s:textfield
                         label="Primer apellido:"
                         requiredLabel="true"

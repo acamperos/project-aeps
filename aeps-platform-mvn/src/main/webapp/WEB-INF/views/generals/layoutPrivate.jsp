@@ -19,11 +19,11 @@
         <link rel="stylesheet" href="scripts/css/generals/responsiveslides.css" />	
         <link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery.ui.all.css" />
         <link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery-ui.css" />
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
-        <link rel="stylesheet" href="scripts/css/generals/main.css">
+        <link rel="stylesheet" href="scripts/css/generals/beoro.css">        
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>		
         <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
+        <link rel="stylesheet" href="scripts/css/generals/main.css">
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
@@ -40,6 +40,7 @@
         <script src="scripts/js/generals/responsiveslides.js"></script>
     </head>
     <body>
+        <div id="divMessage"></div>
         <div id="dialog-form"></div>
         <div class="header">
             <%@ include file="header-private.jsp" %>
@@ -49,6 +50,13 @@
         </div>
         <div class="footer">
             <%@ include file="footer.jsp" %>
-        </div>        
+        </div>
+        <script>
+            var actionName   = '<%= session.getAttribute("action") %>';
+            activeOption('ulOptionsMenu', actionName+'Cls');
+            if (actionName!='' && actionName!='dashboard') {
+                showInfoPage(''+actionName+'.action', 'divBodyLayout');                       
+            }
+        </script>
     </body>
 </html>

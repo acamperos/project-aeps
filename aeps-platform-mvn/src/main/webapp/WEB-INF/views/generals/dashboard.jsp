@@ -9,7 +9,7 @@
         <div class="container">
             <nav>
                 <ul id="menu" class="nav">
-                    <li id="nav1"><sj:a href="getting.action" cssClass="btn" targets="divBodyLayout">Captura</sj:a></li>
+                    <li id="nav1"><s:a href="getting.action" cssClass="btn" targets="divBodyLayout">Captura</s:a></li>
                 </ul>
             </nav>
         </div>

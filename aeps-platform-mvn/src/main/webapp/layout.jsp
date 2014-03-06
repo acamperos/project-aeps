@@ -7,24 +7,24 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <link rel="icon" type="image/ico" href="favicon.ico">
+        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 							
-        <!--<link rel="stylesheet" href="scripts/css/bootstrap/bootstrap-responsive.min.css">-->
-        <!--<link rel="stylesheet" href="scripts/css/generals/justified-nav.css">-->
-        <!-- <link rel="stylesheet" href="scripts/css/bootstrap-theme.min.css"> -->
-        <!--<link rel="stylesheet" href="scripts/css/generals/main.css">-->
         <link rel="stylesheet" href="scripts/css/generals/style.css">
-        <link rel="stylesheet" href="scripts/css/generals/responsive.css">
+        <!--<link rel="stylesheet" href="scripts/css/generals/responsive.css">-->
         <link rel="stylesheet" href="scripts/css/generals/responsiveslides.css" />	
         <!--<link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery.ui.all.css" />-->
         <!--<link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery-ui.css" />-->
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
-        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>		
-        <!--<script type="text/javascript" src="scripts/js/generals/validations.js"></script>-->
+        <link rel="stylesheet" href="scripts/css/generals/beoro.css">        
         <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>        
+        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>		
+        <!--<script type="text/javascript" src="scripts/js/generals/validations.js"></script>-->        
+        <link rel="stylesheet" href="scripts/css/generals/main.css">
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>-->
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>-->
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery-ui/ui/jquery-ui.js"></script>-->	
@@ -41,6 +41,8 @@
         <script src="scripts/js/generals/responsiveslides.js"></script>
     </head>
     <body>
+        <div id="divMessage"></div>
+        <div id="dialog-form"></div>
         <div class="header">
             <%@ include file="WEB-INF/views/generals/header.jsp" %>
         </div>
@@ -50,5 +52,16 @@
         <div class="footer">
             <%@ include file="WEB-INF/views/generals/footer.jsp" %>            
         </div>
+        <script>
+            var actionName   = '<%= session.getAttribute("action") %>';
+//            alert(actionName);            
+            if (actionName!='null' && actionName!='' && actionName!='initial' && actionName!='login') {
+                showInfoPage(''+actionName+'.action', 'divBodyLayout');                 
+            }
+            if (actionName=='null' || actionName=='' || actionName=='initial') {
+              actionName = 'home';                  
+            }
+            activeOption('ulOptionsMenu', actionName+'Cls');
+        </script>
     </body>
 </html>

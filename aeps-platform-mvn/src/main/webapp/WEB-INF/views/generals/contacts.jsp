@@ -15,39 +15,56 @@
                     <!-- <h4>Tabs</h4> -->
                 </div>
                 <div class="w-box-content cnt_b">
-                    <s:form theme="simple">
+                    <s:form id="formContact" action="sendInformation.action" method="post">
+                        <s:hidden name="actExe" value="contact"/>
                         <fieldset>
-                            <legend>Contactenos</legend>
-                            <div class="form-group">
-                                <s:label for="formContact_nameUser">Nombre Completo *:</s:label>
-                                <s:textfield cssClass="form-control" id="formContact_nameUser"/>
-                            </div>
-                            <div class="form-group">
-                                <s:label for="formContact_emailUser">Correo Electr&oacute;nico *:</s:label>
-                                <s:textfield cssClass="form-control" id="formContact_emailUser" placeholder="Ingrese correo"/>
-                            </div>
-                            <div class="row">
-                                <div class="span4">
-                                    <s:label for="formContact_celphone">Celular :</s:label>
-                                    <s:textfield cssClass="form-control" id="formContact_celphone"/>
-                                </div>
-                                <div class="span6">
-                                    <s:label for="formContact_telephone">Telefono :</s:label>
-                                    <s:textfield cssClass="form-control" id="formContact_telephone"/>
+                            <legend><s:property value="getText('text.titlecontact.contact')" /></legend>
+                            <div class="control-group required_field_mark">
+                                <s:label for="formContact_nameUser" cssClass="control-label"><s:property value="getText('text.name.contact')" /> <span>*</span>:</s:label>
+                                <div class="controls">
+                                    <s:textfield cssClass="form-control" id="formContact_nameUser" name="nameUser"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <s:label for="formContact_whatneed">Necesidad *:</s:label>
-                                <textarea rows="5" id="formContact_whatneed"></textarea>
+                            <div class="control-group required_field_mark">
+                                <s:label for="formContact_emailUser" cssClass="control-label"><s:property value="getText('text.email.contact')" /> <span>*</span>:</s:label>
+                                <div class="controls">
+                                    <s:textfield cssClass="form-control" id="formContact_emailUser" name="emailUser" placeholder="%{getText('text.ingressemial.contact')}"/>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span4 control-group">
+                                    <s:label for="formContact_celphone" cssClass="control-label"><s:property value="getText('text.cellphone.contact')" /> :</s:label>
+                                    <div class="controls">
+                                        <s:textfield cssClass="form-control" id="formContact_celphone" name="celphone"/>
+                                    </div>
+                                </div>
+                                <div class="span6 control-group">
+                                    <s:label for="formContact_telephone" cssClass="control-label"><s:property value="getText('text.phone.contact')" /> :</s:label>
+                                    <div class="controls">
+                                        <s:textfield cssClass="form-control" id="formContact_telephone" name="telephone"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group required_field_mark">
+                                <s:label for="formContact_whatneed" cssClass="control-label"><s:property value="getText('text.whatneed.contact')" /> <span>*</span>:</s:label>
+                                <div class="controls">
+                                    <textarea rows="5" id="formContact_whatneed" name="whatneed"></textarea>
+                                </div>					 
                             </div>					 
-                            <div class="row">
+                            <div class="row-fluid">
                                 <div class="span6">
                                     <!--<button type="submit" class="btn btn-primary">Enviar</button>-->
                                     <!-- <button class="btn btn-default" data-href="home.action">Volver</button> -->
-                                <sj:a href="home.action" cssClass="btn btn-default" targets="divBodyLayout">Volver</sj:a>
+                                    <%--<sj:a href="home.action" cssClass="btn btn-default" targets="divBodyLayout">Volver</sj:a>--%>
                                     <!--<a href="home.action" class="btn btn-default">Volver</a>-->
+                                    <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeContact" value="Enviar informacion" validate="true" validateFunction="validationForm"/>
                                 </div>  
                             </div>  
+                            <script>
+                                $.subscribe('completeContact', function(event, data) {
+                                    completeFormChange('', 'formContact', event.originalEvent.request.responseText);
+                                });
+                            </script>
                         </fieldset>
                     </s:form>
                 </div>

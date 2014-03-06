@@ -163,7 +163,7 @@ small { font-size: 11px }*/
     .nav-icons .dropdown-menu li > a {padding:0 10px}
     .user-box { text-align: right }
     .user-box-inner { display: inline-block; text-align: left; }
-    .user-box .user-avatar { display: block; float: left; margin-right: 10px; max-width: 40px; position: relative; top: -3px; }
+    .user-box .user-avatar { display: block; float: left; margin-right: 10px; max-width: 40px; position: relative; top: 1px; }
     .user-box .user-info { padding: 0 20px 0 0; display: inline-block; }
     .user-box .user-info ul { margin: 0; line-height: 15px; }
     .user-box .user-info li { display: inline; font-size: 11px; }

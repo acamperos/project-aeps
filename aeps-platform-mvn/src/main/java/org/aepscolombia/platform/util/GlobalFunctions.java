@@ -39,6 +39,7 @@ public class GlobalFunctions {
      *
      * @param toAdress Quien recibe el correo
      * @param fromAdress Quien escribe el correo
+     * @param fromAdressPass Contraseña de quien escribe el correo
      * @param subject Asunto del correo
      * @param subjectMsg Descripcion general del correo
      */
@@ -48,7 +49,7 @@ public class GlobalFunctions {
 //        props.setProperty("mail.smtp.host", host); 
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.host", "smtp-mail.outlook.com");
         props.put("mail.smtp.port", "587");
 //        Session session  = Session.getDefaultInstance(props, null);
         final String fromAdressVal = fromAdress;
@@ -233,6 +234,26 @@ public class GlobalFunctions {
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
                 + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>AQUI</a> \n"
+                + "</body> \n"
+                + "</html>";
+        return msg;
+    }
+    
+    /**
+     * Encargado de enviar al correo del administrador las inquietudes generadas por el usuario
+     *
+     * @param nameUser Nombre del usuario que ha enviado la solicitud
+     * @param emailUser Email del usuario que ha enviado la solicitud
+     * @param textMessageUser Cuerpo del mensaje enviado por el usuario
+     * restaurar un usuario
+     * @return representacion del mensaje en HTML
+     */
+    public static String messageToSendContact(String nameUser, String emailUser, String textMessageUser) {
+        String msg = "<html> \n"
+                + "<body> \n"
+                + "<h3>El correo: " + emailUser + "</h3> \n"
+                + "<p>Perteneciente a: " + nameUser + "</p> \n"
+                + "<p>Envia lo siguiente: " + textMessageUser + "</p> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;

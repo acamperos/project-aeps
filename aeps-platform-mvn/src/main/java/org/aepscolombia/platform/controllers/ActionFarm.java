@@ -70,6 +70,7 @@ public class ActionFarm extends BaseAction {
     private String identProducer;    
     public List<HashMap> listProducers;
     public List<HashMap> listProperties;
+    private List<HashMap> listRoute;
     private Users user;
     private Integer idEntSystem;
 
@@ -342,6 +343,14 @@ public class ActionFarm extends BaseAction {
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());           
         this.setCity_property(mun);
+//        HashMap route = new HashMap();
+//        route.put("getting", getText("email.from"));
+//        listRoute.add(route);
+//        route = new HashMap();
+////        String val = getText('text.title.farm');
+//        route.put("listFarm", getText("email.from"));
+//        listRoute.add(route);
+        
     }
 
     @Override
@@ -382,6 +391,7 @@ public class ActionFarm extends BaseAction {
                 required.put("length_minutes_property", length_minutes_property);
                 required.put("length_seconds_property", length_seconds_property);
             }
+            System.out.println("values->"+required);
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = String.valueOf(required.get(sK));
@@ -391,6 +401,19 @@ public class ActionFarm extends BaseAction {
                     addFieldError(sK, "El campo es requerido");
                 }
             }
+            
+//            for (Iterator it = required.keySet().iterator(); it.hasNext();) {
+//                String sK = (String) it.next();
+//                String sV = String.valueOf(required.get(sK));
+//                boolean stop = false;
+//                if (sV.equals(sK)) {
+//                    stop = true;
+//                }
+//                if (stop) {
+//                    required.remove(sK);
+//                }
+//            }
+            
             
             double altPro = Double.parseDouble(altitude_property);
             double latPro = Double.parseDouble(latitude_property);
@@ -646,17 +669,13 @@ public class ActionFarm extends BaseAction {
             far.setMunicipalities(new Municipalities(Integer.parseInt(cityFar)));
             session.saveOrUpdate(far);
 //            farDao.save(far);
-//            System.out.println("valId->"+far.getIdFar());
-
+//            System.out.println("valId->"+far.getIdFar());            
             
-            FarmsProducers farPro = new FarmsProducers();
-            farPro.setId(new FarmsProducersId(far.getIdFar(), idProducer));
-            farPro.setFarms(far);   
-            farPro.setProducers(proDao.objectById(idProducer));
-            session.saveOrUpdate(farPro);
             if(far.getIdFar()>0 && action.equals("M")) {
-                FarmsProducers farTemp = farDao.checkFarmProducer(far.getIdFar(), idProOld);
-                session.delete(farTemp);
+                if(idProOld!=idProducer) {
+                    FarmsProducers farTemp = farDao.checkFarmProducer(far.getIdFar(), idProOld);
+                    session.delete(farTemp);
+                }
 //                System.out.println("id field->"+fiePro.getFields().getIdFie());
 //                fiePro = new FieldsProducers();
 //                fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
@@ -664,6 +683,14 @@ public class ActionFarm extends BaseAction {
 //                fiePro.setProducers(proDao.objectById(idProducer));
 //                fiePro.setFieldTypes(new FieldTypes(typeLot));
 //                session.saveOrUpdate(fiePro);
+            }
+            
+            if(idProOld!=idProducer) {
+                FarmsProducers farPro = new FarmsProducers();
+                farPro.setId(new FarmsProducersId(far.getIdFar(), idProducer));
+                farPro.setFarms(far);   
+                farPro.setProducers(proDao.objectById(idProducer));
+                session.saveOrUpdate(farPro);
             }
 
             LogEntities log = new LogEntities();
@@ -690,7 +717,7 @@ public class ActionFarm extends BaseAction {
             }
             e.printStackTrace();
             state = "failure";
-            info = "Fallo al momento de agregar una farm";
+            info = "Fallo al momento de agregar una finca";
         } finally {
             session.close();
         }

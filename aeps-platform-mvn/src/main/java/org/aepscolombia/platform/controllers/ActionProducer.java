@@ -233,18 +233,7 @@ public class ActionProducer extends BaseAction {
 //        user = (Users) this.getSession().get(APConstants.SESSION_USER);
 //        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
 //        super();
-    }
-    
-    @Override
-    public void prepare() throws Exception {
-        user = (Users) this.getSession().get(APConstants.SESSION_USER);
-        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setDepartment_producer(new DepartmentsDao().findAll());
-        List<Municipalities> mun = new ArrayList<Municipalities>();
-        mun.add(new Municipalities());           
-        this.setCity_producer(mun);
-    }
+    }    
     
     //Atributos generales de clase
     /**
@@ -314,6 +303,17 @@ public class ActionProducer extends BaseAction {
 
     public String getInfo() {
         return info;
+    }
+    
+    @Override
+    public void prepare() throws Exception {
+        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+        this.setType_ident_producer(new DocumentsTypesDao().findAll());
+        this.setDepartment_producer(new DepartmentsDao().findAll());
+        List<Municipalities> mun = new ArrayList<Municipalities>();
+        mun.add(new Municipalities());           
+        this.setCity_producer(mun);
     }
 
     @Override
@@ -463,6 +463,7 @@ public class ActionProducer extends BaseAction {
     public String search() {
 //        additionals  = new ArrayList<HashMap<String, String>>();
 //        HashMap mMap = new HashMap();
+        String result = (String)this.getSession().get("result");
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
@@ -470,7 +471,7 @@ public class ActionProducer extends BaseAction {
         additionals = new HashMap();
         additionals.put("selected", selected);
 //        additionals.add(mMap);
-//        this.setType_ident_producer(new DocumentsTypesDao().findAll());
+//        this.setType_ident_producer(new DocumentsTypesDao().findAll());        
         HashMap findParams = new HashMap();
         findParams.put("idEntUser", idEntSystem);
         findParams.put("typeIdent", typeIdent);

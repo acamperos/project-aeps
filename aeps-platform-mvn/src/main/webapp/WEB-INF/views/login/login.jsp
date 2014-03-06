@@ -21,8 +21,9 @@
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>
-        <!--<link rel="stylesheet" href="scripts/css/generals/beoro.css">-->
+        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
         <link rel="stylesheet" href="scripts/css/generals/login.css">
+        <link rel="stylesheet" href="scripts/css/generals/main.css">
         <style>
             body {
                 padding-top: 50px;
@@ -119,12 +120,32 @@
         <div id="login-wrapper" class="clearfix">            
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
-                <h3 class="logo_img"><a href="initial.action">AEPS</a></h3>
+                <a href="initial.action" class="logo_img"><img src="img/logoAEPS.png" style="width: 200px; height: 80px;"/></a>
+                <div class="formIngress" style="margin-bottom: 10px">
+                    <s:url id="localeEN" namespace="/" action="localeLogin" >
+                        <s:param name="lang">en</s:param>
+                    </s:url>
+                    <s:url id="localeES" namespace="/" action="localeLogin" >
+                        <s:param name="lang">es</s:param>
+                    </s:url>
+                    <div class="span1" style="padding-top:10px; padding-right:15px">
+                        <s:property value="getText('text.select.language')" />
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn" href="#"><s:property value="getText('text.language')" /></a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><s:a href="%{localeEN}"><img src="img/languages/kingdom-flat.png" class="img-rounded" /> <s:property value="getText('text.english')" /></s:a></li>
+                            <li><s:a href="%{localeES}"><img src="img/languages/spain-flat.png" class="img-rounded" /> <s:property value="getText('text.spanish')" /></s:a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<h3 class="logo_img"><a href="initial.action">AEPS</a></h3>-->
                 <s:actionerror theme="bootstrap"/>
                 <s:actionmessage theme="bootstrap"/>
                 <s:fielderror theme="bootstrap"/>      
                 <div class="panel" id="divRegisterUser">
-                    <p class="heading_main">Ingreso al Sistema</p>
+                    <p class="heading_main"><s:property value="getText('text.titlecontact.login')" /></p>
                     <s:form id="formLogin" action="login.action" method="post" theme="simple">
                         <s:hidden name="actExe" value="login"/>
                         <!--                        <div class="control-group error">
@@ -136,13 +157,13 @@
                                                 </div>-->
                         <div class="row">
                             <div class="span6 control-group">
-                                <label class="control-label" for="formLogin_username">Usuario</label>
+                                <label class="control-label" for="formLogin_username"><s:property value="getText('text.user.login')" /></label>
                                 <div class="controls">
                                     <s:textfield id="formLogin_username" name="username"/>
                                 </div>                         
                             </div>
                             <div class="span6 control-group">
-                                <label class="control-label" for="formLogin_password">Contrase&ntilde;a</label>
+                                <label class="control-label" for="formLogin_password"><s:property value="getText('text.password.login')" /></label>
                                 <div class="controls">
                                     <s:password id="formLogin_password" name="password"/>
                                 </div>
@@ -150,18 +171,18 @@
                             <!-- <div class="login_links"> -->
                             <div class="login_links span6">
                                 <a href="javascript:void(0)" id="remPass">
-                                    <span>¿Olvido su contrase&ntilde;a?</span>
+                                    <span><s:property value="getText('text.forgetpass.login')" /></span>
                                 </a>
                             </div>
                             <div class="login_links span6">
                                 <a href="javascript:void(0)" id="newUser">
-                                    <span>Registrarse</span>
+                                    <span><s:property value="getText('text.signup.login')" /></span>
                                 </a>
                             </div>
                             <!-- </div> -->
                             <div class="submit_sect">
                                 <%--<sj:submit cssClass="btn btn-beoro-3" targets="result" value="Iniciar sesión" validate="true" validateFunction="bootstrapValidation"/>--%>
-                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" onCompleteTopics="completeLogin" value="Iniciar sesión" validate="true" validateFunction="validationForm" />
+                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" onCompleteTopics="completeLogin" value="%{getText('button.signin.login')}" validate="true" validateFunction="validationForm" />
                                 <%--<sj:submit cssClass="btn btn-primary" validate="true" value="Iniciar sesion"/>--%>
                             </div>
                         </div>				
@@ -214,7 +235,7 @@
                     <s:form id="formNewUser" action="saveUser.action" method="post" theme="simple">
                         <s:hidden name="actExe" value="newuser"/>
                         <div class="form-group control-group">
-                            <label class="control-label" for="formNewUser_typeUser">Tipo de usuario *:</label>
+                            <label class="control-label req" for="formNewUser_typeUser">Tipo de usuario:</label>
                             <div class="controls">
                                 <select class="form-control" id="formNewUser_typeUser" name="typeUser">
                                     <option value="1">Agricultor</option>
@@ -224,19 +245,21 @@
                             </div>   
                         </div>
                         <div class="form-group control-group">
-                            <label class="control-label" for="formNewUser_emailUser">Correo Electr&oacute;nico *:</label>
+                            <label class="control-label req" for="formNewUser_emailUser">Correo Electr&oacute;nico:</label>
                             <div class="controls">
                                 <s:textfield class="form-control" id="formNewUser_emailUser" name="emailUser" placeholder="Ingrese correo"/>
                             </div>
                         </div>
                         <div class="form-group control-group">
-                            <label class="control-label password required" for="formNewUser_passwordUser">Contrasena *:</label>
+                            <label class="control-label password req" for="formNewUser_passwordUser">Contrasena:</label>
+                            <label class="labelRequire" for="formNewUser_passwordUser">(Minimo 6 caracteres)</label>
                             <div class="controls">
                                 <s:password class="form-control" id="formNewUser_passwordUser" name="passwordUser"/>
                             </div>
                         </div>
                         <div class="form-group control-group">
-                            <label class="control-label" for="formNewUser_passwordRepUser">Repetir contrasena *:</label>
+                            <label class="control-label req" for="formNewUser_passwordRepUser">Repetir contrasena:</label>
+                            <label class="labelRequire" for="formNewUser_passwordRepUser">(Minimo 6 caracteres)</label>
                             <div class="controls">
                                 <s:password class="form-control" id="formNewUser_passwordRepUser" name="passwordRepUser"/>
                             </div>
@@ -254,13 +277,13 @@
                                 </a>
                             </div>
                             <div class="span4">
+                                <s:hidden name="intoVal" value="in"/>
                                 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
                                 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
                                 <%
-                                    //ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6Lfh2O0SAAAAANN4PftAGB-KQF26H4qUoyUMH69F", "6Lfh2O0SAAAAANtqQ1zF9uKjryu-9EZZnlCU_d76", false);
-                                    //String captchaScript = captcha.createRecaptchaHtml(null, null);
-
-                                    //out.print(captchaScript);
+                                    ReCaptcha captcha = ReCaptchaFactory.newReCaptcha("6Le3bu4SAAAAAAIy3mS2Ov8XerDrpgVxmWOShi9C", "6Le3bu4SAAAAAAdFTwmmT_2XuBKPGUhfdlgpRseY", false);
+                                    String captchaScript = captcha.createRecaptchaHtml(request.getParameter("error"), null);
+                                    out.print(captchaScript);
                                 %>
                             </div>
                             <div class="span4">

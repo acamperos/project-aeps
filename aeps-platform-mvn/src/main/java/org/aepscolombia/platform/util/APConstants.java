@@ -11,6 +11,8 @@ package org.aepscolombia.platform.util;
 public final class APConstants {
 
   public static final String SESSION_USER = "current_user";
+  public static final String SESSION_LANG = "session_lang";
+  public static final String ACTION_PAGE  = "page";
 //  public static final String ACTIVITY_REQUEST_ID = "activityID";
 //  public static final String PUBLIC_ACTIVITY_ID = "id";
 //  public static final String ACTIVITY_YEAR_REQUEST = "year";
