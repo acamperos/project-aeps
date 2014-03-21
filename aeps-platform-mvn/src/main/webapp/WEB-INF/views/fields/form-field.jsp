@@ -22,7 +22,7 @@
                                 requiredLabel="true"              
                                 tooltip="Seleccione un productor con la lupa a la derecha"                        
                                 />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/searchProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />
+                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />
                             <%-- <a href="#" data-toggle="tooltip" data-placement="right" title="Seleccione el productor">
                                                         
                                                 </a>--%>
@@ -36,7 +36,7 @@
                                 tooltip="Seleccione la finca en la lupa a la derecha"                        
                                 />
                             <!--<img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione la finca" onclick="listInfo('/aeps-plataforma-mvn/searchFarm.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />-->
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" onclick="setPropertyGeneral('/aeps-plataforma-mvn/searchFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
+                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
                             <%--<img src="../img/search_icon.gif" onclick="setPropertyVal('../actions/Actions.php?action=BuscarFincasXPro&selected=property', 'producer', 'params_id_producer', 'params_name_property', 'params_name_property', 'Listado de Fincas', 1050, 550)" />--%>
                         </div>
                         <div>

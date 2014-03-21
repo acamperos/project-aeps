@@ -26,6 +26,10 @@ public class Textures  implements java.io.Serializable {
 
     public Textures() {
     }
+    
+    public Textures(Integer idTex) {
+       this.idTex = idTex;
+    }
 
     public Textures(String nameTex) {
        this.nameTex = nameTex;

@@ -7,7 +7,7 @@
 <% String table = "display:none";%>
 <% String label = "";%>
 
-<s:if test="listLot.size() > 0">
+<s:if test="listSoils.size() > 0">
     <% table = "";%>
     <% label = "display:none";%> 
 </s:if>            
@@ -22,68 +22,58 @@
 <% String value   = (String) add.get("selected");%>
 <% String divShow = "";%>
 <% String divHide = "";%>
-<%  if (value.equals("crop")) {
-        divShow = "divFieldsForm";
-        divHide = "divListFieldsForm";
-    } else if (value.equals("rasta")) {
-        divShow = "divRastaForm";
-        divHide = "divListRastaForm";
-    } else {
-        divHide = "divConListFields";
-    }            
-%>    
+<% divHide = "divConListRasta"; %>    
 
 <div class="msgWin" id="messageWin"></div>
-<div id="divFields" class="w-box">
-    <button type="button" class="btn btn-primary" onclick="viewForm('/aeps-plataforma-mvn/showField.action?action=create', 'idField', '', 'Crear Lote', 1050, 550)">
-        <span class="glyphicon glyphicon-plus-sign"></span>Agregar lote
+<div id="divRasta" class="w-box">
+    <button type="button" class="btn btn-primary" onclick="viewForm('/aeps-plataforma-mvn/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
+        <span class="glyphicon glyphicon-plus-sign"></span>Agregar rasta
     </button>
-    <table class="table table-bordered table-hover" style="<%= table %>" id='tblFields'>
+    <table class="table table-bordered table-hover" style="<%= table %>" id='tblRasta'>
         <thead>
             <tr>
-                <% if (value != "lot") {%>
-                    <% if (value == "crop" || value.equals("rasta")) {%>
-                        <th></th>
-                    <% }%>
-                <% }%>
                 <!-- <th>#</th> -->
-                <th>Nombre</th>
-                <th>Tipo lote</th>
-                <th>Area</th>
+                <th>Numero</th>
+                <th>Fecha</th>
+                <th>Pendiente</th>
                 <th>Latitud</th>
                 <th>Longitud</th>
                 <th>Altura</th>
-                <% if (value == "lot" || value.equals("lot")) {%>
+                <th>Terreno Circundante</th>
+                <th>Posicion del terreno</th>
+                <th>Numero de capas</th>
+                <th>Ph</th>
+                <th>Carbonatos</th>
+                <% if (value == "rasta" || value.equals("rasta")) {%>
                     <th>Accion</th>
                 <% }%>
             </tr>
         </thead>
         <tbody>
-            <s:iterator value="listLot" var="lot">
+            <s:iterator value="listSoils" var="lot">
                 <% String action = "";%>
                 <% if (value != "lot") { %>
                 <%--<s:if test="!value.equals('lot')">--%>
-                    <% action = "selectItem('" + valName + "', '" + valId + "', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "','" + divShow + "', '" + divHide + "');";%>
+                    <% action = "selectItem('" + valName + "', '" + valId + "', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("idRasta") + "');";%>
                     <!--<?php $action = "selectItem('".$additionals['valName']."', '".$additionals['valId']."', '".$lot['nombre']."', '".$lot['id_lote']."'); " ?>-->
                 <%--</s:if>--%>
                 <% } %>
-                <s:if test="%{value.equals('crop')}">
-                    <% //action += "getInfo('/aeps-plataforma-mvn/cultivosAsociados.action?idProd=" + idProducer + "','idField','" + valId + "','divDataCrop','divMessage');";%>
+                <s:if test="value.equals('crop')">
+                    <% //action += "getInfo('/aeps-plataforma-mvn/cultivosAsociados.action?idProd=" + idProducer + "','idRasta','" + valId + "','divDataCrop','divMessage');";%>
                 </s:if>
-                <s:if test="%{value.equals('rasta')}">
-                    <% action = "selectItem('formRasta_nameField', 'formField_idField', '" + request.getAttribute("name_far") + "', '" + request.getAttribute("id_lot") + "', '" + divShow + "', '" + divHide + "')"; %>
-                    <% //action += "getInfo('/aeps-plataforma-mvn/GetRastasXField.action','idField','" + valId + "','divDataRastas','divMessage');";%>
+                <s:if test="value.equals('rasta')">
+                    <% //action += "getInfo('/aeps-plataforma-mvn/GetRastasXRasta.action','idRasta','" + valId + "','divDataRastas','divMessage');";%>
                 </s:if>
                 <tr onclick="<%= action%>" id="trLot<s:property value="id_lot" />>">
-                    <%@ include file="row-field.jsp" %>                                
+                    <%@ include file="row-soil.jsp" %>                                
                 </tr>
             </s:iterator>
         </tbody>
     </table>
-    <label style="<%= label%>"><%= "No se encuentra registrado ningun lote"%></label>
+    <label style="<%= label%>"><%= "No se encuentra registrado ningun rasta"%></label>
     <div class="hide">
         <div id="confirm_dialog_lot" class="cbox_content">
-            <div class="sepH_c"><strong>Desea borrar este(s) lote(s)?</strong></div>
+            <div class="sepH_c"><strong>Desea borrar este rasta?</strong></div>
             <div>
                 <a href="#" class="btn btn-small btn-primary confirm_yes">Si</a>
                 <a href="#" class="btn btn-small confirm_no">No</a>
@@ -92,6 +82,6 @@
     </div>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/searchField.action?selected="+value, divHide, "", "", "formFieldSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/soil/searchRasta.action?selected="+value, divHide, "", "", "formRastaSearch");%>    
     <%= result%>
 <div>

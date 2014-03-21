@@ -1,4 +1,4 @@
-package org.aepscolombia.platform.controllers;
+package org.aepscolombia.platform.util;
 
 /**
  * Clase JavascriptHelper

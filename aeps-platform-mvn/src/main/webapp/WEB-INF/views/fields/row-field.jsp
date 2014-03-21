@@ -1,6 +1,8 @@
 <% if (value != "lot") {%>
     <% if (value.equals("crop")) { %>
-        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>                     
+        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>          
+    <% } else if (value.equals("rasta")) {%>
+        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>
     <% }%>
 <% }%>
 <td>

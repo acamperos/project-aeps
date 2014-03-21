@@ -39,6 +39,9 @@ public class Fields  implements java.io.Serializable {
     public Fields() {
     }
 
+    public Fields(Integer idFie) {
+        this.idFie=idFie;
+    }
 	
     public Fields(String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie) {
         this.nameFie = nameFie;

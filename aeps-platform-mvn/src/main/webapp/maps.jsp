@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <link rel="icon" type="image/ico" href="favicon.ico">
+        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
         <title>AEPS</title>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <sj:head jqueryui="false"/>

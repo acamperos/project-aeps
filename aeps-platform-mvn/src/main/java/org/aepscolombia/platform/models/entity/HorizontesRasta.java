@@ -25,8 +25,10 @@ public class HorizontesRasta  implements java.io.Serializable {
      private Integer idHorRas;
      private Rastas rastas;
      private ResistenciasRompimiento resistenciasRompimiento;
+//     private Integer resistenciasRompimientoId;
      private Textures textures;
-     private int numeroHorizonteHorRas;
+//     private Integer texturesId;
+     private Integer numeroHorizonteHorRas=0;
      private Double espesorHorRas;
      private Integer colorSecoHorRas;
      private Integer colorHumedoHorRas;
@@ -48,6 +50,24 @@ public class HorizontesRasta  implements java.io.Serializable {
        this.colorSecoHorRas = colorSecoHorRas;
        this.colorHumedoHorRas = colorHumedoHorRas;
     }
+    
+    public HorizontesRasta(ResistenciasRompimiento resistenciasRompimiento, Textures textures, int numeroHorizonteHorRas, Double espesorHorRas, Integer colorSecoHorRas, Integer colorHumedoHorRas) {
+       this.resistenciasRompimiento = resistenciasRompimiento;
+       this.textures = textures;
+       this.numeroHorizonteHorRas = numeroHorizonteHorRas;
+       this.espesorHorRas = espesorHorRas;
+       this.colorSecoHorRas = colorSecoHorRas;
+       this.colorHumedoHorRas = colorHumedoHorRas;
+    }
+    
+//    public HorizontesRasta(Integer resistenciasRompimientoId, Integer texturesId, int numeroHorizonteHorRas, Double espesorHorRas, Integer colorSecoHorRas, Integer colorHumedoHorRas) {
+//       this.resistenciasRompimientoId = resistenciasRompimientoId;
+//       this.texturesId = texturesId;
+//       this.numeroHorizonteHorRas = numeroHorizonteHorRas;
+//       this.espesorHorRas = espesorHorRas;
+//       this.colorSecoHorRas = colorSecoHorRas;
+//       this.colorHumedoHorRas = colorHumedoHorRas;
+//    }   
    
      @Id @GeneratedValue(strategy=IDENTITY)
     
@@ -123,7 +143,23 @@ public class HorizontesRasta  implements java.io.Serializable {
         this.colorHumedoHorRas = colorHumedoHorRas;
     }
 
-
+//    @Column(name="resistencia_rompimiento_hor_ras", nullable=false)
+//    public Integer getResistenciasRompimientoId() {
+//        return resistenciasRompimientoId;
+//    }
+//
+//    public void setResistenciasRompimientoId(Integer resistenciasRompimientoId) {
+//        this.resistenciasRompimientoId = resistenciasRompimientoId;
+//    }
+//
+//    @Column(name="textura_hor_ras", nullable=false)
+//    public Integer getTexturesId() {
+//        return texturesId;
+//    }
+//
+//    public void setTexturesId(Integer texturesId) {
+//        this.texturesId = texturesId;
+//    }
 
 
 }

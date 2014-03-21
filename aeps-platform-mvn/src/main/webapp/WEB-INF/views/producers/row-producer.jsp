@@ -2,7 +2,7 @@
 <% valAsig = (String) request.getAttribute("selected"); %>
 <% if (valAsig != "producer") {%>    
     <% if (valAsig.equals("property") || valAsig.equals("lot") || valAsig.equals("crop")) {%>
-        <td><img src="/aeps-plataforma-mvn/img/check.ico" onclick="<%=action%>" /></td>      
+        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>      
     <% } %>    
 <% } %>    
 <td><s:property value="type_document" />: <s:property value="document" /></td>

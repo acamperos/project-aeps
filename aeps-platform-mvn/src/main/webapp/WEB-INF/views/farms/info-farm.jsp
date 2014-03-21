@@ -3,7 +3,7 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="org.aepscolombia.platform.controllers.JavascriptHelper"%>
+<%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>
 <% String table = "display:none";%>
 <% String label = "";%>
 

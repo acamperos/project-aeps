@@ -5,7 +5,7 @@
     <%@page import="org.apache.commons.lang.StringUtils"%>
     <%@page import="java.lang.*"%>
     <%@page import="java.util.HashMap"%>
-    <%@page import="org.aepscolombia.platform.controllers.JavascriptHelper"%>
+    <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>
     <%@page import="com.opensymphony.xwork2.ActionContext" %>
     <%@page import="com.opensymphony.xwork2.util.ValueStack" %>
     <% String table = "display:none";%>

@@ -47,6 +47,7 @@
                     <img id="img_farmer" src="img/suelos.jpg"/>
                     <h3>Suelos</h3>
                     <p>Encargado de la toma de datos para los suelos</p>
+                    <p><s:a cssClass="btn btn-primary" href="/aeps-plataforma-mvn/soil/listSoil.action" role="button" targets="divBodyLayout">Ir »</s:a></p>
                 </div>
                 <div class="span4">
                     <img id="img_farmer" src="img/climate.png"/>

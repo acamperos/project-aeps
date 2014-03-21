@@ -35,7 +35,12 @@ $.fn.numeric = function(config, callback)
 	// if config.negative undefined, set to true (default is to allow negative numbers)
 	if(typeof config.negative == "undefined") config.negative = true;
 	// set decimal point
-	var decimal = (config.decimal === false) ? "" : config.decimal || ".";
+    var decimal = null;
+    if(navigator.language=='es-ES') {
+        decimal = (config.decimal === false) ? "" : config.decimal || ",";  
+    } else if(navigator.language=='en-EN') {
+        decimal = (config.decimal === false) ? "" : config.decimal || ".";  
+    }
 	// allow negatives
 	var negative = (config.negative === true) ? true : false;
 	// callback function

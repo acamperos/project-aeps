@@ -27,6 +27,10 @@ public class ResistenciasRompimiento  implements java.io.Serializable {
 
     public ResistenciasRompimiento() {
     }
+    
+    public ResistenciasRompimiento(Integer idResRom) {
+        this.idResRom = idResRom;
+    }
 
     public ResistenciasRompimiento(String nombreResRom) {
        this.nombreResRom = nombreResRom;

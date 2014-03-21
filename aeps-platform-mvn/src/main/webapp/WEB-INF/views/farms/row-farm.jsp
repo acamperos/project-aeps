@@ -2,9 +2,9 @@
 <% //String value  = (String) (add.get("selected"));%>
 <% if (value != "property") {%>
     <% if (value.equals("lot")) {%>
-        <td><img src="/aeps-plataforma-mvn/img/check.ico" onclick="<%= action%>"/></td>
+        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>
     <% } else if (value.equals("crop")) {%>
-        <td><img src="/aeps-plataforma-mvn/img/check.ico" onclick="<%= action%>"/></td>
+        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>
     <% }%>                        
 <% }%>
 <td>

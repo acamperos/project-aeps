@@ -82,7 +82,10 @@ public class Rastas  implements java.io.Serializable {
 
     public Rastas() {
     }
-
+    
+    public Rastas(Integer idRas) {
+        this.idRas = idRas;
+    }
 	
     public Rastas(Fields fields, Date fechaRas, int numeroCajuelaRas, boolean estadoRas) {
         this.fields = fields;
@@ -90,8 +93,62 @@ public class Rastas  implements java.io.Serializable {
         this.numeroCajuelaRas = numeroCajuelaRas;
         this.estadoRas = estadoRas;
     }
+    
     public Rastas(Fields fields, Date fechaRas, int numeroCajuelaRas, Integer altitudRas, Double latitudRas, Double longitudRas, Double pendienteTerrenoRas, String terrenoCircundanteRas, String posicionPerfilRas, Integer numeroCapasRas, Double phRas, String carbonatosRas, Double profundidadCarbonatosRas, String piedrasSuperficieRas, String rocasSuperficieRas, String piedrasPerfilRas, String rocasPerfilRas, Boolean horizontePedrogosoRocosoRas, Double profundidadHorizontePedregosoRas, Double profundidadPrimerasPiedrasRas, Double espesorHorizontePedregosoRas, Boolean capasEndurecidasRas, Double prufundidadCapasRas, String espesorCapaEndurecidaRas, Boolean moteadosRas, Double profundidadMoteadosRas, Boolean moteadosMas70cmRas, String estructuraRas, Boolean erosionRas, Boolean mohoRas, String costrasDurasRas, String exposicionSolRas, String costrasBlancasRas, String costrasNegrasRas, Boolean regionSecaRas, Boolean raicesVivasRas, Double profundidadRaicesRas, String plantasPequenasRas, Boolean hojarascaRas, Boolean sueloNegroBlandoRas, Boolean cuchilloPrimerHorizonteRas, Boolean cercaRiosQuebradasRas, String recubrimientoVegetalRas, String materiaOrganicaRas, Double profundidadEfectivaRas, String drenajeInternoRas, String dranajeExternoRas, Boolean salinidadRas, Boolean sodicidadRas, String idProyectoRas, boolean estadoRas) {
        this.fields = fields;
+       this.fechaRas = fechaRas;
+       this.numeroCajuelaRas = numeroCajuelaRas;
+       this.altitudRas = altitudRas;
+       this.latitudRas = latitudRas;
+       this.longitudRas = longitudRas;
+       this.pendienteTerrenoRas = pendienteTerrenoRas;
+       this.terrenoCircundanteRas = terrenoCircundanteRas;
+       this.posicionPerfilRas = posicionPerfilRas;
+       this.numeroCapasRas = numeroCapasRas;
+       this.phRas = phRas;
+       this.carbonatosRas = carbonatosRas;
+       this.profundidadCarbonatosRas = profundidadCarbonatosRas;
+       this.piedrasSuperficieRas = piedrasSuperficieRas;
+       this.rocasSuperficieRas = rocasSuperficieRas;
+       this.piedrasPerfilRas = piedrasPerfilRas;
+       this.rocasPerfilRas = rocasPerfilRas;
+       this.horizontePedrogosoRocosoRas = horizontePedrogosoRocosoRas;
+       this.profundidadHorizontePedregosoRas = profundidadHorizontePedregosoRas;
+       this.profundidadPrimerasPiedrasRas = profundidadPrimerasPiedrasRas;
+       this.espesorHorizontePedregosoRas = espesorHorizontePedregosoRas;
+       this.capasEndurecidasRas = capasEndurecidasRas;
+       this.prufundidadCapasRas = prufundidadCapasRas;
+       this.espesorCapaEndurecidaRas = espesorCapaEndurecidaRas;
+       this.moteadosRas = moteadosRas;
+       this.profundidadMoteadosRas = profundidadMoteadosRas;
+       this.moteadosMas70cmRas = moteadosMas70cmRas;
+       this.estructuraRas = estructuraRas;
+       this.erosionRas = erosionRas;
+       this.mohoRas = mohoRas;
+       this.costrasDurasRas = costrasDurasRas;
+       this.exposicionSolRas = exposicionSolRas;
+       this.costrasBlancasRas = costrasBlancasRas;
+       this.costrasNegrasRas = costrasNegrasRas;
+       this.regionSecaRas = regionSecaRas;
+       this.raicesVivasRas = raicesVivasRas;
+       this.profundidadRaicesRas = profundidadRaicesRas;
+       this.plantasPequenasRas = plantasPequenasRas;
+       this.hojarascaRas = hojarascaRas;
+       this.sueloNegroBlandoRas = sueloNegroBlandoRas;
+       this.cuchilloPrimerHorizonteRas = cuchilloPrimerHorizonteRas;
+       this.cercaRiosQuebradasRas = cercaRiosQuebradasRas;
+       this.recubrimientoVegetalRas = recubrimientoVegetalRas;
+       this.materiaOrganicaRas = materiaOrganicaRas;
+       this.profundidadEfectivaRas = profundidadEfectivaRas;
+       this.drenajeInternoRas = drenajeInternoRas;
+       this.dranajeExternoRas = dranajeExternoRas;
+       this.salinidadRas = salinidadRas;
+       this.sodicidadRas = sodicidadRas;
+       this.idProyectoRas = idProyectoRas;
+       this.estadoRas = estadoRas;
+    }
+    
+    public Rastas(Date fechaRas, int numeroCajuelaRas, Integer altitudRas, Double latitudRas, Double longitudRas, Double pendienteTerrenoRas, String terrenoCircundanteRas, String posicionPerfilRas, Integer numeroCapasRas, Double phRas, String carbonatosRas, Double profundidadCarbonatosRas, String piedrasSuperficieRas, String rocasSuperficieRas, String piedrasPerfilRas, String rocasPerfilRas, Boolean horizontePedrogosoRocosoRas, Double profundidadHorizontePedregosoRas, Double profundidadPrimerasPiedrasRas, Double espesorHorizontePedregosoRas, Boolean capasEndurecidasRas, Double prufundidadCapasRas, String espesorCapaEndurecidaRas, Boolean moteadosRas, Double profundidadMoteadosRas, Boolean moteadosMas70cmRas, String estructuraRas, Boolean erosionRas, Boolean mohoRas, String costrasDurasRas, String exposicionSolRas, String costrasBlancasRas, String costrasNegrasRas, Boolean regionSecaRas, Boolean raicesVivasRas, Double profundidadRaicesRas, String plantasPequenasRas, Boolean hojarascaRas, Boolean sueloNegroBlandoRas, Boolean cuchilloPrimerHorizonteRas, Boolean cercaRiosQuebradasRas, String recubrimientoVegetalRas, String materiaOrganicaRas, Double profundidadEfectivaRas, String drenajeInternoRas, String dranajeExternoRas, Boolean salinidadRas, Boolean sodicidadRas, String idProyectoRas, boolean estadoRas) {
        this.fechaRas = fechaRas;
        this.numeroCajuelaRas = numeroCajuelaRas;
        this.altitudRas = altitudRas;

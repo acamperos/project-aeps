@@ -22,7 +22,7 @@
                                 requiredLabel="true"
                                 tooltip="Seleccione un productor en la lupa a la derecha"                        
                                 />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/listProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
+                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
 
                             <%-- <s:textfield
                                 name="id_producer"

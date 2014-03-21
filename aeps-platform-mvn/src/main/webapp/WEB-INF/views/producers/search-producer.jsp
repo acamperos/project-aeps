@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<s:form id="formProducerSearch" action="searchProducer.action?selected=%{selected}" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="Buscar productor">
+<s:form id="formProducerSearch" action="searchProducer.action?selected=%{selected}" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="Buscar un productor">
     <div class="row-fluid">
         <div class="span5">
             <s:select            
@@ -62,7 +62,7 @@
         </div>      
     </div>   
     <div>   
-        <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divConListProducers" onCompleteTopics="completeProducer" value="Buscar productor"/>
+        <sj:submit type="button" cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divConListProducers" onCompleteTopics="completeProducer" value="Buscar Productor">Buscar Productor <i class="icon-search"></i></sj:submit>
     </div>
 </s:form>
 <script>

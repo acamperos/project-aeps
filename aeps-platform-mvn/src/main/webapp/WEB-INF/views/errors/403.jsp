@@ -7,14 +7,14 @@
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 							
-        <link rel="stylesheet" href="scripts/css/bootstrap/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="scripts/css/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="scripts/css/generals/justified-nav.css">
-        <link rel="stylesheet" href="scripts/css/generals/main.css">
-        <link rel="stylesheet" href="scripts/css/generals/style.css">
-        <link rel="stylesheet" href="scripts/css/generals/responsive.css">
-        <link rel="stylesheet" href="scripts/css/generals/responsiveslides.css" />		
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/bootstrap/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/justified-nav.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/main.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/style.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/responsive.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/responsiveslides.css" />		
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/beoro.css">
     </head>
     <body>
         <div class="container">
@@ -26,7 +26,7 @@
                         <p>Usted no cuenta con los permisos necesarios para realizar esta accion, comuniquese con el administrador respectivo.</p> 
 <!--                            Use your browsers <b>Back</b> button to navigate to the page you have prevously come from</p>
                         <p><b>Or you could just press this neat little button:</b></p>-->
-                        <a href="initial.action" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Llevar al inicio</a>
+                        <a href="<%= request.getContextPath() %>/initial.action" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Llevar al inicio</a>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />   
     <constant name="struts.custom.i18n.resources" value="global"></constant>
+    <!--<constant name="struts.locale" value="en_US" />-->
     <!--<constant name="struts.convention.action.packages" value="org.aepscolombia.platform.controllers"/>-->     
     <package name="principal" extends="struts-default,json-default" namespace="/">
         <interceptors>
@@ -216,6 +217,11 @@
             <result>/WEB-INF/views/producers/list-producer.jsp</result>
             <!--<result>/WEB-INF/views/prueba.jsp</result>-->
         </action>
+        <action name="viewProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <result>/WEB-INF/views/producers/view-producer.jsp</result>
+        </action>
         <action name="searchProducer" method="search" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>            
@@ -270,6 +276,11 @@
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/farms/list-farm.jsp</result>
         </action>
+        <action name="viewFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/farms/view-farm.jsp</result>
+        </action>
         <action name="searchFarm" method="search" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>
@@ -310,6 +321,11 @@
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/fields/list-field.jsp</result>
         </action>
+        <action name="viewField" method="search" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/fields/view-field.jsp</result>
+        </action>
         <action name="searchField" method="search" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>
@@ -330,5 +346,48 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>       
+    </package>
+    
+    <package name="soil" extends="principal,struts-default,json-default" namespace="/soil">
+        <action name="showRowAdditional" method="showRowAdditional" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result>/WEB-INF/views/soils/row_additional_horizon.jsp</result>
+            <!--<result>/soils/row_additional_horizon.jsp</result>-->
+        </action>
+        <action name="listSoil" method="search" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/soils/list-soil.jsp</result>
+            <!--<result>/soils/list-soil.jsp</result>-->
+        </action>
+        <action name="viewSoil" method="search" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/soils/view-soil.jsp</result>
+            <!--<result>/soils/info-soil.jsp</result>-->
+        </action> 
+        <action name="searchSoil" method="search" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/soils/info-soil.jsp</result>
+            <!--<result>/soils/info-soil.jsp</result>-->
+        </action>   
+        <action name="showSoil" method="show" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/soils/form-soil.jsp</result>
+            <!--<result>/soils/form-soil.jsp</result>-->
+        </action>
+        <action name="saveSoil" method="saveData" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteSoil" method="delete" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
     </package>
 </struts>

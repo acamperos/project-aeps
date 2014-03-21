@@ -6,7 +6,7 @@
 <s:actionerror theme="bootstrap"/>
 <s:actionmessage theme="bootstrap"/>
 <s:fielderror theme="bootstrap"/>
-<s:form id="formFieldSearch" theme="bootstrap" action="searchField.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Formulario de un lote">
+<s:form id="formFieldSearch" theme="bootstrap" action="searchField.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Buscar un lote">
     <div class="row-fluid">
         <div class="span5">
             <s:textfield
@@ -68,7 +68,7 @@
         </div>         
     </div>         
     <div> 
-        <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divConListFields" onCompleteTopics="completeField" value="Buscar lote"/>
+        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFields" onCompleteTopics="completeField" value="Buscar lote">Buscar Lote <i class="icon-search"></i></sj:submit>
     </div>    
 </s:form>        
 <script>

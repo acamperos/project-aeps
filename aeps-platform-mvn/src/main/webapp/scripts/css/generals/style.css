@@ -1595,9 +1595,9 @@ a.option:hover {
 }
 
 .select,.select_large,.select_small,.select_tiny {
-	border: 1px solid #999999;
-	position: relative;
-	height: 26px;
+	/*border: 1px solid #999999;*/
+	/*position: relative;*/
+	height: 30px;
 	width: 170px;
 }
 

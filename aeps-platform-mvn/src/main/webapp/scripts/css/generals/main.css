@@ -34,6 +34,13 @@
         margin-right: 0;
     }
     
+    /*.radioSelect {text-align:justify; display:inline-block; height: 0;}*/
+    .radioSelect { cursor: pointer }
+    .radioSelect > input {display:inline-block} 
+    .radioSelect:after { content:' '; width: 100%; }    
+    .radioSelect > label {display:inline-block} 
+    .radioSelect > div {display:inline-block} 
+    
     .btn-breadcrumb .btn:not(:last-child):after {
         content: " ";
         display: block;

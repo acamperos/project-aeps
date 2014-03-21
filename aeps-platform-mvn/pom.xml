@@ -86,11 +86,11 @@
             <artifactId>xwork-core</artifactId>
             <version>2.3.15.2</version>
         </dependency>   
-        <dependency>
+<!--        <dependency>
             <groupId>ognl</groupId>
             <artifactId>ognl</artifactId>
             <version>3.0.8</version>
-        </dependency>            
+        </dependency>            -->
         <dependency>
             <groupId>com.jgeppert.struts2.jquery</groupId>
             <artifactId>struts2-jquery-plugin</artifactId>

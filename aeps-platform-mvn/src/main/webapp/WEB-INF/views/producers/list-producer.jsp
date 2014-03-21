@@ -12,11 +12,6 @@
                 <li><span>Productores</span></li>
             </ul>
         </div>
-        <div class="container">
-            <%@ include file="search-producer.jsp" %>
-        </div>     
-        <div class="container" id="divConListProducers">
-            <%@ include file="info-producer.jsp" %>            
-        </div>        
+        <%@ include file="view-producer.jsp" %>             
     </body>
 </html>

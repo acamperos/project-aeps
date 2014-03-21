@@ -11,13 +11,13 @@
             <div class="masthead">
                 <div class="row">
                     <div class="span3">	
-                        <img src="img/logoAEPS.png" style="width: 200px; height: 80px;">
+                        <img src="<%= request.getContextPath() %>/img/logoAEPS.png" style="width: 200px; height: 80px;">
                     </div>
                     <div class="span3">	
                         <label class="titlePrin">Agricultura Específica por Sitio</label>
                     </div>
                     <div class="span6">
-                        <img src="img/header.png">
+                        <img src="<%= request.getContextPath() %>/img/header.png">
                     </div>                    
                 </div>					
             </div>
@@ -49,7 +49,7 @@
                                     <% if (user != null) { %>
                                         <div class="user-box">
                                             <div class="user-box-inner">
-                                                <img src="img/user_ingress.png" alt="" class="user-avatar img-avatar">
+                                                <img src="<%= request.getContextPath() %>/img/user_ingress.png" alt="" class="user-avatar img-avatar">
                                                 <div class="user-info">
                                                     Bienvenido, <strong><%= user.getNameUserUsr() %></strong>
                                                     <ul class="unstyled">
@@ -78,8 +78,8 @@
                                         <a class="btn" href="#"><s:property value="getText('text.language')" /></a>
                                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                                         <ul class="dropdown-menu">
-                                            <li><s:a href="%{localeEN}"><img src="img/languages/kingdom-flat.png" class="img-rounded" /> <s:property value="getText('text.english')" /></s:a></li>
-                                            <li><s:a href="%{localeES}"><img src="img/languages/spain-flat.png" class="img-rounded" /> <s:property value="getText('text.spanish')" /></s:a></li>
+                                            <li><s:a href="%{localeEN}"><img src="<%= request.getContextPath() %>/img/languages/kingdom-flat.png" class="img-rounded" /> <s:property value="getText('text.english')" /></s:a></li>
+                                            <li><s:a href="%{localeES}"><img src="<%= request.getContextPath() %>/img/languages/spain-flat.png" class="img-rounded" /> <s:property value="getText('text.spanish')" /></s:a></li>
                                         </ul>
                                     </div>
                                 </div>

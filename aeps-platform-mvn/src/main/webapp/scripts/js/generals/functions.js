@@ -462,6 +462,7 @@ function showMessInfo(idLoc, info)
     $('#'+idLoc).prepend(infoDiv);
     infoDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
     infoDiv.append('<p>' + info + '</p>\n');    
+    $('#'+idLoc).focus();
     $('#'+idLoc).append(setTimerToMessage(8));
 }
 
@@ -471,6 +472,7 @@ function showMessError(idLoc, info)
     $('#'+idLoc).prepend(errorDiv);
     errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
     errorDiv.append('<p>' + info + '</p>\n');  
+    $('#'+idLoc).focus();
     $('#'+idLoc).append(setTimerToMessage(8));
 }
 
@@ -1015,12 +1017,16 @@ function validationForm(form, errors)
     //Handle non field errors
     if (errors.errors && errors.errors.length > 0) { 
 //        Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
-        var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'></div>");
+        var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts' name='messageUsers'></div>");
         form.prepend(errorDiv);
         errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
         $.each(errors.errors, function(index, value) {
             errorDiv.append('<p>' + value + '</p>\n');
         });
+//        $('[name=errorRasta]').;
+//        document.location='#messageUsers';
+//        alert(form.attr('id'));
+        document.location='#'+form.attr('id');
         form.append(setTimerToMessage(8));
     }
 
@@ -1433,8 +1439,10 @@ function sendFormHarvestChange(url, formId, divShowA, divShowB, divHide, message
 function activeOption(ulId, classId) 
 {
 //    alert(classId)
-    $('#'+ulId).find("li.active").removeClass("active");
-    $('.'+classId).addClass("active");    
+    if($('.'+classId)) {
+        $('#'+ulId).find("li.active").removeClass("active");
+        $('.'+classId).addClass("active");    
+    }
 }
 
 //function activeOption(ulId) 
@@ -1467,4 +1475,87 @@ function showInfoPassword(divId, fieldId)
         $("#"+fieldId).val("false");
     }
     
+}
+
+function showSearchAdvance(divSearchBasic, divSearchAdvance, valAsig, valSel)
+{
+    $("#"+valAsig).val(valSel);
+    if (valSel==1) {
+        $('#'+divSearchBasic).hide();
+        $('#'+divSearchAdvance).show();
+    } else {
+        $('#'+divSearchBasic).show();
+        $('#'+divSearchAdvance).hide();        
+    }
+    
+}
+
+function showRowAdditionalItem(url, divUpdate)
+{
+    var rows  = $('#'+divUpdate).children("tr");
+    var child = $(rows)[rows.length-1];
+//    alert($(child).attr("value"));
+    var data  = '&numRows='+$(child).attr("value");
+//    var data  = '&numRows='+rows.length;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {
+            // responseContent = transport.responseText;
+            // responseContent = information;
+//            $('#'+divUpdate).insert({'bottom': information});
+            $('#'+divUpdate).append(information);
+        }
+    });
+}
+
+function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
+    var valNumDegrees = parseFloat($('#'+valDegrees).val());
+    var valNumMinutes = $('#'+valMinutes).val();
+    var valNumSeconds = $('#'+valSeconds).val();
+    
+    var latLot = parseFloat((valNumMinutes/60) + (valNumSeconds/3600));
+//    if (latLot==0) latLot = "";
+    latLot = (valNumDegrees<0) ? ((Math.abs(valNumDegrees))+latLot)*-1 : (valNumDegrees+latLot);
+    latLot = ""+latLot;
+    latLot = parsePointSeparated(latLot);
+//    alert(latLot)
+    $('#'+valDec).val(latLot);   
+}
+
+function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
+    
+//    alert(navigator.language);
+//    var valNumDecimal = $('#'+valDec).val();    
+    var valNumDecimal = parseCommaSeparated($('#'+valDec).val());    
+//    alert(valNumDecimal)
+    var d = Math.floor (valNumDecimal);
+    var minfloat = (valNumDecimal-d)*60;
+    var m = Math.floor(minfloat);
+    var secfloat = (minfloat-m)*60;
+    var s = Math.round(secfloat);   
+    
+    if (s==60) {
+      m++;
+      s=0;
+    }
+    if (m==60) {
+      d++;
+      m=0;
+    }
+    
+    $('#'+valDegrees).val(d);
+    $('#'+valMinutes).val(m);
+    $('#'+valSeconds).val(s);
+}
+
+function parsePointSeparated( strVal ) {
+    if(navigator.language=='es-ES') {return strVal.replace('.',','); } // remove commas before parse
+    if(navigator.language=='en-EN') {return strVal.replace(',','.'); }// remove commas before parse
+}
+
+function parseCommaSeparated( strVal ) {
+    if(navigator.language=='es-ES') return parseFloat(strVal.replace(',','.')); // remove commas before parse
+    if(navigator.language=='en-EN') return parseFloat(strVal.replace('.',',')); // remove commas before parse
 }
