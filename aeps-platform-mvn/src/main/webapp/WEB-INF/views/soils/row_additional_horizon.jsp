@@ -65,7 +65,7 @@
         </div>
     </td>                
     <td style="vertical-align: bottom ! important; padding: 0 0.5em;">
-        <a class="btn btn-mini delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_<%= numRows %>').remove();"><i class="icon-trash"></i></a>
+        <a class="btn btn-small delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_<%= numRows %>').remove();"><i class="icon-trash"></i></a>
     </td>
     
     <script>			
@@ -78,11 +78,11 @@
     </script>
     <% //if (newRow==1) { %>
 <!--        <td style="vertical-align: bottom ! important; padding: 0 0.5em;">
-            <a class="btn btn-mini delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_<%= numRows %>').remove();"><i class="icon-trash"></i></a>
+            <a class="btn btn-small delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_<%= numRows %>').remove();"><i class="icon-trash"></i></a>
         </td>-->
     <% //} else { %>
 <!--        <td style="vertical-align: bottom ! important; padding: 0 0.5em;">     
-            <a href="#" class="btn btn-mini delete_rows_dt" title="Eliminar" onclick="showDialogDeleteSoil(this, 'confirm_dialog_producer', 'deleteHorizon.action?idPro=${param.id_producer}', 'RowAddit_<%= numRows %>', 'divMessage');"><i class="icon-trash"></i></a>
+            <a href="#" class="btn btn-small delete_rows_dt" title="Eliminar" onclick="showDialogDeleteSoil(this, 'confirm_dialog_producer', 'deleteHorizon.action?idPro=${param.id_producer}', 'RowAddit_<%= numRows %>', 'divMessage');"><i class="icon-trash"></i></a>
         </td>-->
     <% //} %>
 </tr>

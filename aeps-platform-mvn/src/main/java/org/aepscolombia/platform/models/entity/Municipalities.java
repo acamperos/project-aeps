@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="municipalities"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
     , uniqueConstraints = @UniqueConstraint(columnNames="code_mun") 
 )
 public class Municipalities  implements java.io.Serializable {
@@ -56,7 +56,7 @@ public class Municipalities  implements java.io.Serializable {
         this.idMun = idMun;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_departament_mun", nullable=false)
+    @JoinColumn(name="id_department_mun", nullable=false)
     public Departments getDepartments() {
         return this.departments;
     }

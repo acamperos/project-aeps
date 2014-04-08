@@ -40,7 +40,7 @@ public class FarmsDao
         
         String sql = "";
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
-        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_departament_mun, f.status_far";
+        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_department_mun, f.status_far";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
@@ -153,7 +153,7 @@ public class FarmsDao
         sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status_far";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
-        sql += " inner join departments dep on (dep.id_dep=m.id_departament_mun)";
+        sql += " inner join departments dep on (dep.id_dep=m.id_department_mun)";
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
@@ -181,7 +181,7 @@ public class FarmsDao
         }
         if (args.containsKey("depFar")) {
             String valIdent = String.valueOf(args.get("depFar"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_departament_mun="+args.get("depFar");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_department_mun="+args.get("depFar");
         }
         if (args.containsKey("cityFar")) {
             String valIdent = String.valueOf(args.get("cityFar"));

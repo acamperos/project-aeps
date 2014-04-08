@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="beans"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Beans  implements java.io.Serializable {
 

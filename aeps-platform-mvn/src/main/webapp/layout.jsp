@@ -11,9 +11,9 @@
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 							
-        <link rel="stylesheet" href="scripts/css/generals/style.css">
+        <!--<link rel="stylesheet" href="scripts/css/generals/style.css">-->
         <!--<link rel="stylesheet" href="scripts/css/generals/responsive.css">-->
-        <link rel="stylesheet" href="scripts/css/generals/responsiveslides.css" />	
+        <!--<link rel="stylesheet" href="scripts/css/generals/responsiveslides.css" />-->	
         <!--<link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery.ui.all.css" />-->
         <!--<link rel="stylesheet" href="scripts/js/jquery/jquery-ui/themes/base/jquery-ui.css" />-->
         <link rel="stylesheet" href="scripts/css/generals/beoro.css">        
@@ -22,9 +22,12 @@
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>        
-        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>		
-        <!--<script type="text/javascript" src="scripts/js/generals/validations.js"></script>-->        
+        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
+        <!--<script type="text/javascript" src="scripts/js/bootstrap/bootstrap-carousel.js"></script>-->  
+        <!--<script type="text/javascript" src="scripts/js/generals/validations.js"></script>-->
         <link rel="stylesheet" href="scripts/css/generals/main.css">
+        <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">   
+        <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>-->
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>-->
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery-ui/ui/jquery-ui.js"></script>-->	
@@ -32,10 +35,10 @@
         <!--<script type="text/javascript" src="scripts/js/colorbox/jquery.colorbox.min.js"></script>-->
         <!--<link rel="stylesheet" href="scripts/css/colorbox/colorbox.css"/>-->
         <style>
-            body {
+/*            body {
                 padding-top: 50px;
                 padding-bottom: 20px;
-            }
+            }*/
         </style>				
         <!--<script src="scripts/js/generals/main.js"></script>-->				
         <script src="scripts/js/generals/responsiveslides.js"></script>

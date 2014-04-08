@@ -6,7 +6,7 @@
 <s:actionerror theme="bootstrap"/>
 <s:actionmessage theme="bootstrap"/>
 <s:fielderror theme="bootstrap"/>
-<s:form id="formRastaSearch" action="searchSoil.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Busqueda del rasta">
+<s:form id="formRastaSearch" action="searchSoil.action?selected=%{selected}" cssClass="form-horizontal formClassSoil" label="Busqueda del rasta">
     <s:hidden name="searchFrom" value="1"/>    
     <div class="control-group" id="searchBasic">
         <!--<div class="span6">-->
@@ -14,13 +14,13 @@
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><i class="icon-search"></i></sj:submit>
         <!--</div>-->
         <!--<div class="span2">-->
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada <i class="icon-chevron-down"></i></a>
+            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
         <!--</div>-->
     </div> 
     <div id="searchAdvance" class="hide">
         <div class="control-group">
             <!--<div class="span2">-->
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla <i class="icon-chevron-up"></i></a>
+            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
             <!--</div>-->
         </div>
         <div class="row-fluid">
@@ -106,7 +106,7 @@
         <div class="row-fluid">
             <div class="span5">
                 <div class="control-group">
-                    <s:label for="formRastaSearch_date" cssClass="control-label" value="Ph del rasta:"></s:label>
+                    <s:label for="formRastaSearch_ph" cssClass="control-label" value="Ph del rasta:"></s:label>
                     <div class="controls">
                         <s:textfield name="ph" />
                     </div>
@@ -126,7 +126,7 @@
             </div>  
         </div>      
         <div> 
-            <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil" value="Buscar rasta"/>
+            <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil">Buscar rasta <i class="icon-search"></i></sj:submit>
         </div>
     </div>       
 </s:form>        

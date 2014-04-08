@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="fertilizations"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Fertilizations  implements java.io.Serializable {
 

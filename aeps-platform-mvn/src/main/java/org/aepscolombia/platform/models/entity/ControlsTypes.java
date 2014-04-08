@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="controls_types"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ControlsTypes  implements java.io.Serializable {
 

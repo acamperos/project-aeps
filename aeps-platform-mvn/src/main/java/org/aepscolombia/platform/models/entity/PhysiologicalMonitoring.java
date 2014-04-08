@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="physiological_monitoring"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class PhysiologicalMonitoring  implements java.io.Serializable {
 

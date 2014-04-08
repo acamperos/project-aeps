@@ -9,7 +9,7 @@
         <div class="container">
             <nav>
                 <ul id="menu" class="nav">
-                    <li id="nav1"><s:a href="getting.action" cssClass="btn" targets="divBodyLayout">Captura</s:a></li>
+                    <li id="nav1"><s:a href="getting.action" cssClass="btn" targets="divBodyLayout">Recolección de Datos</s:a></li>
                 </ul>
             </nav>
         </div>
@@ -19,14 +19,10 @@
                     <h3>Resumen General</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="span12">
-                    <div class="tabbable-bordered">
-                        <div class="tab-content">
-                            <!-- <p>Reportes Generales</p> -->
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.</p>
-                        </div>
-                    </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <!-- <p>Reportes Generales</p> -->
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.</p>
                 </div>
             </div>				
             <!-- Example row of columns -->

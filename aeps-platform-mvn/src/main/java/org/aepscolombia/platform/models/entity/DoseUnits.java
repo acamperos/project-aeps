@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="dose_units"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class DoseUnits  implements java.io.Serializable {
 

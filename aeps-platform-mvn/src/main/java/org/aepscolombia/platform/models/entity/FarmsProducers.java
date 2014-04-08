@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="farms_producers"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class FarmsProducers  implements java.io.Serializable {
 

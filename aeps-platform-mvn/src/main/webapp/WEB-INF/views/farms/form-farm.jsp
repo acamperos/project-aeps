@@ -172,15 +172,15 @@
                         </div>          
                     </fieldset>
                     <div> 
-                        <s:hidden name="page"/>
+                        <s:hidden name="page" id="formFarm_page" />
                         <s:hidden name="actExe"/>
-                        <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" value="Guardar Finca" validate="true" validateFunction="validationForm"/>
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm">Guardar Finca</sj:submit>
                         <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')">Guardar informaci&oacute;n</button>-->
-                        <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formFarm'); closeWindow();">Cancelar</button>
+                        <button class="btn btn-large bt_cancel_farm" onclick="resetForm('formFarm'); closeWindow();">Cancelar</button>
                     </div>    
                 </s:form>        
                 <script>
-                    var page   = $("#formFarm_page").val();
+//                    var page   = $("#formFarm_page").val();                    
                     //For property
                     // $.mask.definitions['i'] = "[-0-9]";
                     $.mask.definitions['f'] = "[-.0-9]";
@@ -201,7 +201,7 @@
 //                        completeForm('dialog-form', 'formFarm', event.originalEvent.request.responseText);
                         completeFormGetting('dialog-form', 'formFarm', 'divFarms', event.originalEvent.request.responseText);
                         setTimeout( function() {
-                            showInfo("searchFarm.action?page="+page, "divConListFarms");
+                            showInfo("searchFarm.action?page="+$("#formFarm_page").val(), "divConListFarms");
                         }, 2000);
                     });
                     //chargeValues('../actions/Actions.php?action=ListarDeps', 'depId', '', 'params_department_property', 'divMessage');

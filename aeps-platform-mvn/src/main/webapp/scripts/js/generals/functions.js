@@ -997,7 +997,7 @@ function addMessageProcess()
             opacity: .5, 
             color: '#fff' 
         },
-        message: '<div class="view-process"><h3>Procesando....</h3></div>' 
+        message: '<div class="view-process row"><div class="span6"><i class="icon-spinner icon-spin"></i><h3>Procesando....</h3></div></div>' 
     }); 
 //    $.blockUI({ 
 //        message: '<img src="img/ajax.gif" />Procesando....' 
@@ -1042,7 +1042,7 @@ function validationForm(form, errors)
                 controlGroup.addClass('error');
                 controls = controlGroup.find("div.controls");
                 if (controls) {
-                    controls.append("<span class='help-inline s2_help_inline'>" + value[0] + "</span>");
+                    controls.append("<br><span class='help-inline s2_help_inline'>" + value[0] + "</span>");
                 }
             }
         });
@@ -1518,7 +1518,7 @@ function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
     var latLot = parseFloat((valNumMinutes/60) + (valNumSeconds/3600));
 //    if (latLot==0) latLot = "";
     latLot = (valNumDegrees<0) ? ((Math.abs(valNumDegrees))+latLot)*-1 : (valNumDegrees+latLot);
-    latLot = ""+latLot;
+//    latLot = ""+latLot;
     latLot = parsePointSeparated(latLot);
 //    alert(latLot)
     $('#'+valDec).val(latLot);   
@@ -1527,8 +1527,9 @@ function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
 function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
     
 //    alert(navigator.language);
-//    var valNumDecimal = $('#'+valDec).val();    
-    var valNumDecimal = parseCommaSeparated($('#'+valDec).val());    
+//    var valNumDecimal = $('#'+valDec).val(); 
+//    alert(navigator.language);
+    var valNumDecimal = parseCommaSeparated($('#'+valDec).val()); 
 //    alert(valNumDecimal)
     var d = Math.floor (valNumDecimal);
     var minfloat = (valNumDecimal-d)*60;
@@ -1551,11 +1552,11 @@ function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
 }
 
 function parsePointSeparated( strVal ) {
-    if(navigator.language=='es-ES') {return strVal.replace('.',','); } // remove commas before parse
-    if(navigator.language=='en-EN') {return strVal.replace(',','.'); }// remove commas before parse
+    if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
+    if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
 }
 
 function parseCommaSeparated( strVal ) {
-    if(navigator.language=='es-ES') return parseFloat(strVal.replace(',','.')); // remove commas before parse
-    if(navigator.language=='en-EN') return parseFloat(strVal.replace('.',',')); // remove commas before parse
+    if(navigator.language=='es-ES' || navigator.language=='es') return parseFloat(strVal.replace(',','.')); // remove commas before parse
+    if(navigator.language=='en-EN' || navigator.language=='en') return parseFloat(strVal.replace('.',',')); // remove commas before parse
 }

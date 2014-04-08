@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="users_profiles"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class UsersProfiles  implements java.io.Serializable {
 

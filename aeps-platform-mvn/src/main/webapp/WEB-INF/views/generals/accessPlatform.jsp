@@ -25,11 +25,13 @@
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
     </head>
     <body>
-        <div id="divMessage" style="display:none"></div>        
-        <div id="login-wrapper" class="clearfix">            
+        <div id="divMessage"></div>        
+        <!--<div id="login-wrapper" class="clearfix">-->            
+        <div id="login-wrapper">            
             <div class="heading_main">
                 <p>Se ha validado correctamente la contraseña! Será dirigido automáticamente en diez segundos. </p> 
-                <p>En caso contrario, puedes acceder haciendo click <a href="signin.action" class="btn btn-primary btn-success btn-lg">Ingresar</a></p>
+                <p>En caso contrario, puedes acceder haciendo click</p> 
+                <a href="signin.action" class="btn btn-initial btn-success btn-lg">Ingresar</a>
             </div>
         </div>
     </body>

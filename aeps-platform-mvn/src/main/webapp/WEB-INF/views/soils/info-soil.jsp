@@ -26,8 +26,8 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divRasta" class="w-box">
-    <button type="button" class="btn btn-primary" onclick="viewForm('/aeps-plataforma-mvn/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
-        <span class="glyphicon glyphicon-plus-sign"></span>Agregar rasta
+    <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
+        <i class="icon-plus"></i> Agregar rasta
     </button>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblRasta'>
         <thead>
@@ -75,7 +75,7 @@
         <div id="confirm_dialog_lot" class="cbox_content">
             <div class="sepH_c"><strong>Desea borrar este rasta?</strong></div>
             <div>
-                <a href="#" class="btn btn-small btn-primary confirm_yes">Si</a>
+                <a href="#" class="btn btn-small btn-initial confirm_yes">Si</a>
                 <a href="#" class="btn btn-small confirm_no">No</a>
             </div>
         </div>

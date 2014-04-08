@@ -41,13 +41,13 @@
         <%--<s:actionerror theme="bootstrap"/>--%>
         <%--<s:actionmessage theme="bootstrap"/>--%>                
         <% if (value.equals("producer")) {%>
-            <button type="button" class="btn btn-primary" onclick="viewForm('/aeps-plataforma-mvn/showProducer.action?action=create', 'idPro', '', 'Crear Productor', 1050, 550)">
-                <span class="glyphicon glyphicon-plus-sign"></span>Agregar productor
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showProducer.action?action=create', 'idPro', '', 'Crear Productor', 1050, 550)">
+                <i class="icon-plus"></i> Agregar productor
             </button>
         <% }%>
         <table class="table table-bordered table-hover" style="<%= table%>" id='tblProducers'>
             <thead>
-                <tr>
+                <tr class="success">
                     <% if (value != "producer") {%>   
                         <% if (value.equals("property") || value.equals("lot") || value.equals("crop")) {%>
                             <th></th>
@@ -96,7 +96,7 @@
                 <div>
                     <%--<sj:a cssClass="btn btn-small btn-primary confirm_yes" href="deleteProducer.action?idPro=<s:property value ='id_producer' />" role="button" targets="divBodyLayout">Si</sj:a>--%>
                     <%--<sj:a href="home.action" onclick="activeOption('ulOptionsMenu')" targets="divBodyLayout">Inicio</sj:a>--%>
-                    <a href="#" class="btn btn-small btn-primary confirm_yes">Si</a>
+                    <a href="#" class="btn btn-small btn-initial confirm_yes">Si</a>
                     <a href="#" class="btn btn-small confirm_no">No</a>
                 </div>
             </div>
@@ -104,7 +104,7 @@
     </div>
     <div>
         <% if (!value.equals("producer")) {%>
-            <button class="btn btn_per bt_cancel_producer" onclick="toggleAndClean('<%=divShow%>', '<%=divHide%>')">Atras</button>
+            <button class="btn btn_per" onclick="toggleAndClean('<%=divShow%>', '<%=divHide%>')">Atras</button>
         <% }%>
     </div>
     <div style="text-align:center; <%= table %>">

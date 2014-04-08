@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="fields_producers"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class FieldsProducers  implements java.io.Serializable {
 
@@ -25,16 +25,14 @@ public class FieldsProducers  implements java.io.Serializable {
      private FieldsProducersId id;
      private Producers producers;
      private Fields fields;
-     private FieldTypes fieldTypes;
 
     public FieldsProducers() {
     }
 
-    public FieldsProducers(FieldsProducersId id, Producers producers, Fields fields, FieldTypes fieldTypes) {
+    public FieldsProducers(FieldsProducersId id, Producers producers, Fields fields) {
        this.id = id;
        this.producers = producers;
        this.fields = fields;
-       this.fieldTypes = fieldTypes;
     }
    
      @EmbeddedId
@@ -67,19 +65,6 @@ public class FieldsProducers  implements java.io.Serializable {
     public void setFields(Fields fields) {
         this.fields = fields;
     }
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="contract_type_fie_pro", nullable=false)
-    public FieldTypes getFieldTypes() {
-        return this.fieldTypes;
-    }
-    
-    public void setFieldTypes(FieldTypes fieldTypes) {
-        this.fieldTypes = fieldTypes;
-    }
-
-
-
-
 }
 
 

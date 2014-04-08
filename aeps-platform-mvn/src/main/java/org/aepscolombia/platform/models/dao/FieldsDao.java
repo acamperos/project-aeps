@@ -38,7 +38,7 @@ public class FieldsDao
         String sql = "";
         String sqlAdd = "";
         
-        sql += "select l.id_fie, l.id_farm_fie, lp.contract_type_fie_pro, l.name_fie, l.altitude_fie,";
+        sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
         sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status_fie, lp.id_producer_fie_pro,";
         sql += " e.name_ent, f.name_far";
         sql += " from fields l";
@@ -139,11 +139,11 @@ public class FieldsDao
 //    }
 //		sql += sqlAdd;
 //         ft.name_fie_typ
-        sql += "select l.id_fie, l.id_farm_fie, lp.contract_type_fie_pro, l.name_fie, l.altitude_fie,";
+        sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
         sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status_fie, l.id_project_fie, e.name_ent, f.name_far, ft.name_fie_typ";
         sql += " from fields l";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
-        sql += " inner join field_types ft on ft.id_fie_typ=lp.contract_type_fie_pro";
+        sql += " inner join field_types ft on ft.id_fie_typ=l.contract_type_fie";
         sql += " left join farms f on f.id_far=l.id_farm_fie";
         
 //        if (args.containsKey("idFin")) {            
@@ -159,7 +159,7 @@ public class FieldsDao
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " where l.status_fie=1";
-//        sql += " where l.status_fie=1 and lp.contract_type_fie_pro!=1";
+//        sql += " where l.status_fie=1 and l.contract_type_fie!=1";
         
 //        if (args.containsKey("idFarm")) {
 //            sqlAdd += " left join farms f on f.id_far=l.id_farm_fie";
@@ -184,7 +184,7 @@ public class FieldsDao
         }
         if (args.containsKey("typeLot")) {
             String valIdent = String.valueOf(args.get("typeLot"));
-            if(!valIdent.equals("0") && !valIdent.equals("-1") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and lp.contract_type_fie_pro="+args.get("typeLot");
+            if(!valIdent.equals("0") && !valIdent.equals("-1") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.contract_type_fie="+args.get("typeLot");
         }
         if (args.containsKey("altitude_lot")) {
             String valIdent = String.valueOf(args.get("altitude_lot"));
@@ -301,7 +301,8 @@ public class FieldsDao
         Transaction tx = null;
         String sql = "";
 
-        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro, fp.contract_type_fie_pro";
+        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro";
+//        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro, fp.contract_type_fie_pro";
         
 //        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
         sql += " from fields_producers fp";

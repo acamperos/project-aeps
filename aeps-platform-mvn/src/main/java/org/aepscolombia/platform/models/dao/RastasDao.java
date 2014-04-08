@@ -51,7 +51,7 @@ public class RastasDao
         sql += " r.region_seca_ras, r.raices_vivas_ras, r.profundidad_raices_ras, r.plantas_pequenas_ras, r.hojarasca_ras,";
         sql += " r.suelo_negro_blando_ras, r.cuchillo_primer_horizonte_ras, r.cerca_rios_quebradas_ras, r.recubrimiento_vegetal_ras";
         
-//        sql += "select l.id_fie, l.id_farm_fie, lp.contract_type_fie_pro, l.name_fie, l.altitude_fie,";
+//        sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
 //        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status_fie, lp.id_producer_fie_pro,";
 //        sql += " e.name_ent, f.name_far";
         sql += " from rastas r";

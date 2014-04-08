@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="sowing"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Sowing  implements java.io.Serializable {
 

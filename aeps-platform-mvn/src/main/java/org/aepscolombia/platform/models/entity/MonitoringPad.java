@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="monitoring_pad"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class MonitoringPad  implements java.io.Serializable {
 

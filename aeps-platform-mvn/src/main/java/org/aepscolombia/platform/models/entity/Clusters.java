@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="clusters"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Clusters  implements java.io.Serializable {
 

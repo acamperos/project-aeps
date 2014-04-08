@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="incomes_sources_markets"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class IncomesSourcesMarkets  implements java.io.Serializable {
 

@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="harvest_methods"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class HarvestMethods  implements java.io.Serializable {
 

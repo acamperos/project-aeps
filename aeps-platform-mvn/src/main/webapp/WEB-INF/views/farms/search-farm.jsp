@@ -75,7 +75,7 @@
     </div>          
     <!--</fieldset>-->
     <div> 
-        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFarms" onCompleteTopics="completeFarm" value="Buscar Finca">Buscar Finca <i class="icon-search"></i></sj:submit>
+        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFarms" onCompleteTopics="completeFarm">Buscar Finca <i class="icon-search"></i></sj:submit>
     </div>    
 </s:form>        
 <script>

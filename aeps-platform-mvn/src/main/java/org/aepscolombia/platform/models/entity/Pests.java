@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="pests"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Pests  implements java.io.Serializable {
 

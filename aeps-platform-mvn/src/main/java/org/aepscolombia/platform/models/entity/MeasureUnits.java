@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="measure_units"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class MeasureUnits  implements java.io.Serializable {
 

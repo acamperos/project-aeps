@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="extension_agents"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ExtensionAgents  implements java.io.Serializable {
 

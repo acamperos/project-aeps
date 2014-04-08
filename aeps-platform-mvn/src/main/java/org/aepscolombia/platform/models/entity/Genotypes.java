@@ -21,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="genotypes"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Genotypes  implements java.io.Serializable {
 

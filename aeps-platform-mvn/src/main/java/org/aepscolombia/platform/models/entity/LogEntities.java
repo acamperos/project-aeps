@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="log_entities"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class LogEntities  implements java.io.Serializable {
 

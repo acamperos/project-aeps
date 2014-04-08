@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="resistencias_rompimiento"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ResistenciasRompimiento  implements java.io.Serializable {
 

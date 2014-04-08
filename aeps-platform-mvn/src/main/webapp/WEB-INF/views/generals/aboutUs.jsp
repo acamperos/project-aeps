@@ -6,14 +6,25 @@
     <head></head>
     <body>
         <div class="container">
-            <div class="w-box">
-                <div class="w-box-header">
-                    <!-- <h4>Tabs</h4> -->
-                </div>
-                <div class="w-box-content cnt_b">
+            <div class="panel">
+                <div class="panel-body">
                     <div class="row-fluid">
                         <div class="span12">
-                            <div class="tabbable tabs-left tabbable-bordered">
+                            <h3><s:property value="getText('text.mision.aboutus')" /></h3>
+                            <hr>
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
+                                tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum 
+                                massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                            </p>
+                            
+                            <!--<p><s:property value="getText('desc.mision.aboutus')" /></p>-->
+                            <h3><s:property value="getText('text.vision.aboutus')" /></h3>
+                            <hr>
+                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
+                                tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum 
+                                massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                            </p>
+<!--                            <div class="tabbable tabs-left tabbable-bordered">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#tb3_a" data-toggle="tab"><s:property value="getText('text.mision.aboutus')" /></a></li>
                                     <li><a href="#tb3_b" data-toggle="tab"><s:property value="getText('text.vision.aboutus')" /></a></li>
@@ -28,7 +39,7 @@
                                         <p><s:property value="getText('desc.vision.aboutus')" /></p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

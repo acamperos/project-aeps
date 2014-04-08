@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="field_types"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class FieldTypes  implements java.io.Serializable {
 

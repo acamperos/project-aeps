@@ -68,7 +68,7 @@
         </div>         
     </div>         
     <div> 
-        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFields" onCompleteTopics="completeField" value="Buscar lote">Buscar Lote <i class="icon-search"></i></sj:submit>
+        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFields" onCompleteTopics="completeField">Buscar Lote <i class="icon-search"></i></sj:submit>
     </div>    
 </s:form>        
 <script>

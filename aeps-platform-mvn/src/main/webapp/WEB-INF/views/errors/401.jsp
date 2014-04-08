@@ -11,10 +11,9 @@
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/justified-nav.css">
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/main.css">
-        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/style.css">
-        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/responsive.css">
-        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/responsiveslides.css" />		
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/beoro.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/font-awesome/css/font-awesome.min.css">
+        <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <%@ taglib prefix="s" uri="/struts-tags" %>

@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="growing_environment"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class GrowingEnvironment  implements java.io.Serializable {
 

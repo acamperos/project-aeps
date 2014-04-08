@@ -46,7 +46,7 @@
                     </div>    
                     <div class="control-group">
                         <s:label for="formRasta_rasta_latitudRas" cssClass="control-label req" value="Latitud del rasta (decimales):"></s:label>
-                            <div class="controls">
+                        <div class="controls">
                             <s:textfield cssClass="form-control" name="rasta.latitudRas" onkeyup="generateDegrees('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')"/>
                         </div>
                     </div>
@@ -69,9 +69,9 @@
                             </div>
                         </div>
                     </div>                            
-                        <div class="control-group">
+                    <div class="control-group">
                         <s:label for="formRasta_rasta_longitudRas" cssClass="control-label req" value="Longitud del rasta (decimales):"></s:label>
-                            <div class="controls">
+                        <div class="controls">
                             <s:textfield cssClass="form-control" id="formRasta_rasta_longitudRas" name="rasta.longitudRas" onkeyup="generateDegrees('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')"/>
                         </div>
                     </div>
@@ -200,7 +200,7 @@
                                             </div>
                                         </td>
                                         <td style="vertical-align: bottom ! important; padding: 0 0.5em;">
-                                            <a class="btn btn-mini delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_2').remove();"><i class="icon-trash"></i></a>
+                                            <a class="btn btn-small delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_2').remove();"><i class="icon-trash"></i></a>
                                         </td>
                                     </tr>
                                     <script>
@@ -495,8 +495,8 @@
                     <s:hidden name="page"/>
                     <s:hidden name="actExe"/>    
                     <s:hidden name="newRow" value="1"/>    
-                    <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" value="Guardar Rasta" validate="true" validateFunction="validationForm"/>
-                    <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();">Cancelar</button>
+                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm">Guardar Rasta</sj:submit>
+                    <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();">Cancelar</button>
                 </div>    
             </s:form>        
             <script>

@@ -341,17 +341,17 @@ public class ActionField extends BaseAction {
             required.put("altitude_lot", altitude_lot);
             required.put("area_lot", area_lot);
             
-            if (option_geo_lot == 1) {
-                required.put("latitude_property", latitude_lot);
-                required.put("length_property", length_lot);
-            } else if (option_geo_lot == 2) {
-                required.put("latitude_degrees_property", latitude_degrees_lot);
-                required.put("latitude_minutes_property", latitude_minutes_lot);
-                required.put("latitude_seconds_property", latitude_seconds_lot);
-                required.put("length_degrees_property", length_degrees_lot);
-                required.put("length_minutes_property", length_minutes_lot);
-                required.put("length_seconds_property", length_seconds_lot);
-            }
+//            if (option_geo_lot == 1) {
+                required.put("latitude_lot", latitude_lot);
+                required.put("length_lot", length_lot);
+//            } else if (option_geo_lot == 2) {
+//                required.put("latitude_degrees_property", latitude_degrees_lot);
+//                required.put("latitude_minutes_property", latitude_minutes_lot);
+//                required.put("latitude_seconds_property", latitude_seconds_lot);
+//                required.put("length_degrees_property", length_degrees_lot);
+//                required.put("length_minutes_property", length_minutes_lot);
+//                required.put("length_seconds_property", length_seconds_lot);
+//            }
             
 //            System.out.println("required->"+required);
             
@@ -365,24 +365,40 @@ public class ActionField extends BaseAction {
                 }
             }
             
-            double altLot = Double.parseDouble(altitude_lot);
-            double latLot = Double.parseDouble(latitude_lot);
-            double lonLot = Double.parseDouble(length_lot);
-            double areaLot = Double.parseDouble(area_lot);
+            double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot.replace(',','.'));
+            double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
+            double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
+            double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot.replace(',','.'));
             
 //            if (altitude_property) {    
-                if (altLot<0 || altLot>9000) {
-                    addFieldError("altitude_lot", "Dato invalido");
-                    addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
-                }
+            if (altLot<0 || altLot>9000) {
+                addFieldError("altitude_lot", "Dato invalido");
+                addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
+            }
 //            }
                 
             if (areaLot<0 || areaLot>3000) {
                 addFieldError("area_lot", "Dato invalido");
                 addActionError("Se ingreso un area invalida, por favor ingresar un valor entre 0 y 3000");
             }
+            
+            if (latitude_lot==null) {
+                addFieldError("latitude_lot", "Debe ingresar alguno de estos datos");
+                addFieldError("latitude_degrees_lot", " ");
+                addFieldError("latitude_minutes_lot", " ");
+                addFieldError("latitude_seconds_lot", " ");
+                addActionError("Debe ingresar la latitud en Decimales o en Grados");
+            }
+            
+            if (length_lot==null) {
+                addFieldError("length_lot", "Debe ingresar alguno de estos datos");
+                addFieldError("length_degrees_lot", " ");
+                addFieldError("length_minutes_lot", " ");
+                addFieldError("length_seconds_lot", " ");
+                addActionError("Debe ingresar la longitud en Decimales o en Grados");
+            }
 
-            if (option_geo_lot == 1) {
+//            if (option_geo_lot == 1) {
 //                if (latitude_property!=null) { 
                     if (latLot<(-4.3) || latLot>(13.5)) {
                         addFieldError("latitude_lot", "Dato invalido");
@@ -397,7 +413,7 @@ public class ActionField extends BaseAction {
                     }
 //                }			
 
-            } else if (option_geo_lot == 2) {
+//            } else if (option_geo_lot == 2) {
 
 //                if (latitude_degrees_property && (latitude_degrees_property<(-5) || latitude_degrees_property>14)) {
                 if ((latitude_degrees_lot<(-5) || latitude_degrees_lot>14)) {
@@ -434,7 +450,7 @@ public class ActionField extends BaseAction {
                     addFieldError("length_seconds_lot", "Dato invalido");
                     addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
                 }
-            }
+//            }
         }
     }
 //    public String crear() {    
@@ -563,10 +579,10 @@ public class ActionField extends BaseAction {
         Session session = sessions.openSession();
         Transaction tx = null;
         
-        double altLot = Double.parseDouble(altitude_lot);
-        double latLot = Double.parseDouble(latitude_lot);
-        double lonLot = Double.parseDouble(length_lot);
-        double areaLot = Double.parseDouble(area_lot);
+        double altLot = Double.parseDouble(altitude_lot.replace(',','.'));
+        double latLot = Double.parseDouble(latitude_lot.replace(',','.'));
+        double lonLot = Double.parseDouble(length_lot.replace(',','.'));
+        double areaLot = Double.parseDouble(area_lot.replace(',','.'));
         
         if (option_geo_lot == 2) {
             latLot = (latitude_minutes_lot/60) + (latitude_seconds_lot/3600);
@@ -598,6 +614,7 @@ public class ActionField extends BaseAction {
             lot.setLatitudeFie(latLot);
             lot.setLongitudeFie(lonLot);
             lot.setAreaFie(areaLot);            
+            lot.setFieldTypes(new FieldTypes(typeLot));
 //            lot.setControlPlagasLot(true);
 //            lot.setControlEnfermedadesLot(true);       
             session.saveOrUpdate(lot);
@@ -608,7 +625,7 @@ public class ActionField extends BaseAction {
                 if(idProOld!=idProducer) {                    
                     session.delete(fieTemp);
                 } else {
-                    fieTemp.setFieldTypes(new FieldTypes(typeLot));
+//                    fieTemp.setFieldTypes(new FieldTypes(typeLot));
                     session.saveOrUpdate(fieTemp);
                 }
 //                System.out.println("id field->"+fiePro.getFields().getIdFie());
@@ -625,7 +642,7 @@ public class ActionField extends BaseAction {
                 fiePro.setId(new FieldsProducersId(lot.getIdFie(), idProducer));
                 fiePro.setFields(lot);   
                 fiePro.setProducers(proDao.objectById(idProducer));
-                fiePro.setFieldTypes(new FieldTypes(typeLot));
+//                fiePro.setFieldTypes(new FieldTypes(typeLot));
                 session.saveOrUpdate(fiePro);
             }
             

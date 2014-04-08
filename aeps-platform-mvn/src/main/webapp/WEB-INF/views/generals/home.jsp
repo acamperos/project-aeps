@@ -3,86 +3,62 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!--<html>
     <head>-->
-        <script>
-            /*var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-             g.src='//www.google-analytics.com/ga.js';
-             s.parentNode.insertBefore(g,s)}(document,'script'));*/
-            $(function() {
-                $("#slider").responsiveSlides({
-                    auto: true,
-                    pager: false,
-                    nav: true,
-                    speed: 500,
-                    maxwidth: 962,
-                    namespace: "centered-btns"
-                });
-            });
-        </script>
 <!--    </head>
     <body>-->
         <div class="container">
-            <div class="rslides_container">
-                <ul class="rslides" id="slider">							
-                    <li>
-                        <div class="jumbotron">
-                            <div class="row">
-                                <div class="span6">
-                                    <h1><s:property value="getText('image.platform')" /></h1>
-                                </div>
-                                <div class="span6">
-                                    <p class="text-left lead"><s:property value="getText('text.description.platform')" /></p>
-                                    <p>
-                                        <a href="login.action" class="btn btn-primary btn-success btn-lg"><s:property value="getText('button.ingress.platform')" /></a>
-                                        <a href="login.action?user=new" class="btn btn-default btn-lg"><s:property value="getText('button.register.platform')" /></a>
-                                    </p>
-                                </div>
-                            </div>								
-                        </div>
-                    </li>
-                    <li>
-                        <div class="jumbotron">
-                            <div class="row">
-                                <div class="span6">
-                                    <h1><s:property value="getText('image.blog')" /></h1>
-                                </div>
-                                <div class="span6">
-                                    <p class="text-left lead"><s:property value="getText('text.description.blog')" /></p>
-                                    <p>
-                                        <button type="button" class="btn btn-primary btn-success btn-lg"><s:property value="getText('button.go.blog')" /></button>
-                                    </p>
-                                </div>
+            <div id="carousel-487454" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="img/carouselthumb.jpg" alt="thumb">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <p class="lead"><s:property value="getText('text.description.platform')" /></p>
+                                <a href="signin.action" class="btn btn-initial btn-large"><s:property value="getText('button.ingress.platform')" /></a>
+                                <a href="signin.action?logSel=new" class="btn btn-default btn-large"><s:property value="getText('button.register.platform')" /></a>
                             </div>
                         </div>
-                    </li>
-                    <li>
-                        <div class="jumbotron">
-                            <div class="row">
-                                <div class="span6">
-                                    <h1><s:property value="getText('image.mobile')" /></h1>
-                                </div>
-                                <div class="span6">
-                                    <p class="text-left lead"><s:property value="getText('text.description.mobile')" /></p>
-                                    <!--<p>-->
-                                    <div id="img_container">
-                                        <!-- <img src="img/logo-google-play-vetor.png"/> -->
-                                        <button type="button" class="btn btn-primary btn-lg"><s:property value="getText('button.go.mobile')" /></button>
-                                    </div>
-                                    <!--</p>-->
-                                </div>
+                    </div>
+                    <div class="item">
+                        <img src="img/carouselthumb.jpg" alt="thumb">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <p class="lead"><s:property value="getText('text.description.blog')" /></p>
+                                <a href="login.action" class="btn btn-initial btn-large"><s:property value="getText('button.ingress.platform')" /></a>
                             </div>
                         </div>
+                    </div>
+                    <div class="item">
+                        <img src="img/carouselthumb.jpg" alt="thumb">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <p class="lead"><s:property value="getText('text.description.mobile')" /></p>
+                                <a href="login.action" class="btn btn-primary btn-large"><s:property value="getText('button.go.mobile')" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-487454" data-slide-to="0" class="active">
                     </li>
-                </ul>
+                    <li data-target="#carousel-487454" data-slide-to="1" class="">
+                    </li>
+                    <li data-target="#carousel-487454" data-slide-to="2" class="">
+                    </li>
+                </ol>
+                <a class="left carousel-control" href="#carousel-487454" data-slide="prev">&lsaquo;</a> 
+                <a class="right carousel-control" href="#carousel-487454" data-slide="next">&rsaquo;</a>
             </div>
-            <div class="row">
-                <div class="span12">
+            <script>
+                !function ($) {
+                  $(function(){
+                    $('#carousel-487454').carousel();
+                  })
+                }(window.jQuery)
+            </script>
+            <div class="panel">
+                <div class="panel-body">
                     <h3><s:property value="getText('text.title.group')" /></h3><!-- Replace all text with what you want -->
                     <p><s:property value="getText('text.description.group')" /></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="span12">
                     <div class="tabbable tabs-left tabbable-bordered">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tb3_a" data-toggle="tab"><s:property value="getText('text.link.report')" /></a></li>

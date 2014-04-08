@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="textures"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Textures  implements java.io.Serializable {
 

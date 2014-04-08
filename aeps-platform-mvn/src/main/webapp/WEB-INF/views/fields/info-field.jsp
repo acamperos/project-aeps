@@ -35,8 +35,8 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divFields" class="w-box">
-    <button type="button" class="btn btn-primary" onclick="viewForm('/aeps-plataforma-mvn/showField.action?action=create', 'idField', '', 'Crear Lote', 1050, 550)">
-        <span class="glyphicon glyphicon-plus-sign"></span>Agregar lote
+    <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showField.action?action=create', 'idField', '', 'Crear Lote', 1050, 550)">
+        <i class="icon-plus"></i> Agregar lote
     </button>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblFields'>
         <thead>
@@ -85,7 +85,7 @@
         <div id="confirm_dialog_lot" class="cbox_content">
             <div class="sepH_c"><strong>Desea borrar este(s) lote(s)?</strong></div>
             <div>
-                <a href="#" class="btn btn-small btn-primary confirm_yes">Si</a>
+                <a href="#" class="btn btn-small btn-initial confirm_yes">Si</a>
                 <a href="#" class="btn btn-small confirm_no">No</a>
             </div>
         </div>

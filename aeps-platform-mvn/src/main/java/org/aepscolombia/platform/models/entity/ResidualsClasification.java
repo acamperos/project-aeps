@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="residuals_clasification"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ResidualsClasification  implements java.io.Serializable {
 

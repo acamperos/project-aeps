@@ -780,10 +780,10 @@ public class ActionRasta extends BaseAction {
             Fields fie = lotDao.objectById(idField);
             nameField  = fie.getNameFie();
 //            nameField = rasta.getFields().getNameFie();            
-            String dateActual = new SimpleDateFormat("dd/MM/yyyy").format(rasta.getFechaRas());   
+//            String dateActual = new SimpleDateFormat("dd/MM/yyyy").format(rasta.getFechaRas());   
 //            rasta.setFechaRas(new Date(dateActual));
 //            Date asignRasta = null;
-            Date asignRasta = rasta.getFechaRas();
+//            Date asignRasta = rasta.getFechaRas();
 //            System.out.println("date->"+dateActual);
 //            try {
 ////                System.out.println("date->"+new SimpleDateFormat("yyyy-MM-dd").parse(dateActual));
@@ -791,7 +791,7 @@ public class ActionRasta extends BaseAction {
 //            } catch (ParseException ex) {
 ////                System.out.println("errorConversion->"+ex.getMessage());
 //            }
-            rasta.setFechaRas(asignRasta);
+//            rasta.setFechaRas(asignRasta);
             additionalsAtrib = rastaDao.getHorizonRasta(this.getIdRasta());
             newReq = (additionalsAtrib.size());
 //            System.out.println("size->"+newReq);

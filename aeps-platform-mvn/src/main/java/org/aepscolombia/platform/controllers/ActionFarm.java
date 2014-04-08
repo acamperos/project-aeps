@@ -391,7 +391,7 @@ public class ActionFarm extends BaseAction {
                 required.put("length_minutes_property", length_minutes_property);
                 required.put("length_seconds_property", length_seconds_property);
             }
-            System.out.println("values->"+required);
+//            System.out.println("values->"+required);
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = String.valueOf(required.get(sK));
@@ -415,9 +415,9 @@ public class ActionFarm extends BaseAction {
 //            }
             
             
-            double altPro = Double.parseDouble(altitude_property);
-            double latPro = Double.parseDouble(latitude_property);
-            double lonPro = Double.parseDouble(length_property);
+            double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property);
+            double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property);
+            double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property);
             
 //            if (altitude_property) {    
             if (altPro < 0 || altPro > 9000) {

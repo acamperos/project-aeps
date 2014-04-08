@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="amendments_fertilizers"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class AmendmentsFertilizers  implements java.io.Serializable {
 

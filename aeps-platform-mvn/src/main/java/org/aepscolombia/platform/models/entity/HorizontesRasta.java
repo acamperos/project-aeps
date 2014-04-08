@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="horizontes_rasta"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class HorizontesRasta  implements java.io.Serializable {
 

@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="seeds_types"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class SeedsTypes  implements java.io.Serializable {
 

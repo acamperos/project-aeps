@@ -12,8 +12,7 @@
                 listValue="nameDocTyp" 
                 headerKey=" " 
                 headerValue="---"
-                onchange="selValue(this, 'divDigVerPro');
-                        selConf(this.value, 'formProducerSearch_num_ident_producer');"
+                onchange="selConf(this.value, 'formProducerSearch_num_ident_producer');"
                 />
         </div>
         <div class="span3" style="padding-left: 28px">
@@ -62,7 +61,7 @@
         </div>      
     </div>   
     <div>   
-        <sj:submit type="button" cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divConListProducers" onCompleteTopics="completeProducer" value="Buscar Productor">Buscar Productor <i class="icon-search"></i></sj:submit>
+        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListProducers" onCompleteTopics="completeProducer">Buscar Productor <i class="icon-search"></i></sj:submit>
     </div>
 </s:form>
 <script>

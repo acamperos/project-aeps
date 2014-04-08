@@ -56,8 +56,8 @@ public class MunicipalitiesDao {
         try {
             tx = session.beginTransaction();
 //            System.out.println("depId->"+depId);
-            String text = "select m.id_mun, m.id_departament_mun, m.code_mun, m.name_mun from municipalities m "+
-                    "where m.id_departament_mun = :depId";
+            String text = "select m.id_mun, m.id_department_mun, m.code_mun, m.name_mun from municipalities m "+
+                    "where m.id_department_mun = :depId";
             Query query = session.createSQLQuery(text).addEntity("m", Municipalities.class).setParameter("depId", depId);
 //            Query query = session.createQuery(text).setParameter("depId", depId);
 //            query.
@@ -82,7 +82,7 @@ public class MunicipalitiesDao {
 //        events.toArray();
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select id_mun, id_departament_mun, code_mun, name_mun from municipalities");
+            Query query = session.createSQLQuery("select id_mun, id_department_mun, code_mun, name_mun from municipalities");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

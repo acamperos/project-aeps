@@ -13,10 +13,10 @@
     <!--<div class="w-box">-->
     <!--                <div class="w-box-content">
                     </div>-->
-    <div class="row">
-        <div class="span12 tabbable-bordered content">
-            <div class="tabbable-bordered">
-                <div class="tab-content">
+    <!--<div class="row">-->
+        <div class="panel">
+            <div class="panel-body">
+                <!--<div class="tab-content">-->
                     <!--<div class="w-box-content cnt_b">-->
                     <s:form id="formProfileUser" action="sendInformation.action" method="post">
                         <s:hidden name="actExe" value="profileUser"/>
@@ -73,13 +73,13 @@
                             </div>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <sj:submit cssClass="btn btn-success" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" value="Guardar" validate="true" validateFunction="validationForm"/>
+                                    <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" value="Guardar" validate="true" validateFunction="validationForm"/>
                                 </div>  
                             </div>  
                             <script>
-                                        $.subscribe('completeProfile', function(event, data) {
-                                            completeFormChange('', 'formProfileUser', event.originalEvent.request.responseText);
-                                        });
+                                $.subscribe('completeProfile', function(event, data) {
+                                    completeFormChange('', 'formProfileUser', event.originalEvent.request.responseText);
+                                });
                             </script>
                         </fieldset>
                     </s:form>
@@ -165,7 +165,7 @@
                             </div>
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <sj:submit cssClass="btn btn-success" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" value="Guardar" validate="true" validateFunction="validationForm"/>
+                                    <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" value="Guardar" validate="true" validateFunction="validationForm"/>
                                 </div>  
                             </div>  
                             <script>
@@ -175,10 +175,10 @@
                             </script>
                         </fieldset>
                     </s:form>
-                </div>
+                <!--</div>-->
             </div>
         </div>
-    </div>
+    <!--</div>-->
     <!--</div>-->
 </div>
 <!--    </body>

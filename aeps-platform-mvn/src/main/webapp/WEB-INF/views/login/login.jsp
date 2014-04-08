@@ -13,17 +13,19 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 
         <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet'> -->        
-        <sj:head jqueryui="true"/>
+        <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
-        <link rel="stylesheet" href="scripts/css/jquery/jquery.validate.password.css"/>
+        <!--<link rel="stylesheet" href="scripts/css/jquery/jquery.validate.password.css"/>-->
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
+        <!--<link rel="stylesheet" href="scripts/css/generals/beoro.css">-->
         <link rel="stylesheet" href="scripts/css/generals/login.css">
-        <link rel="stylesheet" href="scripts/css/generals/main.css">
+        <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">
+        <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <!--<link rel="stylesheet" href="scripts/css/generals/main.css">-->
         <style>
             body {
                 padding-top: 50px;
@@ -52,36 +54,6 @@
                     })
                 }
             })(jQuery);
-            /*$(document).ready(function() {
-             if($('#login-wrapper').length) {
-             $("#login-wrapper").vAlign().hAlign()
-             };
-             if($('#login-validate').length) {
-             $('#login-validate').validate({
-             onkeyup: false,
-             errorClass: 'error',
-             rules: {
-             login_name: { required: true },
-             login_password: { required: true }
-             }
-             })
-             }
-             if($('#forgot-validate').length) {
-             $('#forgot-validate').validate({
-             onkeyup: false,
-             errorClass: 'error',
-             rules: {
-             forgot_email: { required: true, email: true }
-             }
-             })
-             }
-             $('#pass_login').click(function() {
-             $('.panel:visible').slideUp('200',function() {
-             $('.panel').not($(this)).slideDown('200');
-             });
-             $(this).children('span').toggle();
-             });
-             });*/
             $(document).ready(function() {
                 $('#remPass').click(function() {
                     //$('.panel:visible').slideUp('200',function() {
@@ -182,7 +154,7 @@
                             <!-- </div> -->
                             <div class="submit_sect">
                                 <%--<sj:submit cssClass="btn btn-beoro-3" targets="result" value="Iniciar sesión" validate="true" validateFunction="bootstrapValidation"/>--%>
-                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" onCompleteTopics="completeLogin" value="%{getText('button.signin.login')}" validate="true" validateFunction="validationForm" />
+                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" onCompleteTopics="completeLogin" value="%{getText('button.signin.login')}" validate="true" validateFunction="validationForm" />
                                 <%--<sj:submit cssClass="btn btn-primary" validate="true" value="Iniciar sesion"/>--%>
                             </div>
                         </div>				
@@ -220,7 +192,7 @@
                             </div>
                             <div class="submit_sect">
                                 <!--<button type="submit" class="btn btn-primary">Recordar</button>-->
-                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
+                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>
                     </s:form>
@@ -288,7 +260,7 @@
                             </div>
                             <div class="span4">
                                 <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
-                                <sj:submit cssClass="btn btn-primary" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
+                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>                            
                     </s:form>

@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="resulting_products"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ResultingProducts  implements java.io.Serializable {
 

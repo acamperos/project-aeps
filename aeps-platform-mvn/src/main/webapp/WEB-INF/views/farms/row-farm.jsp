@@ -21,8 +21,8 @@
 <% if (value.equals("property") || value == "property") {%>
     <td>
         <div class="btn-group">
-            <a href="#" class="btn btn-mini" title="Editar Finca" onclick="viewForm('/aeps-plataforma-mvn/showFarm.action?action=modify&page=<%=pageNow%>', 'idFar', <s:property value ="id_farm" />, 'Editar Finca', 1050, 550)"><i class="icon-pencil"></i></a>
-            <a href="#" class="btn btn-mini delete_rows_dt" title="Borrar Finca" onclick="showDialogDelete(this, 'confirm_dialog_property', 'deleteFarm.action?idFar=<s:property value ="id_farm" />', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');"><i class="icon-trash"></i></a>
+            <a href="#" class="btn btn-small" title="Editar Finca" onclick="viewForm('/aeps-plataforma-mvn/showFarm.action?action=modify&page=<%=pageNow%>', 'idFar', <s:property value ="id_farm" />, 'Editar Finca', 1050, 550)"><i class="icon-pencil"></i></a>
+            <a href="#" class="btn btn-small delete_rows_dt" title="Borrar Finca" onclick="showDialogDelete(this, 'confirm_dialog_property', 'deleteFarm.action?idFar=<s:property value ="id_farm" />', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');"><i class="icon-trash"></i></a>
         </div>
     </td>
 <% }%>

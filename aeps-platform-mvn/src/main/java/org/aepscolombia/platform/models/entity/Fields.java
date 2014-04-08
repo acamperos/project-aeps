@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="fields"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Fields  implements java.io.Serializable {
 
@@ -35,6 +35,7 @@ public class Fields  implements java.io.Serializable {
      private boolean diseasesControlFie;
      private boolean statusFie;
      private String idProjectFie;
+     private FieldTypes fieldTypes;
 
     public Fields() {
     }
@@ -43,7 +44,7 @@ public class Fields  implements java.io.Serializable {
         this.idFie=idFie;
     }
 	
-    public Fields(String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie) {
+    public Fields(String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie, FieldTypes fieldTypes) {
         this.nameFie = nameFie;
         this.altitudeFie = altitudeFie;
         this.latitudeFie = latitudeFie;
@@ -53,8 +54,9 @@ public class Fields  implements java.io.Serializable {
         this.pestsControlFie = pestsControlFie;
         this.diseasesControlFie = diseasesControlFie;
         this.statusFie = statusFie;
+        this.fieldTypes = fieldTypes;
     }
-    public Fields(Farms farms, String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie, String idProjectFie) {
+    public Fields(Farms farms, String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie, String idProjectFie, FieldTypes fieldTypes) {
        this.farms = farms;
        this.nameFie = nameFie;
        this.altitudeFie = altitudeFie;
@@ -66,6 +68,7 @@ public class Fields  implements java.io.Serializable {
        this.diseasesControlFie = diseasesControlFie;
        this.statusFie = statusFie;
        this.idProjectFie = idProjectFie;
+       this.fieldTypes = fieldTypes;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -176,6 +179,16 @@ public class Fields  implements java.io.Serializable {
     
     public void setIdProjectFie(String idProjectFie) {
         this.idProjectFie = idProjectFie;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="contract_type_fie", nullable=false)
+    public FieldTypes getFieldTypes() {
+        return this.fieldTypes;
+    }
+    
+    public void setFieldTypes(FieldTypes fieldTypes) {
+        this.fieldTypes = fieldTypes;
     }
 
 }

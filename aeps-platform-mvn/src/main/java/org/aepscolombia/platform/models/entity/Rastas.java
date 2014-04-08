@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="rastas"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Rastas  implements java.io.Serializable {
 

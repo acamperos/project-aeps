@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="chemical_fertilizers"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ChemicalFertilizers  implements java.io.Serializable {
 

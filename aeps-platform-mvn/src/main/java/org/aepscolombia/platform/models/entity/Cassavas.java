@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="cassavas"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Cassavas  implements java.io.Serializable {
 

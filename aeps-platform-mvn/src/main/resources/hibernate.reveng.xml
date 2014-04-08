@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="madr_bd10"/>
+  <schema-selection match-catalog="madr_bd11"/>
   <table-filter match-name="land_uses_markets"/>
   <table-filter match-name="residuals_clasification"/>
   <table-filter match-name="diseases_crops_types"/>

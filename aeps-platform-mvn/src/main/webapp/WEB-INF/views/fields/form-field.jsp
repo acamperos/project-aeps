@@ -10,143 +10,147 @@
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
         <div class="row-fluid" id="divFieldsForm">
-            <div class="span6">	
-                <s:form id="formField" theme="bootstrap" action="saveField.action" cssClass="form-horizontal formClassLot" label="Formulario de un lote">
+            <div class="span7">	
+                <s:form id="formField" action="saveField.action" cssClass="form-horizontal formClassLot" label="Formulario de un lote">
                     <fieldset>
-                        <div>
-                            <s:hidden name="idProducer"/>                            
-                            <s:hidden name="idField"/>
-                            <s:textfield
-                                label="Productor:"
-                                name="name_producer_lot"
-                                requiredLabel="true"              
-                                tooltip="Seleccione un productor con la lupa a la derecha"                        
-                                />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />
-                            <%-- <a href="#" data-toggle="tooltip" data-placement="right" title="Seleccione el productor">
-                                                        
-                                                </a>--%>
-                        </div>                          
-                        <div id="divPropertyLot">
-                            <s:hidden name="idFarm"/>
-                            <s:textfield
-                                label="Seleccione la Finca:"
-                                name="name_property_lot"   
-                                requiredLabel="true"
-                                tooltip="Seleccione la finca en la lupa a la derecha"                        
-                                />
-                            <!--<img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione la finca" onclick="listInfo('/aeps-plataforma-mvn/searchFarm.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')" />-->
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
-                            <%--<img src="../img/search_icon.gif" onclick="setPropertyVal('../actions/Actions.php?action=BuscarFincasXPro&selected=property', 'producer', 'params_id_producer', 'params_name_property', 'params_name_property', 'Listado de Fincas', 1050, 550)" />--%>
-                        </div>
-                        <div>
-                            <s:select
-                                tooltip="Seleccione que tipo de lote es"
-                                label="El lote es:"
-                                name="typeLot"
-                                requiredLabel="true"
-                                list="type_property_lot" 
-                                listKey="idFieTyp" 
-                                listValue="nameFieTyp"              
-                                headerKey="-1" 
-                                headerValue="---" />
-                        </div>
-                        <div>
-                            <s:textfield
-                                label="Nombre de Lote:"
-                                name="name_lot"                    
-                                tooltip="Ingrese el nombre del lote asociado a la finca seleccionada"                        
-                                />
-                        </div>    
-                        <label class="radio inline" style="margin-left: 50px; margin-bottom: 15px;">
-                            <input type="radio" name="option_geo_lot" id="formField_option_degrees_lot" value="2" onclick="changeValues(this.value, 'decimals_lot', 'degrees_lot');">
-                            Grados
-                        </label>
-                        <label class="radio inline" style="margin-left: 50px; margin-bottom: 15px;">
-                            <input type="radio" name="option_geo_lot" id="formField_option_decimal_lot" value="1" checked onclick="changeValues(this.value, 'decimals_lot', 'degrees_lot');">
-                            Decimales
-                        </label>
-                        <div id="decimals_lot"> 
-                            <div>
-                                <s:textfield
-                                    label="Latitud del Lote:"
-                                    name="latitude_lot"           
-                                    requiredLabel="true"
-                                    tooltip="Ingrese la latitud del lote"                        
-                                    />
-                            </div>
-                            <div>
-                                <s:textfield
-                                    label="Longitud del Lote:"
-                                    name="length_lot"      
-                                    requiredLabel="true"
-                                    tooltip="Ingrese la longitud del lote"                        
-                                    />
-                            </div>                
-                        </div>
-                        <div id="degrees_lot" class="hide">   
-                            <div>
-                                <label for="latitude_degrees_lot" style="margin-left: 40px; margin-bottom: 30px;">Latitud del Lote:</label>
-                                <div class="row-fluid">
-                                    <div class="span2 input-prepend" style="width: 100px">
-                                        <span class="add-on">Grados</span>
-                                        <input type="text" name="latitude_degrees_lot" id="formField_latitude_degrees_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
-                                    </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
-                                        <span class="add-on">Minutos</span>
-                                        <input type="text" name="latitude_minutes_lot" id="formField_latitude_minutes_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
-                                    </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
-                                        <span class="add-on">Segundos</span>
-                                        <input type="text" name="latitude_seconds_lot" id="formField_latitude_seconds_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
-                                    </div>
-                                </div>
+                        <s:hidden name="idProducer"/>                            
+                        <s:hidden name="idField"/>
+                        <div class="control-group">
+                            <label for="formField_name_producer_lot" class="control-label req">
+                                Seleccione el lote al cual pertenece:
+                                <i class="icon-info-sign s2b_tooltip" title="Seleccione la finca en la lupa a la derecha"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="name_producer_lot" />
+                                <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
                             </div>  
-                            <div>
-                                <label for="length_degrees_lot" style="margin-left: 40px; margin-bottom: 30px;">Longitud del Lote:</label>
+                        </div>                         
+                        <div id="divPropertyLot">
+                            <div class="control-group">
+                                <s:hidden name="idFarm"/>
+                                <label for="formField_name_property_lot" class="control-label req">
+                                    Seleccione la Finca:
+                                    <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor con la lupa a la derecha"></i>
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="name_property_lot" />
+                                    <a class="btn" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
+                                </div>  
+                            </div>                     
+                        </div>
+                        <div class="control-group">
+                            <label for="formField_typeLot" class="control-label req">
+                                El lote es:
+                                <i class="icon-info-sign s2b_tooltip" title="Seleccione que tipo de lote es"></i>
+                            </label>
+                            <div class="controls">
+                                <!--requiredLabel="true"-->
+                                <s:select
+                                    name="typeLot"                                    
+                                    list="type_property_lot" 
+                                    listKey="idFieTyp" 
+                                    listValue="nameFieTyp"              
+                                    headerKey="-1" 
+                                    headerValue="---" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="formField_name_lot" class="control-label">
+                                Nombre de Lote:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese el nombre del lote asociado"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="name_lot" />
+                            </div>    
+                        </div>    
+                        <div class="control-group">
+                            <label for="formField_latitude_lot" class="control-label req">
+                                Latitud del lote (decimales):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la latitud del lote asociada"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield cssClass="form-control" name="latitude_lot" onkeyup="generateDegrees('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="formField_latitude_degrees_lot" class="control-label req">
+                                Latitud del lote (grados):
+                            </label>
+                            <div class="controls">
                                 <div class="row-fluid">
-                                    <div class="span2 input-prepend" style="width: 100px">
+                                    <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees_lot" id="formField_length_degrees_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_degrees_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_degrees_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
                                     </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes_lot" id="formField_length_minutes_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_minutes_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_minutes_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
                                     </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds_lot" id="formField_length_seconds_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_seconds_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_seconds_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
                                     </div>
                                 </div>
                             </div>
+                        </div>                            
+                        <div class="control-group">
+                            <label for="formField_length_lot" class="control-label req">
+                                Longitud del Lote (decimales):
+                            </label>
+                            <div class="controls">
+                                <s:textfield cssClass="form-control" id="formField_length_lot" name="length_lot" onkeyup="generateDegrees('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')"/>
+                            </div>
                         </div>
-                        <div>
-                            <s:textfield
-                                label="Altitud del Lote (metros):"
-                                name="altitude_lot"              
-                                requiredLabel="true"
-                                tooltip="Ingrese la altitud del lote en metros"                        
-                                />
+                        <div class="control-group">
+                            <label for="formField_length_degrees_lot" class="control-label req">
+                                Longitud del rasta (grados):
+                            </label>
+                            <div class="controls">
+                                <div class="row-fluid">
+                                    <div class="span2 input-prepend controls" style="width: 100px;">
+                                        <span class="add-on">Grados</span>
+                                        <input type="text" name="length_degrees_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_degrees_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    </div>
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
+                                        <span class="add-on">Minutos</span>
+                                        <input type="text" name="length_minutes_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_minutes_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    </div>
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
+                                        <span class="add-on">Segundos</span>
+                                        <input type="text" name="length_seconds_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_seconds_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                        <div class="control-group">
+                            <label for="formField_altitude_lot" class="control-label req">
+                                Altitud del Lote (metros):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la altitud del lote en metros"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="altitude_lot" />
+                            </div>
                         </div>
-                        <div>
-                            <s:textfield
-                                label="Area del Lote (hectarea):"
-                                name="area_lot"                    
-                                requiredLabel="true"
-                                tooltip="Ingrese el area del lote"                        
-                                />
+                        <div class="control-group">
+                            <label for="formField_area_lot" class="control-label req">
+                                Area del Lote (hectarea):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese el area del lote"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="area_lot" requiredLabel="true" />
+                            </div>         
                         </div>         
                     </fieldset>				
                     <div> 
-                        <s:hidden name="page"/>
+                        <s:hidden name="page" id="formField_page"/>
                         <s:hidden name="actExe"/>    
-                        <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" value="Guardar Lote" validate="true" validateFunction="validationForm"/>
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm">Guardar Lote</sj:submit>
                         <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')">Guardar informaci&oacute;n</button>-->
-                        <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formField'); closeWindow();">Cancelar</button>
+                        <button class="btn btn-large bt_cancel_field" onclick="resetForm('formField'); closeWindow();">Cancelar</button>
                     </div>    
                 </s:form>        
                 <script>
-                        var page = $("#formField_page").val();
+//                        var page = $("#formField_page").val();
                         //For Lot
                         $.mask.definitions['i'] = "[-0-9]";
                         $.mask.definitions['f'] = "[-.0-9]";
@@ -172,13 +176,13 @@
                         $.subscribe('completeField', function(event, data) {
                             completeFormGetting('dialog-form', 'formField', 'divFields', event.originalEvent.request.responseText);
                             setTimeout( function() {
-                                showInfo("searchField.action?page="+page, "divConListFields");
+                                showInfo("searchField.action?page="+$("#formField_page").val(), "divConListFields");
                             }, 2000);
                         });
                                 //            chargeValues('/aeps-plataforma-mvn/templates/listarTiposFields.action', 'proId', '', 'formField_type_property_lot', 'divMessage');
                 </script>
             </div>
-            <div class="span6">
+            <div class="span5" style="margin-left: 0">
                 <div class="alert fade in">
                     <strong>Recuerde que en Colombia:</strong>
                     <br /><p></p> 

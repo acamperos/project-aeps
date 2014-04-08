@@ -38,7 +38,7 @@ public class ProducersDao
         
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
         sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
-        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent, e.validation_number_ent, m.id_departament_mun,";
+        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent, e.validation_number_ent, m.id_department_mun,";
         sql += " m.id_mun, e.first_name_1_ent, e.first_name_2_ent, e.last_name_1_ent, e.last_name_2_ent";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";	
@@ -195,7 +195,7 @@ public class ProducersDao
         }
         if (args.containsKey("depPro")) {
             String valIdent = String.valueOf(args.get("depPro"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_departament_mun="+args.get("depPro");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_department_mun="+args.get("depPro");
         }
         if (args.containsKey("cityPro")) {
             String valIdent = String.valueOf(args.get("cityPro"));

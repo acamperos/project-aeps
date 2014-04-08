@@ -390,4 +390,44 @@
             <result name = "states" type="json"></result>
         </action>     
     </package>
+<!--    <package name="crop" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="listCrop" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/crops/list-crops.jsp</result>
+        </action>
+        <action name="dataCrop" method="view" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/crops/data-crops.jsp</result>
+        </action>
+        <action name="viewCrop" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/view-crops.jsp</result>
+        </action> 
+        <action name="searchCrop" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-crops.jsp</result>
+        </action>   
+        <action name="showCrop" method="show" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-crops.jsp</result>
+        </action>
+        <action name="saveCrop" method="saveData" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteCrop" method="delete" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>-->
 </struts>

@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="privileges"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Privileges  implements java.io.Serializable {
 

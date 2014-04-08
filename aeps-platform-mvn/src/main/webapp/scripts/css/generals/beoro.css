@@ -162,15 +162,16 @@ small { font-size: 11px }*/
     .nav-icons .dropdown-menu {margin-top:8px}
     .nav-icons .dropdown-menu li > a {padding:0 10px}
     .user-box { text-align: right }
-    .user-box-inner { display: inline-block; text-align: left; }
+    /*.user-box-inner { display: inline-block; text-align: left; }*/
+    .user-box-inner { text-align: left; }
     .user-box .user-avatar { display: block; float: left; margin-right: 10px; max-width: 40px; position: relative; top: 1px; }
     .user-box .user-info { padding: 0 20px 0 0; display: inline-block; }
     .user-box .user-info ul { margin: 0; line-height: 15px; }
-    .user-box .user-info li { display: inline; font-size: 11px; }
+    .user-box .user-info li { display: inline; font-size: 13px; }
     
 /* breadcrumbs  */  
     #breadcrumbs { overflow: hidden; width: 100%; list-style: none; margin: 0; padding: 14px 0 8px; }
-    #breadcrumbs li { float: left; margin: 0 18px 6px 0; }
+    #breadcrumbs li { line-height: 20px; float: left; margin: 0 18px 6px 0; }
     #breadcrumbs li:last-child { margin-right: 0 }
     #breadcrumbs a { background: #eaeaea; background: rgba(0,0,0,.08); display: block; text-decoration: none; color: #555; text-shadow: 0 1px 0 rgba(255,255,255,.5); position: relative; padding: 3px 6px 3px 10px; }
     #breadcrumbs a:hover { background: #368CA9; color: #fff; text-shadow: none; }
@@ -223,7 +224,8 @@ small { font-size: 11px }*/
     .w-box-footer .f-text { margin: 0; padding: 0 12px; font-size: 12px; }
     .w-box-footer .f-center { padding: 0 10px; text-align: center; }
     .w-box-content.content-hide { display: none }
-    .w-box .table thead th, .w-box .table tfoot th { background-color: #f0f3f5 !important }
+    .w-box .table thead th, .w-box .table tfoot th { background-color: #A4C300 !important }
+    /*.w-box .table thead th, .w-box .table tfoot th { background-color: #f0f3f5 !important }*/
     .w-box .table .sorting_desc, .w-box .table .sorting_asc { background-color: #dce3e7 !important }
     .w-box .table-vam td, .w-box .table-vam th { vertical-align: middle }
     .w-box-blue .w-box-header { background: #208bbd }

@@ -50,7 +50,9 @@ public class GlobalFunctions {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp-mail.outlook.com");
+//        props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+//        props.put("mail.transport.protocol", "smtps");
 //        Session session  = Session.getDefaultInstance(props, null);
         final String fromAdressVal = fromAdress;
         final String fromAdressPassVal = fromAdressPass;
@@ -77,6 +79,7 @@ public class GlobalFunctions {
                     new InternetAddress(toAdress, ""));
             msg.setSubject(subject);
 //            msg.setContent(multipart, "text/html; charset=utf-8"); 
+//            msg.setContent(multipart, "text/html"); 
             msg.setContent(multipart); 
             Transport.send(msg);
             
@@ -207,7 +210,7 @@ public class GlobalFunctions {
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Bienvenido a la plataforma AEPS.</p> \n"
                 + "<p>Para validar su registro por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>AQUI</a>\n"
+                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
 //                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
                 + "<p>Si usted no se ha registrado a este sistema por favor ignorar este mensaje</p> "
                 + "</body> \n"
@@ -233,7 +236,7 @@ public class GlobalFunctions {
                 + "<body> \n"
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>AQUI</a> \n"
+                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;

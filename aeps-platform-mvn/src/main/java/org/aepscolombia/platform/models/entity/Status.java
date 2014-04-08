@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="status"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class Status  implements java.io.Serializable {
 

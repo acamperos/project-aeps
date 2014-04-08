@@ -15,45 +15,60 @@
         </div>
         <div class="container">			
             <!-- Example row of columns -->
-            <div class="row">
-                <div class="span4">
-                    <img id="img_farmer" src="img/farmer.jpg"/>
-                    <h3>Productores</h3>
-                    <p>Encargado de la toma de datos para los productores o agricultores</p>
-                    <%--<s:url id="ajaxTest" value="/AjaxTest.action"/>--%>
-                    <%--<sj:a id="link1" href="%{ajaxTest}" targets="div1">--%>
-                    <p><s:a cssClass="btn btn-primary" href="listProducer.action" role="button" targets="divBodyLayout">Ir »</s:a></p>
-                </div>
-                <div class="span4">
-                    <img id="img_farmer" src="img/property.jpg"/>
-                    <h3>Fincas</h3>
-                    <p>Encargado de la toma de datos para las fincas</p>
-                    <p><s:a cssClass="btn btn-primary" href="listFarm.action" role="button" targets="divBodyLayout">Ir »</s:a></p>
-                </div>
-                <div class="span4">
-                    <img id="img_farmer" src="img/lot.jpg"/>
-                    <h3>Lotes</h3>
-                    <p>Encargado de la toma de datos para los lotes</p>
-                    <p><s:a cssClass="btn btn-primary" href="listField.action" role="button" targets="divBodyLayout">Ir »</s:a></p>
-                </div>
+            <div class="row">                
+                <div class="span6 thumbnail custom-thumb">
+					<img class="img-responsive hidden-xs" src="img/producers.jpg" alt="">
+					<div class="caption">
+						<h3>Productores</h3>
+                        <p>Encargado de la toma de datos para los productores o agricultores</p>
+                        <%--<s:url id="ajaxTest" value="/AjaxTest.action"/>--%>
+                        <%--<sj:a id="link1" href="%{ajaxTest}" targets="div1">--%>
+                        <p><s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout">Ir <i class="icon-white icon-double-angle-right"></i></s:a></p>
+					</div>
+				</div>
+                <div class="span6 thumbnail custom-thumb" style="margin-left: 0">
+					<img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
+					<div class="caption">
+						<h3>Cultivos</h3>
+                        <p>Encargado de la toma de datos para los cultivos</p>
+                        <p><s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+					</div>
+				</div>
             </div>
-            <div class="row">
-                <div class="span4">
-                    <img id="img_farmer" src="img/culture.jpg"/>
-                    <h3>Cultivos</h3>
-                    <p>Encargado de la toma de datos para los cultivos</p>
-                </div>
-                <div class="span4">
-                    <img id="img_farmer" src="img/suelos.jpg"/>
-                    <h3>Suelos</h3>
-                    <p>Encargado de la toma de datos para los suelos</p>
-                    <p><s:a cssClass="btn btn-primary" href="/aeps-plataforma-mvn/soil/listSoil.action" role="button" targets="divBodyLayout">Ir »</s:a></p>
-                </div>
-                <div class="span4">
-                    <img id="img_farmer" src="img/climate.png"/>
-                    <h3>Clima</h3>
-                    <p>Encargado de la toma de datos para el clima</p>
-                </div>
+            <div class="row">                
+                <div class="span6 thumbnail custom-thumb">
+					<img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
+					<div class="caption">
+						<h3>Fincas</h3>
+                        <p>Encargado de la toma de datos para las fincas</p>
+                        <p><s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+					</div>
+				</div>
+                <div class="span6 thumbnail custom-thumb" style="margin-left: 0">
+					<img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
+					<div class="caption">
+						<h3>Suelos</h3>
+                        <p>Encargado de la toma de datos para los suelos</p>
+                        <p><s:a cssClass="btn btn-initial" href="/aeps-plataforma-mvn/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+					</div>
+				</div>
+            </div>
+            <div class="row">                
+                <div class="span6 thumbnail custom-thumb">
+					<img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
+					<div class="caption">
+						<h3>Lotes</h3>
+                        <p>Encargado de la toma de datos para los lotes</p>
+                        <p><s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+					</div>
+				</div>
+                <div class="span6 thumbnail custom-thumb" style="margin-left: 0">
+					<img class="img-responsive hidden-xs" src="img/climate.jpg" alt="">
+					<div class="caption">
+						<h3>Clima</h3>
+                        <p>Encargado de la toma de datos para el clima</p>
+					</div>
+				</div>
             </div>
         </div>
     </body>

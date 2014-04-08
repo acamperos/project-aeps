@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="reasons_soil_analysis"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class ReasonsSoilAnalysis  implements java.io.Serializable {
 

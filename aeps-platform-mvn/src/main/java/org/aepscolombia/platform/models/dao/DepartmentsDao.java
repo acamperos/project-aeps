@@ -50,7 +50,7 @@ public class DepartmentsDao {
 //        eventos.toArray();
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select id_dep, codigo_dep, nombre_dep from departamentos");
+            Query query = session.createSQLQuery("select id_dep, name_dep from departments");
             eventos = query.list();
 //            for (Object[] datos : eventos) {
 //                System.out.println(datos[0] + "-" + datos[1]);

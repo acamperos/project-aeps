@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="seeds_origins"
-    ,catalog="madr_bd10"
+    ,catalog="madr_bd11"
 )
 public class SeedsOrigins  implements java.io.Serializable {
 

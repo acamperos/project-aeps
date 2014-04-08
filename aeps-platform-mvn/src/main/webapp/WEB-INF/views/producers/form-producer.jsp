@@ -157,9 +157,9 @@
                 <s:hidden name="page"/>
                 <!--<input type="submit" class="btn btn-primary" value="Guardar productor" id="submit_492662557">-->
                 <%--<sj:submit cssClass="btn btn-inverse" targets="divBodyLayout" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>--%>
-                <sj:submit cssClass="btn btn-inverse" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>
+                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm">Guardar productor</sj:submit>
                 <!--<button class="btn btn-inverse" onclick="saveData('saveProducer.action','searchProducer.action?page=<%=pageNow%>','formProducer');">Guardar productor</button>-->
-                <button class="btn btn_per bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();">Cancelar</button>
+                <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();">Cancelar</button>
             </div>
         </s:form>
         <script>
@@ -197,7 +197,7 @@
 //                    requestSent = true;
                     completeFormGetting('dialog-form', 'formProducer', 'divProducers', event.originalEvent.request.responseText);
                     setTimeout( function() {
-                        showInfo("searchProducer.action?page="+page, "divConListProducers");
+                        showInfo("searchProducer.action?page="+$("#formProducer_page").val(), "divConListProducers");
     //                        if(requestSent) $.ajax().abort();  // abort request
                     }, 2000);
 //                }
