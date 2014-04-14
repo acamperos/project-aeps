@@ -718,7 +718,7 @@ public class ActionRasta extends BaseAction {
 //        if (searchFrom!=null && searchFrom==2) {
 //            num_rasta = date = pendant = altitude = latitude = length = ground = position = ph = carbonates = search_soil;            
 //        } else if(searchFrom!=null && searchFrom==1) {
-        if(searchFrom!=null && searchFrom==1) {
+        if(searchFrom!=null && searchFrom==2) {
             search_soil = "";
         }
         
@@ -860,7 +860,7 @@ public class ActionRasta extends BaseAction {
             rasta.setFields(new Fields(idField));
             rasta.setNumeroCapasRas(additionalsAtrib.size());
             rasta.setFechaRas(dateRasta);            
-            rasta.setEstadoRas(true);
+            rasta.setStatus(true);
             session.saveOrUpdate(rasta);
             
             rasta.setNumeroCajuelaRas(rasta.getIdRas());

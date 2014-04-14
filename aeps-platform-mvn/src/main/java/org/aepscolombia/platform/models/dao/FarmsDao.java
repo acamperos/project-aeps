@@ -3,7 +3,9 @@ package org.aepscolombia.platform.models.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import org.aepscolombia.platform.models.entity.Entities;
@@ -40,14 +42,14 @@ public class FarmsDao
         
         String sql = "";
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
-        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_department_mun, f.status_far";
+        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_department_mun, f.status";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where f.status_far=1";
+        sql += " where f.status=1";
         if (id!=null) {
             sql += " and f.id_far="+id;
         }
@@ -97,7 +99,7 @@ public class FarmsDao
 
         sql += "select fp.id_farm_far_pro, fp.id_producer_far_pro ";
         
-//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
+//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
         sql += " from farms_producers fp";
         sql += " where fp.id_farm_far_pro="+idFarm;
         sql += " and fp.id_producer_far_pro="+idProducer;
@@ -150,7 +152,7 @@ public class FarmsDao
         
         String sql = "";       
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
-        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status_far";
+        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join departments dep on (dep.id_dep=m.id_department_mun)";
@@ -158,10 +160,36 @@ public class FarmsDao
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where f.status_far=1";
+        sql += " where f.status=1";
         if (args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
         }
+        
+        if (args.containsKey("search_farm")) {
+            String valIdent = String.valueOf(args.get("search_farm"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) { 
+                sql += " and ((e.name_ent like '%"+valIdent+"%')";
+                sql += " or (f.name_far like '%"+valIdent+"%')";
+//                Date asign = new Date(valIdent);
+//                sql += " or (r.fecha_ras like '%"+asign+"%')";
+                try {
+                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+//                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
+                } catch (IllegalArgumentException ex) {
+//                    Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                sql += " or (m.id_department_mun='"+valIdent+"')";
+                sql += " or (m.id_mun='"+valIdent+"')";
+                sql += " or (f.name_commune_far like '%"+valIdent+"%')";
+//                sql += " or (r.terreno_circundante_ras like '%"+valIdent+"%')";
+//                sql += " or (r.posicion_perfil_ras like '%"+valIdent+"%')";
+//                sql += " or (r.ph_ras like '%"+valIdent+"%')";
+                sql += " or (f.altitude_far like '%"+valIdent+"%')";
+                sql += " or (f.latitude_far like '%"+valIdent+"%')";
+                sql += " or (f.longitude_far like '%"+valIdent+"%'))";
+            }
+        }
+        
         // if ($identProductor!='' ) sql .= "where";
         if (args.containsKey("idProducer")) {
             sql += " and fp.id_producer_far_pro="+args.get("idProducer");
@@ -193,15 +221,15 @@ public class FarmsDao
         }
         if (args.containsKey("altitude_property")) {
             String valIdent = String.valueOf(args.get("altitude_property"));
-            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.altitude_far="+args.get("altitude_property");
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.altitude_far like '%"+args.get("altitude_property")+"%'";
         }
         if (args.containsKey("latitude_property")) {
             String valIdent = String.valueOf(args.get("latitude_property"));
-            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.latitude_far="+args.get("latitude_property");
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.latitude_far like '%"+args.get("latitude_property")+"%'";
         }
         if (args.containsKey("length_property")) {
             String valIdent = String.valueOf(args.get("length_property"));
-            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.longitude_far="+args.get("length_property");
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and f.longitude_far like '%"+args.get("length_property")+"%'";
         }
 //        args.get("countTotal");
         

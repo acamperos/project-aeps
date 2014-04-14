@@ -73,6 +73,8 @@ public class ActionProducer extends BaseAction {
     public List<HashMap> listProducers;
     private Users user;
     private Integer idEntSystem;
+    private Integer searchFrom;
+    private String search_producer; 
     
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -85,6 +87,22 @@ public class ActionProducer extends BaseAction {
     public void setIdProducer(int idProducer) {
         this.idProducer = idProducer;
     }
+
+    public String getSearch_producer() {
+        return search_producer;
+    }
+
+    public void setSearch_producer(String search_producer) {
+        this.search_producer = search_producer;
+    }
+
+    public Integer getSearchFrom() {
+        return searchFrom;
+    }
+
+    public void setSearchFrom(Integer searchFrom) {
+        this.searchFrom = searchFrom;
+    }   
     
     public String getTypeIdent() {
         return typeIdent;
@@ -473,7 +491,13 @@ public class ActionProducer extends BaseAction {
 //        additionals.add(mMap);
 //        this.setType_ident_producer(new DocumentsTypesDao().findAll());        
         HashMap findParams = new HashMap();
+        
+        if(searchFrom!=null && searchFrom==2) {
+            search_producer = "";
+        }
+//        System.out.println("search_producer->"+search_producer);
         findParams.put("idEntUser", idEntSystem);
+        findParams.put("search_producer", search_producer);
         findParams.put("typeIdent", typeIdent);
         findParams.put("identProducer", num_ident_producer);
         findParams.put("names_producer_1", names_producer_1);
@@ -624,7 +648,7 @@ public class ActionProducer extends BaseAction {
 //            ent.setIdMunicipalityEnt(new Municipalities(Integer.parseInt(cityPro), new Departments(Integer.parseInt(depPro))));
             if(telephone_producer>0) ent.setPhoneEnt(telephone_producer);
             if(celphone_producer>0) ent.setCellphoneEnt(celphone_producer);
-            ent.setStatusEnt(true);
+            ent.setStatus(true);
             session.saveOrUpdate(ent);
             
 //            entDao.save(ent);          
@@ -634,7 +658,7 @@ public class ActionProducer extends BaseAction {
                 Producers pro = new Producers();
                 pro.setIdPro(null);
                 pro.setEntities(ent);
-                pro.setStatusPro(true);    
+                pro.setStatus(true);    
                 session.saveOrUpdate(pro);
 //                proDao.save(pro);
                 

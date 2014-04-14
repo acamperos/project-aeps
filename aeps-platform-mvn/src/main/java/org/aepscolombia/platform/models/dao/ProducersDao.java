@@ -1,6 +1,8 @@
 package org.aepscolombia.platform.models.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import org.aepscolombia.platform.models.entity.Entities;
@@ -38,7 +40,7 @@ public class ProducersDao
         
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
         sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
-        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent, e.validation_number_ent, m.id_department_mun,";
+        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status, e.validation_number_ent, m.id_department_mun,";
         sql += " m.id_mun, e.first_name_1_ent, e.first_name_2_ent, e.last_name_1_ent, e.last_name_2_ent";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";	
@@ -159,14 +161,37 @@ public class ProducersDao
 //        sql += "select p.*, e.* from productores p";
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
         sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
-        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status_ent";
+        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";		
         sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";		
         sql += " inner join log_entities le on (le.id_object_log_ent=e.id_ent and le.table_log_ent='entities' and le.action_type_log_ent='C')";		
-        sql += " where e.status_ent=1 and e.entity_type_ent=2";        
+        sql += " where e.status=1 and e.entity_type_ent=2";        
         if (args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }
+        
+        if (args.containsKey("search_producer")) {
+            String valIdent = String.valueOf(args.get("search_producer"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) { 
+                sql += " and ((e.document_type_ent='"+valIdent+"')";
+                sql += " or (e.document_number_ent like '%"+valIdent+"%')";
+//                Date asign = new Date(valIdent);
+//                sql += " or (r.fecha_ras like '%"+asign+"%')";
+                try {
+                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+//                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
+                } catch (IllegalArgumentException ex) {
+//                    Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                sql += " or (e.first_name_1_ent like '%"+valIdent+"%')";
+                sql += " or (e.last_name_1_ent like '%"+valIdent+"%')";
+                sql += " or (m.id_department_mun='"+valIdent+"')";
+//                sql += " or (r.terreno_circundante_ras like '%"+valIdent+"%')";
+//                sql += " or (r.posicion_perfil_ras like '%"+valIdent+"%')";
+//                sql += " or (r.ph_ras like '%"+valIdent+"%')";
+                sql += " or (m.id_mun='"+valIdent+"'))";
+            }
         }
 //        args.get("countTotal");
         
@@ -178,20 +203,20 @@ public class ProducersDao
         }    
         if (args.containsKey("typeIdent")) {
             String valType = String.valueOf(args.get("typeIdent"));
-            if(!valType.equals(" ") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent='"+args.get("typeIdent")+"'";
+            if(!valType.equals(" ") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent="+args.get("typeIdent");
         }
         if (args.containsKey("identProducer")) {
             String valIdent = String.valueOf(args.get("identProducer"));
 //            if(!valIdent.equals("null")) sql += " and (e.document_number_ent!='"+args.get("identProductor")+"' OR e.name_ent not like '%"+args.get("identProducer")+"%')";
-            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.document_number_ent='"+args.get("identProducer")+"'";
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.document_number_ent like '%"+args.get("identProducer")+"%'";
         }
         if (args.containsKey("names_producer_1")) {
             String valIdent = String.valueOf(args.get("names_producer_1"));
-            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.first_name_1_ent='"+args.get("names_producer_1")+"'";
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.first_name_1_ent like '%"+args.get("names_producer_1")+"%'";
         }
         if (args.containsKey("last_names_producer_1")) {
             String valIdent = String.valueOf(args.get("last_names_producer_1"));
-            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.last_name_1_ent='"+args.get("last_names_producer_1")+"'";
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.last_name_1_ent like '%"+args.get("last_names_producer_1")+"%'";
         }
         if (args.containsKey("depPro")) {
             String valIdent = String.valueOf(args.get("depPro"));

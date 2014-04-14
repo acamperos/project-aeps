@@ -111,7 +111,7 @@ public class UserEntityDao
 
         try {
             tx = session.beginTransaction();
-            String query = "insert into user_entity (id_usr_ent, id_project_usr_ent, id_user_usr_ent, id_entity_usr_ent, status_usr_ent) values (?,?,?,?,?)";
+            String query = "insert into user_entity (id_usr_ent, id_project_usr_ent, id_user_usr_ent, id_entity_usr_ent, status) values (?,?,?,?,?)";
 
             // Ejecutamos la query y obtenemos el resultado.
             PreparedStatement stmt;

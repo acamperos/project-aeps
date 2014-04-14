@@ -9,139 +9,167 @@
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
-        <s:form id="formProducer" action="saveProducer.action" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="Formulario de un productor">
-            <div>
-                <%--<s:url id="remoteurl" action="comboTiposDocumentos"/>
-                <sj:select 
-                    href="%{remoteurl}" 
-                    emptyOption="true" --%>
-                <%--<s:hidden name="myfield" value="%{#parameters['mparam']}"></s:hidden>--%>
-                <s:hidden name="idProducer"/>
-                <s:select            
-                    tooltip="Seleccione un tipo de documento"
-                    label="Tipo de documento:"
-                    name="typeIdent" 
-                    list="type_ident_producer" 
-                    listKey="acronymDocTyp" 
-                    listValue="nameDocTyp" 
-                    headerKey=" " 
-                    headerValue="---"
-                    requiredLabel="true"
-                    onchange="selValue(this, 'divDigVerPro');
-                                selConf(this.value, 'formProducer_num_ident_producer');"
-                    />
-            </div>
-            <div>
-                <s:textfield
-                    label="Numero de cedula:"
-                    requiredLabel="true"
-                    name="num_ident_producer"       
-                    tooltip="Ingrese su numero de cedula"
-                    />
-                <!--<img src="../img/search_icon.gif" onclick="listInfo('/aeps-plataforma-mvn/buscarProducer.action&selected=producer', 'identObj', 'params_num_ident_producer', 'params_num_ident_producer', 'params_num_ident_producer', 'Listado de Productores', 1050, 550)" />-->
-            </div>
-            <div id="divDigVerPro" class="hide">
-                <s:textfield
-                    label="Digito de verificación:"
-                    name="dig_ver_producer"
-                    tooltip="Ingrese su digito de verificaci?ón"
-                    />
-            </div>     
-            <div class="row-fluid">
-                <div class="span5">
-                    <s:textfield
-                        label="Primer nombre:"
-                        requiredLabel="true"
-                        name="names_producer_1"
-                        tooltip="Ingrese su primer nombre"
+        <s:form id="formProducer" action="saveProducer.action" cssClass="form-horizontal formClassProducer">
+            <fieldset>
+                <legend>Formulario de un productor</legend>
+                <div class="control-group">
+                    <s:hidden name="idProducer"/>
+                    <label for="formProducer_typeIdent" class="control-label req">
+                        Tipo de documento:
+                        <i class="icon-info-sign s2b_tooltip" title="Seleccione un tipo de documento"></i>
+                    </label>
+                    <div class="controls">
+                        <s:select            
+                            name="typeIdent" 
+                            list="type_ident_producer" 
+                            listKey="acronymDocTyp" 
+                            listValue="nameDocTyp" 
+                            headerKey=" " 
+                            headerValue="---"
+                            onchange="selValue(this, 'divDigVerPro');
+                                        selConf(this.value, 'formProducer_num_ident_producer');"
                         />
+                    </div>  
                 </div>  
-                <div class="span3" style="padding-left: 28px">
-                    <s:textfield
-                        label="Segundo nombre:"
-                        name="names_producer_2"
-                        tooltip="Ingrese su segundo nombre"
-                        />
+                <div class="control-group">
+                    <label for="formProducer_num_ident_producer" class="control-label req">
+                        Numero de cedula:
+                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su numero de cedula"></i>
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="num_ident_producer" />
+                    </div>  
+                </div> 
+                <div id="divDigVerPro" class="hide">
+                    <div class="control-group">
+                        <label for="formProducer_dig_ver_producer" class="control-label req">
+                            Digito de verificación:
+                            <i class="icon-info-sign s2b_tooltip" title="Ingrese su digito de verificación"></i>
+                        </label>
+                        <div class="controls">
+                            <s:textfield name="dig_ver_producer" />
+                        </div>  
+                    </div>
+                </div>     
+                <div class="row-fluid">
+                    <div class="span5">
+                        <div class="control-group">
+                            <label for="formProducer_names_producer_1" class="control-label req">
+                                Primer nombre:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer nombre"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="names_producer_1" />
+                            </div>  
+                        </div>
+                    </div>  
+                    <div class="span3" style="padding-left: 28px">
+                        <div class="control-group">
+                            <label for="formProducer_names_producer_2" class="control-label">
+                                Segundo nombre:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo nombre"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="names_producer_2" />
+                            </div>  
+                        </div>
+                    </div>
+                </div> 
+                <div class="row-fluid">
+                    <div class="span5">
+                        <div class="control-group">
+                            <label for="formProducer_last_names_producer_1" class="control-label req">
+                                Primer apellido:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer apellido"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="last_names_producer_1" />
+                            </div>  
+                        </div>
+                    </div>  
+                    <div class="span3" style="padding-left: 28px">
+                        <div class="span5">
+                            <div class="control-group">
+                                <label for="formProducer_last_names_producer_2" class="control-label">
+                                    Segundo apellido:
+                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo apellido"></i>
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="last_names_producer_2" />
+                                </div>  
+                            </div>
+                        </div>  
+                    </div>
                 </div>
-            </div> 
-            <div class="row-fluid">
-                <div class="span5">
-                    <s:textfield
-                        label="Primer apellido:"
-                        requiredLabel="true"
-                        name="last_names_producer_1"
-                        tooltip="Ingrese su primer apellido"
-                        />
-                </div>  
-                <div class="span3" style="padding-left: 28px">
-                    <s:textfield
-                        label="Segundo apellido:"
-                        name="last_names_producer_2"
-                        tooltip="Ingrese su segundo apellido"
-                        />
+                <div class="control-group">
+                    <label for="formProducer_direction_producer" class="control-label">
+                        Dirección:
+                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su dirección"></i>
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="direction_producer" />
+                    </div>  
+                </div>      
+                <div class="control-group">
+                    <label for="formProducer_depPro" class="control-label req">
+                        Departamento:
+                        <i class="icon-info-sign s2b_tooltip" title="Seleccione un departamento"></i>
+                    </label>
+                    <div class="controls">
+                        <s:select
+                            list="department_producer" 
+                            listKey="idDep" 
+                            listValue="nameDep" 
+                            headerKey=" " 
+                            headerValue="---"
+                            onchange="chargeValues('/aeps-plataforma-mvn/comboProducer.action', 'depId', this.value, 'formProducer_cityPro', 'divMessage')"
+                            name="depPro"/>
+                    </div>  
                 </div>
-            </div>
-            <div>
-                <s:textfield
-                    label="Dirección:"
-                    name="direction_producer"
-                    tooltip="Ingrese su dirección"
-                    />
-            </div>
-            <div>
-                <%--<s:url id="remoteurl" action="comboProducer.action"/>--%> 
-                <s:select
-                    tooltip="Seleccione un departamento:"
-                    requiredLabel="true"
-                    label="Departamento"
-                    list="department_producer" 
-                    listKey="idDep" 
-                    listValue="nameDep" 
-                    headerKey=" " 
-                    headerValue="---"
-                    onchange="chargeValues('/aeps-plataforma-mvn/comboProducer.action', 'depId', this.value, 'formProducer_cityPro', 'divMessage')"
-                    name="depPro"/>
-                <!--            <select onchange="chargeValues('../actions/Actions.php?action=ListarMunXDep', 'depId', this.value, 'params_city_producer', 'divMessage')" name="params[department_producer]" id="params_department_producer">
-                            </select>-->
-                <!-- <input type="text" name="params[department_producer]" id="params_department_producer"/> -->
-            </div>
-            <div>
-                <s:select
-                    tooltip="Seleccione un municipio:"
-                    requiredLabel="true"
-                    label="Municipio"
-                    list="city_producer" 
-                    listKey="idMun" 
-                    listValue="nameMun" 
-                    headerKey=" " 
-                    headerValue="---"
-                    name="cityPro" />
-                <!--            <label for="params_city_producer">Municipio:</label>
-                            <select name="params[city_producer]" id="params_city_producer">
-                            </select>-->
-                <!-- <input type="text" name="params[city_producer]" id="params_city_producer" /> -->
-            </div>
-            <div>
-                <s:textfield
-                    label="Teléfono fijo:"
-                    name="telephone_producer"
-                    tooltip="Ingrese su teléfono fijo"
-                    />
-            </div>
-            <div>
-                <s:textfield
-                    label="Celular:"
-                    name="celphone_producer"
-                    tooltip="Ingrese su celular"
-                    />
-            </div>
-            <div>
-                <s:textfield
-                    label="Correo electrónico:"
-                    name="email_producer"
-                    tooltip="Ingrese su correo electrónico"
-                    />
-            </div>  
+                <div class="control-group">
+                    <label for="formProducer_cityPro" class="control-label req">
+                        Municipio:
+                        <i class="icon-info-sign s2b_tooltip" title="Seleccione un municipio"></i>
+                    </label>
+                    <div class="controls">
+                        <s:select
+                            label="Municipio"
+                            list="city_producer" 
+                            listKey="idMun" 
+                            listValue="nameMun" 
+                            headerKey=" " 
+                            headerValue="---"
+                            name="cityPro" />
+                    </div>  
+                </div>
+                <div class="control-group">
+                    <label for="formProducer_telephone_producer" class="control-label">
+                        Teléfono fijo:
+                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su teléfono fijo"></i>
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="telephone_producer" />
+                    </div>  
+                </div>
+                <div class="control-group">
+                    <label for="formProducer_celphone_producer" class="control-label">
+                        Celular:
+                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su celular"></i>
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="celphone_producer" />
+                    </div>  
+                </div>
+                <div class="control-group">
+                    <label for="formProducer_email_producer" class="control-label">
+                        Correo electrónico:
+                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su correo electrónico"></i>
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="email_producer" />
+                    </div>  
+                </div>
+            </fieldset>
             <div>   
                 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
                 <script>

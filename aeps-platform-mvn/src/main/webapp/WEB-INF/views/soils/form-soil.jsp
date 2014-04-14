@@ -26,7 +26,7 @@
                     <legend>Caracteristicas y Observaciones</legend>
                     <s:hidden name="rasta.idRas"/>    
                     <div class="control-group">
-                        <s:label for="formRasta_rasta_fechaRas" cssClass="control-label req" value="Seleccione el lote al cual pertenece:"></s:label>
+                        <s:label for="formRasta_rasta_nameField" cssClass="control-label req" value="Seleccione el lote al cual pertenece:"></s:label>
                         <div class="controls">
                             <s:hidden name="idField"/>
                             <s:textfield

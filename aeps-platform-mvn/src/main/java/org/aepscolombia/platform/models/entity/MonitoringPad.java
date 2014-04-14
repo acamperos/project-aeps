@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="monitoring_pad"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class MonitoringPad  implements java.io.Serializable {
 
@@ -27,6 +27,8 @@ public class MonitoringPad  implements java.io.Serializable {
      private Monitoring monitoring;
      private Pests pests;
      private Weeds weeds;
+     private Boolean status;
+     private Integer createdBy;
 
     public MonitoringPad() {
     }
@@ -35,11 +37,13 @@ public class MonitoringPad  implements java.io.Serializable {
     public MonitoringPad(Monitoring monitoring) {
         this.monitoring = monitoring;
     }
-    public MonitoringPad(Diseases diseases, Monitoring monitoring, Pests pests, Weeds weeds) {
+    public MonitoringPad(Diseases diseases, Monitoring monitoring, Pests pests, Weeds weeds, Boolean status, Integer createdBy) {
        this.diseases = diseases;
        this.monitoring = monitoring;
        this.pests = pests;
        this.weeds = weeds;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -87,6 +91,24 @@ public class MonitoringPad  implements java.io.Serializable {
     
     public void setWeeds(Weeds weeds) {
         this.weeds = weeds;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

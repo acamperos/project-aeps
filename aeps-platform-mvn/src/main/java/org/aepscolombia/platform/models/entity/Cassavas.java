@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="cassavas"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Cassavas  implements java.io.Serializable {
 
@@ -27,6 +27,8 @@ public class Cassavas  implements java.io.Serializable {
      private String cuttingAngleCas;
      private Boolean seedStorageCas;
      private Integer seedStorageTimeCas;
+     private Boolean status;
+     private Integer createdBy;
 
     public Cassavas() {
     }
@@ -35,11 +37,13 @@ public class Cassavas  implements java.io.Serializable {
     public Cassavas(ProductionEvents productionEvents) {
         this.productionEvents = productionEvents;
     }
-    public Cassavas(ProductionEvents productionEvents, String cuttingAngleCas, Boolean seedStorageCas, Integer seedStorageTimeCas) {
+    public Cassavas(ProductionEvents productionEvents, String cuttingAngleCas, Boolean seedStorageCas, Integer seedStorageTimeCas, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.cuttingAngleCas = cuttingAngleCas;
        this.seedStorageCas = seedStorageCas;
        this.seedStorageTimeCas = seedStorageTimeCas;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -87,6 +91,24 @@ public class Cassavas  implements java.io.Serializable {
     
     public void setSeedStorageTimeCas(Integer seedStorageTimeCas) {
         this.seedStorageTimeCas = seedStorageTimeCas;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

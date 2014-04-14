@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="irrigation"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Irrigation  implements java.io.Serializable {
 
@@ -32,6 +32,8 @@ public class Irrigation  implements java.io.Serializable {
      private Date dateIrr;
      private Boolean useIrrigationIrr;
      private Double amountIrr;
+     private Boolean status;
+     private Integer createdBy;
 
     public Irrigation() {
     }
@@ -41,13 +43,15 @@ public class Irrigation  implements java.io.Serializable {
         this.productionEvents = productionEvents;
         this.dateIrr = dateIrr;
     }
-    public Irrigation(IrrigationsTypes irrigationsTypes, ProductionEvents productionEvents, WaterSourcesTypes waterSourcesTypes, Date dateIrr, Boolean useIrrigationIrr, Double amountIrr) {
+    public Irrigation(IrrigationsTypes irrigationsTypes, ProductionEvents productionEvents, WaterSourcesTypes waterSourcesTypes, Date dateIrr, Boolean useIrrigationIrr, Double amountIrr, Boolean status, Integer createdBy) {
        this.irrigationsTypes = irrigationsTypes;
        this.productionEvents = productionEvents;
        this.waterSourcesTypes = waterSourcesTypes;
        this.dateIrr = dateIrr;
        this.useIrrigationIrr = useIrrigationIrr;
        this.amountIrr = amountIrr;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -113,6 +117,24 @@ public class Irrigation  implements java.io.Serializable {
     
     public void setAmountIrr(Double amountIrr) {
         this.amountIrr = amountIrr;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

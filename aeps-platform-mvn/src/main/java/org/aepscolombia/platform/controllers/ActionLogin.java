@@ -222,7 +222,7 @@ public class ActionLogin extends BaseAction {
             Users loggedUser = userDao.getUserByCode(nameUser.trim(), codVal.trim());
             if (loggedUser != null) {
                 loggedUser.setCodValidationUsr("");
-                loggedUser.setStatusUsr(1);
+                loggedUser.setStatus(1);
                 userDao.save(loggedUser);
                 this.getSession().put(APConstants.SESSION_USER, loggedUser);
 //          LOG.info("User " + user.getEmail() + " logged in successfully.");
@@ -299,7 +299,7 @@ public class ActionLogin extends BaseAction {
         if (loggedUser != null) {
 //          LOG.info("User " + user.getEmail() + " logged in successfully.");
             loggedUser.setCodValidationUsr(codValidation);
-            loggedUser.setStatusUsr(2);
+            loggedUser.setStatus(2);
             userDao.save(loggedUser);
             GlobalFunctions.sendEmail(loggedUser.getNameUserUsr(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToRestoreUser(this.getRequest().getLocalAddr(), loggedUser.getNameUserUsr(), codValidation));
             state = "success";
@@ -444,7 +444,7 @@ public class ActionLogin extends BaseAction {
 
             Users user = (Users) userDao.objectById(this.getIdUser());
             user.setPasswordUsr(passRes);
-            user.setStatusUsr(1);
+            user.setStatus(1);
             session.saveOrUpdate(user);
 
 //            LogEntities logPro = new LogEntities();
@@ -637,7 +637,7 @@ public class ActionLogin extends BaseAction {
 //            ent.setCellphoneEnt((long) Integer.parseInt(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long)317524765);
             ent.setEmailEnt(this.getEmailUser());
-            ent.setStatusEnt(true);
+            ent.setStatus(true);
             session.saveOrUpdate(ent);
 //            entDao.save(ent);
 
@@ -655,7 +655,7 @@ public class ActionLogin extends BaseAction {
                 Producers pro = new Producers();
                 pro.setIdPro(null);
                 pro.setEntities(ent);
-                pro.setStatusPro(true);
+                pro.setStatus(true);
                 session.saveOrUpdate(pro);
 
                 LogEntities logPro = new LogEntities();
@@ -683,7 +683,7 @@ public class ActionLogin extends BaseAction {
 //            user.setPasswordUsr(this.getPasswordUser());
             user.setPasswordUsr(passTransform);
             user.setCodValidationUsr(codValidation);
-            user.setStatusUsr(2);//Estado inhabilitado hasta confirmar
+            user.setStatus(2);//Estado inhabilitado hasta confirmar
             session.saveOrUpdate(user);
 //            userDao.save(user);
             
@@ -708,7 +708,7 @@ public class ActionLogin extends BaseAction {
             usrEnt.setIdProjectUsrEnt(null);
             usrEnt.setUsers(user);
             usrEnt.setEntities(ent);
-            usrEnt.setStatusUsrEnt(true);
+            usrEnt.setStatus(true);
             session.saveOrUpdate(usrEnt);
 //            resUsrEnt = usrEntDao.save(usrEnt);
 //            if(!resUsrEnt) tx.rollback();

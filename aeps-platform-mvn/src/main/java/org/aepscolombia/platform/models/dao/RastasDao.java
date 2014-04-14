@@ -52,7 +52,7 @@ public class RastasDao
         sql += " r.suelo_negro_blando_ras, r.cuchillo_primer_horizonte_ras, r.cerca_rios_quebradas_ras, r.recubrimiento_vegetal_ras";
         
 //        sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
-//        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status_fie, lp.id_producer_fie_pro,";
+//        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, lp.id_producer_fie_pro,";
 //        sql += " e.name_ent, f.name_far";
         sql += " from rastas r";
         sql += " inner join log_entities le on le.id_object_log_ent=r.id_ras and le.table_log_ent='rastas' and le.action_type_log_ent='C'";   
@@ -61,7 +61,7 @@ public class RastasDao
         sql += " left join farms f on f.id_far=l.id_farm_fie";
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where l.status_fie=1 and f.status_far=1";
+        sql += " where l.status=1 and f.status=1";
         sql += " and r.estado_ras=1";
 //        sql += " lp.tipo_contrato_lot_pro!=1";
         // if ($identProductor!='' ) sql += "where";
@@ -170,7 +170,8 @@ public class RastasDao
 //                sql += " or (r.fecha_ras like '%"+asign+"%')";
                 try {
                     String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
-                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
+                    sql += " or (r.fecha_ras='"+dateAsign+"')";
+//                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
                 } catch (IllegalArgumentException ex) {
 //                    Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -178,16 +179,16 @@ public class RastasDao
                 sql += " or (r.altitud_ras like '%"+valIdent+"%')";
                 sql += " or (r.latitud_ras like '%"+valIdent+"%')";
                 sql += " or (r.longitud_ras like '%"+valIdent+"%')";
-                sql += " or (r.terreno_circundante_ras like '%"+valIdent+"%')";
-                sql += " or (r.posicion_perfil_ras like '%"+valIdent+"%')";
+                sql += " or (r.terreno_circundante_ras='"+valIdent+"')";
+                sql += " or (r.posicion_perfil_ras='"+valIdent+"')";
                 sql += " or (r.ph_ras like '%"+valIdent+"%')";
-                sql += " or (r.carbonatos_ras like '%"+valIdent+"%'))";
+                sql += " or (r.carbonatos_ras='"+valIdent+"'))";
             }
         }
         
         if (args.containsKey("num_rasta")) {
             String valIdent = String.valueOf(args.get("num_rasta"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.numero_cajuela_ras="+args.get("num_rasta");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.numero_cajuela_ras like '%"+args.get("num_rasta")+"%'";
         }
         if (args.containsKey("date")) {
             String valIdent = String.valueOf(args.get("date"));            
@@ -209,19 +210,19 @@ public class RastasDao
         if (args.containsKey("pendant")) {
             String valIdent = String.valueOf(args.get("pendant"));
 //            if(!valIdent.equals("0") && !valIdent.equals("-1") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.pendiente_terreno_ras="+args.get("pendant");
-            if(!valIdent.equals("0") && !valIdent.equals("-1") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.pendiente_terreno_ras="+args.get("pendant");
+            if(!valIdent.equals("0") && !valIdent.equals("-1") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.pendiente_terreno_ras like '%"+args.get("pendant")+"%'";
         }
         if (args.containsKey("altitude")) {
             String valIdent = String.valueOf(args.get("altitude"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.altitud_ras="+args.get("altitude");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.altitud_ras like '%"+args.get("altitude")+"%'";
         }    
         if (args.containsKey("latitude")) {
             String valIdent = String.valueOf(args.get("latitude"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.latitud_ras="+args.get("latitude");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.latitud_ras like '%"+args.get("latitude")+"%'";
         }        
         if (args.containsKey("length")) {
             String valIdent = String.valueOf(args.get("length"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.longitud_ras="+args.get("length");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.longitud_ras like '%"+args.get("length")+"%'";
         }       
         
         if (args.containsKey("ground")) {
@@ -234,7 +235,7 @@ public class RastasDao
         }
         if (args.containsKey("ph")) {
             String valIdent = String.valueOf(args.get("ph"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.ph_ras="+args.get("ph");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and r.ph_ras like '%"+args.get("ph")+"%'";
         }
         if (args.containsKey("carbonates")) {
             String valIdent = String.valueOf(args.get("carbonates"));

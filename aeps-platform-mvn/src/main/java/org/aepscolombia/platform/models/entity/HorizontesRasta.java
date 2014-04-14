@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="horizontes_rasta"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class HorizontesRasta  implements java.io.Serializable {
 
@@ -25,13 +25,13 @@ public class HorizontesRasta  implements java.io.Serializable {
      private Integer idHorRas;
      private Rastas rastas;
      private ResistenciasRompimiento resistenciasRompimiento;
-//     private Integer resistenciasRompimientoId;
      private Textures textures;
-//     private Integer texturesId;
-     private Integer numeroHorizonteHorRas=0;
+     private int numeroHorizonteHorRas;
      private Double espesorHorRas;
      private Integer colorSecoHorRas;
      private Integer colorHumedoHorRas;
+     private Boolean status;
+     private Integer createdBy;
 
     public HorizontesRasta() {
     }
@@ -41,7 +41,7 @@ public class HorizontesRasta  implements java.io.Serializable {
         this.rastas = rastas;
         this.numeroHorizonteHorRas = numeroHorizonteHorRas;
     }
-    public HorizontesRasta(Rastas rastas, ResistenciasRompimiento resistenciasRompimiento, Textures textures, int numeroHorizonteHorRas, Double espesorHorRas, Integer colorSecoHorRas, Integer colorHumedoHorRas) {
+    public HorizontesRasta(Rastas rastas, ResistenciasRompimiento resistenciasRompimiento, Textures textures, int numeroHorizonteHorRas, Double espesorHorRas, Integer colorSecoHorRas, Integer colorHumedoHorRas, Boolean status, Integer createdBy) {
        this.rastas = rastas;
        this.resistenciasRompimiento = resistenciasRompimiento;
        this.textures = textures;
@@ -49,25 +49,9 @@ public class HorizontesRasta  implements java.io.Serializable {
        this.espesorHorRas = espesorHorRas;
        this.colorSecoHorRas = colorSecoHorRas;
        this.colorHumedoHorRas = colorHumedoHorRas;
+       this.status = status;
+       this.createdBy = createdBy;
     }
-    
-    public HorizontesRasta(ResistenciasRompimiento resistenciasRompimiento, Textures textures, int numeroHorizonteHorRas, Double espesorHorRas, Integer colorSecoHorRas, Integer colorHumedoHorRas) {
-       this.resistenciasRompimiento = resistenciasRompimiento;
-       this.textures = textures;
-       this.numeroHorizonteHorRas = numeroHorizonteHorRas;
-       this.espesorHorRas = espesorHorRas;
-       this.colorSecoHorRas = colorSecoHorRas;
-       this.colorHumedoHorRas = colorHumedoHorRas;
-    }
-    
-//    public HorizontesRasta(Integer resistenciasRompimientoId, Integer texturesId, int numeroHorizonteHorRas, Double espesorHorRas, Integer colorSecoHorRas, Integer colorHumedoHorRas) {
-//       this.resistenciasRompimientoId = resistenciasRompimientoId;
-//       this.texturesId = texturesId;
-//       this.numeroHorizonteHorRas = numeroHorizonteHorRas;
-//       this.espesorHorRas = espesorHorRas;
-//       this.colorSecoHorRas = colorSecoHorRas;
-//       this.colorHumedoHorRas = colorHumedoHorRas;
-//    }   
    
      @Id @GeneratedValue(strategy=IDENTITY)
     
@@ -142,24 +126,26 @@ public class HorizontesRasta  implements java.io.Serializable {
     public void setColorHumedoHorRas(Integer colorHumedoHorRas) {
         this.colorHumedoHorRas = colorHumedoHorRas;
     }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
-//    @Column(name="resistencia_rompimiento_hor_ras", nullable=false)
-//    public Integer getResistenciasRompimientoId() {
-//        return resistenciasRompimientoId;
-//    }
-//
-//    public void setResistenciasRompimientoId(Integer resistenciasRompimientoId) {
-//        this.resistenciasRompimientoId = resistenciasRompimientoId;
-//    }
-//
-//    @Column(name="textura_hor_ras", nullable=false)
-//    public Integer getTexturesId() {
-//        return texturesId;
-//    }
-//
-//    public void setTexturesId(Integer texturesId) {
-//        this.texturesId = texturesId;
-//    }
+
 
 
 }

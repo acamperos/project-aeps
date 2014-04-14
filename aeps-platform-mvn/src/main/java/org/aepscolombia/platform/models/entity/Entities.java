@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="entities"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Entities  implements java.io.Serializable {
 
@@ -30,6 +30,7 @@ public class Entities  implements java.io.Serializable {
      private Integer idEnt;
      private Municipalities municipalities;
      private DocumentsTypes documentsTypes;
+     private PersonType personType;
      private EntitiesTypes entitiesTypes;
      private Integer idProjectEnt;
      private String documentNumberEnt;
@@ -42,7 +43,7 @@ public class Entities  implements java.io.Serializable {
      private Long cellphone2Ent;
      private Integer phoneEnt;
      private Long cellphoneEnt;
-     private boolean statusEnt;
+     private boolean status;
      private String genderEnt;
      private String civilStatusEnt;
      private Integer validationNumberEnt;
@@ -52,24 +53,20 @@ public class Entities  implements java.io.Serializable {
      private String firstName2Ent;
      private String lastName1Ent;
      private String lastName2Ent;
+     private Integer createdBy;
 
     public Entities() {
     }
 
 	
-    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, EntitiesTypes entitiesTypes, String documentNumberEnt, String nameEnt, String emailEnt, String addressEnt, boolean statusEnt) {
-        this.municipalities = municipalities;
-        this.documentsTypes = documentsTypes;
+    public Entities(EntitiesTypes entitiesTypes, boolean status) {
         this.entitiesTypes = entitiesTypes;
-        this.documentNumberEnt = documentNumberEnt;
-        this.nameEnt = nameEnt;
-        this.emailEnt = emailEnt;
-        this.addressEnt = addressEnt;
-        this.statusEnt = statusEnt;
+        this.status = status;
     }
-    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, EntitiesTypes entitiesTypes, Integer idProjectEnt, String documentNumberEnt, String documentIssuePlaceEnt, String nameEnt, Boolean inAssociationEnt, String emailEnt, String email2Ent, String addressEnt, Long cellphone2Ent, Integer phoneEnt, Long cellphoneEnt, boolean statusEnt, String genderEnt, String civilStatusEnt, Integer validationNumberEnt, String educationLevelEnt, Date dateOfBirthEnt, String firstName1Ent, String firstName2Ent, String lastName1Ent, String lastName2Ent) {
+    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, PersonType personType, EntitiesTypes entitiesTypes, Integer idProjectEnt, String documentNumberEnt, String documentIssuePlaceEnt, String nameEnt, Boolean inAssociationEnt, String emailEnt, String email2Ent, String addressEnt, Long cellphone2Ent, Integer phoneEnt, Long cellphoneEnt, boolean status, String genderEnt, String civilStatusEnt, Integer validationNumberEnt, String educationLevelEnt, Date dateOfBirthEnt, String firstName1Ent, String firstName2Ent, String lastName1Ent, String lastName2Ent, Integer createdBy) {
        this.municipalities = municipalities;
        this.documentsTypes = documentsTypes;
+       this.personType = personType;
        this.entitiesTypes = entitiesTypes;
        this.idProjectEnt = idProjectEnt;
        this.documentNumberEnt = documentNumberEnt;
@@ -82,7 +79,7 @@ public class Entities  implements java.io.Serializable {
        this.cellphone2Ent = cellphone2Ent;
        this.phoneEnt = phoneEnt;
        this.cellphoneEnt = cellphoneEnt;
-       this.statusEnt = statusEnt;
+       this.status = status;
        this.genderEnt = genderEnt;
        this.civilStatusEnt = civilStatusEnt;
        this.validationNumberEnt = validationNumberEnt;
@@ -92,6 +89,7 @@ public class Entities  implements java.io.Serializable {
        this.firstName2Ent = firstName2Ent;
        this.lastName1Ent = lastName1Ent;
        this.lastName2Ent = lastName2Ent;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -105,7 +103,7 @@ public class Entities  implements java.io.Serializable {
         this.idEnt = idEnt;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_municipality_ent", nullable=true)
+    @JoinColumn(name="id_municipality_ent")
     public Municipalities getMunicipalities() {
         return this.municipalities;
     }
@@ -114,13 +112,22 @@ public class Entities  implements java.io.Serializable {
         this.municipalities = municipalities;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="document_type_ent", nullable=true)
+    @JoinColumn(name="document_type_ent")
     public DocumentsTypes getDocumentsTypes() {
         return this.documentsTypes;
     }
     
     public void setDocumentsTypes(DocumentsTypes documentsTypes) {
         this.documentsTypes = documentsTypes;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="person_type_ent")
+    public PersonType getPersonType() {
+        return this.personType;
+    }
+    
+    public void setPersonType(PersonType personType) {
+        this.personType = personType;
     }
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="entity_type_ent", nullable=false)
@@ -141,7 +148,7 @@ public class Entities  implements java.io.Serializable {
         this.idProjectEnt = idProjectEnt;
     }
     
-    @Column(name="document_number_ent", nullable=true, length=20)
+    @Column(name="document_number_ent", length=20)
     public String getDocumentNumberEnt() {
         return this.documentNumberEnt;
     }
@@ -159,7 +166,7 @@ public class Entities  implements java.io.Serializable {
         this.documentIssuePlaceEnt = documentIssuePlaceEnt;
     }
     
-    @Column(name="name_ent", nullable=true, length=100)
+    @Column(name="name_ent", length=100)
     public String getNameEnt() {
         return this.nameEnt;
     }
@@ -177,7 +184,7 @@ public class Entities  implements java.io.Serializable {
         this.inAssociationEnt = inAssociationEnt;
     }
     
-    @Column(name="email_ent", nullable=false, length=45)
+    @Column(name="email_ent", length=45)
     public String getEmailEnt() {
         return this.emailEnt;
     }
@@ -195,7 +202,7 @@ public class Entities  implements java.io.Serializable {
         this.email2Ent = email2Ent;
     }
     
-    @Column(name="address_ent", nullable=true, length=200)
+    @Column(name="address_ent", length=200)
     public String getAddressEnt() {
         return this.addressEnt;
     }
@@ -231,13 +238,13 @@ public class Entities  implements java.io.Serializable {
         this.cellphoneEnt = cellphoneEnt;
     }
     
-    @Column(name="status_ent", nullable=false)
-    public boolean isStatusEnt() {
-        return this.statusEnt;
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
     }
     
-    public void setStatusEnt(boolean statusEnt) {
-        this.statusEnt = statusEnt;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
     
     @Column(name="gender_ent", length=10)
@@ -320,7 +327,16 @@ public class Entities  implements java.io.Serializable {
     public void setLastName2Ent(String lastName2Ent) {
         this.lastName2Ent = lastName2Ent;
     }
-
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+    
 }
 
 

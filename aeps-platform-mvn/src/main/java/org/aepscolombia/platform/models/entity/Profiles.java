@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="profiles"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Profiles  implements java.io.Serializable {
 
@@ -28,7 +28,7 @@ public class Profiles  implements java.io.Serializable {
      private String namePro;
      private String descriptionPro;
      private Integer idProjectPro;
-     private Boolean statusPro;
+     private Boolean status;
 
     public Profiles() {
     }
@@ -41,11 +41,11 @@ public class Profiles  implements java.io.Serializable {
         this.namePro = namePro;
         this.descriptionPro = descriptionPro;
     }
-    public Profiles(String namePro, String descriptionPro, Integer idProjectPro, Boolean statusPro) {
+    public Profiles(String namePro, String descriptionPro, Integer idProjectPro, Boolean status) {
        this.namePro = namePro;
        this.descriptionPro = descriptionPro;
        this.idProjectPro = idProjectPro;
-       this.statusPro = statusPro;
+       this.status = status;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -86,13 +86,13 @@ public class Profiles  implements java.io.Serializable {
         this.idProjectPro = idProjectPro;
     }
     
-    @Column(name="status_pro")
-    public Boolean getStatusPro() {
-        return this.statusPro;
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
     }
     
-    public void setStatusPro(Boolean statusPro) {
-        this.statusPro = statusPro;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
 }

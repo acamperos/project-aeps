@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="growing_environment"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class GrowingEnvironment  implements java.io.Serializable {
 
@@ -53,7 +53,7 @@ public class GrowingEnvironment  implements java.io.Serializable {
     public void setNameGroEnv(String nameGroEnv) {
         this.nameGroEnv = nameGroEnv;
     }
-
+    
 }
 
 

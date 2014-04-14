@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,14 +17,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="extension_agents"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class ExtensionAgents  implements java.io.Serializable {
 
 
      private Integer idExtAge;
      private Entities entities;
-     private Boolean statusExtAge;
+     private Boolean status;
+     private Integer createdBy;
 
     public ExtensionAgents() {
     }
@@ -33,9 +34,10 @@ public class ExtensionAgents  implements java.io.Serializable {
     public ExtensionAgents(Entities entities) {
         this.entities = entities;
     }
-    public ExtensionAgents(Entities entities, Boolean statusExtAge) {
+    public ExtensionAgents(Entities entities, Boolean status, Integer createdBy) {
        this.entities = entities;
-       this.statusExtAge = statusExtAge;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -58,13 +60,22 @@ public class ExtensionAgents  implements java.io.Serializable {
         this.entities = entities;
     }
     
-    @Column(name="status_ext_age")
-    public Boolean getStatusExtAge() {
-        return this.statusExtAge;
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
     }
     
-    public void setStatusExtAge(Boolean statusExtAge) {
-        this.statusExtAge = statusExtAge;
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

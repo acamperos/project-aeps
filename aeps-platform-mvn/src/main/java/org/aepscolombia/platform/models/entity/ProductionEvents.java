@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="production_events"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class ProductionEvents  implements java.io.Serializable {
 
@@ -37,7 +37,7 @@ public class ProductionEvents  implements java.io.Serializable {
      private Weeds weeds;
      private String commentProEve;
      private int idProjectProEve;
-     private boolean statusProEve;
+     private boolean status;
      private double expectedProductionProEve;
      private Integer formerCropProEve;
      private Boolean drainingProEve;
@@ -49,21 +49,20 @@ public class ProductionEvents  implements java.io.Serializable {
      private String otherMainDiseaseProEve;
      private String otherMainWeedProEve;
      private Integer numCyclesBeforeProEve;
+     private Integer createdBy;
 
     public ProductionEvents() {
     }
 
 	
-    public ProductionEvents(Fields fields, CropsTypes cropsTypes, String commentProEve, int idProjectProEve, boolean statusProEve, double expectedProductionProEve, Date dataCaptureDateProEve) {
+    public ProductionEvents(Fields fields, CropsTypes cropsTypes, int idProjectProEve, boolean status, double expectedProductionProEve) {
         this.fields = fields;
         this.cropsTypes = cropsTypes;
-        this.commentProEve = commentProEve;
         this.idProjectProEve = idProjectProEve;
-        this.statusProEve = statusProEve;
+        this.status = status;
         this.expectedProductionProEve = expectedProductionProEve;
-        this.dataCaptureDateProEve = dataCaptureDateProEve;
     }
-    public ProductionEvents(CropMainProblem cropMainProblem, Fields fields, Diseases diseases, CropsTypes cropsTypes, Pests pests, ReasonsSoilAnalysis reasonsSoilAnalysis, Weeds weeds, String commentProEve, int idProjectProEve, boolean statusProEve, double expectedProductionProEve, Integer formerCropProEve, Boolean drainingProEve, Date dataCaptureDateProEve, Boolean didSoilAnalysisProEve, Boolean irrigateProEve, String otherFormerCropProEve, String otherMainPestProEve, String otherMainDiseaseProEve, String otherMainWeedProEve, Integer numCyclesBeforeProEve) {
+    public ProductionEvents(CropMainProblem cropMainProblem, Fields fields, Diseases diseases, CropsTypes cropsTypes, Pests pests, ReasonsSoilAnalysis reasonsSoilAnalysis, Weeds weeds, String commentProEve, int idProjectProEve, boolean status, double expectedProductionProEve, Integer formerCropProEve, Boolean drainingProEve, Date dataCaptureDateProEve, Boolean didSoilAnalysisProEve, Boolean irrigateProEve, String otherFormerCropProEve, String otherMainPestProEve, String otherMainDiseaseProEve, String otherMainWeedProEve, Integer numCyclesBeforeProEve, Integer createdBy) {
        this.cropMainProblem = cropMainProblem;
        this.fields = fields;
        this.diseases = diseases;
@@ -73,7 +72,7 @@ public class ProductionEvents  implements java.io.Serializable {
        this.weeds = weeds;
        this.commentProEve = commentProEve;
        this.idProjectProEve = idProjectProEve;
-       this.statusProEve = statusProEve;
+       this.status = status;
        this.expectedProductionProEve = expectedProductionProEve;
        this.formerCropProEve = formerCropProEve;
        this.drainingProEve = drainingProEve;
@@ -85,6 +84,7 @@ public class ProductionEvents  implements java.io.Serializable {
        this.otherMainDiseaseProEve = otherMainDiseaseProEve;
        this.otherMainWeedProEve = otherMainWeedProEve;
        this.numCyclesBeforeProEve = numCyclesBeforeProEve;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -161,7 +161,7 @@ public class ProductionEvents  implements java.io.Serializable {
         this.weeds = weeds;
     }
     
-    @Column(name="comment_pro_eve", nullable=false, length=45)
+    @Column(name="comment_pro_eve", length=45)
     public String getCommentProEve() {
         return this.commentProEve;
     }
@@ -179,13 +179,13 @@ public class ProductionEvents  implements java.io.Serializable {
         this.idProjectProEve = idProjectProEve;
     }
     
-    @Column(name="status_pro_eve", nullable=false)
-    public boolean isStatusProEve() {
-        return this.statusProEve;
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
     }
     
-    public void setStatusProEve(boolean statusProEve) {
-        this.statusProEve = statusProEve;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
     
     @Column(name="expected_production_pro_eve", nullable=false, precision=22, scale=0)
@@ -215,7 +215,7 @@ public class ProductionEvents  implements java.io.Serializable {
         this.drainingProEve = drainingProEve;
     }
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="data_capture_date_pro_eve", nullable=false, length=19)
+    @Column(name="data_capture_date_pro_eve", length=19)
     public Date getDataCaptureDateProEve() {
         return this.dataCaptureDateProEve;
     }
@@ -285,6 +285,15 @@ public class ProductionEvents  implements java.io.Serializable {
     
     public void setNumCyclesBeforeProEve(Integer numCyclesBeforeProEve) {
         this.numCyclesBeforeProEve = numCyclesBeforeProEve;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

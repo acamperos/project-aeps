@@ -34,9 +34,9 @@
             </div>                          
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
-                    <s:label for="formCropSearch_num_crop" cssClass="control-label" value="Numero del cultivo:"></s:label>
+                    <s:label for="formCropSearch_idCrop" cssClass="control-label" value="Numero del cultivo:"></s:label>
                     <div class="controls">
-                        <s:textfield name="num_crop" />
+                        <s:textfield name="idCrop" />
                     </div>
                 </div>
             </div>
@@ -48,9 +48,9 @@
                     <div class="controls">
                        <s:select
                         name="type_doc"
-                        list="type_property_lot" 
-                        listKey="idFieTyp" 
-                        listValue="nameFieTyp" 
+                        list="type_ident_producer" 
+                        listKey="acronymDocTyp" 
+                        listValue="nameDocTyp" 
                         onchange="selConf(this.value, 'formCropSearch_num_doc');"
                         headerKey="-1" 
                         headerValue="---" />
@@ -77,9 +77,27 @@
             </div>                          
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
+                    <s:label for="formCropSearch_name_field" cssClass="control-label" value="Nombre de la finca:"></s:label>
+                    <div class="controls">
+                        <s:textfield name="name_farm" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span5">
+                <div class="control-group">
                     <s:label for="formCropSearch_num_field" cssClass="control-label" value="Numero del lote:"></s:label>
                     <div class="controls">
                         <s:textfield name="num_field" />
+                    </div>                          
+                </div>                          
+            </div>                          
+            <div class="span4" style="padding-left: 28px">
+                <div class="control-group">
+                    <s:label for="formCropSearch_name_field" cssClass="control-label" value="Nombre del lote:"></s:label>
+                    <div class="controls">
+                        <s:textfield name="name_field" />
                     </div>
                 </div>
             </div>
@@ -101,10 +119,10 @@
 </s:form>        
 <script>
     $.mask.definitions['i'] = "[-0-9]";
-    $.mask.definitions['f'] = "[-.0-9]";
+    $.mask.definitions['f'] = "[-.0-9]";    
     $("#formCropSearch_date_sowing").datepicker({dateFormat: 'dd/mm/yy'});
     $("#formCropSearch_date_sowing").mask("99/99/9999", {placeholder: ""});
-    $("#formCropSearch_num_crop").numeric({decimal: false, negative: false});
+    $("#formCropSearch_idCrop").numeric({decimal: false, negative: false});
     $("#formCropSearch_num_farm").numeric({decimal: false, negative: false});
     $("#formCropSearch_num_field").numeric({decimal: false, negative: false});
     $.subscribe('completeSearchCrop', function(event, data) {

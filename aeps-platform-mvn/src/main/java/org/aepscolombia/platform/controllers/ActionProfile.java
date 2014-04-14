@@ -447,7 +447,7 @@ public class ActionProfile extends BaseAction {
 //            ent.setCellphoneEnt((long) Integer.parseInt(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long)317524765);
             ent.setEmailEnt(this.getEmailUser());
-            ent.setStatusEnt(true);
+            ent.setStatus(true);
             session.saveOrUpdate(ent);
 //            entDao.save(ent);
 
@@ -493,7 +493,7 @@ public class ActionProfile extends BaseAction {
 //            user.setPasswordUsr(this.getPasswordUser());
             user.setPasswordUsr("");
             user.setCodValidationUsr(codValidation);
-            user.setStatusUsr(2);//Estado inhabilitado hasta confirmar
+            user.setStatus(2);//Estado inhabilitado hasta confirmar
             session.saveOrUpdate(user);
 //            userDao.save(user);
             
@@ -518,7 +518,7 @@ public class ActionProfile extends BaseAction {
             usrEnt.setIdProjectUsrEnt(null);
             usrEnt.setUsers(user);
             usrEnt.setEntities(ent);
-            usrEnt.setStatusUsrEnt(true);
+            usrEnt.setStatus(true);
             session.saveOrUpdate(usrEnt);
 //            resUsrEnt = usrEntDao.save(usrEnt);
 //            if(!resUsrEnt) tx.rollback();

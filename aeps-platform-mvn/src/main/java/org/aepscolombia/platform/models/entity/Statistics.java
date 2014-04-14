@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="statistics"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="id_crop_stat") 
 )
 public class Statistics  implements java.io.Serializable {
@@ -28,6 +28,8 @@ public class Statistics  implements java.io.Serializable {
      private ProductionEvents productionEvents;
      private String productionStat;
      private String yearStat;
+     private Boolean status;
+     private Integer createdBy;
 
     public Statistics() {
     }
@@ -36,10 +38,12 @@ public class Statistics  implements java.io.Serializable {
     public Statistics(ProductionEvents productionEvents) {
         this.productionEvents = productionEvents;
     }
-    public Statistics(ProductionEvents productionEvents, String productionStat, String yearStat) {
+    public Statistics(ProductionEvents productionEvents, String productionStat, String yearStat, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.productionStat = productionStat;
        this.yearStat = yearStat;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -78,6 +82,24 @@ public class Statistics  implements java.io.Serializable {
     
     public void setYearStat(String yearStat) {
         this.yearStat = yearStat;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

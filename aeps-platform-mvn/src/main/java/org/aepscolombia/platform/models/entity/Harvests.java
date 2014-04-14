@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -22,30 +22,48 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="harvests"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Harvests  implements java.io.Serializable {
 
 
      private Integer idHar;
+     private ResultingProducts resultingProducts;
      private HarvestMethods harvestMethods;
      private ProductionEvents productionEvents;
      private Date dateHar;
      private String commentHar;
+     private int productionHar;
+     private double yieldHar;
+     private Boolean storageHar;
+     private Double productionPerPlantHar;
+     private Double humidityPercentageHar;
+     private Boolean status;
+     private Integer createdBy;
 
     public Harvests() {
     }
 
 	
-    public Harvests(ProductionEvents productionEvents, Date dateHar) {
+    public Harvests(ProductionEvents productionEvents, Date dateHar, int productionHar, double yieldHar) {
         this.productionEvents = productionEvents;
         this.dateHar = dateHar;
+        this.productionHar = productionHar;
+        this.yieldHar = yieldHar;
     }
-    public Harvests(HarvestMethods harvestMethods, ProductionEvents productionEvents, Date dateHar, String commentHar) {
+    public Harvests(ResultingProducts resultingProducts, HarvestMethods harvestMethods, ProductionEvents productionEvents, Date dateHar, String commentHar, int productionHar, double yieldHar, Boolean storageHar, Double productionPerPlantHar, Double humidityPercentageHar, Boolean status, Integer createdBy) {
+       this.resultingProducts = resultingProducts;
        this.harvestMethods = harvestMethods;
        this.productionEvents = productionEvents;
        this.dateHar = dateHar;
        this.commentHar = commentHar;
+       this.productionHar = productionHar;
+       this.yieldHar = yieldHar;
+       this.storageHar = storageHar;
+       this.productionPerPlantHar = productionPerPlantHar;
+       this.humidityPercentageHar = humidityPercentageHar;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -57,6 +75,15 @@ public class Harvests  implements java.io.Serializable {
     
     public void setIdHar(Integer idHar) {
         this.idHar = idHar;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="expected_product_type_har")
+    public ResultingProducts getResultingProducts() {
+        return this.resultingProducts;
+    }
+    
+    public void setResultingProducts(ResultingProducts resultingProducts) {
+        this.resultingProducts = resultingProducts;
     }
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="method_har")
@@ -94,7 +121,70 @@ public class Harvests  implements java.io.Serializable {
     public void setCommentHar(String commentHar) {
         this.commentHar = commentHar;
     }
-
+    
+    @Column(name="production_har", nullable=false)
+    public int getProductionHar() {
+        return this.productionHar;
+    }
+    
+    public void setProductionHar(int productionHar) {
+        this.productionHar = productionHar;
+    }
+    
+    @Column(name="yield_har", nullable=false, precision=22, scale=0)
+    public double getYieldHar() {
+        return this.yieldHar;
+    }
+    
+    public void setYieldHar(double yieldHar) {
+        this.yieldHar = yieldHar;
+    }
+    
+    @Column(name="storage_har")
+    public Boolean getStorageHar() {
+        return this.storageHar;
+    }
+    
+    public void setStorageHar(Boolean storageHar) {
+        this.storageHar = storageHar;
+    }
+    
+    @Column(name="production_per_plant_har", precision=22, scale=0)
+    public Double getProductionPerPlantHar() {
+        return this.productionPerPlantHar;
+    }
+    
+    public void setProductionPerPlantHar(Double productionPerPlantHar) {
+        this.productionPerPlantHar = productionPerPlantHar;
+    }
+    
+    @Column(name="humidity_percentage_har", precision=22, scale=0)
+    public Double getHumidityPercentageHar() {
+        return this.humidityPercentageHar;
+    }
+    
+    public void setHumidityPercentageHar(Double humidityPercentageHar) {
+        this.humidityPercentageHar = humidityPercentageHar;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+    
 }
 
 

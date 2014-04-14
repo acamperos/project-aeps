@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="clusters"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Clusters  implements java.io.Serializable {
 
@@ -26,14 +26,24 @@ public class Clusters  implements java.io.Serializable {
      private Fields fields;
      private int cropTypeClu;
      private int numberClusterClu;
+     private Boolean status;
+     private Integer createdBy;
 
     public Clusters() {
     }
 
+	
     public Clusters(Fields fields, int cropTypeClu, int numberClusterClu) {
+        this.fields = fields;
+        this.cropTypeClu = cropTypeClu;
+        this.numberClusterClu = numberClusterClu;
+    }
+    public Clusters(Fields fields, int cropTypeClu, int numberClusterClu, Boolean status, Integer createdBy) {
        this.fields = fields;
        this.cropTypeClu = cropTypeClu;
        this.numberClusterClu = numberClusterClu;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -72,6 +82,24 @@ public class Clusters  implements java.io.Serializable {
     
     public void setNumberClusterClu(int numberClusterClu) {
         this.numberClusterClu = numberClusterClu;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

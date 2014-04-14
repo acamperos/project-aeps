@@ -15,7 +15,7 @@
 <% //int pageNow     = Integer.parseInt(String.valueOf(request.getParameter("page")));  %>
 <% int countTotal = Integer.parseInt(String.valueOf(request.getAttribute("countTotal")));%>
 <% int maxResults = Integer.parseInt(String.valueOf(request.getAttribute("maxResults")));%>
-<% int idProducer = Integer.parseInt(String.valueOf(request.getAttribute("idProducer")));%>
+<% //int idProducer = Integer.parseInt(String.valueOf(request.getAttribute("idProducer")));%>
 <% String valId   = String.valueOf(request.getAttribute("valId"));%>
 <% String valName = String.valueOf(request.getAttribute("valName"));%>
 <% HashMap add    = (HashMap) request.getAttribute("additionals");%>
@@ -33,9 +33,8 @@
         <thead>
             <tr>
                 <th>Numero del Cultivo</th>
-                <th>Nombre del productor</th>
-                <th>Nombre de la finca</th>
-                <th>Nombre del lote</th>
+                <th>Documento del productor</th>
+                <th>Informacion de procedencia</th>
                 <th>Fecha de siembra</th>
                 <th>Material genetico</th>
                 <% if (value == "crop" || value.equals("crop")) {%>
@@ -78,4 +77,4 @@
 <div style="text-align:center; <%= table %>">
     <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/crop/searchCrop.action?selected="+value, divHide, "", "", "formCropSearch");%>    
     <%= result%>
-<div>
+</div>

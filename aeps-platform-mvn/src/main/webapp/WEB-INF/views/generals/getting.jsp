@@ -31,7 +31,7 @@
 					<div class="caption">
 						<h3>Cultivos</h3>
                         <p>Encargado de la toma de datos para los cultivos</p>
-                        <p><s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+                        <p><s:a cssClass="btn btn-initial" href="/aeps-plataforma-mvn/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
 					</div>
 				</div>
             </div>

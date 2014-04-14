@@ -9,167 +9,151 @@
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
         <div class="row-fluid" id="divFarmsForm">
-            <div class="span6">	
-                <s:form id="formFarm" theme="bootstrap" action="saveFarm.action" cssClass="form-horizontal formClassProperty" label="Formulario de una finca">
+            <div class="span7">	
+                <s:form id="formFarm" action="saveFarm.action" cssClass="form-horizontal formClassProperty">
                     <fieldset>
-                        <div>
+                        <legend>Formulario de una finca</legend>
+                        <div class="control-group">
                             <s:hidden name="idProducer"/>
                             <s:hidden name="idFarm"/>
-                            <s:textfield
-                                label="Productor:"
-                                name="name_producer"
-                                class="input-xlarge uneditable-input"          
-                                requiredLabel="true"
-                                tooltip="Seleccione un productor en la lupa a la derecha"                        
-                                />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
-
-                            <%-- <s:textfield
-                                name="id_producer"
-                                style="display: none"
-                                tooltip="Seleccione un productor con la lupa a la derecha"                        
-                                /> --%>
-                            <%-- <a href="#" data-toggle="tooltip" data-placement="right" title="Seleccione el productor">
-                                 <img src="../img/search_icon.gif" alt="Seleccione el productor" onclick="listInfo('/aeps-plataforma-mvn/buscarProductor.action&selected=property', 'formFarm_name_producer', 'formFarm_idProductor', 'Listado de Productores', 1050, 550)" /></a>--%>
-                        </div>                          
-                        <div>
-                            <s:textfield
-                                label="Nombre de Finca:"
-                                name="name_property"        
-                                requiredLabel="true"
-                                tooltip="Ingrese el nombre de la finca asociada al productor seleccionado"                        
-                                />
-                            <%--<img src="../img/search_icon.gif" onclick="setPropertyVal('/aeps-plataforma-mvn/buscarFinca.action&selected=property', 'idProductor', 'formFarm_idProductor', 'formFarm_name_property', 'formFarm_idFinca', 'Listado de Fincas', 1050, 550)" />--%>
-                        </div>
-                        <label class="radio inline" style="margin-left: 50px; margin-bottom: 15px;">
-                            <input type="radio" name="option_geo" id="formFarm_option_degrees" value="2" onclick="changeValues(this.value, 'decimals', 'degrees');">
-                            Grados
-                        </label>
-                        <label class="radio inline" style="margin-left: 50px; margin-bottom: 15px;">
-                            <input type="radio" name="option_geo" id="formFarm_option_decimal" value="1" checked onclick="changeValues(this.value, 'decimals', 'degrees');">
-                            Decimales
-                        </label>
-                        <%--<s:radio 
-                            cssClass="radio inline"
-                            cssStyle="margin-left: 50px; margin-bottom: 15px;"
-                            name="option_geo"
-                            list="{'Grados', 'Decimales'}"
-                            id="option_degrees"
-                            onclick="changeValues(this.value, 'decimals', 'degrees');"
-                            value="2"
-                            />
-                        <s:radio 
-                            cssClass="radio inline"
-                            label="Decimales"
-                            cssStyle="margin-left: 50px; margin-bottom: 15px;"
-                            name="option_geo"
-                            id="option_decimal"
-                            onclick="changeValues(this.value, 'decimals', 'degrees');"
-                            value="1"
-                            />--%>
-                        <div id="decimals"> 
-                            <div>
-                                <s:textfield
-                                    label="Latitud de la Finca:"
-                                    name="latitude_property"       
-                                    requiredLabel="true"
-                                    tooltip="Ingrese la latitud de la finca"                        
-                                    />
-                            </div>
-                            <div>
-                                <s:textfield
-                                    label="Longitud de la Finca:"
-                                    name="length_property"           
-                                    requiredLabel="true"
-                                    tooltip="Ingrese la longitud de la finca"                        
-                                    />
-                            </div>                
-                        </div>
-                        <div id="degrees" class="hide">   
-                            <div>
-                                <label for="latitude_degrees_property" style="margin-left: 40px; margin-bottom: 30px;">Latitud de la Finca:</label>
-                                <div class="row-fluid">
-                                    <div class="span2 input-prepend" style="width: 100px">
-                                        <span class="add-on">Grados</span>
-                                        <input type="text" name="latitude_degrees_property" id="formFarm_latitude_degrees_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
-                                    </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
-                                        <span class="add-on">Minutos</span>
-                                        <input type="text" name="latitude_minutes_property" id="formFarm_latitude_minutes_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
-                                    </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
-                                        <span class="add-on">Segundos</span>
-                                        <input type="text" name="latitude_seconds_property" id="formFarm_latitude_seconds_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
-                                    </div>
-                                </div>
+                            <label for="formFarm_name_producer" class="control-label req">
+                                Seleccione el productor:
+                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor en la lupa a la derecha"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="name_producer" />
+                                <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')"><i class="icon-search"></i></a>
                             </div>  
-                            <div>
-                                <label for="length_degrees_property" style="margin-left: 40px; margin-bottom: 30px;">Longitud de la Finca:</label>
+                        </div>   
+                        <div class="control-group">
+                            <label for="formFarm_name_property" class="control-label req">
+                                Nombre de Finca:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese el nombre de la finca asociada al productor seleccionado"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="name_property" />
+                            </div>  
+                        </div>
+                        <div class="control-group">
+                            <label for="formFarm_latitude_property" class="control-label req">
+                                Latitud de la finca (decimales):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la latitud de la finca asociada"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield cssClass="form-control" name="latitude_property" onkeyup="generateDegrees('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="formFarm_latitude_degrees_property" class="control-label req">
+                                Latitud de la finca (grados):
+                            </label>
+                            <div class="controls">
                                 <div class="row-fluid">
-                                    <div class="span2 input-prepend" style="width: 100px">
+                                    <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees_property" id="formFarm_length_degrees_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_degrees_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_degrees_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
                                     </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes_property" id="formFarm_length_minutes_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_minutes_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_minutes_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
                                     </div>
-                                    <div class="span2 input-prepend" style="width: 100px">
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds_property" id="formFarm_length_seconds_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_seconds_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_seconds_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class="control-group">
+                            <label for="formFarm_length_property" class="control-label req">
+                                Longitud de la Finca (decimales):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la longitud de la finca asociada"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield cssClass="form-control" id="formFarm_length_property" name="length_property" onkeyup="generateDegrees('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="formFarm_length_degrees_property" class="control-label req">
+                                Longitud de la Finca (grados):
+                            </label>
+                            <div class="controls">
+                                <div class="row-fluid">
+                                    <div class="span2 input-prepend controls" style="width: 100px;">
+                                        <span class="add-on">Grados</span>
+                                        <input type="text" name="length_degrees_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_degrees_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    </div>
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
+                                        <span class="add-on">Minutos</span>
+                                        <input type="text" name="length_minutes_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_minutes_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    </div>
+                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
+                                        <span class="add-on">Segundos</span>
+                                        <input type="text" name="length_seconds_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_seconds_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <s:textfield
-                                label="Altitud de la Finca (metros):"
-                                name="altitude_property"                 
-                                requiredLabel="true"
-                                tooltip="Ingrese la altitud de la finca en metros"                        
-                                />
+                        <div class="control-group">
+                            <label for="formFarm_altitude_property" class="control-label req">
+                                Altitud de la Finca (metros):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la altitud de la finca en metros"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="altitude_property" />
+                            </div>  
                         </div>
-                        <div>
-                            <s:textfield
-                                label="Direccion de la Finca:"
-                                name="direction_property"                    
-                                tooltip="Ingrese la direccion de la finca"                        
+                        <div class="control-group">
+                            <label for="formFarm_direction_property" class="control-label">
+                                Direccion de la Finca:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la direccion de la finca"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="direction_property" />
+                            </div>  
+                        </div>    
+                        <div class="control-group">
+                            <label for="formFarm_depFar" class="control-label req">
+                                Departamento:
+                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un departamento"></i>
+                            </label>
+                            <div class="controls">
+                                <s:select
+                                    name="depFar" 
+                                    list="department_property" 
+                                    listKey="idDep" 
+                                    listValue="nameDep"          
+                                    headerKey=" " 
+                                    headerValue="---"
+                                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'formFarm')"
                                 />
-                        </div>              
-                        <div>
-                            <s:select
-                                tooltip="Seleccione un departamento"
-                                label="Departamento"
-                                name="depFar" 
-                                list="department_property" 
-                                listKey="idDep" 
-                                listValue="nameDep"          
-                                requiredLabel="true"
-                                headerKey=" " 
-                                headerValue="---"
-                                onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'formFarm')"
-                                />
+                            </div>  
                         </div>
-                        <div>
-                            <s:select
-                                tooltip="Seleccione un municipio:"
-                                label="Municipio"
-                                list="city_property" 
-                                listKey="idMun" 
-                                listValue="nameMun" 
-                                requiredLabel="true"
-                                headerKey=" " 
-                                headerValue="---"
-                                name="cityFar" />
-                        </div>
-                        <div>
-                            <s:textfield
-                                label="Vereda:"
-                                name="lane_property"                
-                                requiredLabel="true"
-                                tooltip="Ingrese la vereda"                        
+                        <div class="control-group">
+                            <label for="formFarm_cityFar" class="control-label req">
+                                Municipio:
+                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un municipio"></i>
+                            </label>
+                            <div class="controls">
+                                <s:select
+                                    list="city_property" 
+                                    listKey="idMun" 
+                                    listValue="nameMun" 
+                                    headerKey=" " 
+                                    headerValue="---"
+                                    name="cityFar" 
                                 />
-                        </div>          
+                            </div>  
+                        </div>
+                        <div class="control-group">
+                            <label for="formFarm_lane_property" class="control-label req">
+                                Vereda:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la vereda"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="lane_property" />
+                            </div>  
+                        </div>      
                     </fieldset>
                     <div> 
                         <s:hidden name="page" id="formFarm_page" />
@@ -186,6 +170,9 @@
                     $.mask.definitions['f'] = "[-.0-9]";
                     $("#formFarm_latitude_property").numeric();
                     $("#formFarm_length_property").numeric();
+                    $("#formFarm_latitude_property").val(parsePointSeparated($("#formFarm_latitude_property").val()));
+                    $("#formFarm_length_property").val(parsePointSeparated($("#formFarm_length_property").val()));
+                    
                     $("#formFarm_altitude_property").numeric({decimal: false, negative: false});
                     $("#formFarm_length_degrees_property").numeric({decimal: false});
                     $("#formFarm_length_minutes_property").numeric({decimal: false});
@@ -207,15 +194,25 @@
                     //chargeValues('../actions/Actions.php?action=ListarDeps', 'depId', '', 'params_department_property', 'divMessage');
                 </script>
             </div>
-            <div class="span6">
+            <div class="span5" style="margin-left: 0">
                 <div class="alert fade in">
-                    <strong>Recuerde que en Colombia:</strong>
-                    <br /><p></p> 
-                    <p>Las latitudes en decimales se encuentran entre -4.3 y 13.5</p>
-                    <p>Las longitudes en decimales se encuentran entre -81.8 y -66</p>
-                    <p>Las latitudes en grados se encuentran entre -5 y 14</p>
-                    <p>Las longitudes en grados se encuentran entre -82 y -66</p>
-                    <p>Las altitudes se encuentran entre 0 y 9000 (metros)</p>			
+                    <h3>Recuerde que en Colombia:</h3>
+                    <br />
+                    <strong>Las latitudes</strong>
+                    <hr>
+                    <p>Decimales varia entre (-4.3 y 13.5)</p>
+                    <p>Grados varia entre (-5 y 14)</p>
+                    <p>Minutos varia entre (0 y 60)</p>
+                    <p>Segundos varia entre (0 y 60)</p>
+                    <strong>Las longitudes</strong>
+                    <hr>
+                    <p>Decimales varia entre (-81.8 y -66)</p>
+                    <p>Grados varia entre (-82 y -66)</p>
+                    <p>Minutos varia entre (0 y 60)</p>
+                    <p>Segundos varia entre (0 y 60)</p>
+                    <strong>Las altitudes</strong>
+                    <hr>
+                    <p>Se encuentran entre 0 y 9000 (metros)</p>			
                 </div>
             </div>
         </div>

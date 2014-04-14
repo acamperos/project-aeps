@@ -84,4 +84,4 @@
 <div style="text-align:center; <%= table %>">
     <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/soil/searchRasta.action?selected="+value, divHide, "", "", "formRastaSearch");%>    
     <%= result%>
-<div>
+</div>

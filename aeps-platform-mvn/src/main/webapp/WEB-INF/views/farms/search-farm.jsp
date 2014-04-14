@@ -2,80 +2,90 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <s:form id="formFarmSearch" theme="bootstrap" action="searchFarm.action?selected=%{selected}" cssClass="form-horizontal formClassProperty" label="Buscar una finca">
-    <!--<fieldset>-->
-    <div class="row-fluid">
-        <div class="span5">
-            <s:textfield
-                label="Productor:"
-                name="name_producer"
-                class="input-xlarge uneditable-input"          
-                />
+    <s:hidden name="searchFrom" value="1"/>    
+    <div class="control-group" id="searchBasic">
+        <s:textfield cssClass="form-control" name="search_farm" placeholder="Buscar" theme="simple" />
+        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFarms" onCompleteTopics="completeFarm"><i class="icon-search"></i></sj:submit>
+        <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+    </div>   
+    <div id="searchAdvance" class="hide">
+        <div class="control-group">
+            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
         </div>
-        <div class="span4" style="padding-left: 28px">
-            <s:textfield
-                label="Nombre Finca:"
-                name="name_property"        
-                />
+        <div class="row-fluid">
+            <div class="span5">
+                <s:textfield
+                    label="Productor:"
+                    name="name_producer"
+                    class="input-xlarge uneditable-input"          
+                    />
+            </div>
+            <div class="span4" style="padding-left: 28px">
+                <s:textfield
+                    label="Nombre Finca:"
+                    name="name_property"        
+                    />
+            </div>
         </div>
-    </div>
-    <div class="row-fluid">
-        <div class="span5">
-            <s:textfield
-                label="Latitud de la Finca:"
-                name="latitude_property"  
-                value=""
-                />
-        </div>
-        <div class="span4" style="padding-left: 28px">
-            <s:textfield
-                label="Longitud de la Finca:"
-                name="length_property"   
-                value=""
-                />
+        <div class="row-fluid">
+            <div class="span5">
+                <s:textfield
+                    label="Latitud de la Finca:"
+                    name="latitude_property"  
+                    value=""
+                    />
+            </div>
+            <div class="span4" style="padding-left: 28px">
+                <s:textfield
+                    label="Longitud de la Finca:"
+                    name="length_property"   
+                    value=""
+                    />
+            </div>  
         </div>  
-    </div>  
-    <div class="row-fluid">
-        <div class="span5">
-            <s:textfield
-                label="Altitud de la Finca (metros):"
-                name="altitude_property"        
-                value=""
-                />
-        </div>             
-        <div class="span4" style="padding-left: 28px">
-            <s:select
-                label="Departamento"
-                name="depFar" 
-                list="department_property" 
-                listKey="idDep" 
-                listValue="nameDep"          
-                headerKey=" " 
-                headerValue="---"
-                onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarmSearch_cityFar', 'formFarmSearch')"
-                />
+        <div class="row-fluid">
+            <div class="span5">
+                <s:textfield
+                    label="Altitud de la Finca (metros):"
+                    name="altitude_property"        
+                    value=""
+                    />
+            </div>             
+            <div class="span4" style="padding-left: 28px">
+                <s:select
+                    label="Departamento"
+                    name="depFar" 
+                    list="department_property" 
+                    listKey="idDep" 
+                    listValue="nameDep"          
+                    headerKey=" " 
+                    headerValue="---"
+                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarmSearch_cityFar', 'formFarmSearch')"
+                    />
+            </div>
         </div>
-    </div>
-    <div class="row-fluid">
-        <div class="span5">
-            <s:select
-                label="Municipio"
-                list="city_property" 
-                listKey="idMun" 
-                listValue="nameMun" 
-                headerKey=" " 
-                headerValue="---"
-                name="cityFar" />
-        </div>
-        <div class="span4" style="padding-left: 28px">
-            <s:textfield
-                label="Vereda:"
-                name="lane_property"                
-                />
+        <div class="row-fluid">
+            <div class="span5">
+                <s:select
+                    label="Municipio"
+                    list="city_property" 
+                    listKey="idMun" 
+                    listValue="nameMun" 
+                    headerKey=" " 
+                    headerValue="---"
+                    name="cityFar" />
+            </div>
+            <div class="span4" style="padding-left: 28px">
+                <s:textfield
+                    label="Vereda:"
+                    name="lane_property"                
+                    />
+            </div>          
         </div>          
-    </div>          
-    <!--</fieldset>-->
-    <div> 
-        <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFarms" onCompleteTopics="completeFarm">Buscar Finca <i class="icon-search"></i></sj:submit>
+        <!--</fieldset>-->
+        <div> 
+            <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFarms" onCompleteTopics="completeFarm">Buscar Finca <i class="icon-search"></i></sj:submit>
+        </div>    
     </div>    
 </s:form>        
 <script>

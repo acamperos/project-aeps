@@ -29,11 +29,11 @@ public class EntitiesDao {
 
         sql += "select usr.id_ent, usr.id_project_ent, usr.entity_type_ent, usr.document_number_ent, usr.document_type_ent, usr.document_issue_place_ent,"; 	
         sql += "usr.name_ent, usr.in_association_ent, usr.email_ent, usr.email_2_ent, usr.address_ent, usr.id_municipality_ent,"; 	
-        sql += "usr.cellphone2_ent, usr.phone_ent, usr.cellphone_ent, usr.status_ent, usr.gender_ent, usr.civil_status_ent,"; 	
+        sql += "usr.cellphone2_ent, usr.phone_ent, usr.cellphone_ent, usr.status, usr.gender_ent, usr.civil_status_ent,"; 	
         sql += "usr.validation_number_ent, usr.education_level_ent, usr.date_of_birth_ent, usr.first_name_1_ent,"; 	
         sql += "usr.first_name_2_ent, usr.last_name_1_ent, usr.last_name_2_ent";
         
-//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
+//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
         sql += " from entities usr";
         sql += " where usr.document_type_ent='"+typeIdent+"'";
         sql += " and usr.document_number_ent="+ident;

@@ -42,7 +42,7 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
         sql += " from users usr";
         sql += " where usr.name_user_usr='"+username+"'";
 //        System.out.println("sql->"+sql);
@@ -76,10 +76,10 @@ public class UsersDao
         UserEntity user  = null;
         Transaction tx = null;
         String sql = "";        
-        sql  = "select ue.id_usr_ent, ue.id_project_usr_ent, ue.id_user_usr_ent, ue.id_entity_usr_ent, ue.status_usr_ent";
+        sql  = "select ue.id_usr_ent, ue.id_project_usr_ent, ue.id_user_usr_ent, ue.id_entity_usr_ent, ue.status";
         sql += " from user_entity ue";
 //		sql += " inner join users u on u.id_usr=ue.id_user_usr_ent"; 
-		sql += " where ue.status_usr_ent=1";		
+		sql += " where ue.status=1";		
         sql += " and ue.id_user_usr_ent="+idUser;
 //        System.out.println("sql->"+sql);
         
@@ -114,9 +114,9 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status, usr.created_by";
         sql += " from users usr";
-        sql += " where usr.status_usr=1";
+        sql += " where usr.status=1";
         if (username!=null && username!="") {
             sql += " and usr.name_user_usr='"+username+"'";
         }  
@@ -154,9 +154,9 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr ";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status ";
         sql += "from users usr ";
-        sql += "where usr.status_usr=2 ";
+        sql += "where usr.status=2 ";
         if (username!=null) {
             sql += " and usr.name_user_usr='"+username+"'";
         }  
@@ -262,7 +262,7 @@ public class UsersDao
         String sql  = "";        
         Users event = null;
         Transaction tx = null;
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr ";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status ";
         sql += "from users usr ";
         sql += "where usr.id_usr="+id;
         try {
@@ -300,8 +300,8 @@ public class UsersDao
         sql += "inner join users_profiles usrPer on usrPer.id_users_usr_pro=usr.id_usr ";
         sql += "inner join profiles per on per.id_pro=usrPer.id_profile_usr_pro ";
         sql += "inner join entities ent on ent.id_ent=usrEnt.id_entity_usr_ent ";
-        sql += "where usr.status_usr=1 and per.status_pro=1 ";
-        sql += "and usrEnt.status_usr_ent=1 and ent.status_ent=1";
+        sql += "where usr.status=1 and per.status=1 ";
+        sql += "and usrEnt.status=1 and ent.status=1";
         if (id!=null) {
             sql += " and usr.id_usr="+id;
         }        

@@ -9,9 +9,9 @@ import org.aepscolombia.platform.util.APConstants;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import java.util.Locale;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Map;
-import org.aepscolombia.platform.models.entity.Users;
 
 /**
  * Clase ChangeI18n
@@ -33,12 +33,36 @@ public class ViewActionInterceptor extends AbstractInterceptor
     String actionActual = (String)invocation.getInvocationContext().getContext().get(invocation.getInvocationContext().ACTION_NAME);
     String namespace = (String)invocation.getProxy().getNamespace();
     
+//    System.out.println("values->"+invocation.getInvocationContext().);
+    
+    Map params = invocation.getInvocationContext().getParameters();
+// Getting all request parameters from jsp page on which you have called any
+    String addValues = "";
+    int i=0;
+    
+    if (!params.isEmpty()) {
+        Iterator entries = params.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry entry = (Map.Entry) entries.next();
+            String[] value = (String[]) entry.getValue();
+            String valGet  = value[0];
+//            System.out.println("key->"+entry.getKey()+"value->"+valGet);
+            if(i==0) {
+                addValues += "?"+entry.getKey()+ "=" + valGet;
+            } else {
+                addValues += "&"+entry.getKey()+ "=" + valGet;
+            }
+            i++;
+        }
+    }
+    
     String actionNext   = (String)session.get("action");       
     String result = "";
     if (actionActual.equals(actionNext) && !actionActual.equals("dashboard") && !actionActual.equals("initial")) {
         session.put("action", "");
         result = invocation.invoke();      
     } else {
+        session.put("actionUrl", actionActual+".action"+addValues);
         session.put("action", actionActual);
         result = APConstants.ACTION_PAGE;     
     }

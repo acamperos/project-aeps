@@ -11,26 +11,27 @@
         <s:fielderror theme="bootstrap"/>
         <div class="row-fluid" id="divFieldsForm">
             <div class="span7">	
-                <s:form id="formField" action="saveField.action" cssClass="form-horizontal formClassLot" label="Formulario de un lote">
+                <s:form id="formField" action="saveField.action" cssClass="form-horizontal formClassLot">
                     <fieldset>
-                        <s:hidden name="idProducer"/>                            
+                        <legend>Formulario de un lote</legend>
+                        <s:hidden name="idProducer"/>                           
                         <s:hidden name="idField"/>
-                        <div class="control-group">
+<!--                        <div class="control-group">
                             <label for="formField_name_producer_lot" class="control-label req">
                                 Seleccione el lote al cual pertenece:
-                                <i class="icon-info-sign s2b_tooltip" title="Seleccione la finca en la lupa a la derecha"></i>
+                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor con la lupa a la derecha"></i>
                             </label>
                             <div class="controls">
-                                <s:textfield name="name_producer_lot" />
+                                <%--<s:textfield name="name_producer_lot" />--%>
                                 <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
                             </div>  
-                        </div>                         
+                        </div>                         -->
                         <div id="divPropertyLot">
                             <div class="control-group">
                                 <s:hidden name="idFarm"/>
                                 <label for="formField_name_property_lot" class="control-label req">
                                     Seleccione la Finca:
-                                    <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor con la lupa a la derecha"></i>
+                                    <i class="icon-info-sign s2b_tooltip" title="Seleccione la finca en la lupa a la derecha"></i>
                                 </label>
                                 <div class="controls">
                                     <s:textfield name="name_property_lot" />
@@ -103,7 +104,8 @@
                         </div>
                         <div class="control-group">
                             <label for="formField_length_degrees_lot" class="control-label req">
-                                Longitud del rasta (grados):
+                                Longitud del Lote (grados):
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la longitud del lote asociada"></i>
                             </label>
                             <div class="controls">
                                 <div class="row-fluid">
@@ -161,6 +163,9 @@
 
                         $("#formField_latitude_lot").numeric();
                         $("#formField_length_lot").numeric();
+                        $("#formField_latitude_lot").val(parsePointSeparated($("#formField_latitude_lot").val()));
+                        $("#formField_length_lot").val(parsePointSeparated($("#formField_length_lot").val()));
+                        
                         $("#formField_altitude_lot").numeric({decimal: false, negative: false});
                         $("#formField_area_lot").numeric();
 
@@ -184,14 +189,23 @@
             </div>
             <div class="span5" style="margin-left: 0">
                 <div class="alert fade in">
-                    <strong>Recuerde que en Colombia:</strong>
-                    <br /><p></p> 
-                    <p>Las latitudes en decimales se encuentran entre -4.3 y 13.5</p>
-                    <p>Las longitudes en decimales se encuentran entre -81.8 y -66</p>
-                    <p>Las latitudes en grados se encuentran entre -5 y 14</p>
-                    <p>Las longitudes en grados se encuentran entre -82 y -66</p>
-                    <p>Las altitudes se encuentran entre 0 y 9000 (metros)</p>
-                    <p>El area se encuentran entre 0 y 3000 (hectarea)</p>
+                    <h3>Recuerde que en Colombia:</h3>
+                    <br />
+                    <strong>Las latitudes</strong>
+                    <hr>
+                    <p>Decimales varia entre (-4.3 y 13.5)</p>
+                    <p>Grados varia entre (-5 y 14)</p>
+                    <p>Minutos varia entre (0 y 60)</p>
+                    <p>Segundos varia entre (0 y 60)</p>
+                    <strong>Las longitudes</strong>
+                    <hr>
+                    <p>Decimales varia entre (-81.8 y -66)</p>
+                    <p>Grados varia entre (-82 y -66)</p>
+                    <p>Minutos varia entre (0 y 60)</p>
+                    <p>Segundos varia entre (0 y 60)</p>
+                    <strong>Las altitudes</strong>
+                    <hr>
+                    <p>Se encuentran entre 0 y 9000 (metros)</p>			
                 </div>
             </div>
         </div>

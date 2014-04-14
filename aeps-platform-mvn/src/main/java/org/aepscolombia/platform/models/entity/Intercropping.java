@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="intercropping"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Intercropping  implements java.io.Serializable {
 
@@ -25,13 +25,22 @@ public class Intercropping  implements java.io.Serializable {
      private Integer idInt;
      private CropsTypes cropsTypes;
      private ProductionEvents productionEvents;
+     private Boolean status;
+     private Integer createdBy;
 
     public Intercropping() {
     }
 
+	
     public Intercropping(CropsTypes cropsTypes, ProductionEvents productionEvents) {
+        this.cropsTypes = cropsTypes;
+        this.productionEvents = productionEvents;
+    }
+    public Intercropping(CropsTypes cropsTypes, ProductionEvents productionEvents, Boolean status, Integer createdBy) {
        this.cropsTypes = cropsTypes;
        this.productionEvents = productionEvents;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -61,6 +70,24 @@ public class Intercropping  implements java.io.Serializable {
     
     public void setProductionEvents(ProductionEvents productionEvents) {
         this.productionEvents = productionEvents;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

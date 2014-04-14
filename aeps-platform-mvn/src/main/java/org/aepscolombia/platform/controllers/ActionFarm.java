@@ -73,6 +73,8 @@ public class ActionFarm extends BaseAction {
     private List<HashMap> listRoute;
     private Users user;
     private Integer idEntSystem;
+    private Integer searchFrom;
+    private String search_farm;    
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -85,6 +87,24 @@ public class ActionFarm extends BaseAction {
     public void setIdFarm(int idFarm) {
         this.idFarm = idFarm;
     }
+
+    public Integer getSearchFrom() {
+        return searchFrom;
+    }
+
+    public void setSearchFrom(Integer searchFrom) {
+        this.searchFrom = searchFrom;
+    }
+
+    public String getSearch_farm() {
+        return search_farm;
+    }
+
+    public void setSearch_farm(String search_farm) {
+        this.search_farm = search_farm;
+    }
+    
+    
     
     public List<HashMap> getListProperties() {
         return listProperties;
@@ -380,17 +400,18 @@ public class ActionFarm extends BaseAction {
             required.put("cityFar", cityFar);
             required.put("lane_property", lane_property);
             required.put("altitude_property", altitude_property);
-            if (option_geo == 1) {
+            boolean enter = false;
+//            if (option_geo == 1) {
                 required.put("latitude_property", latitude_property);
                 required.put("length_property", length_property);
-            } else if (option_geo == 2) {
-                required.put("latitude_degrees_property", latitude_degrees_property);
-                required.put("latitude_minutes_property", latitude_minutes_property);
-                required.put("latitude_seconds_property", latitude_seconds_property);
-                required.put("length_degrees_property", length_degrees_property);
-                required.put("length_minutes_property", length_minutes_property);
-                required.put("length_seconds_property", length_seconds_property);
-            }
+//            } else if (option_geo == 2) {
+//                required.put("latitude_degrees_property", latitude_degrees_property);
+//                required.put("latitude_minutes_property", latitude_minutes_property);
+//                required.put("latitude_seconds_property", latitude_seconds_property);
+//                required.put("length_degrees_property", length_degrees_property);
+//                required.put("length_minutes_property", length_minutes_property);
+//                required.put("length_seconds_property", length_seconds_property);
+//            }
 //            System.out.println("values->"+required);
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -399,7 +420,12 @@ public class ActionFarm extends BaseAction {
 //                addFieldError(sK, "El campo es requerido");
                 if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     addFieldError(sK, "El campo es requerido");
+                    enter = true;
                 }
+            }
+            
+            if (enter) {
+                addActionError("Se requiere que ingrese los datos requeridos");
             }
             
 //            for (Iterator it = required.keySet().iterator(); it.hasNext();) {
@@ -415,9 +441,9 @@ public class ActionFarm extends BaseAction {
 //            }
             
             
-            double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property);
-            double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property);
-            double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property);
+            double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property.replace(',','.'));
+            double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
+            double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
             
 //            if (altitude_property) {    
             if (altPro < 0 || altPro > 9000) {
@@ -426,7 +452,25 @@ public class ActionFarm extends BaseAction {
             }
 //            }
 
-            if (option_geo == 1) {
+            if (latitude_property.equals("") || latitude_property==null) {
+                addFieldError("latitude_property", "Debe ingresar alguno de estos datos");
+                addFieldError("latitude_degrees_property", "");
+                addFieldError("latitude_minutes_property", "");
+                addFieldError("latitude_seconds_property", "");
+                addActionError("Debe ingresar la latitud en Decimales o en Grados");
+            }
+            
+            if (length_property.equals("") || length_property==null) {
+                addFieldError("length_property", "Debe ingresar alguno de estos datos");
+                addFieldError("length_degrees_property", "");
+                addFieldError("length_minutes_property", "");
+                addFieldError("length_seconds_property", "");
+                addActionError("Debe ingresar la longitud en Decimales o en Grados");
+            }
+            
+//            if (option_geo == 1) {
+//            if (!latitude_property.equals("") || latitude_property!=null) {
+            if (latPro!=0) {
 //                if (latPro!=null) { 
                 if (latPro < (-4.3) || latPro > (13.5)) {
                     addFieldError("latitude_property", "Dato invalido");
@@ -434,16 +478,6 @@ public class ActionFarm extends BaseAction {
                 }
 //                }
 
-//                if (length_property) {    
-                if (lonPro < (-81.8) || lonPro > (-66)) {
-                    addFieldError("length_property", "Dato invalido");
-                    addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
-                }
-//                }			
-
-            } else if (option_geo == 2) {
-
-//                if (latitude_degrees_property && (latitude_degrees_property<(-5) || latitude_degrees_property>14)) {
                 if ((latitude_degrees_property < (-5) || latitude_degrees_property > 14)) {
                     addFieldError("latitude_degrees_property", "Dato invalido");
                     addActionError("Se ingreso una latitud en grados invalida, por favor ingresar un valor entre -5 y 14");
@@ -460,6 +494,21 @@ public class ActionFarm extends BaseAction {
                     addFieldError("latitude_seconds_property", "Dato invalido");
                     addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
                 }
+            }
+            
+            if (lonPro!=0) {
+//            if (lonPro!=0 && (!length_property.equals("") || length_property!=null)) {
+//                if (length_property) {    
+                if (lonPro < (-81.8) || lonPro > (-66)) {
+                    addFieldError("length_property", "Dato invalido");
+                    addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
+                }
+//                }			
+
+//            } else if (option_geo == 2) {
+
+//                if (latitude_degrees_property && (latitude_degrees_property<(-5) || latitude_degrees_property>14)) {
+                
 
 //                if (length_degrees_property && (length_degrees_property<(-82) || length_degrees_property>(-66))) {
                 if ((length_degrees_property < (-82) || length_degrees_property > (-66))) {
@@ -529,9 +578,15 @@ public class ActionFarm extends BaseAction {
         additionals = new HashMap();
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
+        
+        if(searchFrom!=null && searchFrom==2) {
+            search_farm = "";
+        }
+        
 //        fardParams.put("nameProperty", this.getName_property());
 //        System.out.println("this.getAltitude_property()->"+this.getAltitude_property());
         findParams.put("idEntUser", idEntSystem);
+        findParams.put("search_farm", search_farm);
         findParams.put("name_producer", name_producer);
         findParams.put("name_property", name_property);
         findParams.put("depFar", depFar);
@@ -633,9 +688,9 @@ public class ActionFarm extends BaseAction {
         Session session = sessions.openSession();
         Transaction tx = null;
 
-        double altPro = Double.parseDouble(altitude_property);
-        double latPro = Double.parseDouble(latitude_property);
-        double lonPro = Double.parseDouble(length_property);
+        double altPro = Double.parseDouble(altitude_property.replace(',','.'));
+        double latPro = Double.parseDouble(latitude_property.replace(',','.'));
+        double lonPro = Double.parseDouble(length_property.replace(',','.'));
         
         if (option_geo == 2) {
             latPro = (latitude_minutes_property / 60) + (latitude_seconds_property / 3600);
@@ -654,7 +709,7 @@ public class ActionFarm extends BaseAction {
                 far.setIdFar(null);
                 far.setGeorefFar(true);
                 far.setIdProjectFar("1");
-                far.setStatusFar(true);
+                far.setStatus(true);
             } else {
                 HashMap fieldInfo = farDao.findById(idFarm);
                 idProOld = Integer.parseInt(String.valueOf(fieldInfo.get("id_producer")));

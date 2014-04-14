@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="fertilizations"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Fertilizations  implements java.io.Serializable {
 
@@ -36,6 +36,8 @@ public class Fertilizations  implements java.io.Serializable {
      private String whereBoughtFer;
      private String applicationTechniqueFer;
      private String otherWhereBoughtFer;
+     private Boolean status;
+     private Integer createdBy;
 
     public Fertilizations() {
     }
@@ -47,7 +49,7 @@ public class Fertilizations  implements java.io.Serializable {
         this.dateFer = dateFer;
         this.amountProductUsedFer = amountProductUsedFer;
     }
-    public Fertilizations(ProductionEvents productionEvents, CropsTypes cropsTypes, FertilizationsTypes fertilizationsTypes, Date dateFer, double amountProductUsedFer, String whereBoughtFer, String applicationTechniqueFer, String otherWhereBoughtFer) {
+    public Fertilizations(ProductionEvents productionEvents, CropsTypes cropsTypes, FertilizationsTypes fertilizationsTypes, Date dateFer, double amountProductUsedFer, String whereBoughtFer, String applicationTechniqueFer, String otherWhereBoughtFer, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.cropsTypes = cropsTypes;
        this.fertilizationsTypes = fertilizationsTypes;
@@ -56,6 +58,8 @@ public class Fertilizations  implements java.io.Serializable {
        this.whereBoughtFer = whereBoughtFer;
        this.applicationTechniqueFer = applicationTechniqueFer;
        this.otherWhereBoughtFer = otherWhereBoughtFer;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -139,6 +143,24 @@ public class Fertilizations  implements java.io.Serializable {
     
     public void setOtherWhereBoughtFer(String otherWhereBoughtFer) {
         this.otherWhereBoughtFer = otherWhereBoughtFer;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
     
 }

@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="preparations"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Preparations  implements java.io.Serializable {
 
@@ -35,6 +35,8 @@ public class Preparations  implements java.io.Serializable {
      private String otherPreparationTypePrep;
      private Integer passingsNumberPrep;
      private String otherResidualsManagementPrep;
+     private Boolean status;
+     private Integer createdBy;
 
     public Preparations() {
     }
@@ -44,7 +46,7 @@ public class Preparations  implements java.io.Serializable {
         this.productionEvents = productionEvents;
         this.datePrep = datePrep;
     }
-    public Preparations(ResidualsClasification residualsClasification, ProductionEvents productionEvents, PreparationsTypes preparationsTypes, Date datePrep, Double depthPrep, Boolean useHillsPrep, String otherPreparationTypePrep, Integer passingsNumberPrep, String otherResidualsManagementPrep) {
+    public Preparations(ResidualsClasification residualsClasification, ProductionEvents productionEvents, PreparationsTypes preparationsTypes, Date datePrep, Double depthPrep, Boolean useHillsPrep, String otherPreparationTypePrep, Integer passingsNumberPrep, String otherResidualsManagementPrep, Boolean status, Integer createdBy) {
        this.residualsClasification = residualsClasification;
        this.productionEvents = productionEvents;
        this.preparationsTypes = preparationsTypes;
@@ -54,6 +56,8 @@ public class Preparations  implements java.io.Serializable {
        this.otherPreparationTypePrep = otherPreparationTypePrep;
        this.passingsNumberPrep = passingsNumberPrep;
        this.otherResidualsManagementPrep = otherResidualsManagementPrep;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -146,6 +150,24 @@ public class Preparations  implements java.io.Serializable {
     
     public void setOtherResidualsManagementPrep(String otherResidualsManagementPrep) {
         this.otherResidualsManagementPrep = otherResidualsManagementPrep;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

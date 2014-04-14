@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="flowering"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="id_production_event_flo") 
 )
 public class Flowering  implements java.io.Serializable {
@@ -27,13 +27,22 @@ public class Flowering  implements java.io.Serializable {
      private Integer idFlo;
      private ProductionEvents productionEvents;
      private String monthsFlo;
+     private Boolean status;
+     private Integer createdBy;
 
     public Flowering() {
     }
 
+	
     public Flowering(ProductionEvents productionEvents, String monthsFlo) {
+        this.productionEvents = productionEvents;
+        this.monthsFlo = monthsFlo;
+    }
+    public Flowering(ProductionEvents productionEvents, String monthsFlo, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.monthsFlo = monthsFlo;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -63,6 +72,24 @@ public class Flowering  implements java.io.Serializable {
     
     public void setMonthsFlo(String monthsFlo) {
         this.monthsFlo = monthsFlo;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

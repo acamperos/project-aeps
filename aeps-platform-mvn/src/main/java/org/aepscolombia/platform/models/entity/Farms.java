@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.CascadeType;
@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="farms"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Farms  implements java.io.Serializable {
 
@@ -29,7 +27,7 @@ public class Farms  implements java.io.Serializable {
      private Integer idFar;
      private MeasureUnits measureUnits;
      private Municipalities municipalities;
-     private Distircts distircts;
+     private Districts districts;
      private String nameFar;
      private String addressFar;
      private Integer phoneFar;
@@ -40,7 +38,8 @@ public class Farms  implements java.io.Serializable {
      private Double areaFar;
      private String idProjectFar;
      private String nameCommuneFar;
-     private boolean statusFar;
+     private boolean status;
+     private Integer createdBy;
 
     public Farms() {
     }
@@ -49,17 +48,16 @@ public class Farms  implements java.io.Serializable {
         this.idFar = idFar;
     }
 	
-    public Farms(Municipalities municipalities, String nameFar, String addressFar, boolean georefFar, boolean statusFar) {
-        this.municipalities = municipalities;
+    public Farms(String nameFar, String addressFar, boolean georefFar, boolean status) {
         this.nameFar = nameFar;
         this.addressFar = addressFar;
         this.georefFar = georefFar;
-        this.statusFar = statusFar;
+        this.status = status;
     }
-    public Farms(MeasureUnits measureUnits, Municipalities municipalities, Distircts distircts, String nameFar, String addressFar, Integer phoneFar, boolean georefFar, Double latitudeFar, Double longitudeFar, Double altitudeFar, Double areaFar, String idProjectFar, String nameCommuneFar) {
+    public Farms(MeasureUnits measureUnits, Municipalities municipalities, Districts districts, String nameFar, String addressFar, Integer phoneFar, boolean georefFar, Double latitudeFar, Double longitudeFar, Double altitudeFar, Double areaFar, String idProjectFar, String nameCommuneFar, boolean status, Integer createdBy) {
        this.measureUnits = measureUnits;
        this.municipalities = municipalities;
-       this.distircts = distircts;
+       this.districts = districts;
        this.nameFar = nameFar;
        this.addressFar = addressFar;
        this.phoneFar = phoneFar;
@@ -70,7 +68,8 @@ public class Farms  implements java.io.Serializable {
        this.areaFar = areaFar;
        this.idProjectFar = idProjectFar;
        this.nameCommuneFar = nameCommuneFar;
-       this.statusFar = statusFar;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -93,7 +92,7 @@ public class Farms  implements java.io.Serializable {
         this.measureUnits = measureUnits;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_municipipality_far", nullable=false)
+    @JoinColumn(name="id_municipipality_far")
     public Municipalities getMunicipalities() {
         return this.municipalities;
     }
@@ -103,12 +102,12 @@ public class Farms  implements java.io.Serializable {
     }
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_district_far")
-    public Distircts getDistircts() {
-        return this.distircts;
+    public Districts getDistricts() {
+        return this.districts;
     }
     
-    public void setDistircts(Distircts distircts) {
-        this.distircts = distircts;
+    public void setDistricts(Districts districts) {
+        this.districts = districts;
     }
     
     @Column(name="name_far", nullable=false, length=45)
@@ -201,15 +200,24 @@ public class Farms  implements java.io.Serializable {
         this.nameCommuneFar = nameCommuneFar;
     }
     
-    @Column(name="status_far", nullable=false)
-    public boolean isStatusFar() {
-        return this.statusFar;
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
     }
     
-    public void setStatusFar(boolean statusFar) {
-        this.statusFar = statusFar;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
-
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+    
 }
 
 

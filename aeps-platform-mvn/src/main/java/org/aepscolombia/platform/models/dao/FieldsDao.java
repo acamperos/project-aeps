@@ -2,7 +2,9 @@ package org.aepscolombia.platform.models.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import org.aepscolombia.platform.models.entity.Entities;
@@ -19,7 +21,7 @@ import org.aepscolombia.platform.util.HibernateUtil;
 /**
  * Clase LotsDao
  *
- * Contiene los metodos para interactuar con la tabla Lots de la base de datos (BD)
+ * Contiene los metodos para interactuar con la tabla Fields de la base de datos (BD)
  *
  * @author Juan Felipe Rodriguez
  * @version 1.0
@@ -39,8 +41,8 @@ public class FieldsDao
         String sqlAdd = "";
         
         sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
-        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status_fie, lp.id_producer_fie_pro,";
-        sql += " e.name_ent, f.name_far";
+        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, lp.id_producer_fie_pro,";
+        sql += " e.name_ent, e.document_number_ent, e.document_type_ent, f.name_far";
         sql += " from fields l";
         sql += " inner join log_entities le on le.id_object_log_ent=l.id_fie and le.table_log_ent='fields' and le.action_type_log_ent='C'";   
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
@@ -49,7 +51,7 @@ public class FieldsDao
 //        sql += " left join fincas_productores fp on fp.id_finca_fin_pro=f.id_fin"; 
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where l.status_fie=1 and f.status_far=1";
+        sql += " where l.status=1 and f.status=1";
 //        sql += " lp.tipo_contrato_lot_pro!=1";
         // if ($identProductor!='' ) sql += "where";
 //        sql += sqlAdd;
@@ -78,7 +80,9 @@ public class FieldsDao
                 temp.put("status", data[8]);
                 temp.put("id_producer", data[9]);
                 temp.put("name_producer", data[10]);
-                temp.put("name_farm", data[11]);       
+                temp.put("no_doc_pro", data[11]);       
+                temp.put("type_doc_pro", data[12]);       
+                temp.put("name_farm", data[13]);       
                 result = (temp);
             }
             tx.commit();
@@ -140,7 +144,7 @@ public class FieldsDao
 //		sql += sqlAdd;
 //         ft.name_fie_typ
         sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
-        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status_fie, l.id_project_fie, e.name_ent, f.name_far, ft.name_fie_typ";
+        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, l.id_project_fie, e.name_ent, f.name_far, ft.name_fie_typ";
         sql += " from fields l";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
         sql += " inner join field_types ft on ft.id_fie_typ=l.contract_type_fie";
@@ -158,8 +162,8 @@ public class FieldsDao
 //        sql += " inner join fincas_productores fp on fp.id_finca_fin_pro=f.id_fin"; 
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where l.status_fie=1";
-//        sql += " where l.status_fie=1 and l.contract_type_fie!=1";
+        sql += " where l.status=1";
+//        sql += " where l.status=1 and l.contract_type_fie!=1";
         
 //        if (args.containsKey("idFarm")) {
 //            sqlAdd += " left join farms f on f.id_far=l.id_farm_fie";
@@ -172,6 +176,26 @@ public class FieldsDao
         
         if (args.containsKey("idEntUser")) {
             sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }
+        
+        
+        if (args.containsKey("search_field")) {
+            String valIdent = String.valueOf(args.get("search_field"));
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) { 
+                sql += " and ((e.name_ent like '%"+valIdent+"%')";
+                sql += " or (f.name_far like '%"+valIdent+"%')";
+                try {
+                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+//                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
+                } catch (IllegalArgumentException ex) {
+//                    Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                sql += " or (l.contract_type_fie='"+valIdent+"')";
+                sql += " or (l.altitude_fie like '%"+valIdent+"%')";
+                sql += " or (l.area_fie like '%"+valIdent+"%')";
+                sql += " or (l.latitude_fie like '%"+valIdent+"%')";
+                sql += " or (l.longitude_fie like '%"+valIdent+"%'))";
+            }
         }
         
         if (args.containsKey("name_producer_lot")) {
@@ -188,19 +212,19 @@ public class FieldsDao
         }
         if (args.containsKey("altitude_lot")) {
             String valIdent = String.valueOf(args.get("altitude_lot"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.altitude_fie="+args.get("altitude_lot");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.altitude_fie like '%"+args.get("altitude_lot")+"%'";
         }
         if (args.containsKey("area_lot")) {
             String valIdent = String.valueOf(args.get("area_lot"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.area_fie="+args.get("area_lot");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.area_fie like '%"+args.get("area_lot")+"%'";
         }        
         if (args.containsKey("latitude_property")) {
             String valIdent = String.valueOf(args.get("latitude_property"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.latitude_fie="+args.get("latitude_property");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.latitude_fie like '%"+args.get("latitude_property")+"%'";
         }        
         if (args.containsKey("length_property")) {
             String valIdent = String.valueOf(args.get("length_property"));
-            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.longitude_fie="+args.get("length_property");
+            if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and l.longitude_fie like '%"+args.get("length_property")+"%'";
         }
         // if ($identProductor!='' ) sql += "where";
         sql += sqlAdd;
@@ -304,7 +328,7 @@ public class FieldsDao
         sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro";
 //        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro, fp.contract_type_fie_pro";
         
-//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status_usr";
+//        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
         sql += " from fields_producers fp";
         sql += " where fp.id_field_fie_pro="+idField;
         sql += " and fp.id_producer_fie_pro="+idProducer;

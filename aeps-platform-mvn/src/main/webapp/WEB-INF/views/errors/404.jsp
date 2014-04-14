@@ -25,7 +25,7 @@
                         <p>La pagina o el recurso solicitado no se encuentra. Por favor comuniquese con el administrador respectivo o intente mas tarde. </p>
 <!--                            Use your browsers <b>Back</b> button to navigate to the page you have prevously come from</p>
                         <p><b>Or you could just press this neat little button:</b></p>-->
-                        <a href="<%= request.getContextPath() %>/initial.action" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Llevar al inicio</a>
+                        <a href="<%= request.getContextPath() %>/initial.action" class="btn btn-large btn-initial"><i class="icon-home icon-white"></i> Llevar al inicio</a>
                     </div>
                 </div>
             </div>

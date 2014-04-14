@@ -390,7 +390,19 @@
             <result name = "states" type="json"></result>
         </action>     
     </package>
-<!--    <package name="crop" extends="principal,struts-default,json-default" namespace="/crop">
+    <package name="crop" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="comboGetCol" method="comboGetListGenByCol" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="comboGetGrow" method="comboGetListGenByGrowing" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
         <action name="listCrop" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>
@@ -398,6 +410,11 @@
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/crops/list-crops.jsp</result>
         </action>
+        <action name="showDataCrop" method="showDataCrop" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/data-infocrop.jsp</result>
+        </action>        
         <action name="dataCrop" method="view" class="org.aepscolombia.platform.controllers.ActionCrop">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>
@@ -429,5 +446,5 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>     
-    </package>-->
+    </package>
 </struts>

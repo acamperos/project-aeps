@@ -32,7 +32,7 @@ public class HibernateUtil {
     }
 
     // Database configuration
-    public static String url = "jdbc:mysql://localhost:3306/madr_bd11";
+    public static String url = "jdbc:mysql://localhost:3306/madr_bd13";
     public static String dbdriver = "com.mysql.jdbc.Driver";
     public static String username = "root";
     public static String password = "nbuser";

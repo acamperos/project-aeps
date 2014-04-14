@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="communes"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="code_com") 
 )
 public class Communes  implements java.io.Serializable {
@@ -26,15 +26,26 @@ public class Communes  implements java.io.Serializable {
      private Municipalities municipalities;
      private String codeCom;
      private String nameCom;
+     private Boolean status;
+     private Integer createdBy;
 
     public Communes() {
     }
 
+	
     public Communes(int idCom, Municipalities municipalities, String codeCom, String nameCom) {
+        this.idCom = idCom;
+        this.municipalities = municipalities;
+        this.codeCom = codeCom;
+        this.nameCom = nameCom;
+    }
+    public Communes(int idCom, Municipalities municipalities, String codeCom, String nameCom, Boolean status, Integer createdBy) {
        this.idCom = idCom;
        this.municipalities = municipalities;
        this.codeCom = codeCom;
        this.nameCom = nameCom;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id 
@@ -73,6 +84,24 @@ public class Communes  implements java.io.Serializable {
     
     public void setNameCom(String nameCom) {
         this.nameCom = nameCom;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

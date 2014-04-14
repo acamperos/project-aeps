@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="land_uses_markets"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class LandUsesMarkets  implements java.io.Serializable {
 
@@ -27,15 +27,19 @@ public class LandUsesMarkets  implements java.io.Serializable {
      private Markets markets;
      private Boolean cropProportionLanUseMar;
      private String harvestMonthsLanUseMar;
+     private Boolean status;
+     private Integer createdBy;
 
     public LandUsesMarkets() {
     }
 
-    public LandUsesMarkets(CropsTypes cropsTypes, Markets markets, Boolean cropProportionLanUseMar, String harvestMonthsLanUseMar) {
+    public LandUsesMarkets(CropsTypes cropsTypes, Markets markets, Boolean cropProportionLanUseMar, String harvestMonthsLanUseMar, Boolean status, Integer createdBy) {
        this.cropsTypes = cropsTypes;
        this.markets = markets;
        this.cropProportionLanUseMar = cropProportionLanUseMar;
        this.harvestMonthsLanUseMar = harvestMonthsLanUseMar;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -83,6 +87,24 @@ public class LandUsesMarkets  implements java.io.Serializable {
     
     public void setHarvestMonthsLanUseMar(String harvestMonthsLanUseMar) {
         this.harvestMonthsLanUseMar = harvestMonthsLanUseMar;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

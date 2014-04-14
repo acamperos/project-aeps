@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.CascadeType;
@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="municipalities"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="code_mun") 
 )
 public class Municipalities  implements java.io.Serializable {
@@ -33,11 +33,10 @@ public class Municipalities  implements java.io.Serializable {
 
     public Municipalities() {
     }
-    
+
     public Municipalities(Integer idMun) {
         this.idMun = idMun;
     }
-
 	
     public Municipalities(Departments departments, String codeMun, String nameMun) {
         this.departments = departments;

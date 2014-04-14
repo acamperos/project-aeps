@@ -43,9 +43,10 @@
         </div>
         <script>
             var actionName   = '<%= session.getAttribute("action") %>';
+            var actionUrl    = '<%= session.getAttribute("actionUrl") %>';
             activeOption('ulOptionsMenu', actionName+'Cls');
             if (actionName!='' && actionName!='dashboard') {
-                showInfoPage(''+actionName+'.action', 'divBodyLayout');                       
+                showInfoPage(''+actionUrl, 'divBodyLayout');                       
             }
         </script>
     </body>

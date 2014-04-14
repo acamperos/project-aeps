@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,17 +17,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="quality"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Quality  implements java.io.Serializable {
 
 
      private Integer idQua;
-     private Production production;
+     private Harvests harvests;
      private Double extraQua;
      private Double firstQua;
      private Double secondQua;
-     private Double humidityPercentageQua;
      private Double otherQua;
      private Double dryMatterPercentageQua;
      private Double starchContentQua;
@@ -42,20 +41,21 @@ public class Quality  implements java.io.Serializable {
      private Double percentageLeavesDryMatterCassavaQua;
      private Double percentageRottenRootCassavaQua;
      private Integer plantsNumberFieldCassavaQua;
+     private Boolean status;
+     private Integer createdBy;
 
     public Quality() {
     }
 
 	
-    public Quality(Production production) {
-        this.production = production;
+    public Quality(Harvests harvests) {
+        this.harvests = harvests;
     }
-    public Quality(Production production, Double extraQua, Double firstQua, Double secondQua, Double humidityPercentageQua, Double otherQua, Double dryMatterPercentageQua, Double starchContentQua, Double plantHeightCassavaQua, Double firstBranchHeightCassavaQua, Double freshWeightSeedsCassavaQua, Double freshWeightStemsCassavaQua, Double freshWeightLeavesCassavaQua, Double percentageRootsDryMatterCassavaQua, Double percentageDryMatterSeedsCassavaQua, Double percentageStemsDryMatterCassavaQua, Double percentageLeavesDryMatterCassavaQua, Double percentageRottenRootCassavaQua, Integer plantsNumberFieldCassavaQua) {
-       this.production = production;
+    public Quality(Harvests harvests, Double extraQua, Double firstQua, Double secondQua, Double otherQua, Double dryMatterPercentageQua, Double starchContentQua, Double plantHeightCassavaQua, Double firstBranchHeightCassavaQua, Double freshWeightSeedsCassavaQua, Double freshWeightStemsCassavaQua, Double freshWeightLeavesCassavaQua, Double percentageRootsDryMatterCassavaQua, Double percentageDryMatterSeedsCassavaQua, Double percentageStemsDryMatterCassavaQua, Double percentageLeavesDryMatterCassavaQua, Double percentageRottenRootCassavaQua, Integer plantsNumberFieldCassavaQua, Boolean status, Integer createdBy) {
+       this.harvests = harvests;
        this.extraQua = extraQua;
        this.firstQua = firstQua;
        this.secondQua = secondQua;
-       this.humidityPercentageQua = humidityPercentageQua;
        this.otherQua = otherQua;
        this.dryMatterPercentageQua = dryMatterPercentageQua;
        this.starchContentQua = starchContentQua;
@@ -70,6 +70,8 @@ public class Quality  implements java.io.Serializable {
        this.percentageLeavesDryMatterCassavaQua = percentageLeavesDryMatterCassavaQua;
        this.percentageRottenRootCassavaQua = percentageRottenRootCassavaQua;
        this.plantsNumberFieldCassavaQua = plantsNumberFieldCassavaQua;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -83,13 +85,13 @@ public class Quality  implements java.io.Serializable {
         this.idQua = idQua;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_production_qua", nullable=false)
-    public Production getProduction() {
-        return this.production;
+    @JoinColumn(name="id_harvest_qua", nullable=false)
+    public Harvests getHarvests() {
+        return this.harvests;
     }
     
-    public void setProduction(Production production) {
-        this.production = production;
+    public void setHarvests(Harvests harvests) {
+        this.harvests = harvests;
     }
     
     @Column(name="extra_qua", precision=22, scale=0)
@@ -117,15 +119,6 @@ public class Quality  implements java.io.Serializable {
     
     public void setSecondQua(Double secondQua) {
         this.secondQua = secondQua;
-    }
-    
-    @Column(name="humidity_percentage_qua", precision=22, scale=0)
-    public Double getHumidityPercentageQua() {
-        return this.humidityPercentageQua;
-    }
-    
-    public void setHumidityPercentageQua(Double humidityPercentageQua) {
-        this.humidityPercentageQua = humidityPercentageQua;
     }
     
     @Column(name="other_qua", precision=22, scale=0)
@@ -252,6 +245,24 @@ public class Quality  implements java.io.Serializable {
     
     public void setPlantsNumberFieldCassavaQua(Integer plantsNumberFieldCassavaQua) {
         this.plantsNumberFieldCassavaQua = plantsNumberFieldCassavaQua;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

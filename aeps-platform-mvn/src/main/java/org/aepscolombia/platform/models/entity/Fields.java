@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,12 +18,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="fields"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Fields  implements java.io.Serializable {
 
 
      private Integer idFie;
+     private FieldTypes fieldTypes;
      private Farms farms;
      private String nameFie;
      private double altitudeFie;
@@ -31,11 +32,11 @@ public class Fields  implements java.io.Serializable {
      private double longitudeFie;
      private double areaFie;
      private String measureUnitFie;
-     private boolean pestsControlFie;
-     private boolean diseasesControlFie;
-     private boolean statusFie;
+     private Boolean pestsControlFie;
+     private Boolean diseasesControlFie;
+     private boolean status;
      private String idProjectFie;
-     private FieldTypes fieldTypes;
+     private Integer createdBy;
 
     public Fields() {
     }
@@ -44,19 +45,16 @@ public class Fields  implements java.io.Serializable {
         this.idFie=idFie;
     }
 	
-    public Fields(String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie, FieldTypes fieldTypes) {
+    public Fields(String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, boolean status) {
         this.nameFie = nameFie;
         this.altitudeFie = altitudeFie;
         this.latitudeFie = latitudeFie;
         this.longitudeFie = longitudeFie;
         this.areaFie = areaFie;
-        this.measureUnitFie = measureUnitFie;
-        this.pestsControlFie = pestsControlFie;
-        this.diseasesControlFie = diseasesControlFie;
-        this.statusFie = statusFie;
-        this.fieldTypes = fieldTypes;
+        this.status = status;
     }
-    public Fields(Farms farms, String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, boolean pestsControlFie, boolean diseasesControlFie, boolean statusFie, String idProjectFie, FieldTypes fieldTypes) {
+    public Fields(FieldTypes fieldTypes, Farms farms, String nameFie, double altitudeFie, double latitudeFie, double longitudeFie, double areaFie, String measureUnitFie, Boolean pestsControlFie, Boolean diseasesControlFie, boolean status, String idProjectFie, Integer createdBy) {
+       this.fieldTypes = fieldTypes;
        this.farms = farms;
        this.nameFie = nameFie;
        this.altitudeFie = altitudeFie;
@@ -66,9 +64,9 @@ public class Fields  implements java.io.Serializable {
        this.measureUnitFie = measureUnitFie;
        this.pestsControlFie = pestsControlFie;
        this.diseasesControlFie = diseasesControlFie;
-       this.statusFie = statusFie;
+       this.status = status;
        this.idProjectFie = idProjectFie;
-       this.fieldTypes = fieldTypes;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -80,6 +78,15 @@ public class Fields  implements java.io.Serializable {
     
     public void setIdFie(Integer idFie) {
         this.idFie = idFie;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="contract_type_fie")
+    public FieldTypes getFieldTypes() {
+        return this.fieldTypes;
+    }
+    
+    public void setFieldTypes(FieldTypes fieldTypes) {
+        this.fieldTypes = fieldTypes;
     }
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_farm_fie")
@@ -136,7 +143,7 @@ public class Fields  implements java.io.Serializable {
         this.areaFie = areaFie;
     }
     
-    @Column(name="measure_unit_fie", nullable=false, length=10)
+    @Column(name="measure_unit_fie", length=10)
     public String getMeasureUnitFie() {
         return this.measureUnitFie;
     }
@@ -145,31 +152,31 @@ public class Fields  implements java.io.Serializable {
         this.measureUnitFie = measureUnitFie;
     }
     
-    @Column(name="pests_control_fie", nullable=false)
-    public boolean isPestsControlFie() {
+    @Column(name="pests_control_fie")
+    public Boolean getPestsControlFie() {
         return this.pestsControlFie;
     }
     
-    public void setPestsControlFie(boolean pestsControlFie) {
+    public void setPestsControlFie(Boolean pestsControlFie) {
         this.pestsControlFie = pestsControlFie;
     }
     
-    @Column(name="diseases_control_fie", nullable=false)
-    public boolean isDiseasesControlFie() {
+    @Column(name="diseases_control_fie")
+    public Boolean getDiseasesControlFie() {
         return this.diseasesControlFie;
     }
     
-    public void setDiseasesControlFie(boolean diseasesControlFie) {
+    public void setDiseasesControlFie(Boolean diseasesControlFie) {
         this.diseasesControlFie = diseasesControlFie;
     }
     
-    @Column(name="status_fie", nullable=false)
-    public boolean isStatusFie() {
-        return this.statusFie;
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
     }
     
-    public void setStatusFie(boolean statusFie) {
-        this.statusFie = statusFie;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
     
     @Column(name="id_project_fie", length=4)
@@ -181,14 +188,13 @@ public class Fields  implements java.io.Serializable {
         this.idProjectFie = idProjectFie;
     }
     
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="contract_type_fie", nullable=false)
-    public FieldTypes getFieldTypes() {
-        return this.fieldTypes;
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
     }
     
-    public void setFieldTypes(FieldTypes fieldTypes) {
-        this.fieldTypes = fieldTypes;
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.CascadeType;
@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,22 +19,30 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="producers"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Producers  implements java.io.Serializable {
 
 
      private Integer idPro;
      private Entities entities;
-     private boolean statusPro;
+     private String addressPro;
+     private boolean status;
+     private Integer createdBy;
 
     public Producers() {
     }
 
 	
-    public Producers(Entities entities, boolean statusPro) {
+    public Producers(Entities entities, boolean status) {
         this.entities = entities;
-        this.statusPro = statusPro;
+        this.status = status;
+    }
+    public Producers(Entities entities, String addressPro, boolean status, Integer createdBy) {
+       this.entities = entities;
+       this.addressPro = addressPro;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -59,13 +65,31 @@ public class Producers  implements java.io.Serializable {
         this.entities = entities;
     }
     
-    @Column(name="status_pro", nullable=false)
-    public boolean isStatusPro() {
-        return this.statusPro;
+    @Column(name="address_pro", length=200)
+    public String getAddressPro() {
+        return this.addressPro;
     }
     
-    public void setStatusPro(boolean statusPro) {
-        this.statusPro = statusPro;
+    public void setAddressPro(String addressPro) {
+        this.addressPro = addressPro;
+    }
+    
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="markets"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Markets  implements java.io.Serializable {
 
@@ -40,6 +38,8 @@ public class Markets  implements java.io.Serializable {
      private String cropsHarvestMonthsMar;
      private Integer yearsGrowingCassavaMar;
      private Boolean increaseCroppedAreaMar;
+     private Boolean status;
+     private Integer createdBy;
 
     public Markets() {
     }
@@ -51,7 +51,7 @@ public class Markets  implements java.io.Serializable {
         this.sellToMar = sellToMar;
         this.pakageTypeCassavaMar = pakageTypeCassavaMar;
     }
-    public Markets(MarketsReasons marketsReasons, ProductionEvents productionEvents, String sellInMar, String sellToMar, String toFactoryMar, Boolean clasifyCassavaMar, String pakageTypeCassavaMar, Boolean cassavaMainProductMar, Boolean intercroppingMar, String additionalCropsMar, Boolean proporcionOtrosCultivosMar, String cropsHarvestMonthsMar, Integer yearsGrowingCassavaMar, Boolean increaseCroppedAreaMar) {
+    public Markets(MarketsReasons marketsReasons, ProductionEvents productionEvents, String sellInMar, String sellToMar, String toFactoryMar, Boolean clasifyCassavaMar, String pakageTypeCassavaMar, Boolean cassavaMainProductMar, Boolean intercroppingMar, String additionalCropsMar, Boolean proporcionOtrosCultivosMar, String cropsHarvestMonthsMar, Integer yearsGrowingCassavaMar, Boolean increaseCroppedAreaMar, Boolean status, Integer createdBy) {
        this.marketsReasons = marketsReasons;
        this.productionEvents = productionEvents;
        this.sellInMar = sellInMar;
@@ -66,6 +66,8 @@ public class Markets  implements java.io.Serializable {
        this.cropsHarvestMonthsMar = cropsHarvestMonthsMar;
        this.yearsGrowingCassavaMar = yearsGrowingCassavaMar;
        this.increaseCroppedAreaMar = increaseCroppedAreaMar;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -203,6 +205,24 @@ public class Markets  implements java.io.Serializable {
     
     public void setIncreaseCroppedAreaMar(Boolean increaseCroppedAreaMar) {
         this.increaseCroppedAreaMar = increaseCroppedAreaMar;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

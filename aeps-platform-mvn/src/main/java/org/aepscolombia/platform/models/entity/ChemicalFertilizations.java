@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="chemical_fertilizations"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class ChemicalFertilizations  implements java.io.Serializable {
 
@@ -26,6 +26,8 @@ public class ChemicalFertilizations  implements java.io.Serializable {
      private ChemicalFertilizers chemicalFertilizers;
      private Fertilizations fertilizations;
      private String otherProductCheFer;
+     private Boolean status;
+     private Integer createdBy;
 
     public ChemicalFertilizations() {
     }
@@ -34,10 +36,12 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     public ChemicalFertilizations(Fertilizations fertilizations) {
         this.fertilizations = fertilizations;
     }
-    public ChemicalFertilizations(ChemicalFertilizers chemicalFertilizers, Fertilizations fertilizations, String otherProductCheFer) {
+    public ChemicalFertilizations(ChemicalFertilizers chemicalFertilizers, Fertilizations fertilizations, String otherProductCheFer, Boolean status, Integer createdBy) {
        this.chemicalFertilizers = chemicalFertilizers;
        this.fertilizations = fertilizations;
        this.otherProductCheFer = otherProductCheFer;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -76,6 +80,24 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     
     public void setOtherProductCheFer(String otherProductCheFer) {
         this.otherProductCheFer = otherProductCheFer;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

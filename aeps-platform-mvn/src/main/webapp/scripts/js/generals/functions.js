@@ -73,10 +73,12 @@ function showOtherElement(valSel, divShow) {
 }
 
 function showProductUse(valSel, divShow) {
-    if (valSel == true) {
+    if (valSel=='true') {
         $("#" + divShow).show();
+        $("#" + divShow).removeClass("hide");
     } else {
         $("#" + divShow).hide();
+        $("#" + divShow).addClass("hide");
     }
 }
 
@@ -287,10 +289,10 @@ function listInfo(url, valName, valId, divShow, divHide) {
 }
 
 function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, divHide) {
-    var valAdd = $("#" + valData).val();
-    if (valAdd == "") {
-        alert("Debe tener un productor seleccionado previamente");
-    } else {
+//    var valAdd = $("#" + valData).val();
+//    if (valAdd == "") {
+//        alert("Debe tener un productor seleccionado previamente");
+//    } else {
         $.ajax({
             type: "POST",
             url: url,
@@ -316,7 +318,7 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
                 $('#'+divShow).html(information);
             }
         });
-    }
+//    }
 }
 
 
@@ -1042,7 +1044,9 @@ function validationForm(form, errors)
                 controlGroup.addClass('error');
                 controls = controlGroup.find("div.controls");
                 if (controls) {
-                    controls.append("<br><span class='help-inline s2_help_inline'>" + value[0] + "</span>");
+                    if (value[0]!="") {
+                        controls.append("<span class='help-inline s2_help_inline' style='display: block; margin-top:5px; font-size:10px;'>" + value[0] + "</span>");
+                    }
                 }
             }
         });
@@ -1516,9 +1520,10 @@ function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
     var valNumSeconds = $('#'+valSeconds).val();
     
     var latLot = parseFloat((valNumMinutes/60) + (valNumSeconds/3600));
-//    if (latLot==0) latLot = "";
+//    alert(latLot)
+    if (latLot===0) latLot = ".0";
     latLot = (valNumDegrees<0) ? ((Math.abs(valNumDegrees))+latLot)*-1 : (valNumDegrees+latLot);
-//    latLot = ""+latLot;
+    latLot = ""+latLot;
     latLot = parsePointSeparated(latLot);
 //    alert(latLot)
     $('#'+valDec).val(latLot);   

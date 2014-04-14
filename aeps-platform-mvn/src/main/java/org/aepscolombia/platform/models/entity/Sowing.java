@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="sowing"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Sowing  implements java.io.Serializable {
 
@@ -44,6 +44,8 @@ public class Sowing  implements java.io.Serializable {
      private String freeSeedOriginSow;
      private String otherGenotypeSow;
      private String otherChemicalUsedSow;
+     private Boolean status;
+     private Integer createdBy;
 
     public Sowing() {
     }
@@ -55,7 +57,7 @@ public class Sowing  implements java.io.Serializable {
         this.dateSow = dateSow;
         this.treatedSeedsSow = treatedSeedsSow;
     }
-    public Sowing(Genotypes genotypes, DoseUnits doseUnits, TreatmentTypes treatmentTypes, ChemicalsSowing chemicalsSowing, ProductionEvents productionEvents, SowingTypes sowingTypes, GenotypesSowing genotypesSowing, SeedsOrigins seedsOrigins, Date dateSow, Integer seedsNumberSow, boolean treatedSeedsSow, String reasonTreatmentSow, Double seedTreatmentDosisSow, Double furrowsDistanceSow, Double sitesDistanceSow, String freeSeedOriginSow, String otherGenotypeSow, String otherChemicalUsedSow) {
+    public Sowing(Genotypes genotypes, DoseUnits doseUnits, TreatmentTypes treatmentTypes, ChemicalsSowing chemicalsSowing, ProductionEvents productionEvents, SowingTypes sowingTypes, GenotypesSowing genotypesSowing, SeedsOrigins seedsOrigins, Date dateSow, Integer seedsNumberSow, boolean treatedSeedsSow, String reasonTreatmentSow, Double seedTreatmentDosisSow, Double furrowsDistanceSow, Double sitesDistanceSow, String freeSeedOriginSow, String otherGenotypeSow, String otherChemicalUsedSow, Boolean status, Integer createdBy) {
        this.genotypes = genotypes;
        this.doseUnits = doseUnits;
        this.treatmentTypes = treatmentTypes;
@@ -74,6 +76,8 @@ public class Sowing  implements java.io.Serializable {
        this.freeSeedOriginSow = freeSeedOriginSow;
        this.otherGenotypeSow = otherGenotypeSow;
        this.otherChemicalUsedSow = otherChemicalUsedSow;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -247,6 +251,24 @@ public class Sowing  implements java.io.Serializable {
     
     public void setOtherChemicalUsedSow(String otherChemicalUsedSow) {
         this.otherChemicalUsedSow = otherChemicalUsedSow;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

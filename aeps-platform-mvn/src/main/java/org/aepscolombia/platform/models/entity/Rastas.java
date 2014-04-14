@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="rastas"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Rastas  implements java.io.Serializable {
 
@@ -78,23 +78,23 @@ public class Rastas  implements java.io.Serializable {
      private Boolean salinidadRas;
      private Boolean sodicidadRas;
      private String idProyectoRas;
-     private boolean estadoRas;
+     private boolean status;
+     private Integer createdBy;
 
     public Rastas() {
     }
-    
+
     public Rastas(Integer idRas) {
         this.idRas = idRas;
     }
 	
-    public Rastas(Fields fields, Date fechaRas, int numeroCajuelaRas, boolean estadoRas) {
+    public Rastas(Fields fields, Date fechaRas, int numeroCajuelaRas, boolean status) {
         this.fields = fields;
         this.fechaRas = fechaRas;
         this.numeroCajuelaRas = numeroCajuelaRas;
-        this.estadoRas = estadoRas;
+        this.status = status;
     }
-    
-    public Rastas(Fields fields, Date fechaRas, int numeroCajuelaRas, Integer altitudRas, Double latitudRas, Double longitudRas, Double pendienteTerrenoRas, String terrenoCircundanteRas, String posicionPerfilRas, Integer numeroCapasRas, Double phRas, String carbonatosRas, Double profundidadCarbonatosRas, String piedrasSuperficieRas, String rocasSuperficieRas, String piedrasPerfilRas, String rocasPerfilRas, Boolean horizontePedrogosoRocosoRas, Double profundidadHorizontePedregosoRas, Double profundidadPrimerasPiedrasRas, Double espesorHorizontePedregosoRas, Boolean capasEndurecidasRas, Double prufundidadCapasRas, String espesorCapaEndurecidaRas, Boolean moteadosRas, Double profundidadMoteadosRas, Boolean moteadosMas70cmRas, String estructuraRas, Boolean erosionRas, Boolean mohoRas, String costrasDurasRas, String exposicionSolRas, String costrasBlancasRas, String costrasNegrasRas, Boolean regionSecaRas, Boolean raicesVivasRas, Double profundidadRaicesRas, String plantasPequenasRas, Boolean hojarascaRas, Boolean sueloNegroBlandoRas, Boolean cuchilloPrimerHorizonteRas, Boolean cercaRiosQuebradasRas, String recubrimientoVegetalRas, String materiaOrganicaRas, Double profundidadEfectivaRas, String drenajeInternoRas, String dranajeExternoRas, Boolean salinidadRas, Boolean sodicidadRas, String idProyectoRas, boolean estadoRas) {
+    public Rastas(Fields fields, Date fechaRas, int numeroCajuelaRas, Integer altitudRas, Double latitudRas, Double longitudRas, Double pendienteTerrenoRas, String terrenoCircundanteRas, String posicionPerfilRas, Integer numeroCapasRas, Double phRas, String carbonatosRas, Double profundidadCarbonatosRas, String piedrasSuperficieRas, String rocasSuperficieRas, String piedrasPerfilRas, String rocasPerfilRas, Boolean horizontePedrogosoRocosoRas, Double profundidadHorizontePedregosoRas, Double profundidadPrimerasPiedrasRas, Double espesorHorizontePedregosoRas, Boolean capasEndurecidasRas, Double prufundidadCapasRas, String espesorCapaEndurecidaRas, Boolean moteadosRas, Double profundidadMoteadosRas, Boolean moteadosMas70cmRas, String estructuraRas, Boolean erosionRas, Boolean mohoRas, String costrasDurasRas, String exposicionSolRas, String costrasBlancasRas, String costrasNegrasRas, Boolean regionSecaRas, Boolean raicesVivasRas, Double profundidadRaicesRas, String plantasPequenasRas, Boolean hojarascaRas, Boolean sueloNegroBlandoRas, Boolean cuchilloPrimerHorizonteRas, Boolean cercaRiosQuebradasRas, String recubrimientoVegetalRas, String materiaOrganicaRas, Double profundidadEfectivaRas, String drenajeInternoRas, String dranajeExternoRas, Boolean salinidadRas, Boolean sodicidadRas, String idProyectoRas, boolean status, Integer createdBy) {
        this.fields = fields;
        this.fechaRas = fechaRas;
        this.numeroCajuelaRas = numeroCajuelaRas;
@@ -145,10 +145,11 @@ public class Rastas  implements java.io.Serializable {
        this.salinidadRas = salinidadRas;
        this.sodicidadRas = sodicidadRas;
        this.idProyectoRas = idProyectoRas;
-       this.estadoRas = estadoRas;
+       this.status = status;
+       this.createdBy = createdBy;
     }
-    
-    public Rastas(Date fechaRas, int numeroCajuelaRas, Integer altitudRas, Double latitudRas, Double longitudRas, Double pendienteTerrenoRas, String terrenoCircundanteRas, String posicionPerfilRas, Integer numeroCapasRas, Double phRas, String carbonatosRas, Double profundidadCarbonatosRas, String piedrasSuperficieRas, String rocasSuperficieRas, String piedrasPerfilRas, String rocasPerfilRas, Boolean horizontePedrogosoRocosoRas, Double profundidadHorizontePedregosoRas, Double profundidadPrimerasPiedrasRas, Double espesorHorizontePedregosoRas, Boolean capasEndurecidasRas, Double prufundidadCapasRas, String espesorCapaEndurecidaRas, Boolean moteadosRas, Double profundidadMoteadosRas, Boolean moteadosMas70cmRas, String estructuraRas, Boolean erosionRas, Boolean mohoRas, String costrasDurasRas, String exposicionSolRas, String costrasBlancasRas, String costrasNegrasRas, Boolean regionSecaRas, Boolean raicesVivasRas, Double profundidadRaicesRas, String plantasPequenasRas, Boolean hojarascaRas, Boolean sueloNegroBlandoRas, Boolean cuchilloPrimerHorizonteRas, Boolean cercaRiosQuebradasRas, String recubrimientoVegetalRas, String materiaOrganicaRas, Double profundidadEfectivaRas, String drenajeInternoRas, String dranajeExternoRas, Boolean salinidadRas, Boolean sodicidadRas, String idProyectoRas, boolean estadoRas) {
+   
+    public Rastas(Date fechaRas, int numeroCajuelaRas, Integer altitudRas, Double latitudRas, Double longitudRas, Double pendienteTerrenoRas, String terrenoCircundanteRas, String posicionPerfilRas, Integer numeroCapasRas, Double phRas, String carbonatosRas, Double profundidadCarbonatosRas, String piedrasSuperficieRas, String rocasSuperficieRas, String piedrasPerfilRas, String rocasPerfilRas, Boolean horizontePedrogosoRocosoRas, Double profundidadHorizontePedregosoRas, Double profundidadPrimerasPiedrasRas, Double espesorHorizontePedregosoRas, Boolean capasEndurecidasRas, Double prufundidadCapasRas, String espesorCapaEndurecidaRas, Boolean moteadosRas, Double profundidadMoteadosRas, Boolean moteadosMas70cmRas, String estructuraRas, Boolean erosionRas, Boolean mohoRas, String costrasDurasRas, String exposicionSolRas, String costrasBlancasRas, String costrasNegrasRas, Boolean regionSecaRas, Boolean raicesVivasRas, Double profundidadRaicesRas, String plantasPequenasRas, Boolean hojarascaRas, Boolean sueloNegroBlandoRas, Boolean cuchilloPrimerHorizonteRas, Boolean cercaRiosQuebradasRas, String recubrimientoVegetalRas, String materiaOrganicaRas, Double profundidadEfectivaRas, String drenajeInternoRas, String dranajeExternoRas, Boolean salinidadRas, Boolean sodicidadRas, String idProyectoRas, boolean status) {
        this.fechaRas = fechaRas;
        this.numeroCajuelaRas = numeroCajuelaRas;
        this.altitudRas = altitudRas;
@@ -198,7 +199,7 @@ public class Rastas  implements java.io.Serializable {
        this.salinidadRas = salinidadRas;
        this.sodicidadRas = sodicidadRas;
        this.idProyectoRas = idProyectoRas;
-       this.estadoRas = estadoRas;
+       this.status = status;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -662,13 +663,22 @@ public class Rastas  implements java.io.Serializable {
         this.idProyectoRas = idProyectoRas;
     }
     
-    @Column(name="estado_ras", nullable=false)
-    public boolean isEstadoRas() {
-        return this.estadoRas;
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
     }
     
-    public void setEstadoRas(boolean estadoRas) {
-        this.estadoRas = estadoRas;
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 }

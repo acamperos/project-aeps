@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="physiological_monitoring"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class PhysiologicalMonitoring  implements java.io.Serializable {
 
@@ -31,16 +31,20 @@ public class PhysiologicalMonitoring  implements java.io.Serializable {
      private Date emergencePhyMon;
      private Integer daysPopulationMonFis;
      private Date floweringDatePhyMon;
+     private Boolean status;
+     private Integer createdBy;
 
     public PhysiologicalMonitoring() {
     }
 
-    public PhysiologicalMonitoring(ProductionEvents productionEvents, Monitoring monitoring, Date emergencePhyMon, Integer daysPopulationMonFis, Date floweringDatePhyMon) {
+    public PhysiologicalMonitoring(ProductionEvents productionEvents, Monitoring monitoring, Date emergencePhyMon, Integer daysPopulationMonFis, Date floweringDatePhyMon, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.monitoring = monitoring;
        this.emergencePhyMon = emergencePhyMon;
        this.daysPopulationMonFis = daysPopulationMonFis;
        this.floweringDatePhyMon = floweringDatePhyMon;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -97,6 +101,24 @@ public class PhysiologicalMonitoring  implements java.io.Serializable {
     
     public void setFloweringDatePhyMon(Date floweringDatePhyMon) {
         this.floweringDatePhyMon = floweringDatePhyMon;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

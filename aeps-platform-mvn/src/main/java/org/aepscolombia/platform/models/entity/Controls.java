@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="controls"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Controls  implements java.io.Serializable {
 
@@ -44,6 +44,8 @@ public class Controls  implements java.io.Serializable {
      private String otherOrganicProductCon;
      private Boolean cleaningsCon;
      private Integer cleaningsFrequenceCon;
+     private Boolean status;
+     private Integer createdBy;
 
     public Controls() {
     }
@@ -53,7 +55,7 @@ public class Controls  implements java.io.Serializable {
         this.controlsTypes = controlsTypes;
         this.productionEvents = productionEvents;
     }
-    public Controls(Diseases diseases, Weeds weeds, ControlsTypes controlsTypes, ChemicalsControls chemicalsControls, ProductionEvents productionEvents, TargetsTypes targetsTypes, OrganicControls organicControls, DoseUnits doseUnits, Pests pests, Date dateCon, Double dosisCon, String otherPestCon, String otherDiseaseCon, String otroWeedCon, String otherChemicalProductCon, String otherOrganicProductCon, Boolean cleaningsCon, Integer cleaningsFrequenceCon) {
+    public Controls(Diseases diseases, Weeds weeds, ControlsTypes controlsTypes, ChemicalsControls chemicalsControls, ProductionEvents productionEvents, TargetsTypes targetsTypes, OrganicControls organicControls, DoseUnits doseUnits, Pests pests, Date dateCon, Double dosisCon, String otherPestCon, String otherDiseaseCon, String otroWeedCon, String otherChemicalProductCon, String otherOrganicProductCon, Boolean cleaningsCon, Integer cleaningsFrequenceCon, Boolean status, Integer createdBy) {
        this.diseases = diseases;
        this.weeds = weeds;
        this.controlsTypes = controlsTypes;
@@ -72,6 +74,8 @@ public class Controls  implements java.io.Serializable {
        this.otherOrganicProductCon = otherOrganicProductCon;
        this.cleaningsCon = cleaningsCon;
        this.cleaningsFrequenceCon = cleaningsFrequenceCon;
+       this.status = status;
+       this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -245,6 +249,24 @@ public class Controls  implements java.io.Serializable {
     
     public void setCleaningsFrequenceCon(Integer cleaningsFrequenceCon) {
         this.cleaningsFrequenceCon = cleaningsFrequenceCon;
+    }
+    
+    @Column(name="status")
+    public Boolean getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
 

@@ -1,5 +1,5 @@
 package org.aepscolombia.platform.models.entity;
-// Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.AttributeOverride;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="fields_producers"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class FieldsProducers  implements java.io.Serializable {
 
@@ -25,14 +25,22 @@ public class FieldsProducers  implements java.io.Serializable {
      private FieldsProducersId id;
      private Producers producers;
      private Fields fields;
+     private Integer createdBy;
 
     public FieldsProducers() {
     }
 
+	
     public FieldsProducers(FieldsProducersId id, Producers producers, Fields fields) {
+        this.id = id;
+        this.producers = producers;
+        this.fields = fields;
+    }
+    public FieldsProducers(FieldsProducersId id, Producers producers, Fields fields, Integer createdBy) {
        this.id = id;
        this.producers = producers;
        this.fields = fields;
+       this.createdBy = createdBy;
     }
    
      @EmbeddedId
@@ -65,6 +73,19 @@ public class FieldsProducers  implements java.io.Serializable {
     public void setFields(Fields fields) {
         this.fields = fields;
     }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+
+
+
 }
 
 

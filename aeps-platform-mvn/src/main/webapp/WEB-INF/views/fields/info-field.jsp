@@ -23,8 +23,8 @@
 <% String divShow = "";%>
 <% String divHide = "";%>
 <%  if (value.equals("crop")) {
-        divShow = "divFieldsForm";
-        divHide = "divListFieldsForm";
+        divShow = "divCropForm";
+        divHide = "divListCropForm";
     } else if (value.equals("rasta")) {
         divShow = "divRastaForm";
         divHide = "divListRastaForm";
@@ -42,7 +42,7 @@
         <thead>
             <tr>
                 <% if (value != "lot") {%>
-                    <% if (value == "crop" || value.equals("rasta")) {%>
+                    <% if (value.equals("crop") || value.equals("rasta")) {%>
                         <th></th>
                     <% }%>
                 <% }%>
@@ -94,4 +94,4 @@
 <div style="text-align:center; <%= table %>">
     <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/searchField.action?selected="+value, divHide, "", "", "formFieldSearch");%>    
     <%= result%>
-<div>
+</div>

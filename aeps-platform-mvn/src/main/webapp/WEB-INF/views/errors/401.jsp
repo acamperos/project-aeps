@@ -27,7 +27,7 @@
                         <p>Usted no se encuentra registrado en el sistema para poder realizar esta accion, por favor ingrese al sistema o comuniquese con el administrador respectivo. </p>
 <!--                            Use your browsers <b>Back</b> button to navigate to the page you have prevously come from</p>
                         <p><b>Or you could just press this neat little button:</b></p>-->
-                        <a href="<%= request.getContextPath() %>/initial.action" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Llevar al inicio</a>
+                        <a href="<%= request.getContextPath() %>/initial.action" class="btn btn-large btn-initial"><i class="icon-home icon-white"></i> Llevar al inicio</a>
                     </div>
                 </div>
             </div>

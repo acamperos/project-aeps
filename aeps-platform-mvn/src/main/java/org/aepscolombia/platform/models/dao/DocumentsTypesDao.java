@@ -16,9 +16,9 @@ import org.aepscolombia.platform.models.entity.DocumentsTypes;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
- * Clase TypesDocumentsDao
+ * Clase DocumentsTypesDao
  *
- * Contiene los metodos para interactuar con la tabla TypesDocuments de la base de datos (BD)
+ * Contiene los metodos para interactuar con la tabla DocumentsTypes de la base de datos (BD)
  *
  * @author Juan Felipe Rodriguez
  * @version 1.0

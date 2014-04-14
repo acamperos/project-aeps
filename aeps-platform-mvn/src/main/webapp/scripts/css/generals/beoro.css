@@ -174,11 +174,11 @@ small { font-size: 11px }*/
     #breadcrumbs li { line-height: 20px; float: left; margin: 0 18px 6px 0; }
     #breadcrumbs li:last-child { margin-right: 0 }
     #breadcrumbs a { background: #eaeaea; background: rgba(0,0,0,.08); display: block; text-decoration: none; color: #555; text-shadow: 0 1px 0 rgba(255,255,255,.5); position: relative; padding: 3px 6px 3px 10px; }
-    #breadcrumbs a:hover { background: #368CA9; color: #fff; text-shadow: none; }
+    #breadcrumbs a:hover { background: #87398A; color: #fff; text-shadow: none; }
     #breadcrumbs a::before { content: ""; position: absolute; top: 50%; margin-top: -13px; left: -14px; border-color: rgba(0,0,0,.08) rgba(0,0,0,.08) rgba(0,0,0,.08) rgba(255,255,255,0); border-style: solid; border-width: 13px 0 13px 14px; }
-    #breadcrumbs a:hover::before { border-color: #368CA9 #368CA9 #368CA9 rgba(255,255,255,0) }
+    #breadcrumbs a:hover::before { border-color: #87398A #87398A #87398A rgba(255,255,255,0) }
     #breadcrumbs a::after { content: ""; position: absolute; top: 50%; margin-top: -13px; border-top: 13px solid rgba(255,255,255,0); border-bottom: 13px solid rgba(255,255,255,0); border-left: 14px solid rgba(0,0,0,.08); right: -14px; }
-    #breadcrumbs a:hover::after { border-left-color: #368CA9 }
+    #breadcrumbs a:hover::after { border-left-color: #87398A }
     #breadcrumbs span { display: block; padding: 4px 10px; color: #444; }
     #breadcrumbs i { opacity: .6; margin-top: 0; }
     #breadcrumbs a:hover i { opacity: .8 }
