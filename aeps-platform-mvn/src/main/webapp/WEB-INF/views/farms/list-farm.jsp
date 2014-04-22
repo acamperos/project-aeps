@@ -2,7 +2,9 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <html>
-    <head></head>
+    <head>
+        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
+    </head>
     <body>
         <!--<div id="divMessage" style="display:none"></div>-->
         <div class="container">

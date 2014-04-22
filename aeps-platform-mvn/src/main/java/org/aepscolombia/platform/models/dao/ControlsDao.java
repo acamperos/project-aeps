@@ -113,7 +113,8 @@ public class ControlsDao
         String sqlAdd = "";     
                       
         sql += "select p.target_type_con, pl.name_pes, mal.name_wee, enf.name_dis, tp.name_che_con, p.other_chemical_product_con, cr.name_org_con, p.other_organic_product_con,";
-		sql += " p.id_con, p.date_con, tob.name_tar_typ, p.dosis_con, ud.name_dos_uni, p.cleanings_con, p.cleanings_frequence_con";
+		sql += " p.id_con, p.date_con, tob.name_tar_typ, p.dosis_con, ud.name_dos_uni, p.cleanings_con, p.cleanings_frequence_con,";
+        sql += " p.other_pest_con, p.otro_weed_con, p.other_disease_con";
 		sql += " from controls p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_con";    
         sql += " inner join targets_types tob on tob.id_tar_typ=p.target_type_con";    
@@ -123,9 +124,10 @@ public class ControlsDao
         sql += " left join chemicals_controls tp on tp.id_che_con=p.chemical_product_used_con";    
         sql += " left join organic_controls cr on cr.id_org_con=p.organic_product_used_con";    
         sql += " left join dose_units ud on ud.id_dos_uni=p.dose_units_con and ud.status_dos_uni=1";    
-        sql += " inner join log_entities le on le.id_object_log_ent=p.id_con and le.table_log_ent='controls'";
+        sql += " inner join log_entities le on le.id_object_log_ent=p.id_con and le.table_log_ent='controls' and le.action_type_log_ent='C'";
+        sql += " where p.status=1";
         if (args.containsKey("idEvent")) {
-            sql += " where p.id_production_event_con="+args.get("idEvent");
+            sql += " and p.id_production_event_con="+args.get("idEvent");
         }
 		if (args.containsKey("idEntUser")) {
 			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
@@ -140,7 +142,6 @@ public class ControlsDao
 //            valIni = (valIni-1)*maxResults+1;
 //        }    
 //        events.toArray();
-//        System.out.println("sql->"+sql);
         try {
             tx = session.beginTransaction();
             Query query  = session.createSQLQuery(sql);
@@ -152,26 +153,27 @@ public class ControlsDao
                 int targetTy = Integer.parseInt(String.valueOf(data[0]));
 
                 if (targetTy==1) {
-                    nameObj = String.valueOf(data[1]);
+                    nameObj = (!String.valueOf(data[1]).equals("null") ? String.valueOf(data[1]) : String.valueOf(data[15]));
                 } else if (targetTy==2) {
-                    nameObj = String.valueOf(data[2]);
+                    nameObj = (!String.valueOf(data[2]).equals("null") ? String.valueOf(data[2]) : String.valueOf(data[16]));
                 } else if (targetTy==3) {
-                    nameObj = String.valueOf(data[3]);
+                    nameObj = (!String.valueOf(data[3]).equals("null") ? String.valueOf(data[3]) : String.valueOf(data[17]));
                 }
 
-                String nameChe = (String.valueOf(data[4]).equals("") ? String.valueOf(data[4]) : String.valueOf(data[5]));
-                String nameOrg = (String.valueOf(data[6]).equals("") ? String.valueOf(data[6]) : String.valueOf(data[7]));
+                String nameChe = (!String.valueOf(data[4]).equals("null") ? String.valueOf(data[4]) : String.valueOf(data[5]));
+                String nameOrg = (!String.valueOf(data[6]).equals("null") ? String.valueOf(data[6]) : String.valueOf(data[7]));
                 HashMap temp = new HashMap();
                 temp.put("idCon", data[8]);
                 temp.put("dateCon", data[9]);
-                temp.put("idTarTyp", data[10]);             
+                temp.put("idTarTyp", targetTy);             
+                temp.put("nameTarTyp", data[10]);             
                 temp.put("nameConTyp", nameObj);                
                 temp.put("chemCon", nameChe);
-                temp.put("doseChemCon", (temp.get("chemCon").equals("")) ? "" : data[11]);
-                temp.put("unitChemCon", (temp.get("chemCon").equals("")) ? "" : "-"+data[12]);
+                temp.put("doseChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : data[11]);
+                temp.put("unitChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : "-"+data[12]);
                 temp.put("orgCon", nameOrg);
-                temp.put("doseOrgCon", (temp.get("orgCon").equals("")) ? "" : data[11]);
-                temp.put("unitOrgCon", (temp.get("orgCon").equals("")) ? "" : "-"+data[12]);
+                temp.put("doseOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : data[11]);
+                temp.put("unitOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : "-"+data[12]);
                 temp.put("cleaning", (String.valueOf(data[13]).equals("1")) ? "Si" : "No");
                 temp.put("frequence", data[14]);             
                 result.add(temp);
@@ -197,9 +199,9 @@ public class ControlsDao
 
         try {
             tx = session.beginTransaction();
-            String hql  = "FROM Controls E WHERE E.idProEve = :id_crop";
+            String hql  = "FROM Controls E WHERE E.idCon = :id_con";
             Query query = session.createQuery(hql);
-            query.setParameter("id_crop", id);
+            query.setParameter("id_con", id);
             event = (Controls)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {

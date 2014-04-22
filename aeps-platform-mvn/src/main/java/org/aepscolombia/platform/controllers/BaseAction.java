@@ -149,7 +149,6 @@ public class BaseAction extends ActionSupport implements Preparable, SessionAwar
         } else if (next) {
             return next();
         }
-        System.out.println("entreee a ->");
         return INPUT;
     }
     

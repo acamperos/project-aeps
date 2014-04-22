@@ -35,8 +35,10 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <s:label for="formRastaSearch_date" cssClass="control-label" value="Fecha del rasta:"></s:label>
-                    <div class="controls">
-                        <s:textfield name="date" />
+                    <div class="date controls">
+                        <s:textfield name="date" readonly="true" />
+                        <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>
                 </div>
             </div>

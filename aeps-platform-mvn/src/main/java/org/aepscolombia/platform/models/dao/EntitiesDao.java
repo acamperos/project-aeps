@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Entities;
+import org.aepscolombia.platform.models.entity.EntitiesTypes;
+import org.aepscolombia.platform.models.entity.UserEntity;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -35,8 +37,8 @@ public class EntitiesDao {
         
 //        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
         sql += " from entities usr";
-        sql += " where usr.document_type_ent='"+typeIdent+"'";
-        sql += " and usr.document_number_ent="+ident;
+        if (!typeIdent.equals("")) sql += " where usr.document_type_ent='"+typeIdent+"'";
+        if (!ident.equals("")) sql += " and usr.document_number_ent="+ident;
 //        System.out.println("sql->"+sql);
         
         try {
@@ -53,6 +55,39 @@ public class EntitiesDao {
             session.close();
         }
         return event;
+    }
+    
+    public static String getEntityType(Integer idUser) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        EntitiesTypes event = null;
+        Transaction tx = null;
+        String sql = "";
+        String valEntity = "";
+
+        sql += "select entTy.id_ent_typ, entTy.name_ent_typ";
+        sql += " from entities_types entTy";
+        sql += " inner join entities ent on ent.entity_type_ent=entTy.id_ent_typ";
+        sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and usr.status=1";
+        if (idUser!=null) sql += " and usr.id_user_usr_ent="+idUser;
+//        System.out.println("sql->"+sql);
+        
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("entTy", EntitiesTypes.class);
+            event = (EntitiesTypes)query.uniqueResult();
+            valEntity = event.getNameEntTyp();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return valEntity;
     }
     
     public Entities findById(Integer id) {

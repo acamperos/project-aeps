@@ -186,11 +186,13 @@ public class ProducersDao
                 }
                 sql += " or (e.first_name_1_ent like '%"+valIdent+"%')";
                 sql += " or (e.last_name_1_ent like '%"+valIdent+"%')";
-                sql += " or (m.id_department_mun='"+valIdent+"')";
+                sql += " or (e.email_ent like '%"+valIdent+"%')";
+                sql += " or (e.address_ent like '%"+valIdent+"%')";
+//                sql += " or (m.id_department_mun='"+valIdent+"')";
 //                sql += " or (r.terreno_circundante_ras like '%"+valIdent+"%')";
 //                sql += " or (r.posicion_perfil_ras like '%"+valIdent+"%')";
 //                sql += " or (r.ph_ras like '%"+valIdent+"%')";
-                sql += " or (m.id_mun='"+valIdent+"'))";
+                sql += " or (m.name_mun like '%"+valIdent+"%'))";
             }
         }
 //        args.get("countTotal");
@@ -218,6 +220,16 @@ public class ProducersDao
             String valIdent = String.valueOf(args.get("last_names_producer_1"));
             if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.last_name_1_ent like '%"+args.get("last_names_producer_1")+"%'";
         }
+        if (args.containsKey("direction_producer")) {
+            String valIdent = String.valueOf(args.get("direction_producer"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.address_ent like '%"+args.get("direction_producer")+"%'";
+        }
+        
+        if (args.containsKey("email_producer")) {
+            String valIdent = String.valueOf(args.get("email_producer"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.email_ent like '%"+args.get("email_producer")+"%'";
+        }
+        
         if (args.containsKey("depPro")) {
             String valIdent = String.valueOf(args.get("depPro"));
             if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) sql += " and m.id_department_mun="+args.get("depPro");

@@ -2,11 +2,14 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <html>
-    <head></head>
     <body>
         <%@page import="org.aepscolombia.platform.util.APConstants"%>
         <%@page import="org.aepscolombia.platform.models.entity.Users"%>
+        <%@page import="org.aepscolombia.platform.models.entity.Entities"%>
+        <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
         <% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+        <% String entType = new EntitiesDao().getEntityType(user.getIdUsr()); %>
+        <% //request.setAttribute("entType", entType); %>
         <div class="container">
             <div class="masthead">
                 <div class="row">
@@ -52,12 +55,12 @@
                                     <div class="user-box-inner">
                                         <img src="<%= request.getContextPath() %>/img/user_ingress.png" alt="" class="user-avatar img-avatar">
                                         <div class="user-info">
-                                            Bienvenido, <strong><%= user.getNameUserUsr() %></strong>
+                                            Bienvenido, <strong><%= user.getNameUserUsr() %>-<%= entType %></strong>
                                             <ul class="unstyled">
                                                 <li><s:a href="%{contextPath}/configuration.action">Configuración</s:a></li>
                                                 <li>-</li>
                                                 <!--<li><a href="logout.action"><i class="icon-off">Salir</i></a></li>-->
-                                                <li><a href="<%= request.getContextPath() %>/logout.action">Salir</a></li>
+                                                <li><a href="<%= request.getContextPath() %>/logout.action"><i class="icon-power-off"></i>Salir</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -65,7 +68,7 @@
                             <% } else { %>
                             <% } %>
                         </div>
-                        <div class="formIngress">
+<!--                        <div class="formIngress">
                             <s:url id="localeEN" namespace="/" action="localePrivate" >
                                 <s:param name="lang">en</s:param>
                             </s:url>
@@ -81,13 +84,13 @@
                                         <a class="btn" href="#"><s:property value="getText('text.language')" /></a>
                                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                                         <ul class="dropdown-menu">
-                                            <li><s:a href="%{localeEN}"><img src="<%= request.getContextPath() %>/img/languages/kingdom-flat.png" class="img-rounded" /> <s:property value="getText('text.english')" /></s:a></li>
-                                            <li><s:a href="%{localeES}"><img src="<%= request.getContextPath() %>/img/languages/spain-flat.png" class="img-rounded" /> <s:property value="getText('text.spanish')" /></s:a></li>
+                                            <li><s:a href="%{localeEN}"><img src="<%//= request.getContextPath() %>/img/languages/kingdom-flat.png" class="img-rounded" /> <s:property value="getText('text.english')" /></s:a></li>
+                                            <li><s:a href="%{localeES}"><img src="<%//= request.getContextPath() %>/img/languages/spain-flat.png" class="img-rounded" /> <s:property value="getText('text.spanish')" /></s:a></li>
                                         </ul>
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div>-->
                     <!--</div>-->
                 </div>
             </div>

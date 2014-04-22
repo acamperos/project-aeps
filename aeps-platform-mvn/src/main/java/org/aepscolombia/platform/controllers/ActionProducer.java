@@ -502,6 +502,8 @@ public class ActionProducer extends BaseAction {
         findParams.put("identProducer", num_ident_producer);
         findParams.put("names_producer_1", names_producer_1);
         findParams.put("last_names_producer_1", last_names_producer_1);
+        findParams.put("direction_producer", direction_producer);
+        findParams.put("email_producer", email_producer);
         findParams.put("depPro", depPro);
         findParams.put("cityPro", cityPro);
         int pageReq;

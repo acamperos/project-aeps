@@ -1,5 +1,6 @@
 <td><s:property value="num_rasta" /></td>
-<td><s:property value="date" /></td>
+<s:date name="date" format="dd/MM/yyyy" var="dateTransformDateRas"/>
+<td><s:property value="%{#dateTransformDateRas}" /></td>
 <td><s:property value="pendant" /></td>
 <td><s:property value="latitude" /></td>
 <td><s:property value="length" /></td>

@@ -27,6 +27,11 @@ public class AmendmentsFertilizers  implements java.io.Serializable {
 
     public AmendmentsFertilizers() {
     }
+    
+    public AmendmentsFertilizers(Integer idAmeFer, String nameAmeFer) {
+       this.idAmeFer = idAmeFer;
+       this.nameAmeFer = nameAmeFer;
+    }
 
     public AmendmentsFertilizers(String nameAmeFer, Boolean statusAmeFer) {
        this.nameAmeFer = nameAmeFer;

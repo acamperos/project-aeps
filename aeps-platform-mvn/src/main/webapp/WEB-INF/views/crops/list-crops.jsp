@@ -3,7 +3,9 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
+    </head>
     <body>
         <!--<div id="divMessage" style="display:none"></div>-->       
         <div class="container">

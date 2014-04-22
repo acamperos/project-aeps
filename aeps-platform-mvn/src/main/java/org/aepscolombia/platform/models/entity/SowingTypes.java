@@ -30,6 +30,10 @@ public class SowingTypes  implements java.io.Serializable {
 
     public SowingTypes() {
     }
+    
+    public SowingTypes(Integer idSowTyp) {
+        this.idSowTyp=idSowTyp;
+    }
 
 	
     public SowingTypes(String nameSowTyp, boolean statusSowType) {

@@ -34,7 +34,7 @@ public class Harvests  implements java.io.Serializable {
      private Date dateHar;
      private String commentHar;
      private int productionHar;
-     private double yieldHar;
+     private Double yieldHar;
      private Boolean storageHar;
      private Double productionPerPlantHar;
      private Double humidityPercentageHar;
@@ -45,13 +45,13 @@ public class Harvests  implements java.io.Serializable {
     }
 
 	
-    public Harvests(ProductionEvents productionEvents, Date dateHar, int productionHar, double yieldHar) {
+    public Harvests(ProductionEvents productionEvents, Date dateHar, int productionHar, Double yieldHar) {
         this.productionEvents = productionEvents;
         this.dateHar = dateHar;
         this.productionHar = productionHar;
         this.yieldHar = yieldHar;
     }
-    public Harvests(ResultingProducts resultingProducts, HarvestMethods harvestMethods, ProductionEvents productionEvents, Date dateHar, String commentHar, int productionHar, double yieldHar, Boolean storageHar, Double productionPerPlantHar, Double humidityPercentageHar, Boolean status, Integer createdBy) {
+    public Harvests(ResultingProducts resultingProducts, HarvestMethods harvestMethods, ProductionEvents productionEvents, Date dateHar, String commentHar, int productionHar, Double yieldHar, Boolean storageHar, Double productionPerPlantHar, Double humidityPercentageHar, Boolean status, Integer createdBy) {
        this.resultingProducts = resultingProducts;
        this.harvestMethods = harvestMethods;
        this.productionEvents = productionEvents;
@@ -132,11 +132,11 @@ public class Harvests  implements java.io.Serializable {
     }
     
     @Column(name="yield_har", nullable=false, precision=22, scale=0)
-    public double getYieldHar() {
+    public Double getYieldHar() {
         return this.yieldHar;
     }
     
-    public void setYieldHar(double yieldHar) {
+    public void setYieldHar(Double yieldHar) {
         this.yieldHar = yieldHar;
     }
     

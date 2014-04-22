@@ -8,8 +8,8 @@
     <% }%>                        
 <% }%>
 <td>
-    <s:property value="name_farm" />
-    (<s:property value="name_producer" />)
+    Finca: <s:property value="name_farm" />, <br />
+    Productor: <s:property value="name_producer" />
 </td>
 <td><s:property value="dir_farm" /></td>
 <td><s:property value="name_dep" /></td>

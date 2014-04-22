@@ -390,7 +390,7 @@
             <result name = "states" type="json"></result>
         </action>     
     </package>
-    <package name="crop" extends="principal,struts-default,json-default" namespace="/crop">
+    <package name="croppackage" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="comboGetCol" method="comboGetListGenByCol" class="org.aepscolombia.platform.controllers.ActionCrop">
             <interceptor-ref name="defaultStackAeps"/>
             <result type="json" name="combo">
@@ -443,6 +443,138 @@
             <result name = "states" type="json"></result>
         </action>
         <action name="deleteCrop" method="delete" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>
+    <package name="sowing" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="saveSowing" method="saveData" class="org.aepscolombia.platform.controllers.ActionSowing">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
+        </action>    
+    </package>
+    <package name="physiolo" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="savePhys" method="saveData" class="org.aepscolombia.platform.controllers.ActionPhys">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
+        </action>    
+    </package>
+    <package name="harvest" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="saveHarvest" method="saveData" class="org.aepscolombia.platform.controllers.ActionHarvest">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
+        </action>    
+    </package>
+    <package name="preppackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="searchPrep" method="search" class="org.aepscolombia.platform.controllers.ActionPrep">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-preparations.jsp</result>
+        </action>   
+        <action name="showPrep" method="show" class="org.aepscolombia.platform.controllers.ActionPrep">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-prep.jsp</result>
+        </action>
+        <action name="savePrep" method="saveData" class="org.aepscolombia.platform.controllers.ActionPrep">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deletePrep" method="delete" class="org.aepscolombia.platform.controllers.ActionPrep">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>
+    <package name="irrpackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="searchIrr" method="search" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-irrigations.jsp</result>
+        </action>   
+        <action name="showIrr" method="show" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-irr.jsp</result>
+        </action>
+        <action name="saveIrr" method="saveData" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteIrr" method="delete" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>
+    <package name="monpackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="searchMon" method="search" class="org.aepscolombia.platform.controllers.ActionMon">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-monitorings.jsp</result>
+        </action>   
+        <action name="showMon" method="show" class="org.aepscolombia.platform.controllers.ActionMon">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-mon.jsp</result>
+        </action>
+        <action name="saveMon" method="saveData" class="org.aepscolombia.platform.controllers.ActionMon">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteMon" method="delete" class="org.aepscolombia.platform.controllers.ActionMon">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>
+    <package name="ferpackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="searchFer" method="search" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-fertilizations.jsp</result>
+        </action>   
+        <action name="showFer" method="show" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-fert.jsp</result>
+        </action>
+        <action name="saveFer" method="saveData" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteFer" method="delete" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>
+    <package name="conpackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="comboControls" method="comboControls" class="org.aepscolombia.platform.controllers.ActionCon">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result type="json" name="combo">
+                <param name="contentType">text/html</param>
+            </result>
+        </action>
+        <action name="searchCon" method="search" class="org.aepscolombia.platform.controllers.ActionCon">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-protection.jsp</result>
+        </action>   
+        <action name="showCon" method="show" class="org.aepscolombia.platform.controllers.ActionCon">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-cont.jsp</result>
+        </action>
+        <action name="saveCon" method="saveData" class="org.aepscolombia.platform.controllers.ActionCon">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteCon" method="delete" class="org.aepscolombia.platform.controllers.ActionCon">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>     

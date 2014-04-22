@@ -4,7 +4,6 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import java.lang.String;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,7 +51,6 @@ import org.aepscolombia.platform.models.entity.GrowingEnvironment;
 import org.aepscolombia.platform.models.entity.HarvestMethods;
 import org.aepscolombia.platform.models.entity.Harvests;
 
-import org.aepscolombia.platform.models.entity.HorizontesRasta;
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.PhysiologicalMonitoring;
@@ -75,9 +73,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 /**
- * Clase ActionFarm
+ * Clase ActionCrop
  *
- * Contiene los metodos para interactuar con el modulo de Rasta
+ * Contiene los metodos para interactuar con el modulo de Cultivo
  *
  * @author Juan Felipe Rodriguez
  * @version 1.0
@@ -589,16 +587,6 @@ public class ActionCrop extends BaseAction {
         this.option_geo_lot = option_geo_lot;
     }        
     
-    private List<HorizontesRasta> additionalsAtrib;
-
-    public List<HorizontesRasta> getAdditionalsAtrib() {
-        return additionalsAtrib;
-    }
-
-    public void setAdditionalsAtrib(List<HorizontesRasta> additionalsAtrib) {
-        this.additionalsAtrib = additionalsAtrib;
-    }
-    
     @Override
     public String execute() throws Exception {
         return SUCCESS;
@@ -611,12 +599,11 @@ public class ActionCrop extends BaseAction {
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         this.setType_ident_producer(new DocumentsTypesDao().findAll());
 //        if (user.getIdUsr()!=null) idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-//        additionalsAtrib = new ArrayList<HorizontesRasta>();        
     }
     
     
     /**
-     * Metodo encargado de validar el formulario de Suelos
+     * Metodo encargado de validar el formulario de Cultivo
      */
     @Override
     public void validate() {       
@@ -635,7 +622,8 @@ public class ActionCrop extends BaseAction {
             required.put("typeCrop", typeCrop);
             required.put("performObj", performObj);
             required.put("lastCrop", lastCrop);
-            required.put("drainPlot", drainPlot);            
+            required.put("drainPlot", drainPlot);    
+            boolean enter = false;
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -643,8 +631,14 @@ public class ActionCrop extends BaseAction {
 //                System.out.println(sK + " : " + sV);
                 if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     addFieldError(sK, "El campo es requerido");
+                    enter = true;
                 }
             }
+            
+            if (enter) {
+                addActionError("Faltan campos por ingresar por favor digitelos");
+            }
+            
 //            System.out.println("performObj->"+performObj);
             
             double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
@@ -716,6 +710,7 @@ public class ActionCrop extends BaseAction {
     public String view()
     {     
 //        actExe = (String)(this.getRequest().getParameter("action"));
+        actExe = "modify";
         
 //        int pageReq;
         if (this.getRequest().getParameter("page") == null) {
@@ -753,11 +748,13 @@ public class ActionCrop extends BaseAction {
             
 //            harv.setIdHar(12);
 //            List<Genotypes> event = null;
+//            System.out.println("values=>"+typeCrop);
+//            System.out.println("values12=>"+beans.getGrowingEnvironment().getIdGroEnv());
             this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0));
             if(sowing!=null && sowing.getIdSow()!=0) {
-                if(typeCrop==1) {
+                if(typeCrop==1 && maize.getSeedsColors()!=null) {
                     this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, maize.getSeedsColors().getIdSeeCol()));
-                } else if(typeCrop==2) {
+                } else if(typeCrop==2 && beans.getGrowingEnvironment()!=null) {
                     this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, beans.getGrowingEnvironment().getIdGroEnv()));
                 } else if(typeCrop==3) {
                     this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0));
@@ -790,40 +787,6 @@ public class ActionCrop extends BaseAction {
             this.setType_seed_type(new SeedsTypesDao().findAll());           
             this.setType_sow_types(new SowingTypesDao().findAll());           
             
-//            private Beans beans   = new Beans();
-//            private Cassavas cass = new Cassavas();
-//            private Harvests harv = new Harvests();
-//            private Maize maize   = new Maize();
-//            private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
-//            private Sowing sowing = new Sowing();
-            
-//            private List<HashMap> listPrep;
-//            private List<HashMap> listIrr;
-//            private List<HashMap> listFert;
-//            private List<HashMap> listCont;
-//            private List<HashMap> listMont;
-            
-//            private List<ChemicalsSowing> type_chem_sow;
-//            private List<DoseUnits> type_dose_units;
-//            private List<Genotypes> type_genotypes;
-//            private List<GenotypesSowing> type_genotypes_sow;
-//            private List<GrowingEnvironment> type_grow_env;
-//            private List<HarvestMethods> type_harv_meth;
-//            private List<ResultingProducts> type_res_pro;
-//            private List<SeedsColors> type_seed_color;
-//            private List<SeedsOrigins> type_seed_org;
-//            private List<SeedsTypes> type_seed_type;
-            
-//            Agregar busqueda basica por JQuery por cada listado de datos repetidos (no por ahora)
-//            * Listado de preparaciones (Al momento de crear uno nuevo enviar el ID-Cultivo y el tipo de cultivo)
-//            * Informacion siembra (Con sus opciones de listado de acuerdo al tipo de cultivo)
-//            * Listado de riegos (Al momento de crear uno nuevo enviar el ID-Cultivo y el tipo de cultivo) 
-//            * Listado de fertilizaciones (Al momento de crear uno nuevo enviar el ID-Cultivo y el tipo de cultivo)
-//            * Listado de controles (Al momento de crear uno nuevo enviar el ID-Cultivo y el tipo de cultivo)
-//            * Listado de monitoreo general (Al momento de crear uno nuevo enviar el ID-Cultivo y el tipo de cultivo)
-//            * Informacion de la fisiología (Con sus opciones de listado de acuerdo al tipo de cultivo)
-//            * Información de la cosecha (Con sus opciones de listado de acuerdo al tipo de cultivo)
-//            (No existe)Información de la producción de la cosecha (Con sus opciones de listado de acuerdo al tipo de cultivo)
         }       
         return SUCCESS;
     }
@@ -849,7 +812,7 @@ public class ActionCrop extends BaseAction {
         }
         type_genotypes = null;
         state = "success";
-        info = chain;
+        info  = chain;
         return "combo";
     }
     
@@ -882,7 +845,7 @@ public class ActionCrop extends BaseAction {
      * @param valName:  Nombre del valor a buscar
      * @param valId:    Identificacion del valor a buscar
      * @param selected: Valor seleccionado
-     * @return lista de rastas
+     * @return lista de cultivos
      */
     public String search() {
         valName     = (String)(this.getRequest().getParameter("valName"));
@@ -929,7 +892,7 @@ public class ActionCrop extends BaseAction {
     /**
      * Encargado de mostrar en un formulario la informacion de un cultivo apartir de la identificacion
      * @param idCrop:  Identificacion del cultivo
-     * @return Informacion del rasta
+     * @return Informacion del cultivo
      */
     public String show() {
         actExe = (String)(this.getRequest().getParameter("action"));
@@ -954,16 +917,12 @@ public class ActionCrop extends BaseAction {
             
 //            Fields fie = lotDao.objectById(idField);
 //            nameField  = fie.getNameFie();
-//            System.out.println("valores->" + rasta);
-        } else {
-//            HorizontesRasta hor  = new HorizontesRasta(new ResistenciasRompimiento(1), new Textures(1), 1, 1.0, 1, 3);
-//            additionalsAtrib.add(0,new HorizontesRasta());
-        }
+        } 
         return SUCCESS;
     }    
 
     /**
-     * Encargado de guardar la informacion suministrada por el usuario para un rasta
+     * Encargado de guardar la informacion suministrada por el usuario para un cultivo
      * @return Estado del proceso
      */
     public String saveData() {
@@ -984,7 +943,7 @@ public class ActionCrop extends BaseAction {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx = null;
-//        info = "El rasta ha sido modificado con exito";
+//        info = "El cultivo ha sido modificado con exito";
         
 
         try {
@@ -1010,15 +969,14 @@ public class ActionCrop extends BaseAction {
             session.saveOrUpdate(pro);
             
 //            entDao.save(ent);          
-//            System.out.println("pruebaCrea");
-
-            if (action.equals("C")) {
-                
+//            System.out.println("pruebaCrea");      
+            
+            /*if (action.equals("C")) {        
                 if (typeCrop==1) {
                     Maize ma = new Maize();
                     ma.setIdMai(null);
                     ma.setProductionEvents(pro);
-                    session.saveOrUpdate(ma);
+                    session.saveOrUpdate(ma);            
                 } else if (typeCrop==2) {
                     Beans be = new Beans();
                     be.setIdBea(null);
@@ -1028,16 +986,46 @@ public class ActionCrop extends BaseAction {
                     ca.setIdCas(null);
                     ca.setProductionEvents(pro);
                 }
-                
-//                LogEntities logPro = new LogEntities();
-//                logPro.setIdLogEnt(null);
-//                logPro.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
-//                logPro.setIdObjectLogEnt(pro.getIdPro());
-//                logPro.setTableLogEnt("producers");
-//                logPro.setDateLogEnt(new Date());
-//                logPro.setActionTypeLogEnt(action);
-//                session.saveOrUpdate(logPro);
+            }*/
+            
+            if (action.equals("M")) {
+                if (idCrop>0) {
+                    beans  = beansDao.objectById(idCrop);
+                    cass   = cassDao.objectById(idCrop);
+                    maize  = maizeDao.objectById(idCrop);
+                    if (typeCrop==1) {
+                        if (beans!=null) session.delete(beans);
+                        if (cass!=null) session.delete(cass);                    
+                    } else if (typeCrop==2) {
+                        if (cass!=null) session.delete(cass);
+                        if (maize!=null) session.delete(maize);
+                    } else if (typeCrop==3) {
+                        if (maize!=null) session.delete(maize);
+                        if (beans!=null) session.delete(beans);
+                    }
+                }
             }
+            
+            if (typeCrop==1) {
+                Maize ma = new Maize();
+                ma.setIdMai(null);
+                ma.setProductionEvents(pro);
+                session.saveOrUpdate(ma);            
+            } else if (typeCrop==2) {
+                Beans be = new Beans();
+                be.setIdBea(null);
+                be.setProductionEvents(pro);
+                session.saveOrUpdate(be);
+            } else if (typeCrop==3) {
+                Cassavas ca = new Cassavas();
+                ca.setIdCas(null);
+                ca.setProductionEvents(pro);
+                session.saveOrUpdate(ca);
+            }
+            
+            beans = null;
+            cass  = null;
+            maize = null;
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);

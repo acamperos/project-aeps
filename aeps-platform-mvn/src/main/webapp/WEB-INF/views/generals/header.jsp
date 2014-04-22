@@ -59,7 +59,7 @@
                                     <s:a href="%{register}" cssClass="btn btn-default btn-large"><s:property value="getText('button.register.platform')" /></s:a>			
                                     <% }%>
                                 </div>
-                                <div class="formIngress">
+<!--                                <div class="formIngress">
                                     <s:url id="localeEN" namespace="/" action="locale" >
                                         <s:param name="lang">en</s:param>
                                     </s:url>
@@ -81,7 +81,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>                                    
+                                </div>                                    -->
                             <!--</div>-->
                             <!--</div>-->	
                         <!--</div>-->    

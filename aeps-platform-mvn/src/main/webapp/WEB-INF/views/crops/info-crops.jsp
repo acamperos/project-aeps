@@ -22,7 +22,7 @@
 <% String value   = (String) add.get("selected");%>
 <% String divShow = "";%>
 <% String divHide = "";%>
-<% divHide = "divConListCrops"; %>    
+<% divHide = "divConListCrop"; %>    
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divCrops" class="w-box">
@@ -34,7 +34,7 @@
             <tr>
                 <th>Numero del Cultivo</th>
                 <th>Documento del productor</th>
-                <th>Informacion de procedencia</th>
+                <th>Informacion</th>
                 <th>Fecha de siembra</th>
                 <th>Material genetico</th>
                 <% if (value == "crop" || value.equals("crop")) {%>

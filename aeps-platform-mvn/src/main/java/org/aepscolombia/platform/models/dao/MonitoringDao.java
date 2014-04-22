@@ -114,9 +114,10 @@ public class MonitoringDao
                       
         sql += "select m.id_mon, m.date_mon, m.monitor_pests_mon, m.monitor_diseases_mon, m.monitor_weeds_mon from monitoring m";    
         sql += " inner join production_events ep on m.id_production_event_mon=ep.id_pro_eve"; 
-        sql += " inner join log_entities le on le.id_object_log_ent=m.id_mon and le.table_log_ent='monitoring'"; 
+        sql += " inner join log_entities le on le.id_object_log_ent=m.id_mon and le.table_log_ent='monitoring' and le.action_type_log_ent='C'"; 
+        sql += " where m.status=1";
         if (args.containsKey("idEvent")) {
-            sql += " where m.id_production_event_mon="+args.get("idEvent");
+            sql += " and m.id_production_event_mon="+args.get("idEvent");
         }
 		if (args.containsKey("idEntUser")) {
 			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
@@ -145,6 +146,27 @@ public class MonitoringDao
                 temp.put("monPets", data[2]);             
                 temp.put("monDis", data[3]);                
                 temp.put("monWee", data[4]);
+                String valPet = String.valueOf(temp.get("monPets"));
+                String valDis = String.valueOf(temp.get("monDis"));
+                String valWee = String.valueOf(temp.get("monWee"));
+                if (valPet.equals("true")) {
+                    temp.put("monDesPet", "Si");        
+                } else {
+                    temp.put("monDesPet", "No");        
+                }
+                
+                if (valDis.equals("true")) {
+                    temp.put("monDesDis", "Si");        
+                } else {
+                    temp.put("monDesDis", "No");        
+                }
+                
+                if (valWee.equals("true")) {
+                    temp.put("monDesWee", "Si");        
+                } else {
+                    temp.put("monDesWee", "No");        
+                }
+                
                 result.add(temp);
             }
             tx.commit();
@@ -168,9 +190,9 @@ public class MonitoringDao
 
         try {
             tx = session.beginTransaction();
-            String hql  = "FROM Monitoring E WHERE E.idProEve = :id_crop";
+            String hql  = "FROM Monitoring E WHERE E.idMon = :id_mon";
             Query query = session.createQuery(hql);
-            query.setParameter("id_crop", id);
+            query.setParameter("id_mon", id);
             event = (Monitoring)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {

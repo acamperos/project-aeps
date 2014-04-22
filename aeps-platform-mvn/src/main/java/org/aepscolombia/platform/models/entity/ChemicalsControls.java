@@ -33,6 +33,10 @@ public class ChemicalsControls  implements java.io.Serializable {
     public ChemicalsControls() {
     }
 
+    public ChemicalsControls(Integer idCheCon, String nameCheCon) {
+        this.idCheCon   = idCheCon;
+        this.nameCheCon = nameCheCon;
+    }
 	
     public ChemicalsControls(TargetsTypes targetsTypes, String nameCheCon) {
         this.targetsTypes = targetsTypes;

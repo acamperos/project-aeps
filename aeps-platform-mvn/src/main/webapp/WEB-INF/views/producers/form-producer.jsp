@@ -33,7 +33,7 @@
                 </div>  
                 <div class="control-group">
                     <label for="formProducer_num_ident_producer" class="control-label req">
-                        Numero de cedula:
+                        Numero de documento:
                         <i class="icon-info-sign s2b_tooltip" title="Ingrese su numero de cedula"></i>
                     </label>
                     <div class="controls">
@@ -185,7 +185,7 @@
                 <s:hidden name="page"/>
                 <!--<input type="submit" class="btn btn-primary" value="Guardar productor" id="submit_492662557">-->
                 <%--<sj:submit cssClass="btn btn-inverse" targets="divBodyLayout" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>--%>
-                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm">Guardar productor</sj:submit>
+                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
                 <!--<button class="btn btn-inverse" onclick="saveData('saveProducer.action','searchProducer.action?page=<%=pageNow%>','formProducer');">Guardar productor</button>-->
                 <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();">Cancelar</button>
             </div>

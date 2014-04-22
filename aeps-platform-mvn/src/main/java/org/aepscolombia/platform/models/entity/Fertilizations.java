@@ -32,7 +32,7 @@ public class Fertilizations  implements java.io.Serializable {
      private CropsTypes cropsTypes;
      private FertilizationsTypes fertilizationsTypes;
      private Date dateFer;
-     private double amountProductUsedFer;
+     private Double amountProductUsedFer;
      private String whereBoughtFer;
      private String applicationTechniqueFer;
      private String otherWhereBoughtFer;
@@ -43,13 +43,13 @@ public class Fertilizations  implements java.io.Serializable {
     }
 
 	
-    public Fertilizations(ProductionEvents productionEvents, FertilizationsTypes fertilizationsTypes, Date dateFer, double amountProductUsedFer) {
+    public Fertilizations(ProductionEvents productionEvents, FertilizationsTypes fertilizationsTypes, Date dateFer, Double amountProductUsedFer) {
         this.productionEvents = productionEvents;
         this.fertilizationsTypes = fertilizationsTypes;
         this.dateFer = dateFer;
         this.amountProductUsedFer = amountProductUsedFer;
     }
-    public Fertilizations(ProductionEvents productionEvents, CropsTypes cropsTypes, FertilizationsTypes fertilizationsTypes, Date dateFer, double amountProductUsedFer, String whereBoughtFer, String applicationTechniqueFer, String otherWhereBoughtFer, Boolean status, Integer createdBy) {
+    public Fertilizations(ProductionEvents productionEvents, CropsTypes cropsTypes, FertilizationsTypes fertilizationsTypes, Date dateFer, Double amountProductUsedFer, String whereBoughtFer, String applicationTechniqueFer, String otherWhereBoughtFer, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.cropsTypes = cropsTypes;
        this.fertilizationsTypes = fertilizationsTypes;
@@ -110,11 +110,11 @@ public class Fertilizations  implements java.io.Serializable {
     }
     
     @Column(name="amount_product_used_fer", nullable=false, precision=22, scale=0)
-    public double getAmountProductUsedFer() {
+    public Double getAmountProductUsedFer() {
         return this.amountProductUsedFer;
     }
     
-    public void setAmountProductUsedFer(double amountProductUsedFer) {
+    public void setAmountProductUsedFer(Double amountProductUsedFer) {
         this.amountProductUsedFer = amountProductUsedFer;
     }
     

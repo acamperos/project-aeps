@@ -108,6 +108,9 @@ public class FertilizationsDao
         List<Object[]> events = null;
         Transaction tx = null;
         List<HashMap> result = new ArrayList<HashMap>();
+        List<HashMap> resultChe = new ArrayList<HashMap>();
+        List<HashMap> resultOrg = new ArrayList<HashMap>();
+        List<HashMap> resultAme = new ArrayList<HashMap>();
         
         String sql = "";     
         String sqlAdd = "";     
@@ -117,7 +120,7 @@ public class FertilizationsDao
         sql += " from fertilizations p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_fer";    
         sql += " left join fertilizations_types tp on tp.id_fer_typ=p.fertilization_type_fer";    
-        sql += " inner join log_entities le on le.id_object_log_ent=p.id_fer and le.table_log_ent='fertilizations'";   
+        sql += " inner join log_entities le on le.id_object_log_ent=p.id_fer and le.table_log_ent='fertilizations' and le.action_type_log_ent='C'";   
 		if (args.containsKey("idEvent")) { 
             sql += " where p.id_production_event_fer="+args.get("idEvent");
         }
@@ -168,11 +171,26 @@ public class FertilizationsDao
                     temp.put("idFerTyp", data[2]);             
                     temp.put("nameFerType", data[3]);                
                     temp.put("amountUsed", data[4]);
-                    temp.put("chemical", getChemicals(String.valueOf(temp.get("idFer")), Integer.parseInt(String.valueOf(temp.get("amountUsed")))));	
-                    temp.put("organic", getOrganics(String.valueOf(temp.get("idFer"))));	
-                    temp.put("amendment", getAmendments(String.valueOf(temp.get("idFer"))));	
-                    result.add(temp);
+                    temp.put("infoChe", getChemicals(String.valueOf(temp.get("idFer")), Double.parseDouble(String.valueOf(temp.get("amountUsed")))));	
+                    temp.put("infoOrg", getOrganics(String.valueOf(temp.get("idFer"))));	
+                    temp.put("infoAme", getAmendments(String.valueOf(temp.get("idFer"))));	
+                    String ferType = String.valueOf(temp.get("idFerTyp"));
+                    if(ferType.equals("1")){
+                        resultChe.add(temp);
+                    } else if(ferType.equals("2")){
+                        resultOrg.add(temp);
+                    } else if(ferType.equals("3")){
+                        resultAme.add(temp);
+                    }
 				}
+                HashMap tempList = new HashMap();
+                tempList.put("chemical", resultChe);			
+                tempList.put("organic", resultOrg);			
+                tempList.put("amendment", resultAme);		
+                result.add(tempList);
+//                for (HashMap data : result) {
+//                    System.out.println("values=>"+data);
+//                }
 				tx.commit();
 		} catch (HibernateException e) {
             if (tx != null) {
@@ -185,7 +203,7 @@ public class FertilizationsDao
         return result;
     }    
     
-    public List getChemicals(String idFert, Integer quantPro) {
+    public HashMap getChemicals(String idFert, Double quantPro) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<Object[]> eventsTotal = null;
@@ -194,20 +212,30 @@ public class FertilizationsDao
         List<HashMap> result = new ArrayList<HashMap>();
         
         String sql = "";     
-        String sqlAdd = "";     
-                      
-        sql += "select fq.id_che_fer, fq.name_che_fer, ep.id_product_che_fer, ep.other_product_che_fer ";
-		sql += " tp.name_fer_typ, p.amount_product_used_fer";
+        String sqlAdd = "";     		
+        
+        sql += "select fq.id_che_fer, fq.name_che_fer, ep.id_product_che_fer, ep.other_product_che_fer,";
+        sql += " eq.name_che_ele, p.percentage_che_fer_com";
         sql += " from chemical_fertilizer_composition p"; 
         sql += " inner join chemical_fertilizers fq on fq.id_che_fer=p.id_chemical_fertilizer_che_fer_com";
         sql += " inner join chemical_fertilizations ep on ep.id_product_che_fer=fq.id_che_fer";    
-        sql += " inner join chemical_elements eq on eq.id_che_fer=p.id_elements_che_fer_com and eq.status_che_ele=1";    
-		sql += " where p.id_fertilization_che_fer="+idFert;
-        sql += " order by fq.id_che_fer ASC";
-        
+        sql += " inner join chemical_elements eq on eq.id_che_ele=p.id_elements_che_fer_com and eq.status_che_ele=1";    
+//		sql += " inner join fertilizations fer on ep.id_fertilization_che_fer=fer.id_fer"; 
+//        sql += " inner join production_events prod on prod.id_pro_eve=fer.id_production_event_fer";    
+//        sql += " left join fertilizations_types tp on tp.id_fer_typ=fer.fertilization_type_fer";    
+//        sql += " inner join log_entities le on le.id_object_log_ent=fer.id_fer and le.table_log_ent='fertilizations' and le.action_type_log_ent='C'";        
+        sql += " where ep.id_fertilization_che_fer="+idFert;
+//        if (args.containsKey("idEvent")) { 
+//            sql += " where fer.id_production_event_fer="+args.get("idEvent");
+//        }
+//        if (args.containsKey("idEntUser")) {
+//			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}
+        sqlAdd += " order by fq.id_che_fer ASC";
+        sql += sqlAdd;
 //        args.get("countTotal");
 //        events.toArray();
-//        System.out.println("sql->"+sql);
+        HashMap temp = new HashMap();
         try {
             tx = session.beginTransaction();
             Query query  = session.createSQLQuery(sql);
@@ -220,29 +248,41 @@ public class FertilizationsDao
             // result.add(temp);
 
             int i=1;
-            int numElem = query.list().size();
-
+            int numElem = query.list().size();            
+            String composition = "";
+            String value = "";
             for (Object[] data : events) {
-                HashMap temp = new HashMap();
-                temp.put("idFerQui", data[0]);
+//                HashMap temp = new HashMap();
+                temp.put("idFerChe", data[0]);
                 temp.put("nameFerTyp", data[1]);
                 temp.put("idFerTyp", data[2]);             
-                temp.put("otherProduct", data[3]);                
-
+                temp.put("otherProduct", data[3]);    
+                
 //                String idCoFer = String.valueOf(data[4]);
                 String nameComTyp = String.valueOf(data[4]);
                 Double perCom  = Double.parseDouble(String.valueOf(data[5]));
                 Double amountCom = ((perCom*quantPro)/100);
                 if (i == numElem) {
-                    temp.put("composition", nameComTyp+": "+perCom);
-                    temp.put("value", nameComTyp+": "+amountCom);
+                    composition += nameComTyp+": "+perCom;
+                    value += nameComTyp+": "+amountCom;
+//                    temp.put("composition", nameComTyp+": "+perCom);
+//                    temp.put("value", nameComTyp+": "+amountCom);
                 } else {
-                    temp.put("composition", nameComTyp+": "+perCom+", ");
-                    temp.put("value", nameComTyp+": "+amountCom+", ");
+                    composition += nameComTyp+": "+perCom+", ";
+                    value += nameComTyp+": "+amountCom+", ";
+//                    temp.put("composition", nameComTyp+": "+perCom+", ");
+//                    temp.put("value", nameComTyp+": "+amountCom+", ");
                 }
                 result.add(temp);
                 i++;
             }
+            temp.put("composition", composition);
+            temp.put("value", value);
+//            System.out.println("values=>"+temp);
+//            for (HashMap data : result) {
+////                    System.out.println(data.get("id_productor")+" "+data.get("id_entidad")+" "+data.get("cedula"));
+//                System.out.println("values=>"+data);
+//            }
             tx.commit();
 		} catch (HibernateException e) {
             if (tx != null) {
@@ -252,25 +292,35 @@ public class FertilizationsDao
 		} finally {
             session.close();
 		}
-        return result;
+        return temp;
     }
     
-    public List getOrganics(String idFert) {
+    public HashMap getOrganics(String idFert) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<Object[]> eventsTotal = null;
         List<Object[]> events = null;
         Transaction tx = null;
         List<HashMap> result = new ArrayList<HashMap>();
+        HashMap temp = new HashMap();
         
         String sql = "";     
         String sqlAdd = "";   
         
-        sql += "select p.id_org_fer, eq.name_org_fer, p.id_product_org_fer, p.other_product_org_fer from organic_fertilizations p"; 
+        sql += "select p.id_org_fer, eq.name_org_fer, p.id_product_org_fer, p.other_product_org_fer";
+        sql += " from organic_fertilizations p"; 
         sql += " left join organic_fertilizers eq on eq.id_org_fer=p.id_product_org_fer and eq.status_org_fer=1";    
         sql += " where p.id_fertilization_org_fer="+idFert;
-        sql += " order by p.id_org_fer ASC";
+//        if (args.containsKey("idEvent")) { 
+//            sql += " where fer.id_production_event_fer="+args.get("idEvent");
+//        }
+//        if (args.containsKey("idEntUser")) {
+//			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}
         
+//        sql += " where p.id_fertilization_org_fer="+idFert;
+        sqlAdd += " order by p.id_org_fer ASC";
+        sql += sqlAdd;
 //        args.get("countTotal");
 //        events.toArray();
 //        System.out.println("sql->"+sql);
@@ -283,12 +333,10 @@ public class FertilizationsDao
         // $temp['otro_producto_org'] = utf8_encode($fila['OTRO_PRODUCTO_FER_ORGA']);
 				
             for (Object[] data : events) {
-                HashMap temp = new HashMap();
                 temp.put("idFerOrg", data[0]);
                 temp.put("nameFerTypOrg", data[1]);
                 temp.put("idFerTypOrg", data[2]);             
-                temp.put("otherProductOrg", data[3]);      
-                result.add(temp);
+                temp.put("otherProductOrg", data[3]);   
             }
             tx.commit();
 		} catch (HibernateException e) {
@@ -299,25 +347,34 @@ public class FertilizationsDao
 		} finally {
             session.close();
 		}
-        return result;
+        return temp;
     }
     
-    public List getAmendments(String idFert) {
+    public HashMap getAmendments(String idFert) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<Object[]> eventsTotal = null;
         List<Object[]> events = null;
         Transaction tx = null;
         List<HashMap> result = new ArrayList<HashMap>();
+        HashMap temp = new HashMap();
         
         String sql = "";     
         String sqlAdd = "";   
         
-        sql += "select p.id_ame_fer, eq.name_ame_fer, p.id_product_ame_fer, p.other_product_ame_fer from amendments_fertilizations p"; 
+        sql += "select p.id_ame_fer, eq.name_ame_fer, p.id_product_ame_fer, p.other_product_ame_fer";
+        sql += " from amendments_fertilizations p"; 
         sql += " left join amendments_fertilizers eq on eq.id_ame_fer=p.id_product_ame_fer and eq.status_ame_fer=1";    
         sql += " where p.id_fertilization_ame_fer="+idFert;
-        sql += " order by p.id_ame_fer ASC";
+//        if (args.containsKey("idEvent")) { 
+//            sql += " where fer.id_production_event_fer="+args.get("idEvent");
+//        }
+//        if (args.containsKey("idEntUser")) {
+//			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}        
         
+        sqlAdd += " order by p.id_ame_fer ASC";
+        sql += sqlAdd;
 //        args.get("countTotal");
 //        events.toArray();
 //        System.out.println("sql->"+sql);
@@ -331,11 +388,10 @@ public class FertilizationsDao
 				
 				
             for (Object[] data : events) {
-                HashMap temp = new HashMap();
-                temp.put("idFerAmend", data[0]);
-                temp.put("nameFerTypAmend", data[1]);
-                temp.put("idFerTypAmend", data[2]);             
-                temp.put("otherProductAmend", data[3]);      
+                temp.put("idFerAme", data[0]);
+                temp.put("nameFerTypAme", data[1]);
+                temp.put("idFerTypAme", data[2]);             
+                temp.put("otherProductAme", data[3]);  
                 result.add(temp);
             }
             tx.commit();
@@ -347,7 +403,7 @@ public class FertilizationsDao
 		} finally {
             session.close();
 		}
-        return result;
+        return temp;
     }
     
     public Fertilizations objectById(Integer id) {
@@ -359,9 +415,9 @@ public class FertilizationsDao
 
         try {
             tx = session.beginTransaction();
-            String hql  = "FROM Fertilizations E WHERE E.idProEve = :id_crop";
+            String hql  = "FROM Fertilizations E WHERE E.idFer = :id_fer";
             Query query = session.createQuery(hql);
-            query.setParameter("id_crop", id);
+            query.setParameter("id_fer", id);
             event = (Fertilizations)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {

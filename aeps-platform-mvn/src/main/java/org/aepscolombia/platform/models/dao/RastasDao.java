@@ -62,7 +62,7 @@ public class RastasDao
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " where l.status=1 and f.status=1";
-        sql += " and r.estado_ras=1";
+        sql += " and r.status=1";
 //        sql += " lp.tipo_contrato_lot_pro!=1";
         // if ($identProductor!='' ) sql += "where";
 //        sql += sqlAdd;
@@ -154,8 +154,8 @@ public class RastasDao
         sql += " left join farms f on f.id_far=l.id_farm_fie";
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where l.status_fie=1 and f.status_far=1";
-        sql += " and r.estado_ras=1";    
+        sql += " where l.status=1 and f.status=1";
+        sql += " and r.status=1";    
         
         
         if (args.containsKey("idEntUser")) {
@@ -269,7 +269,7 @@ public class RastasDao
 //        sql += " r.espesor_capa_endurecida_ras-27, r.moteados_ras-28, r.profundidad_moteados_ras-29, r.moteados_mas_70cm_ras-30, r.estructura_ras-31,";
 //        sql += " r.erosion_ras-32, r.moho_ras-33, r.costras_duras_ras-34, r.exposicion_sol_ras-35, r.costras_blancas_ras-36, r.costras_negras_ras-37,";
 //        sql += " r.region_seca_ras-38, r.raices_vivas_ras-39, r.profundidad_raices_ras-40, r.plantas_pequenas_ras-41, r.hojarasca_ras-42,";
-//        sql += " r.suelo_negro_blando_ras-43, r.cuchillo_primer_horizonte_ras-44, r.cerca_rios_quebradas_ras-45, r.recubrimiento_vegetal_ras-46, r.estado_ras-47";
+//        sql += " r.suelo_negro_blando_ras-43, r.cuchillo_primer_horizonte_ras-44, r.cerca_rios_quebradas_ras-45, r.recubrimiento_vegetal_ras-46, r.status-47";
             tx = session.beginTransaction();
 //            Query query = session.createSQLQuery(sql);
             Query query  = session.createSQLQuery(sql);
@@ -341,7 +341,8 @@ public class RastasDao
         try {
             tx = session.beginTransaction();
             String sql  = "select h.id_hor_ras, h.id_rasta_hor_ras, h.numero_horizonte_hor_ras, h.espesor_hor_ras,";
-            sql += " h.color_seco_hor_ras, color_humedo_hor_ras, textura_hor_ras, resistencia_rompimiento_hor_ras ";
+            sql += " h.color_seco_hor_ras, h.color_humedo_hor_ras, h.textura_hor_ras, h.resistencia_rompimiento_hor_ras,";
+            sql += " h.status, h.created_by";
             sql += " from horizontes_rasta h where h.id_rasta_hor_ras = "+idRas;
 //            System.out.println("sql->"+sql);
             Query query = session.createSQLQuery(sql).addEntity("h", HorizontesRasta.class);

@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -33,6 +36,83 @@ import javax.mail.internet.MimeMultipart;
  * @version 1.0
  */
 public class GlobalFunctions {
+    
+    public static Integer check_in_range(Date start, Date end, Date evaluame) 
+    {
+        Integer result = 2;        
+        if(evaluame.after(start) && evaluame.before(end)){
+            result = 1;
+        }
+        return result;
+
+//        if(start.before(end)){
+//            System.out.println("Date1 is before Date2");
+//        }
+//
+//        if(start.equals(end)){
+//            System.out.println("Date1 is equal Date2");
+//        }
+        
+//        $start_ts = strtotime($start_date);
+//        $end_ts   = strtotime($end_date);
+//        $user_ts  = strtotime($evaluame);
+//        if (($user_ts >= $start_ts) && ($user_ts <= $end_ts)) {
+//            return 1;
+//        } else {
+//            return 2;
+//        }
+    }
+    
+    public static Integer compareDateBeforeSowing(Date date1, Date date2)
+    {        
+        Date dateOld = (Date)date2.clone();
+        Double numYearsMore =  Math.abs(Math.floor((dateOld.getMonth() - 10) / 12));
+        dateOld.setMonth((dateOld.getMonth() - 1 - 6) % 12 + 1);
+        dateOld.setYear(dateOld.getYear()-numYearsMore.intValue());
+        String dateAsign = "";
+        Date dateBefore = null;
+        try {
+            dateAsign  = new SimpleDateFormat("yyyy-MM-dd").format(dateOld);
+            dateBefore = new SimpleDateFormat("yyyy-MM-dd").parse(dateAsign);
+        } catch (IllegalArgumentException ex) {
+        } catch (ParseException ex) {
+        }
+//        Date dateBefore = new Date(dateAsign);		
+        return check_in_range(dateBefore, date2, date1);
+//		return self::check_in_range($dateBefore, $date2, $date1);
+	}
+    
+    public static Integer compareDateAfterSowing(Date date1, Date date2, Integer tipoCul)
+    {	
+        Date dateOld = (Date)date2.clone();
+        Double numYearsMore =  Math.floor((dateOld.getMonth() + 10) / 12);
+		if (tipoCul==3) {
+            dateOld.setMonth((dateOld.getMonth() - 1 + 18) % 12 + 1);
+		} else {
+            dateOld.setMonth((dateOld.getMonth() - 1 + 10) % 12 + 1);
+		}	
+        dateOld.setYear(dateOld.getYear()+numYearsMore.intValue());
+//        System.out.println("numYearsMore->"+numYearsMore);
+//        System.out.println("dateConvert->"+date2);
+        String dateAsign = "";
+        Date dateAfter = null;
+        try {
+            dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(dateOld);
+            dateAfter = new SimpleDateFormat("yyyy-MM-dd").parse(dateAsign);
+            dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(date2);
+            date2     = new SimpleDateFormat("yyyy-MM-dd").parse(dateAsign);
+        } catch (IllegalArgumentException ex) {
+        } catch (ParseException ex) {
+        }
+//        System.out.println("date23->"+date2);
+//        System.out.println("dateAfter->"+dateAfter);
+//        System.out.println("date1->"+date1);
+//        Date dateAfter = new Date(dateAsign);
+        return check_in_range(date2, dateAfter, date1);
+        
+//		$dateAfter = ''.$dateAfter->format('Y-m-d');        
+//		return self::check_in_range($date2, $dateAfter, $date1);
+    }
 
     /**
      * Encargado de enviar un correo al usuario

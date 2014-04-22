@@ -23,6 +23,7 @@ public class ChemicalElements  implements java.io.Serializable {
 
      private Integer idCheEle;
      private String nameCheEle;
+     private Double valueCheEle;
      private boolean statusCheEle;
 
     public ChemicalElements() {
@@ -53,6 +54,15 @@ public class ChemicalElements  implements java.io.Serializable {
     public void setNameCheEle(String nameCheEle) {
         this.nameCheEle = nameCheEle;
     }
+
+    public Double getValueCheEle() {
+        return valueCheEle;
+    }
+
+    public void setValueCheEle(Double valueCheEle) {
+        this.valueCheEle = valueCheEle;
+    }  
+    
     
     @Column(name="status_che_ele", nullable=false)
     public boolean isStatusCheEle() {

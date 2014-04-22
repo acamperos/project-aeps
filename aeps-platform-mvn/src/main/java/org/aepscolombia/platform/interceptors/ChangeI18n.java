@@ -36,6 +36,7 @@ public class ChangeI18n extends AbstractInterceptor
     Users user = (Users) session.get(APConstants.SESSION_USER);
     
     if (!lang.equals("")) {
+        lang = "es";
         Locale locale = new Locale(lang);
         invocation.getInvocationContext().setLocale(locale);
     }

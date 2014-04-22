@@ -53,6 +53,10 @@ public class ProductionEvents  implements java.io.Serializable {
 
     public ProductionEvents() {
     }
+    
+    public ProductionEvents(Integer idProEve) {
+        this.idProEve=idProEve;
+    }
 
 	
     public ProductionEvents(Fields fields, CropsTypes cropsTypes, int idProjectProEve, boolean status, double expectedProductionProEve) {

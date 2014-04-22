@@ -4,11 +4,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
+    </head>
     <body>
         <div id="dialog-form"></div>
         <div class="container">
             <ul id="breadcrumbs">
+                <s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
                 <li><s:a href="dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>
                 <li><span>Recolectar datos</span></li>
             </ul>
@@ -30,8 +33,8 @@
 					<img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
 					<div class="caption">
 						<h3>Cultivos</h3>
-                        <p>Encargado de la toma de datos para los cultivos</p>
-                        <p><s:a cssClass="btn btn-initial" href="/aeps-plataforma-mvn/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+                        <p>Encargado de la toma de datos para los cultivos</p>                        
+                        <p><s:a cssClass="btn btn-initial" href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
 					</div>
 				</div>
             </div>
@@ -49,7 +52,7 @@
 					<div class="caption">
 						<h3>Suelos</h3>
                         <p>Encargado de la toma de datos para los suelos</p>
-                        <p><s:a cssClass="btn btn-initial" href="/aeps-plataforma-mvn/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
+                        <p><s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
 					</div>
 				</div>
             </div>

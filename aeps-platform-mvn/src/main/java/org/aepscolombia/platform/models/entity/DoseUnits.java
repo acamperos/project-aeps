@@ -29,6 +29,9 @@ public class DoseUnits  implements java.io.Serializable {
     public DoseUnits() {
     }
 
+    public DoseUnits(Integer idDosUni) {
+        this.idDosUni = idDosUni;
+    }
 	
     public DoseUnits(String nameDosUni) {
         this.nameDosUni = nameDosUni;

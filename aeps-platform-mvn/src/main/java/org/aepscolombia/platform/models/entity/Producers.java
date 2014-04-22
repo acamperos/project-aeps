@@ -33,6 +33,9 @@ public class Producers  implements java.io.Serializable {
     public Producers() {
     }
 
+    public Producers(Integer idPro) {
+        this.idPro = idPro;
+    }
 	
     public Producers(Entities entities, boolean status) {
         this.entities = entities;

@@ -4,7 +4,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head></head>
     <body>
         <div class="container">
             <nav>
@@ -21,8 +20,12 @@
             </div>
             <div class="panel">
                 <div class="panel-body">
+                    <% request.setAttribute("dateLast", user.getLastInUsr()); %>
                     <!-- <p>Reportes Generales</p> -->
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.</p>
+                    <s:date name="%{#attr.dateLast}" format="dd/MM/yyyy" var="dateTransformLastlogin"/>
+                    <h4>Ultima fecha de acceso: <s:property value="%{#dateTransformLastlogin}" /></h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.
+                    </p>
                 </div>
             </div>				
             <!-- Example row of columns -->

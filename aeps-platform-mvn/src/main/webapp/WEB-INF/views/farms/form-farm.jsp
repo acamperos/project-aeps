@@ -51,15 +51,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="latitude_degrees_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_degrees_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_degrees_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_degrees_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="latitude_minutes_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_minutes_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_minutes_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_minutes_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="latitude_seconds_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_seconds_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_seconds_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_seconds_property" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -81,15 +81,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_degrees_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_degrees_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_degrees_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_minutes_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_minutes_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_minutes_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_seconds_property" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_seconds_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_seconds_property" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                     listValue="nameDep"          
                                     headerKey=" " 
                                     headerValue="---"
-                                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'formFarm')"
+                                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'divMessage')"
                                 />
                             </div>  
                         </div>
@@ -158,8 +158,8 @@
                     <div> 
                         <s:hidden name="page" id="formFarm_page" />
                         <s:hidden name="actExe"/>
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm">Guardar Finca</sj:submit>
-                        <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')">Guardar informaci&oacute;n</button>-->
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
+                        <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')"><i class="icon-save"></i> Guardar informaci&oacute;n</button>-->
                         <button class="btn btn-large bt_cancel_farm" onclick="resetForm('formFarm'); closeWindow();">Cancelar</button>
                     </div>    
                 </s:form>        
@@ -171,7 +171,7 @@
                     $("#formFarm_latitude_property").numeric();
                     $("#formFarm_length_property").numeric();
                     $("#formFarm_latitude_property").val(parsePointSeparated($("#formFarm_latitude_property").val()));
-                    $("#formFarm_length_property").val(parsePointSeparated($("#formFarm_length_property").val()));
+                    $("#formFarm_length_property").val(parsePointSeparated($("#formFarm_length_property").val()));           
                     
                     $("#formFarm_altitude_property").numeric({decimal: false, negative: false});
                     $("#formFarm_length_degrees_property").numeric({decimal: false});
@@ -180,6 +180,8 @@
                     $("#formFarm_latitude_degrees_property").numeric({decimal: false});
                     $("#formFarm_latitude_minutes_property").numeric({decimal: false});
                     $("#formFarm_latitude_seconds_property").numeric();
+                    generateDegrees('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property');
+                    generateDegrees('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property');
                     $.subscribe('completeFarm', function(event, data) {
                         //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
                         //     '\n\nThe output div should have already been updated with the responseText.');

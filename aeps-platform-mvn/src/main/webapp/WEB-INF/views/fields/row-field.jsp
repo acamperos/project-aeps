@@ -6,8 +6,9 @@
     <% }%>
 <% }%>
 <td>
-    <s:property value="name_lot" />
-    (<s:property value="name_producer" />-<s:property value="name_far" />)
+    Lote: <s:property value="name_lot" />, <br />
+    Finca: <s:property value="name_far" />, <br />
+    Productor: <s:property value="name_producer" />
 </td>
 <td><s:property value="name_type_lot" /></td>
 <td><s:property value="area_lot" /></td>

@@ -31,6 +31,11 @@ public class Pests  implements java.io.Serializable {
 
     public Pests() {
     }
+    
+    public Pests(Integer idPes, String namePes) {
+        this.idPes   = idPes;
+        this.namePes = namePes;        
+    }
 
 	
     public Pests(String namePes, boolean statusPes) {

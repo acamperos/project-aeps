@@ -18,7 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item">
+<!--                    <div class="item">
                         <img src="img/carouselthumb.jpg" alt="thumb">
                         <div class="container">
                             <div class="carousel-caption">
@@ -26,7 +26,7 @@
                                 <a href="login.action" class="btn btn-initial btn-large"><s:property value="getText('button.ingress.platform')" /></a>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="item">
                         <img src="img/carouselthumb.jpg" alt="thumb">
                         <div class="container">
@@ -41,8 +41,6 @@
                     <li data-target="#carousel-487454" data-slide-to="0" class="active">
                     </li>
                     <li data-target="#carousel-487454" data-slide-to="1" class="">
-                    </li>
-                    <li data-target="#carousel-487454" data-slide-to="2" class="">
                     </li>
                 </ol>
                 <a class="left carousel-control" href="#carousel-487454" data-slide="prev">&lsaquo;</a> 
@@ -67,6 +65,9 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tb3_a">
                                 <p><s:property value="getText('text.description.report')" /></p>
+                            </div>
+                            <div class="tab-pane" id="tb3_b">
+                                <pre><s:property value="getText('text.description.info')" /></pre>
                             </div>
                         </div>
                     </div>

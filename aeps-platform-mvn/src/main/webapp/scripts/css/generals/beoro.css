@@ -224,7 +224,7 @@ small { font-size: 11px }*/
     .w-box-footer .f-text { margin: 0; padding: 0 12px; font-size: 12px; }
     .w-box-footer .f-center { padding: 0 10px; text-align: center; }
     .w-box-content.content-hide { display: none }
-    .w-box .table thead th, .w-box .table tfoot th { background-color: #A4C300 !important }
+    .w-box .table thead th, .w-box .table tfoot th, .w-box .table tbody th { background-color: #A4C300 !important }
     /*.w-box .table thead th, .w-box .table tfoot th { background-color: #f0f3f5 !important }*/
     .w-box .table .sorting_desc, .w-box .table .sorting_asc { background-color: #dce3e7 !important }
     .w-box .table-vam td, .w-box .table-vam th { vertical-align: middle }

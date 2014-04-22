@@ -24,7 +24,6 @@
     <% String value   = (String) (add.get("selected"));%>
     <% String valId   = (String) (request.getAttribute("valId"));%>
     <% String valName = (String) (request.getAttribute("valName"));%>
-    <% //System.out.println("datos->"+value); %>
     <% String divShow = "";%>
     <% String divHide = "";%>
     <% if (value.equals("property")) {
@@ -54,7 +53,7 @@
                         <% }%>
                     <% }%>
                     <!-- <th>#</th> -->
-                    <th>Cedula</th>
+                    <th>Documento</th>
                     <th>Nombre</th>
                     <th>Telefono</th>
                     <th>Celular</th>

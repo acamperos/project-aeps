@@ -117,9 +117,10 @@ public class PreparationsDao
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_prep";    
         sql += " left join preparations_types tp on tp.id_pre_typ=p.preparation_type_prep and tp.status_pre_typ=1";    
         sql += " left join residuals_clasification cr on cr.id_res_cla=p.id_residuals_prep and cr.status_res_cla=1";    
-        sql += " inner join log_entities le on le.id_object_log_ent=p.id_prep and le.table_log_ent='preparations'";   
-		if (args.containsKey("idEvent")) {
-            sql += " where p.id_production_event_prep="+args.get("idEvent");
+        sql += " inner join log_entities le on le.id_object_log_ent=p.id_prep and le.table_log_ent='preparations' and le.action_type_log_ent='C'";   
+		sql += " where p.status=1";
+        if (args.containsKey("idEvent")) {
+            sql += " and p.id_production_event_prep="+args.get("idEvent");
         }
 		if (args.containsKey("idEntUser")) {
 			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
@@ -167,14 +168,20 @@ public class PreparationsDao
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
+        String sql  = "";        
         Preparations event = null;
         Transaction tx = null;
-
+				
+        sql += "select p.id_prep, p.id_production_event_prep, p.date_prep, p.preparation_type_prep,";
+        sql += " p.depth_prep, p.id_residuals_prep, p.use_hills_prep, p.other_preparation_type_prep,";
+        sql += " p.passings_number_prep, p.other_residuals_management_prep, p.status, p.created_by";
+        sql += " from preparations p";
+        sql += " where p.id_production_event_prep="+id;
         try {
             tx = session.beginTransaction();
-            String hql  = "FROM Preparations E WHERE E.idProEve = :id_crop";
+            String hql  = "FROM Preparations E WHERE E.idPrep = :id_prep";
             Query query = session.createQuery(hql);
-            query.setParameter("id_crop", id);
+            query.setParameter("id_prep", id);
             event = (Preparations)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {

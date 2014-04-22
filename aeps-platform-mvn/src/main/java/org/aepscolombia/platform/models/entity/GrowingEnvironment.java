@@ -22,14 +22,14 @@ import javax.persistence.Table;
 public class GrowingEnvironment  implements java.io.Serializable {
 
 
-     private int idGroEnv;
+     private Integer idGroEnv;
      private String nameGroEnv;
 
     public GrowingEnvironment() {
     }
 
 	
-    public GrowingEnvironment(int idGroEnv, String nameGroEnv) {
+    public GrowingEnvironment(Integer idGroEnv, String nameGroEnv) {
         this.idGroEnv = idGroEnv;
         this.nameGroEnv = nameGroEnv;
     }
@@ -37,11 +37,11 @@ public class GrowingEnvironment  implements java.io.Serializable {
      @Id 
     
     @Column(name="id_gro_env", unique=true, nullable=false)
-    public int getIdGroEnv() {
+    public Integer getIdGroEnv() {
         return this.idGroEnv;
     }
     
-    public void setIdGroEnv(int idGroEnv) {
+    public void setIdGroEnv(Integer idGroEnv) {
         this.idGroEnv = idGroEnv;
     }
     

@@ -181,6 +181,18 @@ public class ActionLogin extends BaseAction {
     public void setUser(Users user) {
         this.user = user;
     }
+    
+//    private Date lastLogin;
+//
+//    public Date getLastLogin() {
+//        return lastLogin;
+//    }
+//
+//    public void setLastLogin(Date lastLogin) {
+//        this.lastLogin = lastLogin;
+//    }
+    
+    
 
     /**
      * Encargado de verificar si un usuario se encuentra registrado en el sistema
@@ -193,6 +205,7 @@ public class ActionLogin extends BaseAction {
             if (loggedUser != null) {
                 this.setUsername("");
                 this.setPassword("");
+//                this.setLastLogin(loggedUser.getLastInUsr());
                 this.getSession().put(APConstants.SESSION_USER, loggedUser);
 //          LOG.info("User " + user.getEmail() + " logged in successfully.");
                 return SUCCESS;
@@ -248,6 +261,8 @@ public class ActionLogin extends BaseAction {
 //          LOG.info("User {} logout succesfully", user.getNameUserUsr());
         }
         Map session = this.getSession();
+        user.setLastInUsr(new Date());
+        userDao.save(user);
         session.clear();
         session.remove(APConstants.SESSION_USER);
         return SUCCESS;

@@ -81,15 +81,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="latitude_degrees_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_degrees_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_degrees_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_degrees_lot" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="latitude_minutes_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_minutes_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_minutes_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_minutes_lot" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="latitude_seconds_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_seconds_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="latitude_seconds_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_seconds_lot" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -111,15 +111,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_degrees_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_degrees_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_degrees_lot" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_minutes_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_minutes_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_minutes_lot" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_seconds_lot" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_seconds_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_seconds_lot" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -146,8 +146,8 @@
                     <div> 
                         <s:hidden name="page" id="formField_page"/>
                         <s:hidden name="actExe"/>    
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm">Guardar Lote</sj:submit>
-                        <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')">Guardar informaci&oacute;n</button>-->
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
+                        <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')"><i class="icon-save"></i>  Guardar informaci&oacute;n</button>-->
                         <button class="btn btn-large bt_cancel_field" onclick="resetForm('formField'); closeWindow();">Cancelar</button>
                     </div>    
                 </s:form>        

@@ -106,8 +106,10 @@
             <div class="span5">
                 <div class="control-group">
                     <s:label for="formCropSearch_date_sowing" cssClass="control-label" value="Fecha de siembra"></s:label>
-                    <div class="controls">
-                        <s:textfield name="date_sowing" />
+                    <div class="date controls">
+                        <s:textfield name="date_sowing" readonly="true"/>
+                        <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>                          
                 </div>                          
             </div>     

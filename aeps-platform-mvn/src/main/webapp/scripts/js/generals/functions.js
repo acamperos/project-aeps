@@ -49,10 +49,13 @@ function showElement(valSel, divShow) {
 }
 
 function showInfoRiego(valSel, divShow) {
-    if (valSel == 1) {
+//    if (valSel == 1) {
+    if (valSel=='true') {
         $("#" + divShow).show();
+        $("#" + divShow).removeClass("hide");
     } else {
         $("#" + divShow).hide();
+        $("#" + divShow).addClass("hide");
     }
 }
 
@@ -102,6 +105,27 @@ function selConf(valSel, inputId) {
         //$("#"+inputId).mask("999999?9999",{placeholder:""});
     } else if (valSel == 'RC') {
         //$("#"+inputId).mask("999999?9999",{placeholder:""});
+    }
+}
+
+function showTypeFertilizerSel(valSel, divShowA, divShowB, divShowC) {
+    var valIng = $("#"+valSel).val();
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+    } else if (valIng == 2) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).hide();
+    } else if (valIng == 3) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).show();
+    } else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
     }
 }
 
@@ -167,7 +191,8 @@ function showElementRate(valSel, divShow) {
 
 function showOtherElementPrep(valSel, divShowA, divShowB) {
     if (valSel == 1000000) {
-        $("#" + divShowA).hide();
+//        $("#" + divShowA).hide();
+        $("#" + divShowA).show();
         $("#" + divShowB).show();
     } else if (valSel >= 1 && valSel <= 5) {
         $("#" + divShowA).show();
@@ -420,7 +445,7 @@ function listInfoLot(url, nameData, valData, valName, valId, title, width, heigh
 var requestSent = false;
 function deleteItem(url, urlAction, divTable, divShow)
 {
-    $('#'+divTable).find("div.alert-info").remove();
+    $('#'+divTable).find("div.alert-success").remove();
     $('#'+divTable).find("div.error").removeClass("error");
     $('#'+divTable).find("span.s2_help_inline").remove();
     $('#'+divTable).find("div.s2_validation_errors").remove();
@@ -460,22 +485,26 @@ function deleteItem(url, urlAction, divTable, divShow)
 
 function showMessInfo(idLoc, info)
 {
-    var infoDiv = $("<div class='alert alert-info messageAlerts'></div>");
-    $('#'+idLoc).prepend(infoDiv);
+    var infoDiv = $("<div class='alert alert-success messageAlerts'>");
     infoDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+    infoDiv.append('<i class=\"icon-info-sign\"></i> <strong>Mensaje Exitoso</strong>');
+    infoDiv.append('<hr class=\"message-inner-separator\"></div>');
+    $('#'+idLoc).prepend(infoDiv);    
     infoDiv.append('<p>' + info + '</p>\n');    
     $('#'+idLoc).focus();
-    $('#'+idLoc).append(setTimerToMessage(8));
+    $('#'+idLoc).append(setTimerToMessage(20));
 }
 
 function showMessError(idLoc, info)
 {
-    var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'></div>");
-    $('#'+idLoc).prepend(errorDiv);
+    var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'>");
     errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+    errorDiv.append('<i class=\"icon-remove-sign\"></i> <strong>Mensaje de Error</strong>');
+    errorDiv.append('<hr class=\"message-inner-separator\"></div>');
+    $('#'+idLoc).prepend(errorDiv);    
     errorDiv.append('<p>' + info + '</p>\n');  
     $('#'+idLoc).focus();
-    $('#'+idLoc).append(setTimerToMessage(8));
+    $('#'+idLoc).append(setTimerToMessage(20));
 }
 
 
@@ -769,32 +798,95 @@ function showInfoVende(valSel, divShow) {
     }
 }
 
-function chargeValuesObjective(url, valName, valSend, valFill, valFillAdd, message)
+function chargeValuesControls(url, valName, valSendId, valNameCon, valSenIdCon, valFillChe, valFillOrg, message)
 {
-//     alert(11)
     var data;
-    // if (valSend) {
-    data = '&' + valName + '=' + valSend;
-    // }
-    $('#' + valFill).html('');
-    $('#' + valFillAdd).html('');
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        success: function(information) {
-            // $('.ajaxgif').hide();
-            var json = jQuery.parseJSON(information);
-            if (json.state == 'failure') {
-                $('#' + message).html(json.info);
-                $('#' + message).focus();
-            } else if (json.state == 'success') {
-                $('#' + valFill).html(json.info);
-                $('#' + valFillAdd).html(json.info);
-            }
+    var valSend    = $('#' + valSendId).val();
+    var valSendCon = $('#' + valSenIdCon).val();
+    if (valSend!==-1 && valSendCon!=-1) {
+        data  = '&' + valName + '=' + valSend;
+        data += '&' + valNameCon + '=' + valSendCon;
+        $('#' + valFillChe).html('');
+        $('#' + valFillOrg).html('');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(information) {
+                var json = jQuery.parseJSON(information);
+                if (json.state == 'failure') {
+                    $('#' + message).html(json.info);
+                    $('#' + message).focus();
+                } else if (json.state == 'success') {
+                    if (valSendCon==1){
+                        $('#' + valFillOrg).html(json.info);
+                    } else if (valSendCon==2){
+                        $('#' + valFillChe).html(json.info);
+                    }            
+                }
 
+            }
+        });
+    }
+}
+
+function hideInformationControls(divPes, divWee, divDis, divChe, divOrg) {
+	$('#'+divPes).removaClass('hide').addClass('hide');
+	$('#'+divWee).removaClass('hide').addClass('hide');
+	$('#'+divDis).removaClass('hide').addClass('hide');
+	$('#'+divChe).removaClass('hide').addClass('hide');
+	$('#'+divOrg).removaClass('hide').addClass('hide');
+}
+
+
+//function chargeValuesObjective(url, valName, valSendId, valFillPest, divPest, valFillWee, divWee, valFillDis, divDis, message)
+function chargeValuesObjective(valSendId, divPest, divWee, divDis)
+{
+    var valSend = $('#' + valSendId).val();
+    if (valSend!=null) {
+        $('#' + divPest).addClass("hide");
+        $('#' + divWee).addClass("hide");
+        $('#' + divDis).addClass("hide");
+        if (valSend==1){
+            $('#' + divPest).removeClass("hide");
+        } else if (valSend==2){
+            $('#' + divWee).removeClass("hide");
+        } else if (valSend==3){
+            $('#' + divDis).removeClass("hide");
         }
-    });
+//        var data;
+//        data = '&' + valName + '=' + valSend;
+//        $('#' + valFillPest).html('');
+//        $('#' + valFillWee).html('');
+//        $('#' + valFillDis).html('');
+//        $.ajax({
+//            type: "POST",
+//            url: url,
+//            data: data,
+//            success: function(information) {
+//                var json = jQuery.parseJSON(information);
+//                if (json.state == 'failure') {
+//                    $('#' + message).html(json.info);
+//                    $('#' + message).focus();
+//                } else if (json.state == 'success') {
+//                    $('#' + divPest).addClass("hide");
+//                    $('#' + divWee).addClass("hide");
+//                    $('#' + divDis).addClass("hide");
+//                    if (valSend==1){
+//                        $('#' + valFillPest).html(json.info);
+//                        $('#' + divPest).removeClass("hide");
+//                    } else if (valSend==2){
+//                        $('#' + valFillWee).html(json.info);
+//                        $('#' + divWee).removeClass("hide");
+//                    } else if (valSend==3){
+//                        $('#' + valFillDis).html(json.info);
+//                        $('#' + divDis).removeClass("hide");
+//                    }               
+//                }
+//
+//            }
+//        });
+    }
 }
 
 function selValue(objSel, divShow)
@@ -892,7 +984,7 @@ function setTimerToMessage(fade)
 function completeForm(dialogId, formId, information) 
 {
 //    bootstrapValidation(form, errors);
-//    form.find("div.alert-info").remove();
+//    form.find("div.alert-success").remove();
     
 
     //Handle non field errors
@@ -910,7 +1002,7 @@ function completeForm(dialogId, formId, information)
     $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
     if (dialogId!='') {
-        $('#'+dialogId).find("div.alert-info").remove();
+        $('#'+dialogId).find("div.alert-success").remove();
     }    
     // alert(message);
 //    if (json.state == 'failure') {
@@ -944,7 +1036,7 @@ function completeFormChange(dialogId, formId, information)
     $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
     if (dialogId!='') {
-        $('#'+dialogId).find("div.alert-info").remove();
+        $('#'+dialogId).find("div.alert-success").remove();
     }    
     if (json.state == 'failure') {
         showMessError(formId, json.info);
@@ -960,23 +1052,47 @@ function completeFormChange(dialogId, formId, information)
 
 function completeFormGetting(dialogId, formId, divId, information) 
 {
-    $('#'+divId).find("div.alert-info").remove();
+    $('#'+divId).find("div.alert-success").remove();
     $('#'+divId).find("div.alert-error").remove();
     $.unblockUI();
     $('#'+formId).find("div.error").removeClass("error");
     $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
 //    if (dialogId!='') {
-//        $('#'+dialogId).find("div.alert-info").remove();
+//        $('#'+dialogId).find("div.alert-success").remove();
 //    }    
     if (json.state == 'failure') {
         showMessError(divId, json.info);
         $('#'+divId).append(setTimerToMessage(8));
     } else if (json.state == 'success') {
 //        requestSent = false;
-        $('#'+divId).find("div.alert-info").remove();
+        $('#'+divId).find("div.alert-success").remove();
         showMessInfo(divId, json.info);
         $('#'+formId)[0].reset();
+    }
+    if (dialogId!='') {
+        $('#'+dialogId).dialog("close");
+    }  
+}
+
+function completeFormCrop(dialogId, formId, divId, information) 
+{
+    $('#'+divId).find("div.alert-success").remove();
+    $('#'+divId).find("div.alert-error").remove();
+    $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
+    var json = jQuery.parseJSON(information);
+//    if (dialogId!='') {
+//        $('#'+dialogId).find("div.alert-success").remove();
+//    }    
+    if (json.state == 'failure') {
+        showMessError(divId, json.info);
+        $('#'+divId).append(setTimerToMessage(8));
+    } else if (json.state == 'success') {
+//        requestSent = false;
+        $('#'+divId).find("div.alert-success").remove();
+        showMessInfo(divId, json.info);
     }
     if (dialogId!='') {
         $('#'+dialogId).dialog("close");
@@ -999,7 +1115,7 @@ function addMessageProcess()
             opacity: .5, 
             color: '#fff' 
         },
-        message: '<div class="view-process row"><div class="span6"><i class="icon-spinner icon-spin"></i><h3>Procesando....</h3></div></div>' 
+        message: '<div class="view-process row"><div class="span6"><h3><i style="font-size:30px" class="icon-spinner icon-spin"></i><br>Procesando....</h3></div></div>' 
     }); 
 //    $.blockUI({ 
 //        message: '<img src="img/ajax.gif" />Procesando....' 
@@ -1011,7 +1127,7 @@ function validationForm(form, errors)
 //    bootstrapValidation(form, errors);
     form.find("div.error").removeClass("error");
 //    form.find("div.info").removeClass("error");
-    form.find("div.alert-info").remove();
+    form.find("div.alert-success").remove();
     form.find("div.alert-error").remove();
     form.find("span.s2_help_inline").remove();
     form.find("div.s2_validation_errors").remove();    
@@ -1019,9 +1135,12 @@ function validationForm(form, errors)
     //Handle non field errors
     if (errors.errors && errors.errors.length > 0) { 
 //        Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
-        var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts' name='messageUsers'></div>");
-        form.prepend(errorDiv);
+        var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts' name='messageUsers'>");
         errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+        errorDiv.append('<i class=\"icon-remove-sign\"></i> <strong>Mensaje de Error</strong>');
+        errorDiv.append('<hr class=\"message-inner-separator\"></div>');
+        form.prepend(errorDiv);
+//        errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
         $.each(errors.errors, function(index, value) {
             errorDiv.append('<p>' + value + '</p>\n');
         });
@@ -1029,7 +1148,7 @@ function validationForm(form, errors)
 //        document.location='#messageUsers';
 //        alert(form.attr('id'));
         document.location='#'+form.attr('id');
-        form.append(setTimerToMessage(8));
+        form.append(setTimerToMessage(20));
     }
 
     //Handle field errors
@@ -1051,7 +1170,7 @@ function validationForm(form, errors)
             }
         });
     }
-//    form.find("div.alert-info").remove();
+//    form.find("div.alert-success").remove();
     
 
     //Handle non field errors
@@ -1070,7 +1189,7 @@ function validationForm(form, errors)
 //        });
 //        $(errorDiv).focus();
 //    } else if (errors.state == 'success') {
-//        var errorDiv = $("<div class='alert alert-info s2_validation_info'></div>");
+//        var errorDiv = $("<div class='alert alert-success s2_validation_info'></div>");
 //        form.prepend(errorDiv);
 //        $.each(errors.info, function(index, value) {
 //            errorDiv.append('<p>' + value + '</p>\n');
@@ -1518,15 +1637,18 @@ function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
     var valNumDegrees = parseFloat($('#'+valDegrees).val());
     var valNumMinutes = $('#'+valMinutes).val();
     var valNumSeconds = $('#'+valSeconds).val();
-    
-    var latLot = parseFloat((valNumMinutes/60) + (valNumSeconds/3600));
-//    alert(latLot)
-    if (latLot===0) latLot = ".0";
-    latLot = (valNumDegrees<0) ? ((Math.abs(valNumDegrees))+latLot)*-1 : (valNumDegrees+latLot);
-    latLot = ""+latLot;
-    latLot = parsePointSeparated(latLot);
-//    alert(latLot)
-    $('#'+valDec).val(latLot);   
+    if ($('#'+valDegrees).val()!=null && $('#'+valDegrees).val()!="" && valNumMinutes!=null && valNumMinutes!="" && valNumSeconds!=null && valNumSeconds!="") {
+        var latLot = parseFloat((valNumMinutes/60) + (valNumSeconds/3600));
+    //    alert(latLot)
+        if (latLot===0) latLot = ".0";
+        latLot = (valNumDegrees<0) ? ((Math.abs(valNumDegrees))+latLot)*-1 : (valNumDegrees+latLot);
+        latLot = ""+latLot;
+        latLot = parsePointSeparated(latLot);
+    //    alert(latLot)
+        $('#'+valDec).val(latLot); 
+    } else {
+        $('#'+valDec).val(""); 
+    }
 }
 
 function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
@@ -1535,30 +1657,37 @@ function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
 //    var valNumDecimal = $('#'+valDec).val(); 
 //    alert(navigator.language);
     var valNumDecimal = parseCommaSeparated($('#'+valDec).val()); 
-//    alert(valNumDecimal)
-    var d = Math.floor (valNumDecimal);
-    var minfloat = (valNumDecimal-d)*60;
-    var m = Math.floor(minfloat);
-    var secfloat = (minfloat-m)*60;
-    var s = Math.round(secfloat);   
-    
-    if (s==60) {
-      m++;
-      s=0;
+    if ($('#'+valDec).val()!=null && $('#'+valDec).val()!="") {
+        var d = Math.floor (valNumDecimal);
+        var minfloat = (valNumDecimal-d)*60;
+        var m = Math.floor(minfloat);
+        var secfloat = (minfloat-m)*60;
+        var s = Math.round(secfloat);   
+
+        if (s==60) {
+          m++;
+          s=0;
+        }
+        if (m==60) {
+          d++;
+          m=0;
+        }
+
+        $('#'+valDegrees).val(d);
+        $('#'+valMinutes).val(m);
+        $('#'+valSeconds).val(s);
+    } else {
+        $('#'+valDegrees).val("");
+        $('#'+valMinutes).val("");
+        $('#'+valSeconds).val("");
     }
-    if (m==60) {
-      d++;
-      m=0;
-    }
-    
-    $('#'+valDegrees).val(d);
-    $('#'+valMinutes).val(m);
-    $('#'+valSeconds).val(s);
 }
 
 function parsePointSeparated( strVal ) {
-    if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
-    if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
+    if (strVal!=null) {
+        if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
+        if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
+    }
 }
 
 function parseCommaSeparated( strVal ) {

@@ -1,5 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<div id="divListPrep">
+    <%@ include file="info-preparations.jsp" %>            
+</div>
+<hr class="divider-inner-separator">
 <div id="divMessSowing"></div>
 <s:form id="formCropSow" action="saveSowing" cssClass="form-horizontal">
     <fieldset>
@@ -8,15 +12,17 @@
             <div class="span5">
                 <s:hidden name="idCrop"/>
                 <s:hidden name="typeCrop"/>
+                <s:hidden name="actExe"/>
                 <s:hidden name="sowing.idSow"/>
                 <div class="control-group">
                     <label for="formCropSow_sowing_dateSow" class="control-label req">
                         Fecha de siembra:
                     </label>
-                    <div class="controls">
-                        <s:date name="sowing.dateSow" format="dd/MM/yyyy" var="dateTransform"/>
-                        <s:textfield name="sowing.dateSow" value="%{#dateTransform}"/>
+                    <div class="date controls">
+                        <s:date name="sowing.dateSow" format="dd/MM/yyyy" var="dateTransformDateSow"/>
+                        <s:textfield name="sowing.dateSow" value="%{#dateTransformDateSow}" readonly="true"/>
                         <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>                          
                 </div>                          
             </div>                          
@@ -337,6 +343,14 @@
         <script>
             $("#formCropSow_sowing_dateSow").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropSow_sowing_dateSow").mask("99/99/9999", {placeholder: " "});
+            $("#formCropSow_sowing_seedsNumberSow").numeric({negative: false});
+            $("#formCropSow_sowing_furrowsDistanceSow").numeric({negative: false});
+            $("#formCropSow_sowing_sitesDistanceSow").numeric({negative: false});
+            $("#formCropSow_beans_seedsNumberSiteBea").numeric({ decimal: false, negative: false });
+            
+            $("#formCropSow_sowing_seedsNumberSow").val(parsePointSeparated($("#formCropSow_sowing_seedsNumberSow").val())); 
+            $("#formCropSow_sowing_furrowsDistanceSow").val(parsePointSeparated($("#formCropSow_sowing_furrowsDistanceSow").val())); 
+            $("#formCropSow_sowing_sitesDistanceSow").val(parsePointSeparated($("#formCropSow_sowing_sitesDistanceSow").val())); 
 //            $("#formCropSow_sowing_productionHar").numeric({decimal: false, negative: false});
 //            $("#formCropSow_sowing_yieldHar").numeric({negative: false});
 //            $("#formCropSow_sowing_productionPerPlantHar").numeric({negative: false});
@@ -345,5 +359,11 @@
     </fieldset>
 </s:form>	
 <div style="margin-bottom: 15px" id="divBtSowing">
-    <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessSowing" onCompleteTopics="completeSowing"><i class="icon-pencil"></i>  Guardar Cosecha</sj:submit>
+    <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Siembra</sj:submit>
+    <%--<sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" validate="true" onCompleteTopics="completeSowing"><i class="icon-save"></i>  Guardar Siembra</sj:submit>--%>
 </div>
+<script>
+    $.subscribe('completeSowing', function(event, data) {
+        completeFormCrop('', 'formCropSow', 'divMessSowing', event.originalEvent.request.responseText);
+    });
+</script>

@@ -112,13 +112,14 @@ public class IrrigationDao
         String sql = "";     
         String sqlAdd = "";     
                       
-        sql += "select p.id_irr, p.date_irr, p.amount_irr, tp.name_irr_typ, p.irrigation_type_irr";
+        sql += "select p.id_irr, p.date_irr, p.amount_irr, tp.name_irr_typ, p.irrigation_type_irr, p.use_irrigation_irr";
         sql += " from irrigation p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_irr";    
         sql += " left join irrigations_types tp on tp.id_irr_typ=p.irrigation_type_irr and tp.status_irr_typ=1";    
-        sql += " inner join log_entities le on le.id_object_log_ent=p.id_irr and le.table_log_ent='irrigation'";   
+        sql += " inner join log_entities le on le.id_object_log_ent=p.id_irr and le.table_log_ent='irrigation' and le.action_type_log_ent='C'";   
+        sql += " where p.status=1";
         if (args.containsKey("idEvent")) { 
-            sql += " where p.id_production_event_irr="+args.get("idEvent");
+            sql += " and p.id_production_event_irr="+args.get("idEvent");
         }
 		if (args.containsKey("idEntUser")) {
 			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
@@ -147,6 +148,13 @@ public class IrrigationDao
                     temp.put("dateIrr", data[1]);
                     temp.put("amountIrr", data[2]);             
                     temp.put("nameIrrType", data[3]);                
+                    temp.put("useIrr", data[5]);        
+                    String valUse = String.valueOf(temp.get("useIrr"));
+                    if (valUse.equals("true")) {
+                        temp.put("useDesIrr", "Si");        
+                    } else {
+                        temp.put("useDesIrr", "No");        
+                    }
                     result.add(temp);
             }
             tx.commit();
@@ -170,9 +178,9 @@ public class IrrigationDao
 
         try {
             tx = session.beginTransaction();
-            String hql  = "FROM Irrigation E WHERE E.idProEve = :id_crop";
+            String hql  = "FROM Irrigation E WHERE E.idIrr = :id_irr";
             Query query = session.createQuery(hql);
-            query.setParameter("id_crop", id);
+            query.setParameter("id_irr", id);
             event = (Irrigation)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {

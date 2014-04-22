@@ -11,14 +11,23 @@
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
         <div class="row-fluid alert fade in">
-            <strong>Recuerde que en Colombia:</strong>
-            <br /><p></p> 
-            <p>Las latitudes en decimales se encuentran entre -4.3 y 13.5</p>
-            <p>Las longitudes en decimales se encuentran entre -81.8 y -66</p>
-            <p>Las latitudes en grados se encuentran entre -5 y 14</p>
-            <p>Las longitudes en grados se encuentran entre -82 y -66</p>
-            <p>Las altitudes se encuentran entre 0 y 9000 (metros)</p>
-            <p>El area se encuentran entre 0 y 3000 (hectarea)</p>
+            <h3>Recuerde que en Colombia:</h3>
+            <br />
+            <strong>Las latitudes</strong>
+            <hr>
+            <p>Decimales varia entre (-4.3 y 13.5)</p>
+            <p>Grados varia entre (-5 y 14)</p>
+            <p>Minutos varia entre (0 y 60)</p>
+            <p>Segundos varia entre (0 y 60)</p>
+            <strong>Las longitudes</strong>
+            <hr>
+            <p>Decimales varia entre (-81.8 y -66)</p>
+            <p>Grados varia entre (-82 y -66)</p>
+            <p>Minutos varia entre (0 y 60)</p>
+            <p>Segundos varia entre (0 y 60)</p>
+            <strong>Las altitudes</strong>
+            <hr>
+            <p>Se encuentran entre 0 y 9000 (metros)</p>			
         </div>
         <div class="row-fluid" id="divRastaForm">
             <s:form id="formRasta" action="saveSoil" cssClass="form-horizontal">
@@ -26,22 +35,23 @@
                     <legend>Caracteristicas y Observaciones</legend>
                     <s:hidden name="rasta.idRas"/>    
                     <div class="control-group">
-                        <s:label for="formRasta_rasta_nameField" cssClass="control-label req" value="Seleccione el lote al cual pertenece:"></s:label>
+                        <s:label for="formRasta_nameField" cssClass="control-label req" value="Seleccione el lote al cual pertenece:"></s:label>
                         <div class="controls">
                             <s:hidden name="idField"/>
                             <s:textfield
                                 name="nameField"         
-                                tooltip="Seleccione un lote con la lupa a la derecha"                        
+                                tooltip="Seleccione un lote con la lupa a la derecha"  
                                 />
-                            <img src="/aeps-plataforma-mvn/img/search_icon.gif" style="cursor: pointer" alt="Seleccione el lote" onclick="listInfo('/aeps-plataforma-mvn/viewField.action?selected=rasta', 'formRasta_nameField', 'formRasta_idField', 'divListRastaForm', 'divRastaForm')" />
+                            <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewField.action?selected=rasta', 'formRasta_nameField', 'formRasta_idField', 'divListRastaForm', 'divRastaForm')"><i class="icon-search"></i></a>
                         </div>  
                     </div>  
                     <div class="control-group">
                         <s:label for="formRasta_rasta_fechaRas" cssClass="control-label req" value="Fecha:"></s:label>
-                        <div class="controls">
+                        <div class="date controls">
                             <s:date name="rasta.fechaRas" format="dd/MM/yyyy" var="dateTransform"/>
-                            <s:textfield cssClass="form-control" name="rasta.fechaRas" value="%{#dateTransform}"/>
+                            <s:textfield cssClass="form-control" name="rasta.fechaRas" value="%{#dateTransform}" readonly="true"/>
                             <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                            <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
                     </div>    
                     <div class="control-group">
@@ -56,15 +66,15 @@
                             <div class="row-fluid">
                                 <div class="span2 input-prepend controls" style="width: 100px;">
                                     <span class="add-on">Grados</span>
-                                    <input type="text" name="latitude_degrees" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_degrees" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    <input type="text" name="latitude_degrees" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_degrees" class="input-degrees"/>
                                 </div>
                                 <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                     <span class="add-on">Minutos</span>
-                                    <input type="text" name="latitude_minutes" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_minutes" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    <input type="text" name="latitude_minutes" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_minutes" class="input-degrees"/>
                                 </div>
                                 <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2.2%">
                                     <span class="add-on">Segundos</span>
-                                    <input type="text" name="latitude_seconds" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_seconds" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                    <input type="text" name="latitude_seconds" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_seconds" class="input-degrees"/>
                                 </div>
                             </div>
                         </div>
@@ -81,15 +91,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_degrees" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_degrees" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_degrees" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_minutes" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_minutes" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_minutes" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2.2%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_seconds" style="padding: 8px; max-width:30px; max-height: 12px"/>
+                                        <input type="text" name="length_seconds" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_seconds" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -131,6 +141,7 @@
                         <%@page import="java.util.List"%>
                         <%@page import="java.util.ArrayList"%>
                         <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
+                        <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
                         <table class="table table-condensed" style="width: auto;">
                             <thead>
                                 <tr>
@@ -143,77 +154,12 @@
                                 </tr>
                             </thead>
                             <tbody id="tableAdit">
-                                <% if (actionOpt.equals("create")) {%>
+                                <% //if (actionOpt.equals("create")) {%>
 <!--                                    <tr value="1">
                                     </tr>-->
-                                    <tr value="1" id="RowAddit_1">
-                                        <td style="padding: 3px 0.5em;">
-                                            <div class="">
-                                                <div class="">
-                                                    <s:textfield cssClass="form-control write_tiny" name="additionalsAtrib[0].numeroHorizonteHorRas"/>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="padding: 3px 0.5em 0px 30px;">
-                                            <div class="">
-                                                <div class="">
-                                                    <s:textfield cssClass="form-control write_tiny" name="additionalsAtrib[0].espesorHorRas"/> cm
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="padding: 3px 0.5em;">
-                                            <div class="">
-                                                <div class="">
-                                                    <s:textfield cssClass="form-control write_tiny" name="additionalsAtrib[0].colorSecoHorRas"/>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="padding: 3px 0.5em;">
-                                            <div class="">
-                                                <div class="">
-                                                    <s:textfield cssClass="form-control write_tiny" name="additionalsAtrib[0].colorHumedoHorRas"/>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="padding: 3px 0.5em;">
-                                            <div class="">
-                                                <div class="">
-                                                    <s:select
-                                                        cssClass="select"
-                                                        name="additionalsAtrib[0].textures.idTex"
-                                                        list="#{'1':'Arenoso (A)', '2':'Limoso (L)', '3':'Franco Limoso (FL)', '4':'Franco (F)', '5':'Franco Arenoso (FA)', '6':'Areno Franco (AF)', '7':'Franco Arcilloso (FAr)', '8':'Arcillo Arenoso (ArA)', '9':'Arcillo Limoso (ArL)', '10':'Arcilloso (Ar)'}"           
-                                                        headerKey="-1" 
-                                                        headerValue="---" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="padding: 3px 0.5em;">
-                                            <div class="">
-                                                <div class="">
-                                                    <s:select
-                                                        cssClass="select"
-                                                        name="additionalsAtrib[0].resistenciasRompimiento.idResRom"
-                                                        list="#{'1':'Friable', '2':'Firme', '3':'Extremadamente firme', '4':'Blando', '5':'Duro', '6':'Extremadamente duro', '7':'Plástico', '8':'Muy plástico'}"           
-                                                        headerKey="-1" 
-                                                        headerValue="---" />
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="vertical-align: bottom ! important; padding: 0 0.5em;">
-                                            <a class="btn btn-small delete_rows_dt" title="Quitar" style="margin-bottom:1.2em" onclick="$('#RowAddit_2').remove();"><i class="icon-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <script>
-                                        //For Horizontes					
-                                        $("#formRasta_additionalsAtrib_0__numeroHorizonteHorRas").numeric({ decimal: false, negative: false });
-                                        $("#formRasta_additionalsAtrib_0__espesorHorRas").numeric({ negative: false });
-                                        $("#formRasta_additionalsAtrib_0__espesorHorRas").val(parsePointSeparated($("#formRasta_additionalsAtrib_0__espesorHorRas").val()));
-                                        $("#formRasta_additionalsAtrib_0__colorSecoHorRas").numeric({ decimal: false, negative: false });
-                                        $("#formRasta_additionalsAtrib_0__colorHumedoHorRas").numeric({ decimal: false, negative: false });
-                                    </script>
-                                <% } else { %>
+                                <% //} else { %>
                                     <% //if(!request.getAttribute("additionalsAtrib").equals(null)) { %>
-                                    <%--<s:if test="%{#additionalsAtrib.size()>0}">--%>
+                                    <s:if test="additionalsAtrib.size()>0">
                                         <s:iterator value="additionalsAtrib" var="horizon" status="estatus">
                                             <s:include value="row_additional_horizon.jsp">
                                                 <s:param name="numRows" value="#estatus.index+1" />
@@ -221,16 +167,15 @@
                                             </s:include>
                                         </s:iterator>
                                     <% //} else { %>
-                                    <%--</s:if>--%>
-                                    <%--<s:else>--%>
-<!--                                        <tr value="1">
-                                        </tr>-->
-                                    <% //} %>    
-                                    <%--</s:else>--%>
-                                <% }%>
+                                    </s:if>
+                                    <s:else>
+                                        <tr value="0">
+                                        </tr>   
+                                    </s:else>
+                                <% //}%>
                             </tbody>
                         </table>
-                        <button type="button" class="btn btn-default" onclick="showRowAdditionalItem('../soil/showRowAdditional?action=<%=actionOpt%>', 'tableAdit')">Agregar</button>
+                        <button type="button" class="btn btn-default" onclick="showRowAdditionalItem('../soil/showRowAdditional?action=<%=actionOpt%>&rowNew=<%=rowNew%>', 'tableAdit')">Agregar</button>
                     </div> 
                     <div class="control-group">
                         <s:label for="formRasta_rasta_phRas" cssClass="control-label req" value="pH:"></s:label>
@@ -494,8 +439,9 @@
                     <div> 
                     <s:hidden name="page"/>
                     <s:hidden name="actExe"/>    
+                    <s:hidden name="rowNew"/>    
                     <s:hidden name="newRow" value="1"/>    
-                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm">Guardar Rasta</sj:submit>
+                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
                     <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();">Cancelar</button>
                 </div>    
             </s:form>        
@@ -548,7 +494,9 @@
 //                    $("#formRasta_rasta_fechaRas").val(dateToDMY(new Date(Date.parse($("#formRasta_rasta_fechaRas").val()))));
 //                    alert($("#formRasta_rasta_fechaRas").val())
 //                }
-                
+                generateDegrees('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds');
+                generateDegrees('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds');
+                    
                 $("#formRasta_rasta_fechaRas").datepicker({dateFormat: 'dd/mm/yy'});
                 $("#formRasta_rasta_fechaRas").mask("99/99/9999", {placeholder: ""});
                 

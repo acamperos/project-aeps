@@ -4,8 +4,6 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import java.lang.String;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 /**
- * Clase ActionFarm
+ * Clase ActionRasta
  *
  * Contiene los metodos para interactuar con el modulo de Rasta
  *
@@ -327,7 +325,7 @@ public class ActionRasta extends BaseAction {
         this.option_geo_lot = option_geo_lot;
     }        
     
-    private List<HorizontesRasta> additionalsAtrib;
+    private List<HorizontesRasta> additionalsAtrib; 
 
     public List<HorizontesRasta> getAdditionalsAtrib() {
         return additionalsAtrib;
@@ -344,6 +342,16 @@ public class ActionRasta extends BaseAction {
 //        this.paraMap= parameters;
 //    }
     
+    private String rowNew;
+
+    public String getRowNew() {
+        return rowNew;
+    }
+
+    public void setRowNew(String rowNew) {
+        this.rowNew = rowNew;
+    }   
+    
     @Override
     public String execute() throws Exception {
         return SUCCESS;
@@ -357,6 +365,11 @@ public class ActionRasta extends BaseAction {
         rasta.setLatitudRas(4.567);
 //        if (user.getIdUsr()!=null) idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         additionalsAtrib = new ArrayList<HorizontesRasta>();        
+//        rowNew = (String)(this.getRequest().getParameter("rowNew"));
+//        if (rowNew!=null && rowNew.equals("true")) {
+//            System.out.println("entreeeee");
+//            additionalsAtrib.add(0,new HorizontesRasta());
+//        }
 //        additionalsAtrib.add(1,new HorizontesRasta());
     }
     
@@ -400,7 +413,7 @@ public class ActionRasta extends BaseAction {
 //        numberFormatter = NumberFormat.getNumberInstance(new Locale("en_US"));
 //        quantityOut = numberFormatter.format(rasta.getLatitudRas());
 //        System.out.println("entreeeeeeeeeeeeeeeeeeeee->"+quantityOut);
-        if (actExe.equals("create") || actExe.equals("modify")) {
+        if (actExe!=null && (actExe.equals("create") || actExe.equals("modify"))) {
 //            System.out.println("entreeeeeeeeeeeeeeeeeeeee");
             HashMap required = new HashMap();
             required.put("nameField", nameField);
@@ -425,12 +438,12 @@ public class ActionRasta extends BaseAction {
             required.put("rasta.plantasPequenasRas", rasta.getPlantasPequenasRas());//
             required.put("rasta.recubrimientoVegetalRas", rasta.getRecubrimientoVegetalRas());//
             
-            if (!rasta.getCarbonatosRas().equals("no tiene") && !rasta.getCarbonatosRas().equals("-1")) { 
+            if (rasta.getCarbonatosRas()!=null && !rasta.getCarbonatosRas().equals("no tiene") && !rasta.getCarbonatosRas().equals("-1")) { 
                 required.put("rasta.profundidadCarbonatosRas", rasta.getProfundidadCarbonatosRas());//
 //                addFieldError("rasta.profundidadCarbonatosRas", "Dato requerido");                
             }
 
-            if (rasta.getHorizontePedrogosoRocosoRas()) {  
+            if (rasta.getHorizontePedrogosoRocosoRas()!=null && rasta.getHorizontePedrogosoRocosoRas()) {  
                 required.put("rasta.profundidadHorizontePedregosoRas", rasta.getProfundidadHorizontePedregosoRas());//
                 required.put("rasta.espesorHorizontePedregosoRas", rasta.getEspesorHorizontePedregosoRas());//
                 required.put("rasta.profundidadPrimerasPiedrasRas", rasta.getProfundidadPrimerasPiedrasRas());//
@@ -440,7 +453,7 @@ public class ActionRasta extends BaseAction {
 //                addFieldError("rasta.profundidadPrimerasPiedrasRas", "Dato requerido");
             }
 
-            if (rasta.getCapasEndurecidasRas()) {
+            if (rasta.getCapasEndurecidasRas()!=null && rasta.getCapasEndurecidasRas()) {
                 required.put("rasta.prufundidadCapasRas", rasta.getPrufundidadCapasRas());//
                 required.put("rasta.espesorCapaEndurecidaRas", rasta.getEspesorCapaEndurecidaRas());//
                 
@@ -448,12 +461,12 @@ public class ActionRasta extends BaseAction {
 //                addFieldError("rasta.espesorCapaEndurecidaRas", "Dato requerido");
             }
 
-            if (rasta.getMoteadosRas()) {
+            if (rasta.getMoteadosRas()!=null && rasta.getMoteadosRas()) {
                 required.put("rasta.profundidadMoteadosRas", rasta.getProfundidadMoteadosRas());//
 //                addFieldError("rasta.profundidadMoteadosRas", "Dato requerido");
             }
 
-            if (rasta.getRaicesVivasRas()) {
+            if (rasta.getRaicesVivasRas()!=null && rasta.getRaicesVivasRas()) {
                 required.put("rasta.profundidadRaicesRas", rasta.getProfundidadRaicesRas());//
 //                addFieldError("rasta.profundidadRaicesRas", "Dato requerido");
             }
@@ -530,8 +543,8 @@ public class ActionRasta extends BaseAction {
             int sumEspesor = 0;
 //            for ($params['horizontes'] as $index => $horizonte) {
             int cont = 1;
+//            System.out.println("numHor=>"+additionalsAtrib.size());
             for (HorizontesRasta horizon : additionalsAtrib) {
-                // print_r($horizonte);
 //                System.out.println("horizon->"+horizon);
 //                if ((horizon.getNumeroHorizonteHorRas()<0) && (horizon.getEspesorHorRas()<0) && (horizon.getColorSecoHorRas()<0) && (horizon.getColorHumedoHorRas()<0) && (horizon.getTexturesId()<0) && (horizon.getResistenciasRompimientoId()<0)) {
                 if ((horizon.getNumeroHorizonteHorRas()>0) && (horizon.getEspesorHorRas()!=null && horizon.getEspesorHorRas()>0) && (horizon.getColorSecoHorRas()!=null && horizon.getColorSecoHorRas()>0) && (horizon.getColorHumedoHorRas()!=null && horizon.getColorHumedoHorRas()>0) && (horizon.getTextures()!=null) && (horizon.getResistenciasRompimiento()!=null)) {
@@ -690,10 +703,9 @@ public class ActionRasta extends BaseAction {
 //        this.setNumRows(Integer.parseInt((this.getRequest().getParameter("numRows"))));
         HorizontesRasta horizon = new HorizontesRasta();
 //        horizon.setNumeroHorizonteHorRas(0);
-        additionalsAtrib.add(this.getNumRows()-1,horizon);
-//        this.setFormDocument("formRasta[additionalsAtrib]["+numRows+"]");
-//      $formDocument  = new FormComCatStoreDocumentExtra(array(), array());  
-//      return $this->renderPartial('item/atribAddItem', array('formDocument' => $formDocument, 'numRows' => $numRows+1, 'actionOpt' => 'create', 'message' => 'messageWind'));    
+//        System.out.println("row->"+additionalsAtrib.size());
+        additionalsAtrib.add(horizon);
+        
         return SUCCESS;
     }
 
@@ -779,6 +791,7 @@ public class ActionRasta extends BaseAction {
             idField    = rasta.getFields().getIdFie();
             Fields fie = lotDao.objectById(idField);
             nameField  = fie.getNameFie();
+            rowNew     = "false";
 //            nameField = rasta.getFields().getNameFie();            
 //            String dateActual = new SimpleDateFormat("dd/MM/yyyy").format(rasta.getFechaRas());   
 //            rasta.setFechaRas(new Date(dateActual));
@@ -801,7 +814,10 @@ public class ActionRasta extends BaseAction {
 //            System.out.println("valores->" + rasta);
         } else {
 //            HorizontesRasta hor  = new HorizontesRasta(new ResistenciasRompimiento(1), new Textures(1), 1, 1.0, 1, 3);
-            additionalsAtrib.add(0,new HorizontesRasta());
+//            additionalsAtribTemp.add(0,new HorizontesRasta());
+//            this.setAdditionalsAtrib(additionalsAtribTemp);
+//            additionalsAtrib = new ArrayList<HorizontesRasta>();
+//            rowNew = "true";
         }
         return SUCCESS;
     }    
@@ -857,24 +873,29 @@ public class ActionRasta extends BaseAction {
             
             String dmy     = new SimpleDateFormat("yyyy-MM-dd").format(rasta.getFechaRas());
             Date dateRasta = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
-            rasta.setFields(new Fields(idField));
-            rasta.setNumeroCapasRas(additionalsAtrib.size());
+            rasta.setFields(new Fields(idField));            
             rasta.setFechaRas(dateRasta);            
             rasta.setStatus(true);
-            session.saveOrUpdate(rasta);
+            session.saveOrUpdate(rasta);    
             
             rasta.setNumeroCajuelaRas(rasta.getIdRas());
             session.saveOrUpdate(rasta);
             
 //            rastaDao.save(lot);
             
-            //Agregar los horizontes            
+            //Agregar los horizontes
+            int numCaj = 0;
             for (HorizontesRasta horizon : additionalsAtrib) {
-                horizon.setRastas(rasta);
-//                horizon.setResistenciasRompimiento(new ResistenciasRompimiento(horizon.getResistenciasRompimientoId()));
-//                horizon.setTextures(new Textures(horizon.getTexturesId()));
-                session.saveOrUpdate(horizon);
+                if (horizon.getColorHumedoHorRas()!=null){
+                    horizon.setRastas(rasta);
+    //                horizon.setResistenciasRompimiento(new ResistenciasRompimiento(horizon.getResistenciasRompimientoId()));
+    //                horizon.setTextures(new Textures(horizon.getTexturesId()));
+                    session.saveOrUpdate(horizon);
+                    numCaj++;
+                }
             }
+            rasta.setNumeroCapasRas(numCaj);
+            session.saveOrUpdate(rasta);
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);

@@ -3,14 +3,16 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
+    </head>
     <body>     
         <div class="container">
             <ul id="breadcrumbs">
                 <li><s:a href="%{request.getContextPath()}/dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>
                 <li><s:a href="%{request.getContextPath()}/getting.action" targets="divBodyLayout">Recolectar datos</s:a></li>
                 <li><s:a href="%{request.getContextPath()}/listCrop.action" targets="divBodyLayout">Listar cultivos</s:a></li>
-                <li><span>Informacion cultivo</span></li>
+                <li><span>Informacion del cultivo</span></li>
             </ul>
         </div>
         <div class="container" id="divDataInfoCrop">
@@ -23,48 +25,48 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                            <h3>Establecimiento del cultivo <i class="colOne icon-chevron-down"></i></h3> 
+                            <h4>Establecimiento del cultivo <i class="colOne icon-chevron-down"></i></h4> 
                         </a>
                     </div>
                     <div id="collapseOne" class="accordion-body collapse">				
                         <div class="accordion-inner">
-                            <%@ include file="stablishment-crop.jsp" %>
+                            <%@ include file="establishment-crop.jsp" %>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                            <h3>Nutrici&oacute;n <i class="colTwo icon-chevron-down"></i></h3>
+                            <h4>Nutrici&oacute;n <i class="colTwo icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseTwo" class="accordion-body collapse">				
                         <div class="accordion-inner">
-                            <%--<%@ include file="nutrition.jsp" %>--%>
+                            <%@ include file="nutrition.jsp" %>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
-                            <h3>Protecci&oacute;n <i class="colThree icon-chevron-down"></i></h3>
+                            <h4>Protecci&oacute;n <i class="colThree icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseThree" class="accordion-body collapse">				
                         <div class="accordion-inner">
-                            <%--<%@ include file="protection.jsp" %>--%>
+                            <%@ include file="protection.jsp" %>
                         </div>
                     </div>
                 </div>  
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
-                            <h3>Monitoreo <i class="colFour icon-chevron-down"></i></h3>
+                            <h4>Monitoreo <i class="colFour icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseFour" class="accordion-body collapse">				
                         <div class="accordion-inner">
-                            <%--<%@ include file="monitoring.jsp" %>--%>
+                            <%@ include file="monitoring.jsp" %>
                             <!--<?php include_once('control.php') ?>-->
                         </div>
                     </div>
@@ -72,7 +74,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive">
-                            <h3>Datos de la cosecha <i class="colFive icon-chevron-down"></i></h3>
+                            <h4>Datos de la cosecha <i class="colFive icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseFive" class="accordion-body collapse">                        

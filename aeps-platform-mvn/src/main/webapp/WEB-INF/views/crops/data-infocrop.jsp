@@ -2,24 +2,13 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <div class="panel">
-    <div class="panel-body">
+    <div class="panel-body w-box">
         <s:if test="listCrops.size() > 0">
             <% //table = "";%>
             <% //label = "display:none";%> 
         </s:if>                    
-    <!--                        Informacion del Cultivo Maiz # 350
-
-        Nombre del Productor: Juan Felipe Rodriguez 
-        Cedula del Productor: 1130668332
-        Nombre de la finca: La Poderosa
-        Nombre del Lote: Esto es lo mio
-        Objetivo de rendimiento (kg/ha):
-        Cultivo anterior:
-        Se hace drenaje en la parcela: 
-        Cultivo: Maiz # 350 (Omitirlo)
-        (Va a tocar modificarlos :( )-->
         <fieldset>
-            <legend>Informacion del cultivo <s:property value="nameTypeCrop" /> # <s:property value="idCrop" /></legend>
+            <legend><h3>Informacion del cultivo <s:property value="nameTypeCrop" /> # <s:property value="idCrop" /></h3></legend>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
@@ -57,4 +46,7 @@
 </div>
 <button type="button" class="btn btn-initial" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', 'Modificar Evento Productivo', 1050, 700)">
     <i class="icon-pencil"></i> Editar Evento Productivo
+</button>
+<button type="button" class="btn btn-default" onclick="document.location='/aeps-plataforma-mvn/crop/listCrop.action';">
+    <i class="icon-arrow-left"></i> Volver al listado de cultivos
 </button>

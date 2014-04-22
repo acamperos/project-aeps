@@ -31,6 +31,11 @@ public class Diseases  implements java.io.Serializable {
 
     public Diseases() {
     }
+    
+    public Diseases(Integer idDis, String nameDis) {
+        this.idDis   = idDis;
+        this.nameDis = nameDis;
+    }
 
 	
     public Diseases(String nameDis, boolean statusDis) {

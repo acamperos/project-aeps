@@ -93,7 +93,7 @@
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
                 <a href="initial.action" class="logo_img"><img src="img/logoAEPS.png" style="width: 200px; height: 80px;"/></a>
-                <div class="formIngress" style="margin-bottom: 10px">
+<!--                <div class="formIngress" style="margin-bottom: 10px">
                     <s:url id="localeEN" namespace="/" action="localeLogin" >
                         <s:param name="lang">en</s:param>
                     </s:url>
@@ -111,7 +111,7 @@
                             <li><s:a href="%{localeES}"><img src="img/languages/spain-flat.png" class="img-rounded" /> <s:property value="getText('text.spanish')" /></s:a></li>
                         </ul>
                     </div>
-                </div>
+                </div>-->
                 <!--<h3 class="logo_img"><a href="initial.action">AEPS</a></h3>-->
                 <s:actionerror theme="bootstrap"/>
                 <s:actionmessage theme="bootstrap"/>

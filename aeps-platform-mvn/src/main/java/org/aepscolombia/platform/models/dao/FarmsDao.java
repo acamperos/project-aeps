@@ -18,6 +18,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Farms;
 import org.aepscolombia.platform.models.entity.FarmsProducers;
+import org.aepscolombia.platform.models.entity.FarmsProducersId;
+import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.hibernate.Criteria;
 
@@ -325,17 +327,31 @@ public class FarmsDao
 
         try {
             tx = session.beginTransaction();
-            String query = "insert into farms_producers values (?,?)";
-
-            // Ejecutamos la query y obtenemos el resultado.
-            PreparedStatement stmt;
-            stmt = HibernateUtil.getInstanceConnection().prepareStatement(query);
-            stmt.setInt(1, idFin);
-            stmt.setInt(2, idPro);
+//            String query = "insert into farms_producers values (?,?)";
             
-            stmt.executeUpdate();
-            stmt.close();
-            HibernateUtil.closeConnection();
+            
+//            String hql  = "FROM Entities E WHERE E.idEnt = :id_ent";
+//            Query query = session.createQuery(hql);
+//            query.setParameter("id_ent", id);
+            
+            FarmsProducersId farmPro = new FarmsProducersId(idFin,idPro);
+            Producers prod = new Producers(idPro);
+            
+            Farms far = new Farms(idFin);
+            
+            FarmsProducers farPro = new FarmsProducers(farmPro, prod, far);
+
+            session.saveOrUpdate(farPro);
+            
+            // Ejecutamos la query y obtenemos el resultado.
+//            PreparedStatement stmt;
+//            stmt = HibernateUtil.getInstanceConnection().prepareStatement(query);
+//            stmt.setInt(1, idFin);
+//            stmt.setInt(2, idPro);
+            
+//            stmt.executeUpdate();
+//            stmt.close();
+//            HibernateUtil.closeConnection();
 
             tx.commit();
         } catch (HibernateException e) {
@@ -343,12 +359,13 @@ public class FarmsDao
                 tx.rollback();
             }
             e.printStackTrace();
-        } catch (SQLException ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            ex.printStackTrace();
         }
+//        } catch (SQLException ex) {
+//            if (tx != null) {
+//                tx.rollback();
+//            }
+//            ex.printStackTrace();
+//        }
         
 //        return event;
     }

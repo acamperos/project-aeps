@@ -28,6 +28,11 @@ public class OrganicFertilizers  implements java.io.Serializable {
 
     public OrganicFertilizers() {
     }
+    
+    public OrganicFertilizers(Integer idOrgFer, String nameOrgFer) {
+       this.idOrgFer = idOrgFer;
+       this.nameOrgFer = nameOrgFer;
+    }
 
     public OrganicFertilizers(String nameOrgFer, Boolean statusOrgFer) {
        this.nameOrgFer = nameOrgFer;

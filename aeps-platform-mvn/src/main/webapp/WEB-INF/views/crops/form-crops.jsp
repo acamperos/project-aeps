@@ -68,7 +68,7 @@
                     <s:hidden name="page"/>
                     <s:hidden name="actExe"/>    
                     <s:hidden name="newRow" value="1"/>    
-                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeCrop" validate="true" validateFunction="validationForm">Guardar Crop</sj:submit>
+                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeCrop" validate="true" validateFunction="validationForm"><i class="icon-save"></i> Guardar Evento Productivo</sj:submit>
                     <button class="btn btn-large bt_cancel_crop" onclick="resetForm('formCrop'); closeWindow();">Cancelar</button>
                 </div>    
             </s:form>        

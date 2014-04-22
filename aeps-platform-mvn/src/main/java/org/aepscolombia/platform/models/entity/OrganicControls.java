@@ -32,6 +32,10 @@ public class OrganicControls  implements java.io.Serializable {
     public OrganicControls() {
     }
 
+    public OrganicControls(Integer idOrgCon, String nameOrgCon) {
+        this.idOrgCon   = idOrgCon;
+        this.nameOrgCon = nameOrgCon;
+    }
 	
     public OrganicControls(TargetsTypes targetsTypes, String nameOrgCon) {
         this.targetsTypes = targetsTypes;

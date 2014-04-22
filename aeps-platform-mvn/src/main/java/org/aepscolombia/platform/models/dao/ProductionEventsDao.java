@@ -113,7 +113,7 @@ public class ProductionEventsDao
         String sqlAdd = "";     
                       
         sql += "select pe.id_pro_eve, e.document_type_ent, e.document_number_ent, e.name_ent, f.id_far, f.name_far,";
-        sql += " l.id_farm_fie, l.name_fie, s.date_sow, mg.name_gen, pe.status";
+        sql += " l.id_fie, l.name_fie, s.date_sow, mg.name_gen, pe.status";
         sql += " from production_events pe";
 //        sql += " left join sowing s on pe.id_pro_eve=s.id_production_event_sow and s.status=1";
         sql += " left join sowing s on pe.id_pro_eve=s.id_production_event_sow";
