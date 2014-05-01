@@ -6,6 +6,11 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
 <% String tableCon = "display:none";%>
 <% String labelCon = "";%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users userPro  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrProDao = new UsersDao(); %>
 
 <s:if test="listCont.size() > 0">
     <% tableCon = "";%>
@@ -16,22 +21,26 @@
 <div id="divPro" class="w-box">
     <fieldset>
         <legend>Lista de controles</legend>
-        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showCon.action?action=create', 'idCrop', '${idCrop}', 'Crear Control', 1050, 550);">
-            <i class="icon-plus"></i> Agregar Control
-        </button>
+        <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/create")) { %>
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showCon.action?action=create', 'idCrop', '${idCrop}', 'Crear Control', 1050, 550);">
+                <i class="icon-plus"></i> Agregar Control
+            </button>
+        <% } %>
         <table class="table table-bordered table-hover" style="<%= tableCon %>" id='tblCon'>
             <thead>
                 <tr>
                     <th>Fecha del control</th>
                     <th>Tipo Objetivo</th>
                     <th>Objetivo del control</th>
-                    <th>Realiza limpias manuales</th>
-                    <th>Frecuencia limpias</th>
+<!--                    <th>Realiza limpias manuales</th>
+                    <th>Frecuencia limpias</th>-->
                     <th>Control químico</th>
                     <th>Dosis química</th>
                     <th>Control biológico</th>
-                    <th>Dosis biológica</th>				
-                    <th>Accion</th>
+                    <th>Dosis biológica</th>	
+                    <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete"))) { %>
+                        <th>Accion</th>
+                    <% } %>
                 </tr>
             </thead>
             <tbody>

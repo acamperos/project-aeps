@@ -7,6 +7,10 @@
         <s:textfield cssClass="form-control" name="search_producer" placeholder="Buscar" theme="simple" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListProducers" onCompleteTopics="completeProducer"><i class="icon-search"></i></sj:submit>
         <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+        <s:set name="valSel" value="selected"/> 
+        <s:if test="%{#valSel.equals('producer')}">
+            <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
+        </s:if>
     </div>   
     <div id="searchAdvance" class="hide">
         <div class="control-group">
@@ -20,9 +24,10 @@
                     list="type_ident_producer" 
                     listKey="acronymDocTyp" 
                     listValue="nameDocTyp" 
-                    headerKey=" " 
+                    headerKey="-1" 
                     headerValue="---"
-                    onchange="selConf(this.value, 'formProducerSearch_num_ident_producer');"
+                    onchange="selConf(this.value, 'formProducerSearch_num_ident_producer');
+                              showOtherTypeDocument(this.value, 'divSearchInfoCompany', 'divSearchInfoPerson');"
                     />
             </div>
             <div class="span3" style="padding-left: 28px">
@@ -32,19 +37,37 @@
                     />
             </div>  
         </div>  
-        <div class="row-fluid">
-            <div class="span5">
-                <s:textfield
-                    label="Primer nombre:"
-                    name="names_producer_1"
-                    />
-            </div>  
-            <div class="span3" style="padding-left: 28px">
-               <s:textfield
-                    label="Primer apellido:"
-                    name="last_names_producer_1"
-                    />
-            </div>
+        <div class="hide" id="divSearchInfoCompany">
+            <div class="row-fluid">
+                <div class="span5">
+                    <s:textfield
+                        label="Nombre de la empresa"
+                        name="nameCompany"
+                        />
+                </div>  
+                <div class="span3" style="padding-left: 28px">
+                   <s:textfield
+                        label="Nombre del responsable:"
+                        name="firstNameRep"
+                        />
+                </div>
+            </div> 
+        </div>   
+        <div class="hide" id="divSearchInfoPerson">
+            <div class="row-fluid">
+                <div class="span5">
+                    <s:textfield
+                        label="Primer nombre:"
+                        name="names_producer_1"
+                        />
+                </div>  
+                <div class="span3" style="padding-left: 28px">
+                   <s:textfield
+                        label="Primer apellido:"
+                        name="last_names_producer_1"
+                        />
+                </div>
+            </div> 
         </div> 
         <div class="row-fluid">
             <div class="span5">
@@ -86,6 +109,9 @@
         </div> 
         <div>   
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListProducers" onCompleteTopics="completeProducer">Buscar Productor <i class="icon-search"></i></sj:submit>
+            <s:if test="%{#valSel.equals('producer')}">
+                <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
+            </s:if>
         </div>
     </div>
 </s:form>

@@ -69,6 +69,7 @@ public class ActionFer extends BaseAction {
     private List<HashMap> listFert;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Fertilizations fer = new Fertilizations();
     private ChemicalFertilizations ferChe = new ChemicalFertilizations();
@@ -83,6 +84,7 @@ public class ActionFer extends BaseAction {
     private Double amountProductUsedChe=null;
     private Double amountProductUsedOrg=null;
     private Double amountProductUsedAme=null;
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -275,6 +277,8 @@ public class ActionFer extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        usrDao =  new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -396,6 +400,9 @@ public class ActionFer extends BaseAction {
      * @return lista de fertilizaciones
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
         } catch (NumberFormatException e) {
@@ -417,6 +424,9 @@ public class ActionFer extends BaseAction {
      * @return Informacion de la fertilizacion
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
@@ -461,6 +471,9 @@ public class ActionFer extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -609,6 +622,9 @@ public class ActionFer extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idFer = 0;
         try {
             idFer = Integer.parseInt(this.getRequest().getParameter("idFer"));

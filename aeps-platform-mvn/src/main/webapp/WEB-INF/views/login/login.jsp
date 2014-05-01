@@ -21,6 +21,7 @@
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>
         <!--<link rel="stylesheet" href="scripts/css/generals/beoro.css">-->
         <link rel="stylesheet" href="scripts/css/generals/login.css">
         <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">
@@ -92,7 +93,7 @@
         <div id="login-wrapper" class="clearfix">            
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
-                <a href="initial.action" class="logo_img"><img src="img/logoAEPS.png" style="width: 200px; height: 80px;"/></a>
+                <a href="initial.action" class="logo_img span3"><img src="img/logoAEPS.png"/></a>
 <!--                <div class="formIngress" style="margin-bottom: 10px">
                     <s:url id="localeEN" namespace="/" action="localeLogin" >
                         <s:param name="lang">en</s:param>
@@ -209,24 +210,96 @@
                         <div class="form-group control-group">
                             <label class="control-label req" for="formNewUser_typeUser">Tipo de usuario:</label>
                             <div class="controls">
-                                <select class="form-control" id="formNewUser_typeUser" name="typeUser">
-                                    <option value="1">Agricultor</option>
-                                    <option value="2">Agronomo/Asistente</option>
-                                    <option value="3">Gremio</option>
-                                </select>
+                                <s:select
+                                    name="typeUser"
+                                    list="#{'2':'Productor', '1':'Agronomo/Asistente', '3':'Gremio'}"           
+                                    headerKey="-1" 
+                                    headerValue="---" 
+                                    onchange="showOtherElementUser(this.value, 'divWorkType', 'divDataAssociation');"
+                                />
                             </div>   
+                        </div>
+                        <div class="hide" id="divWorkType">
+                            <div class="form-group control-group">
+                                <label for="formNewUser_workType" class="control-label req">Usted como trabaja:</label>
+                                <div class="controls">
+                                    <s:select
+                                        name="workType"
+                                        list="#{'1':'Freelance', '2':'Unas fincas', '3':'Empresa privada', '4':'Gremio', '5':'Entidades nacionales'}"           
+                                        headerKey="-1" 
+                                        headerValue="---"   
+                                        onchange="showOtherElementWorkType(this.value, 'divAssociationAdd');"
+                                    />
+                                </div>
+                            </div>
+                            <div class="hide" id="divAssociationAdd">
+                                <div class="form-group control-group">
+                                    <label class="control-label req" for="formNewUser_nameAssoExt">Nombre en donde trabaja:</label>
+                                    <div class="controls">
+                                        <s:textfield class="form-control" name="nameAssoExt"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group control-group hide" id="divDataAssociation">                     
+                            <div class="form-group control-group">
+                                <label class="control-label req" for="formNewUser_emailRep">Correo electrónico del representante legal:</label>
+                                <div class="controls">
+                                    <s:textfield type="email" name="emailRep" placeholder="Ingrese correo"/>
+                                </div>
+                            </div>
+                            <div class="form-group control-group">
+                                <label class="control-label req" for="formNewUser_pageLink">Pagina Web:</label>
+                                <div class="controls">
+                                    <s:textfield class="form-control" name="pageLink"/>
+                                </div>
+                            </div>
+                            <div class="form-group control-group">
+                                <label class="control-label req" for="formNewUser_direction">Direccion:</label>
+                                <div class="controls">
+                                    <s:textfield class="form-control" name="direction"/>
+                                </div>
+                            </div>
+                            <div class="form-group control-group">
+                                <label class="control-label req" for="formNewUser_nameAsso">Nombre del gremio:</label>
+                                <div class="controls">
+                                    <s:textfield class="form-control" name="nameAsso"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group control-group">
                             <label class="control-label req" for="formNewUser_emailUser">Correo Electr&oacute;nico:</label>
                             <div class="controls">
-                                <s:textfield class="form-control" id="formNewUser_emailUser" name="emailUser" placeholder="Ingrese correo"/>
+                                <s:textfield type="email" class="form-control" id="formNewUser_emailUser" name="emailUser" placeholder="Ingrese correo"/>
                             </div>
                         </div>
                         <div class="form-group control-group">
-                            <label class="control-label password req" for="formNewUser_passwordUser">Contrasena:</label>
-                            <label class="labelRequire" for="formNewUser_passwordUser">(Minimo 6 caracteres)</label>
-                            <div class="controls">
-                                <s:password class="form-control" id="formNewUser_passwordUser" name="passwordUser"/>
+                            <div class="row-fluid">
+                                <div class="span5" style="width: 48%;">
+                                    <label class="control-label password req" for="formNewUser_passwordUser">Contrasena:</label>
+                                    <label class="labelRequire" for="formNewUser_passwordUser">(Minimo 6 caracteres)</label>
+                                    <div class="controls">
+                                        <s:password class="form-control" id="formNewUser_passwordUser" name="passwordUser"/>
+                                        <div id="pwdMeter" class="progress progress-danger">
+                                            <div class="bar" style="width: 0%"></div>
+                                            <span class="pwdText"></span>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        if($('#formNewUser_passwordUser').length) {
+                                            $('#formNewUser_passwordUser').pwdMeter({
+                                                minLength: 6,
+                                                displayGeneratePassword: false,
+                                                neutralText:"",
+                                                veryWeakText:"Muy Debil",
+                                                weakText:"Debil",
+                                                mediumText:"Normal",
+                                                strongText:"Fuerte",
+                                                veryStrongText:"Muy Fuerte"
+                                            });  
+                                        }
+                                    </script>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group control-group">
@@ -258,6 +331,7 @@
                                     out.print(captchaScript);
                                 %>
                             </div>
+                            <p class="warnField reqBef">Campos Requeridos</p>
                             <div class="span4">
                                 <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
                                 <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>

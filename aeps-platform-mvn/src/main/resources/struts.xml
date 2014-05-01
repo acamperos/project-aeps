@@ -5,6 +5,7 @@
     <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <constant name="struts.devMode" value="true" />   
     <constant name="struts.custom.i18n.resources" value="global"></constant>
+    <constant name="struts.action.excludePattern" value="/NewWebService,/SfUserWebService"/>
     <!--<constant name="struts.locale" value="en_US" />-->
     <!--<constant name="struts.convention.action.packages" value="org.aepscolombia.platform.controllers"/>-->     
     <package name="principal" extends="struts-default,json-default" namespace="/">
@@ -89,6 +90,7 @@
         </action>
         <action name="verifyUser"  method="verifyUser" class="org.aepscolombia.platform.controllers.ActionLogin">
 <!--            <result>/WEB-INF/views/layoutPrivate.jsp</result>-->
+            <interceptor-ref name="basicStack"/>
             <result type="redirectAction">accessPlatform</result>
 <!--            <result name="error" type="redirectAction">400</result>
             <result name="input" type="redirectAction">404</result>-->
@@ -109,6 +111,7 @@
         
         <action name="verifyUserToRestore"  method="verifyUserToRestore" class="org.aepscolombia.platform.controllers.ActionLogin">
             <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="basicStack"/>
             <result>/WEB-INF/views/login/restorePass.jsp</result>            
 <!--            <result name="error" type="redirectAction">400</result>
             <result name="input" type="redirectAction">
@@ -173,7 +176,7 @@
             <result>/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result name="page">/WEB-INF/views/generals/dashboard.jsp</result>
         </action>-->
-        <action name="getting">
+        <action name="getting" method="getValues" class="org.aepscolombia.platform.controllers.ActionProfile">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>            
             <interceptor-ref name="viewAction"/>            
@@ -185,8 +188,18 @@
             <interceptor-ref name="validateI18n"/>            
             <interceptor-ref name="viewAction"/>            
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
-            <result>/WEB-INF/views/profile/form-profile.jsp</result>
-        </action>          
+            <result>/WEB-INF/views/profile/view-profile.jsp</result>
+        </action>    
+        <action name="saveProfile" method="saveProfile" class="org.aepscolombia.platform.controllers.ActionProfile">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="saveSetting" method="saveSetting" class="org.aepscolombia.platform.controllers.ActionProfile">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>      
         <!-- End private part -->
     </package>  
     

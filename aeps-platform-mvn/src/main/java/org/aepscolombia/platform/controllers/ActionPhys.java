@@ -9,21 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.PhysiologicalMonitoringDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
-import org.aepscolombia.platform.models.entity.Beans;
-import org.aepscolombia.platform.models.entity.Cassavas;
-import org.aepscolombia.platform.models.entity.CropsTypes;
-import org.aepscolombia.platform.models.entity.Fields;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
-import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.PhysiologicalMonitoring;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.Sowing;
@@ -56,9 +49,11 @@ public class ActionPhys extends BaseAction {
     private int typeCrop;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
     
     private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
     private Sowing sowing = new Sowing();
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -149,6 +144,8 @@ public class ActionPhys extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -236,7 +233,7 @@ public class ActionPhys extends BaseAction {
             if (phys.getDaysPopulationMonFis() != null) {
 //                System.out.println("values=>"+phys.getDaysPopulationMonFis());
               if (phys.getDaysPopulationMonFis()<0 || phys.getDaysPopulationMonFis()>300000) {
-                  addFieldError("phys.daysPopulationMonFis", "Dato invalido");
+                  addFieldError("phys.daysPopulationMonFis", "Dato invalido valor entre 0 y 300000");
                   addActionError("Se ingreso una poblacion invalida, por favor ingresar un valor entre 0 y 300000");
               }
             }
@@ -249,6 +246,9 @@ public class ActionPhys extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*

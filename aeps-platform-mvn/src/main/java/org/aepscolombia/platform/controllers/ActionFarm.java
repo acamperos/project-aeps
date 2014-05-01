@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import org.aepscolombia.platform.models.dao.DepartmentsDao;
+import org.aepscolombia.platform.models.dao.EntitiesDao;
 
 import org.aepscolombia.platform.models.entity.Farms;
 import org.aepscolombia.platform.models.dao.FarmsDao;
@@ -20,10 +21,12 @@ import org.aepscolombia.platform.models.dao.ProducersDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 
 import org.aepscolombia.platform.models.entity.Departments;
+import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.FarmsProducers;
 import org.aepscolombia.platform.models.entity.FarmsProducersId;
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Municipalities;
+import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.util.APConstants;
 
@@ -54,12 +57,12 @@ public class ActionFarm extends BaseAction {
     private String name_property;
     private String latitude_property;
     private String length_property;
-    private double latitude_degrees_property;
-    private double latitude_minutes_property;
-    private double latitude_seconds_property;
-    private double length_degrees_property;
-    private double length_minutes_property;
-    private double length_seconds_property;
+    private Double latitude_degrees_property;
+    private Double latitude_minutes_property;
+    private Double latitude_seconds_property;
+    private Double length_degrees_property;
+    private Double length_minutes_property;
+    private Double length_seconds_property;
     private String altitude_property;
     private String direction_property;
     private List<Departments> department_property;
@@ -73,8 +76,10 @@ public class ActionFarm extends BaseAction {
     private List<HashMap> listRoute;
     private Users user;
     private Integer idEntSystem;
+    private Integer idUsrSystem;
     private Integer searchFrom;
     private String search_farm;    
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -142,51 +147,51 @@ public class ActionFarm extends BaseAction {
         this.length_property = length_property;
     }
 
-    public double getLatitude_degrees_property() {
+    public Double getLatitude_degrees_property() {
         return latitude_degrees_property;
     }
 
-    public void setLatitude_degrees_property(double latitude_degrees_property) {
+    public void setLatitude_degrees_property(Double latitude_degrees_property) {
         this.latitude_degrees_property = latitude_degrees_property;
     }
 
-    public double getLatitude_minutes_property() {
+    public Double getLatitude_minutes_property() {
         return latitude_minutes_property;
     }
 
-    public void setLatitude_minutes_property(double latitude_minutes_property) {
+    public void setLatitude_minutes_property(Double latitude_minutes_property) {
         this.latitude_minutes_property = latitude_minutes_property;
     }
 
-    public double getLatitude_seconds_property() {
+    public Double getLatitude_seconds_property() {
         return latitude_seconds_property;
     }
 
-    public void setLatitude_seconds_property(double latitude_seconds_property) {
+    public void setLatitude_seconds_property(Double latitude_seconds_property) {
         this.latitude_seconds_property = latitude_seconds_property;
     }
 
-    public double getLength_degrees_property() {
+    public Double getLength_degrees_property() {
         return length_degrees_property;
     }
 
-    public void setLength_degrees_property(double length_degrees_property) {
+    public void setLength_degrees_property(Double length_degrees_property) {
         this.length_degrees_property = length_degrees_property;
     }
 
-    public double getLength_minutes_property() {
+    public Double getLength_minutes_property() {
         return length_minutes_property;
     }
 
-    public void setLength_minutes_property(double length_minutes_property) {
+    public void setLength_minutes_property(Double length_minutes_property) {
         this.length_minutes_property = length_minutes_property;
     }
 
-    public double getLength_seconds_property() {
+    public Double getLength_seconds_property() {
         return length_seconds_property;
     }
 
-    public void setLength_seconds_property(double length_seconds_property) {
+    public void setLength_seconds_property(Double length_seconds_property) {
         this.length_seconds_property = length_seconds_property;
     }
 
@@ -355,11 +360,36 @@ public class ActionFarm extends BaseAction {
         return additionals;
     }   
     
+    private Integer typeEnt;
+
+    public Integer getTypeEnt() {
+        return typeEnt;
+    }
+
+    public void setTypeEnt(Integer typeEnt) {
+        this.typeEnt = typeEnt;
+    }   
+    
+    
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+        EntitiesDao entDao = new EntitiesDao();
+        Entities entTemp = entDao.findById(idEntSystem);
+        typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
+        if (entTemp.getEntitiesTypes().getIdEntTyp()==2) {
+            ProducersDao proDao = new ProducersDao();
+            Producers proTemp   = new Producers();
+            proTemp = proDao.objectByEntityId(idEntSystem);
+            if (proTemp!=null) {
+                idProducer    = proTemp.getIdPro();
+                name_producer = entTemp.getNameEnt();
+            }
+        }
         this.setDepartment_property(new DepartmentsDao().findAll());
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());           
         this.setCity_property(mun);
@@ -394,7 +424,7 @@ public class ActionFarm extends BaseAction {
          */
         if (actExe.equals("create") || actExe.equals("modify")) {
             HashMap required = new HashMap();
-            required.put("name_producer", name_producer);
+            if (typeEnt!=2) required.put("name_producer", name_producer);
             required.put("name_property", name_property);
             required.put("depFar", depFar);
             required.put("cityFar", cityFar);
@@ -418,14 +448,14 @@ public class ActionFarm extends BaseAction {
                 String sV = String.valueOf(required.get(sK));
 //                System.out.println(sK + " : " + sV);
 //                addFieldError(sK, "El campo es requerido");
-                if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     addFieldError(sK, "El campo es requerido");
                     enter = true;
                 }
             }
             
             if (enter) {
-                addActionError("Se requiere que ingrese los datos requeridos");
+                addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
 //            for (Iterator it = required.keySet().iterator(); it.hasNext();) {
@@ -441,13 +471,16 @@ public class ActionFarm extends BaseAction {
 //            }
             
             
-            double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property.replace(',','.'));
-            double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
-            double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
+            Double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property);
+            Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property);
+            Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property);
+//            Double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property.replace(',','.'));
+//            Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
+//            Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
             
 //            if (altitude_property) {    
             if (altPro < 0 || altPro > 9000) {
-                addFieldError("altitude_property", "Dato invalido");
+                addFieldError("altitude_property", "Dato invalido valor entre 0 y 9000");
                 addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
             }
 //            }
@@ -473,26 +506,26 @@ public class ActionFarm extends BaseAction {
             if (latPro!=0) {
 //                if (latPro!=null) { 
                 if (latPro < (-4.3) || latPro > (13.5)) {
-                    addFieldError("latitude_property", "Dato invalido");
+                    addFieldError("latitude_property", "Dato invalido valor entre -4.3 y 13.5");
                     addActionError("Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5");
                 }
 //                }
 
                 if ((latitude_degrees_property < (-5) || latitude_degrees_property > 14)) {
-                    addFieldError("latitude_degrees_property", "Dato invalido");
+                    addFieldError("latitude_degrees_property", "Dato invalido valor entre -5 y 14");
                     addActionError("Se ingreso una latitud en grados invalida, por favor ingresar un valor entre -5 y 14");
                 }
 
 //                if (latitude_minutes_property && (latitude_minutes_property<0 || latitude_minutes_property>60)) {
                 if ((latitude_minutes_property < 0 || latitude_minutes_property > 60)) {
-                    addFieldError("latitude_minutes_property", "Dato invalido");
-                    addActionError("Se ingreso una latitud en minutos invalida, por favor ingresar un valor entre 0 y 60");
+                    addFieldError("latitude_minutes_property", "Dato invalido valor entre 0 y 59");
+                    addActionError("Se ingreso una latitud en minutos invalida, por favor ingresar un valor entre 0 y 59");
                 }
 
 //                if (latitude_seconds_property && (latitude_seconds_property<0 || latitude_seconds_property>60)) {
                 if ((latitude_seconds_property < 0 || latitude_seconds_property > 60)) {
-                    addFieldError("latitude_seconds_property", "Dato invalido");
-                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
+                    addFieldError("latitude_seconds_property", "Dato invalido valor entre 0 y 59");
+                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 59");
                 }
             }
             
@@ -500,7 +533,7 @@ public class ActionFarm extends BaseAction {
 //            if (lonPro!=0 && (!length_property.equals("") || length_property!=null)) {
 //                if (length_property) {    
                 if (lonPro < (-81.8) || lonPro > (-66)) {
-                    addFieldError("length_property", "Dato invalido");
+                    addFieldError("length_property", "Dato invalido valor entre -81.8 y -66");
                     addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
                 }
 //                }			
@@ -512,20 +545,20 @@ public class ActionFarm extends BaseAction {
 
 //                if (length_degrees_property && (length_degrees_property<(-82) || length_degrees_property>(-66))) {
                 if ((length_degrees_property < (-82) || length_degrees_property > (-66))) {
-                    addFieldError("length_degrees_property", "Dato invalido");
+                    addFieldError("length_degrees_property", "Dato invalido valor entre entre -82 y -66");
                     addActionError("Se ingreso una longitud en grados invalida, por favor ingresar un valor entre -82 y -66");
                 }
 
 //                if (length_minutes_property && (length_minutes_property<0 || length_minutes_property>60)) {
                 if ((length_minutes_property < 0 || length_minutes_property > 60)) {
-                    addFieldError("length_minutes_property", "Dato invalido");
-                    addActionError("Se ingreso una longitud en minutos invalida, por favor ingresar un valor entre 0 y 60");
+                    addFieldError("length_minutes_property", "Dato invalido valor entre 0 y 59");
+                    addActionError("Se ingreso una longitud en minutos invalida, por favor ingresar un valor entre 0 y 59");
                 }
 
 //                if (length_seconds_property && (length_seconds_property<0 || length_seconds_property>60)) {
                 if ((length_seconds_property < 0 || length_seconds_property > 60)) {
-                    addFieldError("length_seconds_property", "Dato invalido");
-                    addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
+                    addFieldError("length_seconds_property", "Dato invalido valor entre 0 y 59");
+                    addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 59");
                 }
             }
         }
@@ -571,9 +604,14 @@ public class ActionFarm extends BaseAction {
      * @return lista de fincas
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "farm/list")) {
+//        if (!false) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         valName     = (String) (this.getRequest().getParameter("valName"));
         valId       = (String) (this.getRequest().getParameter("valId"));
         selected    = (String) (this.getRequest().getParameter("selected"));
+        viewInfo    = (String) (this.getRequest().getParameter("viewInfo"));
         if (selected == null) selected = "property";
         additionals = new HashMap();
         additionals.put("selected", selected);
@@ -621,7 +659,11 @@ public class ActionFarm extends BaseAction {
      * @return Informacion de la finca
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "farm/create") || !usrDao.getPrivilegeUser(idUsrSystem, "farm/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
+        viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
         int pageReq;
         if (this.getRequest().getParameter("page") != null) {
             pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
@@ -670,6 +712,9 @@ public class ActionFarm extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() throws SQLException {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "farm/create") || !usrDao.getPrivilegeUser(idUsrSystem, "farm/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
         /*
          * Se evalua dependiendo a la accion realizada:
@@ -688,9 +733,12 @@ public class ActionFarm extends BaseAction {
         Session session = sessions.openSession();
         Transaction tx = null;
 
-        double altPro = Double.parseDouble(altitude_property.replace(',','.'));
-        double latPro = Double.parseDouble(latitude_property.replace(',','.'));
-        double lonPro = Double.parseDouble(length_property.replace(',','.'));
+//        Double altPro = Double.parseDouble(altitude_property.replace(',','.'));
+//        Double latPro = Double.parseDouble(latitude_property.replace(',','.'));
+//        Double lonPro = Double.parseDouble(length_property.replace(',','.'));
+        Double altPro = Double.parseDouble(altitude_property);
+        Double latPro = Double.parseDouble(latitude_property);
+        Double lonPro = Double.parseDouble(length_property);
         
         if (option_geo == 2) {
             latPro = (latitude_minutes_property / 60) + (latitude_seconds_property / 3600);
@@ -787,6 +835,9 @@ public class ActionFarm extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "farm/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idFar = 0;
         try {
             idFar = Integer.parseInt(this.getRequest().getParameter("idFar"));

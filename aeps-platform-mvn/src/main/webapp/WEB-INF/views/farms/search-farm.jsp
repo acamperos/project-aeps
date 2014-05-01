@@ -7,6 +7,10 @@
         <s:textfield cssClass="form-control" name="search_farm" placeholder="Buscar" theme="simple" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFarms" onCompleteTopics="completeFarm"><i class="icon-search"></i></sj:submit>
         <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+        <s:set name="valSel" value="selected"/> 
+        <s:if test="%{#valSel.equals('property')}">
+            <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
+        </s:if>        
     </div>   
     <div id="searchAdvance" class="hide">
         <div class="control-group">
@@ -85,6 +89,9 @@
         <!--</fieldset>-->
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFarms" onCompleteTopics="completeFarm">Buscar Finca <i class="icon-search"></i></sj:submit>
+            <s:if test="%{#valSel.equals('property')}">
+                <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
+            </s:if>
         </div>    
     </div>    
 </s:form>        

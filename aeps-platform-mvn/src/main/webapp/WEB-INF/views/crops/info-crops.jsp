@@ -6,6 +6,11 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
 <% String table = "display:none";%>
 <% String label = "";%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 
 <s:if test="listCrops.size() > 0">
     <% table = "";%>
@@ -18,6 +23,7 @@
 <% //int idProducer = Integer.parseInt(String.valueOf(request.getAttribute("idProducer")));%>
 <% String valId   = String.valueOf(request.getAttribute("valId"));%>
 <% String valName = String.valueOf(request.getAttribute("valName"));%>
+<% String typeEnt = String.valueOf(request.getAttribute("typeEnt"));%>
 <% HashMap add    = (HashMap) request.getAttribute("additionals");%>
 <% String value   = (String) add.get("selected");%>
 <% String divShow = "";%>
@@ -25,21 +31,27 @@
 <% divHide = "divConListCrop"; %>    
 
 <div class="msgWin" id="messageWin"></div>
-<div id="divCrops" class="w-box">
-    <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
-        <i class="icon-plus"></i> Agregar Evento Productivo
-    </button>
+<div id="divCrops" class="w-box">    
+    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) { %>
+        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
+            <i class="icon-plus"></i> Agregar Evento Productivo
+        </button>
+    <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblCrops'>
         <thead>
             <tr>
                 <th>Numero del Cultivo</th>
-                <th>Documento del productor</th>
+                <s:if test="%{typeEnt!=2}">
+                    <th>Documento del productor</th>
+                </s:if>
                 <th>Informacion</th>
                 <th>Fecha de siembra</th>
                 <th>Material genetico</th>
-                <% if (value == "crop" || value.equals("crop")) {%>
-                    <th>Accion</th>
-                <% }%>
+                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/delete"))) { %>
+                    <% if (value == "crop" || value.equals("crop")) {%>
+                        <th>Accion</th>
+                    <% }%>
+                <% } %>
             </tr>
         </thead>
         <tbody>
@@ -66,7 +78,8 @@
     <label style="<%= label%>"><%= "No se encuentra registrado ningun evento productivo"%></label>
     <div class="hide">
         <div id="confirm_dialog_crop" class="cbox_content">
-            <div class="sepH_c"><strong>Desea borrar este evento productivo?</strong></div>
+            <div class="sepH_c"><strong>Desea borrar este evento productivo, <br>
+                    al momento de confirmar todas las dependencias también van a desaparecer?</strong></div>
             <div>
                 <a href="#" class="btn btn-small btn-initial confirm_yes">Si</a>
                 <a href="#" class="btn btn-small confirm_no">No</a>

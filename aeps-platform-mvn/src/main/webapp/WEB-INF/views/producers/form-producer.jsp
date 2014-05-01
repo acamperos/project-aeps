@@ -2,6 +2,11 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -24,10 +29,11 @@
                             list="type_ident_producer" 
                             listKey="acronymDocTyp" 
                             listValue="nameDocTyp" 
-                            headerKey=" " 
+                            headerKey="-1" 
                             headerValue="---"
                             onchange="selValue(this, 'divDigVerPro');
-                                        selConf(this.value, 'formProducer_num_ident_producer');"
+                                      selConf(this.value, 'formProducer_num_ident_producer');
+                                      showOtherTypeDocument(this.value, 'divInfoCompany', 'divInfoPerson');"
                         />
                     </div>  
                 </div>  
@@ -40,7 +46,16 @@
                         <s:textfield name="num_ident_producer" />
                     </div>  
                 </div> 
-                <div id="divDigVerPro" class="hide">
+                <% String classInfoPerson  = "hide"; %>
+                <% String classInfoCompany = "hide"; %>
+                <s:set name="typeDoc" value="typeIdent"/>
+                <s:if test="%{#typeDoc.equals('NIT')}">
+                    <% classInfoCompany = "";%>
+                </s:if>      
+                <s:elseif test="%{!(#typeDoc.equals(''))}">
+                    <% classInfoPerson = "";%>
+                </s:elseif>
+                <div class="<%= classInfoCompany %>" id="divInfoCompany">
                     <div class="control-group">
                         <label for="formProducer_dig_ver_producer" class="control-label req">
                             Digito de verificación:
@@ -50,55 +65,114 @@
                             <s:textfield name="dig_ver_producer" />
                         </div>  
                     </div>
-                </div>     
-                <div class="row-fluid">
-                    <div class="span5">
-                        <div class="control-group">
-                            <label for="formProducer_names_producer_1" class="control-label req">
-                                Primer nombre:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer nombre"></i>
-                            </label>
-                            <div class="controls">
-                                <s:textfield name="names_producer_1" />
-                            </div>  
-                        </div>
-                    </div>  
-                    <div class="span3" style="padding-left: 28px">
-                        <div class="control-group">
-                            <label for="formProducer_names_producer_2" class="control-label">
-                                Segundo nombre:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo nombre"></i>
-                            </label>
-                            <div class="controls">
-                                <s:textfield name="names_producer_2" />
-                            </div>  
-                        </div>
-                    </div>
-                </div> 
-                <div class="row-fluid">
-                    <div class="span5">
-                        <div class="control-group">
-                            <label for="formProducer_last_names_producer_1" class="control-label req">
-                                Primer apellido:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer apellido"></i>
-                            </label>
-                            <div class="controls">
-                                <s:textfield name="last_names_producer_1" />
-                            </div>  
-                        </div>
-                    </div>  
-                    <div class="span3" style="padding-left: 28px">
+                    <div class="control-group">
+                        <label for="formProducer_nameCompany" class="control-label req">
+                            Nombre de la empresa:
+                        </label>
+                        <div class="controls">
+                            <s:textfield name="nameCompany"/>
+                        </div>                         
+                    </div> 
+                    <h4>Información del responsable:</h4>   
+                    <hr />
+                    <div class="row-fluid">
                         <div class="span5">
                             <div class="control-group">
-                                <label for="formProducer_last_names_producer_2" class="control-label">
-                                    Segundo apellido:
-                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo apellido"></i>
+                                <label for="formProducer_firstNameRep" class="control-label req">Primer nombre:</label>
+                                <div class="controls">
+                                    <s:textfield name="firstNameRep"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span3" style="padding-left: 28px">
+                            <div class="control-group">
+                                <label for="formProducer_secondNameRep" class="control-label">Segundo nombre:</label>
+                                <div class="controls">
+                                    <s:textfield name="secondNameRep"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <div class="control-group">
+                                <label for="formProducer_firstLastNameRep" class="control-label req">Primer apellido:</label>
+                                <div class="controls">
+                                    <s:textfield name="firstLastNameRep"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span3" style="padding-left: 28px">
+                            <div class="control-group">
+                                <label for="formProducer_secondLastNameRep" class="control-label">Segundo apellido:</label>
+                                <div class="controls">
+                                    <s:textfield name="secondLastNameRep"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="formProducer_emailRes" class="control-label req">
+                            Correo electrónico del responsable:
+                            <i class="icon-info-sign s2b_tooltip" title="Ingrese su correo electrónico"></i>
+                        </label>
+                        <div class="controls">
+                            <s:textfield type="email" name="emailRes" />
+                        </div>  
+                    </div>
+                    <h4>Información adicional de la empresa:</h4>   
+                    <hr />        
+                </div>   
+                <div class="<%= classInfoPerson %>" id="divInfoPerson">      
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <div class="control-group">
+                                <label for="formProducer_names_producer_1" class="control-label req">
+                                    Primer nombre:
+                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer nombre"></i>
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="last_names_producer_2" />
+                                    <s:textfield name="names_producer_1" />
                                 </div>  
                             </div>
                         </div>  
+                        <div class="span3" style="padding-left: 28px">
+                            <div class="control-group">
+                                <label for="formProducer_names_producer_2" class="control-label">
+                                    Segundo nombre:
+                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo nombre"></i>
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="names_producer_2" />
+                                </div>  
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <div class="control-group">
+                                <label for="formProducer_last_names_producer_1" class="control-label req">
+                                    Primer apellido:
+                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer apellido"></i>
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="last_names_producer_1" />
+                                </div>  
+                            </div>
+                        </div>  
+                        <div class="span3" style="padding-left: 28px">
+                            <div class="span5">
+                                <div class="control-group">
+                                    <label for="formProducer_last_names_producer_2" class="control-label">
+                                        Segundo apellido:
+                                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo apellido"></i>
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="last_names_producer_2" />
+                                    </div>  
+                                </div>
+                            </div>  
+                        </div>
                     </div>
                 </div>
                 <div class="control-group">
@@ -166,10 +240,12 @@
                         <i class="icon-info-sign s2b_tooltip" title="Ingrese su correo electrónico"></i>
                     </label>
                     <div class="controls">
-                        <s:textfield name="email_producer" />
+                        <s:textfield type="email" name="email_producer" />
                     </div>  
                 </div>
+                <p class="warnField reqBef">Campos Requeridos</p>
             </fieldset>
+            <p class="warnField reqBef">Campos Requeridos</p>
             <div>   
                 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
                 <script>
@@ -183,11 +259,15 @@
                 <%--<s:hidden name="actExe" value=""/>--%>
                 <s:hidden name="actExe"/>
                 <s:hidden name="page"/>
+                <s:hidden name="viewInfo"/>                
                 <!--<input type="submit" class="btn btn-primary" value="Guardar productor" id="submit_492662557">-->
                 <%--<sj:submit cssClass="btn btn-inverse" targets="divBodyLayout" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>--%>
-                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
+                <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
+                <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "producer/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify"))) { %>
+                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
+                <% } %>
                 <!--<button class="btn btn-inverse" onclick="saveData('saveProducer.action','searchProducer.action?page=<%=pageNow%>','formProducer');">Guardar productor</button>-->
-                <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();">Cancelar</button>
+                <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
             </div>
         </s:form>
         <script>

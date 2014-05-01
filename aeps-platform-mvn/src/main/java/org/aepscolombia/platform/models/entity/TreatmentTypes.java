@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="treatment_types"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class TreatmentTypes  implements java.io.Serializable {
 

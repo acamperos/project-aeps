@@ -12,14 +12,14 @@
             <div class="masthead">
                 <div class="row">
                     <div class="span3">	
-                        <img src="img/logoAEPS.png" style="width: 200px; height: 80px;">
+                        <img src="img/logoAEPS.png" style="margin-top: 10px;">
                         <!--<h3 class="text-muted">AEPS</h3>-->
                     </div>  
                     <div class="span3">	
                         <label class="titlePrin">Agricultura Específica por Sitio</label>
                     </div>
                     <div class="span6">
-                        <img src="img/header.png">
+                        <img src="img/header.png" style="height: 130px;">
                     </div>
                 </div>					
             </div>

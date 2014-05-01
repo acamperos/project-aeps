@@ -2,6 +2,11 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 <html>
     <head></head>
     <body>
@@ -13,19 +18,34 @@
                 <s:form id="formFarm" action="saveFarm.action" cssClass="form-horizontal formClassProperty">
                     <fieldset>
                         <legend>Formulario de una finca</legend>
+                        <s:hidden name="typeEnt"/>
+                        <s:if test="%{typeEnt==2}">
+                            <!--<div class="control-group">-->
+                                <s:hidden name="idProducer"/>                                
+                                <s:hidden name="name_producer"/>                                
+<!--                                <label class="control-label">
+                                    Seleccione el productor:                                    
+                                </label>
+                                <div class="controls">
+                                    <label><s:property value="name_producer" /></label>                                    
+                                </div>  
+                            </div> -->
+                        </s:if>
+                        <s:else>
+                            <div class="control-group">
+                                <s:hidden name="idProducer"/>                                
+                                <label for="formFarm_name_producer" class="control-label req">
+                                    Seleccione el productor:
+                                    <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor en la lupa a la derecha"></i>
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="name_producer" readonly="true" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
+                                    <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')"><i class="icon-search"></i></a>
+                                </div>  
+                            </div>   
+                        </s:else>                        
                         <div class="control-group">
-                            <s:hidden name="idProducer"/>
                             <s:hidden name="idFarm"/>
-                            <label for="formFarm_name_producer" class="control-label req">
-                                Seleccione el productor:
-                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor en la lupa a la derecha"></i>
-                            </label>
-                            <div class="controls">
-                                <s:textfield name="name_producer" />
-                                <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')"><i class="icon-search"></i></a>
-                            </div>  
-                        </div>   
-                        <div class="control-group">
                             <label for="formFarm_name_property" class="control-label req">
                                 Nombre de Finca:
                                 <i class="icon-info-sign s2b_tooltip" title="Ingrese el nombre de la finca asociada al productor seleccionado"></i>
@@ -51,15 +71,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="latitude_degrees_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_degrees_property" class="input-degrees"/>
+                                        <input type="text" name="latitude_degrees_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property');" id="formFarm_latitude_degrees_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="latitude_minutes_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_minutes_property" class="input-degrees"/>
+                                        <input type="text" name="latitude_minutes_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property'); checkValue('formFarm_latitude_minutes_property', 59);" id="formFarm_latitude_minutes_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="latitude_seconds_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')" id="formFarm_latitude_seconds_property" class="input-degrees"/>
+                                        <input type="text" name="latitude_seconds_property" onkeyup="generateDecimals('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property'); checkValueSecond('formFarm_latitude_seconds_property', 60);" id="formFarm_latitude_seconds_property" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -81,15 +101,15 @@
                                 <div class="row-fluid">
                                     <div class="span2 input-prepend controls" style="width: 100px;">
                                         <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_degrees_property" class="input-degrees"/>
+                                        <input type="text" name="length_degrees_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property');" id="formFarm_length_degrees_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_minutes_property" class="input-degrees"/>
+                                        <input type="text" name="length_minutes_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property'); checkValue('formFarm_length_minutes_property', 59);" id="formFarm_length_minutes_property" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')" id="formFarm_length_seconds_property" class="input-degrees"/>
+                                        <input type="text" name="length_seconds_property" onkeyup="generateDecimals('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property'); checkValueSecond('formFarm_length_seconds_property', 60);" id="formFarm_length_seconds_property" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -102,16 +122,7 @@
                             <div class="controls">
                                 <s:textfield name="altitude_property" />
                             </div>  
-                        </div>
-                        <div class="control-group">
-                            <label for="formFarm_direction_property" class="control-label">
-                                Direccion de la Finca:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la direccion de la finca"></i>
-                            </label>
-                            <div class="controls">
-                                <s:textfield name="direction_property" />
-                            </div>  
-                        </div>    
+                        </div>                         
                         <div class="control-group">
                             <label for="formFarm_depFar" class="control-label req">
                                 Departamento:
@@ -153,14 +164,28 @@
                             <div class="controls">
                                 <s:textfield name="lane_property" />
                             </div>  
-                        </div>      
+                        </div> 
+                        <div class="control-group">
+                            <label for="formFarm_direction_property" class="control-label">
+                                Direccion de la Finca:
+                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la direccion de la finca"></i>
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="direction_property" />
+                            </div>  
+                        </div>   
                     </fieldset>
+                    <p class="warnField reqBef">Campos Requeridos</p>
                     <div> 
                         <s:hidden name="page" id="formFarm_page" />
                         <s:hidden name="actExe"/>
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
+                        <s:hidden name="viewInfo"/>
+                        <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
+                        <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "farm/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify"))) { %>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
+                        <% } %>
                         <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')"><i class="icon-save"></i> Guardar informaci&oacute;n</button>-->
-                        <button class="btn btn-large bt_cancel_farm" onclick="resetForm('formFarm'); closeWindow();">Cancelar</button>
+                        <button class="btn btn-large bt_cancel_farm" onclick="resetForm('formFarm'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>    
                 </s:form>        
                 <script>
@@ -177,9 +202,22 @@
                     $("#formFarm_length_degrees_property").numeric({decimal: false});
                     $("#formFarm_length_minutes_property").numeric({decimal: false});
                     $("#formFarm_length_seconds_property").numeric();
+                    if ($("#formFarm_length_minutes_property").val()>60) {                        
+                        $("#formFarm_length_minutes_property").val('');
+                    }
+                    if ($("#formFarm_length_seconds_property").val()>60) {                        
+                        $("#formFarm_length_seconds_property").val('');
+                    }
+                    
                     $("#formFarm_latitude_degrees_property").numeric({decimal: false});
                     $("#formFarm_latitude_minutes_property").numeric({decimal: false});
                     $("#formFarm_latitude_seconds_property").numeric();
+                    if ($("#formFarm_latitude_minutes_property").val()>60) {                        
+                        $("#formFarm_latitude_minutes_property").val('');
+                    }
+                    if ($("#formFarm_latitude_seconds_property").val()>60) {                        
+                        $("#formFarm_latitude_seconds_property").val('');
+                    }
                     generateDegrees('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property');
                     generateDegrees('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property');
                     $.subscribe('completeFarm', function(event, data) {

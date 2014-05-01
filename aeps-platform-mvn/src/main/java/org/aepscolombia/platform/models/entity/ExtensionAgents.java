@@ -26,6 +26,8 @@ public class ExtensionAgents  implements java.io.Serializable {
      private Entities entities;
      private Boolean status;
      private Integer createdBy;
+     private WorkTypeExtAgent workTypeExtAge;
+     private String nameAssoExtAge;
 
     public ExtensionAgents() {
     }
@@ -34,9 +36,11 @@ public class ExtensionAgents  implements java.io.Serializable {
     public ExtensionAgents(Entities entities) {
         this.entities = entities;
     }
-    public ExtensionAgents(Entities entities, Boolean status, Integer createdBy) {
+    public ExtensionAgents(Entities entities, WorkTypeExtAgent workTypeExtAge, String nameAssoExtAge, Boolean status, Integer createdBy) {
        this.entities = entities;
+       this.workTypeExtAge = workTypeExtAge;
        this.status = status;
+       this.nameAssoExtAge = nameAssoExtAge;
        this.createdBy = createdBy;
     }
    
@@ -58,6 +62,25 @@ public class ExtensionAgents  implements java.io.Serializable {
     
     public void setEntities(Entities entities) {
         this.entities = entities;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="work_type_ext_age")
+    public WorkTypeExtAgent getWorkTypeExtAge() {
+        return this.workTypeExtAge;
+    }
+    
+    public void setWorkTypeExtAge(WorkTypeExtAgent workTypeExtAge) {
+        this.workTypeExtAge = workTypeExtAge;
+    }
+    
+    @Column(name="name_asso_ext_age", length=200)
+    public String getNameAssoExtAge() {
+        return this.nameAssoExtAge;
+    }
+    
+    public void setNameAssoExtAge(String nameAssoExtAge) {
+        this.nameAssoExtAge = nameAssoExtAge;
     }
     
     @Column(name="status")

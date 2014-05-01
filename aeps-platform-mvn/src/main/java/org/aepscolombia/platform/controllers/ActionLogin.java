@@ -11,13 +11,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.dao.UserEntityDao;
 import org.aepscolombia.platform.models.dao.UsersProfilesDao;
@@ -26,10 +26,13 @@ import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Profiles;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.EntitiesTypes;
+import org.aepscolombia.platform.models.entity.ExtensionAgents;
 import org.aepscolombia.platform.models.entity.UserEntity;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entity.UsersProfiles;
 import org.aepscolombia.platform.models.entity.UsersProfilesId;
+import org.aepscolombia.platform.models.entity.WorkTypeExtAgent;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -88,6 +91,12 @@ public class ActionLogin extends BaseAction {
     private String celphoneUser;
     private String passwordUser;
     private String passwordRepUser;
+    private Integer workType;
+    private String emailRep;
+    private String pageLink;
+    private String direction;
+    private String nameAsso;
+    private String nameAssoExt;
 
     public int getTypeUser() {
         return typeUser;
@@ -103,6 +112,54 @@ public class ActionLogin extends BaseAction {
 
     public void setEmailUser(String emailUser) {
         this.emailUser = emailUser;
+    }
+
+    public Integer getWorkType() {
+        return workType;
+    }
+
+    public void setWorkType(Integer workType) {
+        this.workType = workType;
+    }
+
+    public String getEmailRep() {
+        return emailRep;
+    }
+
+    public void setEmailRep(String emailRep) {
+        this.emailRep = emailRep;
+    }
+
+    public String getPageLink() {
+        return pageLink;
+    }
+
+    public void setPageLink(String pageLink) {
+        this.pageLink = pageLink;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public String getNameAsso() {
+        return nameAsso;
+    }
+
+    public void setNameAsso(String nameAsso) {
+        this.nameAsso = nameAsso;
+    }
+
+    public String getNameAssoExt() {
+        return nameAssoExt;
+    }
+
+    public void setNameAssoExt(String nameAssoExt) {
+        this.nameAssoExt = nameAssoExt;
     }
 
     public String getCelphoneUser() {
@@ -200,7 +257,16 @@ public class ActionLogin extends BaseAction {
      */
     public String login() {
         if(this.getUsername()!=null && this.getPassword()!=null) {
-            Users loggedUser = userDao.login(this.getUsername(), this.getPassword());
+            String userUsr=this.getUsername().trim();
+            String passUsr=this.getPassword().trim();
+            String saltUsr="";
+//            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());            
+            Users usrTemp = userDao.getUserByLogin(userUsr, "");
+            if (usrTemp!=null) saltUsr = usrTemp.getSaltUsr();
+            
+            String passRes = GlobalFunctions.generateSHA1(passUsr, saltUsr);
+            
+            Users loggedUser = userDao.login(userUsr, passRes);
 //            System.out.println("entreeee");
             if (loggedUser != null) {
                 this.setUsername("");
@@ -306,9 +372,9 @@ public class ActionLogin extends BaseAction {
         try {
             codValidation = GlobalFunctions.getSalt();
         } catch (NoSuchAlgorithmException ex) {
-            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchProviderException ex) {
-            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
         }        
         Users loggedUser = userDao.getUserByLogin(nameUser.trim(), "");
         if (loggedUser != null) {
@@ -454,13 +520,24 @@ public class ActionLogin extends BaseAction {
         Transaction tx  = session.beginTransaction();
 
         try {
-            String passRes = GlobalFunctions.generateMD5(this.getPassRest());
+//            String passRes = GlobalFunctions.generateMD5(this.getPassRest());
 //            String passResCon = this.getPassRestCon();
+            String saltUsr = GlobalFunctions.getSalt();
+//            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
+            String passRes = GlobalFunctions.generateSHA1(this.getPassRest(), saltUsr);
 
             Users user = (Users) userDao.objectById(this.getIdUser());
+            user.setSaltUsr(saltUsr);
             user.setPasswordUsr(passRes);
             user.setStatus(1);
             session.saveOrUpdate(user);
+            
+            
+//            SfGuardUserDao sfDao = new SfGuardUserDao();
+//            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+//            sfUser.setSalt(saltUsr);
+//            sfUser.setPassword(passRes);
+//            sfDao.save(sfUser);
 
 //            LogEntities logPro = new LogEntities();
 //            logPro.setIdLogEnt(null);
@@ -480,6 +557,10 @@ public class ActionLogin extends BaseAction {
             e.printStackTrace();
             state = "failure";
             info  = "Fallo al momento de regenerar la contraseña";
+        } catch (NoSuchAlgorithmException ex) {
+//            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchProviderException ex) {
+//            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "states";
     }
@@ -509,10 +590,48 @@ public class ActionLogin extends BaseAction {
                 addActionError("Se han ingresado datos invalidos");
             }
         } else if (actExe.equals("newuser")) {           
-            if ((this.getEmailUser()==null || this.getEmailUser().isEmpty()) && (this.getCelphoneUser()==null || this.getCelphoneUser().isEmpty())) {
+            HashMap required = new HashMap();
+            required.put("typeUser", typeUser);
+            if (typeUser==1) {            
+                required.put("workType", workType);
+                required.put("nameAssoExt", nameAssoExt);
+            } else if (typeUser==3) {
+                if (this.getEmailRep()!=null || !this.getEmailRep().isEmpty()) {
+                    if (!ValidatorUtil.validateEmail(this.getEmailRep())) {
+                        addFieldError("emailRep", "Ha ingresado un correo con formato invalido");
+                        this.setPassword(null);
+                    }
+                }
+                required.put("emailRep", emailRep);
+                required.put("pageLink", pageLink);
+                required.put("direction", direction);    
+                required.put("nameAsso", nameAsso);            
+            }
+            required.put("emailUser", emailUser);
+            required.put("passwordUser", passwordUser);    
+            required.put("passwordRepUser", passwordRepUser);    
+            boolean enter = false;
+            
+            for (Iterator it = required.keySet().iterator(); it.hasNext();) {
+                String sK = (String) it.next();
+                String sV = String.valueOf(required.get(sK));
+                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+                    addFieldError(sK, "El campo es requerido");
+                    enter = true;
+                }
+            }
+
+            
+            if (enter) {
+                addActionError("Faltan campos por ingresar por favor digitelos");
+            }
+            
+            //            if ((this.getEmailUser()==null || this.getEmailUser().isEmpty()) && (this.getCelphoneUser()==null || this.getCelphoneUser().isEmpty())) {
+            if ((this.getEmailUser()==null || this.getEmailUser().isEmpty())) {
                 addFieldError("emailUser", "Campo obligatorio");
-                addFieldError("celphoneUser", "Campo obligatorio");
-                addActionError("Se debe ingresar por lo menos correo electronico o celular para el registro");
+//                addFieldError("celphoneUser", "Campo obligatorio");
+                addActionError("Se debe ingresar por lo menos el correo electronico para el registro");
+//                addActionError("Se debe ingresar por lo menos correo electronico o celular para el registro");
             }
 
             if (this.getEmailUser()!=null || !this.getEmailUser().isEmpty()) {
@@ -520,13 +639,13 @@ public class ActionLogin extends BaseAction {
                     addFieldError("emailUser", "Ha ingresado un correo con formato invalido");
                     this.setPassword(null);
                 }
-            }
-
+            }            
+            
             if (this.getPasswordUser()!=null && this.getPasswordUser().length() < 6) {
                 addFieldError("passwordUser", "Campo incompleto");
                 addActionError("Debe ingresar una contraseña de mas de 6 caracteres");
             }
-
+            
             if (this.getPasswordUser()!=null && this.getPasswordUser().length() > 10) {
                 addFieldError("passwordUser", "Campo muy largo");
                 addActionError("Debe ingresar una contraseña de menos de 10 caracteres");
@@ -599,7 +718,7 @@ public class ActionLogin extends BaseAction {
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = (String) required.get(sK);
-                if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     enterFields = true;
                     addFieldError(sK, "El campo es requerido");
                 }
@@ -642,17 +761,25 @@ public class ActionLogin extends BaseAction {
         
         try {
             String codValidation = GlobalFunctions.getSalt();
-            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
+            String saltUsr       = GlobalFunctions.getSalt();
+//            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
+            String passTransform = GlobalFunctions.generateSHA1(this.getPasswordUser(), saltUsr);
 
             Entities ent = new Entities();
             ent.setIdEnt(null);
 //            ent.setEntityTypeEnt(1);
-            ent.setEntitiesTypes(new EntitiesTypes(1));
+            ent.setEntitiesTypes(new EntitiesTypes(this.getTypeUser()));
             if(this.getCelphoneUser()!=null && !celphoneUser.equals("")) ent.setCellphoneEnt(Long.parseLong(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long) Integer.parseInt(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long)317524765);
             ent.setEmailEnt(this.getEmailUser());
             ent.setStatus(true);
+            if (this.getTypeUser()==3) {
+                ent.setEmail2Ent(this.getEmailRep());
+                ent.setPageLinkEnt(this.getPageLink());
+                ent.setAddressEnt(this.getDirection());
+                ent.setNameEnt(this.getNameAsso());  
+            }
             session.saveOrUpdate(ent);
 //            entDao.save(ent);
 
@@ -665,8 +792,9 @@ public class ActionLogin extends BaseAction {
             log.setActionTypeLogEnt(action);
             session.saveOrUpdate(log);
 //            logDao.save(log);
-
-            if (this.getTypeUser() == 1) {
+                        
+//            System.out.println("Result = "+result);
+            if (this.getTypeUser() == 2) {
                 Producers pro = new Producers();
                 pro.setIdPro(null);
                 pro.setEntities(ent);
@@ -683,21 +811,64 @@ public class ActionLogin extends BaseAction {
                 session.saveOrUpdate(logPro);
 //                logDao.save(logPro);
 
+            } else if (this.getTypeUser() == 1) {
+                ExtensionAgents ext = new ExtensionAgents();
+                ext.setIdExtAge(null);
+                ext.setEntities(ent);
+                ext.setWorkTypeExtAge(new WorkTypeExtAgent(this.getWorkType()));
+                ext.setNameAssoExtAge(this.getNameAssoExt());
+                ext.setStatus(true);
+                session.saveOrUpdate(ext);
+
+                LogEntities logPro = new LogEntities();
+                logPro.setIdLogEnt(null);
+                logPro.setIdEntityLogEnt(ent.getIdEnt());
+                logPro.setIdObjectLogEnt(ext.getIdExtAge());
+                logPro.setTableLogEnt("extension_agents");
+                logPro.setDateLogEnt(new Date());
+                logPro.setActionTypeLogEnt(action);
+                session.saveOrUpdate(logPro);
+//                logDao.save(logPro);
+
             }
 
             String nameUser = null;
-            if (!this.getEmailUser().isEmpty()) {
+//            if (!this.getEmailUser().isEmpty()) {
                 nameUser = this.getEmailUser();
-            } else if (!this.getCelphoneUser().isEmpty()) {
-                nameUser = this.getCelphoneUser();
-            }
+//            } else if (!this.getCelphoneUser().isEmpty()) {
+//                nameUser = this.getCelphoneUser();
+//            }
+            
+//            org.aepscolombia.platform.webservices.SfUserWebService_Service service = new org.aepscolombia.platform.webservices.SfUserWebService_Service();
+//            org.aepscolombia.platform.webservices.SfUserWebService port = service.getSfUserWebServicePort();
+//            // TODO process result here
+//            java.lang.String result = port.saveUser(this.getEmailUser(), "", "", "sha1", saltUsr, passTransform);
 
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = new SfGuardUser();
+            sfUser.setEmailAddress(nameUser);
+            sfUser.setFirstName("");
+            sfUser.setLastName("");
+            sfUser.setAlgorithm("sha1");
+            sfUser.setSalt(saltUsr);
+            sfUser.setPassword(passTransform);
+            sfUser.setIsActive(false);
+            sfUser.setIsSuperAdmin(false);
+            sfUser.setUsername(nameUser);
+            sfUser.setCreatedAt(new Date());
+            sfUser.setUpdatedAt(new Date());
+            sfUser.setCanLogin(false);
+            sfDao.save(sfUser);
+                
+                
             Users user = new Users();
             user.setIdUsr(null);
             user.setNameUserUsr(nameUser);
 //            user.setPasswordUsr(this.getPasswordUser());
+            user.setSaltUsr(saltUsr);
             user.setPasswordUsr(passTransform);
             user.setCodValidationUsr(codValidation);
+            user.setLastInUsr(null);
             user.setStatus(2);//Estado inhabilitado hasta confirmar
             session.saveOrUpdate(user);
 //            userDao.save(user);
@@ -735,9 +906,9 @@ public class ActionLogin extends BaseAction {
 ////            if(this.getTypeUser()==1) {
             int profile = 0;
             if(this.getTypeUser()==1) {
-                profile = 3;
-            } else if(this.getTypeUser()==2) {
                 profile = 4;
+            } else if(this.getTypeUser()==2) {
+                profile = 3;
             } else if(this.getTypeUser()==3) {
                 profile = 5;
             }
@@ -751,9 +922,22 @@ public class ActionLogin extends BaseAction {
             session.saveOrUpdate(usrPer);
 
             tx.commit();
-            GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
             state = "success";
-            info  = "El usuario ha sido agregado con exito, confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
+            if (this.getTypeUser() == 3) {
+                GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(this.getRequest().getLocalAddr(), user.getNameUserUsr()));
+                info  = "El usuario gremio ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
+            } else if (this.getTypeUser() == 2) {
+                if (this.getWorkType()== 1 || this.getWorkType()== 2) {
+                    GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
+                    info  = "El usuario agronomo ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
+                } else {
+                    GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(this.getRequest().getLocalAddr(), user.getNameUserUsr()));
+                    info  = "El usuario agronomo ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
+                }
+            } else if (this.getTypeUser() == 1) {
+                GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
+                info  = "El usuario ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
+            }
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -766,6 +950,10 @@ public class ActionLogin extends BaseAction {
         } catch (NoSuchProviderException ex) {
             ex.printStackTrace();
 //            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            state = "failure";
+            info  = "Fallo el servicio para crear el usuario en la aplicacion movil";
         } finally {
             session.close();
         }

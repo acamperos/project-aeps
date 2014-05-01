@@ -73,8 +73,16 @@ public class ActionProducer extends BaseAction {
     public List<HashMap> listProducers;
     private Users user;
     private Integer idEntSystem;
+    private Integer idUsrSystem;
     private Integer searchFrom;
     private String search_producer; 
+    private String nameCompany;                            
+    private String firstNameRep;
+    private String secondNameRep;
+    private String firstLastNameRep;
+    private String secondLastNameRep;
+    private String emailRes;
+    private UsersDao usrDao;
     
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -127,6 +135,54 @@ public class ActionProducer extends BaseAction {
     public void setCityPro(String cityPro) {
         this.cityPro = cityPro;
     }    
+
+    public String getNameCompany() {
+        return nameCompany;
+    }
+
+    public void setNameCompany(String nameCompany) {
+        this.nameCompany = nameCompany;
+    }
+
+    public String getFirstNameRep() {
+        return firstNameRep;
+    }
+
+    public void setFirstNameRep(String firstNameRep) {
+        this.firstNameRep = firstNameRep;
+    }
+
+    public String getSecondNameRep() {
+        return secondNameRep;
+    }
+
+    public void setSecondNameRep(String secondNameRep) {
+        this.secondNameRep = secondNameRep;
+    }
+
+    public String getFirstLastNameRep() {
+        return firstLastNameRep;
+    }
+
+    public void setFirstLastNameRep(String firstLastNameRep) {
+        this.firstLastNameRep = firstLastNameRep;
+    }
+
+    public String getSecondLastNameRep() {
+        return secondLastNameRep;
+    }
+
+    public void setSecondLastNameRep(String secondLastNameRep) {
+        this.secondLastNameRep = secondLastNameRep;
+    }  
+
+    public String getEmailRes() {
+        return emailRes;
+    }
+
+    public void setEmailRes(String emailRes) {
+        this.emailRes = emailRes;
+    }  
     
     public String getNum_ident_producer() {
         return num_ident_producer;
@@ -332,6 +388,8 @@ public class ActionProducer extends BaseAction {
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());           
         this.setCity_producer(mun);
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
 
     @Override
@@ -360,11 +418,21 @@ public class ActionProducer extends BaseAction {
 //            Object required[] = {typeIdent, department_producer, city_producer, num_ident_producer, names_producer_1, last_names_producer_1};
             HashMap required = new HashMap();
             required.put("typeIdent", typeIdent);
-            required.put("num_ident_producer", num_ident_producer);
-            required.put("names_producer_1", names_producer_1);
-            required.put("last_names_producer_1", last_names_producer_1);
+            required.put("num_ident_producer", num_ident_producer);            
             required.put("depPro", depPro);
             required.put("cityPro", cityPro);
+            if (typeIdent.equals("NIT")) {
+                required.put("nameCompany", nameCompany);
+                required.put("firstNameRep", firstNameRep);
+//                required.put("secondNameRep", secondNameRep);
+                required.put("firstLastNameRep", firstLastNameRep);
+//                required.put("secondLastNameRep", secondLastNameRep);
+                required.put("dig_ver_producer", dig_ver_producer);
+                required.put("emailRes", emailRes);
+            } else {
+                required.put("names_producer_1", names_producer_1);
+                required.put("last_names_producer_1", last_names_producer_1);
+            }
 //            addActionMessage("Productor adicionado con exito");
 //            addActionError("Se debe ingresar por lo menos alguno de los datos de contacto (Telefono fijo, Celular, Correo electrónico)");
 
@@ -382,7 +450,8 @@ public class ActionProducer extends BaseAction {
                 String sV = (String) required.get(sK);
 //                System.out.println(sK + " : " + sV);
 //                addFieldError(sK, "El campo es requerido");
-                if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+//                if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     enterFields = true;
                     // if (trim($data[$name])=='') {
 //                    System.out.println("name->" + sK);
@@ -392,7 +461,7 @@ public class ActionProducer extends BaseAction {
             }
             
             if (enterFields) {
-                addActionError("Se han ingresado datos vacíos o invalidos");
+                addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
             if (this.getCelphone_producer() == 0 && this.getTelephone_producer() == 0 && this.getEmail_producer().equals("")) {
@@ -405,7 +474,14 @@ public class ActionProducer extends BaseAction {
             //        System.out.println("errors"+getFieldErrors());            
             if (!this.getEmail_producer().equals("")) {                       
                 if(!ValidatorUtil.validateEmail(this.getEmail_producer())) {
-                    addFieldError("email_producer", "El campo es invalido");
+                    addFieldError("email_producer", "Correo invalido");
+                    addActionError("Se ingreso un email invalido");
+                }                
+            }
+            
+            if (!this.getEmailRes().equals("")) {                       
+                if(!ValidatorUtil.validateEmail(this.getEmailRes())) {
+                    addFieldError("emailRes", "Correo invalido");
                     addActionError("Se ingreso un email invalido");
                 }                
             }
@@ -479,12 +555,16 @@ public class ActionProducer extends BaseAction {
      * @return lista de productores
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
 //        additionals  = new ArrayList<HashMap<String, String>>();
 //        HashMap mMap = new HashMap();
         String result = (String)this.getSession().get("result");
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
+        viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
         if(selected==null) selected="producer";
         additionals = new HashMap();
         additionals.put("selected", selected);
@@ -496,8 +576,17 @@ public class ActionProducer extends BaseAction {
             search_producer = "";
         }
 //        System.out.println("search_producer->"+search_producer);
+        //                required.put("nameCompany", nameCompany);
+//                required.put("firstNameRep", firstNameRep);
+////                required.put("secondNameRep", secondNameRep);
+//                required.put("firstLastNameRep", firstLastNameRep);
+////                required.put("secondLastNameRep", secondLastNameRep);
+//                required.put("dig_ver_producer", dig_ver_producer);
+//                required.put("emailRes", emailRes);
         findParams.put("idEntUser", idEntSystem);
         findParams.put("search_producer", search_producer);
+        findParams.put("nameCompany", nameCompany);
+        findParams.put("firstNameRep", firstNameRep);
         findParams.put("typeIdent", typeIdent);
         findParams.put("identProducer", num_ident_producer);
         findParams.put("names_producer_1", names_producer_1);
@@ -517,6 +606,7 @@ public class ActionProducer extends BaseAction {
         ProducersDao eventDao = new ProducersDao();
 //        System.out.println("entreeee");
         listProducers = eventDao.findByParams(findParams);
+        Integer valResult = eventDao.countData(findParams);
 //        this.setCountTotal(100);
         this.setCountTotal(Integer.parseInt(String.valueOf(listProducers.get(0).get("countTotal"))));
         this.setPage(page);
@@ -532,8 +622,12 @@ public class ActionProducer extends BaseAction {
      * @param idPro:  Identificacion del productor
      * @return Informacion del productor
      */
-    public String show() {        
+    public String show() {   
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/create") || !usrDao.getPrivilegeUser(idUsrSystem, "producer/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
+        viewInfo = (String)(this.getRequest().getParameter("viewInfo"));
         int pageReq;
         if (this.getRequest().getParameter("page") != null) {
             pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
@@ -559,14 +653,24 @@ public class ActionProducer extends BaseAction {
 //            System.out.println("id_productor->"+this.getIdProductor());
             HashMap producerInfo = proDao.findById(this.getIdProducer());
 //            System.out.println("valores->" + producerInfo);
-
+            
             this.setTypeIdent(String.valueOf(producerInfo.get("type_document")));
             this.setNum_ident_producer(String.valueOf(producerInfo.get("document")));
-            this.setDig_ver_producer(String.valueOf(producerInfo.get("digit")));
-            this.setNames_producer_1(String.valueOf(producerInfo.get("name_1")));
-            this.setNames_producer_2(String.valueOf(producerInfo.get("name_2")));
-            this.setLast_names_producer_1(String.valueOf(producerInfo.get("last_name_1")));
-            this.setLast_names_producer_2(String.valueOf(producerInfo.get("last_name_2")));
+            
+            if (this.getTypeIdent().equals("NIT")) {
+                this.setNameCompany(String.valueOf(producerInfo.get("name")));
+                this.setDig_ver_producer(String.valueOf(producerInfo.get("digit")));
+                this.setFirstNameRep(String.valueOf(producerInfo.get("name_1")));
+                this.setSecondNameRep(String.valueOf(producerInfo.get("name_2")));
+                this.setFirstLastNameRep(String.valueOf(producerInfo.get("last_name_1")));
+                this.setSecondLastNameRep(String.valueOf(producerInfo.get("last_name_2")));
+                this.setEmailRes(String.valueOf(producerInfo.get("e_mail_2")));
+            } else {            
+                this.setNames_producer_1(String.valueOf(producerInfo.get("name_1")));
+                this.setNames_producer_2(String.valueOf(producerInfo.get("name_2")));
+                this.setLast_names_producer_1(String.valueOf(producerInfo.get("last_name_1")));
+                this.setLast_names_producer_2(String.valueOf(producerInfo.get("last_name_2")));
+            }
             this.setDirection_producer(String.valueOf(producerInfo.get("direction")));
             this.setDepPro(String.valueOf(producerInfo.get("id_dep")));
             this.setCityPro(String.valueOf(producerInfo.get("id_mun")));
@@ -596,6 +700,9 @@ public class ActionProducer extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/create") || !usrDao.getPrivilegeUser(idUsrSystem, "producer/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
 //        setSelected("producer");
         String action = "";
         /*
@@ -636,14 +743,26 @@ public class ActionProducer extends BaseAction {
             
 //            ent.setEntityTypeEnt(2);
 //            ent.setDocumentsTypes(typeIdent);
+            if (typeIdent.equals("NIT")) {
+                if (digVer>-1) ent.setValidationNumberEnt(digVer);
+                ent.setNameEnt(nameCompany);
+                ent.setAgentNameEnt(firstNameRep+" "+secondNameRep+" "+firstLastNameRep+" "+secondLastNameRep);
+                ent.setEmail2Ent(emailRes);
+                ent.setFirstName1Ent(firstNameRep);
+                ent.setFirstName2Ent(secondNameRep);
+                ent.setLastName1Ent(firstLastNameRep);
+                ent.setLastName2Ent(secondLastNameRep);
+            } else {
+                ent.setNameEnt(names_producer_1+" "+names_producer_2+" "+last_names_producer_1+" "+last_names_producer_2);
+                ent.setFirstName1Ent(names_producer_1);
+                ent.setFirstName2Ent(names_producer_2);
+                ent.setLastName1Ent(last_names_producer_1);
+                ent.setLastName2Ent(last_names_producer_2);
+            }
             ent.setDocumentsTypes(new DocumentsTypes(typeIdent));
-            ent.setDocumentNumberEnt(num_ident_producer);
-            if (digVer>-1) ent.setValidationNumberEnt(digVer);
-            ent.setNameEnt(names_producer_1+" "+names_producer_2+" "+last_names_producer_1+" "+last_names_producer_2);
-            ent.setFirstName1Ent(names_producer_1);
-            ent.setFirstName2Ent(names_producer_2);
-            ent.setLastName1Ent(last_names_producer_1);
-            ent.setLastName2Ent(last_names_producer_2);
+            ent.setDocumentNumberEnt(num_ident_producer);            
+            
+            
             ent.setEmailEnt(email_producer);
             ent.setAddressEnt(direction_producer);
             ent.setMunicipalities(new Municipalities(Integer.parseInt(cityPro)));
@@ -718,6 +837,9 @@ public class ActionProducer extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
 //        System.out.println("idUsr->"+user.getIdUsr());
 //        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         Integer idPro = 0;        

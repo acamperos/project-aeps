@@ -36,11 +36,11 @@ $.fn.numeric = function(config, callback)
 	if(typeof config.negative == "undefined") config.negative = true;
 	// set decimal point
     var decimal = null;
-    if(navigator.language=='es-ES' || navigator.language=='es') {
-        decimal = (config.decimal === false) ? "" : config.decimal || ",";  
-    } else if(navigator.language=='en-EN' || navigator.language=='en') {
+//    if(navigator.language=='es-ES' || navigator.language=='es') {
+//        decimal = (config.decimal === false) ? "" : config.decimal || ",";  
+//    } else if(navigator.language=='en-EN' || navigator.language=='en') {
         decimal = (config.decimal === false) ? "" : config.decimal || ".";  
-    }
+//    }
 	// allow negatives
 	var negative = (config.negative === true) ? true : false;
 	// callback function

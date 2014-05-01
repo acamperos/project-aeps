@@ -55,20 +55,22 @@ public class ActionField extends BaseAction {
     private String name_lot;
     private String latitude_lot;
     private String length_lot;
-    private double latitude_degrees_lot;
-    private double latitude_minutes_lot;
-    private double latitude_seconds_lot;
-    private double length_degrees_lot;
-    private double length_minutes_lot;
-    private double length_seconds_lot;
+    private Double latitude_degrees_lot;
+    private Double latitude_minutes_lot;
+    private Double latitude_seconds_lot;
+    private Double length_degrees_lot;
+    private Double length_minutes_lot;
+    private Double length_seconds_lot;
     private String altitude_lot;
     private String area_lot;
     public List<HashMap> listLot;    
     private List<FieldTypes> type_property_lot;   
     private Users user;
     private Integer idEntSystem;
+    private Integer idUsrSystem;
     private Integer searchFrom;
     private String search_field;
+    private UsersDao usrDao;
 
     
     //Metodos getter y setter por cada variable del formulario 
@@ -155,51 +157,51 @@ public class ActionField extends BaseAction {
         this.length_lot = length_lot;
     }
 
-    public double getLatitude_degrees_lot() {
+    public Double getLatitude_degrees_lot() {
         return latitude_degrees_lot;
     }
 
-    public void setLatitude_degrees_lot(double latitude_degrees_lot) {
+    public void setLatitude_degrees_lot(Double latitude_degrees_lot) {
         this.latitude_degrees_lot = latitude_degrees_lot;
     }
 
-    public double getLatitude_minutes_lot() {
+    public Double getLatitude_minutes_lot() {
         return latitude_minutes_lot;
     }
 
-    public void setLatitude_minutes_lot(double latitude_minutes_lot) {
+    public void setLatitude_minutes_lot(Double latitude_minutes_lot) {
         this.latitude_minutes_lot = latitude_minutes_lot;
     }
 
-    public double getLatitude_seconds_lot() {
+    public Double getLatitude_seconds_lot() {
         return latitude_seconds_lot;
     }
 
-    public void setLatitude_seconds_lot(double latitude_seconds_lot) {
+    public void setLatitude_seconds_lot(Double latitude_seconds_lot) {
         this.latitude_seconds_lot = latitude_seconds_lot;
     }
 
-    public double getLength_degrees_lot() {
+    public Double getLength_degrees_lot() {
         return length_degrees_lot;
     }
 
-    public void setLength_degrees_lot(double length_degrees_lot) {
+    public void setLength_degrees_lot(Double length_degrees_lot) {
         this.length_degrees_lot = length_degrees_lot;
     }
 
-    public double getLength_minutes_lot() {
+    public Double getLength_minutes_lot() {
         return length_minutes_lot;
     }
 
-    public void setLength_minutes_lot(double length_minutes_lot) {
+    public void setLength_minutes_lot(Double length_minutes_lot) {
         this.length_minutes_lot = length_minutes_lot;
     }
 
-    public double getLength_seconds_lot() {
+    public Double getLength_seconds_lot() {
         return length_seconds_lot;
     }
 
-    public void setLength_seconds_lot(double length_seconds_lot) {
+    public void setLength_seconds_lot(Double length_seconds_lot) {
         this.length_seconds_lot = length_seconds_lot;
     }
 
@@ -335,6 +337,8 @@ public class ActionField extends BaseAction {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         this.setType_property_lot(new FieldTypesDao().findAll());
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -354,8 +358,9 @@ public class ActionField extends BaseAction {
         if (actExe.equals("create") || actExe.equals("modify")) {
 //            System.out.println("entreeeeeeeeeeeeeeeeeeeeez");
             HashMap required = new HashMap();
-            required.put("name_producer_lot", name_producer_lot);
+//            required.put("name_producer_lot", name_producer_lot);
             required.put("name_property_lot", name_property_lot);
+            required.put("name_lot", name_lot);
             required.put("typeLot", typeLot);
             required.put("altitude_lot", altitude_lot);
             required.put("area_lot", area_lot);
@@ -380,30 +385,34 @@ public class ActionField extends BaseAction {
                 String sV = String.valueOf(required.get(sK));
 //                System.out.println(sK + " : " + sV);
 //                addFieldError(sK, "El campo es requerido");
-                if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     addFieldError(sK, "El campo es requerido");
                     enter = true;
                 }
             }
             
             if (enter) {
-                addActionError("Se requiere que ingrese los datos requeridos");
+                addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
-            double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot.replace(',','.'));
-            double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
-            double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
-            double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot.replace(',','.'));
+//            Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot.replace(',','.'));
+//            Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
+//            Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
+//            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot.replace(',','.'));
+            Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot);
+            Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot);
+            Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot);
+            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot);
             
 //            if (altitude_property) {    
             if (altLot<0 || altLot>9000) {
-                addFieldError("altitude_lot", "Dato invalido");
+                addFieldError("altitude_lot", "Dato invalido valor entre 0 y 9000");
                 addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
             }
 //            }
                 
             if (areaLot<0 || areaLot>3000) {
-                addFieldError("area_lot", "Dato invalido");
+                addFieldError("area_lot", "Dato invalido valor entre 0 y 3000");
                 addActionError("Se ingreso un area invalida, por favor ingresar un valor entre 0 y 3000");
             }
             
@@ -427,7 +436,7 @@ public class ActionField extends BaseAction {
 //                if (latitude_property!=null) { 
             if (latLot!=0) {
                 if (latLot<(-4.3) || latLot>(13.5)) {
-                    addFieldError("latitude_lot", "Dato invalido");
+                    addFieldError("latitude_lot", "Dato invalido valor entre -4.3 y 13.5");
                     addActionError("Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5");                        
                 }
 //                }
@@ -439,49 +448,50 @@ public class ActionField extends BaseAction {
 //            } else if (option_geo_lot == 2) {
 
 //                if (latitude_degrees_property && (latitude_degrees_property<(-5) || latitude_degrees_property>14)) {
-                if ((latitude_degrees_lot<(-5) || latitude_degrees_lot>14)) {
-                    addFieldError("latitude_degrees_lot", "Dato invalido");
-                    addActionError("Se ingreso una latitud en grados invalida, por favor ingresar un valor entre -5 y 14");
-                }
-
-//                if (latitude_minutes_property && (latitude_minutes_property<0 || latitude_minutes_property>60)) {
-                if ((latitude_minutes_lot<0 || latitude_minutes_lot>60)) {
-                    addFieldError("latitude_minutes_lot", "Dato invalido");
-                    addActionError("Se ingreso una latitud en minutos invalida, por favor ingresar un valor entre 0 y 60");
-                }
-
-//                if (latitude_seconds_property && (latitude_seconds_property<0 || latitude_seconds_property>60)) {
-                if ((latitude_seconds_lot<0 || latitude_seconds_lot>60)) {
-                    addFieldError("latitude_seconds_lot", "Dato invalido");
-                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
-                }		
+//                if ((latitude_degrees_lot<(-5) || latitude_degrees_lot>14)) {
+//                    addFieldError("latitude_degrees_lot", "Dato invalido");
+//                    addActionError("Se ingreso una latitud en grados invalida, por favor ingresar un valor entre -5 y 14");
+//                }
+//
+////                if (latitude_minutes_property && (latitude_minutes_property<0 || latitude_minutes_property>60)) {
+//                if ((latitude_minutes_lot<0 || latitude_minutes_lot>60)) {
+//                    addFieldError("latitude_minutes_lot", "Dato invalido");
+//                    addActionError("Se ingreso una latitud en minutos invalida, por favor ingresar un valor entre 0 y 60");
+//                }
+//
+////                if (latitude_seconds_property && (latitude_seconds_property<0 || latitude_seconds_property>60)) {
+//                if ((latitude_seconds_lot<0 || latitude_seconds_lot>60)) {
+//                    addFieldError("latitude_seconds_lot", "Dato invalido");
+//                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
+//                }		
             
             }
             
             if (lonLot!=0) {
                 
                 if (lonLot<(-81.8) || lonLot>(-66)) {
-                    addFieldError("length_lot", "Dato invalido");
+                    addFieldError("length_lot", "Dato invalido valor entre -81.8 y -66");
                     addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
                 }
-
-//                if (length_degrees_property && (length_degrees_property<(-82) || length_degrees_property>(-66))) {
-                if ((length_degrees_lot<(-82) || length_degrees_lot>(-66))) {
-                    addFieldError("length_degrees_lot", "Dato invalido");
-                    addActionError("Se ingreso una longitud en grados invalida, por favor ingresar un valor entre -82 y -66");
-                }
-
-//                if (length_minutes_property && (length_minutes_property<0 || length_minutes_property>60)) {
-                if ((length_minutes_lot<0 || length_minutes_lot>60)) {
-                    addFieldError("length_minutes_lot", "Dato invalido");
-                    addActionError("Se ingreso una longitud en minutos invalida, por favor ingresar un valor entre 0 y 60");
-                }
-
-//                if (length_seconds_property && (length_seconds_property<0 || length_seconds_property>60)) {
-                if ((length_seconds_lot<0 || length_seconds_lot>60)) {
-                    addFieldError("length_seconds_lot", "Dato invalido");
-                    addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
-                }
+//                if (lonLot!=0) {
+////                if (length_degrees_property && (length_degrees_property<(-82) || length_degrees_property>(-66))) {
+//                    if ((length_degrees_lot<(-82) || length_degrees_lot>(-66))) {
+//                        addFieldError("length_degrees_lot", "Dato invalido");
+//                        addActionError("Se ingreso una longitud en grados invalida, por favor ingresar un valor entre -82 y -66");
+//                    }
+//
+//    //                if (length_minutes_property && (length_minutes_property<0 || length_minutes_property>60)) {
+//                    if ((length_minutes_lot<0 || length_minutes_lot>60)) {
+//                        addFieldError("length_minutes_lot", "Dato invalido");
+//                        addActionError("Se ingreso una longitud en minutos invalida, por favor ingresar un valor entre 0 y 60");
+//                    }
+//
+//    //                if (length_seconds_property && (length_seconds_property<0 || length_seconds_property>60)) {
+//                    if ((length_seconds_lot<0 || length_seconds_lot>60)) {
+//                        addFieldError("length_seconds_lot", "Dato invalido");
+//                        addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
+//                    }
+//                }
             }
         }
     }
@@ -508,9 +518,13 @@ public class ActionField extends BaseAction {
      * @return lista de lotes
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "field/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
+        viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
         if(selected==null) selected="lot";
         additionals = new HashMap();
         additionals.put("selected", selected);
@@ -554,7 +568,11 @@ public class ActionField extends BaseAction {
      * @return Informacion del lote
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "field/create") || !usrDao.getPrivilegeUser(idUsrSystem, "field/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
+        viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
         int pageReq;
         if (this.getRequest().getParameter("page") != null) {
             pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
@@ -599,6 +617,9 @@ public class ActionField extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "field/create") || !usrDao.getPrivilegeUser(idUsrSystem, "field/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
         /*
          * Se evalua dependiendo a la accion realizada:
@@ -617,10 +638,14 @@ public class ActionField extends BaseAction {
         Session session = sessions.openSession();
         Transaction tx = null;
         
-        double altLot = Double.parseDouble(altitude_lot.replace(',','.'));
-        double latLot = Double.parseDouble(latitude_lot.replace(',','.'));
-        double lonLot = Double.parseDouble(length_lot.replace(',','.'));
-        double areaLot = Double.parseDouble(area_lot.replace(',','.'));
+//        Double altLot = Double.parseDouble(altitude_lot.replace(',','.'));
+//        Double latLot = Double.parseDouble(latitude_lot.replace(',','.'));
+//        Double lonLot = Double.parseDouble(length_lot.replace(',','.'));
+//        Double areaLot = Double.parseDouble(area_lot.replace(',','.'));
+        Double altLot = Double.parseDouble(altitude_lot);
+        Double latLot = Double.parseDouble(latitude_lot);
+        Double lonLot = Double.parseDouble(length_lot);
+        Double areaLot = Double.parseDouble(area_lot);
         
 //        if (option_geo_lot == 2) {
 //            latLot = (latitude_minutes_lot/60) + (latitude_seconds_lot/3600);
@@ -727,6 +752,9 @@ public class ActionField extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "field/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idField = 0;
         try {
             idField = Integer.parseInt(this.getRequest().getParameter("idFar"));

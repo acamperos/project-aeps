@@ -26,6 +26,7 @@
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery-ui/ui/jquery.ui.dialog.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/colorbox/jquery.colorbox.min.js"></script>
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/font-awesome/css/font-awesome.min.css">
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>
         <script src="<%= request.getContextPath() %>/scripts/js/generals/responsiveslides.js"></script>
         <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
@@ -48,6 +49,9 @@
             if (actionName!='' && actionName!='dashboard') {
                 showInfoPage(''+actionUrl, 'divBodyLayout');                       
             }
+            $(document).ready(function() {
+                beoro_scrollToTop.init();
+            })
         </script>
     </body>
 </html>

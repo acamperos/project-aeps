@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="user_entity"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class UserEntity  implements java.io.Serializable {
 
@@ -26,22 +26,22 @@ public class UserEntity  implements java.io.Serializable {
      private Entities entities;
      private Users users;
      private Integer idProjectUsrEnt;
-     private boolean statusUsrEnt;
+     private boolean status;
 
     public UserEntity() {
     }
 
 	
-    public UserEntity(Entities entities, Users users, boolean statusUsrEnt) {
+    public UserEntity(Entities entities, Users users, boolean status) {
         this.entities = entities;
         this.users = users;
-        this.statusUsrEnt = statusUsrEnt;
+        this.status = status;
     }
-    public UserEntity(Entities entities, Users users, Integer idProjectUsrEnt, boolean statusUsrEnt) {
+    public UserEntity(Entities entities, Users users, Integer idProjectUsrEnt, boolean status) {
        this.entities = entities;
        this.users = users;
        this.idProjectUsrEnt = idProjectUsrEnt;
-       this.statusUsrEnt = statusUsrEnt;
+       this.status = status;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -82,13 +82,13 @@ public class UserEntity  implements java.io.Serializable {
         this.idProjectUsrEnt = idProjectUsrEnt;
     }
     
-    @Column(name="status_usr_ent", nullable=false)
-    public boolean isStatusUsrEnt() {
-        return this.statusUsrEnt;
+    @Column(name="status", nullable=false)
+    public boolean isStatus() {
+        return this.status;
     }
     
-    public void setStatusUsrEnt(boolean statusUsrEnt) {
-        this.statusUsrEnt = statusUsrEnt;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 

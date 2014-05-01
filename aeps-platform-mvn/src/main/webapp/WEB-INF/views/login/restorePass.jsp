@@ -34,7 +34,7 @@
         <div id="login-wrapper" class="clearfix">
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
-                <h3 class="logo_img">AEPS</h3>
+                <a href="initial.action" class="logo_img span3"><img src="img/logoAEPS.png"/></a>
                 <div class="panel" id="divRestPass">
                     <p class="heading_main">Recuperacion de contraseña</p>
                     <s:form id="formRestCon" action="changePassUser.action" method="post" theme="simple">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group control-group">
                             <!--<button type="submit" class="btn btn-initial">Crear usuario</button>-->
-                            <sj:submit cssClass="btn btn-initial" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Restaurar contraseña" validate="true" validateFunction="validationForm"/>
+                            <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Restaurar contraseña" validate="true" validateFunction="validationForm"/>
                         </div>                            
                     </s:form>
                     <script>

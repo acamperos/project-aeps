@@ -35,7 +35,7 @@ public class BaseAction extends ActionSupport implements Preparable, SessionAwar
     public static final String NOT_LOGGED = "401";
     public static final String NOT_AUTHORIZED = "403";
     public static final String NOT_FOUND = "404";
-    public static final String NOT_POSSIBLE = "400";
+    public static final String NOT_POSSIBLE = "400";    
     
     //Botones de accion
     /**
@@ -90,6 +90,7 @@ public class BaseAction extends ActionSupport implements Preparable, SessionAwar
     protected String state;
     protected String info;
     public String actExe = "";   
+    public String viewInfo;
 
     //Metodos getter y setter por cada propiedad de estado de las peticiones
     /**
@@ -118,7 +119,14 @@ public class BaseAction extends ActionSupport implements Preparable, SessionAwar
     public void setActExe(String actExe) {
         this.actExe = actExe;
     }
-    
+
+    public String getViewInfo() {
+        return viewInfo;
+    }
+
+    public void setViewInfo(String viewInfo) {
+        this.viewInfo = viewInfo;
+    }
     
     //Variable para el manejo de peticiones del cliente
     /**

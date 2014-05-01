@@ -67,7 +67,9 @@ public class ActionRasta extends BaseAction {
     
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
     private Rastas rasta = new Rastas();
+    private UsersDao usrDao;
 
     
 
@@ -362,9 +364,11 @@ public class ActionRasta extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        rasta.setLatitudRas(4.567);
+//        rasta.setLatitudRas(4.567);
 //        if (user.getIdUsr()!=null) idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         additionalsAtrib = new ArrayList<HorizontesRasta>();        
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
 //        rowNew = (String)(this.getRequest().getParameter("rowNew"));
 //        if (rowNew!=null && rowNew.equals("true")) {
 //            System.out.println("entreeeee");
@@ -512,27 +516,27 @@ public class ActionRasta extends BaseAction {
             }
 
             if (rasta.getAltitudRas()!=null && (rasta.getAltitudRas()<0 || rasta.getAltitudRas()>9000)) {
-                addFieldError("rasta.altitudRas", "Dato invalido");
+                addFieldError("rasta.altitudRas", "Dato invalido valor entre 0 y 9000");
                 addActionError("Se ingreso una altitud invalida, por favor ingresar un valor entre 0 y 9000");
             }
 
             if (rasta.getLatitudRas()!=null && (rasta.getLatitudRas()<(-4.3) || rasta.getLatitudRas()>(13.5))) {
-                addFieldError("rasta.latitudRas", "Dato invalido");
+                addFieldError("rasta.latitudRas", "Dato invalido valor entre -4.3 y 13.5");
                 addActionError("Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5");
             }
 
             if (rasta.getLongitudRas()!=null && (rasta.getLongitudRas()<(-81.8) || rasta.getLongitudRas()>(-66))) {
-                addFieldError("rasta.longitudRas", "Dato invalido");
+                addFieldError("rasta.longitudRas", "Dato invalido valor entre -81.8 y -66");
                 addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
             }
 
             if (rasta.getPendienteTerrenoRas()!=null && (rasta.getPendienteTerrenoRas()<0 || rasta.getPendienteTerrenoRas()>100)) {
-                addFieldError("rasta.pendienteTerrenoRas", "Dato invalido");
+                addFieldError("rasta.pendienteTerrenoRas", "Dato invalido valor entre 0 y 100");
                 addActionError("Se ingreso una pendiente invalida, por favor ingresar un valor entre 0 y 100");
             }
 
             if (rasta.getPhRas()!=null && (rasta.getPhRas()<0 || rasta.getPhRas()>14)) {
-                addFieldError("rasta.phRas", "Dato invalido");
+                addFieldError("rasta.phRas", "Dato invalido valor entre 0 y 14");
                 addActionError("Se ingreso un PH invalido, por favor ingresar un valor entre 0 y 14");
             }
 
@@ -594,27 +598,27 @@ public class ActionRasta extends BaseAction {
 
 
             if (rasta.getProfundidadCarbonatosRas()!=null && (rasta.getProfundidadCarbonatosRas()<0 || rasta.getProfundidadCarbonatosRas()>sumEspesor)) {
-                addFieldError("rasta.profundidadCarbonatosRas", "Dato invalido");
+                addFieldError("rasta.profundidadCarbonatosRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso una profundidad de carbonatos invalida, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");
             }
 
             if (rasta.getProfundidadHorizontePedregosoRas()!=null && (rasta.getProfundidadHorizontePedregosoRas()<0 || rasta.getProfundidadHorizontePedregosoRas()>sumEspesor)) {            
-                addFieldError("rasta.profundidadHorizontePedregosoRas", "Dato invalido");
+                addFieldError("rasta.profundidadHorizontePedregosoRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso una profundidad de horizonte pedregoso invalido, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
             }
 
             if (rasta.getEspesorHorizontePedregosoRas()!=null && (rasta.getEspesorHorizontePedregosoRas()<0 || rasta.getEspesorHorizontePedregosoRas()>sumEspesor)) {
-                addFieldError("rasta.espesorHorizontePedregosoRas", "Dato invalido");
+                addFieldError("rasta.espesorHorizontePedregosoRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso un espesor de horizonte pedregoso invalido, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
             }
 
             if (rasta.getProfundidadPrimerasPiedrasRas()!=null && (rasta.getProfundidadPrimerasPiedrasRas()<0 || rasta.getProfundidadPrimerasPiedrasRas()>sumEspesor)) {
-                addFieldError("rasta.profundidadPrimerasPiedrasRas", "Dato invalido");
+                addFieldError("rasta.profundidadPrimerasPiedrasRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso una profundidad de primeras rocas o piedras invalida, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
             }
 
             if (rasta.getPrufundidadCapasRas()!=null && (rasta.getPrufundidadCapasRas()<0 || rasta.getPrufundidadCapasRas()>sumEspesor)) {
-                addFieldError("rasta.prufundidadCapasRas", "Dato invalido");
+                addFieldError("rasta.prufundidadCapasRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso una profundidad de capas endurecidas invalido, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
             }
                         
@@ -622,18 +626,18 @@ public class ActionRasta extends BaseAction {
             if (rasta.getEspesorCapaEndurecidaRas()!=null && !rasta.getEspesorCapaEndurecidaRas().equals("")) {
                 int espCapa = Integer.parseInt(rasta.getEspesorCapaEndurecidaRas());
                 if (espCapa<0 || espCapa>sumEspesor) {
-                    addFieldError("rasta.espesorCapaEndurecidaRas", "Dato invalido");
+                    addFieldError("rasta.espesorCapaEndurecidaRas", "Dato invalido valor entre 0 y "+sumEspesor);
                     addActionError("Se ingreso un espesor de capas endurecidas invalido, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
                 }
             }
 
             if (rasta.getProfundidadMoteadosRas()!=null && (rasta.getProfundidadMoteadosRas()<0 || rasta.getProfundidadMoteadosRas()>sumEspesor)) {
-                addFieldError("rasta.profundidadMoteadosRas", "Dato invalido");
+                addFieldError("rasta.profundidadMoteadosRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso una profundidad de moteados invalida, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
             }
 
             if (rasta.getProfundidadRaicesRas()!=null && (rasta.getProfundidadRaicesRas()<0 || rasta.getProfundidadRaicesRas()>sumEspesor)) {
-                addFieldError("rasta.profundidadMoteadosRas", "Dato invalido");
+                addFieldError("rasta.profundidadRaicesRas", "Dato invalido valor entre 0 y "+sumEspesor);
                 addActionError("Se ingreso una profundidad de raices vivas invalida, por favor ingresar un valor entre 0 y "+sumEspesor+" que corresponde al total de espesor por todas las capas");            
             }
 
@@ -718,6 +722,9 @@ public class ActionRasta extends BaseAction {
      * @return lista de rastas
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
@@ -770,6 +777,9 @@ public class ActionRasta extends BaseAction {
      * @return Informacion del rasta
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/create") || !usrDao.getPrivilegeUser(idUsrSystem, "soil/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         int pageReq;
         if (this.getRequest().getParameter("page") != null) {
@@ -827,6 +837,9 @@ public class ActionRasta extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/create") || !usrDao.getPrivilegeUser(idUsrSystem, "soil/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -938,6 +951,9 @@ public class ActionRasta extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idRasta = 0;
         try {
             idRasta = Integer.parseInt(this.getRequest().getParameter("idRasta"));

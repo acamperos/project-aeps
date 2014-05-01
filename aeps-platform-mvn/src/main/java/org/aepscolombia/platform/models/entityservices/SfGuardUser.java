@@ -21,7 +21,6 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="sf_guard_user"
-    ,catalog="ciat_stage"
     , uniqueConstraints = @UniqueConstraint(columnNames={"username", "deleted_at"}) 
 )
 public class SfGuardUser  implements java.io.Serializable {
@@ -40,7 +39,7 @@ public class SfGuardUser  implements java.io.Serializable {
      private Boolean isSuperAdmin;
      private Date lastLogin;
      private String username;
-     private boolean isActive;
+     private Boolean isActive;
      private Date createdAt;
      private Date updatedAt;
      private Date deletedAt;
@@ -48,14 +47,28 @@ public class SfGuardUser  implements java.io.Serializable {
 
     public SfGuardUser() {
     }
-
+    
+    public SfGuardUser(String emailAddress, String firstName, String lastName, String algorithm, String salt, String password, Boolean isSuperAdmin, String username, Boolean isActive, Date createdAt, Date updatedAt, Boolean canLogin) {
+        this.emailAddress = emailAddress;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.algorithm = algorithm;
+        this.salt = salt;
+        this.password = password;
+        this.isSuperAdmin = isSuperAdmin;
+        this.username = username;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.canLogin = canLogin;
+    }    
 	
-    public SfGuardUser(String algorithm, String username, boolean isActive) {
+    public SfGuardUser(String algorithm, String username, Boolean isActive) {
         this.algorithm = algorithm;
         this.username = username;
         this.isActive = isActive;
     }
-    public SfGuardUser(SfGuardUser sfGuardUserByCreatedBy, SfGuardUser sfGuardUserByUpdatedBy, SfGuardUser sfGuardUserByDeletedBy, String emailAddress, String firstName, String lastName, String algorithm, String salt, String password, Boolean isSuperAdmin, Date lastLogin, String username, boolean isActive, Date createdAt, Date updatedAt, Date deletedAt, Boolean canLogin) {
+    public SfGuardUser(SfGuardUser sfGuardUserByCreatedBy, SfGuardUser sfGuardUserByUpdatedBy, SfGuardUser sfGuardUserByDeletedBy, String emailAddress, String firstName, String lastName, String algorithm, String salt, String password, Boolean isSuperAdmin, Date lastLogin, String username, Boolean isActive, Date createdAt, Date updatedAt, Date deletedAt, Boolean canLogin) {
        this.sfGuardUserByCreatedBy = sfGuardUserByCreatedBy;
        this.sfGuardUserByUpdatedBy = sfGuardUserByUpdatedBy;
        this.sfGuardUserByDeletedBy = sfGuardUserByDeletedBy;
@@ -195,11 +208,11 @@ public class SfGuardUser  implements java.io.Serializable {
     }
     
     @Column(name="is_active", nullable=false)
-    public boolean isIsActive() {
+    public Boolean isIsActive() {
         return this.isActive;
     }
     
-    public void setIsActive(boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
     @Temporal(TemporalType.TIMESTAMP)

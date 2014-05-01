@@ -24,7 +24,7 @@
 </div>
 <footer id="footer">
     <div class="container">
-        <p class="pull-right"><i class="icon-chevron-up"></i><a href="#top">Volver al principio</a></p>
+        <!--<p class="pull-right"><i class="icon-chevron-up"></i><a href="#top">Volver al principio</a></p>-->
 <!--        <div class="links">
           <a href="http://news.bootswatch.com" onclick="pageTracker._link(this.href); return false;">Blog</a>
           <a href="http://feeds.feedburner.com/bootswatch">RSS</a>

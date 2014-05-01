@@ -6,6 +6,11 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
 <% String table = "display:none";%>
 <% String label = "";%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users userPrp  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrPrpDao = new UsersDao(); %>
 
 <s:if test="listPrep.size() > 0">
     <% table = "";%>
@@ -16,9 +21,11 @@
 <div id="divPrep" class="w-box">
     <fieldset>
         <legend>Lista de preparaciones</legend>
-        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showPrep.action?action=create', 'idCrop', '${idCrop}', 'Crear Preparación', 1050, 550);">
-            <i class="icon-plus"></i> Agregar Preparación
-        </button>
+        <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/create")) { %>
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showPrep.action?action=create', 'idCrop', '${idCrop}', 'Crear Preparación', 1050, 550);">
+                <i class="icon-plus"></i> Agregar Preparación
+            </button>
+        <% } %>
         <table class="table table-bordered table-hover" style="<%= table %>" id='tblPrep'>
             <thead>
                 <tr>
@@ -28,7 +35,9 @@
                     <th>Otro tipo de preparación</th>
                     <th>Manejo de rastrojos</th>
                     <th>Otro manejo de rastrojos</th>
-                    <th>Accion</th>
+                    <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/modify") || (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/delete"))) { %>
+                        <th>Accion</th>
+                    <% } %>
                 </tr>
             </thead>
             <tbody>

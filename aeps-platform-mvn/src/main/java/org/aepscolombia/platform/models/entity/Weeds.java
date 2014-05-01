@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="weeds"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class Weeds  implements java.io.Serializable {
 
@@ -32,6 +32,11 @@ public class Weeds  implements java.io.Serializable {
     public Weeds() {
     }
 
+    public Weeds(Integer idWee, String nameWee) {
+        this.idWee = idWee;
+        this.nameWee = nameWee;
+    }
+    
 	
     public Weeds(String nameWee, boolean statusWee) {
         this.nameWee = nameWee;

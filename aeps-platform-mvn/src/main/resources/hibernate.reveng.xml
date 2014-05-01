@@ -111,5 +111,6 @@
   <table-filter match-name="controls_types"/>
   <table-filter match-name="user_entity"/>
   <table-filter match-name="chemical_elements"/>
+  <table-filter match-name="work_type_ext_agent"/>
   <table-filter match-name="residuals_clasifications_crops_types"/>
 </hibernate-reverse-engineering>

@@ -52,9 +52,11 @@ public class ActionMon extends BaseAction {
     private List<HashMap> listMont;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Monitoring mon = new Monitoring();
     private Sowing sowing = new Sowing();
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -156,7 +158,9 @@ public class ActionMon extends BaseAction {
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
-        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr()); 
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -228,6 +232,9 @@ public class ActionMon extends BaseAction {
      * @return lista de monitoreos
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
         } catch (NumberFormatException e) {
@@ -249,6 +256,9 @@ public class ActionMon extends BaseAction {
      * @return Informacion del monitoreo
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
@@ -279,6 +289,9 @@ public class ActionMon extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -357,6 +370,9 @@ public class ActionMon extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idMon = 0;
         try {
             idMon = Integer.parseInt(this.getRequest().getParameter("idMon"));

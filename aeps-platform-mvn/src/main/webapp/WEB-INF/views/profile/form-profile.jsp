@@ -1,185 +1,162 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<!DOCTYPE html>
-<!--<html>
-    <head>-->
-<!--    </head>
-    <body>-->
-<s:actionerror theme="bootstrap"/>
-<s:actionmessage theme="bootstrap"/>
-<s:fielderror theme="bootstrap"/>
-<div class="container">
-    <!--<div class="w-box">-->
-    <!--                <div class="w-box-content">
-                    </div>-->
-    <!--<div class="row">-->
-        <div class="panel">
-            <div class="panel-body">
-                <!--<div class="tab-content">-->
-                    <!--<div class="w-box-content cnt_b">-->
-                    <s:form id="formProfileUser" action="sendInformation.action" method="post">
-                        <s:hidden name="actExe" value="profileUser"/>
-                        <fieldset>
-                            <legend>Informacion del Usuario</legend>
-                            <div class="control-group">
-                                <s:label for="formProfileUser_emailUser" cssClass="control-label" value="Correo electrÛnico:"></s:label>
-                                    <div class="controls">
-                                    <s:textfield cssClass="form-control" id="formProfileUser_emailUser" name="emailUser"/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <s:label for="formProfileUser_celphoneUser" cssClass="control-label" value="Celular:"></s:label>
-                                    <div class="controls">
-                                    <s:textfield cssClass="form-control" id="formProfileUser_celphoneUser" name="celphoneUser"/>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <s:label for="formProfileUser_noRecords" cssClass="control-label" value="Numero de registros a paginar:"></s:label>
-                                    <div class="controls">
-                                    <s:select            
-                                        name="noRecords" 
-                                        list="new int[]{5, 10, 15, 20, 25, 30}" 
-                                        headerKey=" " 
-                                        headerValue="---"
-                                        />
-                                </div>
-                            </div>                                
-                            <div class="row-fluid">
-                                <div class="span6">
-                                    <button class="btn btn-default" style="margin-bottom: 10px" onclick="showInfoPassword('divPassword', 'formProfileUser_changePass')">Cambiar contrasena</button>
-                                </div>  
-                            </div>  
-                            <div id="divPassword" style="display: none">
-                                <s:hidden id="formProfileUser_changePass" name="changePass" value="false"/>
-                                <div class="control-group">
-                                    <s:label for="formProfileUser_passActual" cssClass="control-label req" value="ContraseÒa actual:"></s:label>
-                                        <div class="controls">
-                                        <s:password cssClass="form-control" id="formProfileUser_passActual" name="passActual"/>
-                                    </div>                            
-                                </div>
-                                <div class="control-group">
-                                    <s:label for="formProfileUser_newPass" cssClass="control-label req" value="Nueva contraseÒa:"></s:label>
-                                        <div class="controls">
-                                        <s:password cssClass="form-control" id="formProfileUser_newPass" name="newPass"/>
-                                    </div>                            
-                                </div>
-                                <div class="control-group">
-                                    <s:label for="formProfileUser_confirmNewPass" cssClass="control-label req" value="Confirmar contraseÒa:"></s:label>
-                                        <div class="controls">
-                                        <s:password cssClass="form-control" id="formProfileUser_confirmNewPass" name="confirmNewPass"/>
-                                    </div>                            
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span6">
-                                    <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" value="Guardar" validate="true" validateFunction="validationForm"/>
-                                </div>  
-                            </div>  
-                            <script>
-                                $.subscribe('completeProfile', function(event, data) {
-                                    completeFormChange('', 'formProfileUser', event.originalEvent.request.responseText);
-                                });
-                            </script>
-                        </fieldset>
-                    </s:form>
-                    <s:form id="formProfile" action="sendInformation.action" method="post">
-                        <s:hidden name="actExe" value="profileBasic"/>
-                        <fieldset>
-                            <legend>Informacion Basica</legend>
-                            <div class="control-group">
-                                <s:label for="formProfile_typeDocument" cssClass="control-label" value="Tipo de documento:"></s:label>
-                                    <div class="controls">
-                                    <s:select            
-                                        name="typeDocument" 
-                                        list="type_ident_producer" 
-                                        listKey="acronymDocTyp" 
-                                        listValue="nameDocTyp" 
-                                        headerKey=" " 
-                                        headerValue="---"
-                                        onchange="selValue(this, 'divDigVerPro');
-                                        selConf(this.value, 'formProducer_num_ident_producer');"
-                                        />
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <s:label for="formProfile_noDocument" cssClass="control-label" value="Numero de documento:"></s:label>
-                                    <div class="controls">
-                                    <s:textfield cssClass="form-control" id="formProfile_noDocument" name="noDocument"/>
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span4 control-group">
-                                    <s:label for="formProfile_firstName" cssClass="control-label" value="Primer Nombre:"></s:label>
-                                        <div class="controls">
-                                        <s:textfield cssClass="form-control" id="formProfile_firstName" name="firstName"/>
-                                    </div>
-                                </div>
-                                <div class="span6 control-group">
-                                    <s:label for="formProfile_secondName" cssClass="control-label" value="Segundo nombre:"></s:label>
-                                        <div class="controls">
-                                        <s:textfield cssClass="form-control" id="formProfile_secondName" name="secondName"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span4 control-group">
-                                    <s:label for="formProfile_firstLastName" cssClass="control-label" value="Primer apellido:"></s:label>
-                                        <div class="controls">
-                                        <s:textfield cssClass="form-control" id="formProfile_firstLastName" name="firstLastName"/>
-                                    </div>
-                                </div>
-                                <div class="span6 control-group">
-                                    <s:label for="formProfile_secondLastName" cssClass="control-label" value="Segundo apellido:"></s:label>
-                                        <div class="controls">
-                                        <s:textfield cssClass="form-control" id="formProfile_secondLastName" name="secondLastName"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <s:label for="formProfile_department" cssClass="control-label" value="Departamento:"></s:label>
-                                    <div class="controls">
-                                    <s:select
-                                        list="department_producer" 
-                                        listKey="idDep" 
-                                        listValue="nameDep" 
-                                        headerKey=" " 
-                                        headerValue="---"
-                                        onchange="chargeValues('/aeps-plataforma-mvn/comboProducer.action', 'depId', this.value, 'formProfile_municipality', 'divMessage')"
-                                        name="department"
-                                        />
-                                </div>
-                            </div>	
-                            <div class="control-group">
-                                <s:label for="formProfile_municipality" cssClass="control-label" value="Municipio:"></s:label>
-                                    <div class="controls">
-                                    <s:select
-                                        list="city_producer" 
-                                        listKey="idMun" 
-                                        listValue="nameMun" 
-                                        headerKey=" " 
-                                        headerValue="---"
-                                        name="municipality" 
-                                        />
-                                </div>
-                            </div>
-                            <div class="row-fluid">
-                                <div class="span6">
-                                    <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" value="Guardar" validate="true" validateFunction="validationForm"/>
-                                </div>  
-                            </div>  
-                            <script>
-                                $.subscribe('completeProfile', function(event, data) {
-                                    completeFormChange('', 'formProfile', event.originalEvent.request.responseText);
-                                });
-                            </script>
-                        </fieldset>
-                    </s:form>
-                <!--</div>-->
+<fieldset>
+    <legend>Informacion Basica</legend>    
+    <s:form id="formProfile" action="saveProfile.action">
+        <s:hidden name="actExe" value="configProfile"/>
+        <div class="control-group">
+            <label for="formProfile_typeDocument" class="control-label">Tipo de documento:</label>
+            <div class="controls">
+                <s:select            
+                    name="typeDocument" 
+                    list="type_ident_producer" 
+                    listKey="acronymDocTyp" 
+                    listValue="nameDocTyp" 
+                    headerKey="-1" 
+                    headerValue="---"
+                    onchange="selConf(this.value, 'formProfile_noDocument');
+                              showOtherTypeDocument(this.value, 'divInfoCompany', 'divInfoPerson');
+                             "
+                />
             </div>
         </div>
-    <!--</div>-->
-    <!--</div>-->
-</div>
-<!--    </body>
-</html>-->
+        <div class="control-group">
+            <label for="formProfile_noDocument" class="control-label">Numero de documento:</label>
+            <div class="controls">
+                <s:textfield cssClass="form-control" name="noDocument"/>
+            </div>
+        </div>
+        <% String classInfoPerson  = "hide"; %>
+        <% String classInfoCompany = "hide"; %>
+        <s:set name="typeDoc" value="typeDocument"/>
+        <s:if test="%{#typeDoc.equals('NIT')}">
+            <% classInfoCompany = "";%>
+        </s:if>      
+        <s:elseif test="%{!(#typeDoc.equals('-1'))}">
+            <% classInfoPerson = "";%>
+        </s:elseif>
+        <div class="<%= classInfoCompany %>" id="divInfoCompany">
+            <div class="control-group">
+                <label for="formProfile_digVer" class="control-label">
+                    Digito de verificaci√≥n:
+                    <!--<i class="icon-info-sign s2b_tooltip" title="Ingrese su digito de verificaci√≥n"></i>-->
+                </label>
+                <div class="controls">
+                    <s:textfield name="digVer" />
+                </div>  
+            </div>
+            <div class="control-group">
+                <label for="formProfile_nameCompany" class="control-label">
+                    Nombre de la empresa:
+                </label>
+                <div class="controls">
+                    <s:textfield cssClass="form-control" name="nameCompany"/>
+                </div>                         
+            </div> 
+            <h4>Informaci√≥n del responsable:</h4>   
+            <hr />
+            <div class="row">
+                <div class="span3 control-group">
+                    <label for="formProfile_firstNameRep" class="control-label">Primer nombre:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="firstNameRep"/>
+                    </div>
+                </div>
+                <div class="span6 control-group">
+                    <label for="formProfile_secondNameRep" class="control-label">Segundo nombre:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="secondNameRep"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span3 control-group">
+                    <label for="formProfile_firstLastNameRep" class="control-label">Primer apellido:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="firstLastNameRep"/>
+                    </div>
+                </div>
+                <div class="span6 control-group">
+                    <label for="formProfile_secondLastNameRep" class="control-label">Segundo apellido:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="secondLastNameRep"/>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <div class="<%= classInfoPerson %>" id="divInfoPerson">
+            <div class="row">
+                <div class="span3 control-group">
+                    <label for="formProfile_firstName" class="control-label">Primer Nombre:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="firstName"/>
+                    </div>
+                </div>
+                <div class="span6 control-group">
+                    <label for="formProfile_secondName" class="control-label">Segundo nombre:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="secondName"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span3 control-group">
+                    <label for="formProfile_firstLastName" class="control-label">Primer apellido:</label>
+                        <div class="controls">
+                        <s:textfield cssClass="form-control" name="firstLastName"/>
+                    </div>
+                </div>
+                <div class="span6 control-group">
+                    <label for="formProfile_secondLastName" class="control-label">Segundo apellido:</label>
+                    <div class="controls">
+                        <s:textfield cssClass="form-control" name="secondLastName"/>
+                    </div>
+                </div>
+            </div>                     
+        </div>                     
+        <div class="control-group">
+            <label for="formProfile_department" class="control-label">Departamento:</label>
+            <div class="controls">
+                <s:select
+                    list="department_producer" 
+                    listKey="idDep" 
+                    listValue="nameDep" 
+                    headerKey="-1" 
+                    headerValue="---"
+                    onchange="chargeValues('/aeps-plataforma-mvn/comboProducer.action', 'depId', this.value, 'formProfile_municipality', 'divMessage')"
+                    name="department"
+                    />
+            </div>
+        </div>	
+        <div class="control-group">
+            <label for="formProfile_municipality" class="control-label">Municipio:</label>
+            <div class="controls">
+                <s:select
+                    list="city_producer" 
+                    listKey="idMun" 
+                    listValue="nameMun" 
+                    headerKey="-1" 
+                    headerValue="---"
+                    name="municipality" 
+                    />
+            </div>
+        </div>
+        <p class="warnField reqBef">Campos Requeridos</p>
+        <div class="row">
+            <% //if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify")) { %>
+            <% if (true) { %>
+                <div class="span6">
+                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProfile" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Perfil</sj:submit>
+                </div>  
+            <% } %>
+        </div>  
+        <script>
+            $("#formProfile_digVer").mask("9", {placeholder: ""});
+            $.subscribe('completeProfile', function(event, data) {
+                completeFormCrop('', 'formProfile', 'divMessProfile', event.originalEvent.request.responseText);
+            });
+        </script>    
+    </s:form>
+</fieldset>

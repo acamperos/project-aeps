@@ -71,13 +71,13 @@ public class DepartmentsDao {
     public List<Departments> findAll() {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
-        List<Departments> eventos = null;
+        List<Departments> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
             String hql  = "from Departments order by nameDep ASC";
             Query query = session.createQuery(hql);
-            eventos = query.list();
+            events = query.list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -87,7 +87,7 @@ public class DepartmentsDao {
         } finally {
             session.close();
         }
-        return eventos;
+        return events;
     }
 
     public void save(Departments evento) {

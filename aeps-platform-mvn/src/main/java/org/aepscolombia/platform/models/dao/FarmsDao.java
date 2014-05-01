@@ -154,7 +154,8 @@ public class FarmsDao
         
         String sql = "";       
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
-        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status";
+        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status, ";
+        sql += " e.entity_type_ent";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join departments dep on (dep.id_dep=m.id_department_mun)";
@@ -244,7 +245,7 @@ public class FarmsDao
 //        sql += " order by e.name_ent ASC";
         sql += " order by f.name_far ASC";
 //        events.toArray();
-//        System.out.println("sql->"+sql);
+        System.out.println("sql->"+sql);
         try {
             tx = session.beginTransaction();
 //            Query query = session.createSQLQuery(sql);
@@ -275,12 +276,45 @@ public class FarmsDao
                 temp.put("name_mun", data[13]);
                 temp.put("name_dep", data[15]);                
                 temp.put("status", data[16]);
+                temp.put("typeEnt", data[17]);
                 result.add(temp);
             }
 //            System.out.println(result);
 //            for (HashMap datos : result) {
 //                System.out.println(datos.get("id_productor")+" "+datos.get("id_entidad")+" "+datos.get("cedula"));
 //            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }    
+    
+    public static Integer countData(HashMap args) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Object[] events = null;
+        Transaction tx  = null;
+        Integer result  = 0;
+        
+        String sql = "";       
+        sql += "select count(f.id_far), f.name_far";
+        sql += " from farms f";
+        sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
+        sql += " where f.status=1";
+        if (args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = (Object[])query.uniqueResult();
+            result = Integer.parseInt(String.valueOf(events[0]));
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -6,6 +6,11 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
 <% String table = "display:none";%>
 <% String label = "";%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 
 <s:if test="listSoils.size() > 0">
     <% table = "";%>
@@ -26,9 +31,11 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divRasta" class="w-box">
-    <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
-        <i class="icon-plus"></i> Agregar rasta
-    </button>
+    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/create")) { %>
+        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
+            <i class="icon-plus"></i> Agregar rasta
+        </button>
+    <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblRasta'>
         <thead>
             <tr>
@@ -44,9 +51,11 @@
                 <th>Numero de capas</th>
                 <th>Ph</th>
                 <th>Carbonatos</th>
-                <% if (value == "rasta" || value.equals("rasta")) {%>
-                    <th>Accion</th>
-                <% }%>
+                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/delete"))) { %>                
+                    <% if (value == "rasta" || value.equals("rasta")) {%>
+                        <th>Accion</th>
+                    <% } %>
+                <% } %>
             </tr>
         </thead>
         <tbody>

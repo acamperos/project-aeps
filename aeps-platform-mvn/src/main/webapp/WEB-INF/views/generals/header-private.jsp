@@ -14,13 +14,13 @@
             <div class="masthead">
                 <div class="row">
                     <div class="span3">	
-                        <img src="<%= request.getContextPath() %>/img/logoAEPS.png" style="width: 200px; height: 80px;">
+                        <img src="<%= request.getContextPath() %>/img/logoAEPS.png" style="margin-top: 10px;">
                     </div>
                     <div class="span3">	
                         <label class="titlePrin">Agricultura Específica por Sitio</label>
                     </div>
                     <div class="span6">
-                        <img src="<%= request.getContextPath() %>/img/header.png">
+                        <img src="<%= request.getContextPath() %>/img/header.png" style="height: 130px;">
                     </div>                    
                 </div>					
             </div>
@@ -55,12 +55,12 @@
                                     <div class="user-box-inner">
                                         <img src="<%= request.getContextPath() %>/img/user_ingress.png" alt="" class="user-avatar img-avatar">
                                         <div class="user-info">
-                                            Bienvenido, <strong><%= user.getNameUserUsr() %>-<%= entType %></strong>
+                                            Bienvenido, <strong><%= user.getNameUserUsr() %></strong> (<%= entType %>)
                                             <ul class="unstyled">
-                                                <li><s:a href="%{contextPath}/configuration.action">Configuración</s:a></li>
+                                                <li><s:a href="%{contextPath}/configuration.action"><i class="icon-wrench"></i> Configuración</s:a></li>
                                                 <li>-</li>
                                                 <!--<li><a href="logout.action"><i class="icon-off">Salir</i></a></li>-->
-                                                <li><a href="<%= request.getContextPath() %>/logout.action"><i class="icon-power-off"></i>Salir</a></li>
+                                                <li><a href="<%= request.getContextPath() %>/logout.action"><i class="icon-signout"></i> Salir</a></li>
                                             </ul>
                                         </div>
                                     </div>

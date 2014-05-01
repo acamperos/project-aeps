@@ -212,29 +212,31 @@ public class GlobalFunctions {
         }
         return generatedPassword;
     }
-
-    private static String getSecurePassword(String passwordToHash, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        int iterations = 1000;
-        char[] chars = passwordToHash.toCharArray();
-//        byte[] saltR = salt.getBytes();
-        byte[] saltR = null;
-
-        PBEKeySpec spec = new PBEKeySpec(chars, saltR, iterations, 64 * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = skf.generateSecret(spec).getEncoded();
-//        return iterations + ":" + toHex(saltR) + ":" + toHex(hash);
-        return iterations + ":" + toHex(hash);
-    }
-
-    private static String toHex(byte[] array) {
-        BigInteger bi = new BigInteger(1, array);
-        String hex = bi.toString(16);
-        int paddingLength = (array.length * 2) - hex.length();
-        if (paddingLength > 0) {
-            return String.format("%0" + paddingLength + "d", 0) + hex;
-        } else {
-            return hex;
+    
+    /**
+     * Encargado de generar transformar la contraseña en codigo SHA1
+     *
+     * @param password Password en formato original
+     * @param salt Semilla ingresada
+     * @return contraseña transformado en formato MD5
+     */
+    public static String generateSHA1(String password, String salt) {
+        String passwordToHash = password;
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
+        return generatedPassword;
     }
 
     public static String getSalt() throws NoSuchAlgorithmException, NoSuchProviderException {
@@ -243,34 +245,29 @@ public class GlobalFunctions {
         sr.nextBytes(salt);
         return salt.toString();
     }
+    
 
-    public static boolean validatePassword(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        String[] parts = storedPassword.split(":");
-        int iterations = Integer.parseInt(parts[0]);
-//        byte[] salt = fromHex(parts[1]);
-//        byte[] hash = fromHex(parts[2]);
-        byte[] salt = null;
-        byte[] hash = fromHex(parts[1]);
-
-        PBEKeySpec spec = new PBEKeySpec(originalPassword.toCharArray(), salt, iterations, hash.length * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] testHash = skf.generateSecret(spec).getEncoded();
-
-        int diff = hash.length ^ testHash.length;
-        for (int i = 0; i < hash.length && i < testHash.length; i++) {
-            diff |= hash[i] ^ testHash[i];
-        }
-        return diff == 0;
+    /**
+     * Encargado de generar la descripcion del correo en formato HTML, que va a
+     * ser al usuario cuando es un agronomo o gremio
+     *
+     * @param host Nombre del host en que se encuentra el usuario
+     * @param nameUser Nombre del usuario registrado en el sistema
+     * verificar un nuevo usuario
+     * @return representacion del mensaje en HTML
+     */
+    public static String messageToValidateUser(String host, String nameUser) {
+        String msg = "<html> \n"
+                + "<body> \n"   
+                + "<h3>El Usuario: " + nameUser + "</h3> \n"
+                + "<p>Se requiere validar para el ingreso a la plataforma AEPS.</p> \n"
+                + "<p>Proceder con la respectiva validacion y enviar una respuesta oportuna al usuario.</p> "
+                + "</body> \n"
+                + "</html>";
+        return msg;
     }
-
-    private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
-        byte[] bytes = new byte[hex.length() / 2];
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
-        }
-        return bytes;
-    }
-
+    
+    
     /**
      * Encargado de generar la descripcion del correo en formato HTML, que va a
      * ser al usuario cuando este se crea por primera vez

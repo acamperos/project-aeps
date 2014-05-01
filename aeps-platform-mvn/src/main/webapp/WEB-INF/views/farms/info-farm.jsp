@@ -1,6 +1,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>
@@ -32,11 +37,13 @@
 %>    
 <div class="msgWin" id="messageWin"></div>
 <div id="divFarms" class="w-box">
-    <% if (value.equals("property")) {%>
-        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showFarm.action?action=create', 'idFar', '', 'Crear Finca', 1050, 550)">
-            <i class="icon-plus"></i> Agregar finca
-        </button>
-    <% }%>
+    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/create")) { %>
+        <% if (value.equals("property")) {%>
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', 'Crear Finca', 1050, 550)">
+                <i class="icon-plus"></i> Agregar finca
+            </button>
+        <% } %>
+    <% } %>
     <table class="table table-bordered table-hover" style="<%= table%>" id='tblFarms'>
         <thead>
             <tr>
@@ -54,9 +61,11 @@
                 <th>Latitud</th>
                 <th>Longitud</th>
                 <th>Altura</th>
-                <% if (value.equals("property") || value == "property") { %>
-                    <th>Accion</th>
-                <% }%>
+                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/delete"))) { %>
+                    <% if (value.equals("property") || value == "property") { %>
+                        <th>Accion</th>
+                    <% }%>
+                <% } %>
             </tr>
         </thead>
         <tbody>
@@ -83,7 +92,8 @@
     <label style="<%= label%>"><%= "No se encuentra registrada ninguna finca"%></label>
     <div class="hide">
         <div id="confirm_dialog_property" class="cbox_content">
-            <div class="sepH_c"><strong>Desea borrar esta(s) finca(s)?</strong></div>
+            <div class="sepH_c"><strong>Desea borrar esta(s) finca(s), <br>
+                    al momento de confirmar todas las dependencias también van a desaparecer?</strong></div>
             <div>
                 <a href="#" class="btn btn-small btn-initial confirm_yes">Si</a>
                 <a href="#" class="btn btn-small confirm_no">No</a>
@@ -93,7 +103,7 @@
 </div>
 <div>
     <% if (!value.equals("property")) {%>
-        <button class="btn btn_per" onclick="toggleAndClean('<%=divShow%>', '<%=divHide%>')">Atras</button>
+        <button class="btn btn_per" onclick="toggleAndClean('<%=divShow%>', '<%=divHide%>')"><i class="icon-arrow-left"></i> Atras</button>
     <% }%>
 </div>
 <div style="text-align:center; <%= table %>">

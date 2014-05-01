@@ -3,6 +3,11 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -61,13 +66,17 @@
                             </tr>
                         </tbody>
                     </table>
+                    <p class="warnField reqBef">Campos Requeridos</p>
                     <script>
                         $("#formCropMonGen_mon_dateMon").datepicker({dateFormat: 'dd/mm/yy'});
                         $("#formCropMonGen_mon_dateMon").mask("99/99/9999", {placeholder: " "});
                     </script>
                     <div id="divBtMon">
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Monitoreo</sj:submit>
-                        <button class="btn btn_default btn-large" onclick="resetForm('formCropMonGen'); closeWindow();">Cancelar</button>
+                        <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
+                        <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Monitoreo</sj:submit>
+                        <% } %>
+                        <button class="btn btn_default btn-large" onclick="resetForm('formCropMonGen'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>
                 </fieldset>
             </s:form>	

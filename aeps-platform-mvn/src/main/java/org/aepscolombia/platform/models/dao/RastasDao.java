@@ -331,6 +331,47 @@ public class RastasDao
             session.close();
         }
         return result;
+    }
+    
+    public static Integer countData(HashMap args) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Object[] events = null;
+        Transaction tx = null;
+        Integer result = 0;
+        
+        String sql = "";     
+        String sqlAdd = "";     
+        
+        sql += "select count(r.id_ras), r.id_lote_ras";               
+        sql += " from rastas r";
+        sql += " inner join log_entities le on le.id_object_log_ent=r.id_ras and le.table_log_ent='rastas' and le.action_type_log_ent='C'";   
+        sql += " inner join fields l on r.id_lote_ras=l.id_fie";
+        sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
+        sql += " left join farms f on f.id_far=l.id_farm_fie";
+        sql += " where l.status=1 and f.status=1";
+        sql += " and r.status=1";     
+        if (args.containsKey("idEntUser")) {
+            sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }  
+        sql += sqlAdd;
+//        System.out.println("sql->"+sql);
+        try {
+
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = (Object[])query.uniqueResult();
+            result = Integer.parseInt(String.valueOf(events[0]));
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
     }    
     
     public List<HorizontesRasta> getHorizonRasta(Integer idRas) {

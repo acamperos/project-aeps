@@ -36,6 +36,8 @@ public class Entities  implements java.io.Serializable {
      private String documentNumberEnt;
      private String documentIssuePlaceEnt;
      private String nameEnt;
+     private String agentNameEnt;
+     private String pageLinkEnt;
      private Boolean inAssociationEnt;
      private String emailEnt;
      private String email2Ent;
@@ -63,7 +65,7 @@ public class Entities  implements java.io.Serializable {
         this.entitiesTypes = entitiesTypes;
         this.status = status;
     }
-    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, PersonType personType, EntitiesTypes entitiesTypes, Integer idProjectEnt, String documentNumberEnt, String documentIssuePlaceEnt, String nameEnt, Boolean inAssociationEnt, String emailEnt, String email2Ent, String addressEnt, Long cellphone2Ent, Integer phoneEnt, Long cellphoneEnt, boolean status, String genderEnt, String civilStatusEnt, Integer validationNumberEnt, String educationLevelEnt, Date dateOfBirthEnt, String firstName1Ent, String firstName2Ent, String lastName1Ent, String lastName2Ent, Integer createdBy) {
+    public Entities(Municipalities municipalities, DocumentsTypes documentsTypes, PersonType personType, EntitiesTypes entitiesTypes, Integer idProjectEnt, String documentNumberEnt, String documentIssuePlaceEnt, String nameEnt, String agentNameEnt, String pageLinkEnt, Boolean inAssociationEnt, String emailEnt, String email2Ent, String addressEnt, Long cellphone2Ent, Integer phoneEnt, Long cellphoneEnt, boolean status, String genderEnt, String civilStatusEnt, Integer validationNumberEnt, String educationLevelEnt, Date dateOfBirthEnt, String firstName1Ent, String firstName2Ent, String lastName1Ent, String lastName2Ent, Integer createdBy) {
        this.municipalities = municipalities;
        this.documentsTypes = documentsTypes;
        this.personType = personType;
@@ -72,6 +74,8 @@ public class Entities  implements java.io.Serializable {
        this.documentNumberEnt = documentNumberEnt;
        this.documentIssuePlaceEnt = documentIssuePlaceEnt;
        this.nameEnt = nameEnt;
+       this.agentNameEnt = agentNameEnt;
+       this.pageLinkEnt = pageLinkEnt;
        this.inAssociationEnt = inAssociationEnt;
        this.emailEnt = emailEnt;
        this.email2Ent = email2Ent;
@@ -173,6 +177,24 @@ public class Entities  implements java.io.Serializable {
     
     public void setNameEnt(String nameEnt) {
         this.nameEnt = nameEnt;
+    }
+    
+    @Column(name="agent_name_ent", length=200)
+    public String getAgentNameEnt() {
+        return this.agentNameEnt;
+    }
+    
+    public void setAgentNameEnt(String agentNameEnt) {
+        this.agentNameEnt = agentNameEnt;
+    }
+    
+    @Column(name="page_link_ent", length=200)
+    public String getPageLinkEnt() {
+        return this.pageLinkEnt;
+    }
+    
+    public void setPageLinkEnt(String pageLinkEnt) {
+        this.pageLinkEnt = pageLinkEnt;
     }
     
     @Column(name="in_association_ent")

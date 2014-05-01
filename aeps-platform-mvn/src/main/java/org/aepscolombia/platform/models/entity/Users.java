@@ -2,15 +2,15 @@ package org.aepscolombia.platform.models.entity;
 // Generated Jan 21, 2014 11:35:29 AM by Hibernate Tools 3.2.1.GA
 
 
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -18,27 +18,31 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="users"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="name_user_usr") 
 )
 public class Users  implements java.io.Serializable {
 
 
-     private Integer idUsr;
-     private String nameUserUsr;
-     private String passwordUsr;
-     private String codValidationUsr;
-     private Integer statusUsr;
+    private Integer idUsr;
+    private String nameUserUsr;
+    private String passwordUsr;
+    private String saltUsr;
+    private String codValidationUsr;
+    private Integer status;
+    private Date lastInUsr;
 
     public Users() {
     }
 
 	
-    public Users(String nameUserUsr, String passwordUsr, String codValidationUsr, Integer statusUsr) {
+    public Users(String nameUserUsr, String passwordUsr, String saltUsr, Date lastInUsr, String codValidationUsr, Integer status) {
         this.nameUserUsr = nameUserUsr;
         this.passwordUsr = passwordUsr;
+        this.saltUsr     = saltUsr;
+        this.lastInUsr   = lastInUsr;
         this.codValidationUsr = codValidationUsr;
-        this.statusUsr = statusUsr;
+        this.status = status;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -70,6 +74,15 @@ public class Users  implements java.io.Serializable {
         this.passwordUsr = passwordUsr;
     }
     
+    @Column(name="salt_usr", length=120)
+    public String getSaltUsr() {
+        return this.saltUsr;
+    }
+    
+    public void setSaltUsr(String saltUsr) {
+        this.saltUsr = saltUsr;
+    }
+    
     @Column(name="cod_validation_usr", nullable=false, length=120)
     public String getCodValidationUsr() {
         return this.codValidationUsr;
@@ -79,13 +92,23 @@ public class Users  implements java.io.Serializable {
         this.codValidationUsr = codValidationUsr;
     }
     
-    @Column(name="status_usr", nullable=false)
-    public Integer getStatusUsr() {
-        return this.statusUsr;
+    @Column(name="status", nullable=false)
+    public Integer getStatus() {
+        return this.status;
     }
     
-    public void setStatusUsr(Integer statusUsr) {
-        this.statusUsr = statusUsr;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name="last_in_usr")
+    public Date getLastInUsr() {
+        return this.lastInUsr;
+    }
+    
+    public void setLastInUsr(Date lastInUsr) {
+        this.lastInUsr = lastInUsr;
     }
 
 }

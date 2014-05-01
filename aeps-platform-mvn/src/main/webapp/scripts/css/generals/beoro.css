@@ -1,7 +1,7 @@
 /*html { overflow-y: scroll; -webkit-font-smoothing: antialiased }
 body { padding-top: 34px; background: #f6f6f6; font-size: 13px; }
 html, body { height: 100%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
-a { outline: none !important; color: #368CA9; }
+a { outline: none !important; color: #87398A; }
 a:hover { color: #368CA9 }
 small { font-size: 11px }*/
 
@@ -83,19 +83,19 @@ small { font-size: 11px }*/
     .tabbable-bordered .nav-tabs > li { margin-right: 2px; border-top: 2px solid transparent; }
     .tabbable-bordered .nav-tabs > li > a { -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; margin-right: 0; padding: 6px 10px; }
     .tabbable-bordered .nav-tabs > li > a:hover { background: none; border-color: transparent; }
-    .tabbable-bordered .nav-tabs > li.active { border-top: 3px solid #368CA9; margin-top: 0; position: relative; }
+    .tabbable-bordered .nav-tabs > li.active { border-top: 3px solid #87398A; margin-top: 0; position: relative; }
     .tabbable-bordered .nav-tabs > li.active > a { border-top: none; font-weight: 700; }
     .tabbable-bordered .nav-tabs > li.active > a:hover { background: #fff; border-color: #ddd #ddd transparent; }
     .tabs-below.tabbable-bordered .nav-tabs > li { border-top: none; border-bottom: 2px solid transparent; margin-top: -1px; }
-    .tabs-below.tabbable-bordered .nav-tabs > li.active { border-top: none; border-bottom: 3px solid #368CA9; margin-bottom: 0; position: relative; }
+    .tabs-below.tabbable-bordered .nav-tabs > li.active { border-top: none; border-bottom: 3px solid #87398A; margin-bottom: 0; position: relative; }
     .tabs-below.tabbable-bordered .nav-tabs > li.active > a { border-bottom: none }
     .tabs-below.tabbable-bordered .nav-tabs > li.active > a:hover { background: #fff; border-color: #ddd #ddd transparent; }
     .tabs-left.tabbable-bordered .nav-tabs > li { margin-right: 0; border-left: 2px solid transparent; border-top: none; }
-    .tabs-left.tabbable-bordered .nav-tabs > li.active { border-top: none; border-left: 3px solid #368CA9; margin-top: 0; margin-right: -1px; position: relative; }
+    .tabs-left.tabbable-bordered .nav-tabs > li.active { border-top: none; border-left: 3px solid #87398A; margin-top: 0; margin-right: -1px; position: relative; }
     .tabs-left.tabbable-bordered .nav-tabs > li.active > a { border-top: 1px solid #ddd; border-left: 1px solid transparent; }
     .tabs-left.tabbable-bordered .nav-tabs > li.active > a:hover { background: #fff; border-color: #ddd transparent #ddd; }
     .tabs-right.tabbable-bordered .nav-tabs > li { margin-right: 0; border-right: 2px solid transparent; border-top: none; }
-    .tabs-right.tabbable-bordered .nav-tabs > li.active { border-top: none; border-right: 3px solid #368CA9; margin-top: 0; margin-left: -1px; position: relative; }
+    .tabs-right.tabbable-bordered .nav-tabs > li.active { border-top: none; border-right: 3px solid #87398A; margin-top: 0; margin-left: -1px; position: relative; }
     .tabs-right.tabbable-bordered .nav-tabs > li.active > a { border-top: 1px solid #ddd; border-right: 1px solid transparent; }
     .tabs-right.tabbable-bordered .nav-tabs > li.active > a:hover { background: #fff; border-color: #ddd transparent #ddd; }
     .tabs-right.tabbable-bordered .nav-tabs > li a, .tabs-left.tabbable-bordered .nav-tabs > li a { padding: 8px 10px }
@@ -108,7 +108,7 @@ small { font-size: 11px }*/
     .accordion .accordion-heading a:hover { text-decoration: none }
     .accordion .accordion-heading a i { float: right; margin-top: 3px; margin-left: 10px; opacity: .3; }
     .accordion .accordion-heading .label { vertical-align: 1px }
-    .accordion a.acc-in { background: none; border-top: 3px solid #368CA9; font-weight: 700; }
+    .accordion a.acc-in { background: none; border-top: 3px solid #87398A; font-weight: 700; }
     .accordion a.acc-in i { margin-top: 2px }
     
 /* top bar  */
@@ -255,7 +255,7 @@ small { font-size: 11px }*/
     .close-box { font-size: 20px; color: #fff; cursor: pointer; font-weight: 700; }
     .table input.span12 { width: 100%; margin-bottom: 0; }
     
-    .img-avatar { padding: 2px; background: #fafafa; border: 1px solid #ddd; -webkit-border-radius: 4px 4px 4px 4px; -moz-border-radius: 4px 4px 4px 4px; -ms-border-radius: 4px 4px 4px 4px; border-radius: 4px 4px 4px 4px; }
+    .img-avatar { padding: 6px; background: #fafafa; border: 1px solid #ddd; -webkit-border-radius: 4px 4px 4px 4px; -moz-border-radius: 4px 4px 4px 4px; -ms-border-radius: 4px 4px 4px 4px; border-radius: 4px 4px 4px 4px; }
     .toolbar { border-width: 1px 0; border-style: dashed; border-color: #ddd; margin-bottom: 10px; padding: 4px 0; }
     .toolbar-icons a { display: block; padding: 2px 4px; background: #777; margin-right: 4px; float: left; }
     .toolbar .toolbar_text { font-size: 12px; line-height: 24px; padding: 0 5px; }

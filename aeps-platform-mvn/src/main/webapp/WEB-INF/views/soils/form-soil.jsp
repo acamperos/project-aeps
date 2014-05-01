@@ -3,6 +3,11 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -40,8 +45,10 @@
                             <s:hidden name="idField"/>
                             <s:textfield
                                 name="nameField"         
-                                tooltip="Seleccione un lote con la lupa a la derecha"  
-                                />
+                                tooltip="Seleccione un lote con la lupa a la derecha"
+                                readonly="true"
+                                onclick="listInfo('/aeps-plataforma-mvn/viewField.action?selected=rasta', 'formRasta_nameField', 'formRasta_idField', 'divListRastaForm', 'divRastaForm')"
+                            />
                             <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewField.action?selected=rasta', 'formRasta_nameField', 'formRasta_idField', 'divListRastaForm', 'divRastaForm')"><i class="icon-search"></i></a>
                         </div>  
                     </div>  
@@ -70,11 +77,11 @@
                                 </div>
                                 <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                     <span class="add-on">Minutos</span>
-                                    <input type="text" name="latitude_minutes" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_minutes" class="input-degrees"/>
+                                    <input type="text" name="latitude_minutes" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds'); checkValue('formRasta_rasta_latitude_minutes', 59);" id="formRasta_rasta_latitude_minutes" class="input-degrees"/>
                                 </div>
                                 <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2.2%">
                                     <span class="add-on">Segundos</span>
-                                    <input type="text" name="latitude_seconds" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')" id="formRasta_rasta_latitude_seconds" class="input-degrees"/>
+                                    <input type="text" name="latitude_seconds" onkeyup="generateDecimals('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds'); checkValueSecond('formRasta_rasta_latitude_seconds', 60);" id="formRasta_rasta_latitude_seconds" class="input-degrees"/>
                                 </div>
                             </div>
                         </div>
@@ -95,11 +102,11 @@
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_minutes" class="input-degrees"/>
+                                        <input type="text" name="length_minutes" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds'); checkValue('formRasta_rasta_length_minutes', 59);" id="formRasta_rasta_length_minutes" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2.2%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_seconds" class="input-degrees"/>
+                                        <input type="text" name="length_seconds" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds'); checkValueSecond('formRasta_rasta_length_seconds', 60);" id="formRasta_rasta_length_seconds" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +153,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="1" rowspan="1" style="width:80px;padding:3px;text-align: center;">Capas y horizontes</th>
-                                    <th colspan="1" rowspan="1" style="width:128px;padding-left:0;text-align: center;">Espesor</th>
+                                    <th colspan="1" rowspan="1" style="width:128px;padding-left:0;text-align: center;">Espesor (cm)</th>
                                     <th colspan="1" rowspan="1" style="width:60px;padding-left:0;text-align: center;">Color seco</th>
                                     <th colspan="1" rowspan="1" style="width:60px;padding-left:0;text-align: center;">Color humedo</th>
                                     <th colspan="1" rowspan="1" style="width:175px;padding-left:0;text-align: center;">Textura</th>
@@ -427,22 +434,26 @@
                     </div>
                     <div class="form-group control-group">
                         <s:label for="formRasta_rasta_recubrimientoVegetalRas" cssClass="control-label req" value="Recubrimiento vegetal del suelo:"></s:label>
-                            <div class="controls">
-                                <s:select
-                                    name="rasta.recubrimientoVegetalRas"
-                                    list="{'muy bueno', 'bueno', 'regular', 'espaciado', 'sin cobertura'}"           
-                                    headerKey="-1" 
-                                    headerValue="---" />
-                            </div>   
-                        </div>
-                    </fieldset>
-                    <div> 
+                        <div class="controls">
+                            <s:select
+                                name="rasta.recubrimientoVegetalRas"
+                                list="{'muy bueno', 'bueno', 'regular', 'espaciado', 'sin cobertura'}"           
+                                headerKey="-1" 
+                                headerValue="---" />
+                        </div>   
+                    </div>
+                </fieldset>
+                <p class="warnField reqBef">Campos Requeridos</p>
+                <div> 
                     <s:hidden name="page"/>
                     <s:hidden name="actExe"/>    
                     <s:hidden name="rowNew"/>    
                     <s:hidden name="newRow" value="1"/>    
-                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
-                    <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();">Cancelar</button>
+                    <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
+                    <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "soil/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify"))) { %>                
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
+                    <% } %>
+                    <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                 </div>    
             </s:form>        
             <script>

@@ -8,7 +8,8 @@
     <property name="connection.password"></property>
     <property name="connection.pool_size">1</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">nbuser</property>
+    <property name="hibernate.connection.password">nbuser</property>    
+    <mapping class="org.aepscolombia.platform.models.entity.WorkTypeExtAgent"/>
     <mapping class="org.aepscolombia.platform.models.entity.Cassavas"/>
     <mapping class="org.aepscolombia.platform.models.entity.ResultingProducts"/>
     <mapping class="org.aepscolombia.platform.models.entity.PreparationsTypes"/>

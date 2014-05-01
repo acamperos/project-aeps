@@ -24,7 +24,6 @@ import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.TargetsTypesDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.dao.WeedsDao;
-import org.aepscolombia.platform.models.entity.ChemicalElements;
 import org.aepscolombia.platform.models.entity.ChemicalsControls;
 import org.aepscolombia.platform.models.entity.Controls;
 import org.aepscolombia.platform.models.entity.ControlsTypes;
@@ -69,6 +68,7 @@ public class ActionCon extends BaseAction {
     private List<HashMap> listCont;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Controls con = new Controls();
     private Sowing sowing = new Sowing();
@@ -80,6 +80,7 @@ public class ActionCon extends BaseAction {
     private List<ChemicalsControls> type_prod_che_con;
     private List<OrganicControls> type_prod_org_con;
     private List<DoseUnits> type_dose_units;
+    private UsersDao usrDao;
     
     private Double dosisConChe=null;
     private Integer doseUnitsChe;
@@ -286,6 +287,8 @@ public class ActionCon extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        idUsrSystem = user.getIdUsr();
+        usrDao = new UsersDao();
     }
     
     
@@ -379,12 +382,12 @@ public class ActionCon extends BaseAction {
             }
             
             if (dosisConChe!=null && (dosisConChe<0 || dosisConChe>1000)) {
-                addFieldError("dosisConChe", "Dato invalido");                
+                addFieldError("dosisConChe", "Dato invalido valor entre 0 y 1000");                
                 addActionError("Se ingreso una dosis quimica invalida, por favor ingresar un valor entre 0 y 1000");
             }
 
             if (dosisConOrg!=null && (dosisConOrg<0 || dosisConOrg>1000)) {
-                addFieldError("dosisConOrg", "Dato invalido");                
+                addFieldError("dosisConOrg", "Dato invalido valor entre 0 y 1000");                
                 addActionError("Se ingreso una dosis biologica invalida, por favor ingresar un valor entre 0 y 1000");
             }
 
@@ -447,6 +450,9 @@ public class ActionCon extends BaseAction {
      * @return lista de controles
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
         } catch (NumberFormatException e) {
@@ -468,6 +474,9 @@ public class ActionCon extends BaseAction {
      * @return Informacion del control
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
@@ -522,6 +531,9 @@ public class ActionCon extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -656,6 +668,9 @@ public class ActionCon extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idCon = 0;
         try {
             idCon = Integer.parseInt(this.getRequest().getParameter("idCon"));

@@ -5,10 +5,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
+        <link rel="icon" type="image/ico" href="img/favicon.ico">
     </head>
     <body>
-        <div id="dialog-form"></div>
+        <%@page import="org.aepscolombia.platform.models.entity.Users"%>
+        <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+        <%@page import="org.aepscolombia.platform.util.APConstants"%>
+        <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+        <% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+        <% UsersDao usrDao = new UsersDao(); %>
+        <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
         <div class="container">
             <ul id="breadcrumbs">
                 <s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
@@ -18,61 +24,161 @@
         </div>
         <div class="container">			
             <!-- Example row of columns -->
-            <div class="row">                
-                <div class="span6 thumbnail custom-thumb">
-					<img class="img-responsive hidden-xs" src="img/producers.jpg" alt="">
-					<div class="caption">
-						<h3>Productores</h3>
-                        <p>Encargado de la toma de datos para los productores o agricultores</p>
-                        <%--<s:url id="ajaxTest" value="/AjaxTest.action"/>--%>
-                        <%--<sj:a id="link1" href="%{ajaxTest}" targets="div1">--%>
-                        <p><s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout">Ir <i class="icon-white icon-double-angle-right"></i></s:a></p>
-					</div>
-				</div>
-                <div class="span6 thumbnail custom-thumb" style="margin-left: 0">
-					<img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
-					<div class="caption">
-						<h3>Cultivos</h3>
-                        <p>Encargado de la toma de datos para los cultivos</p>                        
-                        <p><s:a cssClass="btn btn-initial" href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
-					</div>
-				</div>
-            </div>
-            <div class="row">                
-                <div class="span6 thumbnail custom-thumb">
-					<img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
-					<div class="caption">
-						<h3>Fincas</h3>
-                        <p>Encargado de la toma de datos para las fincas</p>
-                        <p><s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
-					</div>
-				</div>
-                <div class="span6 thumbnail custom-thumb" style="margin-left: 0">
-					<img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
-					<div class="caption">
-						<h3>Suelos</h3>
-                        <p>Encargado de la toma de datos para los suelos</p>
-                        <p><s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
-					</div>
-				</div>
-            </div>
-            <div class="row">                
-                <div class="span6 thumbnail custom-thumb">
-					<img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
-					<div class="caption">
-						<h3>Lotes</h3>
-                        <p>Encargado de la toma de datos para los lotes</p>
-                        <p><s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a></p>
-					</div>
-				</div>
-                <div class="span6 thumbnail custom-thumb" style="margin-left: 0">
-					<img class="img-responsive hidden-xs" src="img/climate.jpg" alt="">
-					<div class="caption">
-						<h3>Clima</h3>
-                        <p>Encargado de la toma de datos para el clima</p>
-					</div>
-				</div>
-            </div>
+            <% if (entTypeId==1 || entTypeId==3) { %>
+                <div class="row">             
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/view")) { %>
+                        <div class="span6 thumbnail custom-thumb">
+                            <img class="img-responsive hidden-xs" src="img/producers.jpg" alt="">
+                            <div class="caption">
+                                <h3>Productores<span class="badge badge-success"><s:property value="numPro" /></span></h3>
+                                <p>Encargado de la toma de datos para los productores o agricultores</p>
+                                <%--<s:url id="ajaxTest" value="/AjaxTest.action"/>--%>
+                                <%--<sj:a id="link1" href="%{ajaxTest}" targets="div1">--%>
+                                <p>   
+                                    <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout">Ir <i class="icon-white icon-double-angle-right"></i></s:a>                                                               
+                                </p>
+                            </div>
+                        </div>
+                        <div class="span6 thumbnail custom-thumb" style="margin-left: 10px">                
+                    <% } else { %>
+                        <div class="span6 thumbnail custom-thumb"> 
+                    <% } %>
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/view")) { %>
+                            <img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
+                            <div class="caption">
+                                <h3>Fincas<span class="badge badge-success"><s:property value="numFar" /></span></h3>
+                                <p>Encargado de la toma de datos para las fincas</p>
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div> 
+                    <% } %>
+                </div>            
+                <div class="row"> 
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/view")) { %>
+                        <div class="span6 thumbnail custom-thumb">
+                            <img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
+                            <div class="caption">
+                                <h3>Lotes<span class="badge badge-success"><s:property value="numFie" /></span></h3>
+                                <p>Encargado de la toma de datos para los lotes</p>
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="span6 thumbnail custom-thumb" style="margin-left: 10px">
+                    <% } else { %>
+                        <div class="span6 thumbnail custom-thumb">
+                    <% } %>
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/view")) { %>
+                            <img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
+                            <div class="caption">
+                                <h3>Cultivos<span class="badge badge-success"><s:property value="numEve" /></span></h3>
+                                <p>Encargado de la toma de datos para los cultivos</p>                        
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div>
+                    <% } %>                
+                </div>
+                <div class="row">      
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/view")) { %>
+                        <div class="span6 thumbnail custom-thumb">
+                            <img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
+                            <div class="caption">
+                                <h3>Suelos<span class="badge badge-success"><s:property value="numRas" /></span></h3>
+                                <p>Encargado de la toma de datos para los suelos</p>
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="span6 thumbnail custom-thumb" style="margin-left: 10px">
+                    <% } else { %>
+                        <div class="span6 thumbnail custom-thumb">
+                    <% } %>
+                    <% if (true) { %>
+                            <img class="img-responsive hidden-xs" src="img/climate.jpg" alt="">
+                            <div class="caption">
+                                <h3>Clima</h3>
+                                <p>Encargado de la toma de datos para el clima</p>
+                                <h3>En Construcción!!!</h3>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } else if (entTypeId==2) { %>
+                <div class="row">          
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/view")) { %>
+                        <div class="span6 thumbnail custom-thumb">
+                            <img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
+                            <div class="caption">
+                                <h3>Fincas<span class="badge badge-success"><s:property value="numFar" /></span></h3>
+                                <p>Encargado de la toma de datos para las fincas</p>
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>                                    
+                                </p>
+                            </div>
+                        </div> 
+                        <div class="span6 thumbnail custom-thumb" style="margin-left: 10px">
+                    <% } else { %>
+                        <div class="span6 thumbnail custom-thumb"> 
+                    <% } %>
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/view")) { %>
+                            <img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
+                            <div class="caption">
+                                <h3>Lotes<span class="badge badge-success"><s:property value="numFie" /></span></h3>
+                                <p>Encargado de la toma de datos para los lotes</p>
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>            
+                <div class="row"> 
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/view")) { %>
+                        <div class="span6 thumbnail custom-thumb">
+                            <img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
+                            <div class="caption">
+                                <h3>Cultivos<span class="badge badge-success"><s:property value="numEve" /></span></h3>
+                                <p>Encargado de la toma de datos para los cultivos</p>                        
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="span6 thumbnail custom-thumb" style="margin-left: 10px">
+                    <% } else { %>
+                        <div class="span6 thumbnail custom-thumb">
+                    <% } %>   
+                    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/view")) { %>
+                            <img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
+                            <div class="caption">
+                                <h3>Suelos<span class="badge badge-success"><s:property value="numRas" /></span></h3>
+                                <p>Encargado de la toma de datos para los suelos</p>
+                                <p>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                </p>
+                            </div>
+                        </div>
+                    <% } %>   
+                </div>
+                <div class="row">
+                    <% if (true) { %>
+                        <div class="span6 thumbnail custom-thumb">
+                            <img class="img-responsive hidden-xs" src="img/climate.jpg" alt="">
+                            <div class="caption">
+                                <h3>Clima</h3>
+                                <p>Encargado de la toma de datos para el clima</p>
+                                <h3>En Construcción!!!</h3>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
         </div>
     </body>
 </html>

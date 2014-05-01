@@ -94,7 +94,7 @@ public class ProducersDao
                 temp.put("last_name_2", data[22]);                
                 result = (temp);
             }
-//            System.out.println(result);
+            System.out.println(result);
 //            for (HashMap data : result) {
 //                System.out.println(data.get("id_productor")+" "+data.get("id_entidad")+" "+data.get("cedula"));
 //            }
@@ -161,7 +161,7 @@ public class ProducersDao
 //        sql += "select p.*, e.* from productores p";
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
         sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
-        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status";
+        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status, e.entity_type_ent, e.agent_name_ent, e.validation_number_ent";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";		
         sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";		
@@ -170,6 +170,7 @@ public class ProducersDao
         if (args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
         }
+//        System.out.println("sql=>"+sql);
         
         if (args.containsKey("search_producer")) {
             String valIdent = String.valueOf(args.get("search_producer"));
@@ -187,7 +188,9 @@ public class ProducersDao
                 sql += " or (e.first_name_1_ent like '%"+valIdent+"%')";
                 sql += " or (e.last_name_1_ent like '%"+valIdent+"%')";
                 sql += " or (e.email_ent like '%"+valIdent+"%')";
-                sql += " or (e.address_ent like '%"+valIdent+"%')";
+                sql += " or (e.address_ent like '%"+valIdent+"%')";     
+                sql += " or (e.name_ent like '%"+valIdent+"%')";
+                sql += " or (e.agent_name_ent like '%"+valIdent+"%')";
 //                sql += " or (m.id_department_mun='"+valIdent+"')";
 //                sql += " or (r.terreno_circundante_ras like '%"+valIdent+"%')";
 //                sql += " or (r.posicion_perfil_ras like '%"+valIdent+"%')";
@@ -205,7 +208,7 @@ public class ProducersDao
         }    
         if (args.containsKey("typeIdent")) {
             String valType = String.valueOf(args.get("typeIdent"));
-            if(!valType.equals(" ") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent="+args.get("typeIdent");
+            if(!valType.equals(" ") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent='"+args.get("typeIdent")+"'";
         }
         if (args.containsKey("identProducer")) {
             String valIdent = String.valueOf(args.get("identProducer"));
@@ -219,6 +222,14 @@ public class ProducersDao
         if (args.containsKey("last_names_producer_1")) {
             String valIdent = String.valueOf(args.get("last_names_producer_1"));
             if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.last_name_1_ent like '%"+args.get("last_names_producer_1")+"%'";
+        }        
+        if (args.containsKey("nameCompany")) {
+            String valIdent = String.valueOf(args.get("nameCompany"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.name_ent like '%"+valIdent+"%'";
+        }
+        if (args.containsKey("firstNameRep")) {
+            String valIdent = String.valueOf(args.get("firstNameRep"));
+            if(!valIdent.equals("") && !valIdent.equals("null")) sql += " and e.agent_name_ent like '%"+valIdent+"%'";
         }
         if (args.containsKey("direction_producer")) {
             String valIdent = String.valueOf(args.get("direction_producer"));
@@ -281,6 +292,9 @@ public class ProducersDao
 //                temp.put("fecha_in", data[14]);
                 temp.put("id_project", data[14]);
                 temp.put("status", data[15]);
+                temp.put("typeEnt", data[16]);
+                temp.put("agentName", data[17]);
+                temp.put("digVer", data[18]);
                 result.add(temp);
             }
 //            System.out.println(result);
@@ -298,6 +312,70 @@ public class ProducersDao
         }
         return result;
     }   
+    
+    public static Integer countData(HashMap args) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Object[] events = null;
+        Transaction tx = null;
+        Integer result = 0;
+        
+        String sql = "";
+        
+//        sql += "select p.*, e.* from productores p";
+        sql += "select count(p.id_pro), p.id_entity_pro";
+        sql += " from producers p";
+        sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";
+        sql += " inner join log_entities le on (le.id_object_log_ent=e.id_ent and le.table_log_ent='entities' and le.action_type_log_ent='C')";		
+        sql += " where e.status=1 and e.entity_type_ent=2";        
+        if (args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }
+//        System.out.println("sql=>"+sql);
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = (Object[])query.uniqueResult();
+            result = Integer.parseInt(String.valueOf(events[0]));
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    
+    public Producers objectByEntityId(Integer idEnt) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Producers event = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select p.id_pro, p.id_entity_pro, p.address_pro, p.status, p.created_by";
+        sql += " from producers p";
+        sql += " where p.status=1 and p.id_entity_pro="+idEnt; 
+//        System.out.println("sql->"+sql);
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql).addEntity("p", Producers.class);;
+            event = (Producers)query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return event;
+    }  
     
     public Producers objectById(Integer id) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();

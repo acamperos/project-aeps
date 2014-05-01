@@ -144,7 +144,8 @@ public class FieldsDao
 //		sql += sqlAdd;
 //         ft.name_fie_typ
         sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
-        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, l.id_project_fie, e.name_ent, f.name_far, ft.name_fie_typ";
+        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, l.id_project_fie, e.name_ent, f.name_far, ft.name_fie_typ,";
+        sql += " e.entity_type_ent";
         sql += " from fields l";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
         sql += " inner join field_types ft on ft.id_fie_typ=l.contract_type_fie";
@@ -273,6 +274,7 @@ public class FieldsDao
                 temp.put("name_producer", data[10]);
                 temp.put("name_far", data[11]);
                 temp.put("name_type_lot", data[12]);
+                temp.put("typeEnt", data[13]);
                 result.add(temp);
             }
 //            System.out.println("values->"+result);
@@ -290,7 +292,42 @@ public class FieldsDao
             session.close();
         }
         return result;
-    }    
+    } 
+    
+    public static Integer countData(HashMap args) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Object[] events = null;
+        Transaction tx = null;
+        Integer result = 0;
+        
+        String sql = "";     
+        String sqlAdd = "";     
+        sql += "select count(l.id_fie), l.id_farm_fie";
+        sql += " from fields l";
+        sql += " left join farms f on f.id_far=l.id_farm_fie";
+        sql += " inner join log_entities le on le.id_object_log_ent=l.id_fie and le.table_log_ent='fields' and le.action_type_log_ent='C'";   
+        sql += " where l.status=1";
+        if (args.containsKey("idEntUser")) {
+            sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }
+        sql += sqlAdd;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = (Object[])query.uniqueResult();
+            result = Integer.parseInt(String.valueOf(events[0]));
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
     
     public Fields objectById(Integer id) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
@@ -325,7 +362,7 @@ public class FieldsDao
         Transaction tx = null;
         String sql = "";
 
-        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro";
+        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro, fp.created_by";
 //        sql += "select fp.id_field_fie_pro, fp.id_producer_fie_pro, fp.contract_type_fie_pro";
         
 //        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";

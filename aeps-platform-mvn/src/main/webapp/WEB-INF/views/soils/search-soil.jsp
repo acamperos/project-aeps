@@ -15,6 +15,7 @@
         <!--</div>-->
         <!--<div class="span2">-->
             <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+            <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         <!--</div>-->
     </div> 
     <div id="searchAdvance" class="hide">
@@ -129,6 +130,7 @@
         </div>      
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil">Buscar rasta <i class="icon-search"></i></sj:submit>
+            <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         </div>
     </div>       
 </s:form>        

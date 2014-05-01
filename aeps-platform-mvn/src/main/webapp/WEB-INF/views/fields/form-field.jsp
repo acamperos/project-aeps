@@ -2,6 +2,11 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -34,7 +39,7 @@
                                     <i class="icon-info-sign s2b_tooltip" title="Seleccione la finca en la lupa a la derecha"></i>
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="name_property_lot" />
+                                    <s:textfield name="name_property_lot" readonly="true" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
                                     <a class="btn" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
                                 </div>  
                             </div>                     
@@ -56,7 +61,7 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="formField_name_lot" class="control-label">
+                            <label for="formField_name_lot" class="control-label req">
                                 Nombre de Lote:
                                 <i class="icon-info-sign s2b_tooltip" title="Ingrese el nombre del lote asociado"></i>
                             </label>
@@ -85,11 +90,11 @@
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="latitude_minutes_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_minutes_lot" class="input-degrees"/>
+                                        <input type="text" name="latitude_minutes_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot'); checkValue('formField_latitude_minutes_lot', 59);" id="formField_latitude_minutes_lot" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="latitude_seconds_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')" id="formField_latitude_seconds_lot" class="input-degrees"/>
+                                        <input type="text" name="latitude_seconds_lot" onkeyup="generateDecimals('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot'); checkValueSecond('formField_latitude_seconds_lot', 60);" id="formField_latitude_seconds_lot" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -115,11 +120,11 @@
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
                                         <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_minutes_lot" class="input-degrees"/>
+                                        <input type="text" name="length_minutes_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot'); checkValue('formField_length_minutes_lot', 59);" id="formField_length_minutes_lot" class="input-degrees"/>
                                     </div>
                                     <div class="span2 input-prepend controls" style="width: 100px; margin-left: 3%">
                                         <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')" id="formField_length_seconds_lot" class="input-degrees"/>
+                                        <input type="text" name="length_seconds_lot" onkeyup="generateDecimals('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot'); checkValueSecond('formField_length_seconds_lot', 60);" id="formField_length_seconds_lot" class="input-degrees"/>
                                     </div>
                                 </div>
                             </div>
@@ -142,17 +147,22 @@
                                 <s:textfield name="area_lot" requiredLabel="true" />
                             </div>         
                         </div>         
-                    </fieldset>				
+                    </fieldset>		
+                    <p class="warnField reqBef">Campos Requeridos</p>
                     <div> 
                         <s:hidden name="page" id="formField_page"/>
-                        <s:hidden name="actExe"/>    
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
+                        <s:hidden name="actExe"/>
+                        <s:hidden name="viewInfo"/>
+                        <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
+                        <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "field/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "field/modify"))) { %>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
+                        <% } %>
                         <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')"><i class="icon-save"></i>  Guardar informaci&oacute;n</button>-->
-                        <button class="btn btn-large bt_cancel_field" onclick="resetForm('formField'); closeWindow();">Cancelar</button>
+                        <button class="btn btn-large bt_cancel_field" onclick="resetForm('formField'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>    
                 </s:form>        
                 <script>
-//                        var page = $("#formField_page").val();
+                        var viewInfo = $("#formField_viewInfo").val();
                         //For Lot
                         $.mask.definitions['i'] = "[-0-9]";
                         $.mask.definitions['f'] = "[-.0-9]";
@@ -178,6 +188,8 @@
                         $("#formField_latitude_degrees_lot").numeric({decimal: false});
                         $("#formField_latitude_minutes_lot").numeric({decimal: false});
                         $("#formField_latitude_seconds_lot").numeric();
+                        generateDegrees('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot');
+                        generateDegrees('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot');
                         $.subscribe('completeField', function(event, data) {
                             completeFormGetting('dialog-form', 'formField', 'divFields', event.originalEvent.request.responseText);
                             setTimeout( function() {

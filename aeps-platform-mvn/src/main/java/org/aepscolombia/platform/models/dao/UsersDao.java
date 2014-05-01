@@ -8,8 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.util.HibernateUtil;
-import org.aepscolombia.platform.util.GlobalFunctions;
 import java.util.HashMap;
+import org.aepscolombia.platform.models.entity.Privileges;
 import org.aepscolombia.platform.models.entity.UserEntity;
 
 /**
@@ -42,7 +42,7 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.salt_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
         sql += " from users usr";
         sql += " where usr.name_user_usr='"+username+"'";
 //        System.out.println("sql->"+sql);
@@ -114,7 +114,7 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.salt_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
         sql += " from users usr";
         sql += " where usr.status=1";
         if (username!=null && username!="") {
@@ -154,9 +154,9 @@ public class UsersDao
         Transaction tx = null;
         String sql = "";        
 
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status ";
-        sql += "from users usr ";
-        sql += "where usr.status=2 ";
+        sql += "select usr.id_usr, usr.name_user_usr, usr.salt_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
+        sql += " from users usr ";
+        sql += " where usr.status=2 ";
         if (username!=null) {
             sql += " and usr.name_user_usr='"+username+"'";
         }  
@@ -195,7 +195,8 @@ public class UsersDao
     public Users login(String username, String password) {
       if ((username != null || username.isEmpty()) && (password != null || password.isEmpty())) {
 //        System.out.println("md5->"+password);  
-        Users userFound = this.getUserByLogin(username, GlobalFunctions.generateMD5(password));
+//        Users userFound = this.getUserByLogin(username, GlobalFunctions.generateMD5(password));
+        Users userFound = this.getUserByLogin(username, password);
 //        Usuarios userFound = this.getUserByLogin(username, password);
         if (userFound != null) {
 //          Usuarios temp = new Usuarios();
@@ -262,9 +263,9 @@ public class UsersDao
         String sql  = "";        
         Users event = null;
         Transaction tx = null;
-        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status ";
-        sql += "from users usr ";
-        sql += "where usr.id_usr="+id;
+        sql += "select usr.id_usr, usr.name_user_usr, usr.salt_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
+        sql += " from users usr";
+        sql += " where usr.id_usr="+id;
         try {
             tx = session.beginTransaction();
 //            Query query  = session.createSQLQuery(sql);
@@ -373,6 +374,46 @@ public class UsersDao
 //        
 ////        return event;
 //    }
+    
+     /**
+     * Encargado de verificar si un usuario cuenta con permiso determinado en el sistema
+     * @param idUser:  Identificacion del usuario
+     * @param perUser:  Permiso del usuario
+     * @return Identificacion (Int) de la entidad
+     */
+    public static Boolean getPrivilegeUser(Integer idUser, String perUser) 
+	{
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session  = sessions.openSession();
+        Privileges priv  = null;
+        Transaction tx   = null;
+        Boolean result   = false;
+        String sql = "";        
+        sql  = "select pv.id_pri, pv.route_pri, pv.name_pri, pv.description_pri";
+        sql += " from users_profiles ue";
+		sql += " inner join profiles pr on ue.id_profile_usr_pro=pr.id_pro"; 
+		sql += " inner join profiles_privileges pp on pp.id_profile_pro_pri=pr.id_pro"; 
+		sql += " inner join privileges pv on pv.id_pri=pp.id_privilege_pro_pri"; 
+		sql += " where ue.id_users_usr_pro="+idUser;
+		sql += " and pv.route_pri='"+perUser+"'";
+//        System.out.println("sql->"+sql);
+        
+        try {
+            tx    = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("pv", Privileges.class);
+            priv  = (Privileges) query.uniqueResult();
+            if (priv!=null) result = true;
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+	}
 
     public void save(Users event) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();

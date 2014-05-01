@@ -29,7 +29,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropSow_sowing_sowingTypes_idSowTyp" class="control-label req">
-                        Tipo de siembra (maquinaria):
+                        Método de siembra:
                     </label>
                     <div class="controls">
                         <s:select
@@ -89,7 +89,7 @@
                                 listValue="nameCheSow"            
                                 headerKey="-1" 
                                 headerValue="---"
-                                onchange="showOtherElement(this.value, 'divNewProductSowing')"
+                                onchange="showOtherElementProductUsed(this.value, 'divNewProductSowing', 'divInfoDose')"
                             />
                         </div>                         
                     </div>                          
@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="divInfoDose">
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_sowing_seedTreatmentDosisSow" class="control-label">
@@ -340,6 +340,7 @@
                 </div>
             </div>
         </div>
+        <p class="warnField reqBef">Campos Requeridos</p>
         <script>
             $("#formCropSow_sowing_dateSow").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropSow_sowing_dateSow").mask("99/99/9999", {placeholder: " "});
@@ -358,10 +359,13 @@
         </script>
     </fieldset>
 </s:form>	
-<div style="margin-bottom: 15px" id="divBtSowing">
-    <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Siembra</sj:submit>
-    <%--<sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" validate="true" onCompleteTopics="completeSowing"><i class="icon-save"></i>  Guardar Siembra</sj:submit>--%>
-</div>
+<% String actExeSow   = String.valueOf(request.getAttribute("actExe")); %>
+<% if ((actExeSow=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeSow=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
+    <div style="margin-bottom: 15px" id="divBtSowing">
+        <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Siembra</sj:submit>
+        <%--<sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" validate="true" onCompleteTopics="completeSowing"><i class="icon-save"></i>  Guardar Siembra</sj:submit>--%>
+    </div>
+<% } %>
 <script>
     $.subscribe('completeSowing', function(event, data) {
         completeFormCrop('', 'formCropSow', 'divMessSowing', event.originalEvent.request.responseText);

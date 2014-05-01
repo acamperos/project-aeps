@@ -15,6 +15,7 @@ import org.aepscolombia.platform.models.dao.ControlsDao;
 import org.aepscolombia.platform.models.dao.CropsTypesDao;
 import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
 import org.aepscolombia.platform.models.dao.DoseUnitsDao;
+import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.FertilizationsDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
@@ -44,6 +45,7 @@ import org.aepscolombia.platform.models.entity.ChemicalsSowing;
 import org.aepscolombia.platform.models.entity.CropsTypes;
 import org.aepscolombia.platform.models.entity.DocumentsTypes;
 import org.aepscolombia.platform.models.entity.DoseUnits;
+import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.Fields;
 import org.aepscolombia.platform.models.entity.Genotypes;
 import org.aepscolombia.platform.models.entity.GenotypesSowing;
@@ -135,6 +137,7 @@ public class ActionCrop extends BaseAction {
     
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Beans beans   = new Beans();
     private Cassavas cass = new Cassavas();
@@ -142,6 +145,7 @@ public class ActionCrop extends BaseAction {
     private Maize maize   = new Maize();
     private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
     private Sowing sowing = new Sowing();
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -593,11 +597,26 @@ public class ActionCrop extends BaseAction {
     }   
     
     
+    private Integer typeEnt;
+
+    public Integer getTypeEnt() {
+        return typeEnt;
+    }
+
+    public void setTypeEnt(Integer typeEnt) {
+        this.typeEnt = typeEnt;
+    }
+    
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         this.setType_ident_producer(new DocumentsTypesDao().findAll());
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
+        EntitiesDao entDao = new EntitiesDao();
+        Entities entTemp = entDao.findById(idEntSystem);
+        typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
 //        if (user.getIdUsr()!=null) idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
     }
     
@@ -641,11 +660,12 @@ public class ActionCrop extends BaseAction {
             
 //            System.out.println("performObj->"+performObj);
             
-            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
+//            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
+            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj);
 
             if (performDou!=0) {
                 if (performDou<0 || performDou>30000) {
-                    addFieldError("performObj", "Dato invalido");
+                    addFieldError("performObj", "Dato invalido valor entre 0 y 30000");
                     addActionError("Se ingreso un objetivo de rendimiento invalido, por favor ingresar un valor entre 0 y 30000");
                 }
             }
@@ -691,6 +711,9 @@ public class ActionCrop extends BaseAction {
     
     public String showDataCrop() 
     {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
         } catch (NumberFormatException e) {
@@ -709,6 +732,9 @@ public class ActionCrop extends BaseAction {
     */
     public String view()
     {     
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
 //        actExe = (String)(this.getRequest().getParameter("action"));
         actExe = "modify";
         
@@ -771,7 +797,8 @@ public class ActionCrop extends BaseAction {
 //            System.out.println("values->"+fieldInfo);
             
             this.setName_producer(String.valueOf(fieldInfo.get("name_producer")));
-            this.setNum_doc(Integer.parseInt(String.valueOf(fieldInfo.get("no_doc_pro"))));
+            String numDocTemp = String.valueOf(fieldInfo.get("no_doc_pro"));
+            if (!numDocTemp.equals("null")) this.setNum_doc(Integer.parseInt(numDocTemp));
             this.setType_doc(String.valueOf(fieldInfo.get("type_doc_pro")));
             this.setName_farm(String.valueOf(fieldInfo.get("name_farm")));
             
@@ -848,6 +875,9 @@ public class ActionCrop extends BaseAction {
      * @return lista de cultivos
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
@@ -895,6 +925,9 @@ public class ActionCrop extends BaseAction {
      * @return Informacion del cultivo
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         int pageReq;
         if (this.getRequest().getParameter("page") != null) {
@@ -926,6 +959,9 @@ public class ActionCrop extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -957,7 +993,8 @@ public class ActionCrop extends BaseAction {
                 pro = cropDao.objectById(idCrop);
             }                        
             
-            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
+//            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
+            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj);
             
             pro.setFields(new Fields(idField));
             pro.setCropsTypes(new CropsTypes(typeCrop));
@@ -1067,6 +1104,9 @@ public class ActionCrop extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idCrop = 0;
         try {
             idCrop = Integer.parseInt(this.getRequest().getParameter("idCrop"));

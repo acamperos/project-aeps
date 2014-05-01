@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="targets_types"
-    ,catalog="madr_bd11"
+    ,catalog="madr_bd13"
 )
 public class TargetsTypes  implements java.io.Serializable {
 

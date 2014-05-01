@@ -113,7 +113,7 @@ public class ProductionEventsDao
         String sqlAdd = "";     
                       
         sql += "select pe.id_pro_eve, e.document_type_ent, e.document_number_ent, e.name_ent, f.id_far, f.name_far,";
-        sql += " l.id_fie, l.name_fie, s.date_sow, mg.name_gen, pe.status";
+        sql += " l.id_fie, l.name_fie, s.date_sow, mg.name_gen, pe.status, e.entity_type_ent";
         sql += " from production_events pe";
 //        sql += " left join sowing s on pe.id_pro_eve=s.id_production_event_sow and s.status=1";
         sql += " left join sowing s on pe.id_pro_eve=s.id_production_event_sow";
@@ -222,12 +222,52 @@ public class ProductionEventsDao
                 temp.put("date_sowing", data[8]);
                 temp.put("name_genotype", data[9]);
                 temp.put("status", data[10]);
+                temp.put("typeEnt", data[11]);
                 result.add(temp);
             }
 //            System.out.println("values->"+result);
 //            for (HashMap datos : result) {
 //                System.out.println(datos.get("id_productor")+" "+datos.get("id_entidad")+" "+datos.get("cedula"));
 //            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }    
+    
+    public static Integer countData(HashMap args) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Object[] events = null;
+        Transaction tx = null;
+        Integer result = 0;
+        
+        String sql = "";     
+        String sqlAdd = "";     
+                      
+        sql += "select count(pe.id_pro_eve), pe.id_field_pro_eve";
+        sql += " from production_events pe";  
+        sql += " inner join log_entities le on le.id_object_log_ent=pe.id_pro_eve and le.table_log_ent='production_events' and le.action_type_log_ent='C'";   
+        sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
+        sql += " inner join farms f on f.id_far=l.id_farm_fie";
+        sql += " where l.status=1 and f.status=1 and pe.status=1";        
+        
+        if (args.containsKey("idEntUser")) {
+            sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+        }
+        sql += sqlAdd;
+//        System.out.println("sql->"+sql);
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = (Object[])query.uniqueResult();
+            result = Integer.parseInt(String.valueOf(events[0]));
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

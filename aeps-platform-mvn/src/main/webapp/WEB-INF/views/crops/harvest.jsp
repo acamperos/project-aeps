@@ -111,13 +111,14 @@
             </div>
         </div>
         <div class="control-group">
-            <label for="formCropHar_harv_commentHar" class="control-label req" style="width: 175px">
+            <label for="formCropHar_harv_commentHar" class="control-label" style="width: 175px">
                 Observaciones generales: 
             </label>
             <div class="controls">
                 <s:textarea rows="5" cssClass="span6" name="harv.commentHar"></s:textarea>
             </div>					 
         </div>	
+        <p class="warnField reqBef">Campos Requeridos</p>
         <script>
             $("#formCropHar_harv_dateHar").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropHar_harv_dateHar").mask("99/99/9999", {placeholder: " "});
@@ -129,8 +130,11 @@
         </script>
     </fieldset>
     <div style="margin-bottom: 15px" id="divBtHarvest">
-        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeHarvest" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Cosecha</sj:submit>
-        <!--<button class="btn btn_default" onclick="resetForm('formCropHar')">Cancelar</button>-->
+        <% String actExeHar   = String.valueOf(request.getAttribute("actExe")); %>
+        <% if ((actExeHar=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeHar=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
+            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeHarvest" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Cosecha</sj:submit>
+        <% } %>
+        <!--<button class="btn btn_default" onclick="resetForm('formCropHar')"><i class="icon-ban-circle"></i>  Cancelar</button>-->
     </div>
 </s:form>	
 <script>

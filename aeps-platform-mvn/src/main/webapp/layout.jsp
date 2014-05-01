@@ -65,6 +65,10 @@
               actionName = 'home';                  
             }
             activeOption('ulOptionsMenu', actionName+'Cls');
+            $(document).ready(function() {
+                //* scroll to top button
+                beoro_scrollToTop.init();
+            })
         </script>
     </body>
 </html>

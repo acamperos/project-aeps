@@ -51,9 +51,11 @@ public class ActionHarvest extends BaseAction {
     private int typeCrop;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Harvests harv  = new Harvests();
     private Sowing sowing = new Sowing();
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -143,6 +145,8 @@ public class ActionHarvest extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -169,7 +173,7 @@ public class ActionHarvest extends BaseAction {
             required.put("harv.harvestMethods.idHarMet", harv.getHarvestMethods().getIdHarMet());
             required.put("harv.productionHar", harv.getProductionHar());
             required.put("harv.yieldHar", harv.getYieldHar());            
-            required.put("harv.commentHar", harv.getCommentHar());
+//            required.put("harv.commentHar", harv.getCommentHar());
             if (typeCrop==1 || typeCrop==2) {
                 required.put("harv.resultingProducts.idResPro", harv.getResultingProducts().getIdResPro()); 
             }
@@ -235,21 +239,21 @@ public class ActionHarvest extends BaseAction {
 
             if (harv.getProductionHar()!=0) {
                 if (harv.getProductionHar()<0) {
-                    addFieldError("harv.productionHar", "Dato invalido");
+                    addFieldError("harv.productionHar", "Dato invalido valor mayor a 0");
                     addActionError("Se ingreso una cantidad de produccion invalida, por favor ingresar un valor mayor a 0");
                 }	
             }
 
             if (harv.getYieldHar()!=0) {
                 if (harv.getYieldHar()<0 || harv.getYieldHar()>30000) {
-                    addFieldError("harv.yieldHar", "Dato invalido");
+                    addFieldError("harv.yieldHar", "Dato invalido valor entre 0 y 30000");
                     addActionError("Se ingreso un rendimiento invalido, por favor ingresar un valor entre 0 y 30000");
                 }
             }
             
             if (harv.getHumidityPercentageHar() != null) {
                 if (harv.getHumidityPercentageHar()<0 || harv.getHumidityPercentageHar()>100) {
-                    addFieldError("harv.humidityPercentageHar", "Dato invalido");
+                    addFieldError("harv.humidityPercentageHar", "Dato invalido valor entre 0 y 100");
                     addActionError("Se ingreso un porcentaje de humedad invalido, por favor ingresar un valor entre 0 y 100");
                 }	
             }
@@ -262,6 +266,9 @@ public class ActionHarvest extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*

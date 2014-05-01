@@ -85,6 +85,27 @@ function showProductUse(valSel, divShow) {
     }
 }
 
+function showOtherElementWorkType(valSel, divShow) {
+    if (valSel == 3 || valSel == 4 || valSel == 5) {
+        $("#" + divShow).show();
+    } else {
+        $("#" + divShow).hide();
+    }
+}
+
+function showOtherElementUser(valSel, divShowAg, divShowAss) {
+    if (valSel == 1) {
+        $("#" + divShowAg).show();
+        $("#" + divShowAss).hide();
+    } else if (valSel == 3) {
+        $("#" + divShowAss).show();
+        $("#" + divShowAg).hide();
+    } else {
+        $("#" + divShowAg).hide();
+        $("#" + divShowAss).hide();
+    }
+}
+
 function showNumCycles(valSel, divShow) {
     if (valSel == 2) {
         $("#" + divShow).show();
@@ -182,7 +203,8 @@ function showTypeFertilizer(valSel, divShowA, divShowB, divShowC) {
 }
 
 function showElementRate(valSel, divShow) {
-    if (valSel == 1 || valSel == 4) {
+//    if (valSel == 1 || valSel == 4) {
+    if (valSel == 1) {
         $("#" + divShow).show();
     } else {
         $("#" + divShow).hide();
@@ -200,6 +222,19 @@ function showOtherElementPrep(valSel, divShowA, divShowB) {
     } else {
         $("#" + divShowA).hide();
         $("#" + divShowB).hide();
+    }
+}
+
+function showOtherElementProductUsed(valSel, divShowA, divShowB) {
+    if (valSel == 1000000) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).show();
+    } else if (valSel == 3) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+    } else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
     }
 }
 
@@ -228,6 +263,7 @@ function setCropVal(url, field, fieldFill) {
 }
 
 function showWindow(title, width, height, htmlInfo) {
+//    $(".header").hide();
     $("#dialog-form").html(htmlInfo);
     $("#dialog-form").dialog({
         autoOpen: true,
@@ -236,6 +272,7 @@ function showWindow(title, width, height, htmlInfo) {
         width: width,
         modal: true,
         close: function() {
+//            $(".header").show();
             // allFields.val( "" ).removeClass( "ui-state-error" );
         }
     });
@@ -1684,13 +1721,61 @@ function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
 }
 
 function parsePointSeparated( strVal ) {
-    if (strVal!=null) {
-        if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
-        if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
-    }
+    return strVal.replace(',','.');
+//    if (strVal!=null) {
+//        if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
+//        if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
+//    }
 }
 
 function parseCommaSeparated( strVal ) {
     if(navigator.language=='es-ES' || navigator.language=='es') return parseFloat(strVal.replace(',','.')); // remove commas before parse
     if(navigator.language=='en-EN' || navigator.language=='en') return parseFloat(strVal.replace('.',',')); // remove commas before parse
 }
+
+beoro_scrollToTop = {
+    init: function() {
+        $('body').append('<div class="refTop"><a href="javascript:void(0)" class="scrollup refTop" style="display:none; font-size:80px; text-align:center;"><p style="font-size:14px;">Arriba</p><i class="icon-chevron-sign-up icon-white"></i></a></div>');
+
+        $(window).scroll(function(){
+            if ($(this).scrollTop() > 100) {
+                $('.scrollup').fadeIn();
+            } else {
+                $('.scrollup').fadeOut();
+            }
+        });
+
+        $('.scrollup').click(function(e){
+            $("html, body").animate({ scrollTop: 0 }, 600);
+            e.preventDefault();
+        });
+    }
+};
+
+function checkValue(valSelId, limitVal) {
+    var valSel = $("#" + valSelId).val();
+    if (valSel>limitVal) {
+       $("#" + valSelId).val('');         
+    }
+}
+
+function checkValueSecond(valSelId, limitVal) {
+    var valSel = $("#" + valSelId).val();
+    if (valSel>limitVal || valSel==limitVal) {
+       $("#" + valSelId).val('');         
+    }
+}
+
+function showOtherTypeDocument(valSel, divCom, divPer) {
+    if (valSel == 'NIT') {
+        $("#" + divCom).show();
+        $("#" + divPer).hide();
+    } else if (valSel == -1) {
+        $("#" + divCom).hide();
+        $("#" + divPer).hide();
+    } else {
+        $("#" + divCom).hide();
+        $("#" + divPer).show();
+    }
+}
+

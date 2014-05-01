@@ -11,18 +11,26 @@
             <legend><h3>Informacion del cultivo <s:property value="nameTypeCrop" /> # <s:property value="idCrop" /></h3></legend>
             <table class="table table-bordered">
                 <tbody>
-                    <tr>
-                        <th style="width: 30%">Nombre del Productor</th>
-                        <td><s:property value="name_producer" /></td>
-                    </tr>
-                    <tr>
-                        <th>Documento del Productor</th>
-                        <td><s:property value="type_doc" />: <s:property value="num_doc" /></td>
-                    </tr>
-                    <tr>
-                        <th>Nombre de la finca</th>
-                        <td><s:property value="name_farm" /></td>
-                    </tr>
+                    <s:if test="%{typeEnt!=2}">
+                        <tr>
+                            <th style="width: 30%">Nombre del Productor</th>
+                            <td><s:property value="name_producer" /></td>
+                        </tr>
+                        <tr>
+                            <th>Documento del Productor</th>
+                            <td><s:property value="type_doc" />: <s:property value="num_doc" /></td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de la finca</th>
+                            <td><s:property value="name_farm" /></td>
+                        </tr>
+                    </s:if>
+                    <s:else>
+                        <tr>
+                            <th style="width: 30%">Nombre de la finca</th>
+                            <td><s:property value="name_farm" /></td>
+                        </tr>
+                    </s:else>    
                     <tr>   
                         <th>Nombre del Lote</th>
                         <td><s:property value="nameField" /></td>
@@ -44,9 +52,11 @@
         </fieldset>
     </div>       
 </div>
-<button type="button" class="btn btn-initial" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', 'Modificar Evento Productivo', 1050, 700)">
-    <i class="icon-pencil"></i> Editar Evento Productivo
-</button>
+<% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify")) { %>
+    <button type="button" class="btn btn-initial" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', 'Modificar Evento Productivo', 1050, 700)">
+        <i class="icon-pencil"></i> Editar Evento Productivo
+    </button>
+<% } %>
 <button type="button" class="btn btn-default" onclick="document.location='/aeps-plataforma-mvn/crop/listCrop.action';">
     <i class="icon-arrow-left"></i> Volver al listado de cultivos
 </button>

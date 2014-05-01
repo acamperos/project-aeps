@@ -35,7 +35,11 @@ public class MunicipalitiesDao {
 
         try {
             tx = session.beginTransaction();
-            event = (Municipalities) session.load(Municipalities.class, id);
+            String hql  = "FROM Municipalities E WHERE E.idMun = :id_mun";
+            Query query = session.createQuery(hql);
+            query.setParameter("id_mun", id);
+            event = (Municipalities)query.uniqueResult();            
+//            event = (Municipalities) session.load(Municipalities.class, id);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -47,6 +51,34 @@ public class MunicipalitiesDao {
         }
         return event;
     }
+    
+    public static Integer getDepartmentId(Integer id) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Object[] events = null;
+        Transaction tx  = null;
+        Integer result  = 0;
+        
+        String sql = "";       
+        sql += "select usr.id_department_mun, usr.id_mun, usr.code_mun, usr.name_mun ";
+        sql += " from municipalities usr";
+        sql += " where usr.id_mun="+id;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = (Object[])query.uniqueResult();
+            result = Integer.parseInt(String.valueOf(events[0]));
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }    
     
     public List<Municipalities> findAll(int depId) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();

@@ -6,6 +6,11 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
 <% String table = "display:none";%>
 <% String label = "";%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrDao = new UsersDao(); %>
 
 <s:if test="listLot.size() > 0">
     <% table = "";%>
@@ -35,13 +40,17 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divFields" class="w-box">
-    <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showField.action?action=create', 'idField', '', 'Crear Lote', 1050, 550)">
-        <i class="icon-plus"></i> Agregar lote
-    </button>
+    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/create")) { %>      
+        <% if (value.equals("lot")) {%>
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showField.action?action=create&viewInfo=${viewInfo}', 'idField', '', 'Crear Lote', 1050, 550)">
+                <i class="icon-plus"></i> Agregar lote
+            </button>
+        <% } %>
+    <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblFields'>
         <thead>
             <tr>
-                <% if (value != "lot") {%>
+                <% if (!value.equals("lot")) {%>
                     <% if (value.equals("crop") || value.equals("rasta")) {%>
                         <th></th>
                     <% }%>
@@ -53,9 +62,11 @@
                 <th>Latitud</th>
                 <th>Longitud</th>
                 <th>Altura</th>
-                <% if (value == "lot" || value.equals("lot")) {%>
-                    <th>Accion</th>
-                <% }%>
+                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "field/delete"))) { %>                
+                    <% if (value == "lot" || value.equals("lot")) {%>
+                        <th>Accion</th>
+                    <% }%>
+                <% } %>
             </tr>
         </thead>
         <tbody>
@@ -83,13 +94,19 @@
     <label style="<%= label%>"><%= "No se encuentra registrado ningun lote"%></label>
     <div class="hide">
         <div id="confirm_dialog_lot" class="cbox_content">
-            <div class="sepH_c"><strong>Desea borrar este(s) lote(s)?</strong></div>
+            <div class="sepH_c"><strong>Desea borrar este(s) lote(s), <br>
+                    al momento de confirmar todas las dependencias también van a desaparecer?</strong></div>
             <div>
                 <a href="#" class="btn btn-small btn-initial confirm_yes">Si</a>
                 <a href="#" class="btn btn-small confirm_no">No</a>
             </div>
         </div>
     </div>
+</div>
+<div>
+    <% if (!value.equals("lot")) {%>
+        <button class="btn btn_per" onclick="toggleAndClean('<%=divShow%>', '<%=divHide%>')"><i class="icon-arrow-left"></i> Atras</button>
+    <% }%>
 </div>
 <div style="text-align:center; <%= table %>">
     <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/searchField.action?selected="+value, divHide, "", "", "formFieldSearch");%>    

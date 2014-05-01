@@ -43,6 +43,7 @@
                 <span class="add-on"><i class="icon-calendar"></i></span>
             </div>                          
         </div>
+        <p class="warnField reqBef">Campos Requeridos</p>
         <script>
             $("#formCropMon_phys_emergencePhyMon").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropMon_phys_emergencePhyMon").mask("99/99/9999", {placeholder: " "});
@@ -53,7 +54,10 @@
     </fieldset>
 </s:form>	
 <div style="margin-bottom: 15px" id="divBtMonitoring">
-    <sj:submit type="button" formIds="formCropMon" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completePhyMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Fisiología</sj:submit>
+    <% String actExeMon   = String.valueOf(request.getAttribute("actExe")); %>
+    <% if ((actExeMon=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeMon=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
+        <sj:submit type="button" formIds="formCropMon" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completePhyMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Fisiología</sj:submit>
+    <% } %>
 </div>
 <script>
     $.subscribe('completePhyMon', function(event, data) {

@@ -6,6 +6,11 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
 <% String tableFerChe = "display:none";%>
 <% String labelFerChe = "";%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users userFer  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrFerDao = new UsersDao(); %>
 
 <s:if test="listFert.get(0).get('chemical').size() > 0">
     <% tableFerChe = "";%>
@@ -14,10 +19,12 @@
 
 <div class="msgWin" id="divFer"></div>
 <fieldset>
-    <legend><h3>Lista de fertilizaciones</h3></legend>       
-    <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showFer.action?action=create', 'idCrop', '${idCrop}', 'Crear Fertilizacion', 1050, 550);">
-        <i class="icon-plus"></i> Agregar Fertilizacion
-    </button>
+    <legend><h3>Lista de fertilizaciones</h3></legend>     
+    <% if (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/create")) { %>
+        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showFer.action?action=create', 'idCrop', '${idCrop}', 'Crear Fertilizacion', 1050, 550);">
+            <i class="icon-plus"></i> Agregar Fertilizacion
+        </button>
+    <% } %>
     <div id="divFerChe" class="w-box">
         <fieldset>
             <legend>Lista de fertilizaciones quimicas</legend>        
@@ -29,7 +36,9 @@
                         <th>Fertilizante empleado</th>
                         <th>Composición (%)</th>
                         <th>Cantidad por elemento</th>
-                        <th>Accion</th>
+                        <% if (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/modify") || (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/delete"))) { %>
+                            <th>Accion</th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,7 +78,9 @@
                         <th>Fecha de la aplicación</th>
                         <th>Cantidad de producto bruto (kg/ha)</th>
                         <th>Fertilizante empleado</th>
-                        <th>Accion</th>
+                        <% if (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/modify") || (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/delete"))) { %>
+                            <th>Accion</th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,7 +120,9 @@
                         <th>Fecha de la aplicación</th>
                         <th>Cantidad de producto bruto (kg/ha)</th>
                         <th>Fertilizante empleado</th>
-                        <th>Accion</th>
+                        <% if (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/modify") || (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/delete"))) { %>
+                            <th>Accion</th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody>

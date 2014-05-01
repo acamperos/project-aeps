@@ -52,11 +52,13 @@ public class ActionSowing extends BaseAction {
     private int typeCrop;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Beans beans   = new Beans();
     private Cassavas cass = new Cassavas();
     private Maize maize   = new Maize();
     private Sowing sowing = new Sowing();
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -163,7 +165,9 @@ public class ActionSowing extends BaseAction {
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
-        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr()); 
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -226,19 +230,19 @@ public class ActionSowing extends BaseAction {
             if (typeCrop==2) {
                 required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
                 if (sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
-                    addFieldError("sowing.furrowsDistanceSow", "Dato invalido");
+                    addFieldError("sowing.furrowsDistanceSow", "Dato invalido valor entre 0 y 10");
                     addActionError("Se ingreso una distancia entre surcos invalida, por favor ingresar un valor entre 0 y 10");
                 }
 
                 required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
                 if (sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
-                    addFieldError("sowing.sitesDistanceSow", "Dato invalido");
+                    addFieldError("sowing.sitesDistanceSow", "Dato invalido valor entre 0 y 10");
                     addActionError("Se ingreso una distancia entre sitios invalida, por favor ingresar un valor entre 0 y 10");
                 }
 
                 required.put("beans.seedsNumberSiteBea", beans.getSeedsNumberSiteBea());
                 if (beans.getSeedsNumberSiteBea()!=0 && (beans.getSeedsNumberSiteBea()<1 || beans.getSeedsNumberSiteBea()>50)) {
-                    addFieldError("beans.seedsNumberSiteBea", "Dato invalido");
+                    addFieldError("beans.seedsNumberSiteBea", "Dato invalido valor entre 1 y 50");
                     addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 50");
                 }
             } 
@@ -251,6 +255,9 @@ public class ActionSowing extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -283,7 +290,7 @@ public class ActionSowing extends BaseAction {
                 sowing.setChemicalsSowing(null);
             }
             
-            if (sowing.getDoseUnits().getIdDosUni()==-1) {
+            if (sowing.getDoseUnits().getIdDosUni()==-1 || sowing.getChemicalsSowing().getIdCheSow()==3) {
                 sowing.setDoseUnits(null);
             }
 //            sowing.setSowingTypes(new SowingTypes(idCrop));          

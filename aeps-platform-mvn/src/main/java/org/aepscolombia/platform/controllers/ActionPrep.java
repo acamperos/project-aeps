@@ -56,11 +56,13 @@ public class ActionPrep extends BaseAction {
     private List<HashMap> listPrep;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Preparations prep = new Preparations();
     private Sowing sowing = new Sowing();
     private List<PreparationsTypes> type_prep_typ;
     private List<ResidualsClasification> type_res_clas;
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -177,7 +179,9 @@ public class ActionPrep extends BaseAction {
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
-        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -250,7 +254,7 @@ public class ActionPrep extends BaseAction {
 
             if (prep.getDepthPrep()!=null) {
                 if (prep.getDepthPrep()<0 || prep.getDepthPrep()>200) {
-                    addFieldError("prep.depthPrep", "Dato invalido");
+                    addFieldError("prep.depthPrep", "Dato invalido valor entre 0 y 200");
                     addActionError("Se ingreso una profundidad del trabajo invalida, por favor ingresar un valor entre 0 y 200");
                 }
             }
@@ -267,6 +271,9 @@ public class ActionPrep extends BaseAction {
      * @return lista de preparaciones
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
         } catch (NumberFormatException e) {
@@ -288,6 +295,9 @@ public class ActionPrep extends BaseAction {
      * @return Informacion de la preparacion
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
@@ -320,6 +330,9 @@ public class ActionPrep extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -397,6 +410,9 @@ public class ActionPrep extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idPrep = 0;
         try {
             idPrep = Integer.parseInt(this.getRequest().getParameter("idPrep"));

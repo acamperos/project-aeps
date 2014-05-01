@@ -55,10 +55,12 @@ public class ActionIrr extends BaseAction {
     private List<HashMap> listIrr;
     private Users user;
     private Integer idEntSystem;    
+    private Integer idUsrSystem;    
 
     private Irrigation irr = new Irrigation();
     private Sowing sowing = new Sowing();
     private List<IrrigationsTypes> type_irr_typ;
+    private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -170,6 +172,8 @@ public class ActionIrr extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        usrDao = new UsersDao();
+        idUsrSystem = user.getIdUsr();
     }
     
     
@@ -232,7 +236,7 @@ public class ActionIrr extends BaseAction {
 
             if (irr.getAmountIrr()!=null) {
                 if (irr.getAmountIrr()<0 || irr.getAmountIrr()>1000) {
-                    addFieldError("irr.amountIrr", "Dato invalido");
+                    addFieldError("irr.amountIrr", "Dato invalido valor entre 0 y 1000");
                     addActionError("Se ingreso una cantidad aportada por hectarea invalida, por favor ingresar un valor entre 0 y 1000");
                 }
             }
@@ -249,6 +253,9 @@ public class ActionIrr extends BaseAction {
      * @return lista de riegos
      */
     public String search() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
         } catch (NumberFormatException e) {
@@ -270,6 +277,9 @@ public class ActionIrr extends BaseAction {
      * @return Informacion del riego
      */
     public String show() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         actExe = (String)(this.getRequest().getParameter("action"));
         try {
             this.setIdCrop(Integer.parseInt(this.getRequest().getParameter("idCrop")));
@@ -301,6 +311,9 @@ public class ActionIrr extends BaseAction {
      * @return Estado del proceso
      */
     public String saveData() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         String action = "";
 //        System.out.println("Entre a guardar la info");
         /*
@@ -378,6 +391,9 @@ public class ActionIrr extends BaseAction {
      * @return Estado del proceso
      */
     public String delete() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
         Integer idIrr = 0;
         try {
             idIrr = Integer.parseInt(this.getRequest().getParameter("idIrr"));

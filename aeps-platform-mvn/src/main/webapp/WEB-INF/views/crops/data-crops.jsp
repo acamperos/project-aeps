@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" type="image/ico" href="img/logoAEPS.ico">
+        <link rel="icon" type="image/ico" href="img/favicon.ico">
     </head>
     <body>     
         <div class="container">
@@ -15,9 +15,14 @@
                 <li><span>Informacion del cultivo</span></li>
             </ul>
         </div>
+        <%@page import="org.aepscolombia.platform.models.entity.Users"%>
+        <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+        <%@page import="org.aepscolombia.platform.util.APConstants"%>
+        <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+        <% UsersDao usrDao = new UsersDao(); %>
         <div class="container" id="divDataInfoCrop">
             <%@ include file="data-infocrop.jsp" %>                 
-        </div>     
+        </div>             
         <% int typeCrop = (request.getAttribute("typeCrop") != null) ? Integer.parseInt(String.valueOf(request.getAttribute("typeCrop"))) : 1;%>                    
         <div class="container panel" id="divDataExtendCrop" style="margin-top: 20px"> 
             <%--<%@ include file="info-crops.jsp" %>--%>
