@@ -118,7 +118,7 @@
                 <s:actionmessage theme="bootstrap"/>
                 <s:fielderror theme="bootstrap"/>      
                 <div class="panel" id="divRegisterUser">
-                    <p class="heading_main"><s:property value="getText('text.titlecontact.login')" /></p>
+                    <h3 class="heading_main"><s:property value="getText('text.titlecontact.login')" /></h3>
                     <s:form id="formLogin" action="login.action" method="post" theme="simple">
                         <s:hidden name="actExe" value="login"/>
                         <!--                        <div class="control-group error">
@@ -168,7 +168,7 @@
                 </div>
                 <!--<div id="result"></div>-->
                 <div class="panel" style="display:none" id="divRestoreUser">
-                    <p class="heading_main">No puede ingresar?</p>
+                    <h3 class="heading_main">No puede ingresar?</h3>
                     <s:form id="formValidate" action="restorePassword.action" method="post" theme="simple">
                         <s:hidden name="actExe" value="restuser"/>
                         <div class="row">
@@ -204,7 +204,7 @@
                     </script>
                 </div>
                 <div class="panel" style="display:none" id="divNewUser">
-                    <p class="heading_main">Creaci&oacute;n de nuevo usuario</p>
+                    <h3 class="heading_main">Creaci&oacute;n de nuevo usuario</h3>
                     <s:form id="formNewUser" action="saveUser.action" method="post" theme="simple">
                         <s:hidden name="actExe" value="newuser"/>
                         <div class="form-group control-group">
@@ -322,6 +322,9 @@
                                 </a>
                             </div>
                             <div class="span4">
+                                <p class="warnField reqBef">Campos Requeridos</p>
+                            </div>
+                            <div class="span4">
                                 <s:hidden name="intoVal" value="in"/>
                                 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
                                 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
@@ -330,8 +333,7 @@
                                     String captchaScript = captcha.createRecaptchaHtml(request.getParameter("error"), null);
                                     out.print(captchaScript);
                                 %>
-                            </div>
-                            <p class="warnField reqBef">Campos Requeridos</p>
+                            </div>                            
                             <div class="span4">
                                 <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
                                 <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>

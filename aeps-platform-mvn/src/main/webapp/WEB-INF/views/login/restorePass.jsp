@@ -36,7 +36,7 @@
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
                 <a href="initial.action" class="logo_img span3"><img src="img/logoAEPS.png"/></a>
                 <div class="panel" id="divRestPass">
-                    <p class="heading_main">Recuperacion de contraseña</p>
+                    <h3 class="heading_main">Recuperacion de contraseña</h3>
                     <s:form id="formRestCon" action="changePassUser.action" method="post" theme="simple">
                         <s:hidden name="actExe" value="changepass"/>
                         <s:hidden name="idUser"/>

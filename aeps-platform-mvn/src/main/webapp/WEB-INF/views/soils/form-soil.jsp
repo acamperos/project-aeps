@@ -197,13 +197,21 @@
                                     name="rasta.carbonatosRas"
                                     list="{'no tiene', 'bajos a muy bajos', 'medios', 'altos'}"           
                                     headerKey="-1" 
-                                    headerValue="---" />
+                                    headerValue="---"
+                                    onchange="showOtherElementCarbonato(this.value, 'divCarbonato')" />
                             </div>   
                         </div>
-                        <div class="control-group">
-                            <s:label for="formRasta_rasta_profundidadCarbonatosRas" cssClass="control-label" value="Profundidad Carbonatos:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.profundidadCarbonatosRas" tooltip="Ingrese la profundidad de los carbonatos"/>&nbsp;cm
+                        <% String classCarbonatos = "hide"; %>
+                        <s:set name="carbonato" value="rasta.carbonatosRas"/>
+                        <s:if test="%{(#carbonato.equals('bajos a muy bajos')) || (#carbonato.equals('medios')) || (#carbonato.equals('altos'))}">
+                            <% classCarbonatos = "";%>
+                        </s:if>      
+                        <div class="<%= classCarbonatos %>" id="divCarbonato">
+                            <div class="control-group">
+                                <s:label for="formRasta_rasta_profundidadCarbonatosRas" cssClass="control-label" value="Profundidad Carbonatos:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.profundidadCarbonatosRas" tooltip="Ingrese la profundidad de los carbonatos"/>&nbsp;cm
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -252,25 +260,32 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_horizontePedrogosoRocosoRas" cssClass="control-label" value="Horizonte pedregoso o rocoso:"></s:label>
                         <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.horizontePedrogosoRocosoRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divHorPedre')" name="rasta.horizontePedrogosoRocosoRas" value="false" />
                         </div>
                     </div> 
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_profundidadHorizontePedregosoRas" cssClass="control-label" value="Profundidad de horizonte pedregoso o rocoso:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.profundidadHorizontePedregosoRas" tooltip="Ingrese la profundidad del horizonte pedregoso o rocoso"/>&nbsp;cm
+                    <% String classHorPedre = "hide"; %>
+                    <s:set name="horPedre" value="rasta.horizontePedrogosoRocosoRas"/>
+                    <s:if test="%{#horPedre}">
+                        <% classHorPedre = "";%>
+                    </s:if>      
+                    <div class="<%= classHorPedre %>" id="divHorPedre">
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_profundidadHorizontePedregosoRas" cssClass="control-label" value="Profundidad de horizonte pedregoso o rocoso:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.profundidadHorizontePedregosoRas" tooltip="Ingrese la profundidad del horizonte pedregoso o rocoso"/>&nbsp;cm
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_espesorHorizontePedregosoRas" cssClass="control-label" value="Espesor de horizonte pedregoso o rocoso:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.espesorHorizontePedregosoRas" tooltip="Ingrese el espesor del horizonte pedregoso o rocoso"/>&nbsp;cm
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_espesorHorizontePedregosoRas" cssClass="control-label" value="Espesor de horizonte pedregoso o rocoso:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.espesorHorizontePedregosoRas" tooltip="Ingrese el espesor del horizonte pedregoso o rocoso"/>&nbsp;cm
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_profundidadPrimerasPiedrasRas" cssClass="control-label" value="Profundidad de primeras rocas o piedras:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.profundidadPrimerasPiedrasRas" tooltip="Ingrese la profundidad de primeras rocas o piedras"/>&nbsp;cm
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_profundidadPrimerasPiedrasRas" cssClass="control-label" value="Profundidad de primeras rocas o piedras:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.profundidadPrimerasPiedrasRas" tooltip="Ingrese la profundidad de primeras rocas o piedras"/>&nbsp;cm
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -279,19 +294,26 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_capasEndurecidasRas" cssClass="control-label" value="Capas endurecidas:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.capasEndurecidasRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divCapasEnd')" name="rasta.capasEndurecidasRas" value="false" />
                         </div>
                     </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_prufundidadCapasRas" cssClass="control-label" value="Profundidad de capas endurecidas:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.prufundidadCapasRas" tooltip="Ingrese la profundidad de capas endurecidas"/>&nbsp;cm
+                    <% String classCapasEnd = "hide"; %>
+                    <s:set name="capasEnd" value="rasta.capasEndurecidasRas"/>
+                    <s:if test="%{#capasEnd}">
+                        <% classCapasEnd = "";%>
+                    </s:if>      
+                    <div class="<%= classCapasEnd %>" id="divCapasEnd">
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_prufundidadCapasRas" cssClass="control-label" value="Profundidad de capas endurecidas:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.prufundidadCapasRas" tooltip="Ingrese la profundidad de capas endurecidas"/>&nbsp;cm
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_espesorCapaEndurecidaRas" cssClass="control-label" value="Espesor de capas endurecidas:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.espesorCapaEndurecidaRas" tooltip="Ingrese el espesor de capas endurecidas"/>&nbsp;cm
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_espesorCapaEndurecidaRas" cssClass="control-label" value="Espesor de capas endurecidas:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.espesorCapaEndurecidaRas" tooltip="Ingrese el espesor de capas endurecidas"/>&nbsp;cm
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -300,19 +322,26 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_moteadosRas" cssClass="control-label" value="Moteados:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.moteadosRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divMoteado')" name="rasta.moteadosRas" value="false" />
                         </div>
                     </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_profundidadMoteadosRas" cssClass="control-label" value="Profundidad de moteados:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.profundidadMoteadosRas" tooltip="Ingrese la profundidad de moteados"/>&nbsp;cm
+                    <% String classMoteado = "hide"; %>
+                    <s:set name="moteado" value="rasta.moteadosRas"/>
+                    <s:if test="%{#moteado}">
+                        <% classMoteado = "";%>
+                    </s:if>      
+                    <div class="<%= classMoteado %>" id="divMoteado">
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_profundidadMoteadosRas" cssClass="control-label" value="Profundidad de moteados:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.profundidadMoteadosRas" tooltip="Ingrese la profundidad de moteados"/>&nbsp;cm
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_moteadosMas70cmRas" cssClass="control-label" value="Moteados mas bajo de 70cm:"></s:label>
-                            <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.moteadosMas70cmRas" value="false" />
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_moteadosMas70cmRas" cssClass="control-label" value="Moteados mas bajo de 70cm:"></s:label>
+                                <div class="controls radioSelect">
+                                <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.moteadosMas70cmRas" value="false" />
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -389,13 +418,20 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_raicesVivasRas" cssClass="control-label" value="Raices vivas:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.raicesVivasRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divRaicesVivas')" name="rasta.raicesVivasRas" value="false" />
                         </div>
                     </div>
-                    <div class="control-group">
-                        <s:label for="formRasta_rasta_profundidadRaicesRas" cssClass="control-label" value="Profundidad de raices vivas:"></s:label>
-                            <div class="controls">
-                            <s:textfield cssClass="form-control" name="rasta.profundidadRaicesRas" tooltip="Ingrese la profundidad de raices vivas"/>&nbsp;cm
+                    <% String classRaicesVivas = "hide"; %>
+                    <s:set name="raicesVivas" value="rasta.raicesVivasRas"/>
+                    <s:if test="%{#raicesVivas}">
+                        <% classRaicesVivas = "";%>
+                    </s:if>      
+                    <div class="<%= classRaicesVivas %>" id="divRaicesVivas">
+                        <div class="control-group">
+                            <s:label for="formRasta_rasta_profundidadRaicesRas" cssClass="control-label" value="Profundidad de raices vivas:"></s:label>
+                                <div class="controls">
+                                <s:textfield cssClass="form-control" name="rasta.profundidadRaicesRas" tooltip="Ingrese la profundidad de raices vivas"/>&nbsp;cm
+                            </div>
                         </div>
                     </div>
                     <div class="form-group control-group">

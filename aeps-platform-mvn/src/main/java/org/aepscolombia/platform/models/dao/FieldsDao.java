@@ -239,8 +239,11 @@ public class FieldsDao
 //        int valIni = Integer.parseInt(args.get("pageNow"))*Integer.parseInt((String)args.get("maxResults"));
         int maxResults = Integer.parseInt(String.valueOf(args.get("maxResults")));
         if(valIni!=1){
-            valIni = (valIni-1)*maxResults+1;
-        }    
+//            valIni = ((valIni-1)*maxResults)+1;
+            valIni = ((valIni-1)*maxResults);
+        } else {
+            valIni = 0;
+        }     
 //        sql += " order by e.name_ent ASC";
         sql += " order by l.name_fie ASC";
 //        events.toArray();

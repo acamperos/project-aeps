@@ -204,11 +204,14 @@ public class ProducersDao
 //        int valIni = Integer.parseInt(args.get("pageNow"))*Integer.parseInt((String)args.get("maxResults"));
         int maxResults = Integer.parseInt(String.valueOf(args.get("maxResults")));
         if(valIni!=1){
-            valIni = (valIni-1)*maxResults+1;
-        }    
+//            valIni = ((valIni-1)*maxResults)+1;
+            valIni = ((valIni-1)*maxResults);
+        } else {
+            valIni = 0;
+        }   
         if (args.containsKey("typeIdent")) {
             String valType = String.valueOf(args.get("typeIdent"));
-            if(!valType.equals(" ") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent='"+args.get("typeIdent")+"'";
+            if(!valType.equals("-1") && !valType.equals("") && !valType.equals("null")) sql += " and e.document_type_ent='"+args.get("typeIdent")+"'";
         }
         if (args.containsKey("identProducer")) {
             String valIdent = String.valueOf(args.get("identProducer"));
@@ -251,6 +254,7 @@ public class ProducersDao
         }
         sql += " order by e.name_ent ASC";
 //        events.toArray();
+        System.out.println("valIni->"+valIni);
 //        System.out.println("sql->"+sql);
         try {
             tx = session.beginTransaction();

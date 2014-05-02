@@ -85,6 +85,24 @@ function showProductUse(valSel, divShow) {
     }
 }
 
+function showSelectionRasta(valSel, divShow) {
+    if (valSel=='true') {
+        $("#" + divShow).show();
+        $("#" + divShow).removeClass("hide");
+    } else {
+        $("#" + divShow).hide();
+        $("#" + divShow).addClass("hide");
+    }
+}
+
+function showOtherElementCarbonato(valSel, divShow) {
+    if (valSel == 'no tiene' || valSel == -1) {
+        $("#" + divShow).hide();
+    } else {
+        $("#" + divShow).show();
+    }
+}
+
 function showOtherElementWorkType(valSel, divShow) {
     if (valSel == 3 || valSel == 4 || valSel == 5) {
         $("#" + divShow).show();
@@ -121,7 +139,7 @@ function selConf(valSel, inputId) {
     } else if (valSel == 'CE') {
         $("#" + inputId).mask("999999?9999", {placeholder: ""});
     } else if (valSel == 'NIT') {
-        $("#" + inputId).mask("9999999999", {placeholder: ""});
+        $("#" + inputId).mask("999999999?9", {placeholder: ""});
     } else if (valSel == 'PS') {
         //$("#"+inputId).mask("999999?9999",{placeholder:""});
     } else if (valSel == 'RC') {

@@ -143,7 +143,6 @@
                     />
             </div>
         </div>
-        <p class="warnField reqBef">Campos Requeridos</p>
         <div class="row">
             <% //if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify")) { %>
             <% if (true) { %>

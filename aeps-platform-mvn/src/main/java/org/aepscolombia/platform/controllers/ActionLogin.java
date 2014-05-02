@@ -926,7 +926,7 @@ public class ActionLogin extends BaseAction {
             if (this.getTypeUser() == 3) {
                 GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(this.getRequest().getLocalAddr(), user.getNameUserUsr()));
                 info  = "El usuario gremio ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
-            } else if (this.getTypeUser() == 2) {
+            } else if (this.getTypeUser() == 1) {
                 if (this.getWorkType()== 1 || this.getWorkType()== 2) {
                     GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
                     info  = "El usuario agronomo ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
@@ -934,7 +934,7 @@ public class ActionLogin extends BaseAction {
                     GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(this.getRequest().getLocalAddr(), user.getNameUserUsr()));
                     info  = "El usuario agronomo ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
                 }
-            } else if (this.getTypeUser() == 1) {
+            } else if (this.getTypeUser() == 2) {
                 GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
                 info  = "El usuario ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
             }

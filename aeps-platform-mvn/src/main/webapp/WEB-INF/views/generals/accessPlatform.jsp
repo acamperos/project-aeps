@@ -14,24 +14,16 @@
         <meta name="viewport" content="width=device-width">       
         <sj:head jqueryui="true"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
-        <link rel="stylesheet" href="scripts/css/generals/login.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>				
+        <link rel="stylesheet" href="scripts/css/generals/login.css">			
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
     </head>
     <body>
-        <div id="divMessage"></div>        
-        <!--<div id="login-wrapper" class="clearfix">-->            
-        <div id="login-wrapper">            
-            <div class="heading_main">
-                <p>Se ha validado correctamente la contraseña! Será dirigido automáticamente en diez segundos. </p> 
-                <p>En caso contrario, puedes acceder haciendo click</p> 
-                <a href="signin.action" class="btn btn-initial btn-success btn-lg">Ingresar</a>
+        <div id="login-wrapper" style="width: 550px;">            
+            <p><img src="img/logoAEPS.png"/></p>
+            <div class="heading_main" style="font-size: 18px;">
+                <p>Se ha validado correctamente la contraseña! Será dirigido automáticamente en diez(10) segundos. </p> 
+                <p>En caso contrario, puedes acceder directamente haciendo click en el botón.</p> 
+                <a href="signin.action" class="btn btn-initial btn-large"><i class="icon-arrow-right icon-white"></i>  Ingresar</a>
             </div>
         </div>
     </body>

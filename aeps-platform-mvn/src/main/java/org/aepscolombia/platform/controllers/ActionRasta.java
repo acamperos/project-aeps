@@ -467,7 +467,7 @@ public class ActionRasta extends BaseAction {
 
             if (rasta.getMoteadosRas()!=null && rasta.getMoteadosRas()) {
                 required.put("rasta.profundidadMoteadosRas", rasta.getProfundidadMoteadosRas());//
-//                addFieldError("rasta.profundidadMoteadosRas", "Dato requerido");
+//                required.put("rasta.moteadosMas70cmRas", rasta.getMoteadosMas70cmRas());//
             }
 
             if (rasta.getRaicesVivasRas()!=null && rasta.getRaicesVivasRas()) {

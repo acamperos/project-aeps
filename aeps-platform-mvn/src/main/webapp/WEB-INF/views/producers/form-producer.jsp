@@ -31,8 +31,7 @@
                             listValue="nameDocTyp" 
                             headerKey="-1" 
                             headerValue="---"
-                            onchange="selValue(this, 'divDigVerPro');
-                                      selConf(this.value, 'formProducer_num_ident_producer');
+                            onchange="selConf(this.value, 'formProducer_num_ident_producer');
                                       showOtherTypeDocument(this.value, 'divInfoCompany', 'divInfoPerson');"
                         />
                     </div>  
@@ -243,7 +242,6 @@
                         <s:textfield type="email" name="email_producer" />
                     </div>  
                 </div>
-                <p class="warnField reqBef">Campos Requeridos</p>
             </fieldset>
             <p class="warnField reqBef">Campos Requeridos</p>
             <div>   

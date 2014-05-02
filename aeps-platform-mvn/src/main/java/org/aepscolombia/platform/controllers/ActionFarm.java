@@ -59,7 +59,7 @@ public class ActionFarm extends BaseAction {
     private String length_property;
     private Double latitude_degrees_property;
     private Double latitude_minutes_property;
-    private Double latitude_seconds_property;
+    private double latitude_seconds_property;
     private Double length_degrees_property;
     private Double length_minutes_property;
     private Double length_seconds_property;
@@ -163,11 +163,11 @@ public class ActionFarm extends BaseAction {
         this.latitude_minutes_property = latitude_minutes_property;
     }
 
-    public Double getLatitude_seconds_property() {
+    public double getLatitude_seconds_property() {
         return latitude_seconds_property;
     }
 
-    public void setLatitude_seconds_property(Double latitude_seconds_property) {
+    public void setLatitude_seconds_property(double latitude_seconds_property) {
         this.latitude_seconds_property = latitude_seconds_property;
     }
 
@@ -511,22 +511,22 @@ public class ActionFarm extends BaseAction {
                 }
 //                }
 
-                if ((latitude_degrees_property < (-5) || latitude_degrees_property > 14)) {
-                    addFieldError("latitude_degrees_property", "Dato invalido valor entre -5 y 14");
-                    addActionError("Se ingreso una latitud en grados invalida, por favor ingresar un valor entre -5 y 14");
-                }
-
-//                if (latitude_minutes_property && (latitude_minutes_property<0 || latitude_minutes_property>60)) {
-                if ((latitude_minutes_property < 0 || latitude_minutes_property > 60)) {
-                    addFieldError("latitude_minutes_property", "Dato invalido valor entre 0 y 59");
-                    addActionError("Se ingreso una latitud en minutos invalida, por favor ingresar un valor entre 0 y 59");
-                }
-
-//                if (latitude_seconds_property && (latitude_seconds_property<0 || latitude_seconds_property>60)) {
-                if ((latitude_seconds_property < 0 || latitude_seconds_property > 60)) {
-                    addFieldError("latitude_seconds_property", "Dato invalido valor entre 0 y 59");
-                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 59");
-                }
+//                if ((latitude_degrees_property < (-5) || latitude_degrees_property > 14)) {
+//                    addFieldError("latitude_degrees_property", "Dato invalido valor entre -5 y 14");
+//                    addActionError("Se ingreso una latitud en grados invalida, por favor ingresar un valor entre -5 y 14");
+//                }
+//
+////                if (latitude_minutes_property && (latitude_minutes_property<0 || latitude_minutes_property>60)) {
+//                if ((latitude_minutes_property < 0 || latitude_minutes_property > 60)) {
+//                    addFieldError("latitude_minutes_property", "Dato invalido valor entre 0 y 59");
+//                    addActionError("Se ingreso una latitud en minutos invalida, por favor ingresar un valor entre 0 y 59");
+//                }
+//
+////                if (latitude_seconds_property && (latitude_seconds_property<0 || latitude_seconds_property>60)) {
+//                if ((latitude_seconds_property < 0 || latitude_seconds_property > 60)) {
+//                    addFieldError("latitude_seconds_property", "Dato invalido valor entre 0 y 59");
+//                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 59");
+//                }
             }
             
             if (lonPro!=0) {
@@ -544,22 +544,22 @@ public class ActionFarm extends BaseAction {
                 
 
 //                if (length_degrees_property && (length_degrees_property<(-82) || length_degrees_property>(-66))) {
-                if ((length_degrees_property < (-82) || length_degrees_property > (-66))) {
-                    addFieldError("length_degrees_property", "Dato invalido valor entre entre -82 y -66");
-                    addActionError("Se ingreso una longitud en grados invalida, por favor ingresar un valor entre -82 y -66");
-                }
-
-//                if (length_minutes_property && (length_minutes_property<0 || length_minutes_property>60)) {
-                if ((length_minutes_property < 0 || length_minutes_property > 60)) {
-                    addFieldError("length_minutes_property", "Dato invalido valor entre 0 y 59");
-                    addActionError("Se ingreso una longitud en minutos invalida, por favor ingresar un valor entre 0 y 59");
-                }
-
-//                if (length_seconds_property && (length_seconds_property<0 || length_seconds_property>60)) {
-                if ((length_seconds_property < 0 || length_seconds_property > 60)) {
-                    addFieldError("length_seconds_property", "Dato invalido valor entre 0 y 59");
-                    addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 59");
-                }
+//                if ((length_degrees_property < (-82) || length_degrees_property > (-66))) {
+//                    addFieldError("length_degrees_property", "Dato invalido valor entre entre -82 y -66");
+//                    addActionError("Se ingreso una longitud en grados invalida, por favor ingresar un valor entre -82 y -66");
+//                }
+//
+////                if (length_minutes_property && (length_minutes_property<0 || length_minutes_property>60)) {
+//                if ((length_minutes_property < 0 || length_minutes_property > 60)) {
+//                    addFieldError("length_minutes_property", "Dato invalido valor entre 0 y 59");
+//                    addActionError("Se ingreso una longitud en minutos invalida, por favor ingresar un valor entre 0 y 59");
+//                }
+//
+////                if (length_seconds_property && (length_seconds_property<0 || length_seconds_property>60)) {
+//                if ((length_seconds_property < 0 || length_seconds_property > 60)) {
+//                    addFieldError("length_seconds_property", "Dato invalido valor entre 0 y 59");
+//                    addActionError("Se ingreso una longitud en segundos invalida, por favor ingresar un valor entre 0 y 59");
+//                }
             }
         }
     }

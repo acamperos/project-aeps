@@ -188,8 +188,11 @@ public class ProductionEventsDao
 //        int valIni = Integer.parseInt(args.get("pageNow"))*Integer.parseInt((String)args.get("maxResults"));
         int maxResults = Integer.parseInt(String.valueOf(args.get("maxResults")));
         if(valIni!=1){
-            valIni = (valIni-1)*maxResults+1;
-        }    
+//            valIni = ((valIni-1)*maxResults)+1;
+            valIni = ((valIni-1)*maxResults);
+        } else {
+            valIni = 0;
+        }     
         sql += " order by pe.id_pro_eve ASC";
 //        events.toArray();
 //        System.out.println("sql->"+sql);
