@@ -33,13 +33,7 @@
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery-ui/ui/jquery-ui.js"></script>-->	
         <!--<script type="text/javascript" src="scripts/js/jquery/jquery-ui/ui/jquery.ui.dialog.js"></script>-->
         <!--<script type="text/javascript" src="scripts/js/colorbox/jquery.colorbox.min.js"></script>-->
-        <!--<link rel="stylesheet" href="scripts/css/colorbox/colorbox.css"/>-->
-        <style>
-/*            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }*/
-        </style>				
+        <!--<link rel="stylesheet" href="scripts/css/colorbox/colorbox.css"/>-->			
         <!--<script src="scripts/js/generals/main.js"></script>-->				
         <script src="scripts/js/generals/responsiveslides.js"></script>
     </head>

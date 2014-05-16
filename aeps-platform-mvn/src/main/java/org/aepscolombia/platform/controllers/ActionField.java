@@ -395,14 +395,14 @@ public class ActionField extends BaseAction {
                 addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
-//            Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot.replace(',','.'));
-//            Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
-//            Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
-//            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot.replace(',','.'));
-            Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot);
-            Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot);
-            Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot);
-            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot);
+            Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot.replace(',','.'));
+            Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
+            Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
+            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot.replace(',','.'));
+//            Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot);
+//            Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot);
+//            Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot);
+//            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot);
             
 //            if (altitude_property) {    
             if (altLot<0 || altLot>9000) {
@@ -638,14 +638,14 @@ public class ActionField extends BaseAction {
         Session session = sessions.openSession();
         Transaction tx = null;
         
-//        Double altLot = Double.parseDouble(altitude_lot.replace(',','.'));
-//        Double latLot = Double.parseDouble(latitude_lot.replace(',','.'));
-//        Double lonLot = Double.parseDouble(length_lot.replace(',','.'));
-//        Double areaLot = Double.parseDouble(area_lot.replace(',','.'));
-        Double altLot = Double.parseDouble(altitude_lot);
-        Double latLot = Double.parseDouble(latitude_lot);
-        Double lonLot = Double.parseDouble(length_lot);
-        Double areaLot = Double.parseDouble(area_lot);
+        Double altLot = Double.parseDouble(altitude_lot.replace(',','.'));
+        Double latLot = Double.parseDouble(latitude_lot.replace(',','.'));
+        Double lonLot = Double.parseDouble(length_lot.replace(',','.'));
+        Double areaLot = Double.parseDouble(area_lot.replace(',','.'));
+//        Double altLot = Double.parseDouble(altitude_lot);
+//        Double latLot = Double.parseDouble(latitude_lot);
+//        Double lonLot = Double.parseDouble(length_lot);
+//        Double areaLot = Double.parseDouble(area_lot);
         
 //        if (option_geo_lot == 2) {
 //            latLot = (latitude_minutes_lot/60) + (latitude_seconds_lot/3600);

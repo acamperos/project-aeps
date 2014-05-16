@@ -19,31 +19,13 @@
             <s:form id="formCropIrr" action="saveIrr" cssClass="form-horizontal">
                 <fieldset>
                     <legend>Formulario de Riego</legend>
-                    <div class="row">
-                        <div class="span5">
-                            <s:hidden name="idCrop"/>
-                            <s:hidden name="typeCrop"/>
-                            <s:hidden name="actExe"/>
-                            <s:hidden name="irr.idIrr"/>
-                            <div class="control-group">
-                                <label for="formCropIrr_irr_useIrrigationIrr" class="control-label req">
-                                    Aplica riego:
-                                </label>
-                                <div class="controls radioSelect">
-                                    <s:radio list="#{'true':'Si', 'false':'No'}" name="irr.useIrrigationIrr" onclick="showInfoRiego(this.value, 'divInfoRiego')"/>
-                                </div>                          
-                            </div>                          
-                        </div>       
-                    </div>
-                    <% String classUseIrr="hide"; %>
-                    <s:set name="useIrr" value="irr.useIrrigationIrr"/>
-                    <s:if test="%{#useIrr==true}">
-                        <% classUseIrr = "";%>
-                    </s:if>  
-                    <!--<div id="divInfoRiego" class="<%//= classUseIrr %> hide" style="display: none">-->
-                    <div id="divInfoRiego" class="<%= classUseIrr %>">
+                    <div id="divInfoRiego">
                         <div class="row">
                             <div class="span5">
+                                <s:hidden name="idCrop"/>
+                                <s:hidden name="typeCrop"/>
+                                <s:hidden name="actExe"/>
+                                <s:hidden name="irr.idIrr"/>
                                 <div class="control-group">
                                     <label for="formCropIrr_irr_dateIrr" class="control-label req">
                                         Fecha del riego:
@@ -56,19 +38,7 @@
                                     </div>                          
                                 </div>                          
                             </div>       
-                        </div>
-                        <div class="row">
-                            <div class="span5">
-                                <div class="control-group">
-                                    <label for="formCropIrr_irr_amountIrr" class="control-label req">
-                                        Cantidad aportada por hectarea (lamina):
-                                    </label>
-                                    <div class="controls">
-                                        <s:textfield name="irr.amountIrr"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="row">
                             <div class="span5">
                                 <div class="control-group">
@@ -87,11 +57,23 @@
                                     </div>                         
                                 </div>                          
                             </div>   
-                        </div>	
+                        </div>
+                        <div class="row">
+                            <div class="span5">
+                                <div class="control-group">
+                                    <label for="formCropIrr_irr_amountIrr" class="control-label">
+                                        Cantidad aportada por hectarea (metros cúbicos):
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="irr.amountIrr"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>	
                     <p class="warnField reqBef">Campos Requeridos</p>
                     <script>
-                        $("#formCropIrr_irr_dateIrr").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropIrr_irr_dateIrr").datepicker({dateFormat: 'dd/mm/yy', showOn: "focus"});
                         $("#formCropIrr_irr_dateIrr").mask("99/99/9999", {placeholder: " "});
 //                        $("#formCropIrr_irr_depthIrr").numeric({decimal: false, negative: false});
                         $("#formCropIrr_irr_amountIrr").numeric({negative: false});
@@ -100,13 +82,14 @@
                     <div id="divBtIrr">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeIrr" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Riego</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropIrr'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeIrr" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Riego</sj:submit>
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropIrr'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>
                 </fieldset>
             </s:form>	
-            <script>                
+            <script>         
+                $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completeIrr', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropIrr', 'divIrr', event.originalEvent.request.responseText);
                     setTimeout(function() {

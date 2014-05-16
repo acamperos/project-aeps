@@ -51,6 +51,7 @@
                 <th>Numero de capas</th>
                 <th>Ph</th>
                 <th>Carbonatos</th>
+                <th>Fecha de creación</th>
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/delete"))) { %>                
                     <% if (value == "rasta" || value.equals("rasta")) {%>
                         <th>Accion</th>

@@ -54,13 +54,14 @@
                 <% }%>
                 <!-- <th>#</th> -->
                 <th>Nombre</th>
+                <th>Vereda</th>
                 <th>Direccion</th>
                 <th>Departamento</th>
                 <th>Municipio</th>
-                <th>Vereda</th>
                 <th>Latitud</th>
                 <th>Longitud</th>
                 <th>Altura</th>
+                <th>Fecha de creación</th>                                
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/delete"))) { %>
                     <% if (value.equals("property") || value == "property") { %>
                         <th>Accion</th>

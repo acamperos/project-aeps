@@ -11,7 +11,7 @@
             <ul id="breadcrumbs">
                 <li><s:a href="%{request.getContextPath()}/dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>
                 <li><s:a href="%{request.getContextPath()}/getting.action" targets="divBodyLayout">Recolectar datos</s:a></li>
-                <li><s:a href="%{request.getContextPath()}/listCrop.action" targets="divBodyLayout">Listar cultivos</s:a></li>
+                <li><s:a href="%{request.getContextPath()}/crop/listCrop.action" targets="divBodyLayout">Listar cultivos</s:a></li>
                 <li><span>Informacion del cultivo</span></li>
             </ul>
         </div>
@@ -29,13 +29,25 @@
             <div class="accordion" id="accordion2" style="margin-bottom: 0">
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
                             <h4>Establecimiento del cultivo <i class="colOne icon-chevron-down"></i></h4> 
                         </a>
                     </div>
                     <div id="collapseOne" class="accordion-body collapse">				
                         <div class="accordion-inner">
                             <%@ include file="establishment-crop.jsp" %>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix">
+                            <h4>Riego <i class="colSix icon-chevron-down"></i></h4>
+                        </a>
+                    </div>
+                    <div id="collapseSix" class="accordion-body collapse">				
+                        <div class="accordion-inner">
+                            <%@ include file="irrigation.jsp" %>
                         </div>
                     </div>
                 </div>
@@ -79,7 +91,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive">
-                            <h4>Datos de la cosecha <i class="colFive icon-chevron-down"></i></h4>
+                            <h4>Cosecha <i class="colFive icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseFive" class="accordion-body collapse">                        
@@ -129,6 +141,14 @@
 
             $('#collapseFive').on('hidden', function () {
                 $(".colFive").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+            });
+            
+            $('#collapseSix').on('shown', function () {
+               $(".colSix").removeClass("icon-chevron-down").addClass("icon-chevron-up");
+            });
+
+            $('#collapseSix').on('hidden', function () {
+                $(".colSix").removeClass("icon-chevron-up").addClass("icon-chevron-down");
             });
 
             $("#formCropHar_harv_dateHar").datepicker({changeMonth: true, changeYear: true});

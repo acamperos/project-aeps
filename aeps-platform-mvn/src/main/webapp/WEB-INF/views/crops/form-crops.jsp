@@ -41,7 +41,7 @@
                     <div class="control-group">
                         <label for="formCrop_performObj" class="control-label req">
                             Objetivo de rendimiento (kg/ha):
-                            <i class="icon-info-sign s2b_tooltip" title="Ingrese el objetivo de rendimiento de su cultivo"></i>
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el objetivo de rendimiento de su cultivo." data-title="Información" data-placement="right" data-trigger="hover"></i>
                         </label>
                         <div class="controls">
                             <s:textfield cssClass="form-control" name="performObj"/>
@@ -50,7 +50,7 @@
                     <div class="control-group">
                         <label for="formCrop_lastCrop" class="control-label">
                             Cultivo anterior:
-                            <i class="icon-info-sign s2b_tooltip" title="Ingrese el cultivo anterior"></i>
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el cultivo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
                         </label>
                         <div class="controls">
                             <s:select
@@ -62,12 +62,12 @@
                                 headerValue="---" />
                         </div>
                     </div>
-                    <div class="control-group">
+<!--                    <div class="control-group">
                         <s:label for="formCrop_drainPlot" cssClass="control-label req" value="Se hace drenaje a la parcela:"></s:label>
                         <div class="controls radioSelect">
                             <s:radio list="#{'true':'Si', 'false':'No'}" name="drainPlot" />
                         </div>
-                    </div>   
+                    </div>   -->
                 </fieldset>  
                 <p class="warnField reqBef">Campos Requeridos</p>
                 <div> 
@@ -76,7 +76,7 @@
                     <s:hidden name="newRow" value="1"/>    
                     <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                     <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeCrop" validate="true" validateFunction="validationForm"><i class="icon-save"></i> Guardar Evento Productivo</sj:submit>
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCrop'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeCrop" validate="true" validateFunction="validationForm"><i class="icon-save"></i> Guardar Evento Productivo</sj:submit>
                     <% } %>
                     <button class="btn btn-large bt_cancel_crop" onclick="resetForm('formCrop'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                 </div>    
@@ -100,6 +100,9 @@
 //                        }                      
                     }, 2000);
                 });
+                if($('.pop-over').length) {
+                    $('.pop-over').popover();
+                }
             </script>
         </div>
         <div class="row-fluid" id="divListCropForm"></div>

@@ -59,7 +59,7 @@ public class ActionFarm extends BaseAction {
     private String length_property;
     private Double latitude_degrees_property;
     private Double latitude_minutes_property;
-    private double latitude_seconds_property;
+    private Double latitude_seconds_property;
     private Double length_degrees_property;
     private Double length_minutes_property;
     private Double length_seconds_property;
@@ -163,11 +163,11 @@ public class ActionFarm extends BaseAction {
         this.latitude_minutes_property = latitude_minutes_property;
     }
 
-    public double getLatitude_seconds_property() {
+    public Double getLatitude_seconds_property() {
         return latitude_seconds_property;
     }
 
-    public void setLatitude_seconds_property(double latitude_seconds_property) {
+    public void setLatitude_seconds_property(Double latitude_seconds_property) {
         this.latitude_seconds_property = latitude_seconds_property;
     }
 
@@ -470,13 +470,13 @@ public class ActionFarm extends BaseAction {
 //                }
 //            }
             
-            
-            Double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property);
-            Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property);
-            Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property);
-//            Double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property.replace(',','.'));
-//            Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
-//            Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
+//            System.out.println("latitude_seconds_property=>"+latitude_seconds_property);
+//            Double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property);
+//            Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property);
+//            Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property);
+            Double altPro = (altitude_property==null || altitude_property.isEmpty() || altitude_property.equals("")) ? 0.0 : Double.parseDouble(altitude_property.replace(',','.'));
+            Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
+            Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
             
 //            if (altitude_property) {    
             if (altPro < 0 || altPro > 9000) {
@@ -536,7 +536,7 @@ public class ActionFarm extends BaseAction {
                     addFieldError("length_property", "Dato invalido valor entre -81.8 y -66");
                     addActionError("Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66");
                 }
-//                }			
+//                }
 
 //            } else if (option_geo == 2) {
 
@@ -733,12 +733,12 @@ public class ActionFarm extends BaseAction {
         Session session = sessions.openSession();
         Transaction tx = null;
 
-//        Double altPro = Double.parseDouble(altitude_property.replace(',','.'));
-//        Double latPro = Double.parseDouble(latitude_property.replace(',','.'));
-//        Double lonPro = Double.parseDouble(length_property.replace(',','.'));
-        Double altPro = Double.parseDouble(altitude_property);
-        Double latPro = Double.parseDouble(latitude_property);
-        Double lonPro = Double.parseDouble(length_property);
+        Double altPro = Double.parseDouble(altitude_property.replace(',','.'));
+        Double latPro = Double.parseDouble(latitude_property.replace(',','.'));
+        Double lonPro = Double.parseDouble(length_property.replace(',','.'));
+//        Double altPro = Double.parseDouble(altitude_property);
+//        Double latPro = Double.parseDouble(latitude_property);
+//        Double lonPro = Double.parseDouble(length_property);
         
         if (option_geo == 2) {
             latPro = (latitude_minutes_property / 60) + (latitude_seconds_property / 3600);

@@ -8,10 +8,33 @@
         <div class="container">
             <nav>
                 <ul id="menu" class="nav">
-                    <li id="nav1"><s:a href="getting.action" cssClass="btn" targets="divBodyLayout">Recolección de Datos</s:a></li>
+                    <li id="nav1" class="separate"><s:a href="getting.action" cssClass="btn" targets="divBodyLayout">Recolección</s:a></li>
+                    <li id="nav2"><a href="#" class="btn">Reportes</a>En Construcción</li>
                 </ul>
             </nav>
         </div>
+<!--        <div class="container">
+            <ul class="thumbnails">
+                <li class="span4">
+                    <div class="thumbnail">
+                        <h3 align="center">Recolección de datos</h3>
+                        <img src="http://placehold.it/320x200">
+                        <div class="caption">
+                            <a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Abrir</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail">
+                        <h3 align="center">Reportes</h3>
+                        <img src="http://placehold.it/320x200">
+                        <div class="caption">
+                            <a href="http://bootsnipp.com/" class="btn btn-primary btn-block">Abrir</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>-->
         <div class="container">
             <div class="row">
                 <div class="span12">
@@ -20,12 +43,21 @@
             </div>
             <div class="panel">
                 <div class="panel-body">
+                    <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
+                    <%@page import="org.aepscolombia.platform.models.dao.LogEntitiesDao"%>
+                    <%@page import="java.util.Date"%>
+                    <% Integer idEnt = new UsersDao().getEntitySystem(user.getIdUsr()); %>
+                    <% Date dateIngress = new LogEntitiesDao().getDateIngress(idEnt, user.getIdUsr()); %>
+                    
                     <% request.setAttribute("dateLast", user.getLastInUsr()); %>
+                    <% request.setAttribute("dateIngress", dateIngress); %>
                     <!-- <p>Reportes Generales</p> -->
                     <s:date name="%{#attr.dateLast}" format="dd/MM/yyyy" var="dateTransformLastlogin"/>
+                    <s:date name="%{#attr.dateIngress}" format="dd/MM/yyyy" var="dateTransformIngress"/>
                     <h4>Ultima fecha de acceso: <s:property value="%{#dateTransformLastlogin}" /></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.
-                    </p>
+                    <h4>Fecha de inscripcion al sistema: <s:property value="%{#dateTransformIngress}" /></h4>
+<!--                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi elit dui, porta ac scelerisque placerat, rhoncus vitae sem. Nulla eget libero enim, facilisis accumsan eros.
+                    </p>-->
                 </div>
             </div>				
             <!-- Example row of columns -->

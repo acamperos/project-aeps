@@ -47,6 +47,7 @@
                 <th>Informacion</th>
                 <th>Fecha de siembra</th>
                 <th>Material genetico</th>
+                <th>Fecha de creación</th>
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/delete"))) { %>
                     <% if (value == "crop" || value.equals("crop")) {%>
                         <th>Accion</th>

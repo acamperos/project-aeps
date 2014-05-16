@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import org.aepscolombia.platform.models.dao.AmendmentsFertilizationsDao;
 import org.aepscolombia.platform.models.dao.AmendmentsFertilizersDao;
+import org.aepscolombia.platform.models.dao.ApplicationTypesDao;
 import org.aepscolombia.platform.models.dao.ChemicalElementsDao;
 import org.aepscolombia.platform.models.dao.ChemicalFertilizationsDao;
 import org.aepscolombia.platform.models.dao.ChemicalFertilizersDao;
@@ -26,6 +27,7 @@ import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.AmendmentsFertilizations;
 import org.aepscolombia.platform.models.entity.AmendmentsFertilizers;
+import org.aepscolombia.platform.models.entity.ApplicationTypes;
 import org.aepscolombia.platform.models.entity.ChemicalElements;
 import org.aepscolombia.platform.models.entity.ChemicalFertilizations;
 import org.aepscolombia.platform.models.entity.ChemicalFertilizerComposition;
@@ -77,6 +79,7 @@ public class ActionFer extends BaseAction {
     private AmendmentsFertilizations ferAme = new AmendmentsFertilizations();
     private Sowing sowing = new Sowing();
     private List<FertilizationsTypes> type_fer_typ;
+    private List<ApplicationTypes> list_app_typ;
     private List<ChemicalFertilizers> type_prod_che;
     private List<OrganicFertilizers> type_prod_org;
     private List<AmendmentsFertilizers> type_prod_ame;
@@ -170,6 +173,14 @@ public class ActionFer extends BaseAction {
         this.type_fer_typ = type_fer_typ;
     }
 
+    public List<ApplicationTypes> getList_app_typ() {
+        return list_app_typ;
+    }
+
+    public void setList_app_typ(List<ApplicationTypes> list_app_typ) {
+        this.list_app_typ = list_app_typ;
+    }
+    
     public List<ChemicalFertilizers> getType_prod_che() {
         return type_prod_che;
     }
@@ -300,11 +311,13 @@ public class ActionFer extends BaseAction {
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
             required.put("fer.dateFer", fer.getDateFer());      
-            required.put("fer.fertilizationsTypes.idFerTyp", fer.getFertilizationsTypes().getIdFerTyp());           
+            required.put("fer.fertilizationsTypes.idFerTyp", fer.getFertilizationsTypes().getIdFerTyp());                  
             
             if (fer.getFertilizationsTypes().getIdFerTyp() == 1) {
                 required.put("ferChe.chemicalFertilizers.idCheFer", ferChe.getChemicalFertilizers().getIdCheFer());
                 required.put("amountProductUsedChe", amountProductUsedChe);
+                required.put("ferChe.unitCheFer", ferChe.getUnitCheFer());
+                required.put("ferChe.applicationTypes.idAppTyp", ferChe.getApplicationTypes().getIdAppTyp());
                 if (ferChe.getChemicalFertilizers().getIdCheFer() == 1000000) {
                     required.put("ferChe.otherProductCheFer", ferChe.getOtherProductCheFer());
                 }
@@ -447,6 +460,7 @@ public class ActionFer extends BaseAction {
         }
 
         this.setType_fer_typ(new FertilizationsTypesDao().findAll());
+        this.setList_app_typ(new ApplicationTypesDao().findAll());
         this.setType_prod_che(new ChemicalFertilizersDao().findAllByStatus());
         this.setType_prod_org(new OrganicFertilizersDao().findAllByStatus());
         this.setType_prod_ame(new AmendmentsFertilizersDao().findAllByStatus());

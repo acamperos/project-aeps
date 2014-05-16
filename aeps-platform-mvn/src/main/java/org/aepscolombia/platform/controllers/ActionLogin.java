@@ -264,10 +264,11 @@ public class ActionLogin extends BaseAction {
             Users usrTemp = userDao.getUserByLogin(userUsr, "");
             if (usrTemp!=null) saltUsr = usrTemp.getSaltUsr();
             
-            String passRes = GlobalFunctions.generateSHA1(passUsr, saltUsr);
+            String passRes = GlobalFunctions.generateMD5(saltUsr+passUsr);
+            
+//            String passRes = GlobalFunctions.generateSHA1(passUsr, saltUsr);
             
             Users loggedUser = userDao.login(userUsr, passRes);
-//            System.out.println("entreeee");
             if (loggedUser != null) {
                 this.setUsername("");
                 this.setPassword("");
@@ -522,22 +523,32 @@ public class ActionLogin extends BaseAction {
         try {
 //            String passRes = GlobalFunctions.generateMD5(this.getPassRest());
 //            String passResCon = this.getPassRestCon();
-            String saltUsr = GlobalFunctions.getSalt();
+//            String saltUsr = GlobalFunctions.getSalt();
+            
+            Double salt = (Math.floor(Math.random()*999999+100000));
+//            int valAss = salt.intValue();
+            
+            
 //            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
-            String passRes = GlobalFunctions.generateSHA1(this.getPassRest(), saltUsr);
+//            String passRes = GlobalFunctions.generateSHA1(this.getPassRest(), saltUsr);
 
             Users user = (Users) userDao.objectById(this.getIdUser());
+            
+            
+            String saltUsr = GlobalFunctions.generateMD5(salt+user.getNameUserUsr());
+            String passRes = GlobalFunctions.generateMD5(saltUsr+this.getPassRest());
+            
             user.setSaltUsr(saltUsr);
             user.setPasswordUsr(passRes);
             user.setStatus(1);
             session.saveOrUpdate(user);
             
             
-//            SfGuardUserDao sfDao = new SfGuardUserDao();
-//            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
-//            sfUser.setSalt(saltUsr);
-//            sfUser.setPassword(passRes);
-//            sfDao.save(sfUser);
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            sfUser.setSalt(saltUsr);
+            sfUser.setPassword(passRes);
+            sfDao.save(sfUser);
 
 //            LogEntities logPro = new LogEntities();
 //            logPro.setIdLogEnt(null);
@@ -545,7 +556,7 @@ public class ActionLogin extends BaseAction {
 //            logPro.setIdObjectLogEnt(user.getIdUsr());
 //            logPro.setTableLogEnt("users");
 //            logPro.setDateLogEnt(new Date());
-//            logPro.setActionTypeLogEnt("U");
+//            logPro.setActionTypeLogEnt("M");
 //            session.saveOrUpdate(logPro);
             tx.commit();
             state = "success";
@@ -557,11 +568,12 @@ public class ActionLogin extends BaseAction {
             e.printStackTrace();
             state = "failure";
             info  = "Fallo al momento de regenerar la contraseña";
-        } catch (NoSuchAlgorithmException ex) {
-//            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchProviderException ex) {
-//            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        } catch (NoSuchAlgorithmException ex) {
+////            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (NoSuchProviderException ex) {
+////            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return "states";
     }
     
@@ -594,7 +606,7 @@ public class ActionLogin extends BaseAction {
             required.put("typeUser", typeUser);
             if (typeUser==1) {            
                 required.put("workType", workType);
-                required.put("nameAssoExt", nameAssoExt);
+                if (workType==3 || workType==4 || workType==5) required.put("nameAssoExt", nameAssoExt);
             } else if (typeUser==3) {
                 if (this.getEmailRep()!=null || !this.getEmailRep().isEmpty()) {
                     if (!ValidatorUtil.validateEmail(this.getEmailRep())) {
@@ -646,10 +658,10 @@ public class ActionLogin extends BaseAction {
                 addActionError("Debe ingresar una contraseña de mas de 6 caracteres");
             }
             
-            if (this.getPasswordUser()!=null && this.getPasswordUser().length() > 10) {
-                addFieldError("passwordUser", "Campo muy largo");
-                addActionError("Debe ingresar una contraseña de menos de 10 caracteres");
-            }
+//            if (this.getPasswordUser()!=null && this.getPasswordUser().length() > 10) {
+//                addFieldError("passwordUser", "Campo muy largo");
+//                addActionError("Debe ingresar una contraseña de menos de 10 caracteres");
+//            }
             
 //            System.out.println("datos->"+this.getRequest().getLocalAddr()+" datos1->"+this.getRequest().getLocalName()+" datos2->"+this.getRequest().getMethod());
 //            this.getRequest().getRemoteAddr()            
@@ -761,10 +773,13 @@ public class ActionLogin extends BaseAction {
         
         try {
             String codValidation = GlobalFunctions.getSalt();
-            String saltUsr       = GlobalFunctions.getSalt();
-//            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
-            String passTransform = GlobalFunctions.generateSHA1(this.getPasswordUser(), saltUsr);
-
+//            String saltUsr       = GlobalFunctions.getSalt();
+            Double salt = (Math.floor(Math.random()*999999+100000));
+//            int valAss = salt.intValue();
+            String saltUsr = GlobalFunctions.generateMD5(salt+this.getEmailUser());
+            String passTransform = GlobalFunctions.generateMD5(saltUsr+this.getPasswordUser());
+//            String passTransform = GlobalFunctions.generateSHA1(this.getPasswordUser(), saltUsr);
+            
             Entities ent = new Entities();
             ent.setIdEnt(null);
 //            ent.setEntityTypeEnt(1);
@@ -845,19 +860,27 @@ public class ActionLogin extends BaseAction {
 //            java.lang.String result = port.saveUser(this.getEmailUser(), "", "", "sha1", saltUsr, passTransform);
 
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = new SfGuardUser();
-            sfUser.setEmailAddress(nameUser);
-            sfUser.setFirstName("");
-            sfUser.setLastName("");
-            sfUser.setAlgorithm("sha1");
-            sfUser.setSalt(saltUsr);
-            sfUser.setPassword(passTransform);
-            sfUser.setIsActive(false);
-            sfUser.setIsSuperAdmin(false);
-            sfUser.setUsername(nameUser);
-            sfUser.setCreatedAt(new Date());
-            sfUser.setUpdatedAt(new Date());
-            sfUser.setCanLogin(false);
+            SfGuardUser sfUser   = sfDao.getUserByLogin(nameUser, "");    
+            
+            if (sfUser==null) {
+                sfUser = new SfGuardUser();
+                sfUser.setEmailAddress(nameUser);
+                sfUser.setFirstName("");
+                sfUser.setLastName("");
+                sfUser.setAlgorithm("sha1");
+                sfUser.setSalt(saltUsr);
+                sfUser.setPassword(passTransform);
+                sfUser.setIsActive(false);
+                sfUser.setIsSuperAdmin(false);
+                sfUser.setUsername(nameUser);
+                sfUser.setCreatedAt(new Date());
+                sfUser.setUpdatedAt(new Date());
+                sfUser.setCanLogin(false);                
+            } else {
+                sfUser.setSalt(saltUsr);
+                sfUser.setPassword(passTransform);
+                sfUser.setUpdatedAt(new Date());
+            }
             sfDao.save(sfUser);
                 
                 

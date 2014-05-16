@@ -29,9 +29,8 @@
         <table class="table table-bordered table-hover" style="<%= tableIrr %>" id='tblIrr'>
             <thead>
                 <tr>
-                    <th>Aplica riego</th>
                     <th>Fecha del riego</th>                    
-                    <th>Cantidad aportada por hectarea (mm/ha)</th>
+                    <th>Cantidad aportada por hectarea (metros cúbicos/ha)</th>
                     <th>Tipo de riego</th>
                     <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/modify") || (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/delete"))) { %>
                         <th>Accion</th>

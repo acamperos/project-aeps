@@ -60,13 +60,14 @@
                     <% }%>
                 <% }%>
                 <!-- <th>#</th> -->
-                <th>Documento</th>
                 <th>Nombre</th>
+                <th>Documento</th>
+                <th>Municipio</th>
+                <th>Direccion</th>
                 <th>Telefono</th>
                 <th>Celular</th>
-                <th>Correo</th>
-                <th>Direccion</th>
-                <th>Municipio</th>
+                <th>Correo</th>                                
+                <th>Fecha de creación</th>                                
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/delete"))) { %>                
                     <% if (value.equals("producer") || value == "producer") {%>    
                         <th>Accion</th>

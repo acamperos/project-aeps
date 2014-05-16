@@ -92,16 +92,14 @@ public class ActionCrop extends BaseAction {
     private int idCrop;
     private String nameField;
     private int typeCrop;
-    private String performObj;
-    private int lastCrop;
-    private boolean drainPlot;    
+    private int lastCrop;  
     private String nameTypeCrop;
     private String lastTypeCrop;
     private String nameDrainPlot;
     
     private String name_producer;
     private String type_doc;
-    private Integer num_doc;
+    private String num_doc;
     private Integer num_farm;
     private String name_farm;
     private Integer num_field;
@@ -145,6 +143,7 @@ public class ActionCrop extends BaseAction {
     private Maize maize   = new Maize();
     private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
     private Sowing sowing = new Sowing();
+    private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
@@ -159,6 +158,14 @@ public class ActionCrop extends BaseAction {
         this.beans = beans;
     }
 
+    public ProductionEvents getEvent() {
+        return event;
+    }
+
+    public void setEvent(ProductionEvents event) {
+        this.event = event;
+    }
+    
     public Cassavas getCass() {
         return cass;
     }
@@ -255,28 +262,12 @@ public class ActionCrop extends BaseAction {
         this.typeCrop = typeCrop;
     }
 
-    public String getPerformObj() {
-        return performObj;
-    }
-
-    public void setPerformObj(String performObj) {
-        this.performObj = performObj;
-    }
-
     public int getLastCrop() {
         return lastCrop;
     }
 
     public void setLastCrop(int lastCrop) {
         this.lastCrop = lastCrop;
-    }
-
-    public boolean isDrainPlot() {
-        return drainPlot;
-    }
-
-    public void setDrainPlot(boolean drainPlot) {
-        this.drainPlot = drainPlot;
     }
 
     public String getSearch_crop() {
@@ -447,11 +438,11 @@ public class ActionCrop extends BaseAction {
         this.type_doc = type_doc;
     }
 
-    public Integer getNum_doc() {
+    public String getNum_doc() {
         return num_doc;
     }
 
-    public void setNum_doc(Integer num_doc) {
+    public void setNum_doc(String num_doc) {
         this.num_doc = num_doc;
     }
 
@@ -639,9 +630,8 @@ public class ActionCrop extends BaseAction {
             HashMap required = new HashMap();
             required.put("nameField", nameField);
             required.put("typeCrop", typeCrop);
-            required.put("performObj", performObj);
             required.put("lastCrop", lastCrop);
-            required.put("drainPlot", drainPlot);    
+//            required.put("drainPlot", drainPlot);    
             boolean enter = false;
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
@@ -659,16 +649,6 @@ public class ActionCrop extends BaseAction {
             }
             
 //            System.out.println("performObj->"+performObj);
-            
-//            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
-            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj);
-
-            if (performDou!=0) {
-                if (performDou<0 || performDou>30000) {
-                    addFieldError("performObj", "Dato invalido valor entre 0 y 30000");
-                    addActionError("Se ingreso un objetivo de rendimiento invalido, por favor ingresar un valor entre 0 y 30000");
-                }
-            }
         }
     }
     
@@ -694,10 +674,8 @@ public class ActionCrop extends BaseAction {
         this.setNameField(String.valueOf(cropInfo.get("nameField")));
         this.setIdField(Integer.parseInt(String.valueOf(cropInfo.get("idField"))));
         this.setTypeCrop(Integer.parseInt(String.valueOf(cropInfo.get("typeCrop"))));
-        this.setPerformObj(String.valueOf(cropInfo.get("performObj")));
 //        this.setPerformObj(Double.parseDouble(String.valueOf(cropInfo.get("performObj"))));
         this.setLastCrop(Integer.parseInt(String.valueOf(cropInfo.get("lastCrop"))));
-        this.setDrainPlot((Boolean)cropInfo.get("drainPlot"));    
 //        CropsTypes crop = new CropsTypesDao().objectById(typeCrop);
         
         this.setNameTypeCrop(new CropsTypesDao().objectById(typeCrop).getNameCroTyp());
@@ -771,7 +749,8 @@ public class ActionCrop extends BaseAction {
             maize  = maizeDao.objectById(this.getIdCrop());
             phys   = physDao.objectById(this.getIdCrop());
             sowing = sowDao.objectById(this.getIdCrop());
-            
+            event  = cropDao.objectById(this.getIdCrop());
+            typeCrop = event.getCropsTypes().getIdCroTyp();
 //            harv.setIdHar(12);
 //            List<Genotypes> event = null;
 //            System.out.println("values=>"+typeCrop);
@@ -798,7 +777,8 @@ public class ActionCrop extends BaseAction {
             
             this.setName_producer(String.valueOf(fieldInfo.get("name_producer")));
             String numDocTemp = String.valueOf(fieldInfo.get("no_doc_pro"));
-            if (!numDocTemp.equals("null")) this.setNum_doc(Integer.parseInt(numDocTemp));
+//            if (!numDocTemp.equals("null")) this.setNum_doc(Integer.parseInt(numDocTemp));
+            if (!numDocTemp.equals("null")) this.setNum_doc(numDocTemp);
             this.setType_doc(String.valueOf(fieldInfo.get("type_doc_pro")));
             this.setName_farm(String.valueOf(fieldInfo.get("name_farm")));
             
@@ -993,15 +973,11 @@ public class ActionCrop extends BaseAction {
                 pro = cropDao.objectById(idCrop);
             }                        
             
-//            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj.replace(',','.'));
-            double performDou = (performObj.equals("")) ? 0.0 : Double.parseDouble(performObj);
             
             pro.setFields(new Fields(idField));
             pro.setCropsTypes(new CropsTypes(typeCrop));
             pro.setIdProjectProEve(1);
-            pro.setExpectedProductionProEve(performDou);
             pro.setFormerCropProEve(lastCrop);
-            pro.setDrainingProEve(drainPlot);
             pro.setStatus(true);
             session.saveOrUpdate(pro);
             

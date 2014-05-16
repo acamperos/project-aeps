@@ -36,7 +36,7 @@
                                 <s:hidden name="idProducer"/>                                
                                 <label for="formFarm_name_producer" class="control-label req">
                                     Seleccione el productor:
-                                    <i class="icon-info-sign s2b_tooltip" title="Seleccione un productor en la lupa a la derecha"></i>
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="Usar la lupa para seleccionar el productor al cual pertenece la finca que va a registrar." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
                                     <s:textfield name="name_producer" readonly="true" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
@@ -48,7 +48,7 @@
                             <s:hidden name="idFarm"/>
                             <label for="formFarm_name_property" class="control-label req">
                                 Nombre de Finca:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese el nombre de la finca asociada al productor seleccionado"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el nombre de la finca asociada al productor seleccionado." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="name_property" />
@@ -57,7 +57,7 @@
                         <div class="control-group">
                             <label for="formFarm_latitude_property" class="control-label req">
                                 Latitud de la finca (decimales):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la latitud de la finca asociada"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la sede de la finca. Si su dispositivo esta parametrizado en decimales, ingresar la latitud aquí. Si esta en Grados, Minutos, Segundos (GMS) ingresar los datos en el siguiente campo." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield cssClass="form-control" name="latitude_property" onkeyup="generateDegrees('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property')"/>
@@ -66,6 +66,7 @@
                         <div class="control-group">
                             <label for="formFarm_latitude_degrees_property" class="control-label req">
                                 Latitud de la finca (grados):
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la sede de la finca. Si su dispositivo esta parametrizado en en Grados, Minutos, Segundos (GMS), ingresar la latitud aquí. Si esta en decimales ingresar el dato en el campo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <div class="row-fluid">
@@ -87,7 +88,7 @@
                         <div class="control-group">
                             <label for="formFarm_length_property" class="control-label req">
                                 Longitud de la Finca (decimales):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la longitud de la finca asociada"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la sede de la finca. Si su dispositivo esta parametrizado en decimales, ingresar la longitud aquí. Si esta en Grados, Minutos, Segundos (GMS) ingresar los datos en el siguiente campo." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield cssClass="form-control" id="formFarm_length_property" name="length_property" onkeyup="generateDegrees('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property')"/>
@@ -96,6 +97,7 @@
                         <div class="control-group">
                             <label for="formFarm_length_degrees_property" class="control-label req">
                                 Longitud de la Finca (grados):
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la sede de la finca. Si su dispositivo esta parametrizado en en Grados, Minutos, Segundos (GMS), ingresar la longitud aquí. Si esta en decimales ingresar el dato en el campo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <div class="row-fluid">
@@ -117,7 +119,7 @@
                         <div class="control-group">
                             <label for="formFarm_altitude_property" class="control-label req">
                                 Altitud de la Finca (metros):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la altitud de la finca en metros"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la altitud de la finca en metros." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="altitude_property" />
@@ -126,7 +128,7 @@
                         <div class="control-group">
                             <label for="formFarm_depFar" class="control-label req">
                                 Departamento:
-                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un departamento"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Seleccione un departamento." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:select
@@ -143,7 +145,7 @@
                         <div class="control-group">
                             <label for="formFarm_cityFar" class="control-label req">
                                 Municipio:
-                                <i class="icon-info-sign s2b_tooltip" title="Seleccione un municipio"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Seleccione un municipio." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:select
@@ -159,7 +161,7 @@
                         <div class="control-group">
                             <label for="formFarm_lane_property" class="control-label req">
                                 Vereda:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la vereda"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la vereda." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="lane_property" />
@@ -168,7 +170,7 @@
                         <div class="control-group">
                             <label for="formFarm_direction_property" class="control-label">
                                 Direccion de la Finca:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la direccion de la finca"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la direccion de la finca." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="direction_property" />
@@ -182,7 +184,7 @@
                         <s:hidden name="viewInfo"/>
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "farm/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formFarm'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
                         <% } %>
                         <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')"><i class="icon-save"></i> Guardar informaci&oacute;n</button>-->
                         <button class="btn btn-large bt_cancel_farm" onclick="resetForm('formFarm'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
@@ -231,6 +233,9 @@
                             showInfo("searchFarm.action?page="+$("#formFarm_page").val(), "divConListFarms");
                         }, 2000);
                     });
+                    if($('.pop-over').length) {
+                        $('.pop-over').popover();
+                    }
                     //chargeValues('../actions/Actions.php?action=ListarDeps', 'depId', '', 'params_department_property', 'divMessage');
                 </script>
             </div>

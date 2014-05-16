@@ -92,3 +92,10 @@
         /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
         font-family: "Istok Web";
     }
+    .whatever-you-want {
+        top: 22px !important;
+    }
+    
+    #pwdMeter .pwdTextRes {
+        left: -25px;
+    }

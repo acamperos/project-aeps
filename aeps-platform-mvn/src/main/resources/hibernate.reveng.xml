@@ -30,6 +30,7 @@
   <table-filter match-name="farms_producers"/>
   <table-filter match-name="maize"/>
   <table-filter match-name="chemical_fertilizers"/>
+  <table-filter match-name="application_types"/>
   <table-filter match-name="chemical_fertilizer_composition"/>
   <table-filter match-name="rastas"/>
   <table-filter match-name="producers"/>

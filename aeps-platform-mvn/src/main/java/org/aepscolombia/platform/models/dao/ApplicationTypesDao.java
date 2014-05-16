@@ -1,51 +1,33 @@
 package org.aepscolombia.platform.models.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import org.aepscolombia.platform.models.entity.Entities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.aepscolombia.platform.models.entity.Maize;
+import org.aepscolombia.platform.models.entity.ApplicationTypes;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
- * Clase MaizeDao
+ * Clase ApplicationTypesDao
  *
- * Contiene los metodos para interactuar con la tabla Maize de la base de datos (BD)
+ * Contiene los metodos para interactuar con la tabla ApplicationTypes de la base de datos (BD)
  *
  * @author Juan Felipe Rodriguez
  * @version 1.0
  */
-public class MaizeDao 
-{    
-    
-    public HashMap findById(Integer id) {
+public class ApplicationTypesDao 
+{        
+    public List<ApplicationTypes> findAll() {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
-        
-        List<Object[]> events = null;
-        Transaction tx = null;
-        HashMap result = new HashMap();
-        return result;
-    }
-    
-    public List<Maize> findAll() {
-        SessionFactory sessions = HibernateUtil.getSessionFactory();
-        Session session = sessions.openSession();
-        List<Maize> events = null;
+        List<ApplicationTypes> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from Maize");
+            Query query = session.createQuery("from ApplicationTypes");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -58,32 +40,20 @@ public class MaizeDao
         }
         return events;
     }
-
-    public List findByParams(HashMap args) {
-        SessionFactory sessions = HibernateUtil.getSessionFactory();
-        Session session = sessions.openSession();
-        List<Object[]> eventsTotal = null;
-        List<Object[]> events = null;
-        Transaction tx = null;
-        List<HashMap> result = new ArrayList<HashMap>();
-        return result;
-    }    
     
-    public Maize objectById(Integer id) {
+    public List<ApplicationTypes> findAllById(String exclude) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
         String sql  = "";        
-        Maize event = null;
+        List<ApplicationTypes> event = null;
         Transaction tx = null;
-				
-        sql += "select p.id_mai, p.id_production_event_mai, p.grain_color_mai, p.seeds_number_site_mai, p.status, p.created_by";
-        sql += " from maize p";
-        sql += " where p.id_production_event_mai="+id;
+        
+        sql += "select cr.id_app_typ, cr.name_app_typ from application_types cr";
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", Maize.class);
-            event = (Maize)query.uniqueResult();
+            Query query = session.createSQLQuery(sql).addEntity("p", ApplicationTypes.class);
+            event = query.list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -95,8 +65,13 @@ public class MaizeDao
         }
         return event;
     }
+    
+    public ApplicationTypes objectById(Integer id) {
+        ApplicationTypes event = null;
+        return event;
+    }    
 
-    public void save(Maize event) {
+    public void save(ApplicationTypes event) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -115,7 +90,7 @@ public class MaizeDao
         }
     }
 
-    public void delete(Maize event) {
+    public void delete(ApplicationTypes event) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 

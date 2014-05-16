@@ -118,7 +118,15 @@ hr {
     border-radius: 6px;
     line-height: 1;
     padding: 3px 4px 5px 5px;
-    width: 17%;
+    width: 27%;
+}
+
+.btn-edit {
+    color: #FF9900;    
+}
+
+.btn-delete {
+    color: #CC0000;    
 }
 
 li {
@@ -327,7 +335,7 @@ form {
     width: 50%;
     border-radius: 10px;
     /*height: auto;*/
-    height: 190px;
+    height: 200px;
     float: left;
 }
 
@@ -476,16 +484,16 @@ form {
     color: #68AF23;
 }
 
-#menu {float:left;padding-top:15px}
-#menu li {/*float:left;padding-left:51px*/}
-#menu li a{display:block;font-size:20px;line-height:1.2em;color:#bbb;text-transform:uppercase;text-decoration:none;text-align:center;letter-spacing:-1px;height:79px;font-style:normal;font-weight:700}
+#menu {padding-top:15px}
+#menu li {float:left;}
+#menu li a{display:block;font-size:20px;line-height:1.2em;color:#000;text-transform:uppercase;text-decoration:none;text-align:center;letter-spacing:-1px;height:79px;font-style:normal;font-weight:700}
 /*#menu li a{display:block;font:20px "Trebuchet MS", Arial, Helvetica, sans-serif;line-height:1.2em;color:#bbb;text-transform:uppercase;text-decoration:none;text-align:center;letter-spacing:-1px;height:79px;font-style:normal;font-weight:700}*/
-#menu li a span{font-size:13px;line-height:1.2em;color:#666666;display:block;letter-spacing:-1px;margin-top:-3px;font-weight:normal}
-#menu li a:hover, #menu .active a{box-shadow: 1px 0px 9px #C2BFBF; color:#497e04}
+#menu li a span{font-size:13px;line-height:1.2em;color:#000;display:block;letter-spacing:-1px;margin-top:-3px;font-weight:normal}
+#menu li a:hover, #menu .active a{box-shadow: 1px 0px 9px #C2BFBF; color:#87398A}
 #menu li a:hover span, #menu .active a span{color:#fff}
-#menu #nav1 a{background:url(../../../img/gettingInfo.png) center no-repeat; background-color: #FFFFFF;}
-/* #menu #nav1 a:hover, #menu #nav1.active a{background:url(../img/menu_icon1_active.gif) bottom center no-repeat} */
-#menu #nav2 a{background:url(../../../img/reports.png) center no-repeat}
+#menu #nav1 a{background:url(../../../img/gettingInfo.png) center no-repeat; background-color: #FFFFFF;height: 195px;width: 150px;}
+#menu #nav2 a{background:url(../../../img/report-icon.png) center no-repeat; background-color: #FFFFFF;height: 195px;width: 150px;}
+#menu .separate {padding-right: 20px;}
 /* #menu #nav2 a:hover, #menu #nav2.active a{background:url(../img/menu_icon2_active.gif) bottom center no-repeat} */
 /* #menu #nav3 a{background:url(../img/menu_icon3.gif) bottom center no-repeat} */
 /* #menu #nav3 a:hover, #menu #nav3.active a{background:url(../img/menu_icon3_active.gif) bottom center no-repeat} */
@@ -495,6 +503,8 @@ form {
 /* #menu #nav5 a:hover, #menu #nav5.active a{background:url(../img/menu_icon5_active.gif) bottom center no-repeat} */
 
 .formIngress {float:right; padding-left: 20px;}
+
+.btn:focus {outline: none; outline-offset: -2px;}
 
 #img_farmer { min-width: 250px; width: 250px; min-height: 200px; height: 200px; }
 

@@ -203,8 +203,7 @@ public class ActionPrep extends BaseAction {
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
             required.put("prep.datePrep", prep.getDatePrep());
-            required.put("prep.preparationsTypes.idPreTyp", prep.getPreparationsTypes().getIdPreTyp());
-            required.put("prep.depthPrep", prep.getDepthPrep());
+            required.put("prep.preparationsTypes.idPreTyp", prep.getPreparationsTypes().getIdPreTyp());            
             required.put("prep.residualsClasification.idResCla", prep.getResidualsClasification().getIdResCla());
             
 				
@@ -212,7 +211,9 @@ public class ActionPrep extends BaseAction {
                 required.put("prep.otherPreparationTypePrep", prep.getOtherPreparationTypePrep());
                 required.put("prep.passingsNumberPrep", prep.getPassingsNumberPrep());
             } else if (prep.getPreparationsTypes().getIdPreTyp()>0 && prep.getPreparationsTypes().getIdPreTyp() != 1000000) {
-                required.put("prep.passingsNumberPrep", prep.getPassingsNumberPrep());
+                if (prep.getPreparationsTypes().getIdPreTyp()>=1 && prep.getPreparationsTypes().getIdPreTyp()<=5)
+                    required.put("prep.depthPrep", prep.getDepthPrep());
+//                required.put("prep.passingsNumberPrep", prep.getPassingsNumberPrep());
             }
 
             if (prep.getResidualsClasification().getIdResCla() == 1000000) {

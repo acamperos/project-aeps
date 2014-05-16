@@ -31,7 +31,7 @@
                             <img class="img-responsive hidden-xs" src="img/producers.jpg" alt="">
                             <div class="caption">
                                 <h3>Productores<span class="badge badge-success"><s:property value="numPro" /></span></h3>
-                                <p>Encargado de la toma de datos para los productores o agricultores</p>
+                                <p>Administre información de contacto de los productores a su cargo</p>
                                 <%--<s:url id="ajaxTest" value="/AjaxTest.action"/>--%>
                                 <%--<sj:a id="link1" href="%{ajaxTest}" targets="div1">--%>
                                 <p>   
@@ -47,7 +47,7 @@
                             <img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
                             <div class="caption">
                                 <h3>Fincas<span class="badge badge-success"><s:property value="numFar" /></span></h3>
-                                <p>Encargado de la toma de datos para las fincas</p>
+                                <p>Administre información de las fincas que usted tiene a cargo</p>
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -61,7 +61,7 @@
                             <img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
                             <div class="caption">
                                 <h3>Lotes<span class="badge badge-success"><s:property value="numFie" /></span></h3>
-                                <p>Encargado de la toma de datos para los lotes</p>
+                                <p>Administre información de los lotes en las fincas registradas por usted</p>
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -75,7 +75,7 @@
                             <img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
                             <div class="caption">
                                 <h3>Cultivos<span class="badge badge-success"><s:property value="numEve" /></span></h3>
-                                <p>Encargado de la toma de datos para los cultivos</p>                        
+                                <p>Registre aqui información de monitoreo de los cultivos</p>                        
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -89,7 +89,7 @@
                             <img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
                             <div class="caption">
                                 <h3>Suelos<span class="badge badge-success"><s:property value="numRas" /></span></h3>
-                                <p>Encargado de la toma de datos para los suelos</p>
+                                <p>Registre aqui información de caracterización del suelo en sus lotes</p>
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -103,7 +103,7 @@
                             <img class="img-responsive hidden-xs" src="img/climate.jpg" alt="">
                             <div class="caption">
                                 <h3>Clima</h3>
-                                <p>Encargado de la toma de datos para el clima</p>
+                                <p>Registre aqui información de clima de su finca si cuenta con equipos o datos meteorológicos</p>
                                 <h3>En Construcción!!!</h3>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                             <img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
                             <div class="caption">
                                 <h3>Fincas<span class="badge badge-success"><s:property value="numFar" /></span></h3>
-                                <p>Encargado de la toma de datos para las fincas</p>
+                                <p>Administre información de las fincas que usted tiene a cargo</p>
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>                                    
                                 </p>
@@ -130,7 +130,7 @@
                             <img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
                             <div class="caption">
                                 <h3>Lotes<span class="badge badge-success"><s:property value="numFie" /></span></h3>
-                                <p>Encargado de la toma de datos para los lotes</p>
+                                <p>Administre información de los lotes en las fincas registradas por usted</p>
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -144,7 +144,7 @@
                             <img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
                             <div class="caption">
                                 <h3>Cultivos<span class="badge badge-success"><s:property value="numEve" /></span></h3>
-                                <p>Encargado de la toma de datos para los cultivos</p>                        
+                                <p>Registre aqui información de monitoreo de los cultivos</p>                        
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -158,7 +158,7 @@
                             <img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
                             <div class="caption">
                                 <h3>Suelos<span class="badge badge-success"><s:property value="numRas" /></span></h3>
-                                <p>Encargado de la toma de datos para los suelos</p>
+                                <p>Registre aqui información de caracterización del suelo en sus lotes</p>
                                 <p>
                                     <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
@@ -172,7 +172,7 @@
                             <img class="img-responsive hidden-xs" src="img/climate.jpg" alt="">
                             <div class="caption">
                                 <h3>Clima</h3>
-                                <p>Encargado de la toma de datos para el clima</p>
+                                <p>Registre aqui información de clima de su finca si cuenta con equipos o datos meteorológicos</p>
                                 <h3>En Construcción!!!</h3>
                             </div>
                         </div>

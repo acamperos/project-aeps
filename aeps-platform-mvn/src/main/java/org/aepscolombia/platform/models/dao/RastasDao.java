@@ -146,7 +146,7 @@ public class RastasDao
         sql += " r.espesor_capa_endurecida_ras, r.moteados_ras, r.profundidad_moteados_ras, r.moteados_mas_70cm_ras, r.estructura_ras,";
         sql += " r.erosion_ras, r.moho_ras, r.costras_duras_ras, r.exposicion_sol_ras, r.costras_blancas_ras, r.costras_negras_ras,";
         sql += " r.region_seca_ras, r.raices_vivas_ras, r.profundidad_raices_ras, r.plantas_pequenas_ras, r.hojarasca_ras,";
-        sql += " r.suelo_negro_blando_ras, r.cuchillo_primer_horizonte_ras, r.cerca_rios_quebradas_ras, r.recubrimiento_vegetal_ras";               
+        sql += " r.suelo_negro_blando_ras, r.cuchillo_primer_horizonte_ras, r.cerca_rios_quebradas_ras, r.recubrimiento_vegetal_ras, r.status, le.date_log_ent";               
         sql += " from rastas r";
         sql += " inner join log_entities le on le.id_object_log_ent=r.id_ras and le.table_log_ent='rastas' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on r.id_lote_ras=l.id_fie";
@@ -302,9 +302,9 @@ public class RastasDao
                 temp.put("id_ras", data[0]);
                 temp.put("id_field", data[1]);
                 temp.put("num_rasta", data[6]);             
-                String val = String.valueOf(data[5]);
-                Date newDate   = new SimpleDateFormat("yyyy-MM-dd").parse(val);
-                temp.put("date", new SimpleDateFormat("dd/MM/yyyy").format(newDate));                
+//                String val = String.valueOf(data[5]);
+//                Date newDate   = new SimpleDateFormat("yyyy-MM-dd").parse(val);
+                temp.put("date", data[5]);                
                 temp.put("pendant", data[10]);
                 temp.put("altitude", data[7]);
                 temp.put("latitude", data[8]);                
@@ -314,7 +314,8 @@ public class RastasDao
                 temp.put("ph", data[14]);                
                 temp.put("carbonates", data[15]);                
                 temp.put("num_layer", data[13]);                
-                temp.put("status", data[46]);
+                temp.put("status", data[47]);
+                temp.put("dateLog", data[48]);
                 result.add(temp);
             }
 //            System.out.println("values->"+result);
@@ -328,8 +329,6 @@ public class RastasDao
                 tx.rollback();
             }
             e.printStackTrace();
-        } catch (ParseException ex) {
-//            Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             session.close();
         }

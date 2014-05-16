@@ -64,7 +64,8 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tb3_a">
-                                <p><s:property value="getText('text.description.report')" /></p>
+                                <!--<p><s:property value="getText('text.description.report')" /></p>-->
+                                <p></p>
                             </div>
                             <div class="tab-pane" id="tb3_b">
                                 <pre><s:property value="getText('text.description.info')" /></pre>

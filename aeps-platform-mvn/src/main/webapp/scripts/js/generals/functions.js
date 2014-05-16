@@ -75,6 +75,16 @@ function showOtherElement(valSel, divShow) {
     }
 }
 
+function showOtherElementChemical(idSel, idAppTyp, divShow) {
+    var valSel = $('#'+idSel).val();
+    var valAppTyp = $('#'+idAppTyp).val();
+    if (valSel == 1000000 && valAppTyp==1) {
+        $("#" + divShow).show();
+    } else {
+        $("#" + divShow).hide();
+    }
+}
+
 function showProductUse(valSel, divShow) {
     if (valSel=='true') {
         $("#" + divShow).show();
@@ -229,14 +239,20 @@ function showElementRate(valSel, divShow) {
     }
 }
 
-function showOtherElementPrep(valSel, divShowA, divShowB) {
+function showOtherElementPrep(valSel, divShowA, divShowB, lblDepth) {
     if (valSel == 1000000) {
 //        $("#" + divShowA).hide();
         $("#" + divShowA).show();
         $("#" + divShowB).show();
-    } else if (valSel >= 1 && valSel <= 5) {
+        $("#" + lblDepth).addClass("req");
+    } else if ((valSel >= 1 && valSel <= 5) || valSel == 12) {
         $("#" + divShowA).show();
         $("#" + divShowB).hide();
+        if (valSel == 12) {
+            $("#" + lblDepth).removeClass("req");
+        } else {
+            $("#" + lblDepth).addClass("req");
+        }
     } else {
         $("#" + divShowA).hide();
         $("#" + divShowB).hide();
@@ -293,7 +309,7 @@ function showWindow(title, width, height, htmlInfo) {
 //            $(".header").show();
             // allFields.val( "" ).removeClass( "ui-state-error" );
         }
-    });
+    });    
 }
 
 function closeWindow() {
@@ -1077,6 +1093,7 @@ function completeForm(dialogId, formId, information)
         $('#'+formId).append(setTimerToMessage(8));
     } else if (json.state == 'success') {
         showMessInfo(formId, json.info);
+        document.location='#'+formId;
         $('#'+formId)[0].reset();
     }
     if (dialogId!='') {
@@ -1098,6 +1115,7 @@ function completeFormChange(dialogId, formId, information)
         $('#'+formId).append(setTimerToMessage(8));
     } else if (json.state == 'success') {
         showMessInfo(formId, json.info);
+        document.location='#'+formId;
         $('#'+formId)[0].reset();
     }
     if (dialogId!='') {
@@ -1123,6 +1141,7 @@ function completeFormGetting(dialogId, formId, divId, information)
 //        requestSent = false;
         $('#'+divId).find("div.alert-success").remove();
         showMessInfo(divId, json.info);
+        document.location='#'+divId;
         $('#'+formId)[0].reset();
     }
     if (dialogId!='') {
@@ -1148,6 +1167,8 @@ function completeFormCrop(dialogId, formId, divId, information)
 //        requestSent = false;
         $('#'+divId).find("div.alert-success").remove();
         showMessInfo(divId, json.info);
+        document.location='#'+divId;
+        restoreDecimalNumber(formId);
     }
     if (dialogId!='') {
         $('#'+dialogId).dialog("close");
@@ -1170,7 +1191,7 @@ function addMessageProcess()
             opacity: .5, 
             color: '#fff' 
         },
-        message: '<div class="view-process row"><div class="span6"><h3><i style="font-size:30px" class="icon-spinner icon-spin"></i><br>Procesando....</h3></div></div>' 
+        message: '<div class="view-process"><div><h3><i style="font-size:30px" class="icon-spinner icon-spin"></i><br>Procesando....</h3></div></div>' 
     }); 
 //    $.blockUI({ 
 //        message: '<img src="img/ajax.gif" />Procesando....' 
@@ -1199,6 +1220,7 @@ function validationForm(form, errors)
         $.each(errors.errors, function(index, value) {
             errorDiv.append('<p>' + value + '</p>\n');
         });
+        restoreDecimalNumber(form.attr('id'));
 //        $('[name=errorRasta]').;
 //        document.location='#messageUsers';
 //        alert(form.attr('id'));
@@ -1251,6 +1273,26 @@ function validationForm(form, errors)
 //        });
 //        $(form)[0].reset();
 //    }
+}
+
+function searchDecimalNumber(formId) {
+    
+    $('#'+formId+' *').filter(':input').each(function(key, elem){
+        var decimal=  /^[-+]?[0-9]+\.[0-9]+$/;   
+        var valTemp = elem.value;
+        if (elem.value!='' && valTemp.match(decimal)) elem.value = elem.value.replace('.',',');
+    });
+    
+}
+
+function restoreDecimalNumber(formId) {
+    
+    $('#'+formId+' *').filter(':input').each(function(key, elem){
+        var decimal=  /^[-+]?[0-9]+\,[0-9]+$/;   
+        var valTemp = elem.value;
+        if (elem.value!='' && valTemp.match(decimal)) elem.value = elem.value.replace(',','.');
+    });
+    
 }
 
 function saveData(url, urlAction, formId, divShow)
@@ -1710,7 +1752,7 @@ function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
     
 //    alert(navigator.language);
 //    var valNumDecimal = $('#'+valDec).val(); 
-//    alert(navigator.language);
+//    alert(navigator.language);    
     var valNumDecimal = parseCommaSeparated($('#'+valDec).val()); 
     if ($('#'+valDec).val()!=null && $('#'+valDec).val()!="") {
         var d = Math.floor (valNumDecimal);
@@ -1739,7 +1781,14 @@ function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
 }
 
 function parsePointSeparated( strVal ) {
-    return strVal.replace(',','.');
+//    alert(strVal)
+    var decimal=  /^[-+]?[0-9]+\,[0-9]+$/;   
+    if (strVal=="") {
+        strVal = "";
+    } else if ((!isNaN(strVal)) && strVal.match(decimal)) {
+        return strVal.replace(',','.');
+    }
+    return strVal;
 //    if (strVal!=null) {
 //        if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
 //        if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
@@ -1797,3 +1846,10 @@ function showOtherTypeDocument(valSel, divCom, divPer) {
     }
 }
 
+function showElementChemical(valSel, divShow) {
+    if (valSel == 1) {
+        $("#" + divShow).show();
+    } else {
+        $("#" + divShow).hide();
+    }
+}

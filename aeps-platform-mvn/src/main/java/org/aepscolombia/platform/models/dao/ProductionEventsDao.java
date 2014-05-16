@@ -113,7 +113,7 @@ public class ProductionEventsDao
         String sqlAdd = "";     
                       
         sql += "select pe.id_pro_eve, e.document_type_ent, e.document_number_ent, e.name_ent, f.id_far, f.name_far,";
-        sql += " l.id_fie, l.name_fie, s.date_sow, mg.name_gen, pe.status, e.entity_type_ent";
+        sql += " l.id_fie, l.name_fie, s.date_sow, mg.name_gen, pe.status, e.entity_type_ent, le.date_log_ent";
         sql += " from production_events pe";
 //        sql += " left join sowing s on pe.id_pro_eve=s.id_production_event_sow and s.status=1";
         sql += " left join sowing s on pe.id_pro_eve=s.id_production_event_sow";
@@ -226,6 +226,7 @@ public class ProductionEventsDao
                 temp.put("name_genotype", data[9]);
                 temp.put("status", data[10]);
                 temp.put("typeEnt", data[11]);
+                temp.put("dateLog", data[12]);
                 result.add(temp);
             }
 //            System.out.println("values->"+result);

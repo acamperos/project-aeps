@@ -42,7 +42,7 @@
                         <div class="span5">
                             <div class="control-group">
                                 <label for="formCropFer_fer_fertilizationsTypes_idFerTyp" class="control-label req">
-                                    Tipo de abono:
+                                    Tipo:
                                 </label>
                                 <div class="controls">
                                     <s:select
@@ -57,8 +57,28 @@
                                 </div>                         
                             </div>                          
                         </div>   
-                    </div>       
+                    </div>
                     <div id="divQuimicoFer" class="hide">
+                        <div class="row">
+                            <div class="span5">
+                                <div class="control-group">
+                                    <label for="formCropFer_ferChe_applicationTypes_idAppTyp" class="control-label req">
+                                        Tipo de aplicación:
+                                    </label>
+                                    <div class="controls">
+                                        <s:select
+                                            name="ferChe.applicationTypes.idAppTyp"
+                                            list="list_app_typ" 
+                                            listKey="idAppTyp" 
+                                            listValue="nameAppTyp"            
+                                            headerKey="-1" 
+                                            headerValue="---"
+                                            onchange="showOtherElementChemical('formCropFer_ferChe_chemicalFertilizers_idCheFer', 'formCropFer_ferChe_applicationTypes_idAppTyp', 'divNewProQui')"
+                                        />
+                                    </div>                         
+                                </div>                          
+                            </div>   
+                        </div> 
                         <div class="row">
                             <div class="span5">
                                 <s:hidden name="ferChe.idCheFer"/>
@@ -74,7 +94,7 @@
                                             listValue="nameCheFer"            
                                             headerKey="-1" 
                                             headerValue="---"
-                                            onchange="showOtherElement(this.value, 'divNewProQui')"
+                                            onchange="showOtherElementChemical('formCropFer_ferChe_chemicalFertilizers_idCheFer', 'formCropFer_ferChe_applicationTypes_idAppTyp', 'divNewProQui')"
                                         />
                                     </div>                         
                                 </div>                          
@@ -101,7 +121,12 @@
                             <!--<div class="row">-->
                                 <!--<div class="span12">-->
                                     <div class="row" style="margin-left:153px">
-                                        <table class="tableComposition" style="width:50%">                                            
+                                        <table class="tableComposition" style="width:50%">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="2"><label>Manejar valores en porcentajes</label></td>
+                                                </tr>
+                                            </thead>
                                             <s:iterator value="additionalsElem" var="element" status="estatus">     
                                                 <s:if test="%{#estatus.index==0}">   
                                                     <tr>
@@ -163,13 +188,28 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropFer_amountProductUsedChe" class="control-label req">
-                                        Cantidad de producto (kg/ha):
+                                        Cantidad de producto:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="amountProductUsedChe"/>
                                     </div>                         
                                 </div>                          
                             </div>   
+                            <div class="span4" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="ferChe_unitCheFer" class="control-label req">
+                                        Unidad:
+                                    </label>
+                                    <div class="controls">
+                                        <s:select
+                                            name="ferChe.unitCheFer"
+                                            list="#{'1':'kg/ha', '2':'lt/ha'}"           
+                                            headerKey="-1" 
+                                            headerValue="---"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>                            
                     </div>                           
                     <div id="divOrganicoFer" class="hide">
@@ -223,7 +263,7 @@
                                         <s:textfield name="amountProductUsedOrg"/>
                                     </div>                         
                                 </div>                          
-                            </div>   
+                            </div>                               
                         </div>                            
                     </div>
                     <div id="divEnmiendasFer" class="hide">
@@ -297,13 +337,14 @@
                     <div id="divBtFer">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeFer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Fertilizacion</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropFer'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeFer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Fertilizacion</sj:submit>
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropFer'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>
                 </fieldset>
             </s:form>	
-            <script>                
+            <script>      
+                $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completeFer', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropFer', 'divFer', event.originalEvent.request.responseText);
                     setTimeout(function() {

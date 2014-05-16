@@ -161,7 +161,8 @@ public class ProducersDao
 //        sql += "select p.*, e.* from productores p";
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
         sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
-        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status, e.entity_type_ent, e.agent_name_ent, e.validation_number_ent";
+        sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status, e.entity_type_ent, e.agent_name_ent, e.validation_number_ent,";
+        sql += " le.date_log_ent";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";		
         sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";		
@@ -254,7 +255,7 @@ public class ProducersDao
         }
         sql += " order by e.name_ent ASC";
 //        events.toArray();
-        System.out.println("valIni->"+valIni);
+//        System.out.println("valIni->"+valIni);
 //        System.out.println("sql->"+sql);
         try {
             tx = session.beginTransaction();
@@ -299,6 +300,7 @@ public class ProducersDao
                 temp.put("typeEnt", data[16]);
                 temp.put("agentName", data[17]);
                 temp.put("digVer", data[18]);
+                temp.put("dateLog", data[19]);
                 result.add(temp);
             }
 //            System.out.println(result);

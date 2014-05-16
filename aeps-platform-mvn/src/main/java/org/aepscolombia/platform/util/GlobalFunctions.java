@@ -37,11 +37,21 @@ import javax.mail.internet.MimeMultipart;
  */
 public class GlobalFunctions {
     
-    public static Integer check_in_range(Date start, Date end, Date evaluame) 
+    public static Integer check_in_range(Date start, Date end, Date evaluame, Integer whatIs) 
     {
         Integer result = 2;        
         if(evaluame.after(start) && evaluame.before(end)){
             result = 1;
+        }
+        /*
+         * whatIs=
+         * 1: Before Sowing
+         * 2: After Sowing
+         */
+        if (whatIs==1) {
+            if (evaluame.equals(end)) result = 1;
+        } else if (whatIs==2) {
+            if (evaluame.equals(start)) result = 1;
         }
         return result;
 
@@ -78,7 +88,7 @@ public class GlobalFunctions {
         } catch (ParseException ex) {
         }
 //        Date dateBefore = new Date(dateAsign);		
-        return check_in_range(dateBefore, date2, date1);
+        return check_in_range(dateBefore, date2, date1, 1);
 //		return self::check_in_range($dateBefore, $date2, $date1);
 	}
     
@@ -108,7 +118,7 @@ public class GlobalFunctions {
 //        System.out.println("dateAfter->"+dateAfter);
 //        System.out.println("date1->"+date1);
 //        Date dateAfter = new Date(dateAsign);
-        return check_in_range(date2, dateAfter, date1);
+        return check_in_range(date2, dateAfter, date1, 2);
         
 //		$dateAfter = ''.$dateAfter->format('Y-m-d');        
 //		return self::check_in_range($date2, $dateAfter, $date1);

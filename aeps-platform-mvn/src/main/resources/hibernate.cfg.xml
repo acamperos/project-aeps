@@ -92,6 +92,7 @@
     <mapping class="org.aepscolombia.platform.models.entity.ErrorReport"/>
     <mapping class="org.aepscolombia.platform.models.entity.CropsTypes"/>
     <mapping class="org.aepscolombia.platform.models.entity.ChemicalFertilizers"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ApplicationTypes"/>
     <mapping class="org.aepscolombia.platform.models.entity.UserEntity"/>
     <mapping class="org.aepscolombia.platform.models.entity.Producers"/>
     <mapping class="org.aepscolombia.platform.models.entity.Communes"/>

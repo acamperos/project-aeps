@@ -28,51 +28,6 @@
                                     </address>
                                 </div>
                             </div>
-                            <div class="panel">
-                                <div class="panel-heading">
-                                  <h3><i class="icon-time main-color"></i> Horarios de oficina</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <table class="table table-hover">
-                                      <thead>
-                                        <tr>
-                                          <th>Dia</th>
-                                          <th>Horario</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr class="success">
-                                          <td>Lunes</td>
-                                          <td>7:30 a 4:30</td>
-                                        </tr>
-                                        <tr class="success">
-                                          <td>Martes</td>
-                                          <td>7:30 a 4:30</td>
-                                        </tr>
-                                        <tr class="success">
-                                          <td>Miercoles</td>
-                                          <td>7:30 a 4:30</td>
-                                        </tr>
-                                        <tr class="success">
-                                          <td>Jueves</td>
-                                          <td>7:30 a 4:30</td>
-                                        </tr>
-                                        <tr class="success">
-                                          <td>Viernes</td>
-                                          <td>7:30 a 4:30</td>
-                                        </tr>
-                                        <tr class="error">
-                                          <td>Sabado</td>
-                                          <td>Dia libre</td>
-                                        </tr>
-                                        <tr class="error">
-                                          <td>Domingo</td>
-                                          <td>Dia libre</td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                         <div class="span7">
                             <div class="panel">

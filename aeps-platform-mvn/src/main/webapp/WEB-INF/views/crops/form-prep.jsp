@@ -26,6 +26,24 @@
                             <s:hidden name="actExe"/>
                             <s:hidden name="prep.idPrep"/>
                             <div class="control-group">
+                                <label for="formCropPrep_prep_preparationsTypes_idPreTyp" class="control-label req">
+                                    Tipo de preparación:
+                                </label>
+                                <div class="controls">
+                                    <s:select
+                                        name="prep.preparationsTypes.idPreTyp"
+                                        list="type_prep_typ" 
+                                        listKey="idPreTyp" 
+                                        listValue="namePreTyp"            
+                                        headerKey="-1" 
+                                        headerValue="---"
+                                        onchange="showOtherElementPrep(this.value, 'divNewPasses', 'divNewTypePrep', 'lblDepthPrep')"
+                                    />
+                                </div>                          
+                            </div>                          
+                        </div>
+                        <div class="span4" style="padding-left: 28px">                            
+                            <div class="control-group">
                                 <label for="formCropPrep_prep_datePrep" class="control-label req">
                                     Fecha de trabajo:
                                 </label>
@@ -36,40 +54,23 @@
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
-                        </div>                          
-                        <div class="span4" style="padding-left: 28px">
+                        </div>       
+                    </div>
+                    <div class="row hide" id="divNewPasses">
+                        <div class="span5">
                             <div class="control-group">
-                                <label for="formCropPrep_prep_depthPrep" class="control-label req">
+                                <label for="formCropPrep_prep_depthPrep" id="lblDepthPrep" class="control-label req">
                                      Profundidad del trabajo (cm): 
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="prep.depthPrep"/>
+                                    <s:number name="prep.depthPrep" type="integer" var="depthPreparation" />
+                                    <s:textfield name="prep.depthPrep" value="%{#depthPreparation}"/>
                                 </div> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label for="formCropPrep_prep_preparationsTypes_idPreTyp" class="control-label req">
-                                    Tipo de prepación:
-                                </label>
-                                <div class="controls">
-                                    <s:select
-                                        name="prep.preparationsTypes.idPreTyp"
-                                        list="type_prep_typ" 
-                                        listKey="idPreTyp" 
-                                        listValue="namePreTyp"            
-                                        headerKey="-1" 
-                                        headerValue="---"
-                                        onchange="showOtherElementPrep(this.value, 'divNewPasses', 'divNewTypePrep')"
-                                    />
-                                </div>                          
                             </div>                          
                         </div>     
-                        <div class="span4 hide" id="divNewPasses" style="padding-left: 28px">
+                        <div class="span4" style="padding-left: 28px">
                             <div class="control-group">
-                                <label for="formCropPrep_prep_passingsNumberPrep" class="control-label req">
+                                <label for="formCropPrep_prep_passingsNumberPrep" id="lblPassingsNumberPrep" class="control-label">
                                     Numero de pases:
                                 </label>
                                 <div class="controls">
@@ -139,13 +140,14 @@
                     <div id="divBtPrep">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completePrep" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Preparación</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropPrep'); addMessageProcess()" targets="divMessage" onCompleteTopics="completePrep" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Preparación</sj:submit>
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropPrep'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>
                 </fieldset>
             </s:form>	
-            <script>                
+            <script>    
+                $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completePrep', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropPrep', 'divPrep', event.originalEvent.request.responseText);
                     setTimeout(function() {

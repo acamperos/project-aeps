@@ -58,6 +58,7 @@ public class ActionSowing extends BaseAction {
     private Cassavas cass = new Cassavas();
     private Maize maize   = new Maize();
     private Sowing sowing = new Sowing();
+    private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
 
     //Metodos getter y setter por cada variable del formulario 
@@ -71,6 +72,14 @@ public class ActionSowing extends BaseAction {
     public void setBeans(Beans beans) {
         this.beans = beans;
     }
+
+    public ProductionEvents getEvent() {
+        return event;
+    }
+
+    public void setEvent(ProductionEvents event) {
+        this.event = event;
+    } 
 
     public Cassavas getCass() {
         return cass;
@@ -192,6 +201,7 @@ public class ActionSowing extends BaseAction {
             required.put("sowing.seedsNumberSow", sowing.getSeedsNumberSow());
             required.put("sowing.treatedSeedsSow", sowing.isTreatedSeedsSow());
             required.put("sowing.genotypes.idGen", sowing.getGenotypes().getIdGen());                
+            required.put("event.expected_production_pro_eve", event.getExpectedProductionProEve());                
             
 //            if (sowing.getGenotypesSowing().getIdGenSow()==1000000) {
             if (sowing.getGenotypes().getIdGen()==1000000) {
@@ -201,11 +211,14 @@ public class ActionSowing extends BaseAction {
             if (typeCrop==1) {
               required.put("sowing.genotypesSowing.idGenSow", sowing.getGenotypesSowing().getIdGenSow());
               required.put("maize.seedsColors.idSeeCol", maize.getSeedsColors().getIdSeeCol());
+              required.put("maize.seedsNumberSiteMai", maize.getSeedsNumberSiteMai());
             } else if (typeCrop==2) {
+              required.put("beans.seedsNumberSiteBea", beans.getSeedsNumberSiteBea());
               required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
               required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
+              required.put("sowing.seedsOrigins.idSeeOri", sowing.getSeedsOrigins().getIdSeeOri());
               required.put("beans.seedsTypes.idSeeTyp", beans.getSeedsTypes().getIdSeeTyp());
-              required.put("beans.seedsInoculations.idSeeIno", beans.getSeedsInoculations().getIdSeeIno());
+//              required.put("beans.seedsInoculations.idSeeIno", beans.getSeedsInoculations().getIdSeeIno());
               required.put("beans.growingEnvironment.idGroEnv", beans.getGrowingEnvironment().getIdGroEnv());
 
               if (beans.getOtroInoculationBea().equals("1000000")) {
@@ -227,25 +240,39 @@ public class ActionSowing extends BaseAction {
                 addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
+//            if (typeCrop==2) {
+            required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
+            if (sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
+                addFieldError("sowing.furrowsDistanceSow", "Dato invalido valor entre 0 y 10");
+                addActionError("Se ingreso una distancia entre surcos invalida, por favor ingresar un valor entre 0 y 10");
+            }
+
+            required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
+            if (sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
+                addFieldError("sowing.sitesDistanceSow", "Dato invalido valor entre 0 y 10");
+                addActionError("Se ingreso una distancia entre sitios invalida, por favor ingresar un valor entre 0 y 10");
+            }
+                
             if (typeCrop==2) {
-                required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
-                if (sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
-                    addFieldError("sowing.furrowsDistanceSow", "Dato invalido valor entre 0 y 10");
-                    addActionError("Se ingreso una distancia entre surcos invalida, por favor ingresar un valor entre 0 y 10");
-                }
-
-                required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
-                if (sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
-                    addFieldError("sowing.sitesDistanceSow", "Dato invalido valor entre 0 y 10");
-                    addActionError("Se ingreso una distancia entre sitios invalida, por favor ingresar un valor entre 0 y 10");
-                }
-
                 required.put("beans.seedsNumberSiteBea", beans.getSeedsNumberSiteBea());
-                if (beans.getSeedsNumberSiteBea()!=0 && (beans.getSeedsNumberSiteBea()<1 || beans.getSeedsNumberSiteBea()>50)) {
-                    addFieldError("beans.seedsNumberSiteBea", "Dato invalido valor entre 1 y 50");
-                    addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 50");
+                if (beans.getSeedsNumberSiteBea()!=0 && (beans.getSeedsNumberSiteBea()<=1 || beans.getSeedsNumberSiteBea()>=10)) {
+                    addFieldError("beans.seedsNumberSiteBea", "Dato invalido valor entre 1 y 10");
+                    addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 10");
                 }
-            } 
+            } else if (typeCrop==1) {
+                required.put("maize.seedsNumberSiteMai", maize.getSeedsNumberSiteMai());
+                if (maize.getSeedsNumberSiteMai()!=0 && (maize.getSeedsNumberSiteMai()<=1 || maize.getSeedsNumberSiteMai()>=10)) {
+                    addFieldError("maize.seedsNumberSiteMai", "Dato invalido valor entre 1 y 10");
+                    addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 10");
+                }
+            }
+
+            if (event.getExpectedProductionProEve()!=0) {
+                if (event.getExpectedProductionProEve()<0 || event.getExpectedProductionProEve()>30000) {
+                    addFieldError("event.expected_production_pro_eve", "Dato invalido valor entre 0 y 30000");
+                    addActionError("Se ingreso un rendimiento histórico obtenido invalido, por favor ingresar un valor entre 0 y 30000");
+                }
+            }
             
         }
     }     
@@ -283,6 +310,8 @@ public class ActionSowing extends BaseAction {
             
             String dmy   = new SimpleDateFormat("yyyy-MM-dd").format(sowing.getDateSow());
             Date dateSow = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
+            
+            session.saveOrUpdate(event);
             
             sowing.setProductionEvents(new ProductionEvents(idCrop));
             sowing.setDateSow(dateSow);          

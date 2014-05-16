@@ -27,6 +27,7 @@ public class Maize  implements java.io.Serializable {
      private ProductionEvents productionEvents;
      private Boolean status;
      private Integer createdBy;
+     private Integer seedsNumberSiteMai;
 
     public Maize() {
     }
@@ -35,8 +36,9 @@ public class Maize  implements java.io.Serializable {
     public Maize(ProductionEvents productionEvents) {
         this.productionEvents = productionEvents;
     }
-    public Maize(SeedsColors seedsColors, ProductionEvents productionEvents, Boolean status, Integer createdBy) {
+    public Maize(SeedsColors seedsColors, ProductionEvents productionEvents, Integer seedsNumberSiteMai, Boolean status, Integer createdBy) {
        this.seedsColors = seedsColors;
+       this.seedsNumberSiteMai = seedsNumberSiteMai;
        this.productionEvents = productionEvents;
        this.status = status;
        this.createdBy = createdBy;
@@ -78,6 +80,15 @@ public class Maize  implements java.io.Serializable {
     
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+    
+    @Column(name="seeds_number_site_mai")
+    public Integer getSeedsNumberSiteMai() {
+        return this.seedsNumberSiteMai;
+    }
+    
+    public void setSeedsNumberSiteMai(Integer seedsNumberSiteMai) {
+        this.seedsNumberSiteMai = seedsNumberSiteMai;
     }
     
     @Column(name="created_by")

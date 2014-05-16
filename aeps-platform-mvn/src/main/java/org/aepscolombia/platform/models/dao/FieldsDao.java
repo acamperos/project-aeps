@@ -145,7 +145,7 @@ public class FieldsDao
 //         ft.name_fie_typ
         sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
         sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, l.id_project_fie, e.name_ent, f.name_far, ft.name_fie_typ,";
-        sql += " e.entity_type_ent";
+        sql += " e.entity_type_ent, m.name_mun, le.date_log_ent";
         sql += " from fields l";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
         sql += " inner join field_types ft on ft.id_fie_typ=l.contract_type_fie";
@@ -157,7 +157,7 @@ public class FieldsDao
 //            sqlAdd += " and l.id_lote_lot_pro="+args.get("idLote");
 //        }
 //        sql += " left join lotes_productores lp on lp.id_lote_lot_pro=l.id_lot";
-//        sql += " inner join municipios m on (m.id_mun=f.id_municipio_fin)";
+        sql += " left join municipalities m on (m.id_mun=f.id_municipipality_far)";
 //        sql += " inner join departamentos dep on (dep.id_dep=m.id_departamento_mun)";
         sql += " inner join log_entities le on le.id_object_log_ent=l.id_fie and le.table_log_ent='fields' and le.action_type_log_ent='C'";   
 //        sql += " inner join fincas_productores fp on fp.id_finca_fin_pro=f.id_fin"; 
@@ -278,6 +278,8 @@ public class FieldsDao
                 temp.put("name_far", data[11]);
                 temp.put("name_type_lot", data[12]);
                 temp.put("typeEnt", data[13]);
+                temp.put("city", data[14]);
+                temp.put("dateLog", data[15]);
                 result.add(temp);
             }
 //            System.out.println("values->"+result);

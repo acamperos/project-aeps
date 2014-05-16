@@ -56,7 +56,7 @@
 <div style="margin-bottom: 15px" id="divBtMonitoring">
     <% String actExeMon   = String.valueOf(request.getAttribute("actExe")); %>
     <% if ((actExeMon=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeMon=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-        <sj:submit type="button" formIds="formCropMon" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completePhyMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Fisiología</sj:submit>
+        <sj:submit type="button" formIds="formCropMon" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropMon'); addMessageProcess()" targets="divMessage" onCompleteTopics="completePhyMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Fisiología</sj:submit>
     <% } %>
 </div>
 <script>

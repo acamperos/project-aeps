@@ -62,6 +62,8 @@
                 <th>Latitud</th>
                 <th>Longitud</th>
                 <th>Altura</th>
+                <th>Municipio</th>
+                <th>Fecha de creación</th>
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "field/delete"))) { %>                
                     <% if (value == "lot" || value.equals("lot")) {%>
                         <th>Accion</th>

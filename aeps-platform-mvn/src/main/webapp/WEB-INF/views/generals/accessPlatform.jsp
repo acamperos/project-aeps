@@ -12,7 +12,7 @@
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">       
-        <sj:head jqueryui="true"/>
+        <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
         <link rel="stylesheet" href="scripts/css/generals/login.css">			
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	

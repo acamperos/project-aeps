@@ -40,7 +40,10 @@
                     <legend>Caracteristicas y Observaciones</legend>
                     <s:hidden name="rasta.idRas"/>    
                     <div class="control-group">
-                        <s:label for="formRasta_nameField" cssClass="control-label req" value="Seleccione el lote al cual pertenece:"></s:label>
+                        <label for="formRasta_nameField" class="control-label req">
+                            Seleccione el lote al cual pertenece:
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Usar la lupa para seleccionar el lote en el cual se esta registrando el RASTA." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                        </label>
                         <div class="controls">
                             <s:hidden name="idField"/>
                             <s:textfield
@@ -62,13 +65,19 @@
                         </div>
                     </div>    
                     <div class="control-group">
-                        <s:label for="formRasta_rasta_latitudRas" cssClass="control-label req" value="Latitud del rasta (decimales):"></s:label>
+                        <label for="formRasta_rasta_latitudRas" class="control-label req">
+                            Latitud del rasta (decimales):
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la cajuela. Si su dispositivo esta parametrizado en decimales, ingresar la latitud aquí. Si esta en Grados, Minutos, Segundos (GMS) ingresar los datos en el siguiente campo." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                        </label>
                         <div class="controls">
                             <s:textfield cssClass="form-control" name="rasta.latitudRas" onkeyup="generateDegrees('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds')"/>
                         </div>
                     </div>
                     <div class="control-group">
-                        <s:label for="formRasta_rasta_latitude_degrees" cssClass="control-label req" value="Latitud del rasta (grados):"></s:label>
+                        <label for="formRasta_rasta_latitude_degrees" class="control-label req">
+                            Latitud del rasta (grados):
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la cajuela. Si su dispositivo esta parametrizado en en Grados, Minutos, Segundos (GMS), ingresar la latitud aquí. Si esta en decimales ingresar el dato en el campo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                        </label>
                         <div class="controls">
                             <div class="row-fluid">
                                 <div class="span2 input-prepend controls" style="width: 100px;">
@@ -87,31 +96,37 @@
                         </div>
                     </div>                            
                     <div class="control-group">
-                        <s:label for="formRasta_rasta_longitudRas" cssClass="control-label req" value="Longitud del rasta (decimales):"></s:label>
+                        <label for="formRasta_rasta_longitudRas" class="control-label req">
+                            Longitud del rasta (decimales):
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la cajuela. Si su dispositivo esta parametrizado en decimales, ingresar la longitud aquí. Si esta en Grados, Minutos, Segundos (GMS) ingresar los datos en el siguiente campo." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                        </label>
                         <div class="controls">
                             <s:textfield cssClass="form-control" id="formRasta_rasta_longitudRas" name="rasta.longitudRas" onkeyup="generateDegrees('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')"/>
                         </div>
                     </div>
                     <div class="control-group">
-                        <s:label for="formRasta_rasta_length_degrees" cssClass="control-label req" value="Longitud del rasta (grados):"></s:label>
-                            <div class="controls">
-                                <div class="row-fluid">
-                                    <div class="span2 input-prepend controls" style="width: 100px;">
-                                        <span class="add-on">Grados</span>
-                                        <input type="text" name="length_degrees" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_degrees" class="input-degrees"/>
-                                    </div>
-                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
-                                        <span class="add-on">Minutos</span>
-                                        <input type="text" name="length_minutes" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds'); checkValue('formRasta_rasta_length_minutes', 59);" id="formRasta_rasta_length_minutes" class="input-degrees"/>
-                                    </div>
-                                    <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2.2%">
-                                        <span class="add-on">Segundos</span>
-                                        <input type="text" name="length_seconds" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds'); checkValueSecond('formRasta_rasta_length_seconds', 60);" id="formRasta_rasta_length_seconds" class="input-degrees"/>
-                                    </div>
+                        <label for="formRasta_rasta_length_degrees" class="control-label req">
+                            Longitud del rasta (grados):
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas de la cajuela. Si su dispositivo esta parametrizado en en Grados, Minutos, Segundos (GMS), ingresar la longitud aquí. Si esta en decimales ingresar el dato en el campo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                        </label>
+                        <div class="controls">
+                            <div class="row-fluid">
+                                <div class="span2 input-prepend controls" style="width: 100px;">
+                                    <span class="add-on">Grados</span>
+                                    <input type="text" name="length_degrees" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds')" id="formRasta_rasta_length_degrees" class="input-degrees"/>
+                                </div>
+                                <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2%">
+                                    <span class="add-on">Minutos</span>
+                                    <input type="text" name="length_minutes" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds'); checkValue('formRasta_rasta_length_minutes', 59);" id="formRasta_rasta_length_minutes" class="input-degrees"/>
+                                </div>
+                                <div class="span2 input-prepend controls" style="width: 100px; margin-left: 2.2%">
+                                    <span class="add-on">Segundos</span>
+                                    <input type="text" name="length_seconds" onkeyup="generateDecimals('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds'); checkValueSecond('formRasta_rasta_length_seconds', 60);" id="formRasta_rasta_length_seconds" class="input-degrees"/>
                                 </div>
                             </div>
-                        </div>                             
-                        <div class="control-group">
+                        </div>
+                    </div>                             
+                    <div class="control-group">
                         <s:label for="formRasta_rasta_altitudRas" cssClass="control-label req" value="Altitud del rasta (metros):"></s:label>
                             <div class="controls">
                             <s:textfield cssClass="form-control" id="formRasta_rasta_altitudRas" name="rasta.altitudRas" tooltip="Ingrese la altitud del rasta en metros"/>
@@ -182,7 +197,7 @@
                                 <% //}%>
                             </tbody>
                         </table>
-                        <button type="button" class="btn btn-default" onclick="showRowAdditionalItem('../soil/showRowAdditional?action=<%=actionOpt%>&rowNew=<%=rowNew%>', 'tableAdit')">Agregar</button>
+                        <button type="button" class="btn btn-default" onclick="showRowAdditionalItem('../soil/showRowAdditional?action=<%=actionOpt%>&rowNew=<%=rowNew%>', 'tableAdit')"><i class="icon-plus"></i> Agregar</button>
                     </div> 
                     <div class="control-group">
                         <s:label for="formRasta_rasta_phRas" cssClass="control-label req" value="pH:"></s:label>
@@ -260,7 +275,7 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_horizontePedrogosoRocosoRas" cssClass="control-label" value="Horizonte pedregoso o rocoso:"></s:label>
                         <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divHorPedre')" name="rasta.horizontePedrogosoRocosoRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divHorPedre')" name="rasta.horizontePedrogosoRocosoRas" />
                         </div>
                     </div> 
                     <% String classHorPedre = "hide"; %>
@@ -294,7 +309,7 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_capasEndurecidasRas" cssClass="control-label" value="Capas endurecidas:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divCapasEnd')" name="rasta.capasEndurecidasRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divCapasEnd')" name="rasta.capasEndurecidasRas" />
                         </div>
                     </div>
                     <% String classCapasEnd = "hide"; %>
@@ -322,7 +337,7 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_moteadosRas" cssClass="control-label" value="Moteados:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divMoteado')" name="rasta.moteadosRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divMoteado')" name="rasta.moteadosRas" />
                         </div>
                     </div>
                     <% String classMoteado = "hide"; %>
@@ -340,7 +355,7 @@
                         <div class="control-group">
                             <s:label for="formRasta_rasta_moteadosMas70cmRas" cssClass="control-label" value="Moteados mas bajo de 70cm:"></s:label>
                                 <div class="controls radioSelect">
-                                <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.moteadosMas70cmRas" value="false" />
+                                <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.moteadosMas70cmRas" />
                             </div>
                         </div>
                     </div>
@@ -360,13 +375,13 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_erosionRas" cssClass="control-label" value="Erosion:"></s:label>
                         <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.erosionRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.erosionRas" />
                         </div>
                     </div>
                     <div class="control-group">
                         <s:label for="formRasta_rasta_mohoRas" cssClass="control-label" value="Moho:"></s:label>
                         <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.mohoRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.mohoRas" />
                         </div>
                     </div>
                     <div class="form-group control-group">
@@ -412,13 +427,13 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_regionSecaRas" cssClass="control-label" value="Region seca:"></s:label>
                         <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.regionSecaRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.regionSecaRas" />
                         </div>
                     </div>
                     <div class="control-group">
                         <s:label for="formRasta_rasta_raicesVivasRas" cssClass="control-label" value="Raices vivas:"></s:label>
-                            <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divRaicesVivas')" name="rasta.raicesVivasRas" value="false" />
+                        <div class="controls radioSelect">
+                            <s:radio list="#{'true':'Si', 'false':'No'}" onclick="showSelectionRasta(this.value, 'divRaicesVivas')" name="rasta.raicesVivasRas" />
                         </div>
                     </div>
                     <% String classRaicesVivas = "hide"; %>
@@ -429,7 +444,7 @@
                     <div class="<%= classRaicesVivas %>" id="divRaicesVivas">
                         <div class="control-group">
                             <s:label for="formRasta_rasta_profundidadRaicesRas" cssClass="control-label" value="Profundidad de raices vivas:"></s:label>
-                                <div class="controls">
+                            <div class="controls">
                                 <s:textfield cssClass="form-control" name="rasta.profundidadRaicesRas" tooltip="Ingrese la profundidad de raices vivas"/>&nbsp;cm
                             </div>
                         </div>
@@ -447,25 +462,25 @@
                         <div class="control-group">
                             <s:label for="formRasta_rasta_hojarascaRas" cssClass="control-label" value="Mucha hojarasca:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.hojarascaRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.hojarascaRas" />
                         </div>
                     </div>
                     <div class="control-group">
                         <s:label for="formRasta_rasta_sueloNegroBlandoRas" cssClass="control-label" value="Suelo es muy negro, muy blando:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.sueloNegroBlandoRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.sueloNegroBlandoRas" />
                         </div>
                     </div>
                     <div class="control-group">
                         <s:label for="formRasta_rasta_cuchilloPrimerHorizonteRas" cssClass="control-label" value="Cuchillo entra sin ningún esfuerzo:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.cuchilloPrimerHorizonteRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.cuchilloPrimerHorizonteRas" />
                         </div>
                     </div>
                     <div class="control-group">
                         <s:label for="formRasta_rasta_cercaRiosQuebradasRas" cssClass="control-label" value="Cerca de agua subterránea muy superficial:"></s:label>
                             <div class="controls radioSelect">
-                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.cercaRiosQuebradasRas" value="false" />
+                            <s:radio list="#{'true':'Si', 'false':'No'}" name="rasta.cercaRiosQuebradasRas" />
                         </div>
                     </div>
                     <div class="form-group control-group">
@@ -487,7 +502,7 @@
                     <s:hidden name="newRow" value="1"/>    
                     <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                     <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "soil/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify"))) { %>                
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
+                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formRasta'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
                     <% } %>
                     <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                 </div>    
@@ -594,6 +609,9 @@
                         showInfo("searchSoil.action?page=" + page, "divConListRasta");
                     }, 2000);
                 });
+                if($('.pop-over').length) {
+                    $('.pop-over').popover();
+                }
             </script>
         </div>
         <div class="row-fluid" id="divListRastaForm"></div>

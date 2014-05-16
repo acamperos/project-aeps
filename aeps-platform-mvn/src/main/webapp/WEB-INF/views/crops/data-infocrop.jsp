@@ -43,10 +43,10 @@
                         <th>Cultivo anterior</th>
                         <td><s:property value="lastTypeCrop" /></td>
                     </tr>
-                    <tr>
+<!--                    <tr>
                         <th>Se hace drenaje en la parcela</th>
                         <td><s:property value="nameDrainPlot" /></td>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
         </fieldset>

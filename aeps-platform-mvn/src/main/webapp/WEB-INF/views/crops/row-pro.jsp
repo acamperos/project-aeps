@@ -12,10 +12,10 @@
     <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete"))) { %>
         <div class="btn-group">
             <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify")) { %>
-                <a class="btn btn-small" title="Editar Control" onclick="viewForm('/aeps-plataforma-mvn/crop/showCon.action?action=modify&idCrop=${idCrop}', 'idCon', ${idCon}, 'Editar Control', 1050, 550);"><i class="icon-pencil"></i></a>
+                <a class="btn btn-small btn-edit" title="Editar Control" onclick="viewForm('/aeps-plataforma-mvn/crop/showCon.action?action=modify&idCrop=${idCrop}', 'idCon', ${idCon}, 'Editar Control', 1050, 550);"><i class="icon-pencil"></i></a>
             <% } %>
             <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete")) { %>
-                <a class="btn btn-small delete_rows_dt" title="Borrar Control" onclick="showDialogDelete(this, 'confirm_dialog_con', 'deleteCon.action?idCon=${idCon}', 'searchCon.action?idCrop=${idCrop}', 'divPro', 'divListPro');"><i class="icon-trash"></i></a>
+                <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Control" onclick="showDialogDelete(this, 'confirm_dialog_con', 'deleteCon.action?idCon=${idCon}', 'searchCon.action?idCrop=${idCrop}', 'divPro', 'divListPro');"><i class="icon-trash"></i></a>
             <% } %>
         </div>
     <% } %>

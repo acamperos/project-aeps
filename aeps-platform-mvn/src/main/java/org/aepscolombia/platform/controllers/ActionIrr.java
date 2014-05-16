@@ -194,13 +194,13 @@ public class ActionIrr extends BaseAction {
             boolean enter = false;
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
-            required.put("irr.useIrrigationIrr", irr.getUseIrrigationIrr());           
+//            required.put("irr.useIrrigationIrr", irr.getUseIrrigationIrr());           
             
-            if (irr.getUseIrrigationIrr()!=null && irr.getUseIrrigationIrr()) {
+//            if (irr.getUseIrrigationIrr()!=null && irr.getUseIrrigationIrr()) {
                 required.put("irr.dateIrr", irr.getDateIrr());
-                required.put("irr.amountIrr", irr.getAmountIrr());
+//                required.put("irr.amountIrr", irr.getAmountIrr());
                 required.put("irr.irrigationsTypes.idIrrTyp", irr.getIrrigationsTypes().getIdIrrTyp());
-            }           			       	               
+//            }           			       	               
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -338,6 +338,7 @@ public class ActionIrr extends BaseAction {
             String dmy    = new SimpleDateFormat("yyyy-MM-dd").format(irr.getDateIrr());
             Date dateIrr = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
             
+            irr.setUseIrrigationIrr(true);
             irr.setProductionEvents(new ProductionEvents(idCrop));
             irr.setDateIrr(dateIrr);          
 //            if (sowing.getChemicalsSowing().getIdCheSow()==-1) {

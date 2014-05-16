@@ -74,13 +74,14 @@
                     <div id="divBtMon">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Monitoreo</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropMonGen'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeMon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Monitoreo</sj:submit>
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropMonGen'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>
                 </fieldset>
             </s:form>	
-            <script>                
+            <script>       
+                $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completeMon', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropMonGen', 'divMon', event.originalEvent.request.responseText);
                     setTimeout(function() {

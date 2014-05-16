@@ -433,7 +433,8 @@ public class ActionProfile extends BaseAction {
         } else if (actExe.equals("configSetting")) {
             if (this.getChangePass()) {
                 String saltUsr=user.getSaltUsr();
-                String passRes = GlobalFunctions.generateSHA1(this.getPassActual(), saltUsr);
+//                String passRes = GlobalFunctions.generateSHA1(this.getPassActual(), saltUsr);
+                String passRes = GlobalFunctions.generateMD5(saltUsr+this.getPassActual());
 
                 Users loggedUser = userDao.login(user.getNameUserUsr(), passRes);
                 if (loggedUser == null) {
@@ -551,8 +552,11 @@ public class ActionProfile extends BaseAction {
         try {
             state = "success";
             if (this.getChangePass()) {
-                String saltUsr = GlobalFunctions.getSalt();
-                String passRes = GlobalFunctions.generateSHA1(newPass, saltUsr);
+//                String saltUsr = GlobalFunctions.getSalt();
+//                String passRes = GlobalFunctions.generateSHA1(newPass, saltUsr);
+                Double salt = (Math.floor(Math.random()*999999+100000));
+                String saltUsr = GlobalFunctions.generateMD5(salt+user.getNameUserUsr());
+                String passRes = GlobalFunctions.generateMD5(saltUsr+newPass);
 
                 user.setSaltUsr(saltUsr);
                 user.setPasswordUsr(passRes);
@@ -579,10 +583,10 @@ public class ActionProfile extends BaseAction {
             }
             state = "failure";
             info  = "Fallo al momento de cambiar la informacion de configuracion";
-        } catch (NoSuchAlgorithmException ex) {
-//            java.util.logging.Logger.getLogger(ActionProfile.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchProviderException ex) {
-//            java.util.logging.Logger.getLogger(ActionProfile.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (NoSuchAlgorithmException ex) {
+////            java.util.logging.Logger.getLogger(ActionProfile.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (NoSuchProviderException ex) {
+////            java.util.logging.Logger.getLogger(ActionProfile.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             session.close();
         }

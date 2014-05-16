@@ -12,19 +12,14 @@
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 				
-        <sj:head jqueryui="true"/>
-        <sb:head includeScripts="true" includeScriptsValidation="true"/>	
-        <link rel="stylesheet" href="scripts/css/generals/beoro.css">
+        <sj:head jqueryui="false"/>
+        <sb:head includeScripts="true" includeScriptsValidation="true"/>
+        <script type="text/javascript" src="scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>
         <link rel="stylesheet" href="scripts/css/generals/login.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>	
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	        
+        <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <s:actionerror theme="bootstrap"/>
@@ -41,9 +36,17 @@
                         <s:hidden name="actExe" value="changepass"/>
                         <s:hidden name="idUser"/>
                         <div class="form-group control-group">
-                            <label class="control-label" for="formRestCon_passRest">Nueva Contrasena *:</label>
-                            <div class="controls">
-                                <s:password class="form-control" id="formRestCon_passRest" name="passRest"/>
+                            <div class="row-fluid">
+                                <div class="span5" style="width: 67%;">
+                                    <label class="control-label" for="formRestCon_passRest">Nueva Contrasena *:</label>
+                                    <div class="controls">
+                                        <s:password class="form-control" id="formRestCon_passRest" name="passRest"/>
+                                        <div id="pwdMeter" class="progress progress-danger">
+                                            <div class="bar" style="width: 0%"></div>
+                                            <span class="pwdText pwdTextRes"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group control-group">
@@ -58,6 +61,19 @@
                         </div>                            
                     </s:form>
                     <script>
+                        if($('#formRestCon_passRest').length) {
+                            $('#formRestCon_passRest').pwdMeter({
+                                minLength: 6,
+                                displayGeneratePassword: false,
+                                neutralText:"",
+                                veryWeakText:"Muy Debil",
+                                weakText:"Debil",
+                                mediumText:"Normal",
+                                strongText:"Fuerte",
+                                veryStrongText:"Muy Fuerte"
+                            });  
+                        }
+                        
                         $.subscribe('completeRestore', function(event, data) {
                             $.unblockUI();
                             completeFormChange('', 'formRestCon', event.originalEvent.request.responseText);

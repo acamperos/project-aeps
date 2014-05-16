@@ -44,7 +44,8 @@ public class FarmsDao
         
         String sql = "";
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
-        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_department_mun, f.status";
+        sql += " f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.name_mun, m.id_mun, m.id_department_mun, f.status,";
+        sql += " le.date_log_ent";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
@@ -77,6 +78,7 @@ public class FarmsDao
                 temp.put("lane_farm", data[11]);
                 temp.put("id_mun", data[13]);
                 temp.put("id_dep", data[14]);        
+                temp.put("dateLog", data[16]);        
                 result = (temp);
             }
             tx.commit();
@@ -248,7 +250,7 @@ public class FarmsDao
 //        sql += " order by e.name_ent ASC";
         sql += " order by f.name_far ASC";
 //        events.toArray();
-        System.out.println("sql->"+sql);
+//        System.out.println("sql->"+sql);
         try {
             tx = session.beginTransaction();
 //            Query query = session.createSQLQuery(sql);

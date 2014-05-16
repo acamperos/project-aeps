@@ -41,7 +41,6 @@
             <div class="control-group">
                 <label for="formProfile_digVer" class="control-label">
                     Digito de verificación:
-                    <!--<i class="icon-info-sign s2b_tooltip" title="Ingrese su digito de verificación"></i>-->
                 </label>
                 <div class="controls">
                     <s:textfield name="digVer" />

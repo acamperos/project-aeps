@@ -21,7 +21,7 @@
                     <s:hidden name="idProducer"/>
                     <label for="formProducer_typeIdent" class="control-label req">
                         Tipo de documento:
-                        <i class="icon-info-sign s2b_tooltip" title="Seleccione un tipo de documento"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Seleccione un tipo de documento." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:select            
@@ -39,7 +39,7 @@
                 <div class="control-group">
                     <label for="formProducer_num_ident_producer" class="control-label req">
                         Numero de documento:
-                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su numero de cedula"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su numero de cedula." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:textfield name="num_ident_producer" />
@@ -58,7 +58,7 @@
                     <div class="control-group">
                         <label for="formProducer_dig_ver_producer" class="control-label req">
                             Digito de verificación:
-                            <i class="icon-info-sign s2b_tooltip" title="Ingrese su digito de verificación"></i>
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su digito de verificación." data-title="Información" data-placement="right" data-trigger="hover"></i>
                         </label>
                         <div class="controls">
                             <s:textfield name="dig_ver_producer" />
@@ -113,7 +113,7 @@
                     <div class="control-group">
                         <label for="formProducer_emailRes" class="control-label req">
                             Correo electrónico del responsable:
-                            <i class="icon-info-sign s2b_tooltip" title="Ingrese su correo electrónico"></i>
+                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el correo electrónico del responsable." data-title="Información" data-placement="right" data-trigger="hover"></i>
                         </label>
                         <div class="controls">
                             <s:textfield type="email" name="emailRes" />
@@ -128,7 +128,7 @@
                             <div class="control-group">
                                 <label for="formProducer_names_producer_1" class="control-label req">
                                     Primer nombre:
-                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer nombre"></i>
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su primer nombre." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
                                     <s:textfield name="names_producer_1" />
@@ -139,7 +139,7 @@
                             <div class="control-group">
                                 <label for="formProducer_names_producer_2" class="control-label">
                                     Segundo nombre:
-                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo nombre"></i>
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su segundo nombre." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
                                     <s:textfield name="names_producer_2" />
@@ -152,7 +152,7 @@
                             <div class="control-group">
                                 <label for="formProducer_last_names_producer_1" class="control-label req">
                                     Primer apellido:
-                                    <i class="icon-info-sign s2b_tooltip" title="Ingrese su primer apellido"></i>
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su primer apellido." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
                                     <s:textfield name="last_names_producer_1" />
@@ -164,7 +164,7 @@
                                 <div class="control-group">
                                     <label for="formProducer_last_names_producer_2" class="control-label">
                                         Segundo apellido:
-                                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su segundo apellido"></i>
+                                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su segundo apellido." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="last_names_producer_2" />
@@ -177,7 +177,7 @@
                 <div class="control-group">
                     <label for="formProducer_direction_producer" class="control-label">
                         Dirección:
-                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su dirección"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su dirección." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:textfield name="direction_producer" />
@@ -186,7 +186,7 @@
                 <div class="control-group">
                     <label for="formProducer_depPro" class="control-label req">
                         Departamento:
-                        <i class="icon-info-sign s2b_tooltip" title="Seleccione un departamento"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Seleccione un departamento." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:select
@@ -202,7 +202,7 @@
                 <div class="control-group">
                     <label for="formProducer_cityPro" class="control-label req">
                         Municipio:
-                        <i class="icon-info-sign s2b_tooltip" title="Seleccione un municipio"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Seleccione un municipio." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:select
@@ -218,7 +218,7 @@
                 <div class="control-group">
                     <label for="formProducer_telephone_producer" class="control-label">
                         Teléfono fijo:
-                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su teléfono fijo"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su teléfono fijo." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:textfield name="telephone_producer" />
@@ -227,7 +227,7 @@
                 <div class="control-group">
                     <label for="formProducer_celphone_producer" class="control-label">
                         Celular:
-                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su celular"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su celular." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:textfield name="celphone_producer" />
@@ -236,7 +236,7 @@
                 <div class="control-group">
                     <label for="formProducer_email_producer" class="control-label">
                         Correo electrónico:
-                        <i class="icon-info-sign s2b_tooltip" title="Ingrese su correo electrónico"></i>
+                        <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese su correo electrónico." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
                         <s:textfield type="email" name="email_producer" />
@@ -262,7 +262,7 @@
                 <%--<sj:submit cssClass="btn btn-inverse" targets="divBodyLayout" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>--%>
                 <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                 <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "producer/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify"))) { %>
-                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
+                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formProducer'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
                 <% } %>
                 <!--<button class="btn btn-inverse" onclick="saveData('saveProducer.action','searchProducer.action?page=<%=pageNow%>','formProducer');">Guardar productor</button>-->
                 <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
@@ -308,6 +308,9 @@
                     }, 2000);
 //                }
             });
+            if($('.pop-over').length) {
+                $('.pop-over').popover();
+            }
         </script>
     </body>
 </html>

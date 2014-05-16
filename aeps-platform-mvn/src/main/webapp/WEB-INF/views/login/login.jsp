@@ -12,27 +12,20 @@
         <title>AEPS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width"> 
-        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet'> -->        
         <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
         <!--<link rel="stylesheet" href="scripts/css/jquery/jquery.validate.password.css"/>-->
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
-        <script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>
-        <script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>
+        <!--<script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>-->
+        <!--<script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>-->
         <script type="text/javascript" src="scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>
-        <!--<link rel="stylesheet" href="scripts/css/generals/beoro.css">-->
+        <!--<script type="text/javascript" src="scripts/js/jquery/jquery-1.9.0.min.js"></script>-->
         <link rel="stylesheet" href="scripts/css/generals/login.css">
         <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">
         <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
         <!--<link rel="stylesheet" href="scripts/css/generals/main.css">-->
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>				
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
         <script type="text/javascript">            
             (function(a) {
@@ -119,7 +112,7 @@
                 <s:fielderror theme="bootstrap"/>      
                 <div class="panel" id="divRegisterUser">
                     <h3 class="heading_main"><s:property value="getText('text.titlecontact.login')" /></h3>
-                    <s:form id="formLogin" action="login.action" method="post" theme="simple">
+                    <s:form id="formLogin" action="login.action" method="post">
                         <s:hidden name="actExe" value="login"/>
                         <!--                        <div class="control-group error">
                                                     <label class="control-label" for="inputError">Input with error</label>
@@ -130,7 +123,11 @@
                                                 </div>-->
                         <div class="row">
                             <div class="span6 control-group">
-                                <label class="control-label" for="formLogin_username"><s:property value="getText('text.user.login')" /></label>
+                                <label class="control-label" for="formLogin_username">
+                                    <s:property value="getText('text.user.login')" />
+                                    <!--<img src="http://g.etfv.co/http://www.cnn.com" alt="Google" width="16" height="16" />-->
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="El usuario es su correo electrónico que registro al inscribirse." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                                </label>
                                 <div class="controls">
                                     <s:textfield id="formLogin_username" name="username"/>
                                 </div>                         
@@ -169,7 +166,7 @@
                 <!--<div id="result"></div>-->
                 <div class="panel" style="display:none" id="divRestoreUser">
                     <h3 class="heading_main">No puede ingresar?</h3>
-                    <s:form id="formValidate" action="restorePassword.action" method="post" theme="simple">
+                    <s:form id="formValidate" action="restorePassword.action" method="post">
                         <s:hidden name="actExe" value="restuser"/>
                         <div class="row">
                             <!--                            <div class="span6">
@@ -205,10 +202,16 @@
                 </div>
                 <div class="panel" style="display:none" id="divNewUser">
                     <h3 class="heading_main">Creaci&oacute;n de nuevo usuario</h3>
-                    <s:form id="formNewUser" action="saveUser.action" method="post" theme="simple">
+                    <s:form id="formNewUser" action="saveUser.action" method="post">
                         <s:hidden name="actExe" value="newuser"/>
                         <div class="form-group control-group">
-                            <label class="control-label req" for="formNewUser_typeUser">Tipo de usuario:</label>
+                            <label class="control-label req" for="formNewUser_typeUser">
+                                Tipo de usuario:
+                                <i class="icon-info-sign itooltip s2b_tooltip pop-over" data-content="<strong>Use el perfil Productor</strong>: si usted administra directamente una o varias fincas de las cuales quiere registrar datos.<br/>
+                                <strong>Use el perfil Agronomo</strong>: si usted asesora a varios productores de los cuales usted va a registrar datos (si ellos no pueden registrar sus datos ellos mismos).<br/>
+                                <strong>Use el perfil Gremio</strong>: si usted es responsable de varios agronomos que colectan datos. Usted podra ver y administrar los datos de sus agronomos, pero no podra ingresar datos de fincas
+                                ." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                            </label>
                             <div class="controls">
                                 <s:select
                                     name="typeUser"
@@ -221,11 +224,11 @@
                         </div>
                         <div class="hide" id="divWorkType">
                             <div class="form-group control-group">
-                                <label for="formNewUser_workType" class="control-label req">Usted como trabaja:</label>
+                                <label for="formNewUser_workType" class="control-label req">Usted trabaja como:</label>
                                 <div class="controls">
                                     <s:select
                                         name="workType"
-                                        list="#{'1':'Freelance', '2':'Unas fincas', '3':'Empresa privada', '4':'Gremio', '5':'Entidades nacionales'}"           
+                                        list="#{'1':'Como independiente', '3':'Para empresa privada', '4':'Para gremio', '5':'Para entidades gubernamentales'}"           
                                         headerKey="-1" 
                                         headerValue="---"   
                                         onchange="showOtherElementWorkType(this.value, 'divAssociationAdd');"
@@ -298,6 +301,25 @@
                                                 veryStrongText:"Muy Fuerte"
                                             });  
                                         }
+                                        
+                                        $('.itooltip').popover({
+//                                            placement: wheretoplace,
+                                            html: true, 
+                                            trigger: 'hover', 
+                                            template: '<div class="popover whatever-you-want"><div class="arrow" style="top:65px;"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+                                        });
+                                        
+//                                        $('[data-toggle=popover]').popover();
+//
+//                                        $('[data-toggle=popover]').on('shown.bs.popover', function () {
+//                                          $('.popover').css('top',parseInt($('.popover').css('top')) + 52 + 'px !important')
+//                                        })
+
+//                                        function wheretoplace(){
+//                                            var width = window.innerWidth;
+//                                            if (width<500) return 'bottom';
+//                                            return 'right';
+//                                        }
                                     </script>
                                 </div>
                             </div>
@@ -344,6 +366,9 @@
                         $.subscribe('completeUser', function(event, data) {
                             completeForm('', 'formNewUser', event.originalEvent.request.responseText);
                         });
+                        if($('.pop-over').length) {
+                            $('.pop-over').popover({html:true});
+                        }
                     </script>
                 </div>
             </div>

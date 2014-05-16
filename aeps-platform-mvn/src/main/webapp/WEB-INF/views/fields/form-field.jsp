@@ -36,7 +36,7 @@
                                 <s:hidden name="idFarm"/>
                                 <label for="formField_name_property_lot" class="control-label req">
                                     Seleccione la Finca:
-                                    <i class="icon-info-sign s2b_tooltip" title="Seleccione la finca en la lupa a la derecha"></i>
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="Usar la lupa para seleccionar la finca a la cual pertenece el lote que va a registrar." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
                                     <s:textfield name="name_property_lot" readonly="true" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
@@ -47,7 +47,8 @@
                         <div class="control-group">
                             <label for="formField_typeLot" class="control-label req">
                                 El lote es:
-                                <i class="icon-info-sign s2b_tooltip" title="Seleccione que tipo de lote es"></i>
+                                <!--<i class="icon-info-sign s2b_tooltip" title="Seleccione que tipo de lote es"></i>-->
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Seleccionar el régimen de tenencia del lote." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <!--requiredLabel="true"-->
@@ -63,7 +64,7 @@
                         <div class="control-group">
                             <label for="formField_name_lot" class="control-label req">
                                 Nombre de Lote:
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese el nombre del lote asociado"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el nombre del lote asociado." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="name_lot" />
@@ -72,7 +73,7 @@
                         <div class="control-group">
                             <label for="formField_latitude_lot" class="control-label req">
                                 Latitud del lote (decimales):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la latitud del lote asociada"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas del lote. Si su dispositivo esta parametrizado en decimales, ingresar la latitud aquí. Si esta en Grados, Minutos, Segundos (GMS) ingresar los datos en el siguiente campo." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield cssClass="form-control" name="latitude_lot" onkeyup="generateDegrees('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot')"/>
@@ -81,6 +82,7 @@
                         <div class="control-group">
                             <label for="formField_latitude_degrees_lot" class="control-label req">
                                 Latitud del lote (grados):
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas del lote. Si su dispositivo esta parametrizado en en Grados, Minutos, Segundos (GMS), ingresar la latitud aquí. Si esta en decimales ingresar el dato en el campo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <div class="row-fluid">
@@ -102,6 +104,7 @@
                         <div class="control-group">
                             <label for="formField_length_lot" class="control-label req">
                                 Longitud del Lote (decimales):
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas del lote. Si su dispositivo esta parametrizado en decimales, ingresar la longitud aquí. Si esta en Grados, Minutos, Segundos (GMS) ingresar los datos en el siguiente campo." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield cssClass="form-control" id="formField_length_lot" name="length_lot" onkeyup="generateDegrees('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot')"/>
@@ -110,7 +113,7 @@
                         <div class="control-group">
                             <label for="formField_length_degrees_lot" class="control-label req">
                                 Longitud del Lote (grados):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la longitud del lote asociada"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Hacer uso de un GPS, o de un smartphone para capturar las coordenadas del lote. Si su dispositivo esta parametrizado en en Grados, Minutos, Segundos (GMS), ingresar la longitud aquí. Si esta en decimales ingresar el dato en el campo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <div class="row-fluid">
@@ -132,7 +135,7 @@
                         <div class="control-group">
                             <label for="formField_altitude_lot" class="control-label req">
                                 Altitud del Lote (metros):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese la altitud del lote en metros"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la altitud del lote en metros." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="altitude_lot" />
@@ -141,7 +144,7 @@
                         <div class="control-group">
                             <label for="formField_area_lot" class="control-label req">
                                 Area del Lote (hectarea):
-                                <i class="icon-info-sign s2b_tooltip" title="Ingrese el area del lote"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el area del lote." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="area_lot" requiredLabel="true" />
@@ -155,7 +158,7 @@
                         <s:hidden name="viewInfo"/>
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "field/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "field/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formField'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
                         <% } %>
                         <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')"><i class="icon-save"></i>  Guardar informaci&oacute;n</button>-->
                         <button class="btn btn-large bt_cancel_field" onclick="resetForm('formField'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
@@ -196,6 +199,9 @@
                                 showInfo("searchField.action?page="+$("#formField_page").val(), "divConListFields");
                             }, 2000);
                         });
+                        if($('.pop-over').length) {
+                            $('.pop-over').popover();
+                        }
                                 //            chargeValues('/aeps-plataforma-mvn/templates/listarTiposFields.action', 'proId', '', 'formField_type_property_lot', 'divMessage');
                 </script>
             </div>

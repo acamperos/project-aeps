@@ -132,7 +132,7 @@
     <div style="margin-bottom: 15px" id="divBtHarvest">
         <% String actExeHar   = String.valueOf(request.getAttribute("actExe")); %>
         <% if ((actExeHar=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeHar=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeHarvest" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Cosecha</sj:submit>
+            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropHar'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeHarvest" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Cosecha</sj:submit>
         <% } %>
         <!--<button class="btn btn_default" onclick="resetForm('formCropHar')"><i class="icon-ban-circle"></i>  Cancelar</button>-->
     </div>
