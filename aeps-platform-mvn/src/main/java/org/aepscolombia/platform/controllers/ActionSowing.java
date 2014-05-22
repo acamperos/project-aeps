@@ -19,6 +19,7 @@ import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Beans;
 import org.aepscolombia.platform.models.entity.Cassavas;
+import org.aepscolombia.platform.models.entity.CropsTypes;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Maize;
@@ -217,7 +218,7 @@ public class ActionSowing extends BaseAction {
               required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
               required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
               required.put("sowing.seedsOrigins.idSeeOri", sowing.getSeedsOrigins().getIdSeeOri());
-              required.put("beans.seedsTypes.idSeeTyp", beans.getSeedsTypes().getIdSeeTyp());
+//              required.put("beans.seedsTypes.idSeeTyp", beans.getSeedsTypes().getIdSeeTyp());
 //              required.put("beans.seedsInoculations.idSeeIno", beans.getSeedsInoculations().getIdSeeIno());
               required.put("beans.growingEnvironment.idGroEnv", beans.getGrowingEnvironment().getIdGroEnv());
 
@@ -255,13 +256,13 @@ public class ActionSowing extends BaseAction {
                 
             if (typeCrop==2) {
                 required.put("beans.seedsNumberSiteBea", beans.getSeedsNumberSiteBea());
-                if (beans.getSeedsNumberSiteBea()!=0 && (beans.getSeedsNumberSiteBea()<=1 || beans.getSeedsNumberSiteBea()>=10)) {
+                if (beans.getSeedsNumberSiteBea()!=0 && (beans.getSeedsNumberSiteBea()<1 || beans.getSeedsNumberSiteBea()>10)) {
                     addFieldError("beans.seedsNumberSiteBea", "Dato invalido valor entre 1 y 10");
                     addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 10");
                 }
             } else if (typeCrop==1) {
                 required.put("maize.seedsNumberSiteMai", maize.getSeedsNumberSiteMai());
-                if (maize.getSeedsNumberSiteMai()!=0 && (maize.getSeedsNumberSiteMai()<=1 || maize.getSeedsNumberSiteMai()>=10)) {
+                if (maize.getSeedsNumberSiteMai()!=0 && (maize.getSeedsNumberSiteMai()<1 || maize.getSeedsNumberSiteMai()>10)) {
                     addFieldError("maize.seedsNumberSiteMai", "Dato invalido valor entre 1 y 10");
                     addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 10");
                 }
@@ -311,6 +312,10 @@ public class ActionSowing extends BaseAction {
             String dmy   = new SimpleDateFormat("yyyy-MM-dd").format(sowing.getDateSow());
             Date dateSow = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
             
+//            event.setFields(event.getFields());
+//            event.setCropsTypes(new CropsTypes(2));
+//            event.setIdProjectProEve(event.getIdProjectProEve());
+//            event.setStatus(event.isStatus());
             session.saveOrUpdate(event);
             
             sowing.setProductionEvents(new ProductionEvents(idCrop));
@@ -319,7 +324,7 @@ public class ActionSowing extends BaseAction {
                 sowing.setChemicalsSowing(null);
             }
             
-            if (sowing.getDoseUnits().getIdDosUni()==-1 || sowing.getChemicalsSowing().getIdCheSow()==3) {
+            if (sowing.getDoseUnits()!=null && (sowing.getDoseUnits().getIdDosUni()==-1 || sowing.getChemicalsSowing().getIdCheSow()==3)) {
                 sowing.setDoseUnits(null);
             }
 //            sowing.setSowingTypes(new SowingTypes(idCrop));          
@@ -337,7 +342,8 @@ public class ActionSowing extends BaseAction {
                 maize.setProductionEvents(new ProductionEvents(idCrop));
                 maize.setStatus(true);
                 session.saveOrUpdate(maize);
-            } else if (typeCrop==2) {         
+            } else if (typeCrop==2) {  
+                beans.setSeedsTypes(null);
                 beans.setProductionEvents(new ProductionEvents(idCrop));
                 beans.setStatus(true);
                 session.saveOrUpdate(beans);

@@ -363,7 +363,7 @@ public class ActionField extends BaseAction {
             required.put("name_lot", name_lot);
             required.put("typeLot", typeLot);
             required.put("altitude_lot", altitude_lot);
-            required.put("area_lot", area_lot);
+//            required.put("area_lot", area_lot);
             boolean enter = false;
             
 //            if (option_geo_lot == 1) {

@@ -27,7 +27,7 @@
                             <s:hidden name="fer.idFer"/>
                             <div class="control-group">
                                 <label for="formCropFer_fer_dateFer" class="control-label req">
-                                    Fecha del aplicación:
+                                    Fecha de aplicación:
                                 </label>
                                 <div class="date controls">
                                     <s:date name="fer.dateFer" format="dd/MM/yyyy" var="dateTransformFer"/>
@@ -73,13 +73,20 @@
                                             listValue="nameAppTyp"            
                                             headerKey="-1" 
                                             headerValue="---"
-                                            onchange="showOtherElementChemical('formCropFer_ferChe_chemicalFertilizers_idCheFer', 'formCropFer_ferChe_applicationTypes_idAppTyp', 'divNewProQui')"
+                                            onchange="showOtherElementChemical('formCropFer_ferChe_chemicalFertilizers_idCheFer', 'formCropFer_ferChe_applicationTypes_idAppTyp', 'divNewProQui')
+                                            showApplicationProduct('formCropFer_ferChe_applicationTypes_idAppTyp', 'formCropFer_ferChe_chemicalFertilizers_idCheFer', 'divAppProduct', 'divNewProQui', 'divPerEda');
+                                            "
                                         />
                                     </div>                         
                                 </div>                          
                             </div>   
                         </div> 
-                        <div class="row">
+                        <% String classAppTyp="hide"; %>
+                        <s:set name="idAppTyp" value="ferChe.applicationTypes.idAppTyp"/>
+                        <s:if test="%{#idAppTyp==1}">
+                            <% classAppTyp = "";%>
+                        </s:if> 
+                        <div class="row <%= classAppTyp %>" id="divAppProduct">
                             <div class="span5">
                                 <s:hidden name="ferChe.idCheFer"/>
                                 <div class="control-group">
@@ -102,7 +109,7 @@
                         </div> 
                         <% String classNewProChe="hide"; %>
                         <s:set name="idCheFer" value="ferChe.chemicalFertilizers.idCheFer"/>
-                        <s:if test="%{#idCheFer==1000000}">
+                        <s:if test="%{#idCheFer==1000000 || #idAppTyp==2}">
                             <% classNewProChe = "";%>
                         </s:if> 
                         <div class="<%= classNewProChe %>" id="divNewProQui">
@@ -120,11 +127,15 @@
                             </div>
                             <!--<div class="row">-->
                                 <!--<div class="span12">-->
-                                    <div class="row" style="margin-left:153px">
+                                    <% String classEdafico="hide"; %>
+                                    <s:if test="%{#idAppTyp==1}">
+                                        <% classEdafico = "";%>
+                                    </s:if>
+                                    <div class="row <%= classEdafico %>" id="divPerEda" style="margin-left:153px">
                                         <table class="tableComposition" style="width:50%">
                                             <thead>
                                                 <tr>
-                                                    <td colspan="2"><label>Manejar valores en porcentajes</label></td>
+                                                    <td colspan="5"><label>Manejar valores en porcentajes (Ingresar por lo menos alguna de las composiciones)</label></td>
                                                 </tr>
                                             </thead>
                                             <s:iterator value="additionalsElem" var="element" status="estatus">     
@@ -136,7 +147,7 @@
                                                         <div class="span1">
                                                             <div class="control-group">
                                                                 <div class="input-prepend controls" style="margin-left:0">
-                                                                    <span class="add-on req"><s:property value="nameCheEle" /></span>
+                                                                    <span class="add-on"><s:property value="nameCheEle" /></span>
                                                                     <s:textfield name="additionalsElem[%{#estatus.index}].valueCheEle" value="%{#attr.valueCheEle}" cssClass="input-degrees"/>
                                                                     <s:hidden name="additionalsElem[%{#estatus.index}].idCheEle" value="%{#attr.idCheEle}"/>
                                                                 </div>
@@ -155,7 +166,7 @@
                                                         <div class="span1">
                                                             <div class="control-group">
                                                                 <div class="input-prepend controls" style="margin-left:0">
-                                                                    <span class="add-on req"><s:property value="nameCheEle" /></span>
+                                                                    <span class="add-on"><s:property value="nameCheEle" /></span>
                                                                     <s:textfield name="additionalsElem[%{#estatus.index}].valueCheEle" value="%{#attr.valueCheEle}" cssClass="input-degrees"/>
                                                                     <s:hidden name="additionalsElem[%{#estatus.index}].idCheEle" value="%{#attr.idCheEle}"/>
                                                                 </div>

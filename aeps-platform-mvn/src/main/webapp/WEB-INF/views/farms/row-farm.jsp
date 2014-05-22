@@ -9,7 +9,7 @@
 <% }%>
 <td>
     Finca: <s:property value="name_farm" />
-    <s:if test="%{typeEnt!=2}">
+    <s:if test="%{typeEnt!=1}">
         , <br />
         Productor: <s:property value="name_producer" />
     </s:if>

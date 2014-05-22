@@ -75,10 +75,30 @@ function showOtherElement(valSel, divShow) {
     }
 }
 
+function showApplicationProduct(idAppTyp, idSel, divShowApp, divShowOther, divShowPer) {
+    var valAppTyp = $('#'+idAppTyp).val();
+    if (valAppTyp==1) {
+        $("#"+divShowApp).show();
+        $("#"+divShowOther).hide().removeClass("hide");
+        $("#"+divShowPer).show();
+    } else if (valAppTyp==2) {
+        $("#"+divShowApp).hide().removeClass("hide");
+        $("#"+divShowOther).show();
+        $("#"+divShowPer).hide().removeClass("hide");
+        $('#'+idSel).val(1000000);
+    } else {
+        $("#"+divShowApp).hide().removeClass("hide");
+        $("#"+divShowOther).hide().removeClass("hide");
+        $("#"+divShowPer).hide().removeClass("hide");
+    }
+}
+
 function showOtherElementChemical(idSel, idAppTyp, divShow) {
     var valSel = $('#'+idSel).val();
     var valAppTyp = $('#'+idAppTyp).val();
-    if (valSel == 1000000 && valAppTyp==1) {
+    if (valAppTyp==2) {
+        
+    } else if (valSel == 1000000 && valAppTyp==1) {
         $("#" + divShow).show();
     } else {
         $("#" + divShow).hide();
@@ -902,11 +922,11 @@ function chargeValuesControls(url, valName, valSendId, valNameCon, valSenIdCon, 
 }
 
 function hideInformationControls(divPes, divWee, divDis, divChe, divOrg) {
-	$('#'+divPes).removaClass('hide').addClass('hide');
-	$('#'+divWee).removaClass('hide').addClass('hide');
-	$('#'+divDis).removaClass('hide').addClass('hide');
-	$('#'+divChe).removaClass('hide').addClass('hide');
-	$('#'+divOrg).removaClass('hide').addClass('hide');
+	$('#'+divPes).removeClass('hide').addClass('hide');
+	$('#'+divWee).removeClass('hide').addClass('hide');
+	$('#'+divDis).removeClass('hide').addClass('hide');
+	$('#'+divChe).removeClass('hide').addClass('hide');
+	$('#'+divOrg).removeClass('hide').addClass('hide');
 }
 
 

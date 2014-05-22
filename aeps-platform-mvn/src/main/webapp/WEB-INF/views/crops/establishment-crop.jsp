@@ -47,22 +47,28 @@
             <div class="span5">
                 <div class="control-group">
                     <label for="formCropSow_event_expected_production_pro_eve" class="control-label">
-                        Rendimiento histórico obtenido (kg/ha):
+                        Mejor rendimiento obtenido del lote (kg/ha):
                         <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el rendimiento histórico obtenido." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
-                        <s:number name="event.expected_production_pro_eve" type="integer" var="performanceCrop" />
-                        <s:textfield name="event.expected_production_pro_eve" value="%{#performanceCrop}"/>
+                        <s:hidden name="event.idProEve"/>
+                        <s:hidden name="event.fields.idFie"/>
+                        <s:hidden name="event.cropsTypes.idCroTyp"/>
+                        <s:hidden name="event.idProjectFie"/>
+                        <s:hidden name="event.formerCropProEve"/>
+                        <s:hidden name="event.status"/>
+                        <s:number name="event.expectedProductionProEve" type="integer" var="performanceCrop" />
+                        <s:textfield name="event.expectedProductionProEve" value="%{#performanceCrop}"/>
                     </div>                  
                 </div>                          
             </div>                          
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
-                    <label for="formCropSow_event_draining_pro_eve" class="control-label">
+                    <label for="formCropSow_event_drainingProEve" class="control-label">
                         Se hace drenaje a la parcela:
                     </label>
                     <div class="controls radioSelect">
-                        <s:radio list="#{'true':'Si', 'false':'No'}" name="event.draining_pro_eve" />
+                        <s:radio list="#{'true':'Si', 'false':'No'}" name="event.drainingProEve" />
                     </div>
                 </div>
             </div>
@@ -75,7 +81,7 @@
                             Kilogramo de semilla utilizada X hectarea:
                             <i class="icon-info-sign s2b_tooltip pop-over" data-content="Por favor hacer la conversión a número de semillas." data-title="Información" data-placement="right" data-trigger="hover"></i> 
                         <% } else if (typeCrop==2) { %>
-                            Cantidad de semillas en kilos:
+                            Cantidad de semillas en kilos/lote:
                         <% } %>                        
                     </label>
                     <div class="controls">

@@ -61,9 +61,7 @@
                 <% }%>
                 <!-- <th>#</th> -->
                 <th>Nombre</th>
-                <th>Documento</th>
                 <th>Municipio</th>
-                <th>Direccion</th>
                 <th>Telefono</th>
                 <th>Celular</th>
                 <th>Correo</th>                                

@@ -36,10 +36,6 @@
                         <td><s:property value="nameField" /></td>
                     </tr>
                     <tr>
-                        <th>Objetivo de rendimiento (kg/ha)</th>
-                        <td><s:property value="performObj" /></td>
-                    </tr>
-                    <tr>
                         <th>Cultivo anterior</th>
                         <td><s:property value="lastTypeCrop" /></td>
                     </tr>

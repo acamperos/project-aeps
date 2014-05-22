@@ -48,7 +48,7 @@
                             <s:hidden name="idFarm"/>
                             <label for="formFarm_name_property" class="control-label req">
                                 Nombre de Finca:
-                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el nombre de la finca asociada al productor seleccionado." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                                <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el nombre de la finca asociada. Sino cuenta con nombre colocar el nombre del productor o manejar numeros." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">
                                 <s:textfield name="name_property" />
@@ -169,7 +169,7 @@
                         </div> 
                         <div class="control-group">
                             <label for="formFarm_direction_property" class="control-label">
-                                Direccion de la Finca:
+                                Indicación (Como llegar):
                                 <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la direccion de la finca." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
                             <div class="controls">

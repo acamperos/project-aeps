@@ -12,16 +12,7 @@
     </s:if>
 </td>
 <s:set name="typeDoc" value="type_document"/>
-<td><s:property value="type_document" />: 
-    <s:if test="%{#typeDoc.equals('NIT')}">
-        <s:property value="document" />-<s:property value="digVer" />
-    </s:if>
-    <s:else>
-        <s:property value="document" />
-    </s:else>
-</td>
 <td><s:property value="city" /></td>
-<td><s:property value="direction" /></td>
 <td><s:property value="phone" /></td>
 <td><s:property value="cellphone" /></td>
 <td><s:property value="e_mail_1" /></td>

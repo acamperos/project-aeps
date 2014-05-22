@@ -37,16 +37,7 @@
                                 headerKey="-1" 
                                 headerValue="---" />
                         </div>
-                    </div>                                 
-                    <div class="control-group">
-                        <label for="formCrop_performObj" class="control-label req">
-                            Objetivo de rendimiento (kg/ha):
-                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el objetivo de rendimiento de su cultivo." data-title="Información" data-placement="right" data-trigger="hover"></i>
-                        </label>
-                        <div class="controls">
-                            <s:textfield cssClass="form-control" name="performObj"/>
-                        </div>
-                    </div>
+                    </div>         
                     <div class="control-group">
                         <label for="formCrop_lastCrop" class="control-label">
                             Cultivo anterior:

@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label for="formField_area_lot" class="control-label req">
+                            <label for="formField_area_lot" class="control-label">
                                 Area del Lote (hectarea):
                                 <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el area del lote." data-title="Información" data-placement="right" data-trigger="hover"></i>
                             </label>
@@ -215,15 +215,21 @@
                     <p>Grados varia entre (-5 y 14)</p>
                     <p>Minutos varia entre (0 y 60)</p>
                     <p>Segundos varia entre (0 y 60)</p>
+                    <br />
                     <strong>Las longitudes</strong>
                     <hr>
                     <p>Decimales varia entre (-81.8 y -66)</p>
                     <p>Grados varia entre (-82 y -66)</p>
                     <p>Minutos varia entre (0 y 60)</p>
                     <p>Segundos varia entre (0 y 60)</p>
+                    <br />
                     <strong>Las altitudes</strong>
                     <hr>
-                    <p>Se encuentran entre 0 y 9000 (metros)</p>			
+                    <p>Se encuentran entre 0 y 9000 (metros)</p>
+                    <br />
+                    <strong>Area</strong>
+                    <hr>
+                    <p>Se encuentra entre 0 y 3000 (hectarea)</p>			
                 </div>
             </div>
         </div>

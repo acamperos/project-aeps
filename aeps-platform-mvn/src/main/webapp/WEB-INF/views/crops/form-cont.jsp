@@ -367,6 +367,7 @@
                 </fieldset>
             </s:form>	
             <script>                
+                $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completeCon', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropCon', 'divPro', event.originalEvent.request.responseText);
                     setTimeout(function() {

@@ -78,7 +78,7 @@ public class BeansDao
         Transaction tx = null;
 				
         sql += "select p.id_bea, p.id_production_event_bea, p.growing_environment_bea, p.seeds_number_site_bea,";
-        sql += " p.seeds_inoculation_bea, p.seed_type_bea, p.otro_inoculation_bea, p.status, p.created_by";
+        sql += " p.seeds_number_site_bea, p.seeds_inoculation_bea, p.seed_type_bea, p.otro_inoculation_bea, p.status, p.created_by";
         sql += " from beans p";
         sql += " where p.id_production_event_bea="+id;
         try {

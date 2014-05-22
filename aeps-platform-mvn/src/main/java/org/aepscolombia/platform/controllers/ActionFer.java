@@ -372,7 +372,7 @@ public class ActionFer extends BaseAction {
             }
             
             if (fer.getFertilizationsTypes()!=null && ferChe.getChemicalFertilizers()!=null) {
-                if (fer.getFertilizationsTypes().getIdFerTyp() == 1 && ferChe.getChemicalFertilizers().getIdCheFer() == 1000000) {
+                if (fer.getFertilizationsTypes().getIdFerTyp() == 1 && ferChe.getChemicalFertilizers().getIdCheFer() == 1000000 && ferChe.getApplicationTypes().getIdAppTyp()==1) {
                     Boolean entry = false;
                     Boolean errorCom = false;
                     int cont = 0;
@@ -393,8 +393,8 @@ public class ActionFer extends BaseAction {
                     }
 
                     if (!entry) {
-                        for (int i=0; i<additionalsElem.size(); i++) {                    
-                            addFieldError("additionalsElem["+i+"].valueCheEle", "");            
+                        for (int i=0; i<additionalsElem.size(); i++) {                      
+                            addFieldError("additionalsElem["+i+"].valueCheEle", ""); 
                         }
                         addActionError("Se debe ingresar por lo menos alguna de las composiciones");
                     }
@@ -549,7 +549,7 @@ public class ActionFer extends BaseAction {
                 }
             }
             
-            if (fer.getFertilizationsTypes().getIdFerTyp()==1) {
+            if (fer.getFertilizationsTypes().getIdFerTyp()==1 && ferChe.getApplicationTypes().getIdAppTyp()==1) {
                 ChemicalFertilizers cheFer = null;
                 if (ferChe.getOtherProductCheFer()!=null && !ferChe.getOtherProductCheFer().equals("")) {
                     cheFer = new ChemicalFertilizersDao().objectById(fer.getIdFer());
@@ -557,7 +557,7 @@ public class ActionFer extends BaseAction {
 
                     cheFer = new ChemicalFertilizers();
                     cheFer.setNameCheFer(ferChe.getOtherProductCheFer());
-                    cheFer.setStatusCheFer(true);
+                    cheFer.setStatusCheFer(false);
                     session.saveOrUpdate(cheFer);
                     
                     ferChe.setChemicalFertilizers(cheFer);

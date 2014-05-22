@@ -157,7 +157,7 @@ public class FarmsDao
         String sql = "";       
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
         sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status, ";
-        sql += " e.entity_type_ent";
+        sql += " e.entity_type_ent, le.date_log_ent";
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join departments dep on (dep.id_dep=m.id_department_mun)";
@@ -282,6 +282,7 @@ public class FarmsDao
                 temp.put("name_dep", data[15]);                
                 temp.put("status", data[16]);
                 temp.put("typeEnt", data[17]);
+                temp.put("dateLog", data[18]);
                 result.add(temp);
             }
 //            System.out.println(result);
