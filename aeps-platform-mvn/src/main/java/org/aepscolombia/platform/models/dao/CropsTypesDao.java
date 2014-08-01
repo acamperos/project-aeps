@@ -105,6 +105,10 @@ public class CropsTypesDao {
             tx = session.beginTransaction();
             Query query = session.createQuery("from CropsTypes");
             events = query.list();
+            CropsTypes temp = new CropsTypes();
+            temp.setIdCroTyp(1000000);
+            temp.setNameCroTyp("Otro");    
+            events.add(temp);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -23,6 +23,7 @@
 <% int idProducer = Integer.parseInt(String.valueOf(request.getAttribute("idProducer")));%>
 <% String valId   = String.valueOf(request.getAttribute("valId"));%>
 <% String valName = String.valueOf(request.getAttribute("valName"));%>
+<% String typeEnt = String.valueOf(request.getAttribute("typeEnt"));%>
 <% HashMap add    = (HashMap) request.getAttribute("additionals");%>
 <% String value   = (String) add.get("selected");%>
 <% String divShow = "";%>
@@ -42,7 +43,7 @@
 <div id="divFields" class="w-box">
     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/create")) { %>      
         <% if (value.equals("lot")) {%>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showField.action?action=create&viewInfo=${viewInfo}', 'idField', '', 'Crear Lote', 1050, 550)">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showField.action?action=create&viewInfo=${viewInfo}', 'idField', '', 'Crear Lote', 1050, 550)">
                 <i class="icon-plus"></i> Agregar lote
             </button>
         <% } %>
@@ -81,11 +82,11 @@
                 <%--</s:if>--%>
                 <% } %>
                 <s:if test="%{value.equals('crop')}">
-                    <% //action += "getInfo('/aeps-plataforma-mvn/cultivosAsociados.action?idProd=" + idProducer + "','idField','" + valId + "','divDataCrop','divMessage');";%>
+                    <% //action += "getInfo('/cultivosAsociados.action?idProd=" + idProducer + "','idField','" + valId + "','divDataCrop','divMessage');";%>
                 </s:if>
                 <s:if test="%{value.equals('rasta')}">
                     <% action = "selectItem('formRasta_nameField', 'formField_idField', '" + request.getAttribute("name_far") + "', '" + request.getAttribute("id_lot") + "', '" + divShow + "', '" + divHide + "')"; %>
-                    <% //action += "getInfo('/aeps-plataforma-mvn/GetRastasXField.action','idField','" + valId + "','divDataRastas','divMessage');";%>
+                    <% //action += "getInfo('/GetRastasXField.action','idField','" + valId + "','divDataRastas','divMessage');";%>
                 </s:if>
                 <tr onclick="<%= action%>" id="trLot<s:property value="id_lot" />>">
                     <%@ include file="row-field.jsp" %>                                
@@ -111,6 +112,6 @@
     <% }%>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/searchField.action?selected="+value, divHide, "", "", "formFieldSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchField.action?selected="+value+"&valId="+valId+"&valName="+valName, divHide, "", "", "formFieldSearch");%>    
     <%= result%>
 </div>

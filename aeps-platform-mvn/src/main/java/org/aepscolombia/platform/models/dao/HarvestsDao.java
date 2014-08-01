@@ -77,9 +77,10 @@ public class HarvestsDao
         Harvests event = null;
         Transaction tx = null;
 				
-        sql += "select p.id_har, p.id_production_event_har, p.date_har, p.comment_har, p.method_har, p.production_har, ";
-        sql += " p.yield_har, p.storage_har, p.production_per_plant_har, p.expected_product_type_har, ";
-        sql += " p.humidity_percentage_har, p.status, p.created_by";
+        sql += "select p.id_har, p.id_production_event_har, p.date_har, p.comment_har, p.method_har, p.production_har,";
+        sql += " p.yield_har, p.storage_har, p.production_per_plant_har, p.expected_product_type_har,";
+        sql += " p.humidity_percentage_har, p.number_sacks_sow, p.weight_avg_sacks_sow, p.load_hectare_sow,";
+        sql += " p.status, p.created_by";
         sql += " from harvests p";
         sql += " where p.id_production_event_har="+id;
         try {

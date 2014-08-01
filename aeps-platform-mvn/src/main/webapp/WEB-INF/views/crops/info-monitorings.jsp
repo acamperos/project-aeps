@@ -22,7 +22,7 @@
     <fieldset>
         <legend>Lista de monitoreos</legend>
         <% if (usrMonDao.getPrivilegeUser(userMon.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showMon.action?action=create', 'idCrop', '${idCrop}', 'Crear Monitoreo', 1050, 550);">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showMon.action?action=create', 'idCrop', '${idCrop}', 'Crear Monitoreo', 1050, 550);">
                 <i class="icon-plus"></i> Agregar Monitoreo
             </button>
         <% } %>

@@ -24,7 +24,10 @@ public class ApplicationTypes  implements java.io.Serializable {
 
     public ApplicationTypes() {
     }
-
+    
+    public ApplicationTypes(Integer idAppTyp) {
+        this.idAppTyp = idAppTyp;
+    }
 	
     public ApplicationTypes(String nameAppTyp) {
         this.nameAppTyp = nameAppTyp;

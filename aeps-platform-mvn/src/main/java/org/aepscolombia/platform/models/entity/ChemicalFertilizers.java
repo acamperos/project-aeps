@@ -26,6 +26,10 @@ public class ChemicalFertilizers  implements java.io.Serializable {
     public ChemicalFertilizers() {
     }
     
+    public ChemicalFertilizers(Integer idCheFer) {
+       this.idCheFer = idCheFer;
+    } 
+    
     public ChemicalFertilizers(Integer idCheFer, String nameCheFer) {
        this.idCheFer = idCheFer;
        this.nameCheFer = nameCheFer;

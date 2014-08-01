@@ -4,11 +4,11 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/madr_bd13</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ciat_ext</property>
     <property name="connection.password"></property>
     <property name="connection.pool_size">1</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">nbuser</property>    
+    <property name="hibernate.connection.username">ciat</property>
+    <property name="hibernate.connection.password">GtA7U5BWcPATbGpT</property>    
     <mapping class="org.aepscolombia.platform.models.entity.WorkTypeExtAgent"/>
     <mapping class="org.aepscolombia.platform.models.entity.Cassavas"/>
     <mapping class="org.aepscolombia.platform.models.entity.ResultingProducts"/>
@@ -108,5 +108,8 @@
     <mapping class="org.aepscolombia.platform.models.entity.AmendmentsFertilizations"/>
     <mapping class="org.aepscolombia.platform.models.entity.FertilizationsTypes"/>
     <mapping class="org.aepscolombia.platform.models.entity.ResistenciasRompimiento"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ChemicalFertilizationsChemicalElements"/>
+    <mapping class="org.aepscolombia.platform.models.entity.ResidualsManagement"/>
+    <mapping class="org.aepscolombia.platform.models.entity.DescriptionsProductionEvent"/>
   </session-factory>
 </hibernate-configuration>

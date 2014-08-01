@@ -39,8 +39,8 @@
                                     <i class="icon-info-sign s2b_tooltip pop-over" data-content="Usar la lupa para seleccionar el productor al cual pertenece la finca que va a registrar." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="name_producer" readonly="true" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
-                                    <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')"><i class="icon-search"></i></a>
+                                    <s:textfield name="name_producer" readonly="true" onclick="listInfo('/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')" />
+                                    <a class="btn" onclick="listInfo('/viewProducer.action?selected=property', 'formFarm_name_producer', 'formFarm_idProducer', 'divListFarmsForm', 'divFarmsForm')"><i class="icon-search"></i></a>
                                 </div>  
                             </div>   
                         </s:else>                        
@@ -117,6 +117,11 @@
                             </div>
                         </div>
                         <div class="control-group">
+                            <button type="button" class="btn btn-initial btn-space" onclick="viewPosition('/viewPositionFarm.action', 'formFarm', 'latitude_property', 'formFarm_latitude_property', 'length_property', 'formFarm_length_property', 'divFarmsForm', 'divListFarmsForm');">
+                                <i class="icon-map-marker"></i> Cambiar ubicacion
+                            </button>
+                        </div>
+                        <div class="control-group">
                             <label for="formFarm_altitude_property" class="control-label req">
                                 Altitud de la Finca (metros):
                                 <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la altitud de la finca en metros." data-title="Información" data-placement="right" data-trigger="hover"></i>
@@ -138,7 +143,7 @@
                                     listValue="nameDep"          
                                     headerKey=" " 
                                     headerValue="---"
-                                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'divMessage')"
+                                    onchange="chargeValues('/comboMunicipalities.action', 'depId', this.value, 'formFarm_cityFar', 'divMessage')"
                                 />
                             </div>  
                         </div>
@@ -210,6 +215,8 @@
                     if ($("#formFarm_length_seconds_property").val()>60) {                        
                         $("#formFarm_length_seconds_property").val('');
                     }
+                    
+                    $("#formFarm_altitude_property").val(parseValueInt( $("#formFarm_altitude_property").val()));
                     
                     $("#formFarm_latitude_degrees_property").numeric({decimal: false});
                     $("#formFarm_latitude_minutes_property").numeric({decimal: false});

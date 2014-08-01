@@ -114,7 +114,7 @@ public class ControlsDao
                       
         sql += "select p.target_type_con, pl.name_pes, mal.name_wee, enf.name_dis, tp.name_che_con, p.other_chemical_product_con, cr.name_org_con, p.other_organic_product_con,";
 		sql += " p.id_con, p.date_con, tob.name_tar_typ, p.dosis_con, ud.name_dos_uni, p.cleanings_con, p.cleanings_frequence_con,";
-        sql += " p.other_pest_con, p.otro_weed_con, p.other_disease_con";
+        sql += " p.other_pest_con, p.otro_weed_con, p.other_disease_con, p.control_type_con";
 		sql += " from controls p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_con";    
         sql += " inner join targets_types tob on tob.id_tar_typ=p.target_type_con";    
@@ -125,7 +125,7 @@ public class ControlsDao
         sql += " left join organic_controls cr on cr.id_org_con=p.organic_product_used_con";    
         sql += " left join dose_units ud on ud.id_dos_uni=p.dose_units_con and ud.status_dos_uni=1";    
         sql += " inner join log_entities le on le.id_object_log_ent=p.id_con and le.table_log_ent='controls' and le.action_type_log_ent='C'";
-        sql += " where p.status=1";
+        sql += " where p.status=1 and ep.status=1";
         if (args.containsKey("idEvent")) {
             sql += " and p.id_production_event_con="+args.get("idEvent");
         }
@@ -169,13 +169,19 @@ public class ControlsDao
                 temp.put("nameTarTyp", data[10]);             
                 temp.put("nameConTyp", nameObj);                
                 temp.put("chemCon", nameChe);
-                temp.put("doseChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : data[11]);
-                temp.put("unitChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : "-"+data[12]);
                 temp.put("orgCon", nameOrg);
-                temp.put("doseOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : data[11]);
-                temp.put("unitOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : "-"+data[12]);
+                String valUnit = "";
+                if(data[12]!=null) {
+                    valUnit = "-"+data[12];
+                }
+                temp.put("doseCon", data[11]+valUnit);                
+//                temp.put("doseChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : data[11]);              
+//                temp.put("unitChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : valUnit);                
+//                temp.put("doseOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : data[11]);
+//                temp.put("unitOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : valUnit);
                 temp.put("cleaning", (String.valueOf(data[13]).equals("1")) ? "Si" : "No");
                 temp.put("frequence", data[14]);             
+                temp.put("conType", data[18]);             
                 result.add(temp);
             }
             tx.commit();

@@ -33,18 +33,19 @@
 <div class="msgWin" id="messageWin"></div>
 <div id="divCrops" class="w-box">    
     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) { %>
-        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
+        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
             <i class="icon-plus"></i> Agregar Evento Productivo
         </button>
     <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblCrops'>
         <thead>
             <tr>
-                <th>Numero del Cultivo</th>
+                <th>Informacion</th>                
                 <s:if test="%{typeEnt!=2}">
-                    <th>Documento del productor</th>
+                    <th>Nombre del Productor</th>
                 </s:if>
-                <th>Informacion</th>
+                <th>Que cultivo es</th>
+                <th>Numero del Cultivo</th>
                 <th>Fecha de siembra</th>
                 <th>Material genetico</th>
                 <th>Fecha de creación</th>
@@ -65,10 +66,10 @@
                 <%--</s:if>--%>
                 <% } %>
                 <s:if test="value.equals('crop')">
-                    <% //action += "getInfo('/aeps-plataforma-mvn/cultivosAsociados.action?idProd=" + idProducer + "','idCrop','" + valId + "','divDataCrop','divMessage');";%>
+                    <% //action += "getInfo('/cultivosAsociados.action?idProd=" + idProducer + "','idCrop','" + valId + "','divDataCrop','divMessage');";%>
                 </s:if>
                 <s:if test="value.equals('crop')">
-                    <% //action += "getInfo('/aeps-plataforma-mvn/GetRastasXRasta.action','idCrop','" + valId + "','divDataCrops','divMessage');";%>
+                    <% //action += "getInfo('/GetRastasXRasta.action','idCrop','" + valId + "','divDataCrops','divMessage');";%>
                 </s:if>
                 <tr onclick="<%= action%>" id="trCrop<s:property value="id_crop" />>">
                     <%@ include file="row-crops.jsp" %>                                
@@ -89,6 +90,6 @@
     </div>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/crop/searchCrop.action?selected="+value, divHide, "", "", "formCropSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/crop/searchCrop.action?selected="+value, divHide, "", "", "formCropSearch");%>    
     <%= result%>
 </div>

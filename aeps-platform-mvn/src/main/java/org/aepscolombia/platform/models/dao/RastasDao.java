@@ -16,6 +16,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Rastas;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -62,7 +63,7 @@ public class RastasDao
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " where l.status=1 and f.status=1";
-        sql += " and r.status=1";
+        sql += " and r.status=1 and e.status=1";
 //        sql += " lp.tipo_contrato_lot_pro!=1";
         // if ($identProductor!='' ) sql += "where";
 //        sql += sqlAdd;
@@ -155,7 +156,7 @@ public class RastasDao
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " where l.status=1 and f.status=1";
-        sql += " and r.status=1";    
+        sql += " and r.status=1 and e.status=1";    
         
         
         if (args.containsKey("idEntUser")) {
@@ -170,7 +171,7 @@ public class RastasDao
 //                sql += " or (r.fecha_ras like '%"+asign+"%')";
                 try {
                     String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
-                    sql += " or (r.fecha_ras='"+dateAsign+"')";
+                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
 //                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
                 } catch (IllegalArgumentException ex) {
 //                    Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,7 +196,7 @@ public class RastasDao
 //            SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");            
             if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) {
                 String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
-                sql += " and r.fecha_ras='"+dateAsign+"'";
+                sql += " and r.fecha_ras like '%"+dateAsign+"%'";
 //                try {
                     //                Date myDate = (Date)args.get("date");
 //                    Date dmy = new SimpleDateFormat("yyyy-MM-dd").parse(String.valueOf(args.get("date")));
@@ -261,7 +262,7 @@ public class RastasDao
 //        sql += " order by e.name_ent ASC";
         sql += " order by r.id_ras ASC";
 //        events.toArray();
-//        System.out.println("sql->"+sql);
+        System.out.println("sql->"+sql);
         try {
 
 //        sql += "select r.id_ras-0, r.id_lote_ras-1, l.name_fie-2, e.name_ent-3, f.name_far-4, r.fecha_ras-5, r.numero_cajuela_ras-6, r.altitud_ras-7, r.latitud_ras-8, r.longitud_ras-9,";
@@ -301,7 +302,10 @@ public class RastasDao
                 HashMap temp = new HashMap();
                 temp.put("id_ras", data[0]);
                 temp.put("id_field", data[1]);
-                temp.put("num_rasta", data[6]);             
+                temp.put("num_rasta", data[6]);          
+                temp.put("name_producer", data[3]);                
+                temp.put("name_farm", data[4]);
+                temp.put("name_field", data[2]);                  
 //                String val = String.valueOf(data[5]);
 //                Date newDate   = new SimpleDateFormat("yyyy-MM-dd").parse(val);
                 temp.put("date", data[5]);                
@@ -350,9 +354,12 @@ public class RastasDao
         sql += " inner join log_entities le on le.id_object_log_ent=r.id_ras and le.table_log_ent='rastas' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on r.id_lote_ras=l.id_fie";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
-        sql += " left join farms f on f.id_far=l.id_farm_fie";
+        sql += " inner join farms f on f.id_far=l.id_farm_fie";
+        sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
+        sql += " inner join entities e on e.id_ent=p.id_entity_pro";
+        
         sql += " where l.status=1 and f.status=1";
-        sql += " and r.status=1";     
+        sql += " and r.status=1 and e.status=1";     
         if (args.containsKey("idEntUser")) {
             sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
         }  
@@ -496,4 +503,202 @@ public class RastasDao
         }
         return numDelete;
     }
+    
+    public String getInfoToReport(Integer id) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result  = "data.frame(";
+        
+        String sql = "";        
+        sql += "select l.id_fie, f.id_far, r.PENDIENTE_TERRENO_RAS,";
+        sql += "UPPER(r.TERRENO_CIRCUNDANTE_RAS), UPPER(r.POSICION_PERFIL_RAS), r.NUMERO_CAPAS_RAS, espesorRasta(r.ID_RAS), cSecoRasta(r.ID_RAS), cHumedoRasta(r.ID_RAS),";
+        sql += "texturaRasta(r.ID_RAS), resistenciaRasta(r.ID_RAS), r.PH_RAS, UPPER(r.CARBONATOS_RAS), IF(r.CARBONATOS_RAS='no tiene','NA',r.PROFUNDIDAD_CARBONATOS_RAS), UPPER(r.PIEDRAS_SUPERFICIE_RAS),";
+        sql += "UPPER(r.ROCAS_SUPERFICIE_RAS), UPPER(r.PIEDRAS_PERFIL_RAS), UPPER(r.ROCAS_PERFIL_RAS), IF(r.HORIZONTE_PEDROGOSO_ROCOSO_RAS=1,'SI','NO'),";
+        sql += "IF(r.HORIZONTE_PEDROGOSO_ROCOSO_RAS=1,r.PROFUNDIDAD_HORIZONTE_PEDREGOSO_RAS,'NA'), IF(r.HORIZONTE_PEDROGOSO_ROCOSO_RAS=1,r.ESPESOR_HORIZONTE_PEDREGOSO_RAS,'NA'), IF(r.HORIZONTE_PEDROGOSO_ROCOSO_RAS=1,r.PROFUNDIDAD_PRIMERAS_PIEDRAS_RAS,'NA'), IF(r.CAPAS_ENDURECIDAS_RAS=1,'SI','NO'),";
+        sql += "IF(r.CAPAS_ENDURECIDAS_RAS=1,r.PRUFUNDIDAD_CAPAS_RAS,'NA'), IF(r.CAPAS_ENDURECIDAS_RAS=1,r.ESPESOR_CAPA_ENDURECIDA_RAS,'NA'), IF(r.MOTEADOS_RAS=1,'SI','NO'), IF(r.MOTEADOS_RAS=1,r.PROFUNDIDAD_MOTEADOS_RAS,'NA'),";
+        sql += "IF(r.MOTEADOS_MAS_70CM_RAS=1,'SI','NO'), UPPER(r.ESTRUCTURA_RAS), IF(r.EROSION_RAS=1,'SI','NO'), IF(r.MOHO_RAS=1,'SI','NO'), UPPER(r.COSTRAS_DURAS_RAS),";
+        sql += "UPPER(r.EXPOSICION_SOL_RAS), UPPER(r.COSTRAS_BLANCAS_RAS), UPPER(r.COSTRAS_NEGRAS_RAS),";
+        sql += "IF(r.REGION_SECA_RAS=1,'SI','NO'), IF(r.RAICES_VIVAS_RAS=1,'SI','NO'), IF(r.RAICES_VIVAS_RAS=1,r.PROFUNDIDAD_RAICES_RAS,'NA'), UPPER(r.plantas_pequenas_ras), IF(r.HOJARASCA_RAS=1,'SI','NO'), IF(r.SUELO_NEGRO_BLANDO_RAS=1,'SI','NO'), IF(r.CUCHILLO_PRIMER_HORIZONTE_RAS=1,'SI','NO'),";
+        sql += "IF(r.CERCA_RIOS_QUEBRADAS_RAS=1,'SI','NO'), UPPER(r.RECUBRIMIENTO_VEGETAL_RAS)";
+        sql += " from fields l";
+        sql += " inner join rastas r on r.id_lote_ras = l.id_fie";
+        sql += " inner join fields_producers lp on lp.id_field_fie_pro = l.id_fie";
+        sql += " inner join farms f on l.id_farm_fie=f.id_far";
+        sql += " inner join farms_producers fp on f.id_far = fp.id_farm_far_pro";
+        sql += " inner join producers p on p.id_pro = fp.id_producer_far_pro";
+        sql += " inner join entities ent on ent.id_ent = p.id_entity_pro";
+        sql += " left join log_entities le on le.id_object_log_ent = r.id_ras AND le.table_log_ent = 'rastas'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
+        sql += " where r.status=1";
+        if (id!=null) {
+            sql += " and r.id_ras="+id;
+            sql += " and le.id_object_log_ent not in (select le.id_object_log_ent from log_entities le where le.id_object_log_ent = "+id+" and le.action_type_log_ent = 'D' AND le.table_log_ent = 'rastas')";
+        }
+        sql += " and le.action_type_log_ent = 'C'";
+//        args.get("countTotal");
+//        events.toArray();
+//        System.out.println("sql->"+sql);        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {
+                for (int i=0;i<data.length;i++) {
+                    String temp = String.valueOf(data[i]);
+                    if (i<(data.length-1)) {
+                        result += GlobalFunctions.checkDataRasta(temp)+",";
+                    } else {
+                        result += GlobalFunctions.checkDataRasta(temp);
+                    }             
+                }
+                result += ")";
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    
+    public String getInfoRasta(Integer id, HashMap valInf) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";        
+        sql += "select ent.name_ent, r.ph_ras, r.estructura_ras, r.exposicion_sol_ras, r.recubrimiento_vegetal_ras, r.pendiente_terreno_ras";
+        sql += " from rastas r";
+        sql += " inner join fields l on r.id_lote_ras = l.id_fie";
+        sql += " inner join fields_producers lp on lp.id_field_fie_pro = l.id_fie";
+        sql += " inner join farms f on l.id_farm_fie=f.id_far";
+        sql += " inner join farms_producers fp on f.id_far = fp.id_farm_far_pro";
+        sql += " inner join producers p on p.id_pro = fp.id_producer_far_pro";
+        sql += " inner join entities ent on ent.id_ent = p.id_entity_pro";
+        sql += " left join log_entities le on le.id_object_log_ent = r.id_ras AND le.table_log_ent = 'rastas'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
+        sql += " where r.status=1";
+        if (id!=null) {
+            sql += " and r.id_ras="+id;
+            sql += " and le.id_object_log_ent not in (select le.id_object_log_ent from log_entities le where le.id_object_log_ent = "+id+" and le.action_type_log_ent = 'D' AND le.table_log_ent = 'rastas')";
+        }
+        sql += " and le.action_type_log_ent = 'C'";
+        
+        String dataGeneral = "{\"valTable\" : [{";        
+//        args.get("countTotal");
+//        events.toArray();
+//        System.out.println("sql->"+sql);        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {                
+                dataGeneral   += "\"producerId\": \""+data[0]+"\",";
+                dataGeneral   += "\"depthId\": \""+valInf.get("depth")+"\",";
+                dataGeneral   += "\"phId\": \""+data[1]+"\",";
+                dataGeneral   += "\"structureId\": \""+data[2]+"\",";
+                dataGeneral   += "\"exposeId\": \""+data[3]+"\",";
+                dataGeneral   += "\"coveringId\": \""+data[4]+"\",";
+                dataGeneral   += "\"drainIntId\": \""+valInf.get("internal")+"\",";
+                dataGeneral   += "\"drainExtId\": \""+valInf.get("external")+"\",";
+                dataGeneral   += "\"valDes\": \"Pendiente: "+data[5]+"%\",";
+                dataGeneral   += "\"valIn\": \""+data[5]+"\"";
+            }           
+            dataGeneral   += "}],";    
+            String[] infoMaterials = (String[])valInf.get("organic");
+            dataGeneral   += this.getInfoHorizontes(id, infoMaterials);    
+            dataGeneral   += "}";                      
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return dataGeneral;
+    }
+    
+    
+    public String getInfoHorizontes(Integer idRasta, String[] materials) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx  = null;
+        String result   = "";        
+        Integer cont    = 0;
+        
+        String sql = "";        
+        sql += "select h.numero_horizonte_hor_ras, h.espesor_hor_ras, rr.nombre_res_rom, t.prefix_tex";
+        sql += " from horizontes_rasta h";
+        sql += " inner join resistencias_rompimiento rr on rr.id_res_rom=h.resistencia_rompimiento_hor_ras";
+        sql += " inner join textures t on t.id_tex=h.textura_hor_ras";
+        sql += " where h.status=1";
+        if (idRasta!=null) {
+            sql += " and h.id_rasta_hor_ras="+idRasta;
+        }
+        sql += " order by h.id_rasta_hor_ras";
+        
+        String profiles = "\"detailProfiles\" : [{";         
+        String depths   = "\"data\" : [";
+        String textures = "\"infoProfile\" : [{";
+        /*
+         "data" : [{"point" :"[[1, -20]]", "color": "#0077FF"},{"point" :"[[1, -40]]", "color": "#7D0096"},{"point" :"[[1, -60]]", "color": "#DE000F"}], 
+         "infoProfile" : [{"pro1": "a","pro2": "f","pro3": "l"}]         
+         */    
+        
+//        { "detailProfiles" : [{"profile1" : "<center>Horizonte 1:</center><p>Espesor: 30cm, <br/>Resistencia al rompimiento : Friable, <br/>Materia organica : MEDIA</p>", "profile2" : "<center>Horizonte 1:</center><p>Espesor: 30cm, <br/>Resistencia al rompimiento : Friable, <br/>Materia organica : MEDIA</p>", "profile3" : "<center>Horizonte 1:</center><p>Espesor: 30cm, <br/>Resistencia al rompimiento : Friable, <br/>Materia organica : MEDIA</p>"}], "valTable" : [{"producerId" : "Jose Arana", "depthId" : "Profundidad Efectiva (cm) - 110", "phId" : "5", "structureId" : "Granular", "exposeId" : "La Mañana y Tarde", "coveringId" : "Bueno", "drainIntId" : "Bueno", "drainExtId" : "Lento"}], "valIn" : "Inclinacion: 12%", "data" : [{"point" :"[[1, -20]]", "color": "#0077FF"},{"point" :"[[1, -40]]", "color": "#7D0096"},{"point" :"[[1, -60]]", "color": "#DE000F"}], "infoProfile" : [{"pro1": "a","pro2": "f","pro3": "l"}] }
+//        args.get("countTotal");
+//        events.toArray();
+//        System.out.println("sql->"+sql);        
+        String[] colors = {"#0077FF","#7D0096","#DE000F","#DE000F"};
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();             
+            
+            for (Object[] data : events) {
+                Double espDouble = Double.parseDouble(String.valueOf(data[1]));
+                Integer esp      = espDouble.intValue();
+                
+                if (cont!=(events.size()-1)) {
+                    profiles += "\"profile"+(cont+1)+"\": \"<center><b>Horizonte "+(cont+1)+": </b></center><p><b>Espesor: </b>"+esp+", <br/><b>Resistencia al rompimiento: </b> "+data[2]+", <br/><b>Materia organica: </b>"+materials[cont]+"\",";
+                    depths   += "{\"point\": \"[[1, -"+data[1]+"]]\", \"color\": \""+colors[cont]+"\"},";
+                    textures += "\"pro"+(cont+1)+"\": \""+data[3]+"\",";
+                } else {
+                    profiles += "\"profile"+(cont+1)+"\": \"<center><b>Horizonte "+(cont+1)+": </b></center><p><b>Espesor: </b>"+esp+", <br/><b>Resistencia al rompimiento: </b> "+data[2]+", <br/><b>Materia organica: </b>"+materials[cont]+"\"";
+                    depths   += "{\"point\": \"[[1, -"+data[1]+"]]\", \"color\": \""+colors[cont]+"\"}";
+                    textures += "\"pro"+(cont+1)+"\": \""+data[3]+"\"";
+                }                
+                cont++;
+            }
+            profiles += "}]";
+            textures += "}]";
+            depths   += "]";
+            result   += profiles+","+depths+","+textures;
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    
 }

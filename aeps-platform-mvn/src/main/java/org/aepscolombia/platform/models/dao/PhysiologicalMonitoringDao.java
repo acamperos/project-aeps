@@ -78,7 +78,7 @@ public class PhysiologicalMonitoringDao
         Transaction tx = null;
 				
         sql += "select p.id_phy_mon, p.id_monitoring_phy_mon, p.id_production_event_phy_mon, p.emergence_phy_mon, ";
-        sql += " p.20_days_population_mon_fis, p.flowering_date_phy_mon, p.status, p.created_by";
+        sql += " p.20_days_population_mon_fis, p.flowering_date_phy_mon, p.percentage_reseeding_phy_mon, p.status, p.created_by";
         sql += " from physiological_monitoring p";
         sql += " where p.id_production_event_phy_mon="+id;
         try {

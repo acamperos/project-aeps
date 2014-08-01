@@ -47,7 +47,7 @@ public class LogEntitiesDao {
             tx    = session.beginTransaction();
             Query query = session.createSQLQuery(sql).addEntity("ue", LogEntities.class);
             logEnt      = (LogEntities) query.uniqueResult();
-            dateIngress = logEnt.getDateLogEnt();
+            if (logEnt!=null) dateIngress = logEnt.getDateLogEnt();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="madr_bd13"/>
+  <schema-selection match-catalog="ciat_ext"/>
   <table-filter match-name="resutling_products_crops_types"/>
   <table-filter match-name="flowering"/>
   <table-filter match-name="treatment_types"/>
@@ -114,4 +114,7 @@
   <table-filter match-name="chemical_elements"/>
   <table-filter match-name="work_type_ext_agent"/>
   <table-filter match-name="residuals_clasifications_crops_types"/>
+  <table-filter match-name="chemical_fertilizations_chemical_elements"/>
+  <table-filter match-name="residuals_management"/>
+  <table-filter match-name="descriptions_production_event"/>
 </hibernate-reverse-engineering>

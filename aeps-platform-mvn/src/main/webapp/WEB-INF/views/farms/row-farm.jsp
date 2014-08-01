@@ -2,9 +2,9 @@
 <% //String value  = (String) (add.get("selected"));%>
 <% if (value != "property") {%>
     <% if (value.equals("lot")) {%>
-        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>
+        <td><img src="/img/check.ico"/></td>
     <% } else if (value.equals("crop")) {%>
-        <td><img src="/aeps-plataforma-mvn/img/check.ico"/></td>
+        <td><img src="/img/check.ico"/></td>
     <% }%>                        
 <% }%>
 <td>
@@ -29,7 +29,7 @@
         <td>
             <div class="btn-group">
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify")) { %>
-                    <a class="btn btn-small btn-edit" title="Editar Finca" onclick="viewForm('/aeps-plataforma-mvn/showFarm.action?action=modify&page=<%=pageNow%>', 'idFar', <s:property value ="id_farm" />, 'Editar Finca', 1050, 550)"><i class="icon-pencil"></i></a>
+                    <a class="btn btn-small btn-edit" title="Editar Finca" onclick="viewForm('/showFarm.action?action=modify&page=<%=pageNow%>', 'idFar', <s:property value ="id_farm" />, 'Editar Finca', 1050, 550)"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/delete")) { %>
                     <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Finca" onclick="showDialogDelete(this, 'confirm_dialog_property', 'deleteFarm.action?idFar=<s:property value ="id_farm" />', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');"><i class="icon-trash"></i></a>

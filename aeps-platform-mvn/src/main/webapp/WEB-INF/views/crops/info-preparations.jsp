@@ -22,7 +22,7 @@
     <fieldset>
         <legend>Lista de preparaciones</legend>
         <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showPrep.action?action=create', 'idCrop', '${idCrop}', 'Crear Preparación', 1050, 550);">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showPrep.action?action=create', 'idCrop', '${idCrop}', 'Crear Preparación', 1050, 550);">
                 <i class="icon-plus"></i> Agregar Preparación
             </button>
         <% } %>
@@ -33,8 +33,6 @@
                     <th>Profundidad del trabajo (cm)</th>
                     <th>Tipo de preparación</th>
                     <th>Otro tipo de preparación</th>
-                    <th>Manejo de rastrojos</th>
-                    <th>Otro manejo de rastrojos</th>
                     <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/modify") || (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/delete"))) { %>
                         <th>Accion</th>
                     <% } %>

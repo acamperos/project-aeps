@@ -8,7 +8,15 @@
             <% //label = "display:none";%> 
         </s:if>                    
         <fieldset>
-            <legend><h3>Informacion del cultivo <s:property value="nameTypeCrop" /> # <s:property value="idCrop" /></h3></legend>
+            <legend><h3>Informacion del cultivo 
+                <s:if test="%{typeCrop==1}">
+                    <s:property value="nameTypeCrop" /> Mecanizado # <s:property value="idCrop" /></h3>
+                </s:if>
+                <s:else>
+                    <s:property value="nameTypeCrop" /> # <s:property value="idCrop" /></h3>
+                </s:else>
+                    
+            </legend>
             <table class="table table-bordered">
                 <tbody>
                     <s:if test="%{typeEnt!=2}">
@@ -49,10 +57,10 @@
     </div>       
 </div>
 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify")) { %>
-    <button type="button" class="btn btn-initial" onclick="viewForm('/aeps-plataforma-mvn/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', 'Modificar Evento Productivo', 1050, 700)">
+    <button type="button" class="btn btn-initial" onclick="viewForm('/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', 'Modificar Evento Productivo', 1050, 700)">
         <i class="icon-pencil"></i> Editar Evento Productivo
     </button>
 <% } %>
-<button type="button" class="btn btn-default" onclick="document.location='/aeps-plataforma-mvn/crop/listCrop.action';">
+<button type="button" class="btn btn-default" onclick="document.location='/crop/listCrop.action';">
     <i class="icon-arrow-left"></i> Volver al listado de cultivos
 </button>

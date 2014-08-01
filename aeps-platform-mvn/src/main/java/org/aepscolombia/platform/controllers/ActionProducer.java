@@ -4,6 +4,7 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.validator.annotations.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,7 +75,7 @@ public class ActionProducer extends BaseAction {
     private Users user;
     private Integer idEntSystem;
     private Integer idUsrSystem;
-    private Integer searchFrom;
+    private Integer searchFromProducer;
     private String search_producer; 
     private String nameCompany;                            
     private String firstNameRep;
@@ -104,12 +105,12 @@ public class ActionProducer extends BaseAction {
         this.search_producer = search_producer;
     }
 
-    public Integer getSearchFrom() {
-        return searchFrom;
+    public Integer getSearchFromProducer() {
+        return searchFromProducer;
     }
 
-    public void setSearchFrom(Integer searchFrom) {
-        this.searchFrom = searchFrom;
+    public void setSearchFromProducer(Integer searchFromProducer) {
+        this.searchFromProducer = searchFromProducer;
     }   
     
     public String getTypeIdent() {
@@ -496,7 +497,7 @@ public class ActionProducer extends BaseAction {
                     }
                 }
             }
-        }
+        }    
     }    
 
     /**
@@ -572,7 +573,7 @@ public class ActionProducer extends BaseAction {
 //        this.setType_ident_producer(new DocumentsTypesDao().findAll());        
         HashMap findParams = new HashMap();
         
-        if(searchFrom!=null && searchFrom==2) {
+        if(searchFromProducer!=null && searchFromProducer==2) {
             search_producer = "";
         }
 //        System.out.println("search_producer->"+search_producer);
@@ -866,8 +867,9 @@ public class ActionProducer extends BaseAction {
             Entities ent  = entDao.findById(Integer.parseInt(String.valueOf(pro.get("id_entity"))));      
 //            System.out.println("idEnt->"+pro.get("id_entity"));
 //            System.out.println("numEnt->"+ent.getDocumentNumberEnt());
-            session.delete(ent);
-//            entDao.delete(ent);            
+            ent.setStatus(false);     
+            session.saveOrUpdate(ent);//Tambien si fuera el caso borrar datos de la tabla intermedia farms_producers y fields_producers
+//            session.delete(ent);
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);

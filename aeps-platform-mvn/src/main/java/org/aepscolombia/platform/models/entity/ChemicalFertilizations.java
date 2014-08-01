@@ -28,7 +28,8 @@ public class ChemicalFertilizations  implements java.io.Serializable {
      private String otherProductCheFer;
      private Boolean status;
      private Integer createdBy;
-
+     private Double amountProductUsedCheFer;
+    
     public ChemicalFertilizations() {
     }
 
@@ -36,12 +37,13 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     public ChemicalFertilizations(Fertilizations fertilizations) {
         this.fertilizations = fertilizations;
     }
-    public ChemicalFertilizations(ChemicalFertilizers chemicalFertilizers, ApplicationTypes applicationTypes, Fertilizations fertilizations, Integer unitCheFer, String otherProductCheFer, Boolean status, Integer createdBy) {
+    public ChemicalFertilizations(ChemicalFertilizers chemicalFertilizers, ApplicationTypes applicationTypes, Fertilizations fertilizations, Integer unitCheFer, String otherProductCheFer, Double amountProductUsedCheFer, Boolean status, Integer createdBy) {
        this.chemicalFertilizers = chemicalFertilizers;
        this.applicationTypes = applicationTypes;
        this.fertilizations = fertilizations;
        this.unitCheFer = unitCheFer;
        this.otherProductCheFer = otherProductCheFer;
+       this.amountProductUsedCheFer = amountProductUsedCheFer;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -67,7 +69,7 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     }
     
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="application_type_che_fer", nullable=false)
+    @JoinColumn(name="application_type_che_fer")
     public ApplicationTypes getApplicationTypes() {
         return this.applicationTypes;
     }
@@ -93,6 +95,15 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     
     public void setUnitCheFer(Integer unitCheFer) {
         this.unitCheFer = unitCheFer;
+    }
+    
+    @Column(name="amount_product_used_che_fer", precision=22, scale=0)
+    public Double getAmountProductUsedCheFer() {
+        return this.amountProductUsedCheFer;
+    }
+    
+    public void setAmountProductUsedCheFer(Double amountProductUsedCheFer) {
+        this.amountProductUsedCheFer = amountProductUsedCheFer;
     }
     
     @Column(name="other_product_che_fer", length=65535)
@@ -121,10 +132,7 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
-
-
-
-
+    
 }
 
 

@@ -4,6 +4,7 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -202,10 +203,12 @@ public class ActionSowing extends BaseAction {
             required.put("sowing.seedsNumberSow", sowing.getSeedsNumberSow());
             required.put("sowing.treatedSeedsSow", sowing.isTreatedSeedsSow());
             required.put("sowing.genotypes.idGen", sowing.getGenotypes().getIdGen());                
-            required.put("event.expected_production_pro_eve", event.getExpectedProductionProEve());                
+            required.put("event.expected_production_pro_eve", event.getExpectedProductionProEve());     
+            required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
+            required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
             
 //            if (sowing.getGenotypesSowing().getIdGenSow()==1000000) {
-            if (sowing.getGenotypes().getIdGen()==1000000) {
+            if (sowing.getGenotypes().getIdGen()!=null && sowing.getGenotypes().getIdGen()==1000000) {
                 required.put("sowing.otherGenotypeSow", sowing.getOtherGenotypeSow());
             }
 	
@@ -214,9 +217,7 @@ public class ActionSowing extends BaseAction {
               required.put("maize.seedsColors.idSeeCol", maize.getSeedsColors().getIdSeeCol());
               required.put("maize.seedsNumberSiteMai", maize.getSeedsNumberSiteMai());
             } else if (typeCrop==2) {
-              required.put("beans.seedsNumberSiteBea", beans.getSeedsNumberSiteBea());
-              required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
-              required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
+              required.put("beans.seedsNumberSiteBea", beans.getSeedsNumberSiteBea());              
               required.put("sowing.seedsOrigins.idSeeOri", sowing.getSeedsOrigins().getIdSeeOri());
 //              required.put("beans.seedsTypes.idSeeTyp", beans.getSeedsTypes().getIdSeeTyp());
 //              required.put("beans.seedsInoculations.idSeeIno", beans.getSeedsInoculations().getIdSeeIno());
@@ -243,13 +244,13 @@ public class ActionSowing extends BaseAction {
             
 //            if (typeCrop==2) {
             required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
-            if (sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
+            if (sowing.getFurrowsDistanceSow()!=null && sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
                 addFieldError("sowing.furrowsDistanceSow", "Dato invalido valor entre 0 y 10");
                 addActionError("Se ingreso una distancia entre surcos invalida, por favor ingresar un valor entre 0 y 10");
             }
 
             required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
-            if (sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
+            if (sowing.getFurrowsDistanceSow()!=null && sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
                 addFieldError("sowing.sitesDistanceSow", "Dato invalido valor entre 0 y 10");
                 addActionError("Se ingreso una distancia entre sitios invalida, por favor ingresar un valor entre 0 y 10");
             }
@@ -262,7 +263,7 @@ public class ActionSowing extends BaseAction {
                 }
             } else if (typeCrop==1) {
                 required.put("maize.seedsNumberSiteMai", maize.getSeedsNumberSiteMai());
-                if (maize.getSeedsNumberSiteMai()!=0 && (maize.getSeedsNumberSiteMai()<1 || maize.getSeedsNumberSiteMai()>10)) {
+                if (maize.getSeedsNumberSiteMai()!=null && maize.getSeedsNumberSiteMai()!=0 && (maize.getSeedsNumberSiteMai()<1 || maize.getSeedsNumberSiteMai()>10)) {
                     addFieldError("maize.seedsNumberSiteMai", "Dato invalido valor entre 1 y 10");
                     addActionError("Se ingreso un numero de semillas por sitio invalido, por favor ingresar un valor entre 1 y 10");
                 }

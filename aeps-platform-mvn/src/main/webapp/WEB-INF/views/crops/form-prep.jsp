@@ -93,41 +93,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label for="formCropPrep_prep_residualsClasification_idResCla" class="control-label req">
-                                    Manejo de rastrojos:
-                                </label>
-                                <div class="controls">
-                                    <s:select
-                                        name="prep.residualsClasification.idResCla"
-                                        list="type_res_clas" 
-                                        listKey="idResCla" 
-                                        listValue="nameResCla"            
-                                        headerKey="-1" 
-                                        headerValue="---"
-                                        onchange="showOtherElement(this.value, 'divNewManageStub');"
-                                    />
-                                </div>                         
-                            </div>                          
-                        </div>   
-                        <% String classNewRes="hide"; %>
-                        <s:set name="idResidual" value="prep.residualsClasification.idResCla"/>
-                        <s:if test="%{#idResidual==1000000}">
-                            <% classNewRes = "";%>
-                        </s:if>  
-                        <div class="span4 <%= classNewRes %>" id="divNewManageStub" style="padding-left: 28px">
-                            <div class="control-group">
-                                <label for="formCropPrep_prep_otherResidualsManagementPrep" class="control-label req">
-                                     Nuevo manejo de rastrojo:
-                                </label>
-                                <div class="controls">
-                                    <s:textfield name="prep.otherResidualsManagementPrep"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>	
                     <p class="warnField reqBef">Campos Requeridos</p>
                     <script>
                         showOtherElementPrep($("#formCropPrep_prep_preparationsTypes_idPreTyp").val(), 'divNewPasses', 'divNewTypePrep');
@@ -151,8 +116,7 @@
                 $.subscribe('completePrep', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropPrep', 'divPrep', event.originalEvent.request.responseText);
                     setTimeout(function() {
-//                        showInfo("searchField.action?page="+$("#formField_page").val(), "divConListFields");
-                        showInfo("/aeps-plataforma-mvn/crop/searchPrep.action?idCrop="+$("#formCropPrep_idCrop").val(), "divListPrep");
+                        showInfo("/crop/searchPrep.action?idCrop="+$("#formCropPrep_idCrop").val(), "divListPrep");
                     }, 2000);
                 });
             </script>

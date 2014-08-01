@@ -46,7 +46,7 @@
     <%--<s:actionmessage theme="bootstrap"/>--%>   
     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/create")) { %>
         <% if (value.equals("producer")) {%>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showProducer.action?action=create&viewInfo=${viewInfo}', 'idPro', '', 'Crear Productor', 1050, 550)">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showProducer.action?action=create&viewInfo=${viewInfo}', 'idPro', '', 'Crear Productor', 1050, 550)">
                 <i class="icon-plus"></i> Agregar productor
             </button>
         <% }%>
@@ -87,7 +87,7 @@
 //                                        action = "selectItem('" + valName + "', '" + valId + "', '" + request.getAttribute("name") + "', '" + request.getAttribute("id_producer") + "', '" + divShow + "', '" + divHide + "')";
                         } else if (value.equals("lot") || value == "lot") {
                             action = "selectItem('formField_name_producer_lot', 'formField_idProducer', '" + request.getAttribute("name") + "', '" + request.getAttribute("id_producer") + "', '" + divShow + "', '" + divHide + "')";
-//                                        action = "viewInfo('/aeps-plataforma-mvn/searchProducer.action?action=modify&idProducer=" + request.getAttribute("id_producer") + "&selected=" + add.get("selected") + "', 'Listado de Fincas', 'divProducers', 'divProperties')";
+//                                        action = "viewInfo('/searchProducer.action?action=modify&idProducer=" + request.getAttribute("id_producer") + "&selected=" + add.get("selected") + "', 'Listado de Fincas', 'divProducers', 'divProperties')";
                     }
                 }%>     
                 <tr id="trProducer<s:property value='id_producer' />" onclick="<%=action%>">
@@ -116,7 +116,7 @@
     <% }%>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/searchProducer.action?selected="+value, divHide, "", "", "formProducerSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchProducer.action?selected="+value, divHide, "", "", "formProducerSearch");%>    
     <%= result%>
 </div>
 <s:div id="divProperties" />

@@ -26,7 +26,7 @@
                             <s:hidden name="actExe"/>
                             <s:hidden name="con.idCon"/>
                             <div class="control-group">
-                                <label for="formCropCon_con_dateCon" class="control-label">
+                                <label for="formCropCon_con_dateCon" class="control-label req">
                                     Fecha del control:
                                 </label>
                                 <div class="date controls">
@@ -41,23 +41,23 @@
                     <div class="row">
                         <div class="span5">
                             <div class="control-group">
-                                <label for="formCropCon_con_targetsTypes_idTarTyp" class="control-label req">
+<!--                                <label for="formCropCon_con_targetsTypes_idTarTyp" class="control-label req">
                                     Tipo de objetivo:
-                                </label>
-                                <div class="controls">
-                                    <s:select
+                                </label>-->
+                                <div class="controls radioSelect">
+                                    <s:radio
                                         name="con.targetsTypes.idTarTyp"
                                         list="type_tar_typ" 
                                         listKey="idTarTyp" 
                                         listValue="nameTarTyp"            
                                         headerKey="-1" 
                                         headerValue="---"                                                                                
-                                        onchange="chargeValuesObjective('formCropCon_con_targetsTypes_idTarTyp', 'divListPest', 'divListWee', 'divListDis');
-                                                  chargeValuesControls('/aeps-plataforma-mvn/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'formCropCon_con_targetsTypes_idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
+                                        onclick="chargeValuesObjective('con.targetsTypes.idTarTyp', 'divListPest', 'divListWee', 'divListDis');
+                                                  chargeValuesControls('/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'con.targetsTypes.idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
                                                   hideInformationControls('divNewObjControlPes', 'divNewObjControlWee', 'divNewObjControlDis', 'divNewProCheCon', 'divNewProOrgCon');"
                                     />
-                                    <!--onchange="chargeValuesObjective('/aeps-plataforma-mvn/crop/comboListObjectives.action', 'idTarget', 'formCropCon_con_targetsTypes_idTarTyp', 'formCropCon_con_pests_idPes', 'divListPest', 'formCropCon_con_weeds_idWee', 'divListWee', 'formCropCon_con_diseases_idDis', 'divListDis', 'divMessage');--> 
-                                    <!--onchange="chargeValuesObjective('/aeps-plataforma-mvn/crop/comboListObjectives.action', 'idTarget', this.value, 'params_objetive_control_pro', 'params_obj_mas_afecta', 'divMessProtection'); chargeValues('../actions/Actions.php?action=ListarQuimicosXObjetivo&idEvent=<?php echo $options['idEvent'] ?>&tipoCul=<?php echo $options['tipoCul'] ?>', 'valSel', this.value, 'params_family_mol_che', 'divMessProtection'); chargeValues('../actions/Actions.php?action=ListarBiologicosXObjetivo&idEvent=<?php echo $options['idEvent'] ?>&tipoCul=<?php echo $options['tipoCul'] ?>', 'valSel', this.value, 'params_type_biologic', 'divMessProtection')"-->
+                                    <!--onchange="chargeValuesObjective('/crop/comboListObjectives.action', 'idTarget', 'con.targetsTypes.idTarTyp', 'formCropCon_con_pests_idPes', 'divListPest', 'formCropCon_con_weeds_idWee', 'divListWee', 'formCropCon_con_diseases_idDis', 'divListDis', 'divMessage');--> 
+                                    <!--onchange="chargeValuesObjective('/crop/comboListObjectives.action', 'idTarget', this.value, 'params_objetive_control_pro', 'params_obj_mas_afecta', 'divMessProtection'); chargeValues('../actions/Actions.php?action=ListarQuimicosXObjetivo&idEvent=<?php echo $options['idEvent'] ?>&tipoCul=<?php echo $options['tipoCul'] ?>', 'valSel', this.value, 'params_family_mol_che', 'divMessProtection'); chargeValues('../actions/Actions.php?action=ListarBiologicosXObjetivo&idEvent=<?php echo $options['idEvent'] ?>&tipoCul=<?php echo $options['tipoCul'] ?>', 'valSel', this.value, 'params_type_biologic', 'divMessProtection')"-->
                                 </div>                         
                             </div>                          
                         </div>   
@@ -201,8 +201,8 @@
                                         listValue="nameConType"            
                                         headerKey="-1" 
                                         headerValue="---"       
-                                        onchange="showTypeFertilizerSel('formCropCon_con_controlsTypes_idConTyp', 'divOrganicCon', 'divChemicalCon', 'divMechanicCon');
-                                                  chargeValuesControls('/aeps-plataforma-mvn/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'formCropCon_con_targetsTypes_idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
+                                        onchange="showTypeFertilizerControl('formCropCon_con_controlsTypes_idConTyp', 'divOrganicCon', 'divChemicalCon', 'divMechanicCon', 'divMechanizedCon', 'divManualCon');
+                                                  chargeValuesControls('/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'con.targetsTypes.idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
                                                   hideInformationControls('divNewObjControlPes', 'divNewObjControlWee', 'divNewObjControlDis', 'divNewProCheCon', 'divNewProOrgCon');"
                                     />
                                 </div>                         
@@ -214,7 +214,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_con_chemicalsControls_idCheCon" class="control-label req">
-                                        Familia de molecula activa:
+                                        Ingrediente activo:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -250,7 +250,7 @@
                         <div class="row">
                             <div class="span5">
                                 <div class="control-group">
-                                    <label for="formCropCon_dosisConChe" class="control-label req">
+                                    <label for="formCropCon_dosisConChe" class="control-label">
                                         Dosis:
                                     </label>
                                     <div class="controls">
@@ -260,7 +260,7 @@
                             </div> 
                             <div class="span4" style="padding-left: 6px">
                                 <div class="control-group">
-                                    <label for="formCropCon_doseUnitsChe" class="control-label req">
+                                    <label for="formCropCon_doseUnitsChe" class="control-label">
                                          Unidad:
                                     </label>
                                     <div class="controls">
@@ -318,7 +318,7 @@
                         <div class="row">
                             <div class="span5">
                                 <div class="control-group">
-                                    <label for="formCropCon_dosisConOrg" class="control-label req">
+                                    <label for="formCropCon_dosisConOrg" class="control-label">
                                         Dosis:
                                     </label>
                                     <div class="controls">
@@ -328,7 +328,7 @@
                             </div> 
                             <div class="span4" style="padding-left: 6px">
                                 <div class="control-group">
-                                    <label for="formCropCon_doseUnitsOrg" class="control-label req">
+                                    <label for="formCropCon_doseUnitsOrg" class="control-label">
                                          Unidad:
                                     </label>
                                     <div class="controls">
@@ -345,8 +345,70 @@
                             </div>
                         </div>
                     </div>
-                    <div id="divMechanicCon" class="hide">                            
-                    </div> 
+                    <div id="divMechanicCon" class="hide">                        
+                    </div>                
+                    <div id="divMechanizedCon" class="hide">      
+                        <div class="row">
+                            <div class="span5">
+                                <div class="control-group">
+                                    <label for="formCropCon_dosisConMec" class="control-label">
+                                        Dosis:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="dosisConMec"/>
+                                    </div>                         
+                                </div>                          
+                            </div> 
+                            <div class="span4" style="padding-left: 6px">
+                                <div class="control-group">
+                                    <label for="formCropCon_doseUnitsMec" class="control-label">
+                                         Unidad:
+                                    </label>
+                                    <div class="controls">
+                                        <s:select
+                                            name="doseUnitsMec"
+                                            list="type_dose_units" 
+                                            listKey="idDosUni" 
+                                            listValue="nameDosUni"            
+                                            headerKey="-1" 
+                                            headerValue="---"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divManualCon" class="hide">      
+                        <div class="row">
+                            <div class="span5">
+                                <div class="control-group">
+                                    <label for="formCropCon_dosisConMan" class="control-label">
+                                        Dosis:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="dosisConMan"/>
+                                    </div>                         
+                                </div>                          
+                            </div> 
+                            <div class="span4" style="padding-left: 6px">
+                                <div class="control-group">
+                                    <label for="formCropCon_doseUnitsMan" class="control-label">
+                                         Unidad:
+                                    </label>
+                                    <div class="controls">
+                                        <s:select
+                                            name="doseUnitsMan"
+                                            list="type_dose_units" 
+                                            listKey="idDosUni" 
+                                            listValue="nameDosUni"            
+                                            headerKey="-1" 
+                                            headerValue="---"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <p class="warnField reqBef">Campos Requeridos</p>
                     <script>
                         $("#formCropCon_con_dateCon").datepicker({dateFormat: 'dd/mm/yy'});
@@ -355,7 +417,7 @@
                         $("#formCropCon_dosisConOrg").val(parsePointSeparated($("#formCropCon_dosisConOrg").val())); 
                         $("#formCropCon_dosisConChe").numeric({ negative: false });
                         $("#formCropCon_dosisConChe").val(parsePointSeparated($("#formCropCon_dosisConChe").val()));                         
-                        showTypeFertilizerSel('formCropCon_con_controlsTypes_idConTyp', 'divOrganicCon', 'divChemicalCon', 'divMechanicCon');
+                        showTypeFertilizerControl('formCropCon_con_controlsTypes_idConTyp', 'divOrganicCon', 'divChemicalCon', 'divMechanicCon', 'divMechanizedCon', 'divManualCon');
                     </script>
                     <div id="divBtCon">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
@@ -371,7 +433,7 @@
                 $.subscribe('completeCon', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropCon', 'divPro', event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        showInfo("/aeps-plataforma-mvn/crop/searchCon.action?idCrop="+$("#formCropCon_idCrop").val(), "divListPro");
+                        showInfo("/crop/searchCon.action?idCrop="+$("#formCropCon_idCrop").val(), "divListPro");
                     }, 2000);
                 });
             </script>

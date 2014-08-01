@@ -22,7 +22,7 @@
     <fieldset>
         <legend>Lista de controles</legend>
         <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showCon.action?action=create', 'idCrop', '${idCrop}', 'Crear Control', 1050, 550);">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCon.action?action=create', 'idCrop', '${idCrop}', 'Crear Control', 1050, 550);">
                 <i class="icon-plus"></i> Agregar Control
             </button>
         <% } %>
@@ -34,10 +34,8 @@
                     <th>Objetivo del control</th>
 <!--                    <th>Realiza limpias manuales</th>
                     <th>Frecuencia limpias</th>-->
-                    <th>Control químico</th>
-                    <th>Dosis química</th>
-                    <th>Control biológico</th>
-                    <th>Dosis biológica</th>	
+                    <th>Control</th>
+                    <th>Dosis</th>
                     <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete"))) { %>
                         <th>Accion</th>
                     <% } %>

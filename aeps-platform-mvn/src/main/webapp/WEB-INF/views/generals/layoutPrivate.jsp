@@ -27,8 +27,15 @@
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/colorbox/jquery.colorbox.min.js"></script>
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/font-awesome/css/font-awesome.min.css">
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>
-        <script src="<%= request.getContextPath() %>/scripts/js/generals/responsiveslides.js"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/generals/responsiveslides.js"></script>
         <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/geoxml/geoxml3.js"></script>
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/js/spinner/jqamp-ui-spinner.min.css"/>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/spinner/globalize.min.js"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/spinner/jqamp-ui-spinner.min.js"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/spinner/jquery-mousewheel-3.0.6.min.js"></script>                
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/geoxml/gmap.css"/>
     </head>
     <body>
         <div id="divMessage"></div>

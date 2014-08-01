@@ -39,7 +39,7 @@
 <div id="divFarms" class="w-box">
     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/create")) { %>
         <% if (value.equals("property")) {%>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', 'Crear Finca', 1050, 550)">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', 'Crear Finca', 1050, 550)">
                 <i class="icon-plus"></i> Agregar finca
             </button>
         <% } %>
@@ -55,7 +55,7 @@
                 <!-- <th>#</th> -->
                 <th>Nombre</th>
                 <th>Vereda</th>
-                <th>Direccion</th>
+                <th>Indicación (Como llegar)</th>
                 <th>Departamento</th>
                 <th>Municipio</th>
                 <th>Latitud</th>
@@ -108,7 +108,7 @@
     <% }%>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/aeps-plataforma-mvn/searchFarm.action?selected="+value, divHide, "", "", "formFarmSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchFarm.action?selected="+value, divHide, "", "", "formFarmSearch");%>    
     <%= result%>
 </div>
 <s:div id="divProperties" />

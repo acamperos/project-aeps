@@ -31,7 +31,7 @@
                         </div>
                         <div class="span7">
                             <div class="panel">
-                                <div class="panel-heading">
+                                <div class="panel-heading">                                    
                                     <h3><i class="icon-envelope main-color"></i> <s:property value="getText('text.titlecontact.contact')" /></h3>
                                 </div>
                                 <div class="panel-body">

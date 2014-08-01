@@ -4,6 +4,7 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -167,9 +168,9 @@ public class ActionPhys extends BaseAction {
             sowing = sowDao.objectById(this.getIdCrop());
             
             HashMap required = new HashMap();
-            required.put("phys.emergencePhyMon", phys.getEmergencePhyMon());
-            required.put("phys.daysPopulationMonFis", phys.getDaysPopulationMonFis());
-            required.put("phys.floweringDatePhyMon", phys.getFloweringDatePhyMon());            
+//            required.put("phys.emergencePhyMon", phys.getEmergencePhyMon());
+//            required.put("phys.daysPopulationMonFis", phys.getDaysPopulationMonFis());
+//            required.put("phys.floweringDatePhyMon", phys.getFloweringDatePhyMon());            
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -195,8 +196,10 @@ public class ActionPhys extends BaseAction {
 
                     Date dateSow = new SimpleDateFormat("dd/MM/yyyy").parse(dmySow);
                     
-                    String dmyEme  = new SimpleDateFormat("yyyy-MM-dd").format(phys.getEmergencePhyMon());
-                    Date dateEme = new SimpleDateFormat("yyyy-MM-dd").parse(dmyEme);
+                    if (phys.getEmergencePhyMon()!=null) {                    
+                        String dmyEme  = new SimpleDateFormat("yyyy-MM-dd").format(phys.getEmergencePhyMon());
+                        Date dateEme = new SimpleDateFormat("yyyy-MM-dd").parse(dmyEme);
+                    }
                     
     //                $fechaSiembra = date('m-d-Y', strtotime($params['fecha_siembra']));
     //                try {
@@ -272,15 +275,22 @@ public class ActionPhys extends BaseAction {
         try {
             tx = session.beginTransaction();
             
-            String dmyEmer     = new SimpleDateFormat("yyyy-MM-dd").format(phys.getEmergencePhyMon());
-            Date dateEmergence = new SimpleDateFormat("yyyy-MM-dd").parse(dmyEmer);
+            String dmyEmer = "";
+            String dmyFlow = "";
             
-            String dmyFlow     = new SimpleDateFormat("yyyy-MM-dd").format(phys.getFloweringDatePhyMon());
-            Date dateFlow      = new SimpleDateFormat("yyyy-MM-dd").parse(dmyFlow);
+            if (phys.getEmergencePhyMon()!=null) {                
+                dmyEmer = new SimpleDateFormat("yyyy-MM-dd").format(phys.getEmergencePhyMon());            
+                Date dateEmergence = new SimpleDateFormat("yyyy-MM-dd").parse(dmyEmer);
+                phys.setEmergencePhyMon(dateEmergence);
+            }
             
-            phys.setProductionEvents(new ProductionEvents(idCrop));
-            phys.setEmergencePhyMon(dateEmergence);     
-            phys.setFloweringDatePhyMon(dateFlow);
+            if (phys.getFloweringDatePhyMon()!=null) {
+                dmyFlow = new SimpleDateFormat("yyyy-MM-dd").format(phys.getFloweringDatePhyMon());
+                Date dateFlow = new SimpleDateFormat("yyyy-MM-dd").parse(dmyFlow);
+                phys.setFloweringDatePhyMon(dateFlow);
+            }
+            
+            phys.setProductionEvents(new ProductionEvents(idCrop));     
             phys.setStatus(true);
             session.saveOrUpdate(phys);
             

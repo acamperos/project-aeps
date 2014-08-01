@@ -21,8 +21,10 @@
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>                          
                 </div>                          
-            </div>                          
-            <div class="span4" style="padding-left: 28px">
+            </div>       
+        </div>
+        <div class="row">
+            <div class="span5">
                 <div class="control-group">
                     <label for="formCropHar_harv_harvestMethods_idHarMet" class="control-label req">
                         Metodo de cosecha:
@@ -36,46 +38,12 @@
                             headerKey="-1" 
                             headerValue="---" />
                     </div> 
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span5">
-                <div class="control-group">
-                    <label for="formCropHar_harv_productionHar" class="control-label req">
-                        Cantidad (Kg):
-                    </label>
-                    <div class="controls">
-                        <s:textfield name="harv.productionHar"/>
-                    </div>                          
-                </div>                          
-            </div>                          
-            <div class="span4" style="padding-left: 28px">
-                <div class="control-group">
-                    <label for="formCropHar_harv_yieldHar" class="control-label req">
-                        Rendimiento (kg/ha):
-                    </label>
-                    <div class="controls">
-                        <s:textfield name="harv.yieldHar"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span5">
-                <div class="control-group">
-                    <label for="formCropHar_harv_storageHar" class="control-label">
-                        Almacenamiento:
-                    </label>
-                    <div class="controls radioSelect">
-                        <s:radio list="#{'true':'Si', 'false':'No'}" name="harv.storageHar" />
-                    </div>                         
-                </div>                          
-            </div>                          
+                </div>                                        
+            </div>          
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropHar_harv_resultingProducts_idResPro" class="control-label req">
-                         Producto esperado:
+                         Producto cosechado:
                     </label>
                     <div class="controls">
                         <s:select
@@ -85,34 +53,93 @@
                             listValue="nameResPro"            
                             headerKey="-1" 
                             headerValue="---"
-                            onchange="showElementRate(this.value, 'divRateWet');"
+                            onchange="showElementRate(this.value, 'divRateWet');
+                            changeOptionsHarvest('formCropHar_harv_resultingProducts_idResPro', 'divYield', 'divHumidity', 'divNumberSacks', 'harvNumberSacks', 'Numero de bulto (ha):', 'Numero de bolsas:', 'harvWeightAvg', 'Peso promedio de un bulto (kg/bulto):', 'Peso promedio de la bolsa:');
+                            "
                         />
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
-        <% String classRateWet="hide"; %>
-        <s:set name="idHarvest" value="harv.resultingProducts.idResPro"/>
-        <s:if test="%{#idHarvest==1 || #idHarvest==4}">
-            <% classRateWet = "";%>
-        </s:if>  
-        <div class="<%= classRateWet %>" id="divRateWet">
-            <div class="row">
-                <div class="span5">
-                    <div class="control-group">
-                        <label for="formCropHar_harv_humidityPercentageHar" class="control-label req">
-                             % de Humedad de la cosecha:
-                        </label>
-                        <div class="controls">
-                            <s:textfield name="harv.humidityPercentageHar" />
-                        </div>                          
+        <div class="row hide" id="divYield">
+            <div class="span5">
+                <div class="control-group">
+                    <label for="formCropHar_harv_yieldHar" class="control-label req">
+                        Rendimiento (kg/ha):
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="harv.yieldHar"/>
+                    </div>
+                </div>                                      
+            </div>                          
+            <div class="span4" style="padding-left: 28px">
+                <div class="control-group">
+                    <label for="formCropHar_harv_productionHar" class="control-label">
+                        Cantidad total (Kg):
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="harv.productionHar"/>
                     </div>                          
-                </div>     
+                </div>    
             </div>
         </div>
+        <div class="row hide" id="divHumidity">
+            <div class="span5">
+                <div class="control-group">
+                    <label for="formCropHar_harv_humidityPercentageHar" class="control-label req">
+                         % de Humedad de la cosecha:
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="harv.humidityPercentageHar" />
+                    </div>                          
+                </div>                                          
+            </div>       
+            <div class="span4" style="padding-left: 28px">
+                <div class="control-group">
+                    <label for="formCropHar_harv_storageHar" class="control-label">
+                        Almacenamiento en finca:
+                    </label>
+                    <div class="controls radioSelect">
+                        <s:radio list="#{'true':'Si', 'false':'No'}" name="harv.storageHar" />
+                    </div>                         
+                </div>
+            </div>
+        </div>
+        <div class="row hide" id="divNumberSacks">
+            <div class="span5">
+                <div class="control-group">
+                    <label for="formCropHar_harv_numberSacksSow" id="harvNumberSacks" class="control-label req">
+                         Numero de bulto (ha):
+                    </label>
+                    <div class="controls">
+                        <s:textfield name="harv.numberSacksSow" />
+                    </div>                          
+                </div>                                          
+            </div>       
+            <div class="span4" style="padding-left: 28px">
+                <div class="control-group">
+                    <label for="formCropHar_harv_weightAvgSacksSow" id="harvWeightAvg" class="control-label">
+                        Peso promedio de un bulto (kg/bulto):
+                    </label>
+                    <div class="controls radioSelect">
+                        <s:textfield name="harv.weightAvgSacksSow" />
+                    </div>                         
+                </div>
+            </div>
+        </div>
+        <s:if test="%{typeCrop==2}">
+            <div class="control-group">
+                <label for="formCropHar_harv_loadHectareSow" class="control-label">
+                    Cargas por hectárea: 
+                </label>
+                <div class="controls">
+                    <s:textfield name="harv.loadHectareSow" />
+                </div>					 
+            </div>
+        </s:if>
         <div class="control-group">
             <label for="formCropHar_harv_commentHar" class="control-label" style="width: 175px">
-                Observaciones generales: 
+                Observaciones que afectaron la producción: 
             </label>
             <div class="controls">
                 <s:textarea rows="5" cssClass="span6" name="harv.commentHar"></s:textarea>
@@ -120,13 +147,19 @@
         </div>	
         <p class="warnField reqBef">Campos Requeridos</p>
         <script>
+            changeOptionsHarvest('formCropHar_harv_resultingProducts_idResPro', 'divYield', 'divHumidity', 'divNumberSacks', 'harvNumberSacks', 'Numero de bulto (ha):', 'Numero de bolsas:', 'harvWeightAvg', 'Peso promedio de un bulto (kg/bulto):', 'Peso promedio de la bolsa:');
             $("#formCropHar_harv_dateHar").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropHar_harv_dateHar").mask("99/99/9999", {placeholder: " "});
-            $("#formCropHar_harv_productionHar").numeric({decimal: false, negative: false});
+            $("#formCropHar_harv_productionHar").numeric({decimal: false, negative: false});            
             $("#formCropHar_harv_yieldHar").numeric({negative: false});
             $("#formCropHar_harv_humidityPercentageHar").numeric({negative: false});
+            $("#formCropHar_harv_numberSacksSow").numeric({decimal: false, negative: false});
+            $("#formCropHar_harv_weightAvgSacksSow").numeric({negative: false});
+            $("#formCropHar_harv_loadHectareSow").numeric({negative: false});
             $("#formCropHar_harv_yieldHar").val(parsePointSeparated($("#formCropHar_harv_yieldHar").val())); 
             $("#formCropHar_harv_humidityPercentageHar").val(parsePointSeparated($("#formCropHar_harv_humidityPercentageHar").val())); 
+//            $("#formCropHar_harv_weightAvgSacksSow").val(parsePointSeparated($("#formCropHar_harv_weightAvgSacksSow").val())); 
+//            $("#formCropHar_harv_loadHectareSow").val(parsePointSeparated($("#formCropHar_harv_loadHectareSow").val())); 
         </script>
     </fieldset>
     <div style="margin-bottom: 15px" id="divBtHarvest">

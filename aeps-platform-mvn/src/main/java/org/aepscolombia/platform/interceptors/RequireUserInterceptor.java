@@ -35,18 +35,26 @@ public class RequireUserInterceptor extends AbstractInterceptor
     String result = BaseAction.NOT_LOGGED;
     String actionActual = (String)invocation.getInvocationContext().getContext().get(invocation.getInvocationContext().ACTION_NAME);
 //    invocation.getProxy().getConfig().getPackageName()
-    if (actionActual.equals("signin")) {
-        result = Action.INPUT;  
-    }    
+       
     Map<String, Object> session = invocation.getInvocationContext().getSession();
     Users user = (Users) session.get(APConstants.SESSION_USER);
 //    
-//    System.out.println("action->"+actionActual);
-    if (user != null) {
+//    System.out.println("action->"+actionActual);    
+    
+    if (user != null && !actionActual.equals("signin")) {
 //        Integer userAsign = new UsersDao().getEntitySystem(user.getIdUsr());
 //        System.out.println("user asig->"+userAsign);
         result = invocation.invoke();
     }    
+    
+    if (user == null && actionActual.equals("signin")) {
+        result = invocation.invoke();  
+    } 
+    
+    if (user != null && actionActual.equals("signin")) {
+        result = Action.SUCCESS;  
+    }
+    
 //    } else {
 //        if (actionActual.equals("login")) {
 //            result = Action.INPUT;  

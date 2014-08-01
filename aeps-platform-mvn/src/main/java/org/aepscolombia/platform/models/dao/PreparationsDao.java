@@ -43,7 +43,7 @@ public class PreparationsDao
         sql += " from production_events pe";
         sql += " inner join log_entities le on le.id_object_log_ent=pe.id_pro_eve and le.table_log_ent='production_events' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
-        sql += " where l.status=1 and f.status=1 and pe.status=1";
+        sql += " where l.status=1 and pe.status=1";
         if (id!=null) {
             sql += " and pe.id_pro_eve="+id;
         }
@@ -112,13 +112,12 @@ public class PreparationsDao
         String sql = "";     
         String sqlAdd = "";     
                       
-        sql  += "select p.id_prep, p.date_prep, tp.name_pre_typ, p.other_preparation_type_prep, p.depth_prep, cr.name_res_cla, p.other_residuals_management_prep";
+        sql  += "select p.id_prep, p.date_prep, tp.name_pre_typ, p.other_preparation_type_prep, p.depth_prep";
         sql += " from preparations p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_prep";    
-        sql += " left join preparations_types tp on tp.id_pre_typ=p.preparation_type_prep and tp.status_pre_typ=1";    
-        sql += " left join residuals_clasification cr on cr.id_res_cla=p.id_residuals_prep and cr.status_res_cla=1";    
+        sql += " left join preparations_types tp on tp.id_pre_typ=p.preparation_type_prep and tp.status_pre_typ=1";     
         sql += " inner join log_entities le on le.id_object_log_ent=p.id_prep and le.table_log_ent='preparations' and le.action_type_log_ent='C'";   
-		sql += " where p.status=1";
+		sql += " where p.status=1 and ep.status=1";
         if (args.containsKey("idEvent")) {
             sql += " and p.id_production_event_prep="+args.get("idEvent");
         }
@@ -147,9 +146,7 @@ public class PreparationsDao
                 temp.put("datePrep", data[1]);
                 temp.put("namePrep", data[2]);             
                 temp.put("otherNamePrep", data[3]);                
-                temp.put("depthPrep", data[4]);
-                temp.put("residualsPrep", data[5]);
-                temp.put("otherResidualsPrep", data[6]);                
+                temp.put("depthPrep", data[4]);            
                 result.add(temp);
             }
             tx.commit();
@@ -174,9 +171,9 @@ public class PreparationsDao
 				
         sql += "select p.id_prep, p.id_production_event_prep, p.date_prep, p.preparation_type_prep,";
         sql += " p.depth_prep, p.id_residuals_prep, p.use_hills_prep, p.other_preparation_type_prep,";
-        sql += " p.passings_number_prep, p.other_residuals_management_prep, p.status, p.created_by";
+        sql += " p.passings_number_prep, p.status, p.created_by";
         sql += " from preparations p";
-        sql += " where p.id_production_event_prep="+id;
+        sql += " where p.status=1 and p.id_production_event_prep="+id;
         try {
             tx = session.beginTransaction();
             String hql  = "FROM Preparations E WHERE E.idPrep = :id_prep";

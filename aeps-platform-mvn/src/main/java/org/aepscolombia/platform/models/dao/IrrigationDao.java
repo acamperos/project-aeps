@@ -43,7 +43,7 @@ public class IrrigationDao
         sql += " from production_events pe";
         sql += " inner join log_entities le on le.id_object_log_ent=pe.id_pro_eve and le.table_log_ent='production_events' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
-        sql += " where l.status=1 and f.status=1 and pe.status=1";
+        sql += " where l.status=1 and pe.status=1";
         if (id!=null) {
             sql += " and pe.id_pro_eve="+id;
         }
@@ -117,7 +117,7 @@ public class IrrigationDao
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_irr";    
         sql += " left join irrigations_types tp on tp.id_irr_typ=p.irrigation_type_irr and tp.status_irr_typ=1";    
         sql += " inner join log_entities le on le.id_object_log_ent=p.id_irr and le.table_log_ent='irrigation' and le.action_type_log_ent='C'";   
-        sql += " where p.status=1";
+        sql += " where p.status=1 and ep.status=1";
         if (args.containsKey("idEvent")) { 
             sql += " and p.id_production_event_irr="+args.get("idEvent");
         }

@@ -4,8 +4,10 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ import org.aepscolombia.platform.models.dao.AmendmentsFertilizersDao;
 import org.aepscolombia.platform.models.dao.ApplicationTypesDao;
 import org.aepscolombia.platform.models.dao.ChemicalElementsDao;
 import org.aepscolombia.platform.models.dao.ChemicalFertilizationsDao;
+import org.aepscolombia.platform.models.dao.ChemicalFertilizationsObj;
 import org.aepscolombia.platform.models.dao.ChemicalFertilizersDao;
 import org.aepscolombia.platform.models.dao.FertilizationsDao;
 import org.aepscolombia.platform.models.dao.FertilizationsTypesDao;
@@ -267,7 +270,57 @@ public class ActionFer extends BaseAction {
 
     public void setLogDao(LogEntitiesDao logDao) {
         this.logDao = logDao;
-    }      
+    }     
+    
+    private Integer appTyp;
+
+    public Integer getAppTyp() {
+        return appTyp;
+    }
+
+    public void setAppTyp(Integer appTyp) {
+        this.appTyp = appTyp;
+    }   
+    
+    private List<ChemicalFertilizationsObj> chemFert; 
+
+    public List<ChemicalFertilizationsObj> getChemFert() {
+        return chemFert;
+    }
+
+    public void setChemFert(List<ChemicalFertilizationsObj> chemFert) {
+        this.chemFert = chemFert;
+    }
+    
+    private List<OrganicFertilizations> orgFert; 
+
+    public List<OrganicFertilizations> getOrgFert() {
+        return orgFert;
+    }
+
+    public void setOrgFert(List<OrganicFertilizations> orgFert) {
+        this.orgFert = orgFert;
+    }
+    
+    private List<AmendmentsFertilizations> amenFert; 
+
+    public List<AmendmentsFertilizations> getAmenFert() {
+        return amenFert;
+    }
+
+    public void setAmenFert(List<AmendmentsFertilizations> amenFert) {
+        this.amenFert = amenFert;
+    }
+    
+    private Integer numRows=0;
+
+    public Integer getNumRows() {
+        return numRows;
+    }
+
+    public void setNumRows(Integer numRows) {
+        this.numRows = numRows;
+    }    
     
     private List<ChemicalElements> additionalsElem;
 
@@ -286,10 +339,53 @@ public class ActionFer extends BaseAction {
     
     @Override
     public void prepare() throws Exception {
-        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        user   = (Users) this.getSession().get(APConstants.SESSION_USER);
+        chemFert    = new ArrayList<ChemicalFertilizationsObj>();
+        orgFert     = new ArrayList<OrganicFertilizations>();
+        amenFert    = new ArrayList<AmendmentsFertilizations>();
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
         usrDao =  new UsersDao();
         idUsrSystem = user.getIdUsr();
+    }
+    
+    /**
+    * Acción que permite cargar una nueva fila de fertilización sea quimica, organica o de enmiendas.
+    */
+    public String showRowAdditional()
+    {     
+        actExe = (String)(this.getRequest().getParameter("action"));
+        appTyp = Integer.parseInt(this.getRequest().getParameter("appTyp"));
+        this.setNumRows(Integer.parseInt((this.getRequest().getParameter("numRows")))+1);
+        String resAdd = "";
+        this.setType_fer_typ(new FertilizationsTypesDao().findAll());
+        this.setList_app_typ(new ApplicationTypesDao().findAll());
+        this.setType_prod_che(new ChemicalFertilizersDao().findAllByStatus());
+        this.setType_prod_org(new OrganicFertilizersDao().findAllByStatus());
+        this.setType_prod_ame(new AmendmentsFertilizersDao().findAllByStatus());
+        
+        if (appTyp==1) {
+            ChemicalFertilizationsObj ferCheTemp = new ChemicalFertilizationsObj();
+            for (int i=0;i<this.getNumRows();i++) {
+                if (i==this.getNumRows()-1)
+                    ferCheTemp.setAdditionalsElem(new ChemicalElementsDao().findByParams(ferCheTemp.getIdCheFer()));
+                chemFert.add(ferCheTemp);
+            }
+                           
+//            additionalsElem = new ChemicalElementsDao().findByParams(ferCheTemp.getIdCheFer());
+//            System.out.println("tamaño=>"+chemFert.size());
+            
+            resAdd = "chemical";
+        } else if (appTyp==2) {
+            OrganicFertilizations ferOrgTemp = new OrganicFertilizations();
+            orgFert.add(ferOrgTemp);
+            resAdd = "organic";
+        } else if (appTyp==3) {
+            AmendmentsFertilizations ferAmenTemp = new AmendmentsFertilizations();
+            amenFert.add(ferAmenTemp);
+            resAdd = "amendment";
+        }
+        
+        return resAdd;
     }
     
     
@@ -311,32 +407,50 @@ public class ActionFer extends BaseAction {
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
             required.put("fer.dateFer", fer.getDateFer());      
-            required.put("fer.fertilizationsTypes.idFerTyp", fer.getFertilizationsTypes().getIdFerTyp());                  
+//            required.put("fer.fertilizationsTypes.idFerTyp", fer.getFertilizationsTypes().getIdFerTyp());                  
             
-            if (fer.getFertilizationsTypes().getIdFerTyp() == 1) {
-                required.put("ferChe.chemicalFertilizers.idCheFer", ferChe.getChemicalFertilizers().getIdCheFer());
-                required.put("amountProductUsedChe", amountProductUsedChe);
-                required.put("ferChe.unitCheFer", ferChe.getUnitCheFer());
-                required.put("ferChe.applicationTypes.idAppTyp", ferChe.getApplicationTypes().getIdAppTyp());
-                if (ferChe.getChemicalFertilizers().getIdCheFer() == 1000000) {
-                    required.put("ferChe.otherProductCheFer", ferChe.getOtherProductCheFer());
+            if (chemFert.size()<0 && orgFert.size()<0 && amenFert.size()<0) {
+                addActionError("Se debe ingresar por lo menos alguna fertilizacion");
+            }
+            
+            int contFer = 0;
+            for (ChemicalFertilizationsObj ferCheTemp : chemFert) {
+                if (ferCheTemp!=null) {
+                    required.put("chemFert["+contFer+"].chemicalFertilizers.idCheFer", ferCheTemp.getChemicalFertilizers().getIdCheFer());
+                    required.put("chemFert["+contFer+"].amountProductUsedCheFer", ferCheTemp.getAmountProductUsedCheFer());
+                    required.put("chemFert["+contFer+"].unitCheFer", ferCheTemp.getUnitCheFer());
+                    required.put("chemFert["+contFer+"].applicationTypes.idAppTyp", ferCheTemp.getApplicationTypes().getIdAppTyp());
+                    if (ferCheTemp.getChemicalFertilizers().getIdCheFer() == 1000000) {
+                        required.put("chemFert["+contFer+"].otherProductCheFer", ferCheTemp.getOtherProductCheFer());
+                    }                    
                 }
+                contFer++;
             }
 
-            if (fer.getFertilizationsTypes().getIdFerTyp() == 2) {
-                required.put("ferOrg.organicFertilizers.idOrgFer", ferOrg.getOrganicFertilizers().getIdOrgFer());
-                required.put("amountProductUsedOrg", amountProductUsedOrg);
-                if (ferOrg.getOrganicFertilizers().getIdOrgFer() == 1000000) {
-                  required.put("ferOrg.otherProductOrgFer", ferOrg.getOtherProductOrgFer());
+//            if (fer.getFertilizationsTypes().getIdFerTyp() == 2) {
+            int contOrg = 0;
+            for (OrganicFertilizations ferOrgTemp : orgFert) {
+                if (ferOrgTemp!=null) {
+                    required.put("orgFert["+contOrg+"].organicFertilizers.idOrgFer", ferOrgTemp.getOrganicFertilizers().getIdOrgFer());
+                    required.put("orgFert["+contOrg+"].amountProductUsedOrgFer", ferOrgTemp.getAmountProductUsedOrgFer());
+                    if (ferOrgTemp.getOrganicFertilizers().getIdOrgFer() == 1000000) {
+                      required.put("orgFert["+contOrg+"].otherProductOrgFer", ferOrgTemp.getOtherProductOrgFer());
+                    }
                 }
+                contOrg++;
             }
 
-            if (fer.getFertilizationsTypes().getIdFerTyp() == 3) {
-                required.put("ferAme.amendmentsFertilizers.idAmeFer", ferAme.getAmendmentsFertilizers().getIdAmeFer());
-                required.put("amountProductUsedAme", amountProductUsedAme);
-                if (ferAme.getAmendmentsFertilizers().getIdAmeFer() == 1000000) {
-                  required.put("ferAme.otherProductAmeFer", ferAme.getOtherProductAmeFer());
+//            if (fer.getFertilizationsTypes().getIdFerTyp() == 3) {
+            int contAme = 0;
+            for (AmendmentsFertilizations ferAmeTemp : amenFert) {
+                if (ferAmeTemp!=null) {
+                    required.put("amenFert["+contAme+"].amendmentsFertilizers.idAmeFer", ferAmeTemp.getAmendmentsFertilizers().getIdAmeFer());
+                    required.put("amenFert["+contAme+"].amountProductUsedAmeFer", ferAmeTemp.getAmountProductUsedAmeFer());
+                    if (ferAmeTemp.getAmendmentsFertilizers().getIdAmeFer() == 1000000) {
+                      required.put("amenFert["+contAme+"].otherProductAmeFer", ferAmeTemp.getOtherProductAmeFer());
+                    }
                 }
+                contAme++;
             }                        			       	               
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
@@ -371,34 +485,43 @@ public class ActionFer extends BaseAction {
                 }	
             }
             
-            if (fer.getFertilizationsTypes()!=null && ferChe.getChemicalFertilizers()!=null) {
-                if (fer.getFertilizationsTypes().getIdFerTyp() == 1 && ferChe.getChemicalFertilizers().getIdCheFer() == 1000000 && ferChe.getApplicationTypes().getIdAppTyp()==1) {
-                    Boolean entry = false;
-                    Boolean errorCom = false;
-                    int cont = 0;
-                    for (ChemicalElements chem : additionalsElem) {
-                        if (chem.getValueCheEle()!=null) {
-                            entry = true;					
-                        }				
+            if (chemFert!=null) {
+//                if (fer.getFertilizationsTypes().getIdFerTyp() == 1 && ferChe.getChemicalFertilizers().getIdCheFer() == 1000000 && ferChe.getApplicationTypes().getIdAppTyp()==1) {
+//                if (fer.getFertilizationsTypes().getIdFerTyp() == 1) {
+                    
+                    contFer = 0;
+                    for (ChemicalFertilizationsObj ferCheTemp : chemFert) {
+                        if (ferCheTemp!=null) {
+                            if (ferCheTemp.getChemicalFertilizers().getIdCheFer() == 1000000 && ferCheTemp.getApplicationTypes().getIdAppTyp()==1) {
+                                Boolean entry = false;
+                                Boolean errorCom = false;
+                                int cont = 0;
+                                for (ChemicalElements chem : ferCheTemp.getAdditionalsElem()) {
+                                    if (chem.getValueCheEle()!=null) {
+                                        entry = true;					
+                                    }				
 
-                        if (chem.getValueCheEle()!=null && (chem.getValueCheEle()<0 || chem.getValueCheEle()>100)) {
-                            addFieldError("additionalsElem["+cont+"].valueCheEle", "Dato invalido");
-                            errorCom = true;					
+                                    if (chem.getValueCheEle()!=null && (chem.getValueCheEle()<0 || chem.getValueCheEle()>100)) {
+                                        addFieldError("chemFert["+contFer+"].additionalsElem["+cont+"].valueCheEle", "Dato invalido");
+                                        errorCom = true;					
+                                    }                                
+                                }		
+
+                                if (errorCom) {
+                                    addActionError("Se ingresaron composiciones invalidas, por favor ingresar valores entre 0 y 100");
+                                }
+
+                                if (!entry) {
+                                    for (int i=0; i<ferCheTemp.getAdditionalsElem().size(); i++) {                      
+                                        addFieldError("chemFert["+contFer+"].additionalsElem["+i+"].valueCheEle", ""); 
+                                    }
+                                    addActionError("Se debe ingresar por lo menos alguna de las composiciones");
+                                }
+                            }
                         }
-                        cont++;
-                    }		
-
-                    if (errorCom) {
-                        addActionError("Se ingresaron composiciones invalidas, por favor ingresar valores entre 0 y 100");
+                        contFer++;
                     }
-
-                    if (!entry) {
-                        for (int i=0; i<additionalsElem.size(); i++) {                      
-                            addFieldError("additionalsElem["+i+"].valueCheEle", ""); 
-                        }
-                        addActionError("Se debe ingresar por lo menos alguna de las composiciones");
-                    }
-                }
+//                }
             }           
             sowing=null;            
         }
@@ -464,18 +587,19 @@ public class ActionFer extends BaseAction {
         this.setType_prod_che(new ChemicalFertilizersDao().findAllByStatus());
         this.setType_prod_org(new OrganicFertilizersDao().findAllByStatus());
         this.setType_prod_ame(new AmendmentsFertilizersDao().findAllByStatus());
-        additionalsElem = new ChemicalElementsDao().findByParams(this.getIdFer());
+//        additionalsElem = new ChemicalElementsDao().findByParams(this.getIdFer());
         if (this.getIdFer()!= -1) {
-            fer    = ferDao.objectById(this.getIdFer());
-            ferChe = new ChemicalFertilizationsDao().objectById(this.getIdFer());            
-            ferOrg = new OrganicFertilizationsDao().objectById(this.getIdFer());            
-            ferAme = new AmendmentsFertilizationsDao().objectById(this.getIdFer());   
-            amountProductUsedChe = fer.getAmountProductUsedFer();
-            amountProductUsedOrg = fer.getAmountProductUsedFer();
-            amountProductUsedAme = fer.getAmountProductUsedFer(); 
-            if (ferChe!=null && ferChe.getOtherProductCheFer()!=null && !ferChe.getOtherProductCheFer().equals("")) ferChe.setChemicalFertilizers(new ChemicalFertilizers(1000000, "Otro"));
-            if (ferOrg!=null && ferOrg.getOtherProductOrgFer()!=null && !ferOrg.getOtherProductOrgFer().equals("")) ferOrg.setOrganicFertilizers(new OrganicFertilizers(1000000, "Otro"));
-            if (ferAme!=null && ferAme.getOtherProductAmeFer()!=null && !ferOrg.getOtherProductOrgFer().equals("")) ferAme.setAmendmentsFertilizers(new AmendmentsFertilizers(1000000, "Otro"));
+            fer      = ferDao.objectById(this.getIdFer());
+            chemFert = new ChemicalFertilizationsDao().getListChemFert(this.getIdFer());
+            orgFert  = new OrganicFertilizationsDao().getListOrgFert(this.getIdFer());
+            amenFert = new AmendmentsFertilizationsDao().getListAmeFert(this.getIdFer());
+            
+//            ferChe = new ChemicalFertilizationsDao().objectById(this.getIdFer());            
+//            ferOrg = new OrganicFertilizationsDao().objectById(this.getIdFer());            
+//            ferAme = new AmendmentsFertilizationsDao().objectById(this.getIdFer());   
+//            amountProductUsedChe = fer.getAmountProductUsedFer();
+//            amountProductUsedOrg = fer.getAmountProductUsedFer();
+//            amountProductUsedAme = fer.getAmountProductUsedFer(); 
         } 
         return SUCCESS;
     }
@@ -514,13 +638,14 @@ public class ActionFer extends BaseAction {
             
             fer.setProductionEvents(new ProductionEvents(idCrop));
             fer.setDateFer(dateFer);          
-            if (fer.getFertilizationsTypes().getIdFerTyp()==1) {
-                fer.setAmountProductUsedFer(amountProductUsedChe);
-            } else if (fer.getFertilizationsTypes().getIdFerTyp()==2) {
-                fer.setAmountProductUsedFer(amountProductUsedOrg);
-            } else if (fer.getFertilizationsTypes().getIdFerTyp()==3) {
-                fer.setAmountProductUsedFer(amountProductUsedAme);
-            }            
+            fer.setFertilizationsTypes(null);
+//            if (fer.getFertilizationsTypes().getIdFerTyp()==1) {
+//                fer.setAmountProductUsedFer(amountProductUsedChe);
+//            } else if (fer.getFertilizationsTypes().getIdFerTyp()==2) {
+//                fer.setAmountProductUsedFer(amountProductUsedOrg);
+//            } else if (fer.getFertilizationsTypes().getIdFerTyp()==3) {
+//                fer.setAmountProductUsedFer(amountProductUsedAme);
+//            }            
             
 //            if (sowing.getChemicalsSowing().getIdCheSow()==-1) {
 //                sowing.setChemicalsSowing(null);
@@ -531,69 +656,130 @@ public class ActionFer extends BaseAction {
             fer.setStatus(true);
             session.saveOrUpdate(fer);
             
+            Double amountProduct=null;
+            
             if (action.equals("M")) {
                 if (fer.getIdFer()>0) {
-                    ChemicalFertilizations ferCheTemp  = new ChemicalFertilizationsDao().objectById(this.getIdFer());
-                    OrganicFertilizations ferOrgTemp  = new OrganicFertilizationsDao().objectById(this.getIdFer());
-                    AmendmentsFertilizations ferAmeTemp  = new AmendmentsFertilizationsDao().objectById(this.getIdFer());
-                    if (fer.getFertilizationsTypes().getIdFerTyp()==1) {
-                        if (ferOrgTemp!=null) session.delete(ferOrgTemp);
-                        if (ferAmeTemp!=null) session.delete(ferAmeTemp);                    
-                    } else if (fer.getFertilizationsTypes().getIdFerTyp()==2) {
-                        if (ferCheTemp!=null) session.delete(ferCheTemp);
-                        if (ferAmeTemp!=null) session.delete(ferAmeTemp);
-                    } else if (fer.getFertilizationsTypes().getIdFerTyp()==3) {
-                        if (ferCheTemp!=null) session.delete(ferCheTemp);
-                        if (ferOrgTemp!=null) session.delete(ferOrgTemp);
+                    List<ChemicalFertilizations> chemFertOld = new ChemicalFertilizationsDao().getListChemFertOld(fer.getIdFer());
+                    for (ChemicalFertilizations ferCheOld : chemFertOld) {
+                        session.delete(ferCheOld);
                     }
+                    
+                    List<OrganicFertilizations> orgFertOld = new OrganicFertilizationsDao().getListOrgFert(fer.getIdFer());
+                    for (OrganicFertilizations ferOrgOld : orgFertOld) {
+                        session.delete(ferOrgOld);
+                    }
+                    
+                    List<AmendmentsFertilizations> ameFertOld = new AmendmentsFertilizationsDao().getListAmeFert(fer.getIdFer());
+                    for (AmendmentsFertilizations ferAmeOld : ameFertOld) {
+                        session.delete(ferAmeOld);
+                    }
+                    
+                    
+//                    ChemicalFertilizations ferCheTemp  = new ChemicalFertilizationsDao().objectById(this.getIdFer());
+//                    OrganicFertilizations ferOrgTemp  = new OrganicFertilizationsDao().objectById(this.getIdFer());
+//                    AmendmentsFertilizations ferAmeTemp  = new AmendmentsFertilizationsDao().objectById(this.getIdFer());
+//                    if (fer.getFertilizationsTypes().getIdFerTyp()==1) {
+//                        if (ferOrgTemp!=null) session.delete(ferOrgTemp);
+//                        if (ferAmeTemp!=null) session.delete(ferAmeTemp);                    
+//                    } else if (fer.getFertilizationsTypes().getIdFerTyp()==2) {
+//                        if (ferCheTemp!=null) session.delete(ferCheTemp);
+//                        if (ferAmeTemp!=null) session.delete(ferAmeTemp);
+//                    } else if (fer.getFertilizationsTypes().getIdFerTyp()==3) {
+//                        if (ferCheTemp!=null) session.delete(ferCheTemp);
+//                        if (ferOrgTemp!=null) session.delete(ferOrgTemp);
+//                    }
                 }
             }
             
-            if (fer.getFertilizationsTypes().getIdFerTyp()==1 && ferChe.getApplicationTypes().getIdAppTyp()==1) {
-                ChemicalFertilizers cheFer = null;
-                if (ferChe.getOtherProductCheFer()!=null && !ferChe.getOtherProductCheFer().equals("")) {
-                    cheFer = new ChemicalFertilizersDao().objectById(fer.getIdFer());
-                    if (cheFer!=null) session.delete(cheFer);     
+//            throw new HibernateException("Fallo creado"); 
+            
+            if (chemFert!=null) {                
+                for (ChemicalFertilizationsObj ferCheTemp : chemFert) {
+                    ChemicalFertilizers cheFer = null;
+                    if (ferCheTemp!=null) {
+                        if (ferCheTemp.getOtherProductCheFer()!=null && !ferCheTemp.getOtherProductCheFer().equals("")) {
+                            cheFer = new ChemicalFertilizersDao().objectById(ferCheTemp.getIdCheFer());
+                            if (cheFer!=null) session.delete(cheFer);     
 
-                    cheFer = new ChemicalFertilizers();
-                    cheFer.setNameCheFer(ferChe.getOtherProductCheFer());
-                    cheFer.setStatusCheFer(false);
-                    session.saveOrUpdate(cheFer);
-                    
-                    ferChe.setChemicalFertilizers(cheFer);
+                            cheFer = new ChemicalFertilizers();
+                            cheFer.setNameCheFer(ferCheTemp.getOtherProductCheFer());
+                            cheFer.setStatusCheFer(false);
+                            session.saveOrUpdate(cheFer);
 
-                    for (ChemicalElements elem : additionalsElem) {
-                        if (elem.getValueCheEle()!=null) {
-                            ChemicalFertilizerComposition chem = new ChemicalFertilizerComposition();
-                            chem.setChemicalElements(elem);
-                            chem.setChemicalFertilizers(cheFer);
-                            chem.setPercentageCheFerCom(elem.getValueCheEle());
-                            Double quant = (fer.getAmountProductUsedFer()*elem.getValueCheEle())/100;		
+                            ferCheTemp.setChemicalFertilizers(cheFer);
 
-                            chem.setRawElementQuantityCheFerCom(quant);
-                            session.saveOrUpdate(chem);
-                        }
+                            for (ChemicalElements elem : ferCheTemp.getAdditionalsElem()) {
+                                if (elem.getValueCheEle()!=null) {
+                                    ChemicalFertilizerComposition chem = new ChemicalFertilizerComposition();
+                                    chem.setChemicalElements(elem);
+                                    chem.setChemicalFertilizers(cheFer);
+                                    chem.setPercentageCheFerCom(elem.getValueCheEle());
+                                    Double quant = (ferCheTemp.getAmountProductUsedCheFer()*elem.getValueCheEle())/100;		
+
+                                    chem.setRawElementQuantityCheFerCom(quant);
+                                    session.saveOrUpdate(chem);
+                                }
+                            }
+                        }             
+                        
+//                        amountProduct += ferCheTemp.getAmountProductUsedCheFer();
+                        ChemicalFertilizations chemFer = new ChemicalFertilizations();           
+                        Integer idCheFer = ferCheTemp.getIdCheFer();
+//                        chemFer.setIdCheFer(idCheFer);
+                        chemFer.setIdCheFer(null);
+                        chemFer.setFertilizations(fer);
+                        chemFer.setStatus(true);
+                        chemFer.setChemicalFertilizers(ferCheTemp.getChemicalFertilizers());
+                        chemFer.setOtherProductCheFer(ferCheTemp.getOtherProductCheFer());
+                        chemFer.setApplicationTypes(ferCheTemp.getApplicationTypes());
+                        chemFer.setAmountProductUsedCheFer(ferCheTemp.getAmountProductUsedCheFer());
+                        chemFer.setUnitCheFer(ferCheTemp.getUnitCheFer());
+
+//                        ferCheTemp.setAdditionalsElem(null);
+//                        ferCheTemp.setFertilizations(fer);
+//                        ferCheTemp.setStatus(true);
+                        session.saveOrUpdate(chemFer);   
                     }
-                }                
-                
-                ferChe.setFertilizations(fer);
-                ferChe.setStatus(true);
-                session.saveOrUpdate(ferChe);            
-            } else if (fer.getFertilizationsTypes().getIdFerTyp()==2) {
-                ferOrg.setFertilizations(fer);
-                ferOrg.setStatus(true);
-                if (ferOrg.getOtherProductOrgFer()!=null && !ferOrg.getOtherProductOrgFer().equals("")) {
-                    ferOrg.setOrganicFertilizers(null);
                 }
-                session.saveOrUpdate(ferOrg);      
-            } else if (fer.getFertilizationsTypes().getIdFerTyp()==3) {
-                ferAme.setFertilizations(fer);
-                ferAme.setStatus(true);
-                if (ferAme.getOtherProductAmeFer()!=null && !ferAme.getOtherProductAmeFer().equals("")) {
-                    ferAme.setAmendmentsFertilizers(null);
+            } 
+            
+            if (orgFert!=null) {
+                for (OrganicFertilizations ferOrgNew : orgFert) {
+                    if (ferOrgNew!=null) {
+                        ferOrgNew.setIdOrgFer(null);
+                        ferOrgNew.setFertilizations(fer);
+                        ferOrgNew.setStatus(true);
+                        if (ferOrgNew.getOtherProductOrgFer()!=null && !ferOrgNew.getOtherProductOrgFer().equals("")) {
+                            ferOrgNew.setOrganicFertilizers(null);
+                        }
+                        ferOrgNew.setFertilizations(fer);
+                        ferOrgNew.setStatus(true);
+//                        amountProduct += ferOrgNew.getAmountProductUsedOrgFer();
+                        session.saveOrUpdate(ferOrgNew);    
+                    }
                 }
-                session.saveOrUpdate(ferAme);      
+            } 
+            
+            if (amenFert!=null) {
+                for (AmendmentsFertilizations ferAmeNew : amenFert) {
+                    if (ferAmeNew!=null) {
+                        ferAmeNew.setIdAmeFer(null);
+                        ferAmeNew.setFertilizations(fer);
+                        ferAmeNew.setStatus(true);
+                        if (ferAmeNew.getOtherProductAmeFer()!=null && !ferAmeNew.getOtherProductAmeFer().equals("")) {
+                            ferAmeNew.setAmendmentsFertilizers(null);
+                        }
+                        ferAmeNew.setFertilizations(fer);
+                        ferAmeNew.setStatus(true);
+//                        amountProduct += ferAmeNew.getAmountProductUsedAmeFer();
+                        session.saveOrUpdate(ferAmeNew);  
+                    }
+                }
             }     
+            
+//            fer.setAmountProductUsedFer(amountProduct);
+//            session.saveOrUpdate(fer);
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);

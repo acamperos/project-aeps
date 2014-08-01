@@ -4,9 +4,9 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ciat_stage</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">nbuser</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ciat</property>
+    <property name="hibernate.connection.username">ciat</property>
+    <property name="hibernate.connection.password">GtA7U5BWcPATbGpT</property>
     <mapping class="org.aepscolombia.platform.models.entityservices.SfGuardUser"/>
   </session-factory>
 </hibernate-configuration>

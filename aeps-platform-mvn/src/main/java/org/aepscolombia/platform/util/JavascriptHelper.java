@@ -39,7 +39,7 @@ public class JavascriptHelper {
     public static String pager_params_ajax(int page, int countTotal, int maxResults, String url, String divUpdate, String divMessage, String params, String formId) {
         int linksTotals = (int) Math.ceil((double)countTotal / maxResults);
         
-        String script = "changePage('/aeps-plataforma-mvn/buscarPersonas.action', 'page', '', 'divTabPersons', 'divMessage');";
+        String script = "changePage('/buscarPersonas.action', 'page', '', 'divTabPersons', 'divMessage');";
         String navigation = "";
         navigation += "<div class=\"pagination pagination-centered\"><ul>";
         String links = "";

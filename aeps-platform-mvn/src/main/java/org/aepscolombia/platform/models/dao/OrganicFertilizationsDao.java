@@ -15,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.OrganicFertilizations;
+import org.aepscolombia.platform.models.entity.OrganicFertilizers;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -78,9 +79,9 @@ public class OrganicFertilizationsDao
         Transaction tx = null;
 				
         sql += "select p.id_org_fer, p.id_fertilization_org_fer, p.id_product_org_fer,";
-        sql += " p.other_product_org_fer, p.status, p.created_by"; 
+        sql += " p.other_product_org_fer, p.amount_product_used_org_fer, p.status, p.created_by"; 
         sql += " from organic_fertilizations p";
-        sql += " where p.id_fertilization_org_fer="+id;
+        sql += " where p.status=1 and p.id_fertilization_org_fer="+id;
         try {
             tx = session.beginTransaction();
             Query query = session.createSQLQuery(sql).addEntity("p", OrganicFertilizations.class);
@@ -95,6 +96,36 @@ public class OrganicFertilizationsDao
             session.close();
         }
         return event;
+    }
+    
+    public List<OrganicFertilizations> getListOrgFert(Integer idFert) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<OrganicFertilizations> eventsTemp = null;
+        List<OrganicFertilizations> result     = new ArrayList<OrganicFertilizations>();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String sql = "select p.id_org_fer, p.id_fertilization_org_fer, p.id_product_org_fer,";
+            sql += " p.other_product_org_fer, p.amount_product_used_org_fer, p.status, p.created_by"; 
+            sql += " from organic_fertilizations p";
+            sql += " where p.status=1 and p.id_fertilization_org_fer="+idFert;
+            Query query = session.createSQLQuery(sql).addEntity("p", OrganicFertilizations.class);
+            eventsTemp = query.list();
+            for (OrganicFertilizations data : eventsTemp) {
+                if (data!=null && data.getOtherProductOrgFer()!=null && !data.getOtherProductOrgFer().equals("")) data.setOrganicFertilizers(new OrganicFertilizers(1000000, "Otro"));
+                result.add(data);
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
     }
 
     public void save(OrganicFertilizations event) {

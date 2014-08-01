@@ -55,6 +55,7 @@ public class WeedsDao
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_wee_cro="+idTypeCrop;
         }
+        sql += " order by ms.name_wee ASC";
 				
         try {
             tx = session.beginTransaction();

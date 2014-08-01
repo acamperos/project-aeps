@@ -1,11 +1,6 @@
 package org.aepscolombia.platform.models.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -47,15 +42,19 @@ public class DoseUnitsDao {
         return event;
     }
 
-    public List findByParams(String[] args) {
+    public List<DoseUnits> findByParams(String exclude) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
-        List<Object[]> events = null;
+        List<DoseUnits> events = null;
         Transaction tx = null;
 //        events.toArray();
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select acronym_doc_typ, name_doc_typ from dose_units");
+            String sql  = "select p.id_dos_uni, p.name_dos_uni, p.status_dos_uni from dose_units p";
+            sql += " where p.id_dos_uni not in ("+exclude+")";
+//            sql += " where p.name_dos_uni not in ("+exclude+")";
+//            sql += " and p.id_dos_uni in ("+include+")";
+            Query query = session.createSQLQuery(sql).addEntity("p", DoseUnits.class);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

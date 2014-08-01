@@ -66,7 +66,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
-                            <h4>Protecci&oacute;n <i class="colThree icon-chevron-down"></i></h4>
+                            <h4>Manejo Fitosanitario <i class="colThree icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseThree" class="accordion-body collapse">				
@@ -85,6 +85,18 @@
                         <div class="accordion-inner">
                             <%@ include file="monitoring.jsp" %>
                             <!--<?php include_once('control.php') ?>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven">
+                            <h4>Observaciones <i class="colSeven icon-chevron-down"></i></h4> 
+                        </a>
+                    </div>
+                    <div id="collapseSeven" class="accordion-body collapse">				
+                        <div class="accordion-inner">
+                            <%@ include file="descriptions.jsp" %>
                         </div>
                     </div>
                 </div>
@@ -149,6 +161,10 @@
 
             $('#collapseSix').on('hidden', function () {
                 $(".colSix").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+            });
+            
+            $('#collapseSeven').on('hidden', function () {
+                $(".colSeven").removeClass("icon-chevron-up").addClass("icon-chevron-down");
             });
 
             $("#formCropHar_harv_dateHar").datepicker({changeMonth: true, changeYear: true});

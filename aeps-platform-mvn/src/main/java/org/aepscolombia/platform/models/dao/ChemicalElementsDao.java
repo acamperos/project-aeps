@@ -43,7 +43,7 @@ public class ChemicalElementsDao
         sql += " from production_events pe";
         sql += " inner join log_entities le on le.id_object_log_ent=pe.id_pro_eve and le.table_log_ent='production_events' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
-        sql += " where l.status=1 and f.status=1 and pe.status=1";
+        sql += " where l.status=1 and pe.status=1";
         if (id!=null) {
             sql += " and pe.id_pro_eve="+id;
         }
@@ -137,6 +137,7 @@ public class ChemicalElementsDao
                 Double valChe  = getValuePercentage(idFert, valId);
                 temp.setIdCheEle(valId);
                 temp.setNameCheEle(String.valueOf(data[1]));
+//                System.out.println("valName=>"+temp.getNameCheEle());
 //                temp.setStatusCheEle(true);
                 temp.setValueCheEle(valChe);
                 result.add(temp);
@@ -162,14 +163,14 @@ public class ChemicalElementsDao
         String sql = "";    
         Double perEle=null;
         
-        if (idFert>0) {
+        if (idFert!=null && idFert>0) {
             sql += "select p.id_che_ele, p.name_che_ele, eq.percentage_che_fer_com";
             sql += " from chemical_elements p"; 
             sql += " left join chemical_fertilizer_composition eq on eq.id_elements_che_fer_com=p.id_che_ele";    
             sql += " left join chemical_fertilizers fq on fq.id_che_fer=eq.id_chemical_fertilizer_che_fer_com";
             sql += " left join chemical_fertilizations ep on ep.id_product_che_fer=fq.id_che_fer";    
-            sql += " where p.status_che_ele=1";     
-            sql += " and ep.id_fertilization_che_fer="+idFert;                
+            sql += " where p.status_che_ele=1 and ep.status=1";     
+            sql += " and ep.id_che_fer="+idFert;                
             sql += " and p.id_che_ele="+idEle;     
             sql += " order by p.id_che_ele ASC";        
         

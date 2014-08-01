@@ -2,19 +2,19 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <s:form id="formProducerSearch" action="searchProducer.action?selected=%{selected}" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="Buscar un productor">
-    <s:hidden name="searchFrom" value="1"/>    
-    <div class="control-group" id="searchBasic">
+    <s:hidden name="searchFromProducer" value="1"/>    
+    <div class="control-group" id="searchBasicProducer">
         <s:textfield cssClass="form-control" name="search_producer" placeholder="Buscar" theme="simple" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListProducers" onCompleteTopics="completeProducer"><i class="icon-search"></i></sj:submit>
-        <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+        <a onclick="showSearchAdvance('searchBasicProducer', 'searchAdvanceProducer', 'formProducerSearch_searchFromProducer', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
         <s:set name="valSel" value="selected"/> 
         <s:if test="%{#valSel.equals('producer')}">
             <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         </s:if>
     </div>   
-    <div id="searchAdvance" class="hide">
+    <div id="searchAdvanceProducer" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicProducer', 'searchAdvanceProducer', 'formProducerSearch_searchFromProducer', 1)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">
@@ -79,7 +79,7 @@
                     listValue="nameDep"          
                     headerKey=" " 
                     headerValue="---"
-                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formProducerSearch_cityPro', 'formFarm')"
+                    onchange="chargeValues('/comboMunicipalities.action', 'depId', this.value, 'formProducerSearch_cityPro', 'formFarm')"
                     />
             </div>
             <div class="span4" style="padding-left: 28px">

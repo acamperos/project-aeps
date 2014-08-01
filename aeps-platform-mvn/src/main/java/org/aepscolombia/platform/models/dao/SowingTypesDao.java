@@ -56,7 +56,7 @@ public class SowingTypesDao
         List<SowingTypes> event = null;
         Transaction tx = null;
 				
-        sql += " select d.id_sow_typ, d.name_sow_typ, d.status_sow_type  from sowing_types d";
+        sql += " select d.id_sow_typ, d.name_sow_typ, d.status_sow_type from sowing_types d";
         sql += " inner join sowing_types_crops_types pm on pm.id_sowing_type_sow_typ_cro=d.id_sow_typ";
         sql += " where d.status_sow_type=1";
         sql += " and pm.id_crop_type_sow_typ_cro="+idTypeCrop;

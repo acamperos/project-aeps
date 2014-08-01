@@ -14,7 +14,7 @@
             <s:hidden name="actExe"/>
             <s:hidden name="valueIng" value="phys"/>
             <s:hidden name="phys.idPhyMon"/>
-            <label for="formCropMon_phys_emergencePhyMon" class="control-label req">
+            <label for="formCropMon_phys_emergencePhyMon" class="control-label">
                 Fecha de emergencia:
             </label>
             <div class="date controls">
@@ -25,7 +25,7 @@
             </div>                          
         </div>
         <div class="control-group">
-            <label for="formCropMon_phys_daysPopulationMonFis" class="control-label req">
+            <label for="formCropMon_phys_daysPopulationMonFis" class="control-label">
                 Poblacion a los 20 días:
             </label>
             <div class="controls">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="control-group">
-            <label for="formCropMon_phys_floweringDatePhyMon" class="control-label req">
+            <label for="formCropMon_phys_floweringDatePhyMon" class="control-label">
                 Fecha de floración:
             </label>
             <div class="date controls">
@@ -43,8 +43,17 @@
                 <span class="add-on"><i class="icon-calendar"></i></span>
             </div>                          
         </div>
+        <div class="control-group">
+            <label for="formCropMon_phys_percentageReseedingPhyMon" class="control-label">
+                Porcentaje de resiembra:
+            </label>
+            <div class="controls">
+                <s:textfield name="phys.percentageReseedingPhyMon" />
+            </div>                          
+        </div>
         <p class="warnField reqBef">Campos Requeridos</p>
         <script>
+            $("#formCropMon_phys_percentageReseedingPhyMon").numeric({negative: false});
             $("#formCropMon_phys_emergencePhyMon").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropMon_phys_emergencePhyMon").mask("99/99/9999", {placeholder: " "});
             $("#formCropMon_phys_floweringDatePhyMon").datepicker({dateFormat: 'dd/mm/yy'});

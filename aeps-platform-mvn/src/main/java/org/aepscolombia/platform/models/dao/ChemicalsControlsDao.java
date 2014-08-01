@@ -59,6 +59,7 @@ public class ChemicalsControlsDao
             if (idTargetType!=null && idTargetType!=0) {
                 sql += " and ms.target_name_che_con="+idTargetType;
             }
+            sql += " order by ms.name_che_con ASC";
 
             try {
                 tx = session.beginTransaction();

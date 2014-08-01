@@ -4,12 +4,14 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.aepscolombia.platform.models.dao.DepartmentsDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 
@@ -77,7 +79,7 @@ public class ActionFarm extends BaseAction {
     private Users user;
     private Integer idEntSystem;
     private Integer idUsrSystem;
-    private Integer searchFrom;
+    private Integer searchFromFarm;
     private String search_farm;    
     private UsersDao usrDao;
 
@@ -93,12 +95,12 @@ public class ActionFarm extends BaseAction {
         this.idFarm = idFarm;
     }
 
-    public Integer getSearchFrom() {
-        return searchFrom;
+    public Integer getSearchFromFarm() {
+        return searchFromFarm;
     }
 
-    public void setSearchFrom(Integer searchFrom) {
-        this.searchFrom = searchFrom;
+    public void setSearchFromFarm(Integer searchFromFarm) {
+        this.searchFromFarm = searchFromFarm;
     }
 
     public String getSearch_farm() {
@@ -373,7 +375,8 @@ public class ActionFarm extends BaseAction {
     
     @Override
     public void prepare() throws Exception {
-        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        user = (Users) ActionContext.getContext().getSession().get(APConstants.SESSION_USER);
+//        user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
@@ -404,9 +407,57 @@ public class ActionFarm extends BaseAction {
     }
 
     @Override
-    public String execute() throws Exception {
+    public String execute() {
 //        this.setType_ident_producer(new TiposDocumentosDao().findAll());
 //        this.setDepartment_property(new DepartmentsDao().findAll());
+        return SUCCESS;
+    }
+    
+    private Map fieldError;
+
+    public Map getFieldError() {
+        return fieldError;
+    }
+
+    public void setFieldError(Map fieldError) {
+        this.fieldError = fieldError;
+    }
+    
+    
+    
+    public String viewPosition() {
+        Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
+        Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
+//        position = this.getRequest().getParameter("position");
+//        if (position.equals("in")) {   
+        info = "";
+            if (latPro!=0) {
+                if (latPro < (-4.3) || latPro > (13.5)) {
+                    addFieldError("latitude_property", "Dato invalido valor entre -4.3 y 13.5");
+                    state = "failure";
+                    info  = "Dato invalido valor entre -4.3 y 13.5";
+                }
+            } else {
+                addFieldError("latitude_property", "Dato invalido valor entre -4.3 y 13.5");
+                state = "failure";
+                info  = "Dato invalido valor entre -4.3 y 13.5";
+            }
+            
+            if (lonPro!=0) {
+                if (lonPro < (-81.8) || lonPro > (-66)) {
+                    addFieldError("length_property", "Dato invalido valor entre -81.8 y -66");
+                    state = "failure";
+                    info  = "Dato invalido valor entre -81.8 y -66";
+                }
+            } else {
+//                getFieldErrors()
+                addFieldError("length_property", "Dato invalido valor entre -81.8 y -66");
+                state = "failure";
+                info  = "Dato invalido valor entre -81.8 y -66";
+            }
+            fieldError = getFieldErrors();
+//        }
+        if (state.equals("failure")) return "states";
         return SUCCESS;
     }
 
@@ -617,7 +668,7 @@ public class ActionFarm extends BaseAction {
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
         
-        if(searchFrom!=null && searchFrom==2) {
+        if(searchFromFarm!=null && searchFromFarm==2) {
             search_farm = "";
         }
         
@@ -858,7 +909,9 @@ public class ActionFarm extends BaseAction {
         try {
             tx = session.beginTransaction();
             Farms far = farDao.objectById(idFar);
-            session.delete(far);
+            far.setStatus(false);     
+            session.saveOrUpdate(far);
+//            session.delete(far);
 //            farDao.delete(far);
 
             LogEntities log = new LogEntities();

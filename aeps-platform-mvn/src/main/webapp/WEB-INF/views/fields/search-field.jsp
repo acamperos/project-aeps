@@ -7,19 +7,19 @@
 <s:actionmessage theme="bootstrap"/>
 <s:fielderror theme="bootstrap"/>
 <s:form id="formFieldSearch" theme="bootstrap" action="searchField.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Buscar un lote">
-    <s:hidden name="searchFrom" value="1"/>    
-    <div class="control-group" id="searchBasic">
-        <s:textfield cssClass="form-control" name="search_farm" placeholder="Buscar" theme="simple" />
+    <s:hidden name="searchFromField" value="1"/>    
+    <div class="control-group" id="searchBasicField">
+        <s:textfield cssClass="form-control" name="search_field" placeholder="Buscar" theme="simple" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFields" onCompleteTopics="completeField"><i class="icon-search"></i></sj:submit>
-        <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+        <a onclick="showSearchAdvance('searchBasicField', 'searchAdvanceField', 'formFieldSearch_searchFromField', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
         <s:set name="valSel" value="selected"/> 
         <s:if test="%{#valSel.equals('lot')}">
             <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         </s:if>
     </div>   
-    <div id="searchAdvance" class="hide">
+    <div id="searchAdvanceField" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicField', 'searchAdvanceField', 'formFieldSearch_searchFromField', 1)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">

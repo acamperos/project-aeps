@@ -85,7 +85,7 @@
                 $.subscribe('completeMon', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropMonGen', 'divMon', event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        showInfo("/aeps-plataforma-mvn/crop/searchMon.action?idCrop="+$("#formCropMonGen_idCrop").val(), "divListMonGen");
+                        showInfo("/crop/searchMon.action?idCrop="+$("#formCropMonGen_idCrop").val(), "divListMonGen");
                     }, 2000);
                 });
             </script>

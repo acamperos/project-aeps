@@ -1,0 +1,18 @@
+.active {
+    display: block;
+}
+
+.deactivate {
+    display: none;
+}
+
+.inclinationText {
+    margin-top: 0px; 
+    position: relative; 
+    top: -50px; 
+    left: 35px;
+}
+
+.img-size {
+    width: 550px;
+}

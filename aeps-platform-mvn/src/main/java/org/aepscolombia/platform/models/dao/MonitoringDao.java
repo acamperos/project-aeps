@@ -43,7 +43,7 @@ public class MonitoringDao
         sql += " from production_events pe";
         sql += " inner join log_entities le on le.id_object_log_ent=pe.id_pro_eve and le.table_log_ent='production_events' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
-        sql += " where l.status=1 and f.status=1 and pe.status=1";
+        sql += " where l.status=1 and pe.status=1";
         if (id!=null) {
             sql += " and pe.id_pro_eve="+id;
         }
@@ -115,7 +115,7 @@ public class MonitoringDao
         sql += "select m.id_mon, m.date_mon, m.monitor_pests_mon, m.monitor_diseases_mon, m.monitor_weeds_mon from monitoring m";    
         sql += " inner join production_events ep on m.id_production_event_mon=ep.id_pro_eve"; 
         sql += " inner join log_entities le on le.id_object_log_ent=m.id_mon and le.table_log_ent='monitoring' and le.action_type_log_ent='C'"; 
-        sql += " where m.status=1";
+        sql += " where m.status=1 and ep.status=1";
         if (args.containsKey("idEvent")) {
             sql += " and m.id_production_event_mon="+args.get("idEvent");
         }

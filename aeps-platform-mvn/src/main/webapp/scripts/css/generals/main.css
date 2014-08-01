@@ -23,6 +23,22 @@
     /*font-family: Tahoma;*/        
 }
 
+.icon-report {
+    /*background-position: -192px -120px;*/
+    /*margin-top: 2px;*/
+    background: url("../../../img/report_graphic.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    /*cursor: pointer;*/    
+    display: inline-block !important;
+/*    height: 16px;
+    width: 16px;*/
+}
+
+.ui-spinner {
+    width: 100px !important;
+}
+
 .refTop {
     /*background-color: #AD68A3;*/
     color: #87398A;
@@ -493,6 +509,7 @@ form {
 #menu li a:hover span, #menu .active a span{color:#fff}
 #menu #nav1 a{background:url(../../../img/gettingInfo.png) center no-repeat; background-color: #FFFFFF;height: 195px;width: 150px;}
 #menu #nav2 a{background:url(../../../img/report-icon.png) center no-repeat; background-color: #FFFFFF;height: 195px;width: 150px;}
+#menu #nav3 a{background:url(../../../img/report-problem.png) center 70% no-repeat; background-color: #FFFFFF;height: 195px;width: 150px;}
 #menu .separate {padding-right: 20px;}
 /* #menu #nav2 a:hover, #menu #nav2.active a{background:url(../img/menu_icon2_active.gif) bottom center no-repeat} */
 /* #menu #nav3 a{background:url(../img/menu_icon3.gif) bottom center no-repeat} */

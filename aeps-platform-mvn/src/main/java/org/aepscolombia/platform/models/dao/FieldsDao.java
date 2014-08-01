@@ -51,7 +51,7 @@ public class FieldsDao
 //        sql += " left join fincas_productores fp on fp.id_finca_fin_pro=f.id_fin"; 
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where l.status=1 and f.status=1";
+        sql += " where l.status=1 and f.status=1 and e.status=1";
 //        sql += " lp.tipo_contrato_lot_pro!=1";
         // if ($identProductor!='' ) sql += "where";
 //        sql += sqlAdd;
@@ -163,7 +163,7 @@ public class FieldsDao
 //        sql += " inner join fincas_productores fp on fp.id_finca_fin_pro=f.id_fin"; 
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where l.status=1";
+        sql += " where l.status=1 and f.status=1 and e.status=1";
 //        sql += " where l.status=1 and l.contract_type_fie!=1";
         
 //        if (args.containsKey("idFarm")) {
@@ -311,8 +311,11 @@ public class FieldsDao
         sql += "select count(l.id_fie), l.id_farm_fie";
         sql += " from fields l";
         sql += " left join farms f on f.id_far=l.id_farm_fie";
+        sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
+        sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
+        sql += " inner join entities e on e.id_ent=p.id_entity_pro";        
         sql += " inner join log_entities le on le.id_object_log_ent=l.id_fie and le.table_log_ent='fields' and le.action_type_log_ent='C'";   
-        sql += " where l.status=1";
+        sql += " where l.status=1 and f.status=1 and e.status=1";
         if (args.containsKey("idEntUser")) {
             sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
         }

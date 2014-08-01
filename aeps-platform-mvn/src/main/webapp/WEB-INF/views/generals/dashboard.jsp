@@ -8,8 +8,9 @@
         <div class="container">
             <nav>
                 <ul id="menu" class="nav">
-                    <li id="nav1" class="separate"><s:a href="getting.action" cssClass="btn" targets="divBodyLayout">Recolección</s:a></li>
-                    <li id="nav2"><a href="#" class="btn">Reportes</a>En Construcción</li>
+                    <li id="nav1" class="separate"><s:a href="getting" cssClass="btn" targets="divBodyLayout">Recolección</s:a></li>
+                    <li id="nav2" class="separate"><s:a href="reports" cssClass="btn" targets="divBodyLayout">Reportes</s:a></li>
+                    <li id="nav3"><s:a href="viewIssue" cssClass="btn" targets="divBodyLayout">Reportar problema</s:a></li>
                 </ul>
             </nav>
         </div>

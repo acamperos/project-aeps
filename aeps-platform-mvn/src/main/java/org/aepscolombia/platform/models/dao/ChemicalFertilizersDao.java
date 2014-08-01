@@ -85,7 +85,7 @@ public class ChemicalFertilizersDao
         sql += "select p.id_che_fer, p.name_che_fer, p.status_che_fer";
         sql += " from chemical_fertilizers p";
         sql += " inner join chemical_fertilizations fq on fq.id_product_che_fer=p.id_che_fer";
-        sql += " where fq.id_fertilization_che_fer="+id;
+        sql += " where fq.id_che_fer="+id;
         try {
             tx = session.beginTransaction();
             Query query = session.createSQLQuery(sql).addEntity("p", ChemicalFertilizers.class);

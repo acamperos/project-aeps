@@ -3,7 +3,7 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd  ">
 <struts>
     <!--<constant name="struts.enable.DynamicMethodInvocation" value="false" />-->
-    <constant name="struts.devMode" value="true" />   
+    <constant name="struts.devMode" value="false" />   
     <constant name="struts.custom.i18n.resources" value="global"></constant>
     <constant name="struts.action.excludePattern" value="/NewWebService,/SfUserWebService"/>
     <!--<constant name="struts.locale" value="en_US" />-->
@@ -15,13 +15,9 @@
             <interceptor name="requireUser" class="org.aepscolombia.platform.interceptors.RequireUserInterceptor"/>
             <interceptor name="validateI18n" class="org.aepscolombia.platform.interceptors.ChangeI18n"/>
             <interceptor name="viewAction" class="org.aepscolombia.platform.interceptors.ViewActionInterceptor"/>
-            <!--<interceptor name="jcaptchaDefaultStack" class="com.google.code.jcaptcha4struts2.core.interceptors.JCaptchaValidationIntercepter"/>-->
             <interceptor-stack name="defaultStackAeps">    
                 <interceptor-ref name="requireUser" />
                 <interceptor-ref name="defaultStack" />        
-                <!--<interceptor-ref name="jcaptchaDefaultStack" />-->               
-                <!--<interceptor-ref name="timer" />
-                <interceptor-ref name="logger" />-->
             </interceptor-stack>
             <interceptor-stack name="defaultI18n">    
                 <interceptor-ref name="timer" />
@@ -30,8 +26,7 @@
                 <interceptor-ref name="validateI18n" />
             </interceptor-stack>
         </interceptors>
-        <!--<default-action-ref name="initial" />-->
-        <!--<default-interceptor-ref name="defaultI18n"></default-interceptor-ref>-->
+        
         <global-results>
             <result name="400">
                 /WEB-INF/views/errors/400.jsp                
@@ -66,7 +61,7 @@
         <action name="initial">
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="viewAction"/>
-            <result name="page" type="redirectAction">locale</result>
+            <result type="redirectAction">locale</result>
             <!--<result>/layout.jsp</result>-->
         </action>             
         <action name="home">
@@ -81,10 +76,8 @@
             <result name="page">/layout.jsp</result>
             <result>/WEB-INF/views/generals/aboutUs.jsp</result>
         </action>           
-<!--        <action name="contact"  method="contact" class="org.aepscolombia.platform.controllers.ActionContact">
-            <result>/WEB-INF/views/contacts.jsp</result>
-        </action>-->
-        <action name="contact">
+        <action name="contact" method="getReport" class="org.aepscolombia.platform.controllers.ActionContact">
+        <!--<action name="contact">-->
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="viewAction"/>
             <result name="page">/layout.jsp</result>
@@ -114,31 +107,18 @@
         <action name="verifyUserToRestore"  method="verifyUserToRestore" class="org.aepscolombia.platform.controllers.ActionLogin">
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="basicStack"/>
-            <result>/WEB-INF/views/login/restorePass.jsp</result>            
-<!--            <result name="error" type="redirectAction">400</result>
-            <result name="input" type="redirectAction">
-                <param name="actionName">404</param>
-                <param name="namespace">/</param>
-            </result>-->
-            <!--<result name="input" type="redirectAction">404</result>-->
+            <result>/WEB-INF/views/login/restorePass.jsp</result>
         </action> 
         <action name="changePassUser"  method="changePassUser" class="org.aepscolombia.platform.controllers.ActionLogin">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="states" type="json"></result>
-            <!--<result type="redirectAction">signin</result>-->
         </action>
-        <action name="login"  method="login" class="org.aepscolombia.platform.controllers.ActionLogin">
-            <interceptor-ref name="validateI18n"/>            
-            <interceptor-ref name="viewAction"/>            
-            <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <!--<result name = "states" type="json"></result>-->
-<!--            <result type="redirectAction">
-                <param name="actionName">verify</param>
-                <param name="namespace">/</param>
-            </result>-->
-            <!--<result>/WEB-INF/views/generals/layoutPrivate.jsp</result>-->            
+        <action name="login" method="login" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>    
+            <interceptor-ref name="jsonValidationWorkflowStack"/>        
+            <interceptor-ref name="viewAction"/>                
+            <result name="states" type="json"></result>   
             <result type="redirectAction">dashboard</result>            
-            <!--<result type="redirect">/WEB-INF/views/dashboard.jsp</result>-->
             <result name="input">/WEB-INF/views/login/login.jsp</result>
         </action>
         <action name="saveUser" method="saveData" class="org.aepscolombia.platform.controllers.ActionLogin">    
@@ -146,21 +126,38 @@
             <interceptor-ref name="validateI18n"/> 
             <interceptor-ref name="defaultStack" />               
             <result name="states" type="json"></result>
-            <!--<result name="input">/WEB-INF/views/login/login.jsp</result>-->
+        </action>
+        <action name="viewIssue" method="show" class="org.aepscolombia.platform.controllers.ActionIssues">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/generals/error.jsp</result>
+        </action>
+        <action name="sendIssue" method="saveData" class="org.aepscolombia.platform.controllers.ActionIssues">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name="states" type="json"></result>
         </action>
         <!-- End public part -->
         
         <!-- Private part -->
-        <action name="signin" class="org.aepscolombia.platform.controllers.ActionLogin">
-            <interceptor-ref name="validateI18n"/>
-            <interceptor-ref name="defaultStackAeps"/>
-            <interceptor-ref name="viewAction"/>
-            <result type="redirectAction">dashboard</result>
-            <!--<result>/WEB-INF/views/generals/layoutPrivate.jsp</result>-->
+        <action name="signin" method="signin" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="requireUser"/>    
+            <interceptor-ref name="validateI18n"/>    
+            <interceptor-ref name="jsonValidationWorkflowStack"/>        
+            <result type="redirectAction">dashboard</result>    
+            <result name="states" type="json"></result>        
             <result name="input">/WEB-INF/views/login/login.jsp</result>
-        </action>                           
+        </action>  
+        <action name="tryFree" method="tryFree" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>    
+            <interceptor-ref name="jsonValidationWorkflowStack"/>        
+            <result type="redirectAction">dashboard</result>    
+            <result name="states" type="json"></result>        
+            <result name="input">/WEB-INF/views/generals/home.jsp</result>
+        </action>                         
         <action name="logout" method="logout" class="org.aepscolombia.platform.controllers.ActionLogin">
-            <!--<result type="redirectAction">initial</result>-->
             <result type="redirectAction">
                 <param name="actionName">initial</param>
                 <param name="namespace">/</param>
@@ -172,19 +169,20 @@
             <interceptor-ref name="viewAction"/>            
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
         </action>
-<!--        <action name="resume">
-            <interceptor-ref name="validateI18n"/>
-            <interceptor-ref name="defaultStackAeps"/>
-            <result>/WEB-INF/views/generals/layoutPrivate.jsp</result>
-            <result name="page">/WEB-INF/views/generals/dashboard.jsp</result>
-        </action>-->
         <action name="getting" method="getValues" class="org.aepscolombia.platform.controllers.ActionProfile">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>            
             <interceptor-ref name="viewAction"/>            
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
             <result>/WEB-INF/views/generals/getting.jsp</result>
-        </action>  
+        </action> 
+        <action name="reports">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/reports/reports.jsp</result>
+        </action> 
         <action name="configuration" method="getInformation" class="org.aepscolombia.platform.controllers.ActionProfile">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>            
@@ -306,6 +304,12 @@
             <interceptor-ref name="validateI18n"/>            
             <result>/WEB-INF/views/farms/form-farm.jsp</result>
         </action>
+        <action name="viewPositionFarm" method="viewPosition" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+            <result>/WEB-INF/views/farms/maps-farm.jsp</result>
+        </action>
         <action name="saveFarm" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>
@@ -351,6 +355,12 @@
             <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/fields/form-field.jsp</result>
         </action>
+        <action name="viewPositionField" method="viewPosition" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+            <result>/WEB-INF/views/fields/maps-field.jsp</result>
+        </action>
         <action name="saveField" method="saveData" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
@@ -394,7 +404,7 @@
             <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/soils/form-soil.jsp</result>
             <!--<result>/soils/form-soil.jsp</result>-->
-        </action>
+        </action>        
         <action name="saveSoil" method="saveData" class="org.aepscolombia.platform.controllers.ActionRasta">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
@@ -404,6 +414,22 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>     
+<!--        <action name="getReportSoil" method="getReportRasta" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>      
+            <result>/WEB-INF/views/reports/rasta_report.jsp</result>
+        </action>-->
+        <action name="viewPositionSoil" method="viewPosition" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+            <result>/WEB-INF/views/soils/maps-soil.jsp</result>
+        </action>
+        <action name="generateInf" method="generateInf" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>      
+            <result>/WEB-INF/views/reports/rasta_report.jsp</result>
+        </action>        
     </package>
     <package name="croppackage" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="comboGetCol" method="comboGetListGenByCol" class="org.aepscolombia.platform.controllers.ActionCrop">
@@ -462,6 +488,38 @@
             <result name = "states" type="json"></result>
         </action>     
     </package>
+    <package name="reportpackage" extends="principal,struts-default,json-default" namespace="/">        
+        <action name="listCropRep" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/reports/list-crops.jsp</result>
+        </action>
+        <action name="searchCropRep" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/reports/info-crops.jsp</result>
+        </action>
+        <action name="listSoilRep" method="search" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/reports/list-soil.jsp</result>
+        </action>
+        <action name="searchSoilRep" method="search" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/reports/info-soil.jsp</result>
+        </action>
+        <action name="getReport" method="getReport" class="org.aepscolombia.platform.controllers.ActionReport">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>      
+            <result name = "reportBox">/WEB-INF/views/reports/production_reportAgro.jsp</result>
+            <result name = "reportDet">/WEB-INF/views/reports/production_reportPro.jsp</result>
+        </action>
+    </package>
     <package name="sowing" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="saveSowing" method="saveData" class="org.aepscolombia.platform.controllers.ActionSowing">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
@@ -504,6 +562,48 @@
             <result name = "states" type="json"></result>
         </action>     
     </package>
+    <package name="residualpackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="searchResidual" method="search" class="org.aepscolombia.platform.controllers.ActionResiduals">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-residual.jsp</result>
+        </action>   
+        <action name="showResidual" method="show" class="org.aepscolombia.platform.controllers.ActionResiduals">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-residual.jsp</result>
+        </action>
+        <action name="saveResidual" method="saveData" class="org.aepscolombia.platform.controllers.ActionResiduals">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteResidual" method="delete" class="org.aepscolombia.platform.controllers.ActionResiduals">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>
+    <package name="descriptionspackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="searchDescrip" method="search" class="org.aepscolombia.platform.controllers.ActionDescriptions">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/info-description.jsp</result>
+        </action>   
+        <action name="showDescrip" method="show" class="org.aepscolombia.platform.controllers.ActionDescriptions">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/crops/form-description.jsp</result>
+        </action>
+        <action name="saveDescrip" method="saveData" class="org.aepscolombia.platform.controllers.ActionDescriptions">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteDescrip" method="delete" class="org.aepscolombia.platform.controllers.ActionDescriptions">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>     
+    </package>    
     <package name="irrpackage" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="searchIrr" method="search" class="org.aepscolombia.platform.controllers.ActionIrr">
             <interceptor-ref name="defaultStackAeps"/>
@@ -547,6 +647,11 @@
         </action>     
     </package>
     <package name="ferpackage" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="showRowAddFer" method="showRowAdditional" class="org.aepscolombia.platform.controllers.ActionFer">
+            <result name = "chemical">/WEB-INF/views/crops/row_chemical_fer.jsp</result>
+            <result name = "organic">/WEB-INF/views/crops/row_organic_fer.jsp</result>
+            <result name = "amendment">/WEB-INF/views/crops/row_amendment_fer.jsp</result>
+        </action>
         <action name="searchFer" method="search" class="org.aepscolombia.platform.controllers.ActionFer">
             <interceptor-ref name="defaultStackAeps"/>
             <interceptor-ref name="validateI18n"/>

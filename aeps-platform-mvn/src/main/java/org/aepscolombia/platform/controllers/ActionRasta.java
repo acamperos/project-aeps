@@ -4,6 +4,7 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,11 +12,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import javax.script.*;
+import org.aepscolombia.platform.models.dao.EntitiesDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.RastasDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
+import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.Fields;
 
 import org.aepscolombia.platform.models.entity.HorizontesRasta;
@@ -30,6 +35,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.renjin.sexp.ListVector;
 
 /**
  * Clase ActionRasta
@@ -48,7 +54,7 @@ public class ActionRasta extends BaseAction {
     private int idProducer;
     private int idFarm;
     private int idField;
-    private int idRasta;
+    private Integer idRasta;
     private String nameField;
     
     private String search_soil; 
@@ -63,7 +69,7 @@ public class ActionRasta extends BaseAction {
     private String ph;
     private String carbonates;
     private List<HashMap> listSoils;
-    private Integer searchFrom;
+    private Integer searchFromSoil;
     
     private Users user;
     private Integer idEntSystem;    
@@ -94,12 +100,12 @@ public class ActionRasta extends BaseAction {
         this.nameField = nameField;
     } 
 
-    public Integer getSearchFrom() {
-        return searchFrom;
+    public Integer getSearchFromSoil() {
+        return searchFromSoil;
     }
 
-    public void setSearchFrom(Integer searchFrom) {
-        this.searchFrom = searchFrom;
+    public void setSearchFromSoil(Integer searchFromSoil) {
+        this.searchFromSoil = searchFromSoil;
     }   
     
     public int getIdProducer() {
@@ -110,11 +116,11 @@ public class ActionRasta extends BaseAction {
         this.idProducer = idProducer;
     }
 
-    public int getIdRasta() {
+    public Integer getIdRasta() {
         return idRasta;
     }
 
-    public void setIdRasta(int idRasta) {
+    public void setIdRasta(Integer idRasta) {
         this.idRasta = idRasta;
     }   
     
@@ -354,6 +360,16 @@ public class ActionRasta extends BaseAction {
         this.rowNew = rowNew;
     }   
     
+    private Integer typeEnt;
+
+    public Integer getTypeEnt() {
+        return typeEnt;
+    }
+
+    public void setTypeEnt(Integer typeEnt) {
+        this.typeEnt = typeEnt;
+    }
+    
     @Override
     public String execute() throws Exception {
         return SUCCESS;
@@ -369,12 +385,148 @@ public class ActionRasta extends BaseAction {
         additionalsAtrib = new ArrayList<HorizontesRasta>();        
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+        EntitiesDao entDao = new EntitiesDao();
+        Entities entTemp = entDao.findById(idEntSystem);
+        typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
 //        rowNew = (String)(this.getRequest().getParameter("rowNew"));
 //        if (rowNew!=null && rowNew.equals("true")) {
 //            System.out.println("entreeeee");
 //            additionalsAtrib.add(0,new HorizontesRasta());
 //        }
 //        additionalsAtrib.add(1,new HorizontesRasta());
+    }
+    
+    private Map fieldError;
+
+    public Map getFieldError() {
+        return fieldError;
+    }
+
+    public void setFieldError(Map fieldError) {
+        this.fieldError = fieldError;
+    }
+    
+    public String viewPosition() {
+        info = "";
+        if (rasta.getLatitudRas()!=null && (rasta.getLatitudRas()<(-4.3) || rasta.getLatitudRas()>(13.5))) {
+            addFieldError("rasta.latitudRas", "Dato invalido valor entre -4.3 y 13.5");
+            state = "failure";
+            info += "Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5";
+        } else if (rasta.getLatitudRas()==null) {
+            addFieldError("rasta.latitudRas", "Dato invalido valor entre -4.3 y 13.5");
+            state = "failure";
+            info += "Se ingreso una latitud invalida, por favor ingresar un valor entre -4.3 y 13.5";
+        }
+
+        if (rasta.getLongitudRas()!=null && (rasta.getLongitudRas()<(-81.8) || rasta.getLongitudRas()>(-66))) {
+            addFieldError("rasta.longitudRas", "Dato invalido valor entre -81.8 y -66");
+            state = "failure";
+            info += "Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66";
+        } else if (rasta.getLongitudRas()==null) {
+            addFieldError("rasta.longitudRas", "Dato invalido valor entre -81.8 y -66");
+            state = "failure";
+            info += "Se ingreso una longitud invalida, por favor ingresar un valor entre -81.8 y -66";
+        }
+        fieldError = getFieldErrors();
+        if (state.equals("failure")) return "states";
+        return SUCCESS;
+    }
+    
+    public String generateInf() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/create") || !usrDao.getPrivilegeUser(idUsrSystem, "soil/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        } 
+        System.out.println("entereeeee");
+        
+        try {
+            this.setIdRasta(Integer.parseInt(this.getRequest().getParameter("idRasta")));
+        } catch (NumberFormatException e) {
+            this.setIdRasta(-1);
+        }        
+        
+        state = "failure";     
+        ScriptEngineManager manager = new ScriptEngineManager();
+        
+        // create a Renjin engine:
+        ScriptEngine engine = manager.getEngineByName("Renjin");
+        // check if the engine has loaded correctly:
+        if(engine == null) {
+//            throw new RuntimeException("Renjin Script Engine not found on the classpath.");
+            info  = "El paquete de coneccion de R y Java no funciona de manera apropiada";
+        }
+        
+        if (this.getIdRasta()==-1) {
+            info  = "Se produjo un error al momento de obtener el valor del rasta seleccionado";
+        }
+        
+        try {
+            
+            String vec = "vec <- "+rastaDao.getInfoToReport(this.getIdRasta());      
+            System.out.println("vec=>"+vec);
+            engine.eval(vec);
+            
+            ListVector res = (ListVector)engine.eval(new java.io.FileReader("inferidas.R"));            
+            String depthEffective  = res.getElementAsString(0);
+            String organicMaterial = res.getElementAsString(1);
+            String internalDrain   = res.getElementAsString(2);
+            String externalDrain   = res.getElementAsString(3);
+            String[] infoMaterials = organicMaterial.split(",");     
+//            System.out.println("infoMaterials->"+infoMaterials);
+            
+            HashMap valInf = new HashMap();
+            valInf.put("depth", depthEffective);
+            valInf.put("organic", infoMaterials);
+            valInf.put("internal", internalDrain);
+            valInf.put("external", externalDrain);
+            
+            Integer error = null;            
+            if (depthEffective.equals("Error") || depthEffective.equals("Error.nd") || depthEffective.equals("ERROR.ND") || depthEffective.equals("NO CLASIFICADO")) {
+                error = 1;
+            }            
+            
+            for (int i = 0; i < infoMaterials.length; i++) {
+                String temp = infoMaterials[i];
+                if (temp.equals("ERROR.ND") || internalDrain.equals("NO CLASIFICADO")) {
+                    error = 2;
+                }
+            }            
+            
+            if (internalDrain.equals("ERROR.ND") || internalDrain.equals("NO CLASIFICADO estruc") || internalDrain.equals("NO CLASIFICADO bueno") || internalDrain.equals("NO CLASIFICADO excesivo")) {
+                error = 3;
+            }
+            
+            if (externalDrain.equals("ERROR.ND") || externalDrain.equals("NO CLASIFICADO estruc") || externalDrain.equals("NO CLASIFICADO bueno") || externalDrain.equals("NO CLASIFICADO excesivo")) {
+                error = 4;
+            }
+            
+            if (error!=null) {
+                if (error==1) info  = "Se obtuvo un error al momento de obtener la profundidad efectiva";
+                if (error==2) info  = "Se obtuvo un error al momento de obtener la materia organica";
+                if (error==3) info  = "Se obtuvo un error al momento de obtener el drenaje interno";
+                if (error==4) info  = "Se obtuvo un error al momento de obtener el drenaje externo";
+//                return "states";
+            }
+            
+            Rastas rasTemp = rastaDao.objectById(this.getIdRasta());
+            info = rastaDao.getInfoRasta(this.getIdRasta(), valInf);            
+            
+            System.out.println("info=>"+info);
+            rasTemp.setProfundidadEfectivaRas(Double.parseDouble(depthEffective));
+            rasTemp.setMateriaOrganicaRas(organicMaterial);
+            rasTemp.setDrenajeInternoRas(internalDrain);
+            rasTemp.setDranajeExternoRas(externalDrain);
+            rastaDao.save(rasTemp);
+            return SUCCESS;             
+        } catch (ScriptException ex) {
+            System.out.println("Error mostrando la informacion");
+            info  = "Error mostrando la informacion";
+//                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            System.out.println("Error leyendo el archivo R");
+            info  = "Se obtuvo un error al momento de cargar R";
+//                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "states";
     }
     
     
@@ -551,7 +703,7 @@ public class ActionRasta extends BaseAction {
             for (HorizontesRasta horizon : additionalsAtrib) {
 //                System.out.println("horizon->"+horizon);
 //                if ((horizon.getNumeroHorizonteHorRas()<0) && (horizon.getEspesorHorRas()<0) && (horizon.getColorSecoHorRas()<0) && (horizon.getColorHumedoHorRas()<0) && (horizon.getTexturesId()<0) && (horizon.getResistenciasRompimientoId()<0)) {
-                if ((horizon.getNumeroHorizonteHorRas()>0) && (horizon.getEspesorHorRas()!=null && horizon.getEspesorHorRas()>0) && (horizon.getColorSecoHorRas()!=null && horizon.getColorSecoHorRas()>0) && (horizon.getColorHumedoHorRas()!=null && horizon.getColorHumedoHorRas()>0) && (horizon.getTextures()!=null) && (horizon.getResistenciasRompimiento()!=null)) {
+                if ((horizon.getNumeroHorizonteHorRas()!=null && horizon.getNumeroHorizonteHorRas()>0) && (horizon.getEspesorHorRas()!=null && horizon.getEspesorHorRas()>0) && (horizon.getColorSecoHorRas()!=null && horizon.getColorSecoHorRas()>0) && (horizon.getColorHumedoHorRas()!=null && horizon.getColorHumedoHorRas()>0) && (horizon.getTextures()!=null) && (horizon.getResistenciasRompimiento()!=null)) {
                     entry = false;					
                 }
 //                System.out.println("horizon.getColorSecoHorRas()->"+horizon.getColorSecoHorRas());
@@ -644,7 +796,7 @@ public class ActionRasta extends BaseAction {
             if (entry) {
 //                cont = 1;
 //                for (HorizontesRasta horizon : additionalsAtrib) {
-                for (int i=1; i<=additionalsAtrib.size(); i++) {                    
+                for (int i=0; i<=additionalsAtrib.size(); i++) {                    
                     addFieldError("additionalsAtrib["+i+"].numeroHorizonteHorRas", "Dato invalido");
                     addFieldError("additionalsAtrib["+i+"].espesorHorRas", "Dato invalido");
                     addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "Dato invalido");
@@ -654,11 +806,11 @@ public class ActionRasta extends BaseAction {
 //                    $fails[] = $prefix.'horizontes_'.$index.'_num_horizonte';				
 //                    cont++;
                 }
-                addActionError("Se debe ingresar por lo menos alguna capa");    
+                addActionError("Se debe ingresar por lo menos algun horizonte");    
             }
 
             if (sumEspesor>150) {
-                for (int i=1; i<=additionalsAtrib.size(); i++) {
+                for (int i=0; i<=additionalsAtrib.size(); i++) {
                     addFieldError("additionalsAtrib["+i+"].numeroHorizonteHorRas", "Dato invalido");
                     addFieldError("additionalsAtrib["+i+"].espesorHorRas", "Dato invalido");
                     addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "Dato invalido");
@@ -671,7 +823,7 @@ public class ActionRasta extends BaseAction {
         }
     }
     
-    private int numRows=0;
+    private Integer numRows=0;
 
     public Integer getNumRows() {
         return numRows;
@@ -712,7 +864,7 @@ public class ActionRasta extends BaseAction {
         
         return SUCCESS;
     }
-
+    
     /**
      * Encargado de buscar las coincidencias de un formulario de busqueda, para cada una de los
      * rastas registrados a un usuario
@@ -734,10 +886,10 @@ public class ActionRasta extends BaseAction {
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
         
-//        if (searchFrom!=null && searchFrom==2) {
+//        if (searchFromSoil!=null && searchFromSoil==2) {
 //            num_rasta = date = pendant = altitude = latitude = length = ground = position = ph = carbonates = search_soil;            
-//        } else if(searchFrom!=null && searchFrom==1) {
-        if(searchFrom!=null && searchFrom==2) {
+//        } else if(searchFromSoil!=null && searchFromSoil==1) {
+        if(searchFromSoil!=null && searchFromSoil==2) {
             search_soil = "";
         }
         
@@ -976,7 +1128,9 @@ public class ActionRasta extends BaseAction {
 //            rastaDao.deleteHorizonte(idRasta);
             
             Rastas ras = rastaDao.objectById(idRasta);      
-            session.delete(ras);            
+            ras.setStatus(false);     
+            session.saveOrUpdate(ras);
+//            session.delete(ras);            
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);

@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.FarmsDao;
 
 import org.aepscolombia.platform.models.entity.Farms;
@@ -16,6 +18,7 @@ import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.FieldTypesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
+import org.aepscolombia.platform.models.entity.Entities;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Fields;
@@ -68,7 +71,7 @@ public class ActionField extends BaseAction {
     private Users user;
     private Integer idEntSystem;
     private Integer idUsrSystem;
-    private Integer searchFrom;
+    private Integer searchFromField;
     private String search_field;
     private UsersDao usrDao;
 
@@ -85,12 +88,12 @@ public class ActionField extends BaseAction {
         this.idFarm = idFarm;
     }      
 
-    public Integer getSearchFrom() {
-        return searchFrom;
+    public Integer getSearchFromField() {
+        return searchFromField;
     }
 
-    public void setSearchFrom(Integer searchFrom) {
-        this.searchFrom = searchFrom;
+    public void setSearchFromField(Integer searchFromField) {
+        this.searchFromField = searchFromField;
     }
 
     public String getSearch_field() {
@@ -322,7 +325,17 @@ public class ActionField extends BaseAction {
 
     public void setOption_geo_lot(int option_geo_lot) {
         this.option_geo_lot = option_geo_lot;
-    }        
+    }       
+    
+    private Integer typeEnt;
+
+    public Integer getTypeEnt() {
+        return typeEnt;
+    }
+
+    public void setTypeEnt(Integer typeEnt) {
+        this.typeEnt = typeEnt;
+    }
     
     @Override
     public String execute() throws Exception {
@@ -339,6 +352,53 @@ public class ActionField extends BaseAction {
         this.setType_property_lot(new FieldTypesDao().findAll());
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+        EntitiesDao entDao = new EntitiesDao();
+        Entities entTemp = entDao.findById(idEntSystem);
+        typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
+    }
+    
+    private Map fieldError;
+
+    public Map getFieldError() {
+        return fieldError;
+    }
+
+    public void setFieldError(Map fieldError) {
+        this.fieldError = fieldError;
+    }
+    
+    
+    
+    public String viewPosition() {
+        Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
+        Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
+        info = "";
+        if (latLot!=0) {
+            if (latLot < (-4.3) || latLot > (13.5)) {
+                addFieldError("latitude_lot", "Dato invalido valor entre -4.3 y 13.5");
+                state = "failure";
+                info  += "Dato invalido valor entre -4.3 y 13.5";
+            }
+        } else {
+            addFieldError("latitude_lot", "Dato invalido valor entre -4.3 y 13.5");
+            state = "failure";
+            info  += "Dato invalido valor entre -4.3 y 13.5";
+        }
+
+        if (lonLot!=0) {
+            if (lonLot < (-81.8) || lonLot > (-66)) {
+                addFieldError("length_lot", "Dato invalido valor entre -81.8 y -66");
+                state = "failure";
+                info  += "Dato invalido valor entre -81.8 y -66";
+            }
+        } else {
+            addFieldError("length_lot", "Dato invalido valor entre -81.8 y -66");
+            state = "failure";
+            info  += "Dato invalido valor entre -81.8 y -66";
+        }
+        fieldError = getFieldErrors();
+        if (state.equals("failure")) return "states";
+        return SUCCESS;
     }
     
     
@@ -530,7 +590,7 @@ public class ActionField extends BaseAction {
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
         
-        if(searchFrom!=null && searchFrom==2) {
+        if(searchFromField!=null && searchFromField==2) {
             search_field = "";
         }
         
@@ -641,7 +701,10 @@ public class ActionField extends BaseAction {
         Double altLot = Double.parseDouble(altitude_lot.replace(',','.'));
         Double latLot = Double.parseDouble(latitude_lot.replace(',','.'));
         Double lonLot = Double.parseDouble(length_lot.replace(',','.'));
-        Double areaLot = Double.parseDouble(area_lot.replace(',','.'));
+        Double areaLot = null;
+        if (!area_lot.isEmpty()) {
+            areaLot = Double.parseDouble(area_lot.replace(',','.'));
+        }
 //        Double altLot = Double.parseDouble(altitude_lot);
 //        Double latLot = Double.parseDouble(latitude_lot);
 //        Double lonLot = Double.parseDouble(length_lot);
@@ -680,7 +743,7 @@ public class ActionField extends BaseAction {
             lot.setAltitudeFie(altLot);
             lot.setLatitudeFie(latLot);
             lot.setLongitudeFie(lonLot);
-            lot.setAreaFie(areaLot);            
+            if (areaLot!=null) lot.setAreaFie(areaLot);            
             lot.setFieldTypes(new FieldTypes(typeLot));
 //            lot.setControlPlagasLot(true);
 //            lot.setControlEnfermedadesLot(true);       
@@ -774,8 +837,10 @@ public class ActionField extends BaseAction {
 
         try {
             tx = session.beginTransaction();
-            Fields lot = lotDao.objectById(idField);      
-            session.delete(lot);
+            Fields lot = lotDao.objectById(idField);  
+            lot.setStatus(false);     
+            session.saveOrUpdate(lot);
+//            session.delete(lot);
 //            lotDao.delete(lot);            
             
             LogEntities log = new LogEntities();

@@ -7,21 +7,21 @@
 <s:actionmessage theme="bootstrap"/>
 <s:fielderror theme="bootstrap"/>
 <s:form id="formCropSearch" action="searchCrop.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Busqueda de evento productivos">
-    <s:hidden name="searchFrom" value="1"/>    
-    <div class="control-group" id="searchBasic">
+    <s:hidden name="searchFromCrop" value="1"/>    
+    <div class="control-group" id="searchBasicCrop">
         <!--<div class="span6">-->
             <s:textfield cssClass="form-control" name="search_crop" placeholder="Buscar" />
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListCrop" onCompleteTopics="completeSearchCrop"><i class="icon-search"></i></sj:submit>
                     <!--</div>-->
         <!--<div class="span2">-->
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+            <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
             <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         <!--</div>-->
     </div> 
-    <div id="searchAdvance" class="hide">
+    <div id="searchAdvanceCrop" class="hide">
         <div class="control-group">
             <!--<div class="span2">-->
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 1)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
             <!--</div>-->
         </div>
         <div class="row">

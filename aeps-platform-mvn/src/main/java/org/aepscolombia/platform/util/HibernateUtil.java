@@ -34,10 +34,10 @@ public class HibernateUtil {
     }
 
     // Database configuration
-    public static String url = "jdbc:mysql://localhost:3306/madr_bd13";
+    public static String url = "jdbc:mysql://localhost:3306/ciat_ext";
     public static String dbdriver = "com.mysql.jdbc.Driver";
-    public static String username = "root";
-    public static String password = "nbuser";
+    public static String username = "ciat";
+    public static String password = "GtA7U5BWcPATbGpT";
     static Connection conn;
     static Statement st;
     

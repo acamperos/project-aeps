@@ -22,7 +22,7 @@
     <fieldset>
         <legend>Lista de riegos</legend>
         <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/aeps-plataforma-mvn/crop/showIrr.action?action=create', 'idCrop', '${idCrop}', 'Crear Riego', 1050, 550);">
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showIrr.action?action=create', 'idCrop', '${idCrop}', 'Crear Riego', 1050, 550);">
                 <i class="icon-plus"></i> Agregar Riego
             </button>
         <% } %>

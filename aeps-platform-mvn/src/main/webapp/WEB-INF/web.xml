@@ -14,7 +14,7 @@
     </filter-mapping>
     <session-config>
         <session-timeout>
-            90
+            5400
         </session-timeout>
     </session-config>
     <welcome-file-list>

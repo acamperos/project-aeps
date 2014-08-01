@@ -5,7 +5,9 @@
 package org.aepscolombia.platform.controllers;
 
 import com.opensymphony.xwork2.ActionContext;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import org.aepscolombia.platform.util.APConstants;
 
 /**
@@ -38,7 +40,10 @@ public class LocaleAction extends BaseAction {
             Locale locale = new Locale(lang);
     //        System.out.println("locale->"+ActionContext.getContext().getLocale());
             ActionContext.getContext().setLocale(locale);
-            this.getSession().put(APConstants.SESSION_LANG, lang);
+//            this.getSession().put(APConstants.SESSION_LANG, lang);
+            Map<String, Object> userSession=ActionContext.getContext().getSession();
+            userSession.put(APConstants.SESSION_LANG, lang);
+            this.setSession(userSession);
         }
 //        return "states";
         return SUCCESS;

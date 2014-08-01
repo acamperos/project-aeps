@@ -2,19 +2,19 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <s:form id="formFarmSearch" theme="bootstrap" action="searchFarm.action?selected=%{selected}" cssClass="form-horizontal formClassProperty" label="Buscar una finca">
-    <s:hidden name="searchFrom" value="1"/>    
-    <div class="control-group" id="searchBasic">
+    <s:hidden name="searchFromFarm" value="1"/>    
+    <div class="control-group" id="searchBasicFarm">
         <s:textfield cssClass="form-control" name="search_farm" placeholder="Buscar" theme="simple" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFarms" onCompleteTopics="completeFarm"><i class="icon-search"></i></sj:submit>
-        <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 1)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
+        <a onclick="showSearchAdvance('searchBasicFarm', 'searchAdvanceFarm', 'formFarmSearch_searchFromFarm', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
         <s:set name="valSel" value="selected"/> 
         <s:if test="%{#valSel.equals('property')}">
             <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         </s:if>        
     </div>   
-    <div id="searchAdvance" class="hide">
+    <div id="searchAdvanceFarm" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasic', 'searchAdvance', 'searchFrom', 2)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicFarm', 'searchAdvanceFarm', 'formFarmSearch_searchFromFarm', 1)" class="radioSelect">Busqueda sencilla </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">
@@ -64,7 +64,7 @@
                     listValue="nameDep"          
                     headerKey=" " 
                     headerValue="---"
-                    onchange="chargeValues('/aeps-plataforma-mvn/comboMunicipalities.action', 'depId', this.value, 'formFarmSearch_cityFar', 'formFarmSearch')"
+                    onchange="chargeValues('/comboMunicipalities.action', 'depId', this.value, 'formFarmSearch_cityFar', 'formFarmSearch')"
                     />
             </div>
         </div>

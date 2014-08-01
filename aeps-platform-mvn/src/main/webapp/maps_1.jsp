@@ -187,11 +187,11 @@
             elevator = new google.maps.ElevationService();
 
             // Add a listener for the click event and call getElevation on that location
-            google.maps.event.addListener(map, 'click', getElevation);
+            //google.maps.event.addListener(map, 'click', getElevation);
           
-          google.maps.event.addListener(map, 'click', function(event) {
-             var marker = createMarker(event.latLng,"name",'<b>Location</b><br>'+event.latLng+'The elevation at this point <br>is ' + getElevation(event) + ' meters.',"green");
-          });
+          //google.maps.event.addListener(map, 'click', function(event) {
+             //var marker = createMarker(event.latLng,"name",'<b>Location</b><br>'+event.latLng+'The elevation at this point <br>is ' + getElevation(event) + ' meters.',"green");
+          //});
         }
 
         var infowindow = new google.maps.InfoWindow({ 
@@ -217,6 +217,7 @@
             // Creating a marker and putting it on the map
             var marker = createMarker(latLng,"name",'<b>Location</b><br>'+latLng,"green");
             marker.setMap(map);
+            infowindow.setContent('<b>Location</b><br>'+latLng); 
 //            var marker = new google.maps.Marker({
 //                position: latLng,
 //                map: map,

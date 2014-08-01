@@ -1,20 +1,15 @@
 package org.aepscolombia.platform.util;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import javax.mail.Authenticator;
-import javax.mail.BodyPart;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -230,16 +225,17 @@ public class GlobalFunctions {
      * @param salt Semilla ingresada
      * @return contraseña transformado en formato MD5
      */
-    public static String generateSHA1(String password, String salt) {
+    public static String generateSHA1(String password) {
         String passwordToHash = password;
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
-            md.update(salt.getBytes());
-            byte[] bytes = md.digest(passwordToHash.getBytes());
+//            md.update(salt.getBytes());
+            md.update(passwordToHash.getBytes());
+//            byte[] bytes = md.digest(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
+            for(int i=0; i< bytes.length ;i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
@@ -297,8 +293,8 @@ public class GlobalFunctions {
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Bienvenido a la plataforma AEPS.</p> \n"
                 + "<p>Para validar su registro por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
-//                + "http://"+host+":8083/aeps-plataforma-mvn/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
+                + "<a href='http://"+host+":8080/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://"+host+":8080/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
+//                + "http://"+host+":8083/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
                 + "<p>Si usted no se ha registrado a este sistema por favor ignorar este mensaje</p> "
                 + "</body> \n"
                 + "</html>";
@@ -323,7 +319,7 @@ public class GlobalFunctions {
                 + "<body> \n"
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://"+host+":8083/aeps-plataforma-mvn/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
+                + "<a href='http://"+host+":8080/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://"+host+":8080/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;
@@ -348,4 +344,60 @@ public class GlobalFunctions {
                 + "</html>";
         return msg;
     }
+    
+    /**
+     * Encargado de enviar al correo del administrador los errores encontrados por el usuario
+     *
+     * @param nameUser Nombre del usuario que ha enviado la solicitud
+     * @param emailUser Email del usuario que ha enviado la solicitud
+     * @param subMessageUser Asunto del mensaje enviado por el usuario
+     * @param textMessageUser Cuerpo del mensaje enviado por el usuario
+     * restaurar un usuario
+     * @return representacion del mensaje en HTML
+     */
+    public static String reportToSend(String nameUser, String emailUser, String subMessageUser, String textMessageUser) {
+        String msg = "<html> \n"
+                + "<body> \n"
+                + "<h3>El usuario: <b>" + nameUser + "</b></h3> \n"
+                + "<p>Que cuenta con el correo: " + emailUser + "</p> \n"
+                + "<p>Tiene el asunto: <b> " + subMessageUser + "</b></p> \n"
+                + "<p>Con lo siguiente: <br /> " + textMessageUser + "</p> \n"
+                + "</body> \n"
+                + "</html>";
+        return msg;
+    }
+    
+    
+    /**
+    * Función que elimina acentos y caracteres especiales de
+    * una cadena de texto.
+    * @param input
+    * @return cadena de texto limpia de acentos y caracteres especiales.
+    */
+    public static String remove(String input) {
+        // Cadena de caracteres original a sustituir.
+        String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+        // Cadena de caracteres ASCII que reemplazarán los originales.
+        String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+        String output = input;
+        for (int i = 0; i < input.length(); i++) {
+            // Reemplazamos los caracteres especiales.
+            output = output.replace(original.charAt(i), ascii.charAt(i));
+        }
+        return output;
+    }    
+    
+    public static String checkDataRasta(String input) {
+        String result = "";
+        if (input.matches("[0-9]*") || input.equals("ND") || input.equals("NA")) {
+            if (input.matches("[0-9]*")) {
+                input = input.replace(",", ".");
+            }            
+            result = input;
+        } else {
+            result = "\""+GlobalFunctions.remove(input)+"\"";
+        }        
+        return result;
+    }
+    
 }

@@ -52,7 +52,7 @@ public class FarmsDao
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where f.status=1";
+        sql += " where f.status=1 and e.status=1";
         if (id!=null) {
             sql += " and f.id_far="+id;
         }
@@ -165,7 +165,7 @@ public class FarmsDao
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
-        sql += " where f.status=1";
+        sql += " where f.status=1 and e.status=1";
         if (args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
         }
@@ -311,8 +311,11 @@ public class FarmsDao
         String sql = "";       
         sql += "select count(f.id_far), f.name_far";
         sql += " from farms f";
+        sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
+        sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
+        sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
-        sql += " where f.status=1";
+        sql += " where f.status=1 and e.status=1";
         if (args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
         }

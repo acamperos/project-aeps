@@ -28,14 +28,14 @@
                 <div class="row">             
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/view")) { %>
                         <div class="span6 thumbnail custom-thumb">
-                            <img class="img-responsive hidden-xs" src="img/producers.jpg" alt="">
+                            <s:a href="%{contextPath}/listProducer.action" role="button" targets="divBodyLayout"><img class="img-responsive hidden-xs" src="img/producers.jpg" alt=""></s:a>
                             <div class="caption">
                                 <h3>Productores<span class="badge badge-success"><s:property value="numPro" /></span></h3>
                                 <p>Administre información de contacto de los productores a su cargo</p>
                                 <%--<s:url id="ajaxTest" value="/AjaxTest.action"/>--%>
                                 <%--<sj:a id="link1" href="%{ajaxTest}" targets="div1">--%>
                                 <p>   
-                                    <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout">Ir <i class="icon-white icon-double-angle-right"></i></s:a>                                                               
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/listProducer.action" role="button" targets="divBodyLayout">Ir <i class="icon-white icon-double-angle-right"></i></s:a>                                                               
                                 </p>
                             </div>
                         </div>
@@ -44,12 +44,12 @@
                         <div class="span6 thumbnail custom-thumb"> 
                     <% } %>
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/view")) { %>
-                            <img class="img-responsive hidden-xs" src="img/farms.jpg" alt="">
+                            <s:a href="%{contextPath}/listFarm.action" role="button" targets="divBodyLayout"><img class="img-responsive hidden-xs" src="img/farms.jpg" alt=""></s:a>
                             <div class="caption">
                                 <h3>Fincas<span class="badge badge-success"><s:property value="numFar" /></span></h3>
                                 <p>Administre información de las fincas que usted tiene a cargo</p>
                                 <p>
-                                    <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/listFarm.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
                             </div>
                         </div> 
@@ -58,12 +58,12 @@
                 <div class="row"> 
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/view")) { %>
                         <div class="span6 thumbnail custom-thumb">
-                            <img class="img-responsive hidden-xs" src="img/fields.jpg" alt="">
+                            <s:a href="%{contextPath}/listField.action" role="button" targets="divBodyLayout"><img class="img-responsive hidden-xs" src="img/fields.jpg" alt=""></s:a>
                             <div class="caption">
                                 <h3>Lotes<span class="badge badge-success"><s:property value="numFie" /></span></h3>
                                 <p>Administre información de los lotes en las fincas registradas por usted</p>
                                 <p>
-                                    <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/listField.action" role="button" targets="divBodyLayout">Ir <i class="icon-double-angle-right"></i></s:a>
                                 </p>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                         <div class="span6 thumbnail custom-thumb">
                     <% } %>
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/view")) { %>
-                            <img class="img-responsive hidden-xs" src="img/crops.jpg" alt="">
+                            <s:a href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout"><img class="img-responsive hidden-xs" src="img/crops.jpg" alt=""></s:a>
                             <div class="caption">
                                 <h3>Cultivos<span class="badge badge-success"><s:property value="numEve" /></span></h3>
                                 <p>Registre aqui información de monitoreo de los cultivos</p>                        
@@ -86,7 +86,7 @@
                 <div class="row">      
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/view")) { %>
                         <div class="span6 thumbnail custom-thumb">
-                            <img class="img-responsive hidden-xs" src="img/soils.jpg" alt="">
+                            <s:a href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout"><img class="img-responsive hidden-xs" src="img/soils.jpg" alt=""></s:a>
                             <div class="caption">
                                 <h3>Suelos<span class="badge badge-success"><s:property value="numRas" /></span></h3>
                                 <p>Registre aqui información de caracterización del suelo en sus lotes</p>
@@ -173,7 +173,7 @@
                             <div class="caption">
                                 <h3>Clima</h3>
                                 <p>Registre aqui información de clima de su finca si cuenta con equipos o datos meteorológicos</p>
-                                <h3>En Construcción!!!</h3>
+                                <h4>En Construcción!!!</h4>
                             </div>
                         </div>
                     <% } %>

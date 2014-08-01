@@ -39,6 +39,8 @@
                         </div>       
                     </div>
                     <div class="row">
+                        <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
+                        <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
                         <div class="span5">
                             <div class="control-group">
                                 <label for="formCropFer_fer_fertilizationsTypes_idFerTyp" class="control-label req">
@@ -52,292 +54,76 @@
                                         listValue="nameFerTyp"            
                                         headerKey="-1" 
                                         headerValue="---"
-                                        onchange="showTypeFertilizerSel('formCropFer_fer_fertilizationsTypes_idFerTyp', 'divQuimicoFer', 'divOrganicoFer', 'divEnmiendasFer')"
                                     />
                                 </div>                         
                             </div>                          
-                        </div>   
-                    </div>
-                    <div id="divQuimicoFer" class="hide">
-                        <div class="row">
-                            <div class="span5">
-                                <div class="control-group">
-                                    <label for="formCropFer_ferChe_applicationTypes_idAppTyp" class="control-label req">
-                                        Tipo de aplicación:
-                                    </label>
-                                    <div class="controls">
-                                        <s:select
-                                            name="ferChe.applicationTypes.idAppTyp"
-                                            list="list_app_typ" 
-                                            listKey="idAppTyp" 
-                                            listValue="nameAppTyp"            
-                                            headerKey="-1" 
-                                            headerValue="---"
-                                            onchange="showOtherElementChemical('formCropFer_ferChe_chemicalFertilizers_idCheFer', 'formCropFer_ferChe_applicationTypes_idAppTyp', 'divNewProQui')
-                                            showApplicationProduct('formCropFer_ferChe_applicationTypes_idAppTyp', 'formCropFer_ferChe_chemicalFertilizers_idCheFer', 'divAppProduct', 'divNewProQui', 'divPerEda');
-                                            "
-                                        />
-                                    </div>                         
-                                </div>                          
-                            </div>   
                         </div> 
-                        <% String classAppTyp="hide"; %>
-                        <s:set name="idAppTyp" value="ferChe.applicationTypes.idAppTyp"/>
-                        <s:if test="%{#idAppTyp==1}">
-                            <% classAppTyp = "";%>
-                        </s:if> 
-                        <div class="row <%= classAppTyp %>" id="divAppProduct">
-                            <div class="span5">
-                                <s:hidden name="ferChe.idCheFer"/>
-                                <div class="control-group">
-                                    <label for="formCropFer_ferChe_chemicalFertilizers_idCheFer" class="control-label req">
-                                        Producto:
-                                    </label>
-                                    <div class="controls">
-                                        <s:select
-                                            name="ferChe.chemicalFertilizers.idCheFer"
-                                            list="type_prod_che" 
-                                            listKey="idCheFer" 
-                                            listValue="nameCheFer"            
-                                            headerKey="-1" 
-                                            headerValue="---"
-                                            onchange="showOtherElementChemical('formCropFer_ferChe_chemicalFertilizers_idCheFer', 'formCropFer_ferChe_applicationTypes_idAppTyp', 'divNewProQui')"
-                                        />
-                                    </div>                         
-                                </div>                          
-                            </div> 
-                        </div> 
-                        <% String classNewProChe="hide"; %>
-                        <s:set name="idCheFer" value="ferChe.chemicalFertilizers.idCheFer"/>
-                        <s:if test="%{#idCheFer==1000000 || #idAppTyp==2}">
-                            <% classNewProChe = "";%>
-                        </s:if> 
-                        <div class="<%= classNewProChe %>" id="divNewProQui">
-                            <div class="row">
-                                <div class="span5">
-                                    <div class="control-group">
-                                        <label for="formCropFer_ferChe_otherProductCheFer" class="control-label req">
-                                             Otro producto:
-                                        </label>
-                                        <div class="controls">
-                                            <s:textfield name="ferChe.otherProductCheFer"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--<div class="row">-->
-                                <!--<div class="span12">-->
-                                    <% String classEdafico="hide"; %>
-                                    <s:if test="%{#idAppTyp==1}">
-                                        <% classEdafico = "";%>
-                                    </s:if>
-                                    <div class="row <%= classEdafico %>" id="divPerEda" style="margin-left:153px">
-                                        <table class="tableComposition" style="width:50%">
-                                            <thead>
-                                                <tr>
-                                                    <td colspan="5"><label>Manejar valores en porcentajes (Ingresar por lo menos alguna de las composiciones)</label></td>
-                                                </tr>
-                                            </thead>
-                                            <s:iterator value="additionalsElem" var="element" status="estatus">     
-                                                <s:if test="%{#estatus.index==0}">   
-                                                    <tr>
-                                                </s:if>    
-                                                <s:if test="%{#estatus.index>=0 && #estatus.index<=4}">                                                        
-                                                    <td>
-                                                        <div class="span1">
-                                                            <div class="control-group">
-                                                                <div class="input-prepend controls" style="margin-left:0">
-                                                                    <span class="add-on"><s:property value="nameCheEle" /></span>
-                                                                    <s:textfield name="additionalsElem[%{#estatus.index}].valueCheEle" value="%{#attr.valueCheEle}" cssClass="input-degrees"/>
-                                                                    <s:hidden name="additionalsElem[%{#estatus.index}].idCheEle" value="%{#attr.idCheEle}"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </s:if>                                                    
-                                                <s:if test="%{#estatus.index==4}">   
-                                                    </tr>
-                                                </s:if> 
-                                                <s:if test="%{#estatus.index==5}">   
-                                                    <tr>
-                                                </s:if>    
-                                                <s:if test="%{#estatus.index>=5 && #estatus.index<=additionalsElem.size()}">                                                        
-                                                    <td>
-                                                        <div class="span1">
-                                                            <div class="control-group">
-                                                                <div class="input-prepend controls" style="margin-left:0">
-                                                                    <span class="add-on"><s:property value="nameCheEle" /></span>
-                                                                    <s:textfield name="additionalsElem[%{#estatus.index}].valueCheEle" value="%{#attr.valueCheEle}" cssClass="input-degrees"/>
-                                                                    <s:hidden name="additionalsElem[%{#estatus.index}].idCheEle" value="%{#attr.idCheEle}"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </s:if>
-                                                <s:if test="%{#estatus.index==additionalsElem.size()}">   
-                                                    </tr>
-                                                </s:if> 
-                                                <script>			
-                                                    $("#formCropFer_additionalsElem_0__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_1__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_2__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_3__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_4__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_5__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_6__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_7__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_8__valueCheEle").numeric({ negative: false });
-                                                    $("#formCropFer_additionalsElem_9__valueCheEle").numeric({ negative: false });
-                                                </script>
-                                            </s:iterator>
-                                        </table>
-                                    </div>
-<!--                                </div>
-                            </div>-->
+                        <div class="span3">
+                            <button type="button" class="btn btn-default" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', 'formCropFer_fer_fertilizationsTypes_idFerTyp', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> Agregar</button>
                         </div>
-                        <div class="row">
-                            <div class="span5">
-                                <div class="control-group">
-                                    <label for="formCropFer_amountProductUsedChe" class="control-label req">
-                                        Cantidad de producto:
-                                    </label>
-                                    <div class="controls">
-                                        <s:textfield name="amountProductUsedChe"/>
-                                    </div>                         
-                                </div>                          
-                            </div>   
-                            <div class="span4" style="padding-left: 28px">
-                                <div class="control-group">
-                                    <label for="ferChe_unitCheFer" class="control-label req">
-                                        Unidad:
-                                    </label>
-                                    <div class="controls">
-                                        <s:select
-                                            name="ferChe.unitCheFer"
-                                            list="#{'1':'kg/ha', '2':'lt/ha'}"           
-                                            headerKey="-1" 
-                                            headerValue="---"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                            
-                    </div>                           
-                    <div id="divOrganicoFer" class="hide">
-                        <div class="row">
-                            <div class="span5">
-                                <s:hidden name="ferOrg.idOrgFer"/>
-                                <div class="control-group">
-                                    <label for="formCropFer_ferOrg_organicFertilizers_idOrgFer" class="control-label req">
-                                        Producto:
-                                    </label>
-                                    <div class="controls">
-                                        <s:select
-                                            name="ferOrg.organicFertilizers.idOrgFer"
-                                            list="type_prod_org" 
-                                            listKey="idOrgFer" 
-                                            listValue="nameOrgFer"            
-                                            headerKey="-1" 
-                                            headerValue="---"
-                                            onchange="showOtherElement(this.value, 'divNewProOrg')"
-                                        />
-                                    </div>                         
-                                </div>                          
-                            </div> 
-                        </div> 
-                        <% String classNewProOrg="hide"; %>
-                        <s:set name="idCheOrg" value="ferOrg.organicFertilizers.idOrgFer"/>
-                        <s:if test="%{#idCheOrg==1000000}">
-                            <% classNewProOrg = "";%>
-                        </s:if> 
-                        <div class="<%= classNewProOrg %>" id="divNewProOrg">
-                            <div class="row">
-                                <div class="span5">
-                                    <div class="control-group">
-                                        <label for="formCropFer_ferOrg_otherProductOrgFer" class="control-label req">
-                                             Otro producto:
-                                        </label>
-                                        <div class="controls">
-                                            <s:textfield name="ferOrg.otherProductOrgFer"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="span5">
-                                <div class="control-group">
-                                    <label for="formCropFer_amountProductUsedOrg" class="control-label req">
-                                        Cantidad de producto (kg/ha):
-                                    </label>
-                                    <div class="controls">
-                                        <s:textfield name="amountProductUsedOrg"/>
-                                    </div>                         
-                                </div>                          
-                            </div>                               
-                        </div>                            
                     </div>
-                    <div id="divEnmiendasFer" class="hide">
-                        <div class="row">
-                            <div class="span5">
-                                <s:hidden name="ferAme.idAmeFer"/>
-                                <div class="control-group">
-                                    <label for="formCropFer_ferAme_amendmentsFertilizers_idAmeFer" class="control-label req">
-                                        Producto:
-                                    </label>
-                                    <div class="controls">
-                                        <s:select
-                                            name="ferAme.amendmentsFertilizers.idAmeFer"
-                                            list="type_prod_ame" 
-                                            listKey="idAmeFer" 
-                                            listValue="nameAmeFer"            
-                                            headerKey="-1" 
-                                            headerValue="---"
-                                            onchange="showOtherElement(this.value, 'divNewProAme')"
-                                        />
-                                    </div>                         
-                                </div>                          
-                            </div> 
-                        </div> 
-                        <% String classNewProAme="hide"; %>
-                        <s:set name="idCheAme" value="ferAme.amendmentsFertilizers.idAmeFer"/>
-                        <s:if test="%{#idCheAme==1000000}">
-                            <% classNewProAme = "";%>
-                        </s:if> 
-                        <div class="<%= classNewProAme %>" id="divNewProAme">
-                            <div class="row">
-                                <div class="span5">
-                                    <div class="control-group">
-                                        <label for="formCropFer_ferAme_otherProductAmeFer" class="control-label req">
-                                             Otro producto:
-                                        </label>
-                                        <div class="controls">
-                                            <s:textfield name="ferAme.otherProductAmeFer"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                        
-                        <div class="row">
-                            <div class="span5">
-                                <div class="control-group">
-                                    <label for="formCropFer_amountProductUsedAme" class="control-label req">
-                                        Cantidad de producto (kg/ha):
-                                    </label>
-                                    <div class="controls">
-                                        <s:textfield name="amountProductUsedAme"/>
-                                    </div>                         
-                                </div>                          
-                            </div>   
-                        </div>                            
-                    </div> 
+                    <fieldset>
+                        <legend>Fertilizaciones Quimicas</legend>
+                        <table class="table" style="width: 100%;">
+                            <tbody id="tableAditFertChem">
+                                <s:if test="chemFert.size()>0">
+                                    <s:iterator value="chemFert" var="chemical" status="estatus">
+                                        <s:include value="row_chemical_fer.jsp">
+                                            <s:param name="numRows" value="#estatus.index+1" />
+                                            <s:param name="actionOpt" value="{request.actExe}" />
+                                        </s:include>
+                                    </s:iterator>
+                                </s:if>   
+                                <s:else>
+                                    <tr value="0">
+                                    </tr>   
+                                </s:else>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Fertilizaciones Organicas</legend>
+                        <table class="table" style="width: 100%;">
+                            <tbody id="tableAditFertOrg">
+                                <s:if test="orgFert.size()>0">
+                                    <s:iterator value="orgFert" var="organic" status="estatus">
+                                        <s:include value="row_organic_fer.jsp">
+                                            <s:param name="numRows" value="#estatus.index+1" />
+                                            <s:param name="actionOpt" value="{request.actExe}" />
+                                        </s:include>
+                                    </s:iterator>
+                                </s:if>
+                                <s:else>
+                                    <tr value="0">
+                                    </tr>   
+                                </s:else>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Fertilizaciones Enmiendas</legend>
+                        <table class="table" style="width: 100%;">
+                            <tbody id="tableAditFertAmen">
+                                <s:if test="amenFert.size()>0">
+                                    <s:iterator value="amenFert" var="amendment" status="estatus">
+                                        <s:include value="row_amendment_fer.jsp">
+                                            <s:param name="numRows" value="#estatus.index+1" />
+                                            <s:param name="actionOpt" value="{request.actExe}" />
+                                        </s:include>
+                                    </s:iterator>
+                                </s:if>
+                                <s:else>
+                                    <tr value="0">
+                                    </tr>   
+                                </s:else>
+                            </tbody>
+                        </table>
+                    </fieldset>
                     <p class="warnField reqBef">Campos Requeridos</p>
                     <script>
                         showTypeFertilizerSel('formCropFer_fer_fertilizationsTypes_idFerTyp', 'divQuimicoFer', 'divOrganicoFer', 'divEnmiendasFer');
                         $("#formCropFer_fer_dateFer").datepicker({dateFormat: 'dd/mm/yy'});
                         $("#formCropFer_fer_dateFer").mask("99/99/9999", {placeholder: " "});
-                        $("#formCropFer_amountProductUsedChe").numeric({ negative: false });
-                        $("#formCropFer_amountProductUsedChe").val(parsePointSeparated($("#formCropFer_amountProductUsedChe").val())); 
                         
                         $("#formCropFer_amountProductUsedOrg").numeric({ negative: false });
                         $("#formCropFer_amountProductUsedOrg").val(parsePointSeparated($("#formCropFer_amountProductUsedOrg").val())); 
@@ -359,7 +145,7 @@
                 $.subscribe('completeFer', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropFer', 'divFer', event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        showInfo("/aeps-plataforma-mvn/crop/searchFer.action?idCrop="+$("#formCropFer_idCrop").val(), "divListFer");
+                        showInfo("/crop/searchFer.action?idCrop="+$("#formCropFer_idCrop").val(), "divListFer");
                     }, 2000);
                 });
             </script>

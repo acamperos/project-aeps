@@ -4,6 +4,7 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,11 +16,9 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
-import org.aepscolombia.platform.models.entity.Beans;
 import org.aepscolombia.platform.models.entity.Harvests;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
-import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
@@ -170,29 +169,37 @@ public class ActionHarvest extends BaseAction {
             
             HashMap required = new HashMap();
             required.put("harv.dateHar", harv.getDateHar());
-            required.put("harv.harvestMethods.idHarMet", harv.getHarvestMethods().getIdHarMet());
-            required.put("harv.productionHar", harv.getProductionHar());
-            required.put("harv.yieldHar", harv.getYieldHar());            
+            required.put("harv.harvestMethods.idHarMet", harv.getHarvestMethods().getIdHarMet());                     
 //            required.put("harv.commentHar", harv.getCommentHar());
             if (typeCrop==1 || typeCrop==2) {
-                required.put("harv.resultingProducts.idResPro", harv.getResultingProducts().getIdResPro()); 
+                required.put("harv.resultingProducts.idResPro", harv.getResultingProducts().getIdResPro());
             }
             
             if (harv.getResultingProducts().getIdResPro()!=0) {
-                if (harv.getResultingProducts().getIdResPro()==1 || harv.getResultingProducts().getIdResPro()==4) {
+                if (harv.getResultingProducts().getIdResPro()==1 || harv.getResultingProducts().getIdResPro()==2 || harv.getResultingProducts().getIdResPro()==5) {
+                    required.put("harv.yieldHar", harv.getYieldHar());   
                     required.put("harv.humidityPercentageHar", harv.getHumidityPercentageHar());
-                }		
+                } else if (harv.getResultingProducts().getIdResPro()==3) {
+                    required.put("harv.numberSacksSow", harv.getNumberSacksSow());
+                } else if (harv.getResultingProducts().getIdResPro()==4) {
+                    required.put("harv.yieldHar", harv.getYieldHar());   
+                    required.put("harv.numberSacksSow", harv.getNumberSacksSow());
+                }
+                
+//                if (harv.getResultingProducts().getIdResPro()==1 || harv.getResultingProducts().getIdResPro()==4) {
+//                    required.put("harv.humidityPercentageHar", harv.getHumidityPercentageHar());
+//                }		
             } 
             
 //            System.out.println("value=>"+harv.getYieldHar());
             
-            if (harv.getProductionHar()==0) {
-                addFieldError("harv.productionHar", "El campo es requerido");
-            }
+//            if (harv.getProductionHar()==0) {
+//                addFieldError("harv.productionHar", "El campo es requerido");
+//            }
             
-            if (harv.getYieldHar()==0) {
-                addFieldError("harv.yieldHar", "El campo es requerido");
-            }
+//            if (harv.getYieldHar()==0) {
+//                addFieldError("harv.yieldHar", "El campo es requerido");
+//            }
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -237,14 +244,14 @@ public class ActionHarvest extends BaseAction {
                 }	
             }
 
-            if (harv.getProductionHar()!=0) {
+            if (harv.getProductionHar()!=null && harv.getProductionHar()!=0) {
                 if (harv.getProductionHar()<0) {
                     addFieldError("harv.productionHar", "Dato invalido valor mayor a 0");
                     addActionError("Se ingreso una cantidad de produccion invalida, por favor ingresar un valor mayor a 0");
                 }	
             }
 
-            if (harv.getYieldHar()!=0) {
+            if (harv.getYieldHar()!=null && harv.getYieldHar()!=0) {
                 if (harv.getYieldHar()<0 || harv.getYieldHar()>30000) {
                     addFieldError("harv.yieldHar", "Dato invalido valor entre 0 y 30000");
                     addActionError("Se ingreso un rendimiento invalido, por favor ingresar un valor entre 0 y 30000");

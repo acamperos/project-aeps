@@ -15,7 +15,6 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="actions_values"
-    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="key_act_val") 
 )
 public class ActionsValues  implements java.io.Serializable {

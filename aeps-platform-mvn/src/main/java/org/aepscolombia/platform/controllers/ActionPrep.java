@@ -4,6 +4,7 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -204,7 +205,7 @@ public class ActionPrep extends BaseAction {
             HashMap required = new HashMap();
             required.put("prep.datePrep", prep.getDatePrep());
             required.put("prep.preparationsTypes.idPreTyp", prep.getPreparationsTypes().getIdPreTyp());            
-            required.put("prep.residualsClasification.idResCla", prep.getResidualsClasification().getIdResCla());
+//            required.put("prep.residualsClasification.idResCla", prep.getResidualsClasification().getIdResCla());
             
 				
             if (prep.getPreparationsTypes().getIdPreTyp() == 1000000) {
@@ -216,9 +217,9 @@ public class ActionPrep extends BaseAction {
 //                required.put("prep.passingsNumberPrep", prep.getPassingsNumberPrep());
             }
 
-            if (prep.getResidualsClasification().getIdResCla() == 1000000) {
-                required.put("prep.otherResidualsManagementPrep", prep.getOtherResidualsManagementPrep());
-            }           	               
+//            if (prep.getResidualsClasification().getIdResCla() == 1000000) {
+//                required.put("prep.otherResidualsManagementPrep", prep.getOtherResidualsManagementPrep());
+//            }           	               
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();

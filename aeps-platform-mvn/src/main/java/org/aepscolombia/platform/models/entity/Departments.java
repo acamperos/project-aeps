@@ -18,7 +18,6 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="departments"
-    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="code_dep") 
 )
 public class Departments  implements java.io.Serializable {

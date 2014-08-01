@@ -36,11 +36,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="item">
+                        <img src="img/usuario_prueba.png" alt="thumb">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <p class="lead" style="margin-bottom:20px !important;">
+                                    ¿No sabe si inscribirse?
+                                    Puede probar la plataforma sin necesidad de crear un usuario.
+                                    En donde se le permitirá entrar para visitar la plataforma, probar las diferentes funcionalidades sin ningún compromiso. 
+                                    Y luego, si le gusta, regístrese para tener su propio usuario y proteger su información.
+                                    Y si tiene preguntas, no dude en contactarnos.
+                                </p>
+                                <a href="tryFree.action" class="btn btn-initial btn-large">Probar sistema</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-487454" data-slide-to="0" class="active">
                     </li>
                     <li data-target="#carousel-487454" data-slide-to="1" class="">
+                    </li>
+                    <li data-target="#carousel-487454" data-slide-to="2" class="">
                     </li>
                 </ol>
                 <a class="left carousel-control" href="#carousel-487454" data-slide="prev">&lsaquo;</a> 

@@ -5,6 +5,7 @@
 package org.aepscolombia.platform.controllers;
 
 //import com.opensymphony.xwork2.inject.Inject;
+import com.opensymphony.xwork2.ActionContext;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Date;
@@ -237,57 +238,70 @@ public class ActionLogin extends BaseAction {
     
     public void setUser(Users user) {
         this.user = user;
-    }
-    
-//    private Date lastLogin;
-//
-//    public Date getLastLogin() {
-//        return lastLogin;
-//    }
-//
-//    public void setLastLogin(Date lastLogin) {
-//        this.lastLogin = lastLogin;
-//    }
-    
-    
+    }   
 
     /**
      * Encargado de verificar si un usuario se encuentra registrado en el sistema
      * @return Estado del proceso
      */
-    public String login() {
+    public String signin() {
         if(this.getUsername()!=null && this.getPassword()!=null) {
             String userUsr=this.getUsername().trim();
             String passUsr=this.getPassword().trim();
             String saltUsr="";
-//            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());            
+//          String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());            
             Users usrTemp = userDao.getUserByLogin(userUsr, "");
             if (usrTemp!=null) saltUsr = usrTemp.getSaltUsr();
             
-            String passRes = GlobalFunctions.generateMD5(saltUsr+passUsr);
+            String passRes = GlobalFunctions.generateSHA1(saltUsr+passUsr);            
             
-//            String passRes = GlobalFunctions.generateSHA1(passUsr, saltUsr);
+//          String passRes = GlobalFunctions.generateSHA1(passUsr, saltUsr);
             
             Users loggedUser = userDao.login(userUsr, passRes);
             if (loggedUser != null) {
                 this.setUsername("");
                 this.setPassword("");
-//                this.setLastLogin(loggedUser.getLastInUsr());
-                this.getSession().put(APConstants.SESSION_USER, loggedUser);
-//          LOG.info("User " + user.getEmail() + " logged in successfully.");
+//              this.setLastLogin(loggedUser.getLastInUsr());
+                Map<String, Object> userSession=ActionContext.getContext().getSession();
+                userSession.put(APConstants.SESSION_USER, loggedUser);
+                this.setSession(userSession);
+                
+//              this.getSession().put(APConstants.SESSION_USER, loggedUser);
+//              LOG.info("User " + user.getEmail() + " logged in successfully.");
+//              return "states";
                 return SUCCESS;
             } else {
-//          LOG.info("User " + user.getEmail() + " tried to logged in but failed.");
                 this.setUsername("");
                 this.setPassword("");
-//                addFieldError("username", username);
-//                addFieldError("password", password);
                 addActionError("La informacion ingresada es invalida");
-//                return INPUT;
                 return INPUT;
             }
         }
         return INPUT;
+    }
+    
+    /**
+     * Encargado de ingresar al sistema de forma gratuita
+     * @return Estado del proceso
+     */
+    public String tryFree() {
+        String userUsr=getText("user.usernamefree");
+        String passUsr=getText("user.passwordfree");
+        String saltUsr="";
+
+        Users usrTemp = userDao.getUserByLogin(userUsr, "");
+        if (usrTemp!=null) saltUsr = usrTemp.getSaltUsr();
+
+        String passRes   = GlobalFunctions.generateSHA1(saltUsr+passUsr);
+        Users loggedUser = userDao.login(userUsr, passRes);
+        if (loggedUser != null) {
+            Map<String, Object> userSession=ActionContext.getContext().getSession();
+            userSession.put(APConstants.SESSION_USER, loggedUser);
+            this.setSession(userSession);
+            return SUCCESS;
+        } else {
+            return INPUT;
+        }
     }
 
     /**
@@ -521,7 +535,7 @@ public class ActionLogin extends BaseAction {
         Transaction tx  = session.beginTransaction();
 
         try {
-//            String passRes = GlobalFunctions.generateMD5(this.getPassRest());
+//            String passRes = GlobalFunctions.generateSHA1(this.getPassRest());
 //            String passResCon = this.getPassRestCon();
 //            String saltUsr = GlobalFunctions.getSalt();
             
@@ -529,14 +543,14 @@ public class ActionLogin extends BaseAction {
 //            int valAss = salt.intValue();
             
             
-//            String passTransform = GlobalFunctions.generateMD5(this.getPasswordUser());
+//            String passTransform = GlobalFunctions.generateSHA1(this.getPasswordUser());
 //            String passRes = GlobalFunctions.generateSHA1(this.getPassRest(), saltUsr);
 
             Users user = (Users) userDao.objectById(this.getIdUser());
             
             
             String saltUsr = GlobalFunctions.generateMD5(salt+user.getNameUserUsr());
-            String passRes = GlobalFunctions.generateMD5(saltUsr+this.getPassRest());
+            String passRes = GlobalFunctions.generateSHA1(saltUsr+this.getPassRest());
             
             user.setSaltUsr(saltUsr);
             user.setPasswordUsr(passRes);
@@ -601,6 +615,23 @@ public class ActionLogin extends BaseAction {
             if (!getFieldErrors().isEmpty()) {
                 addActionError("Se han ingresado datos invalidos");
             }
+            
+            if(this.getUsername()!=null && this.getPassword()!=null) {
+                String userUsr = this.getUsername().trim();
+                String passUsr = this.getPassword().trim();
+                String saltUsr = "";         
+                Users usrTemp  = userDao.getUserByLogin(userUsr, "");
+                if (usrTemp!=null) saltUsr = usrTemp.getSaltUsr();
+
+                String passRes   = GlobalFunctions.generateSHA1(saltUsr+passUsr);
+                Users loggedUser = userDao.login(userUsr, passRes);                
+                if (loggedUser == null) {
+                    addFieldError("username", "Campo invalido");
+                    addFieldError("password", "Campo invalido");
+                    addActionError("La informacion ingresada es invalida");
+                }
+            }
+            
         } else if (actExe.equals("newuser")) {           
             HashMap required = new HashMap();
             required.put("typeUser", typeUser);
@@ -777,7 +808,7 @@ public class ActionLogin extends BaseAction {
             Double salt = (Math.floor(Math.random()*999999+100000));
 //            int valAss = salt.intValue();
             String saltUsr = GlobalFunctions.generateMD5(salt+this.getEmailUser());
-            String passTransform = GlobalFunctions.generateMD5(saltUsr+this.getPasswordUser());
+            String passTransform = GlobalFunctions.generateSHA1(saltUsr+this.getPasswordUser());
 //            String passTransform = GlobalFunctions.generateSHA1(this.getPasswordUser(), saltUsr);
             
             Entities ent = new Entities();
@@ -870,7 +901,7 @@ public class ActionLogin extends BaseAction {
                 sfUser.setAlgorithm("sha1");
                 sfUser.setSalt(saltUsr);
                 sfUser.setPassword(passTransform);
-                sfUser.setIsActive(false);
+                sfUser.setIsActive(true);
                 sfUser.setIsSuperAdmin(false);
                 sfUser.setUsername(nameUser);
                 sfUser.setCreatedAt(new Date());
@@ -946,19 +977,21 @@ public class ActionLogin extends BaseAction {
 
             tx.commit();
             state = "success";
+//            String host = this.getRequest().getRemoteHost();
+            String host = "www.open-aeps.org";
             if (this.getTypeUser() == 3) {
-                GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(this.getRequest().getLocalAddr(), user.getNameUserUsr()));
+                GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()));
                 info  = "El usuario gremio ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
             } else if (this.getTypeUser() == 1) {
                 if (this.getWorkType()== 1 || this.getWorkType()== 2) {
-                    GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
+                    GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation));
                     info  = "El usuario agronomo ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
                 } else {
-                    GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(this.getRequest().getLocalAddr(), user.getNameUserUsr()));
+                    GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()));
                     info  = "El usuario agronomo ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
                 }
             } else if (this.getTypeUser() == 2) {
-                GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(this.getRequest().getLocalAddr(), user.getNameUserUsr(), codValidation));
+                GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation));
                 info  = "El usuario ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
             }
         } catch (HibernateException e) {

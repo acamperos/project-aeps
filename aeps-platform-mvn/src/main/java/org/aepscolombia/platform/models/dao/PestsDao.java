@@ -55,6 +55,7 @@ public class PestsDao
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_pes_cro_typ="+idTypeCrop;
         }
+        sql += " order by ms.name_pes ASC";
 				
         try {
             tx = session.beginTransaction();

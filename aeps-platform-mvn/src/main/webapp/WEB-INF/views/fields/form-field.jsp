@@ -28,7 +28,7 @@
                             </label>
                             <div class="controls">
                                 <%--<s:textfield name="name_producer_lot" />--%>
-                                <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
+                                <a class="btn" onclick="listInfo('/viewProducer.action?selected=lot', 'formField_name_producer_lot', 'formField_idProducer', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
                             </div>  
                         </div>                         -->
                         <div id="divPropertyLot">
@@ -39,8 +39,8 @@
                                     <i class="icon-info-sign s2b_tooltip pop-over" data-content="Usar la lupa para seleccionar la finca a la cual pertenece el lote que va a registrar." data-title="Información" data-placement="right" data-trigger="hover"></i>
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="name_property_lot" readonly="true" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
-                                    <a class="btn" onclick="setPropertyGeneral('/aeps-plataforma-mvn/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
+                                    <s:textfield name="name_property_lot" readonly="true" onclick="setPropertyGeneral('/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')" />
+                                    <a class="btn" onclick="setPropertyGeneral('/viewFarm.action?selected=lot', 'idProducer', 'formField_idProducer', 'formField_name_property_lot', 'formField_idFarm', 'divListFieldsForm', 'divFieldsForm')"><i class="icon-search"></i></a>
                                 </div>  
                             </div>                     
                         </div>
@@ -133,6 +133,11 @@
                             </div>
                         </div>    
                         <div class="control-group">
+                            <button type="button" class="btn btn-initial btn-space" onclick="viewPosition('/viewPositionField.action', 'formField', 'latitude_lot', 'formField_latitude_lot', 'length_lot', 'formField_length_lot', 'divFieldsForm', 'divListFieldsForm');">
+                                <i class="icon-map-marker"></i> Cambiar ubicacion
+                            </button>
+                        </div>
+                        <div class="control-group">
                             <label for="formField_altitude_lot" class="control-label req">
                                 Altitud del Lote (metros):
                                 <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese la altitud del lote en metros." data-title="Información" data-placement="right" data-trigger="hover"></i>
@@ -202,7 +207,7 @@
                         if($('.pop-over').length) {
                             $('.pop-over').popover();
                         }
-                                //            chargeValues('/aeps-plataforma-mvn/templates/listarTiposFields.action', 'proId', '', 'formField_type_property_lot', 'divMessage');
+                                //            chargeValues('/templates/listarTiposFields.action', 'proId', '', 'formField_type_property_lot', 'divMessage');
                 </script>
             </div>
             <div class="span5" style="margin-left: 0">

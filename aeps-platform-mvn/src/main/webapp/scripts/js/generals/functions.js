@@ -14,7 +14,6 @@ function setPropertyVal(url, nameData, valData, valName, valId, title, width, he
         // url: url,
         // data: "productor="+valAdd,
         // success: function(information) {
-        // $('.ajaxgif').hide();
         // var obj = jQuery.parseJSON(information);
         // alert(obj.state);
         // if (obj.state == 'failure') {
@@ -77,6 +76,7 @@ function showOtherElement(valSel, divShow) {
 
 function showApplicationProduct(idAppTyp, idSel, divShowApp, divShowOther, divShowPer) {
     var valAppTyp = $('#'+idAppTyp).val();
+//    alert(valAppTyp)
     if (valAppTyp==1) {
         $("#"+divShowApp).show();
         $("#"+divShowOther).hide().removeClass("hide");
@@ -198,6 +198,47 @@ function showTypeFertilizerSel(valSel, divShowA, divShowB, divShowC) {
     }
 }
 
+function showTypeFertilizerControl(valSel, divShowA, divShowB, divShowC, divShowD, divShowE) {
+    var valIng = $("#"+valSel).val();
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 2) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 3) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).show();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 4) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).show();
+        $("#" + divShowE).hide();
+    } else if (valIng == 5) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).show();
+    } else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    }
+}
+
 
 function showControl(valSel, divShowA, divShowB, divShowC) {
     if (valSel == 2) {
@@ -265,10 +306,10 @@ function showOtherElementPrep(valSel, divShowA, divShowB, lblDepth) {
         $("#" + divShowA).show();
         $("#" + divShowB).show();
         $("#" + lblDepth).addClass("req");
-    } else if ((valSel >= 1 && valSel <= 5) || valSel == 12) {
+    } else if ((valSel >= 1 && valSel <= 5) || (valSel >= 12 && valSel <= 16)) {
         $("#" + divShowA).show();
         $("#" + divShowB).hide();
-        if (valSel == 12) {
+        if ((valSel >= 12 && valSel <= 16)) {
             $("#" + lblDepth).removeClass("req");
         } else {
             $("#" + lblDepth).addClass("req");
@@ -303,7 +344,6 @@ function setCropVal(url, field, fieldFill) {
         // url: url,
         // data: "lot="+valAdd,
         // success: function(information) {
-        // $('.ajaxgif').hide();
         // var obj = jQuery.parseJSON(information);
         // alert(obj.state);
         // if (obj.state == 'failure') {
@@ -347,7 +387,6 @@ function viewInfoRasta(url, nameData, valData, title, width, height) {
         url: url,
         data: nameData + '=' + valData,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var obj = jQuery.parseJSON(information);
             if (obj.state == 'failure') {
                 $('#' + message).html(obj.info);
@@ -369,7 +408,6 @@ function viewForm(url, nameData, valData, title, width, height) {
 //        data: nameData + '=' + $("#" + valData).val(),
         data: nameData + '=' + valData,
         success: function(information) {
-            // $('.ajaxgif').hide();
 //            var obj = jQuery.parseJSON(information);
 //            if (obj.state == 'failure') {
 //                $('#' + message).html(obj.info);
@@ -388,7 +426,6 @@ function listInfo(url, valName, valId, divShow, divHide) {
         url: url,
         data: '&valName=' + valName + '&valId=' + valId,
         success: function(information) {
-            // $('.ajaxgif').hide();
 //            var obj = jQuery.parseJSON(information);
 //            if (obj.state == 'failure') {
 //                $('#' + message).html(obj.info);
@@ -414,7 +451,6 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
             url: url,
             data: nameData + '=' + $("#"+valData).val() + '&valName=' + valName + '&valId=' + valId,
             success: function(information) {
-                // $('.ajaxgif').hide();
     //            var obj = jQuery.parseJSON(information);
     //            if (obj.state == 'failure') {
     //                $('#' + message).html(obj.info);
@@ -456,7 +492,6 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
 //        url: url,
 //        data: nameData + '=' + $("#" + valData).val() + '&valName=' + valName + '&valId=' + valId,
 //        success: function(information) {
-//            // $('.ajaxgif').hide();
 //            var obj = jQuery.parseJSON(information);
 //            if (obj.state == 'failure') {
 //                $('#' + message).html(obj.info);
@@ -514,7 +549,6 @@ function listInfoLot(url, nameData, valData, valName, valId, title, width, heigh
         url: url,
         data: nameData + '=' + $("#" + valData).val() + '&valName=' + valName + '&valId=' + valId,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var obj = jQuery.parseJSON(information);
             if (obj.state == 'failure') {
                 $('#' + message).html(obj.info);
@@ -622,7 +656,6 @@ function viewInfo(url, title, divShow, divHide)
         type: "POST",
         url: url,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var obj = jQuery.parseJSON(information);
             if (obj.state == 'failure') {
                 $("#" + message).html(obj.info);
@@ -863,7 +896,6 @@ function chargeValuesMercado(url, valName, valSend, valFill, divShow, message)
         url: url,
         data: data,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             if (json.state == 'failure') {
                 $('#' + message).html(json.info);
@@ -891,8 +923,9 @@ function showInfoVende(valSel, divShow) {
 
 function chargeValuesControls(url, valName, valSendId, valNameCon, valSenIdCon, valFillChe, valFillOrg, message)
 {
-    var data;
-    var valSend    = $('#' + valSendId).val();
+    var data;    
+//    var valSend    = $('#' + valSendId).val();
+    var valSend    = $( "input[name='"+valSendId+"']:checked").val();
     var valSendCon = $('#' + valSenIdCon).val();
     if (valSend!==-1 && valSendCon!=-1) {
         data  = '&' + valName + '=' + valSend;
@@ -930,10 +963,37 @@ function hideInformationControls(divPes, divWee, divDis, divChe, divOrg) {
 }
 
 
+function changeOptionsHarvest(valSendId, divYield, divHumidity, divNumberSacks, lblNumberId, lblNumTextA, lblNumTextB, lblWeightId, lblWeightTextA, lblWeightTextB)
+{
+    var valSend = $('#' + valSendId).val();
+    if (valSend==1 || valSend==2 || valSend==5){
+        $('#' + divYield).removeClass("hide");
+        $('#' + divHumidity).removeClass("hide");
+        $('#' + divNumberSacks).addClass("hide");
+    } else if (valSend==3){
+        $('#' + divYield).addClass("hide");
+        $('#' + divHumidity).addClass("hide");
+        $('#' + divNumberSacks).removeClass("hide");
+        $('#'+lblNumberId).text(lblNumTextA);
+        $('#'+lblWeightId).text(lblWeightTextA);
+    } else if (valSend==4){
+        $('#' + divYield).removeClass("hide");
+        $('#' + divHumidity).addClass("hide");
+        $('#' + divNumberSacks).removeClass("hide");
+        $('#'+lblNumberId).text(lblNumTextB);
+        $('#'+lblWeightId).text(lblWeightTextB);
+    } else {
+        $('#' + divYield).addClass("hide");
+        $('#' + divHumidity).addClass("hide");
+        $('#' + divNumberSacks).addClass("hide");
+    }
+}
+
 //function chargeValuesObjective(url, valName, valSendId, valFillPest, divPest, valFillWee, divWee, valFillDis, divDis, message)
 function chargeValuesObjective(valSendId, divPest, divWee, divDis)
 {
-    var valSend = $('#' + valSendId).val();
+//    var valSend = $('#' + valSendId).val();
+    var valSend = $( "input[name='"+valSendId+"']:checked").val();
     if (valSend!=null) {
         $('#' + divPest).addClass("hide");
         $('#' + divWee).addClass("hide");
@@ -1040,7 +1100,6 @@ function autenticateUser(url, formId, message)
         url: url,
         data: data,
         success: function(information) {
-//         $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
 //         alert(event);
             if (json.state == 'invalid') {
@@ -1328,7 +1387,6 @@ function saveData(url, urlAction, formId, divShow)
             setTimeout( function() {
                 showInfo(urlAction, divShow);
             }, 2000);
-//            $('.ajaxgif').hide();
 //            var json = jQuery.parseJSON(information);
 //            // alert(message);
 //            if (json.state == 'invalid') {
@@ -1381,7 +1439,6 @@ function sendForm(url, formId, message)
     // $(".mensaje").focus().after("<span class='error'>Ingrese un mensaje</span>");
     // return false;
     // } else {
-    // $('.ajaxgif').removeClass('hide');
     // var data  = $('.'+formClass).serializeArray();
     // $('#'+message).text('');
     $('#' + message).html('');
@@ -1402,7 +1459,6 @@ function sendForm(url, formId, message)
         url: url,
         data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1429,7 +1485,6 @@ function sendForm(url, formId, message)
 
         }
         // , error: function() {
-        // $('.ajaxgif').hide();
         // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);	
         // }
     });
@@ -1452,7 +1507,6 @@ function sendFormRasta(url, formId, divTable, message)
         url: url,
         data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1481,7 +1535,6 @@ function sendFormRasta(url, formId, divTable, message)
 
         }
         // , error: function() {
-        // $('.ajaxgif').hide();
         // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);	
         // }
     });
@@ -1509,7 +1562,6 @@ function sendFormProtection(url, formId, divHide, message)
         url: url,
         data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1560,7 +1612,6 @@ function sendFormCrop(url, formId, divHide, message)
         url: url,
         data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1602,7 +1653,6 @@ function sendFormHarvest(url, formId, divShow, divHide, message)
         url: url,
         data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1645,7 +1695,6 @@ function sendFormHarvestChange(url, formId, divShowA, divShowB, divHide, message
         url: url,
         data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1720,7 +1769,7 @@ function showInfoPassword(divId, fieldId)
 function showSearchAdvance(divSearchBasic, divSearchAdvance, valAsig, valSel)
 {
     $("#"+valAsig).val(valSel);
-    if (valSel==1) {
+    if (valSel==2) {
         $('#'+divSearchBasic).hide();
         $('#'+divSearchAdvance).show();
     } else {
@@ -1748,6 +1797,48 @@ function showRowAdditionalItem(url, divUpdate)
             $('#'+divUpdate).append(information);
         }
     });
+}
+
+function showRowAdditionalFert(url, idTypeApp, divUpdateChe, divUpdateOrg, divUpdateAme)
+{
+    var valTypeApp  = $('#'+idTypeApp).val();
+    var rows;
+    if (valTypeApp==1) {
+        rows  = $('#'+divUpdateChe).children("tr");
+    } else if (valTypeApp==2) {
+        rows  = $('#'+divUpdateOrg).children("tr");
+    } else if (valTypeApp==3) {
+        rows  = $('#'+divUpdateAme).children("tr");
+    }
+        
+    
+    var child = $(rows)[rows.length-1];
+//    var data  = $('#'+formId).serialize();
+    var data;
+    data  += '&numRows='+$(child).attr("value")+'&appTyp='+valTypeApp;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {
+            $('#'+idTypeApp).val(-1);
+            if (valTypeApp==1) {
+                rows  = $('#'+divUpdateChe).append(information);
+            } else if (valTypeApp==2) {
+                rows  = $('#'+divUpdateOrg).append(information);
+            } else if (valTypeApp==3) {
+                rows  = $('#'+divUpdateAme).append(information);
+            }
+        }
+    });
+}
+
+function changeChemicalFoliar(typeAppId, lblProductId, lblText) {
+    var valTypeApp  = $('#'+typeAppId).val();
+    if (valTypeApp==2) {
+        $('#'+lblProductId).text(lblText);
+    }
+    
 }
 
 function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
@@ -1820,6 +1911,10 @@ function parseCommaSeparated( strVal ) {
     if(navigator.language=='en-EN' || navigator.language=='en') return parseFloat(strVal.replace('.',',')); // remove commas before parse
 }
 
+function parseValueInt(strVal) {
+    if (strVal!="") return parseInt(strVal);
+}
+
 beoro_scrollToTop = {
     init: function() {
         $('body').append('<div class="refTop"><a href="javascript:void(0)" class="scrollup refTop" style="display:none; font-size:80px; text-align:center;"><p style="font-size:14px;">Arriba</p><i class="icon-chevron-sign-up icon-white"></i></a></div>');
@@ -1872,4 +1967,148 @@ function showElementChemical(valSel, divShow) {
     } else {
         $("#" + divShow).hide();
     }
+}
+
+function showDialogReport(divDialog, hRef, urlAction, nameData, valData, title, width, height) {
+    $(divDialog).colorbox({
+        initialHeight: '0',
+        initialWidth: '0',
+        href: "#"+hRef,
+        inline: true,        
+        opacity: '0.3',        
+        onComplete: function(){
+            $('.confirm_yes').click(function(e){
+                e.preventDefault();
+                viewForm(urlAction, nameData, valData, title, width, height);
+                $.colorbox.close();
+            });
+            $('.confirm_no').click(function(e){
+                e.preventDefault();
+                $.colorbox.close(); 
+            });
+        }
+    });       
+}
+
+
+function changeReport(valSelId, divRepA, divRepB) {
+    var valSel = $("#" + valSelId).val();
+    if (valSel==1) {
+        $("#"+divRepA).removeClass("hide");
+        $("#"+divRepB).addClass("hide");
+    } else if (valSel==2) {
+        $("#"+divRepA).addClass("hide");
+        $("#"+divRepB).removeClass("hide");
+    }
+    
+}
+
+function changeRepYear(valSelId, divRepA, divRepB) {
+    var valSel = $("#" + valSelId).val();         
+    if (valSel==1) {
+        $("#"+divRepA).removeClass("hide");
+        $("#"+divRepB).addClass("hide");
+    } else if (valSel==2) {
+        $("#"+divRepA).removeClass("hide");
+        $("#"+divRepB).removeClass("hide");
+    } 
+    
+}
+
+
+function viewPositionRasta(url, formId, valNameLat, valLatId, valNameLon, valLonId, divHide, divShow)
+{
+    var strValLat = $("#"+valLatId).val();
+    strValLat = strValLat.replace('.',',');
+    
+    var strValLon = $("#"+valLonId).val();
+    strValLon = strValLon.replace('.',',');
+    
+    $("#"+valLatId).val(strValLat);
+    $("#"+valLonId).val(strValLon);
+    var valLat  = $('#'+valLatId).val();
+    var valLon  = $('#'+valLonId).val();
+    var data    = '';
+    data  += '&'+valNameLat+'='+valLat+'&'+valNameLon+'='+valLon;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {     
+            var json = information;
+            if (json.state == 'failure') {
+                $.each(json.fieldError, function(index, value) {
+                    var form = $("#"+formId);
+                    var element = form.find(":input[name=\"" + index + "\"]"), controlGroup, controls;
+                    if (element && element.length > 0) {
+                        element  = $(element[0]);
+                        controlGroup = element.closest("div.control-group");
+                        controlGroup.addClass('error');
+                        controls = controlGroup.find("div.controls");
+                        controls.find("span.s2_help_inline").remove();
+                        if (controls) {
+                            if (value[0]!="") {
+                                controls.append("<span class='help-inline s2_help_inline' style='display: block; margin-top:5px; font-size:10px;'>" + value[0] + "</span>");
+                            }
+                        }
+                    }
+                });
+            } else {
+                $("#"+divHide).hide();
+                $("#"+divShow).show();
+                $("#"+divShow).html(information);       
+            }
+            
+        }
+    });
+}
+
+function viewPosition(url, formId, valNameLat, valLatId, valNameLon, valLonId, divHide, divShow)
+{
+    var valLat  = $('#'+valLatId).val();
+    var valLon  = $('#'+valLonId).val();    
+    var data    = '';
+    data  += '&'+valNameLat+'='+valLat+'&'+valNameLon+'='+valLon;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {     
+//            alert(information.state)
+//            var json = jQuery.parseJSON(information);
+            var json = information;
+            if (json.state == 'failure') {
+                $.each(json.fieldError, function(index, value) {
+                    var form = $("#"+formId);
+                    var element = form.find(":input[name=\"" + index + "\"]"), controlGroup, controls;
+                    if (element && element.length > 0) {
+                        element  = $(element[0]);
+                        controlGroup = element.closest("div.control-group");
+                        controlGroup.addClass('error');
+                        controls = controlGroup.find("div.controls");
+                        controls.find("span.s2_help_inline").remove();
+                        if (controls) {
+                            if (value[0]!="") {
+                                controls.append("<span class='help-inline s2_help_inline' style='display: block; margin-top:5px; font-size:10px;'>" + value[0] + "</span>");
+                            }
+                        }
+                    }
+                });
+                
+//                showMessError(divHide, json.info);
+//                $("#"+divHide).append(setTimerToMessage(8));
+            } else {
+                $("#"+divHide).hide();
+                $("#"+divShow).show();
+                $("#"+divShow).html(information);       
+            }
+            
+        }
+    });
+}
+
+function selValPos(formLatId, valIdLat, formLonId, valIdLon) 
+{
+    $("#"+formLatId).val($("#"+valIdLat).val());
+    $("#"+formLonId).val($("#"+valIdLon).val());    
 }

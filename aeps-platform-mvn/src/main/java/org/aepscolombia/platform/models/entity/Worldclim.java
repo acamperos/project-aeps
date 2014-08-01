@@ -18,7 +18,6 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="worldclim"
-    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="id_field_wor") 
 )
 public class Worldclim  implements java.io.Serializable {

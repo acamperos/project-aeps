@@ -55,6 +55,7 @@ public class DiseasesDao
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_dis_cro_typ="+idTypeCrop;
         }
+        sql += " order by ms.name_dis ASC";
 				
         try {
             tx = session.beginTransaction();

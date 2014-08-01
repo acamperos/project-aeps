@@ -24,8 +24,8 @@
                         <s:label for="formCrop_nameField" cssClass="control-label req" value="Seleccione el lote al cual pertenece:"></s:label>
                         <div class="controls">
                             <s:hidden name="idField"/>
-                            <s:textfield name="nameField" readonly="true" onclick="listInfo('/aeps-plataforma-mvn/viewField.action?selected=crop', 'formCrop_nameField', 'formCrop_idField', 'divListCropForm', 'divCropForm')" />
-                            <a class="btn" onclick="listInfo('/aeps-plataforma-mvn/viewField.action?selected=crop', 'formCrop_nameField', 'formCrop_idField', 'divListCropForm', 'divCropForm')"><i class="icon-search"></i></a>
+                            <s:textfield name="nameField" readonly="true" onclick="listInfo('/viewField.action?selected=crop', 'formCrop_nameField', 'formCrop_idField', 'divListCropForm', 'divCropForm')" />
+                            <a class="btn" onclick="listInfo('/viewField.action?selected=crop', 'formCrop_nameField', 'formCrop_idField', 'divListCropForm', 'divCropForm')"><i class="icon-search"></i></a>
                         </div>  
                     </div>  
                     <div class="control-group">
@@ -37,22 +37,43 @@
                                 headerKey="-1" 
                                 headerValue="---" />
                         </div>
-                    </div>         
-                    <div class="control-group">
-                        <label for="formCrop_lastCrop" class="control-label">
-                            Cultivo anterior:
-                            <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el cultivo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
-                        </label>
-                        <div class="controls">
-                            <s:select
-                                name="lastCrop"                                    
-                                list="type_crops" 
-                                listKey="idCroTyp" 
-                                listValue="nameCroTyp"              
-                                headerKey="-1" 
-                                headerValue="---" />
+                    </div>                             
+                    <div class="row">
+                        <div class="span5" style="padding-left: 20px;">
+                            <div class="control-group">
+                                <label for="formCrop_lastCrop" class="control-label">
+                                    Cultivo anterior:
+                                    <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el cultivo anterior." data-title="Información" data-placement="right" data-trigger="hover"></i>
+                                </label>
+                                <div class="controls">
+                                    <s:select
+                                        name="lastCrop"                                    
+                                        list="type_crops" 
+                                        listKey="idCroTyp" 
+                                        listValue="nameCroTyp"              
+                                        headerKey="-1" 
+                                        headerValue="---" 
+                                        onchange="showOtherElement(this.value, 'divNewCrop')"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <% String classNewLast="hide"; %>
+                        <s:set name="idOtherCrop" value="%{#attr.lastCrop}"/>
+                        <s:if test="%{#idOtherCrop==1000000}">
+                            <% classNewLast = "";%>
+                        </s:if> 
+                        <div class="span4 <%= classNewLast %>" style="padding-left: 28px" id="divNewCrop">
+                            <div class="control-group">
+                                <label for="formCrop_otherCrop" class="control-label req">
+                                     Otro producto:
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="otherCrop" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>          
 <!--                    <div class="control-group">
                         <s:label for="formCrop_drainPlot" cssClass="control-label req" value="Se hace drenaje a la parcela:"></s:label>
                         <div class="controls radioSelect">
@@ -85,9 +106,9 @@
 //                    alert(data);
                     setTimeout(function() {
 //                        if (action=='create') {
-                            document.location = "/aeps-plataforma-mvn/crop/dataCrop.action?idCrop="+json.idCrop;
+                            document.location = "/crop/dataCrop.action?idCrop="+json.idCrop;
 //                        } else if (action=='modify') {
-//                            showInfo("/aeps-plataforma-mvn/crop/showDataCrop.action?idCrop="+json.idCrop, "divDataInfoCrop");
+//                            showInfo("/crop/showDataCrop.action?idCrop="+json.idCrop, "divDataInfoCrop");
 //                        }                      
                     }, 2000);
                 });

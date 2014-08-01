@@ -45,8 +45,9 @@ public class ProducersDao
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";	
         sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";
+        sql += " where e.status=1";
         if (id!=null) {
-            sql += " where p.id_pro="+id;
+            sql += " and p.id_pro="+id;
         }
 //        args.get("countTotal");
 //        events.toArray();
@@ -79,6 +80,14 @@ public class ProducersDao
                 temp.put("phone", data[8]);
                 temp.put("direction", data[9]);
                 temp.put("city", data[10]);
+                
+                if (data[11]==null) data[11]="";                
+                if (data[12]==null) data[12]="";                
+                if (data[19]==null) data[19]="";                
+                if (data[20]==null) data[20]="";                
+                if (data[21]==null) data[21]="";                
+                if (data[22]==null) data[22]="";               
+                
                 temp.put("e_mail_1", data[11]);
                 temp.put("e_mail_2", data[12]);
                 temp.put("associate", data[13]);
@@ -94,7 +103,7 @@ public class ProducersDao
                 temp.put("last_name_2", data[22]);                
                 result = (temp);
             }
-            System.out.println(result);
+//            System.out.println(result);
 //            for (HashMap data : result) {
 //                System.out.println(data.get("id_productor")+" "+data.get("id_entidad")+" "+data.get("cedula"));
 //            }

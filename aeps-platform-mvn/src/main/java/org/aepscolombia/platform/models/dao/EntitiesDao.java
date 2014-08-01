@@ -32,12 +32,12 @@ public class EntitiesDao {
         sql += "select usr.id_ent, usr.id_project_ent, usr.entity_type_ent, usr.document_number_ent, usr.document_type_ent, usr.document_issue_place_ent,"; 	
         sql += "usr.name_ent, usr.in_association_ent, usr.email_ent, usr.email_2_ent, usr.address_ent, usr.id_municipality_ent,"; 	
         sql += "usr.cellphone2_ent, usr.phone_ent, usr.cellphone_ent, usr.status, usr.gender_ent, usr.civil_status_ent,"; 	
-        sql += "usr.validation_number_ent, usr.education_level_ent, usr.date_of_birth_ent, usr.first_name_1_ent,"; 	
-        sql += "usr.first_name_2_ent, usr.last_name_1_ent, usr.last_name_2_ent, usr.agent_name_ent, usr.page_link_ent";
+        sql += "usr.validation_number_ent, usr.education_level_ent, usr.date_of_birth_ent, usr.first_name_1_ent, usr.person_type_ent,"; 	
+        sql += "usr.first_name_2_ent, usr.last_name_1_ent, usr.last_name_2_ent, usr.agent_name_ent, usr.page_link_ent, usr.created_by";
         
 //        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.cod_validation_usr, usr.status";
         sql += " from entities usr";
-        if (!typeIdent.equals("")) sql += " where usr.document_type_ent='"+typeIdent+"'";
+        if (!typeIdent.equals("")) sql += " where usr.status=1 and usr.document_type_ent='"+typeIdent+"'";
         if (!ident.equals("")) sql += " and usr.document_number_ent="+ident;
 //        System.out.println("sql->"+sql);
         
@@ -69,7 +69,7 @@ public class EntitiesDao {
         sql += "select entTy.id_ent_typ, entTy.name_ent_typ";
         sql += " from entities_types entTy";
         sql += " inner join entities ent on ent.entity_type_ent=entTy.id_ent_typ";
-        sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and usr.status=1";
+        sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and ent.status=1 and usr.status=1";
         if (idUser!=null) sql += " and usr.id_user_usr_ent="+idUser;
 //        System.out.println("sql->"+sql);
         
@@ -102,7 +102,7 @@ public class EntitiesDao {
         sql += "select entTy.id_ent_typ, entTy.name_ent_typ";
         sql += " from entities_types entTy";
         sql += " inner join entities ent on ent.entity_type_ent=entTy.id_ent_typ";
-        sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and usr.status=1";
+        sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and ent.status=1 and usr.status=1";
         if (idUser!=null) sql += " and usr.id_user_usr_ent="+idUser;
 //        System.out.println("sql->"+sql);
         

@@ -112,7 +112,7 @@
                 <s:fielderror theme="bootstrap"/>      
                 <div class="panel" id="divRegisterUser">
                     <h3 class="heading_main"><s:property value="getText('text.titlecontact.login')" /></h3>
-                    <s:form id="formLogin" action="login.action" method="post">
+                    <s:form id="formLogin" action="signin.action">
                         <s:hidden name="actExe" value="login"/>
                         <!--                        <div class="control-group error">
                                                     <label class="control-label" for="inputError">Input with error</label>
@@ -149,24 +149,24 @@
                                     <span><s:property value="getText('text.signup.login')" /></span>
                                 </a>
                             </div>
-                            <!-- </div> -->
-                            <div class="submit_sect">
-                                <%--<sj:submit cssClass="btn btn-beoro-3" targets="result" value="Iniciar sesión" validate="true" validateFunction="bootstrapValidation"/>--%>
-                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" onCompleteTopics="completeLogin" value="%{getText('button.signin.login')}" validate="true" validateFunction="validationForm" />
-                                <%--<sj:submit cssClass="btn btn-primary" validate="true" value="Iniciar sesion"/>--%>
-                            </div>
-                        </div>				
-                        <script>
-                            $.subscribe('completeLogin', function(event,data) {
-                                $.unblockUI();
-                            });
-                        </script>
+                            <!-- </div> -->                            
+                        </div>                 
                     </s:form>
+                    <div class="submit_sect">
+                        <sj:submit type="button" formIds="formLogin" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" onCompleteTopics="completeLogin" validate="true" validateFunction="validationForm"><s:property value="%{getText('button.signin.login')}"/></sj:submit>
+                    </div>
+                    <script>
+                        $.subscribe('completeLogin', function(event,data) {
+                            $.unblockUI();
+//                                alert(event.originalEvent.request.responseText)
+//                            document.location='http://localhost:8083/dashboard.action'
+                        });
+                    </script>
                 </div>
                 <!--<div id="result"></div>-->
                 <div class="panel" style="display:none" id="divRestoreUser">
                     <h3 class="heading_main">No puede ingresar?</h3>
-                    <s:form id="formValidate" action="restorePassword.action" method="post">
+                    <s:form id="formValidate" action="restorePassword.action">
                         <s:hidden name="actExe" value="restuser"/>
                         <div class="row">
                             <!--                            <div class="span6">
@@ -190,7 +190,7 @@
                             </div>
                             <div class="submit_sect">
                                 <!--<button type="submit" class="btn btn-primary">Recordar</button>-->
-                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" value="Recuperar" validate="true" validateFunction="validationForm"/>
+                                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" validate="true" validateFunction="validationForm">Recuperar</sj:submit>
                             </div>
                         </div>
                     </s:form>
@@ -202,7 +202,7 @@
                 </div>
                 <div class="panel" style="display:none" id="divNewUser">
                     <h3 class="heading_main">Creaci&oacute;n de nuevo usuario</h3>
-                    <s:form id="formNewUser" action="saveUser.action" method="post">
+                    <s:form id="formNewUser" action="saveUser.action">
                         <s:hidden name="actExe" value="newuser"/>
                         <div class="form-group control-group">
                             <label class="control-label req" for="formNewUser_typeUser">

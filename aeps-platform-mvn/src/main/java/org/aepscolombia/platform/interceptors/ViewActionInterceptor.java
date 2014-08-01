@@ -67,7 +67,7 @@ public class ViewActionInterceptor extends AbstractInterceptor
         result = APConstants.ACTION_PAGE;     
     }
     
-    if(actionActual.equals("login") || actionActual.equals("signin")) result = invocation.invoke();
+    if(actionActual.equals("login") || actionActual.equals("signin") || actionActual.equals("initial")) result = invocation.invoke();
     
     return result;
   }

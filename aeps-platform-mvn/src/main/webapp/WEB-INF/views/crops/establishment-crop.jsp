@@ -1,5 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<div id="divListRes">
+    <%@ include file="info-residual.jsp" %>            
+</div>
 <div id="divListPrep">
     <%@ include file="info-preparations.jsp" %>            
 </div>
@@ -207,7 +210,7 @@
                                 listValue="colorSeeCol"            
                                 headerKey="-1" 
                                 headerValue="---"
-                                onchange="chargeValues('/aeps-plataforma-mvn/crop/comboGetCol.action?typeCrop=%{typeCrop}', 'idColor', this.value, 'formCropSow_sowing_genotypes_idGen', 'divMessage')"
+                                onchange="chargeValues('/crop/comboGetCol.action?typeCrop=%{typeCrop}', 'idColor', this.value, 'formCropSow_sowing_genotypes_idGen', 'divMessage')"
                             />
                         </div>
                     </div>
@@ -294,7 +297,7 @@
                                 listValue="nameGroEnv"            
                                 headerKey="-1" 
                                 headerValue="---"
-                                onchange="chargeValues('/aeps-plataforma-mvn/crop/comboGetGrow.action?typeCrop=%{typeCrop}', 'idGrow', this.value, 'formCropSow_sowing_genotypes_idGen', 'divMessage')"
+                                onchange="chargeValues('/crop/comboGetGrow.action?typeCrop=%{typeCrop}', 'idGrow', this.value, 'formCropSow_sowing_genotypes_idGen', 'divMessage')"
                             />
                         </div>                         
                     </div>                          
@@ -340,6 +343,8 @@
         <script>
             $("#formCropSow_sowing_dateSow").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropSow_sowing_dateSow").mask("99/99/9999", {placeholder: " "});
+            $("#formCropSow_event_expected_production_pro_eve").numeric({decimal: false, negative: false});
+            
             $("#formCropSow_sowing_seedsNumberSow").numeric({decimal: false, negative: false});
             $("#formCropSow_sowing_furrowsDistanceSow").numeric({negative: false});
             $("#formCropSow_sowing_sitesDistanceSow").numeric({negative: false});

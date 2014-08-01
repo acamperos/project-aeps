@@ -22,7 +22,6 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="districts"
-    ,catalog="madr_bd13"
     , uniqueConstraints = @UniqueConstraint(columnNames="code_dis") 
 )
 public class Districts  implements java.io.Serializable {

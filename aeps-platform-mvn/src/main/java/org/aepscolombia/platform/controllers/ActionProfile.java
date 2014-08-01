@@ -5,8 +5,7 @@
 package org.aepscolombia.platform.controllers;
 
 //import com.opensymphony.xwork2.inject.Inject;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
+import com.opensymphony.xwork2.ActionContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -330,7 +329,8 @@ public class ActionProfile extends BaseAction {
     
     @Override
     public void prepare() throws Exception {
-        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        user = (Users) ActionContext.getContext().getSession().get(APConstants.SESSION_USER);
+//        user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         ent = entDao.findById(idEntSystem);
         this.setType_ident_producer(new DocumentsTypesDao().findAll());

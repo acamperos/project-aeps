@@ -58,7 +58,8 @@ public class OrganicControlsDao
             }
             if (idTargetType!=null && idTargetType!=0) {
                 sql += " and ms.target_type_org_con="+idTargetType;
-            }            
+            }         
+            sql += " order by ms.name_org_con ASC";
 
             try {
                 tx = session.beginTransaction();

@@ -13,6 +13,7 @@ import org.aepscolombia.platform.models.dao.CassavasDao;
 import org.aepscolombia.platform.models.dao.ChemicalsSowingDao;
 import org.aepscolombia.platform.models.dao.ControlsDao;
 import org.aepscolombia.platform.models.dao.CropsTypesDao;
+import org.aepscolombia.platform.models.dao.DescriptionsProductionEventDao;
 import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
 import org.aepscolombia.platform.models.dao.DoseUnitsDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
@@ -31,6 +32,7 @@ import org.aepscolombia.platform.models.dao.MonitoringDao;
 import org.aepscolombia.platform.models.dao.PhysiologicalMonitoringDao;
 import org.aepscolombia.platform.models.dao.PreparationsDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.ResidualsManagementDao;
 import org.aepscolombia.platform.models.dao.ResultingProductsDao;
 import org.aepscolombia.platform.models.dao.SeedsColorsDao;
 import org.aepscolombia.platform.models.dao.SeedsInoculationsDao;
@@ -89,7 +91,7 @@ public class ActionCrop extends BaseAction {
      * Atributos provenientes del formulario
      */
     private int idField;
-    private int idCrop;
+    private Integer idCrop;
     private String nameField;
     private int typeCrop;
     private int lastCrop;  
@@ -99,16 +101,21 @@ public class ActionCrop extends BaseAction {
     
     private String name_producer;
     private String type_doc;
+    private String date_sowing;
+    private String date_harvest;
     private String num_doc;
     private Integer num_farm;
     private String name_farm;
     private Integer num_field;
     private String name_field;
+    private String otherCrop;
     
     private String search_crop; 
     private List<HashMap> listCrops;
     
     private List<HashMap> listPrep;
+    private List<HashMap> listResMan;
+    private List<HashMap> listDesPro;
     private List<HashMap> listIrr;
     private List<HashMap> listFert;
     private List<HashMap> listCont;
@@ -131,7 +138,7 @@ public class ActionCrop extends BaseAction {
     private List<SowingTypes> type_sow_types;   
     
     private List<CropsTypes> type_crops;
-    private Integer searchFrom;
+    private Integer searchFromCrop;
     
     private Users user;
     private Integer idEntSystem;    
@@ -204,7 +211,23 @@ public class ActionCrop extends BaseAction {
 
     public void setSowing(Sowing sowing) {
         this.sowing = sowing;
-    }   
+    } 
+
+    public String getDate_sowing() {
+        return date_sowing;
+    }
+
+    public void setDate_sowing(String date_sowing) {
+        this.date_sowing = date_sowing;
+    }
+
+    public String getDate_harvest() {
+        return date_harvest;
+    }
+
+    public void setDate_harvest(String date_harvest) {
+        this.date_harvest = date_harvest;
+    }
 
     public String getNameField() {
         return nameField;
@@ -213,13 +236,21 @@ public class ActionCrop extends BaseAction {
     public void setNameField(String nameField) {
         this.nameField = nameField;
     } 
-
-    public Integer getSearchFrom() {
-        return searchFrom;
+    
+    public String getOtherCrop() {
+        return otherCrop;
     }
 
-    public void setSearchFrom(Integer searchFrom) {
-        this.searchFrom = searchFrom;
+    public void setOtherCrop(String otherCrop) {
+        this.otherCrop = otherCrop;
+    } 
+
+    public Integer getSearchFromCrop() {
+        return searchFromCrop;
+    }
+
+    public void setSearchFromCrop(Integer searchFromCrop) {
+        this.searchFromCrop = searchFromCrop;
     }   
         
     public int getIdField() {
@@ -230,11 +261,11 @@ public class ActionCrop extends BaseAction {
         this.idField = idField;
     }
 
-    public int getIdCrop() {
+    public Integer getIdCrop() {
         return idCrop;
     }
 
-    public void setIdCrop(int idCrop) {
+    public void setIdCrop(Integer idCrop) {
         this.idCrop = idCrop;
     }
 
@@ -398,6 +429,14 @@ public class ActionCrop extends BaseAction {
         this.user = user;
     }    
 
+    public List<HashMap> getListResMan() {
+        return listResMan;
+    }
+
+    public List<HashMap> getListDesPro() {
+        return listDesPro;
+    }   
+
     public List<HashMap> getListPrep() {
         return listPrep;
     }
@@ -501,6 +540,8 @@ public class ActionCrop extends BaseAction {
     private MonitoringDao monDao     = new MonitoringDao();
     private PhysiologicalMonitoringDao physDao     = new PhysiologicalMonitoringDao();
     private PreparationsDao prepDao     = new PreparationsDao();
+    private ResidualsManagementDao resDao          = new ResidualsManagementDao();
+    private DescriptionsProductionEventDao desDao  = new DescriptionsProductionEventDao();
     private SowingDao sowDao      = new SowingDao();
     private LogEntitiesDao logDao = new LogEntitiesDao();
     
@@ -634,6 +675,10 @@ public class ActionCrop extends BaseAction {
 //            required.put("drainPlot", drainPlot);    
             boolean enter = false;
             
+            if (lastCrop==1000000) {
+                required.put("otherCrop", otherCrop);
+            }
+            
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = String.valueOf(required.get(sK));
@@ -676,10 +721,17 @@ public class ActionCrop extends BaseAction {
         this.setTypeCrop(Integer.parseInt(String.valueOf(cropInfo.get("typeCrop"))));
 //        this.setPerformObj(Double.parseDouble(String.valueOf(cropInfo.get("performObj"))));
         this.setLastCrop(Integer.parseInt(String.valueOf(cropInfo.get("lastCrop"))));
-//        CropsTypes crop = new CropsTypesDao().objectById(typeCrop);
-        
+        this.setOtherCrop(String.valueOf(cropInfo.get("otherCrop")));
+//        CropsTypes crop = new CropsTypesDao().objectById(typeCrop);        
+//        if (this.getOtherCrop()!=null && !this.getOtherCrop().equals("")) {
+//            this.setLastCrop(1000000);
+//        }        
         this.setNameTypeCrop(new CropsTypesDao().objectById(typeCrop).getNameCroTyp());
-        lastTypeCrop = new CropsTypesDao().objectById(this.getLastCrop()).getNameCroTyp();
+        if (this.getLastCrop()==1000000) {
+            lastTypeCrop = this.getOtherCrop();
+        } else {
+            lastTypeCrop = new CropsTypesDao().objectById(this.getLastCrop()).getNameCroTyp();
+        }
         if (this.getLastCrop()==1) {
             nameDrainPlot = "Si";
         } else {
@@ -737,6 +789,8 @@ public class ActionCrop extends BaseAction {
             HashMap findParams = new HashMap();       
             findParams.put("idEvent", this.getIdCrop());       
             findParams.put("idEntUser", idEntSystem);       
+            listDesPro = desDao.findByParams(findParams);
+            listResMan = resDao.findByParams(findParams);
             listPrep = prepDao.findByParams(findParams);
             listIrr  = irrDao.findByParams(findParams);
             listFert = fertDao.findByParams(findParams);
@@ -757,9 +811,9 @@ public class ActionCrop extends BaseAction {
 //            System.out.println("values12=>"+beans.getGrowingEnvironment().getIdGroEnv());
             this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0));
             if(sowing!=null && sowing.getIdSow()!=0) {
-                if(typeCrop==1 && maize.getSeedsColors()!=null) {
+                if(typeCrop==1 && maize!=null && maize.getSeedsColors()!=null) {
                     this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, maize.getSeedsColors().getIdSeeCol()));
-                } else if(typeCrop==2 && beans.getGrowingEnvironment()!=null) {
+                } else if(typeCrop==2 && beans!=null && beans.getGrowingEnvironment()!=null) {
                     this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, beans.getGrowingEnvironment().getIdGroEnv()));
                 } else if(typeCrop==3) {
                     this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0));
@@ -867,12 +921,17 @@ public class ActionCrop extends BaseAction {
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
         
-        if(searchFrom!=null && searchFrom==2) {
+        if(searchFromCrop!=null && searchFromCrop==2) {
             search_crop = "";
         } 
         
+        System.out.println("date_sowing=>"+date_sowing);
+        System.out.println("date_harvest=>"+date_harvest);
+        
         findParams.put("idEntUser", idEntSystem);
         findParams.put("search_crop", search_crop);
+        findParams.put("date_sowing", date_sowing);
+        findParams.put("date_harvest", date_harvest);
         findParams.put("name_producer", name_producer);
         findParams.put("idCrop", idCrop);
         findParams.put("type_doc", type_doc);
@@ -927,7 +986,7 @@ public class ActionCrop extends BaseAction {
         this.setType_crops(new CropsTypesDao().findAll());
         if (this.getIdCrop()!= -1) {
             setValuesCrop(this.getIdCrop());
-            
+                
 //            Fields fie = lotDao.objectById(idField);
 //            nameField  = fie.getNameFie();
         } 
@@ -966,7 +1025,7 @@ public class ActionCrop extends BaseAction {
             tx = session.beginTransaction();
             
             ProductionEvents pro = null;
-            if (idCrop<=0) {
+            if (idCrop==null || idCrop<=0) {
                 pro = new ProductionEvents();
                 pro.setIdProEve(null);
             } else {
@@ -976,8 +1035,13 @@ public class ActionCrop extends BaseAction {
             
             pro.setFields(new Fields(idField));
             pro.setCropsTypes(new CropsTypes(typeCrop));
-            pro.setIdProjectProEve(1);
-            pro.setFormerCropProEve(lastCrop);
+            pro.setIdProjectProEve(1);            
+            if (lastCrop==1000000) {
+                pro.setFormerCropProEve(null);
+                pro.setOtherFormerCropProEve(otherCrop);
+            } else {
+                pro.setFormerCropProEve(lastCrop);
+            }
             pro.setStatus(true);
             session.saveOrUpdate(pro);
             

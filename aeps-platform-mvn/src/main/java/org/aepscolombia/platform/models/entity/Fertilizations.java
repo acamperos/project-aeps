@@ -37,7 +37,10 @@ public class Fertilizations  implements java.io.Serializable {
 
     public Fertilizations() {
     }
-
+    
+    public Fertilizations(Integer idFer) {
+        this.idFer = idFer;
+    }
 	
     public Fertilizations(ProductionEvents productionEvents, FertilizationsTypes fertilizationsTypes, Date dateFer, Double amountProductUsedFer) {
         this.productionEvents = productionEvents;
@@ -87,7 +90,7 @@ public class Fertilizations  implements java.io.Serializable {
         this.cropsTypes = cropsTypes;
     }
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="fertilization_type_fer", nullable=false)
+    @JoinColumn(name="fertilization_type_fer")
     public FertilizationsTypes getFertilizationsTypes() {
         return this.fertilizationsTypes;
     }
@@ -105,7 +108,7 @@ public class Fertilizations  implements java.io.Serializable {
         this.dateFer = dateFer;
     }
     
-    @Column(name="amount_product_used_fer", nullable=false, precision=22, scale=0)
+    @Column(name="amount_product_used_fer", precision=22, scale=0)
     public Double getAmountProductUsedFer() {
         return this.amountProductUsedFer;
     }

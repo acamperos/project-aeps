@@ -195,7 +195,7 @@
                             listValue="nameDep" 
                             headerKey=" " 
                             headerValue="---"
-                            onchange="chargeValues('/aeps-plataforma-mvn/comboProducer.action', 'depId', this.value, 'formProducer_cityPro', 'divMessage')"
+                            onchange="chargeValues('/comboProducer.action', 'depId', this.value, 'formProducer_cityPro', 'divMessage')"
                             name="depPro"/>
                     </div>  
                 </div>

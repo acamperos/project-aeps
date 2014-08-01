@@ -93,7 +93,7 @@
                 $.subscribe('completeIrr', function(event, data) {             
                     completeFormGetting('dialog-form', 'formCropIrr', 'divIrr', event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        showInfo("/aeps-plataforma-mvn/crop/searchIrr.action?idCrop="+$("#formCropIrr_idCrop").val(), "divListIrr");
+                        showInfo("/crop/searchIrr.action?idCrop="+$("#formCropIrr_idCrop").val(), "divListIrr");
                     }, 2000);
                 });
             </script>
