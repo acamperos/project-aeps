@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
-<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
-<% UsersDao usrDao = new UsersDao(); %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<% Users userCrop  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrCropDao = new UsersDao(); %>
+<% Integer entTypeCropId = new EntitiesDao().getEntityTypeId(userCrop.getIdUsr()); %>
 
 <s:if test="listCrops.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>            
 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
 <% //int pageNow     = Integer.parseInt(String.valueOf(request.getParameter("page")));  %>
@@ -32,14 +34,19 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divCrops" class="w-box">    
-    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) { %>
-        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
-            <i class="icon-plus"></i> Agregar Evento Productivo
-        </button>
+    <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/create")) { %>
+        <% if (entTypeCropId!=3) { %>
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
+                <i class="icon-plus"></i> Agregar Evento Productivo
+            </button>
+        <% } %>
     <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblCrops'>
         <thead>
             <tr>
+                <% if (entTypeCropId==3) { %>    
+                    <th>Agronomo</th>
+                <% } %>
                 <th>Informacion</th>                
                 <s:if test="%{typeEnt!=2}">
                     <th>Nombre del Productor</th>
@@ -49,7 +56,7 @@
                 <th>Fecha de siembra</th>
                 <th>Material genetico</th>
                 <th>Fecha de creación</th>
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/delete"))) { %>
+                <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/modify") || (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/delete"))) { %>
                     <% if (value == "crop" || value.equals("crop")) {%>
                         <th>Accion</th>
                     <% }%>

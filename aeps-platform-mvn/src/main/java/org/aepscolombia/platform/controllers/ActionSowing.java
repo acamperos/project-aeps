@@ -269,7 +269,7 @@ public class ActionSowing extends BaseAction {
                 }
             }
 
-            if (event.getExpectedProductionProEve()!=0) {
+            if (event.getExpectedProductionProEve()!=null && event.getExpectedProductionProEve()!=0) {
                 if (event.getExpectedProductionProEve()<0 || event.getExpectedProductionProEve()>30000) {
                     addFieldError("event.expected_production_pro_eve", "Dato invalido valor entre 0 y 30000");
                     addActionError("Se ingreso un rendimiento histórico obtenido invalido, por favor ingresar un valor entre 0 y 30000");

@@ -9,6 +9,7 @@
     <property name="connection.pool_size">1</property>
     <property name="hibernate.connection.username">ciat</property>
     <property name="hibernate.connection.password">GtA7U5BWcPATbGpT</property>    
+    <mapping class="org.aepscolombia.platform.models.entity.Association"/>
     <mapping class="org.aepscolombia.platform.models.entity.WorkTypeExtAgent"/>
     <mapping class="org.aepscolombia.platform.models.entity.Cassavas"/>
     <mapping class="org.aepscolombia.platform.models.entity.ResultingProducts"/>

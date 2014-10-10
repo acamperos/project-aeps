@@ -8,17 +8,19 @@
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>
 <%@page import="com.opensymphony.xwork2.ActionContext" %>
 <%@page import="com.opensymphony.xwork2.util.ValueStack" %>
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
-<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
-<% UsersDao usrDao = new UsersDao(); %>
+<% Users userPro  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrProDao   = new UsersDao(); %>
+<% Integer entTypeProId = new EntitiesDao().getEntityTypeId(userPro.getIdUsr()); %>
 
 <s:if test="listProducers.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>
 <%-- <% int pos = request.getParameter("additionals").indexOf("selected"); %> --%>
 <% int pageNow    = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
@@ -44,11 +46,13 @@
 <div id="divProducers" class="w-box">
     <%--<s:actionerror theme="bootstrap"/>--%>
     <%--<s:actionmessage theme="bootstrap"/>--%>   
-    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/create")) { %>
-        <% if (value.equals("producer")) {%>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showProducer.action?action=create&viewInfo=${viewInfo}', 'idPro', '', 'Crear Productor', 1050, 550)">
-                <i class="icon-plus"></i> Agregar productor
-            </button>
+    <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/create")) { %>
+        <% if (entTypeProId!=3) { %>    
+            <% if (value.equals("producer")) {%>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showProducer.action?action=create&viewInfo=${viewInfo}', 'idPro', '', 'Crear Productor', 1050, 550)">
+                    <i class="icon-plus"></i> Agregar productor
+                </button>
+            <% }%>
         <% }%>
     <% } %>
     <table class="table table-bordered table-hover" style="<%= table%>" id='tblProducers'>
@@ -60,13 +64,16 @@
                     <% }%>
                 <% }%>
                 <!-- <th>#</th> -->
+                <% if (entTypeProId==3) { %>    
+                    <th>Agronomo</th>
+                <% } %>
                 <th>Nombre</th>
                 <th>Municipio</th>
                 <th>Telefono</th>
                 <th>Celular</th>
                 <th>Correo</th>                                
                 <th>Fecha de creación</th>                                
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "producer/delete"))) { %>                
+                <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/delete"))) { %>                
                     <% if (value.equals("producer") || value == "producer") {%>    
                         <th>Accion</th>
                     <% } %>
@@ -90,7 +97,7 @@
 //                                        action = "viewInfo('/searchProducer.action?action=modify&idProducer=" + request.getAttribute("id_producer") + "&selected=" + add.get("selected") + "', 'Listado de Fincas', 'divProducers', 'divProperties')";
                     }
                 }%>     
-                <tr id="trProducer<s:property value='id_producer' />" onclick="<%=action%>">
+                <tr id="trProducer<s:property value='id_producer' />" class="selectVal" onclick="<%=action%>">
                     <%@ include file="row-producer.jsp" %>
                 </tr>
             </s:iterator>

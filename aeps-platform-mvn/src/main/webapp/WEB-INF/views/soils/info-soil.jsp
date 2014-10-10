@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
-<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
-<% UsersDao usrDao = new UsersDao(); %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<% Users userSoil  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrSoilDao = new UsersDao(); %>
+<% Integer entTypeSoilId = new EntitiesDao().getEntityTypeId(userSoil.getIdUsr()); %>
 
 <s:if test="listSoils.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>            
 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
 <% //int pageNow     = Integer.parseInt(String.valueOf(request.getParameter("page")));  %>
@@ -32,15 +34,20 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divRasta" class="w-box">
-    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/create")) { %>
-        <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
-            <i class="icon-plus"></i> Agregar rasta
-        </button>
+    <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/create")) { %>
+        <% if (entTypeSoilId!=3) { %>
+            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
+                <i class="icon-plus"></i> Agregar rasta
+            </button>
+        <% } %>
     <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblRasta'>
         <thead>
             <tr>
                 <!-- <th>#</th> -->
+                <% if (entTypeSoilId==3) { %>    
+                    <th>Agronomo</th>
+                <% } %>
                 <th>Informacion</th>
                 <th>Fecha</th>
                 <th>Pendiente</th>
@@ -51,7 +58,7 @@
                 <th>Ph</th>
                 <th>Carbonatos</th>
                 <th>Fecha de creación</th>
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/delete"))) { %>                
+                <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify") || (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete"))) { %>                
                     <% if (value == "rasta" || value.equals("rasta")) {%>
                         <th>Accion</th>
                     <% } %>

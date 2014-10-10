@@ -12,7 +12,7 @@
 <s:actionmessage theme="bootstrap"/>
 <s:fielderror theme="bootstrap"/>
 <!--list="{'1':'Anual', '2':'Departamental'}"-->
-<s:form id="formCropSearch" action="searchCropRep.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Busqueda de evento productivos">
+<s:form id="formCropSearch" action="getReportPro.action" cssClass="form-horizontal">
     <div class="control-group">
         <s:label for="formCropSearch_typeReport" cssClass="control-label" value="Tipo de reporte:"></s:label>
         <div class="controls">
@@ -60,7 +60,8 @@
                 </div>
             </div>            
         </div>
-        <% if (entTypeId==1) { %>
+        <% //if (entTypeId==1) { %>
+        <% if (entTypeId==5) { %>
             <div class="row">
                 <div class="span5">
                     <div class="control-group">
@@ -97,7 +98,8 @@
                 </div>
             </div> 
             <script>
-                $("#formCropSearch_num_doc").numeric({decimal: false, negative: false});
+                $("#formCropSearch_num_doc").mask("999999?9999", {placeholder: ""});
+//                $("#formCropSearch_num_doc").numeric({decimal: false, negative: false});
             </script>
         <% } %>
         <script>            
@@ -170,7 +172,8 @@
             </div>
         <% } %>
         <script>
-            $("#formCropSearch_numDocDep").numeric({decimal: false, negative: false});
+            $("#formCropSearch_numDocDep").mask("999999?9999", {placeholder: ""});
+//            $("#formCropSearch_numDocDep").numeric({decimal: false, negative: false});
         </script>
     </div>
     <!--<div>--> 

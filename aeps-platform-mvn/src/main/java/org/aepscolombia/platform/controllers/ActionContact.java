@@ -49,7 +49,7 @@ public class ActionContact extends BaseAction {
                     "\"PLANTAS NORMALES\",\"NO\",\"NO\",\"SI\",\"NO\",\"BUENO\")");
 //                engine.eval("load(\"funciones_AESCE.RData\")");
             ListVector res = (ListVector)engine.eval(new java.io.FileReader("inferidas.R"));
-            System.out.println("The result of a*b is: " + res);
+//            System.out.println("The result of a*b is: " + res);
             // determine the Java class of the result:
 //                Class objectType = res.getClass();
 //                objectType.
@@ -91,7 +91,7 @@ public class ActionContact extends BaseAction {
             }
             
             
-            System.out.println("Java class of 'res' is: " + res.getElementAsString(1));
+//            System.out.println("Java class of 'res' is: " + res.getElementAsString(1));
             // use the getTypeName() method of the SEXP object to get R's type name:
 //                System.out.println("In R, typeof(res) would give '" + res.getTypeName() + "'");
 //                System.out.println("In R, typeof(res) would give '" + objectType.getEnumConstants()+ "'");          
@@ -100,10 +100,10 @@ public class ActionContact extends BaseAction {
 //                engine.eval("prueba <- sqlQuery(canal, 'SELECT * FROM entities')");
 //                engine.eval("head(prueba)");
         } catch (ScriptException ex) {
-            System.out.println("Error mostrando la informacion");
+//            System.out.println("Error mostrando la informacion");
 //                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
-            System.out.println("Error leyendo el archivo");
+//            System.out.println("Error leyendo el archivo");
 //                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
         }
 

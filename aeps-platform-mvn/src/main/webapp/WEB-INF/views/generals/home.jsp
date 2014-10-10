@@ -9,7 +9,7 @@
             <div id="carousel-487454" class="carousel slide">
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="img/platform.jpg" alt="thumb">
+                        <a href="signin.action"><img src="img/platform.jpg"></a>
                         <div class="container">
                             <div class="carousel-caption">
                                 <p class="lead"><s:property value="getText('text.description.platform')" /></p>
@@ -28,7 +28,7 @@
                         </div>
                     </div>-->
                     <div class="item">
-                        <img src="img/apps-mobile.jpg" alt="thumb">
+                        <a href="https://play.google.com/store/apps/details?id=com.aepsmovil.aepsmovil"><img src="img/apps-mobile.jpg"></a>
                         <div class="container">
                             <div class="carousel-caption">
                                 <p class="lead" style="margin-bottom:20px !important;"><s:property value="getText('text.description.mobile')" /></p>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="img/usuario_prueba.png" alt="thumb">
+                        <a href="tryFree.action"><img src="img/usuario_prueba.png"></a>
                         <div class="container">
                             <div class="carousel-caption">
                                 <p class="lead" style="margin-bottom:20px !important;">

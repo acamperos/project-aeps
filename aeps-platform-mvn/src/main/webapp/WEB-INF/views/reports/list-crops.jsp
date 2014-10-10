@@ -5,6 +5,17 @@
 <html>
     <head>
         <link rel="icon" type="image/ico" href="img/favicon.ico">
+        <link rel="stylesheet" href="scripts/js/spinner/jqamp-ui-spinner.min.css"/>
+        <script type="text/javascript" src="scripts/js/spinner/globalize.min.js"></script>
+        <script type="text/javascript" src="scripts/js/spinner/jqamp-ui-spinner.min.js"></script>
+        <script type="text/javascript" src="scripts/js/spinner/jquery-mousewheel-3.0.6.min.js"></script>
+        <script type="text/javascript" src="scripts/js/highcharts/highcharts.js"></script>
+        <script type="text/javascript" src="scripts/js/highcharts/highcharts-more.js"></script>
+        <script type="text/javascript" src="scripts/js/highcharts/exporting.js"></script>
+        <script type="text/javascript" src="scripts/js/flot-charts/jquery.flot.min.js"></script>
+        <script type="text/javascript" src="scripts/js/flot-charts/jquery.flot.time.js"></script>
+        <script type="text/javascript" src="scripts/js/flot-charts/jquery.flot.symbol.js"></script>
+        <script type="text/javascript" src="scripts/js/flot-charts/jquery.flot.axislabels.js"></script>
     </head>
     <body>   
         <div class="container">

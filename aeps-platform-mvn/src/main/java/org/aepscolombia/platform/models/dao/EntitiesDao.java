@@ -66,7 +66,7 @@ public class EntitiesDao {
         String sql = "";
         String valEntity = "";
 
-        sql += "select entTy.id_ent_typ, entTy.name_ent_typ";
+        sql += "select entTy.id_ent_typ, entTy.name_ent_typ, entTy.status_ent_typ";
         sql += " from entities_types entTy";
         sql += " inner join entities ent on ent.entity_type_ent=entTy.id_ent_typ";
         sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and ent.status=1 and usr.status=1";
@@ -99,7 +99,7 @@ public class EntitiesDao {
         String sql = "";
         Integer valEntity=0;
 
-        sql += "select entTy.id_ent_typ, entTy.name_ent_typ";
+        sql += "select entTy.id_ent_typ, entTy.name_ent_typ, entTy.status_ent_typ";
         sql += " from entities_types entTy";
         sql += " inner join entities ent on ent.entity_type_ent=entTy.id_ent_typ";
         sql += " inner join user_entity usr on usr.id_entity_usr_ent=ent.id_ent and ent.status=1 and usr.status=1";

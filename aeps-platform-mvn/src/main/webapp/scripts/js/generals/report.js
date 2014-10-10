@@ -1,13 +1,10 @@
-//var dataResult = '{ "detailProfiles" : [{"profile1" : "<center>Horizonte 1:</center><p>Espesor: 30cm, <br/>Resistencia al rompimiento : Friable, <br/>Materia organica : MEDIA</p>", "profile2" : "<center>Horizonte 1:</center><p>Espesor: 30cm, <br/>Resistencia al rompimiento : Friable, <br/>Materia organica : MEDIA</p>", "profile3" : "<center>Horizonte 1:</center><p>Espesor: 30cm, <br/>Resistencia al rompimiento : Friable, <br/>Materia organica : MEDIA</p>"}], "valTable" : [{"producerId" : "Jose Arana", "valIn" : "Inclinacion: 12%", "depthId" : "Profundidad Efectiva (cm) - 110", "phId" : "5", "structureId" : "Granular", "exposeId" : "La Mañana y Tarde", "coveringId" : "Bueno", "drainIntId" : "Bueno", "drainExtId" : "Lento"}], "data" : [{"point" :"[[1, -20]]", "color": "#0077FF"},{"point" :"[[1, -40]]", "color": "#7D0096"},{"point" :"[[1, -60]]", "color": "#DE000F"}], "infoProfile" : [{"pro1": "A","pro2": "F","pro3": "L"}] }';
-//var dataResult;
 //var objResult  = JSON.parse(dataResult);
 var objResult;
 
 function dregreesToRadian(rad) {
     return rad * 180 / Math.PI; 
 }
-
-//function chargeInfographic(dataResult) {			
+	
 function chargeInfographic() {			
     $('#inclinationInfo').text(objResult.valTable[0].valDes);
     var dataTemp	 = '[';
@@ -29,15 +26,15 @@ function chargeInfographic() {
         },
         bars: {
             align: "center",
-//            barWidth: 124 * 60 * 60 * 2000,
-            barWidth: 124 * 60 * 60,
-            lineWidth: 5
+            barWidth: 124 * 60 * 60 * 2000,
+            lineWidth: 5,
+            fillColor: { colors: [ { opacity: 0.7 }, { opacity: 0.7 } ] }
         },
         legend: {
             show: false
         },
         xaxis: {
-            tickLength: 1,
+            tickLength: 20,
             show: false,
             color: "black",
             axisLabelUseCanvas: true,
@@ -52,16 +49,15 @@ function chargeInfographic() {
             position: "left",
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: "Istok Web",
-            axisLabelPadding: 3
+            axisLabelPadding: 3,
+            autoscaleMargin: null
         },
         grid: {
             hoverable: true,
             borderWidth: 2,
             backgroundColor: { colors: ["#EDF5FF", "#ffffff"] }
         }
-        //,colors:["#004078","#207800", "#613C00"]
     };   
-//    $(".flot-text").css( "left", "-14px" );    
 
     var previousPoint = null, previousLabel = null;
     $.fn.UseTooltip = function () {
@@ -74,12 +70,10 @@ function chargeInfographic() {
 
                     var x = item.datapoint[0];
                     var y = item.datapoint[1];
-                    var color = item.series.color;                    
+                    var color = item.series.color;   
                     var text  = eval("objResult.detailProfiles[0].profile"+item.series.label);			
                     var soilSel = eval("objResult.infoProfile[0].pro"+item.series.label);										
                     findInfoSoil(soilSel);
-//                    alert(item.pageX)
-//                    alert(item.pageY)
                     showTooltip(item.pageX, item.pageY, color, text);
                 }
             } else {
@@ -90,13 +84,28 @@ function chargeInfographic() {
         });
     };
     
-//    $(document).ready(function () {
-        $.plot($("#flot-placeholder"), dataset, options);    
-        $("#flot-placeholder").UseTooltip();
-//    });
+    var plot = $.plot($("#flot-placeholder"), dataset, options);    
+    $("#flot-placeholder").UseTooltip();
 
-//    $(".legendColorBox").addClass("hide");
-//    $(".legendLabel").addClass("hide");
+    var series = plot.getData();
+    var pos  = 0;
+    var posX = 1;
+    
+    for (var i = 0; i < series.length; ++i) {
+        var num = series[i].data;
+        var str = num.toString();
+        var val = str.split(",");
+        pos   = pos + Math.abs(val[1]);
+        var o = plot.pointOffset({ x: 1, y: -pos});
+        var textColor = eval("objResult.detailColors[0].text"+posX);
+        posX++;
+        $("#flot-placeholder").append("<div style='position:absolute;left:135px;top:"+(o.top-30)+"px;color:#000;font-size:normal'>"+textColor+"</div>");
+    }
+    
+    var depthId = parseInt(eval("objResult.valTable[0].depthId"));
+    var o = plot.pointOffset({ x: 1, y: -depthId});
+    $("#flot-placeholder").append("<div style='position:absolute;left:115px;top:"+(o.top-20)+"px;color:#B22222;font-size:small'><b>Profundidad Efectiva: "+depthId+"cm</b></div>");
+    $("#flot-placeholder").append("<div style='position:absolute;width:285px;border: 2px dotted #B22222;left:55px;top:"+(o.top)+"px;'></div>");
 }
 
 function showTooltip(x, y, color, contents) {
@@ -104,9 +113,10 @@ function showTooltip(x, y, color, contents) {
         position: 'absolute',
         display: 'none',
         width: '250px',
-        height: '120px',
-        top: (y/2),
-        left: (x/2)-80,
+        height: '200px',
+        top:  y-50,
+        left: x+80,
+        'z-index': 100,
         border: '2px solid ' + color,
         padding: '3px',
         'font-size': '17px',
@@ -114,12 +124,12 @@ function showTooltip(x, y, color, contents) {
         'background-color': '#fff',
         'font-family': "Istok Web",
         opacity: 0.9
-    }).appendTo("#dialog-form").fadeIn();
+    }).appendTo("body").fadeIn();
 }		
 
 function generateInclination(val) {
     var ctx = $('#canvas')[0].getContext("2d");
-    ctx.fillStyle = "#00A308";
+    ctx.fillStyle = "#B4CA29";
     ctx.beginPath();
     ctx.moveTo(150,150);
     ctx.lineTo(150,val);

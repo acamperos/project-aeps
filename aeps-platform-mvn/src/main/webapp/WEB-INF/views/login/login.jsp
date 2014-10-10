@@ -18,10 +18,9 @@
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
-        <!--<script type="text/javascript" src="scripts/js/jquery/jquery.validate.js"></script>-->
-        <!--<script type="text/javascript" src="scripts/js/jquery/jquery.validate.password.js"></script>-->
+        <script type="text/javascript" src="scripts/js/colorbox/jquery.colorbox.min.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>
-        <!--<script type="text/javascript" src="scripts/js/jquery/jquery-1.9.0.min.js"></script>-->
+        <link rel="stylesheet" href="scripts/css/colorbox/colorbox.css"/>
         <link rel="stylesheet" href="scripts/css/generals/login.css">
         <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">
         <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -82,7 +81,7 @@
         </script>
     </head>
     <body>
-        <div id="divMessage" style="display:none"></div>        
+        <div id="divMessage" style="display:none;"></div>        
         <div id="login-wrapper" class="clearfix">            
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->
@@ -164,7 +163,7 @@
                     </script>
                 </div>
                 <!--<div id="result"></div>-->
-                <div class="panel" style="display:none" id="divRestoreUser">
+                <div class="panel" style="display:none;" id="divRestoreUser">
                     <h3 class="heading_main">No puede ingresar?</h3>
                     <s:form id="formValidate" action="restorePassword.action">
                         <s:hidden name="actExe" value="restuser"/>
@@ -189,18 +188,29 @@
                                 </a>
                             </div>
                             <div class="submit_sect">
-                                <!--<button type="submit" class="btn btn-primary">Recordar</button>-->
-                                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" validate="true" validateFunction="validationForm">Recuperar</sj:submit>
+                                <sj:submit type="button" id="btRestore" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" validate="true" validateFunction="validationForm">Recuperar</sj:submit>
                             </div>
                         </div>
                     </s:form>
+                    <div class="hide">
+                        <div id="confirm_dialog" class="cbox_content">
+                            <div class="sepH_c">
+                                <p>El correo  que le mandamos puede ser filtrado como spam. <br />Si no encuentra el correo en su buzon principal,<br /> 
+                                por favor no olvide de revisar el buzon de spam.</p>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-small confirm_ok">Ok</a>
+                            </div>
+                        </div>
+                    </div>
                     <script>
                         $.subscribe('completeRestore', function(event, data) {
+                            showDialogWarning('confirm_dialog');
                             completeForm('', 'formValidate', event.originalEvent.request.responseText);
                         });
                     </script>
                 </div>
-                <div class="panel" style="display:none" id="divNewUser">
+                <div class="panel" style="display:none;" id="divNewUser">
                     <h3 class="heading_main">Creaci&oacute;n de nuevo usuario</h3>
                     <s:form id="formNewUser" action="saveUser.action">
                         <s:hidden name="actExe" value="newuser"/>
@@ -237,9 +247,16 @@
                             </div>
                             <div class="hide" id="divAssociationAdd">
                                 <div class="form-group control-group">
-                                    <label class="control-label req" for="formNewUser_nameAssoExt">Nombre en donde trabaja:</label>
+                                    <label class="control-label req" for="formNewUser_nameAssoExt">Sitio donde trabaja:</label>
                                     <div class="controls">
-                                        <s:textfield class="form-control" name="nameAssoExt"/>
+                                        <s:select
+                                            name="idAssoExt" 
+                                            list="association_list" 
+                                            listKey="idAsc" 
+                                            listValue="nameAsc"          
+                                            headerKey=" " 
+                                            headerValue="---"
+                                        />
                                     </div>
                                 </div>
                             </div>

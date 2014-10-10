@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String tableIrr = "display:none";%>
+<% String tableIrr = "display:none;";%>
 <% String labelIrr = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users userIrr  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrIrrDao = new UsersDao(); %>
+<% Integer entTypeIrrId = new EntitiesDao().getEntityTypeId(userIrr.getIdUsr()); %>
 
 <s:if test="listIrr.size() > 0">
     <% tableIrr = "";%>
-    <% labelIrr = "display:none";%> 
+    <% labelIrr = "display:none;";%> 
 </s:if>            
 
 <div class="msgWin" id="divMessListIrr"></div>
@@ -22,9 +24,11 @@
     <fieldset>
         <legend>Lista de riegos</legend>
         <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showIrr.action?action=create', 'idCrop', '${idCrop}', 'Crear Riego', 1050, 550);">
-                <i class="icon-plus"></i> Agregar Riego
-            </button>
+            <% if (entTypeIrrId!=3) { %>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showIrr.action?action=create', 'idCrop', '${idCrop}', 'Crear Riego', 1050, 550);">
+                    <i class="icon-plus"></i> Agregar Riego
+                </button>
+            <% } %>
         <% } %>
         <table class="table table-bordered table-hover" style="<%= tableIrr %>" id='tblIrr'>
             <thead>

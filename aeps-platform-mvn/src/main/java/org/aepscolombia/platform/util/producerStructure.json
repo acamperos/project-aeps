@@ -1,0 +1,7 @@
+{
+    "database" : "mkyongDB",
+    "_id": "NumberInt(90)",
+    "table" : "hosting",
+    "detail" : {"records" : 99, "index" : "vps_index1", "active" : "true"}
+            
+}

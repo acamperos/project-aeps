@@ -6,6 +6,13 @@
 <s:actionmessage theme="bootstrap"/>
 <s:fielderror theme="bootstrap"/>
 <div class="container">
+    <ul id="breadcrumbs">
+        <s:set id="contextPath"  value="#request.get('javax.servlet.forward.context_path')" />
+        <li><s:a href="dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>
+        <li><span>Reportar Problema</span></li>
+    </ul>
+</div>
+<div class="container">
     <div class="panel">
         <div class="panel-heading">
             <h4>Reportar Problema</h4>

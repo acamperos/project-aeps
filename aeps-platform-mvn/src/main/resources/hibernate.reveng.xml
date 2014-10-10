@@ -117,4 +117,5 @@
   <table-filter match-name="chemical_fertilizations_chemical_elements"/>
   <table-filter match-name="residuals_management"/>
   <table-filter match-name="descriptions_production_event"/>
+  <table-filter match-name="association"/>
 </hibernate-reverse-engineering>

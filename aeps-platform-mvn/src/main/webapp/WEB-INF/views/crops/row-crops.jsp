@@ -1,3 +1,6 @@
+<% if (entTypeCropId==3) { %>    
+    <td><s:property value="nameAgro" /></td>
+<% } %>
 <td>
     Lote: #<s:property value="num_field" />-<s:property value="name_field" />,<br />
     Finca: #<s:property value="num_farm" />-<s:property value="name_farm" />
@@ -20,12 +23,12 @@
 <s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <td>
-    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/delete"))) { %>
+    <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/modify") || (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/delete"))) { %>
         <div class="btn-group">
-            <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify")) { %>
+            <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/modify")) { %>
                 <a href="/crop/dataCrop.action?idCrop=${idCrop}&page=<%=pageNow%>" class="btn btn-small" title="Ver Evento Productivo">Actualizar información <i class="icon-eye-open"></i></a>
             <% } %>
-            <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/delete")) { %>
+            <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/delete")) { %>
                 <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Evento Productivo" onclick="showDialogDelete(this, 'confirm_dialog_crop', 'deleteCrop.action?idCrop=<s:property value="idCrop" />', 'searchCrop.action?page=<%=pageNow%>', 'divCrops', '<%=divHide%>');"><i class="icon-trash"></i></a>
             <% } %>
         </div>

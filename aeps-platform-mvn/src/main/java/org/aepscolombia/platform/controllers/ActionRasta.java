@@ -4,7 +4,10 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.script.*;
+import org.aepscolombia.platform.models.dao.AssociationDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
@@ -76,6 +80,8 @@ public class ActionRasta extends BaseAction {
     private Integer idUsrSystem;    
     private Rastas rasta = new Rastas();
     private UsersDao usrDao;
+    private List<Entities> list_agronomist;
+    private AssociationDao assDao;
 
     
 
@@ -106,6 +112,22 @@ public class ActionRasta extends BaseAction {
 
     public void setSearchFromSoil(Integer searchFromSoil) {
         this.searchFromSoil = searchFromSoil;
+    }   
+
+    public List<Entities> getList_agronomist() {
+        return list_agronomist;
+    }
+
+    public void setList_agronomist(List<Entities> list_agronomist) {
+        this.list_agronomist = list_agronomist;
+    }
+
+    public AssociationDao getAssDao() {
+        return assDao;
+    }
+
+    public void setAssDao(AssociationDao assDao) {
+        this.assDao = assDao;
     }   
     
     public int getIdProducer() {
@@ -388,6 +410,7 @@ public class ActionRasta extends BaseAction {
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
+        assDao = new AssociationDao();
 //        rowNew = (String)(this.getRequest().getParameter("rowNew"));
 //        if (rowNew!=null && rowNew.equals("true")) {
 //            System.out.println("entreeeee");
@@ -436,7 +459,6 @@ public class ActionRasta extends BaseAction {
         if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/create") || !usrDao.getPrivilegeUser(idUsrSystem, "soil/modify")) {
             return BaseAction.NOT_AUTHORIZED;
         } 
-        System.out.println("entereeeee");
         
         try {
             this.setIdRasta(Integer.parseInt(this.getRequest().getParameter("idRasta")));
@@ -461,8 +483,7 @@ public class ActionRasta extends BaseAction {
         
         try {
             
-            String vec = "vec <- "+rastaDao.getInfoToReport(this.getIdRasta());      
-            System.out.println("vec=>"+vec);
+            String vec = "vec <- "+rastaDao.getInfoToReport(this.getIdRasta());    
             engine.eval(vec);
             
             ListVector res = (ListVector)engine.eval(new java.io.FileReader("inferidas.R"));            
@@ -508,9 +529,7 @@ public class ActionRasta extends BaseAction {
             }
             
             Rastas rasTemp = rastaDao.objectById(this.getIdRasta());
-            info = rastaDao.getInfoRasta(this.getIdRasta(), valInf);            
-            
-            System.out.println("info=>"+info);
+            info = rastaDao.getInfoRasta(this.getIdRasta(), valInf);         
             rasTemp.setProfundidadEfectivaRas(Double.parseDouble(depthEffective));
             rasTemp.setMateriaOrganicaRas(organicMaterial);
             rasTemp.setDrenajeInternoRas(internalDrain);
@@ -518,11 +537,11 @@ public class ActionRasta extends BaseAction {
             rastaDao.save(rasTemp);
             return SUCCESS;             
         } catch (ScriptException ex) {
-            System.out.println("Error mostrando la informacion");
+//            System.out.println("Error mostrando la informacion");
             info  = "Error mostrando la informacion";
 //                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
-            System.out.println("Error leyendo el archivo R");
+//            System.out.println("Error leyendo el archivo R");
             info  = "Se obtuvo un error al momento de cargar R";
 //                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -534,7 +553,7 @@ public class ActionRasta extends BaseAction {
      * Metodo encargado de validar el formulario de Suelos
      */
     @Override
-    public void validate() {       
+    public void validate() {               
 //        super.validate();
         /*
          * Se evalua dependiendo a la accion realizada:
@@ -641,15 +660,20 @@ public class ActionRasta extends BaseAction {
 //            
 ////            System.out.println("required->"+required);
 //            
+            boolean enter = false;
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
                 String sV = String.valueOf(required.get(sK));
 //                System.out.println(sK + " : " + sV);
                 if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     addFieldError(sK, "El campo es requerido");
+                    enter = true;
                 }
             }
-//            
+            
+            if (enter) {
+                addActionError("Faltan campos por ingresar por favor digitelos");
+            }
             
             if (rasta.getLatitudRas()==null) {
                 addFieldError("rasta.latitudRas", "Debe ingresar alguno de estos datos");
@@ -703,7 +727,7 @@ public class ActionRasta extends BaseAction {
             for (HorizontesRasta horizon : additionalsAtrib) {
 //                System.out.println("horizon->"+horizon);
 //                if ((horizon.getNumeroHorizonteHorRas()<0) && (horizon.getEspesorHorRas()<0) && (horizon.getColorSecoHorRas()<0) && (horizon.getColorHumedoHorRas()<0) && (horizon.getTexturesId()<0) && (horizon.getResistenciasRompimientoId()<0)) {
-                if ((horizon.getNumeroHorizonteHorRas()!=null && horizon.getNumeroHorizonteHorRas()>0) && (horizon.getEspesorHorRas()!=null && horizon.getEspesorHorRas()>0) && (horizon.getColorSecoHorRas()!=null && horizon.getColorSecoHorRas()>0) && (horizon.getColorHumedoHorRas()!=null && horizon.getColorHumedoHorRas()>0) && (horizon.getTextures()!=null) && (horizon.getResistenciasRompimiento()!=null)) {
+                if ((horizon.getNumeroHorizonteHorRas()!=null && horizon.getNumeroHorizonteHorRas()>0) && (horizon.getEspesorHorRas()!=null && horizon.getEspesorHorRas()>0) && ((horizon.getColorSecoHorRas()!=null && horizon.getColorSecoHorRas()>0) || (horizon.getColorHumedoHorRas()!=null && horizon.getColorHumedoHorRas()>0)) && (horizon.getTextures()!=null) && (horizon.getResistenciasRompimiento()!=null)) {
                     entry = false;					
                 }
 //                System.out.println("horizon.getColorSecoHorRas()->"+horizon.getColorSecoHorRas());
@@ -794,17 +818,24 @@ public class ActionRasta extends BaseAction {
             }
 
             if (entry) {
-//                cont = 1;
-//                for (HorizontesRasta horizon : additionalsAtrib) {
-                for (int i=0; i<=additionalsAtrib.size(); i++) {                    
+                int i = 0;
+                for (HorizontesRasta horizon : additionalsAtrib) {
+//                for (int i=0; i<=additionalsAtrib.size(); i++) {                                    
                     addFieldError("additionalsAtrib["+i+"].numeroHorizonteHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].espesorHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].colorHumedoHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].textures", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "Dato invalido");            
+                    addFieldError("additionalsAtrib["+i+"].espesorHorRas", "");
+//                    System.out.println("tamaño=>"+additionalsAtrib.size());
+                    if (additionalsAtrib.size()>0) {
+//                        HorizontesRasta horizon = additionalsAtrib.get(i);
+                        if (horizon.getColorHumedoHorRas()==null && horizon.getColorSecoHorRas()==null) {
+                            addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "");
+                            addFieldError("additionalsAtrib["+i+"].colorHumedoHorRas", "");
+                        }
+                    }
+                    addFieldError("additionalsAtrib["+i+"].textures", "");
+                    addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "");            
 //                    $fails[] = $prefix.'horizontes_'.$index.'_num_horizonte';				
 //                    cont++;
+                    i++;
                 }
                 addActionError("Se debe ingresar por lo menos algun horizonte");    
             }
@@ -812,11 +843,11 @@ public class ActionRasta extends BaseAction {
             if (sumEspesor>150) {
                 for (int i=0; i<=additionalsAtrib.size(); i++) {
                     addFieldError("additionalsAtrib["+i+"].numeroHorizonteHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].espesorHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].colorHumedoHorRas", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].textures", "Dato invalido");
-                    addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "Dato invalido");         		
+                    addFieldError("additionalsAtrib["+i+"].espesorHorRas", "");
+                    addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "");
+                    addFieldError("additionalsAtrib["+i+"].colorHumedoHorRas", "");
+                    addFieldError("additionalsAtrib["+i+"].textures", "");
+                    addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "");         		
                 }
                 addActionError("Se debe ingresar espesores de maximo 150 centimetros");   
             }
@@ -865,6 +896,34 @@ public class ActionRasta extends BaseAction {
         return SUCCESS;
     }
     
+    private String name_agronomist;
+    private String selectAllname_agronomist;
+    private String selectItemname_agronomist;      
+
+    public String getName_agronomist() {
+        return name_agronomist;
+    }
+
+    public void setName_agronomist(String name_agronomist) {
+        this.name_agronomist = name_agronomist;
+    }  
+
+    public String getSelectAllname_agronomist() {
+        return selectAllname_agronomist;
+    }
+
+    public void setSelectAllname_agronomist(String selectAllname_agronomist) {
+        this.selectAllname_agronomist = selectAllname_agronomist;
+    }
+
+    public String getSelectItemname_agronomist() {
+        return selectItemname_agronomist;
+    }
+
+    public void setSelectItemname_agronomist(String selectItemname_agronomist) {
+        this.selectItemname_agronomist = selectItemname_agronomist;
+    }
+    
     /**
      * Encargado de buscar las coincidencias de un formulario de busqueda, para cada una de los
      * rastas registrados a un usuario
@@ -880,12 +939,24 @@ public class ActionRasta extends BaseAction {
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
-        if(selected==null) selected="rasta";
+        String selAll = "false";
+        if(selected==null) {
+            selected="rasta";
+            selAll = "true";
+        }       
+        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
         
         additionals = new HashMap();
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
-        
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        list_agronomist   = assDao.gelAllAgronomist(idEntSystem);
 //        if (searchFromSoil!=null && searchFromSoil==2) {
 //            num_rasta = date = pendant = altitude = latitude = length = ground = position = ph = carbonates = search_soil;            
 //        } else if(searchFromSoil!=null && searchFromSoil==1) {
@@ -922,6 +993,43 @@ public class ActionRasta extends BaseAction {
         return SUCCESS;
     }
     
+    /**
+     * Bloque correspondiente al tratamiento de creacion y lectura de archivos
+     *
+     */    
+    private InputStream inputStream;   
+    
+    public InputStream getInputStream() {  
+        return inputStream;  
+    }  
+  
+    public void setInputStream(InputStream inputStream) {  
+        this.inputStream = inputStream;  
+    }
+    
+    public String getReport() throws Exception {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        
+        String selAll = "false";        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
+        
+        HashMap findParams = new HashMap();
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        findParams.put("idEntUser", idEntSystem);
+        String fileName  = "/var/www/document/rastasInfo.csv";
+        rastaDao.getRastas(findParams, fileName);
+  
+        File f = new File(fileName);  
+        inputStream = new FileInputStream(f);  
+        return "OUTPUTCSV"; 
+    }    
 
     /**
      * Encargado de mostrar en un formulario la informacion de un rasta apartir de la identificacion
@@ -1055,6 +1163,7 @@ public class ActionRasta extends BaseAction {
                     horizon.setRastas(rasta);
     //                horizon.setResistenciasRompimiento(new ResistenciasRompimiento(horizon.getResistenciasRompimientoId()));
     //                horizon.setTextures(new Textures(horizon.getTexturesId()));
+                    horizon.setStatus(true);
                     session.saveOrUpdate(horizon);
                     numCaj++;
                 }

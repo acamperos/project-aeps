@@ -1,5 +1,9 @@
 package org.aepscolombia.platform.models.dao;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -155,19 +159,38 @@ public class FarmsDao
         List<HashMap> result = new ArrayList<HashMap>();
         
         String sql = "";       
+        String entType = String.valueOf(args.get("entType"));
         sql += "select fp.id_producer_far_pro, f.id_far, e.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
         sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status, ";
-        sql += " e.entity_type_ent, le.date_log_ent";
+        sql += " e.entity_type_ent,";
+        if (entType.equals("3")) {
+            sql += " le.date_log_ent, entLe.name_ent as nameAgro";
+        } else {
+            sql += " le.date_log_ent";
+        }
         sql += " from farms f";
         sql += " inner join municipalities m on (m.id_mun=f.id_municipipality_far)";
         sql += " inner join departments dep on (dep.id_dep=m.id_department_mun)";
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
+        if (entType.equals("3")) {
+            sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
+            sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
         sql += " inner join farms_producers fp on fp.id_farm_far_pro=f.id_far"; 
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " where f.status=1 and e.status=1";
-        if (args.containsKey("idEntUser")) {
+        
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            String selAll  = String.valueOf(args.get("selAll"));
+            if (selAll.equals("true")) {
+                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+            } else {
+                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+            }
         }
         
         if (args.containsKey("search_farm")) {
@@ -283,6 +306,9 @@ public class FarmsDao
                 temp.put("status", data[16]);
                 temp.put("typeEnt", data[17]);
                 temp.put("dateLog", data[18]);
+                if (entType.equals("3")) {
+                    temp.put("nameAgro", data[19]);
+                }
                 result.add(temp);
             }
 //            System.out.println(result);
@@ -307,6 +333,7 @@ public class FarmsDao
         Object[] events = null;
         Transaction tx  = null;
         Integer result  = 0;
+        String entType = String.valueOf(args.get("entType"));
         
         String sql = "";       
         sql += "select count(f.id_far), f.name_far";
@@ -315,9 +342,16 @@ public class FarmsDao
         sql += " inner join producers p on p.id_pro=fp.id_producer_far_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " inner join log_entities le on le.id_object_log_ent=f.id_far and le.table_log_ent='farms' and le.action_type_log_ent='C'";   
+        if (entType.equals("3")) {
+            sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
+            sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
         sql += " where f.status=1 and e.status=1";
-        if (args.containsKey("idEntUser")) {
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            sql += " and ass.id_entity_asc="+args.get("idEntUser");
         }
         try {
             tx = session.beginTransaction();
@@ -449,5 +483,114 @@ public class FarmsDao
         } finally {
             session.close();
         }
+    }
+    
+    public void getFarms(HashMap args, String fileName) 
+    {        
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> events = null;
+        Transaction tx = null;  
+
+        String sql = "";
+        String entType = String.valueOf(args.get("entType"));
+        
+        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, f.name_far as FINCA,";
+        sql += "f.address_far as DIRECCION, f.latitude_far as LATITUD, f.longitude_far as LONGITUD, f.altitude_far as ALTITUD, f.area_far as AREA, m.name_mun as MUNICIPIO";
+        sql += " from farms f";
+        sql += " inner join farms_producers fp on f.id_far = fp.id_farm_far_pro";
+        sql += " inner join producers p on p.id_pro = fp.id_producer_far_pro";
+        sql += " inner join entities ent on ent.id_ent = p.id_entity_pro";
+        sql += " inner join municipalities m on m.id_mun  = f.id_municipipality_far";
+        sql += " inner join departments d on d.id_dep=m.id_department_mun";
+        sql += " left join log_entities le on le.id_object_log_ent = f.id_far AND le.table_log_ent = 'farms'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.ID_ENT";
+        if (entType.equals("3")) {
+            sql += " inner join extension_agents ext on (ext.id_entity_ext_age=e.id_ent)";
+            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
+        sql += " where le.action_type_log_ent = 'C'";
+        sql += " and f.status=1 and ent.status=1";
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            String selAll  = String.valueOf(args.get("selAll"));
+            if (selAll.equals("true")) {
+                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+            } else {
+                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+            }
+        }
+        sql += " and le.id_object_log_ent not in (";
+        sql += "	select le.id_object_log_ent from log_entities le ";
+        if (entType.equals("3")) {
+            sql += "	inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
+            sql += "	inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += "	inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
+        sql += "	where le.action_type_log_ent = 'D' AND le.table_log_ent = 'farms'";
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            String selAll  = String.valueOf(args.get("selAll"));
+            if (selAll.equals("true")) {
+                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+            } else {
+                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+            }
+        }
+        sql += ")";
+        sql += " order by e.name_ent";
+
+//        System.out.println("sql=>"+sql);
+        try {
+            tx = session.beginTransaction();
+            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            Query query  = session.createSQLQuery(sql);
+            events = query.list();  
+        
+            String[] val = {
+                "USUARIO",
+                "PRODUCTOR",
+                "CEDULA",
+                "FINCA",
+                "DIRECCION",
+                "LATITUD",
+                "LONGITUD",
+                "ALTITUD",
+                "AREA",
+                "MUNICIPIO"
+            };
+            writer.writeNext(val);
+            for (Object[] data : events) {
+                String[] valTemp = {
+                    String.valueOf(data[0]),
+                    String.valueOf(data[1]),
+                    String.valueOf(data[2]),
+                    String.valueOf(data[3]),
+                    String.valueOf(data[4]),
+                    String.valueOf(data[5]),
+                    String.valueOf(data[6]),
+                    String.valueOf(data[7]),
+                    String.valueOf(data[8]),
+                    String.valueOf(data[9])
+                };
+                writer.writeNext(valTemp);
+            }
+            writer.close();
+//            stmt   = con.prepareStatement(sql);     
+//            result = stmt.executeQuery();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (IOException ex) {
+//            Logger.getLogger(FarmsDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            session.close();
+        }
+//        return result;
     }
 }

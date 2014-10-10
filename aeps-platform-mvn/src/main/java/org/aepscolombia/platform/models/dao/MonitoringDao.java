@@ -112,9 +112,15 @@ public class MonitoringDao
         String sql = "";     
         String sqlAdd = "";     
                       
-        sql += "select m.id_mon, m.date_mon, m.monitor_pests_mon, m.monitor_diseases_mon, m.monitor_weeds_mon from monitoring m";    
+        sql += "select m.id_mon, m.date_mon, m.monitor_pests_mon, m.monitor_diseases_mon, m.monitor_weeds_mon,";    
+        sql += "pe.name_pes, de.name_dis, we.name_wee, m.percentage_impact_pest_mon, m.percentage_impact_disease_mon, m.percentage_impact_weed_mon,";    
+        sql += "m.other_pest_mon, m.other_disease_mon,";    
+        sql += "m.otro_weed_mon from monitoring m";    
         sql += " inner join production_events ep on m.id_production_event_mon=ep.id_pro_eve"; 
         sql += " inner join log_entities le on le.id_object_log_ent=m.id_mon and le.table_log_ent='monitoring' and le.action_type_log_ent='C'"; 
+        sql += " left join pests pe on pe.id_pes=m.id_pest_mon and pe.status_pes=1"; 
+        sql += " left join diseases de on de.id_dis=m.id_disease_mon and de.status_dis=1"; 
+        sql += " left join weeds we on we.id_wee=m.id_weed_mon and we.status_wee=1"; 
         sql += " where m.status=1 and ep.status=1";
         if (args.containsKey("idEvent")) {
             sql += " and m.id_production_event_mon="+args.get("idEvent");
@@ -146,23 +152,43 @@ public class MonitoringDao
                 temp.put("monPets", data[2]);             
                 temp.put("monDis", data[3]);                
                 temp.put("monWee", data[4]);
+                temp.put("namePets", "");
+                temp.put("nameDis", "");
+                temp.put("nameWee", "");
+                temp.put("perPets", "");
+                temp.put("perDis", "");
+                temp.put("perWee", "");
                 String valPet = String.valueOf(temp.get("monPets"));
                 String valDis = String.valueOf(temp.get("monDis"));
-                String valWee = String.valueOf(temp.get("monWee"));
+                String valWee = String.valueOf(temp.get("monWee"));                
+                
+                String pest    = String.valueOf(data[5]);
+                String disease = String.valueOf(data[6]);
+                String weed    = String.valueOf(data[7]);                
+                if (pest.equals("")) pest = String.valueOf(data[11]);
+                if (disease.equals("")) disease = String.valueOf(data[12]);
+                if (weed.equals("")) weed = String.valueOf(data[13]);                           
+                
                 if (valPet.equals("true")) {
-                    temp.put("monDesPet", "Si");        
+                    temp.put("monDesPet", "Si");
+                    temp.put("namePets", pest);
+                    temp.put("perPets", data[8]);
                 } else {
                     temp.put("monDesPet", "No");        
                 }
                 
                 if (valDis.equals("true")) {
-                    temp.put("monDesDis", "Si");        
+                    temp.put("monDesDis", "Si");  
+                    temp.put("nameDis", disease);
+                    temp.put("perDis", data[9]);
                 } else {
                     temp.put("monDesDis", "No");        
                 }
                 
                 if (valWee.equals("true")) {
-                    temp.put("monDesWee", "Si");        
+                    temp.put("monDesWee", "Si");  
+                    temp.put("nameWee", weed);
+                    temp.put("perWee", data[10]);
                 } else {
                     temp.put("monDesWee", "No");        
                 }

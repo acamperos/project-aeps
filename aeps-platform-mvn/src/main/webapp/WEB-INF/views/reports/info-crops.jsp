@@ -4,7 +4,7 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
@@ -14,7 +14,7 @@
 
 <s:if test="listCrops.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>            
 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
 <% int countTotal = Integer.parseInt(String.valueOf(request.getAttribute("countTotal")));%>

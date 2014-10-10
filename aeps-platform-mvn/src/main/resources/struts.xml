@@ -51,7 +51,7 @@
         </action>
         
         <action name="localeLogin" class="org.aepscolombia.platform.controllers.LocaleAction">
-            <result>/WEB-INF/views/login/login.jsp</result>
+            <result>/WEB-INF/views/login/login.jsp</result>            
         </action>
         
         <action name="localePrivate" class="org.aepscolombia.platform.controllers.LocaleAction">
@@ -266,7 +266,17 @@
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <!--<interceptor-ref name="defaultStackAeps"/>-->
             <result name = "states" type="json"></result>
-        </action>        
+        </action>   
+        <action name="getReportProducer" method="getReport" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <!--<interceptor-ref name="defaultStackAeps"/>-->  
+            <result name="OUTPUTCSV" type="stream">  
+                <param name="inputName">inputStream</param>  
+                <param name="contentType">application/csv</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
+                <param name="contentCharSet">charset=shift-jis</param>  
+            </result>  
+        </action>     
     </package>
     
     <package name="farm" extends="principal,producer,json-default" namespace="/">       
@@ -320,6 +330,16 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>
+        <action name="getReportFarm" method="getReport" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <!--<interceptor-ref name="defaultStackAeps"/>-->  
+            <result name="OUTPUTCSV" type="stream">  
+                <param name="inputName">inputStream</param>  
+                <param name="contentType">application/csv</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
+                <param name="contentCharSet">charset=shift-jis</param>  
+            </result>  
+        </action>
     </package>
     
     <package name="field" extends="principal,farm,producer,json-default" namespace="/"> 
@@ -370,7 +390,17 @@
         <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
-        </action>       
+        </action>     
+        <action name="getReportField" method="getReport" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <!--<interceptor-ref name="defaultStackAeps"/>-->  
+            <result name="OUTPUTCSV" type="stream">  
+                <param name="inputName">inputStream</param>  
+                <param name="contentType">application/csv</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
+                <param name="contentCharSet">charset=shift-jis</param>  
+            </result>  
+        </action>  
     </package>
     
     <package name="soil" extends="principal,struts-default,json-default" namespace="/soil">
@@ -413,7 +443,17 @@
         <action name="deleteSoil" method="delete" class="org.aepscolombia.platform.controllers.ActionRasta">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
-        </action>     
+        </action> 
+        <action name="getReportSoil" method="getReport" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <!--<interceptor-ref name="defaultStackAeps"/>-->  
+            <result name="OUTPUTCSV" type="stream">  
+                <param name="inputName">inputStream</param>  
+                <param name="contentType">application/csv</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
+                <param name="contentCharSet">charset=shift-jis</param>  
+            </result>  
+        </action>    
 <!--        <action name="getReportSoil" method="getReportRasta" class="org.aepscolombia.platform.controllers.ActionRasta">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>      
@@ -487,6 +527,16 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>     
+        <action name="getReportCrop" method="getReport" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <!--<interceptor-ref name="defaultStackAeps"/>-->  
+            <result name="OUTPUTCSV" type="stream">  
+                <param name="inputName">inputStream</param>  
+                <param name="contentType">application/csv</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
+                <param name="contentCharSet">charset=shift-jis</param>  
+            </result>  
+        </action>   
     </package>
     <package name="reportpackage" extends="principal,struts-default,json-default" namespace="/">        
         <action name="listCropRep" method="search" class="org.aepscolombia.platform.controllers.ActionCrop">
@@ -513,7 +563,7 @@
             <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/reports/info-soil.jsp</result>
         </action>
-        <action name="getReport" method="getReport" class="org.aepscolombia.platform.controllers.ActionReport">
+        <action name="getReportPro" method="getReport" class="org.aepscolombia.platform.controllers.ActionReport">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>      
             <result name = "reportBox">/WEB-INF/views/reports/production_reportAgro.jsp</result>

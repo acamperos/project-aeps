@@ -39,6 +39,18 @@
                         </div>       
                     </div>
                     <div class="row">
+                        <div class="span5">
+                            <div class="control-group">
+                                <label for="formCropFer_fer_amountProductUsedFer" class="control-label req">
+                                    Cantidad de producto (kg/ha):
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="fer.amountProductUsedFer" />
+                                </div>                         
+                            </div>                          
+                        </div>
+                    </div>
+                    <div class="row">
                         <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
                         <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
                         <div class="span5">

@@ -4,17 +4,19 @@
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
-<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
-<% UsersDao usrDao = new UsersDao(); %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<% Users userFar  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrFarDao = new UsersDao(); %>
+<% Integer entTypeFarId = new EntitiesDao().getEntityTypeId(userFar.getIdUsr()); %>
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
 
 <s:if test="listProperties.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>
 <%-- <% int pos = request.getParameter("additionals").indexOf("selected"); %> --%>
 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
@@ -37,14 +39,16 @@
 %>    
 <div class="msgWin" id="messageWin"></div>
 <div id="divFarms" class="w-box">
-    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/create")) { %>
-        <% if (value.equals("property")) {%>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', 'Crear Finca', 1050, 550)">
-                <i class="icon-plus"></i> Agregar finca
-            </button>
+    <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/create")) { %>
+        <% if (entTypeFarId!=3) { %>    
+            <% if (value.equals("property")) {%>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', 'Crear Finca', 1050, 550)">
+                    <i class="icon-plus"></i> Agregar finca
+                </button>
+            <% } %>
         <% } %>
     <% } %>
-    <table class="table table-bordered table-hover" style="<%= table%>" id='tblFarms'>
+    <table class="table table-bordered table-hover" style="<%= table%> max-width: 100%" id='tblFarms'>
         <thead>
             <tr>
                 <% if (value != "property") {%>
@@ -53,6 +57,9 @@
                     <% }%>
                 <% }%>
                 <!-- <th>#</th> -->
+                <% if (entTypeFarId==3) { %>    
+                    <th>Agronomo</th>
+                <% } %>
                 <th>Nombre</th>
                 <th>Vereda</th>
                 <th>Indicación (Como llegar)</th>
@@ -62,7 +69,7 @@
                 <th>Longitud</th>
                 <th>Altura</th>
                 <th>Fecha de creación</th>                                
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/delete"))) { %>
+                <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/modify") || (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete"))) { %>
                     <% if (value.equals("property") || value == "property") { %>
                         <th>Accion</th>
                     <% }%>
@@ -84,7 +91,7 @@
                 <%--<s:else>--%>
                 <!--<tr id="trPropertys:property value="id_finca" />">-->
                 <%--</s:else>--%>
-                <tr id="trProperty<s:property value="id_farm" />" onclick="<%= action%>">
+                <tr id="trProperty<s:property value="id_farm" />" class="selectVal" onclick="<%= action%>">
                     <%@ include file="row-farm.jsp" %>
                 </tr>
             </s:iterator>

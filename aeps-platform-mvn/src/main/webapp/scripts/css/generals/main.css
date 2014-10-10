@@ -35,6 +35,62 @@
     width: 16px;*/
 }
 
+.icon-extdra {
+    background: url("../../../img/drenaje-externo.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-intdra {
+    background: url("../../../img/drenaje-interno.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-struct {
+    background: url("../../../img/estructura.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-expose {
+    background: url("../../../img/exposicion-solar.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-ph {
+    background: url("../../../img/PH.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-producer {
+    background: url("../../../img/productor.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-depth {
+    background: url("../../../img/profundidad-efectiva.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
+.icon-cover {
+    background: url("../../../img/recubrimiento-del-lote.png") center center no-repeat !important;    
+    height: 25px !important; 
+    width: 25px !important; 
+    display: inline-block !important;
+}
+
 .ui-spinner {
     width: 100px !important;
 }
@@ -150,7 +206,11 @@ li {
 }
 
 img, tr {
-    cursor: pointer;
+    /*cursor: pointer;*/
+}
+
+.selectVal {
+    cursor: pointer;    
 }
 
 .titleOptions {
@@ -498,6 +558,16 @@ form {
 
 .main-color {
     color: #68AF23;
+}
+
+.mapAdv {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.mapAdv:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
 }
 
 #menu {padding-top:15px}

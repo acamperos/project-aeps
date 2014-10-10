@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users userPrp  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrPrpDao = new UsersDao(); %>
+<% Integer entTypePrpId = new EntitiesDao().getEntityTypeId(userPrp.getIdUsr()); %>
 
 <s:if test="listPrep.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>            
 
 <div class="msgWin" id="divMessListPrep"></div>
@@ -22,9 +24,11 @@
     <fieldset>
         <legend>Lista de preparaciones</legend>
         <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showPrep.action?action=create', 'idCrop', '${idCrop}', 'Crear Preparación', 1050, 550);">
-                <i class="icon-plus"></i> Agregar Preparación
-            </button>
+            <% if (entTypePrpId!=3) { %>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showPrep.action?action=create', 'idCrop', '${idCrop}', 'Crear Preparación', 1050, 550);">
+                    <i class="icon-plus"></i> Agregar Preparación
+                </button>
+            <% } %>
         <% } %>
         <table class="table table-bordered table-hover" style="<%= table %>" id='tblPrep'>
             <thead>

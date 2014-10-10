@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String tableCon = "display:none";%>
+<% String tableCon = "display:none;";%>
 <% String labelCon = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users userPro  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrProDao = new UsersDao(); %>
+<% Integer entTypeProId = new EntitiesDao().getEntityTypeId(userPro.getIdUsr()); %>
 
 <s:if test="listCont.size() > 0">
     <% tableCon = "";%>
-    <% labelCon = "display:none";%> 
+    <% labelCon = "display:none;";%> 
 </s:if>            
 
 <div class="msgWin" id="divMessListCon"></div>
@@ -22,9 +24,11 @@
     <fieldset>
         <legend>Lista de controles</legend>
         <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCon.action?action=create', 'idCrop', '${idCrop}', 'Crear Control', 1050, 550);">
-                <i class="icon-plus"></i> Agregar Control
-            </button>
+            <% if (entTypeProId!=3) { %>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCon.action?action=create', 'idCrop', '${idCrop}', 'Crear Control', 1050, 550);">
+                    <i class="icon-plus"></i> Agregar Control
+                </button>
+            <% } %>
         <% } %>
         <table class="table table-bordered table-hover" style="<%= tableCon %>" id='tblCon'>
             <thead>

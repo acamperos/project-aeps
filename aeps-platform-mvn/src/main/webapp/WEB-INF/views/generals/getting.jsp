@@ -104,7 +104,7 @@
                             <div class="caption">
                                 <h3>Clima</h3>
                                 <p>Registre aqui información de clima de su finca si cuenta con equipos o datos meteorológicos</p>
-                                <h3>En Construcción!!!</h3>
+                                <h4>En Construcción!!!</h4>
                             </div>
                         </div>
                     <% } %>

@@ -4,11 +4,26 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.aepscolombia.platform.models.dao.AssociationDao;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.FarmsDao;
 
@@ -17,6 +32,7 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.FieldTypesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Entities;
 
@@ -26,6 +42,7 @@ import org.aepscolombia.platform.models.entity.FieldTypes;
 import org.aepscolombia.platform.models.entity.FieldsProducers;
 import org.aepscolombia.platform.models.entity.FieldsProducersId;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
 
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -74,6 +91,8 @@ public class ActionField extends BaseAction {
     private Integer searchFromField;
     private String search_field;
     private UsersDao usrDao;
+    private List<Entities> list_agronomist;
+    private AssociationDao assDao;
 
     
     //Metodos getter y setter por cada variable del formulario 
@@ -95,6 +114,22 @@ public class ActionField extends BaseAction {
     public void setSearchFromField(Integer searchFromField) {
         this.searchFromField = searchFromField;
     }
+
+    public List<Entities> getList_agronomist() {
+        return list_agronomist;
+    }
+
+    public void setList_agronomist(List<Entities> list_agronomist) {
+        this.list_agronomist = list_agronomist;
+    }
+
+    public AssociationDao getAssDao() {
+        return assDao;
+    }
+
+    public void setAssDao(AssociationDao assDao) {
+        this.assDao = assDao;
+    }   
 
     public String getSearch_field() {
         return search_field;
@@ -355,6 +390,7 @@ public class ActionField extends BaseAction {
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
+        assDao = new AssociationDao();
     }
     
     private Map fieldError;
@@ -568,6 +604,34 @@ public class ActionField extends BaseAction {
         type_property_lot = eventDao.findAll();
         return "combo";
     } 
+    
+    private String name_agronomist;
+    private String selectAllname_agronomist;
+    private String selectItemname_agronomist;      
+
+    public String getName_agronomist() {
+        return name_agronomist;
+    }
+
+    public void setName_agronomist(String name_agronomist) {
+        this.name_agronomist = name_agronomist;
+    }  
+
+    public String getSelectAllname_agronomist() {
+        return selectAllname_agronomist;
+    }
+
+    public void setSelectAllname_agronomist(String selectAllname_agronomist) {
+        this.selectAllname_agronomist = selectAllname_agronomist;
+    }
+
+    public String getSelectItemname_agronomist() {
+        return selectItemname_agronomist;
+    }
+
+    public void setSelectItemname_agronomist(String selectItemname_agronomist) {
+        this.selectItemname_agronomist = selectItemname_agronomist;
+    }
 
     /**
      * Encargado de buscar las coincidencias de un formulario de busqueda, para cada una de los
@@ -585,11 +649,23 @@ public class ActionField extends BaseAction {
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
         viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
-        if(selected==null) selected="lot";
+        String selAll = "false";
+        if(selected==null) {
+            selected="lot";
+            selAll = "true";
+        }       
+        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
         additionals = new HashMap();
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
-        
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        list_agronomist   = assDao.gelAllAgronomist(idEntSystem);
         if(searchFromField!=null && searchFromField==2) {
             search_field = "";
         }
@@ -612,7 +688,6 @@ public class ActionField extends BaseAction {
         }
         findParams.put("pageNow", pageReq);
         findParams.put("maxResults", this.getMaxResults());
-//        FarmsDao eventDao = new FarmsDao();
         listLot = lotDao.findByParams(findParams);
 //        this.setCountTotal(100);
         this.setCountTotal(Integer.parseInt(String.valueOf(listLot.get(0).get("countTotal"))));
@@ -620,6 +695,44 @@ public class ActionField extends BaseAction {
         listLot.remove(0);
 //        System.out.println("countTotal->"+this.getCountTotal());
         return SUCCESS;
+    }
+    
+    /**
+     * Bloque correspondiente al tratamiento de creacion y lectura de archivos
+     *
+     */    
+    private InputStream inputStream;   
+    
+    public InputStream getInputStream() {  
+        return inputStream;  
+    }  
+  
+    public void setInputStream(InputStream inputStream) {  
+        this.inputStream = inputStream;  
+    }
+    
+    public String getReport() throws Exception {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "field/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        
+        String selAll = "false";        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
+        
+        HashMap findParams = new HashMap();
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        findParams.put("idEntUser", idEntSystem);
+        String fileName  = "/var/www/document/fieldsInfo.csv";
+        lotDao.getFields(findParams, fileName);
+  
+        File f = new File(fileName);  
+        inputStream = new FileInputStream(f);  
+        return "OUTPUTCSV"; 
     }
 
     /**
@@ -704,7 +817,7 @@ public class ActionField extends BaseAction {
         Double areaLot = null;
         if (!area_lot.isEmpty()) {
             areaLot = Double.parseDouble(area_lot.replace(',','.'));
-        }
+        }       
 //        Double altLot = Double.parseDouble(altitude_lot);
 //        Double latLot = Double.parseDouble(latitude_lot);
 //        Double lonLot = Double.parseDouble(length_lot);
@@ -786,6 +899,58 @@ public class ActionField extends BaseAction {
             log.setActionTypeLogEnt(action);
             session.saveOrUpdate(log);
 //            logDao.save(log);            
+            
+            /*
+            "85": "Finca asociada" => Seleccion (solo dato seleccionado) => farmId
+            "86": "Seleccione el tipo de lote" => Seleccion => typeField
+            "87": "Nombre de Lote" => nameField
+            "88": "-30.9866133,-64.10017753,596" Capturar posicion => lat, lng, alt
+            "89": "Área del Lote" => areaField
+            */
+            
+            //Manejo para ingresar datos en MongoDB
+            /*SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+
+            HashMap valInfo = new HashMap();
+            valInfo.put("fieldId", lot.getIdFie());
+            valInfo.put("farmId", idFarm);
+            valInfo.put("nameFarm", String.valueOf(objFarm.get("name_farm")));
+            valInfo.put("typeField", typeLot);
+            valInfo.put("nameField", name_lot);
+            valInfo.put("lat", latLot);
+            valInfo.put("lng", lonLot);
+            valInfo.put("alt", altLot);
+            valInfo.put("areaField", areaLot);
+            valInfo.put("userMobileId", sfUser.getId());      
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", '"'+lot.getIdFie()+'"');
+            query.put("form_id", "5");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+
+            DBCursor cursor    = col.find(query);
+            WriteResult result = null;
+            BasicDBObject jsonField = null;
+            jsonField          = GlobalFunctions.generateJSONProducer(valInfo);
+            
+            if (cursor.count()>0) {
+                result = col.update(query, jsonField);
+            } else {
+                result = col.insert(jsonField);
+            }
+            
+            if (!result.getError().equals("")) {
+                throw new HibernateException("");
+            }*/
             
             tx.commit();           
             state = "success";

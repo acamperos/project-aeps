@@ -4,11 +4,31 @@
 var objResult;
 
 function gd(year, month, day) {
-    return new Date(year, month, day).getTime();
+    return new Date(month+"/"+day+"/"+year).getTime();
 }
 			
 function chargeInfographic() {			
-    var dataTemp	 = eval(objResult.values);
+//    var dataTemp	 = [[gd(2013,7,30), 5384.0],[gd(2014,2,2), 9060.0]];
+//    var dataTemp	 = [[1375160400000, 5384.0],[1391317200000, 9060.0]];
+    var dataTemp = eval(objResult.values);
+    /*var dataTemp = [
+                    [new Date('11/08/2012').getTime(),1200],
+                    [new Date('11/09/2012').getTime(),1400],
+                    [new Date('11/10/2012').getTime(),1500],
+                    [new Date('11/11/2012').getTime(),1285],
+                    [new Date('11/12/2012').getTime(),1340],
+                    [new Date('11/13/2012').getTime(),1421],
+                    [new Date('11/14/2012').getTime(),1212],
+                    [new Date('11/15/2012').getTime(),1408],
+                    [new Date('11/16/2012').getTime(),1567],
+                    [new Date('11/17/2012').getTime(),1238],
+                    [new Date('11/18/2012').getTime(),1340],
+                    [new Date('11/19/2012').getTime(),1401],
+                    [new Date('11/20/2012').getTime(),1491],
+                    [new Date('11/21/2012').getTime(),1510]
+                ];
+//    var dataTemp	 = [["2013/06/26", 7811.0]];*/
+//    alert(dataTemp)
 //    $.each(objResult.values, function(index, info) {
 //        var pos = index+1;
 //        if (index!=(objResult.values.length-1)) {
@@ -17,7 +37,8 @@ function chargeInfographic() {
 //            dataTemp += '{ label: "'+pos+'", data: '+info.point+', color: "'+info.color+'" }]';	
 //        }
 //    });
-
+//    for (var i = 0; i < dataTemp.length; ++i) {dataTemp[i][0] += 60 * 120 * 1000};
+//    alert(new Date('7/30/2013').getTime())
     var dataset = [{ label: "Rendimientos", data: dataTemp}];
     var options = {
         series: {
@@ -32,25 +53,31 @@ function chargeInfographic() {
         },
         xaxis: {
             mode: "time",
-            tickSize: [1, "month"],
-            tickLength: 0,
+            tickSize: [30, "day"],
+            timeformat: "%m/%Y",
+//            timezone: "browser", // format string to use
+//            useLocalTime: true,
+//            timeZoneOffset: (new Date()).getTimezoneOffset(),
+//            localTimezone: true,
+//            labelWidth: "40",
+//            mode: "time",
+//            tickLength: 0,
             axisLabel: "Tiempo",
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: 'Istok Web',
             axisLabelPadding: 10
         },
-        yaxes: [{
+        yaxes: {
             axisLabel: "Rendimientos",
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: 'Istok Web',
-            axisLabelPadding: 3,
-            tickFormatter: function (v, axis) {
-                return $.formatNumber(v, { format: "#,###", locale: "us" });
-            }
-        }
-      ],
+            axisLabelPadding: 3
+        },
+        zoom: {
+            interactive: true
+        },
         legend: {
             noColumns: 0,
             labelBoxBorderColor: "#000000",
@@ -67,6 +94,7 @@ function chargeInfographic() {
 
 
     var previousPoint = null, previousLabel = null;
+    var monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
     $.fn.UseTooltip = function () {
         $(this).bind("plothover", function (event, pos, item) {
@@ -78,10 +106,18 @@ function chargeInfographic() {
 
                     var x = item.datapoint[0];
                     var y = item.datapoint[1];
-
+                    
+                    var text  = eval("objResult.format[0].set"+x);
+//                    alert(text)
                     var color = item.series.color;
+                    var day   = new Date(x).getDay();
                     var month = new Date(x).getMonth();
-                    showTooltip(item.pageX, item.pageY, color, "<strong>" + x + " : <strong>" + y + "</strong>");
+                    var year  = new Date(x).getFullYear();
+                    showTooltip(item.pageX,
+                            item.pageY,
+                            color,
+                            "<strong> Rendimiento </strong><br>"+monthNames[month]+" "+text+" : <strong>"+y+"</strong>");
+//                    showTooltip(item.pageX, item.pageY, color, "<strong>" + x + " : <strong>" + y + "</strong>");
                 }
             } else {
                 $("#tooltip").remove();

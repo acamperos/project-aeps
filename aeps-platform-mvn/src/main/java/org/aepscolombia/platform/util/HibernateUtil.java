@@ -43,15 +43,15 @@ public class HibernateUtil {
     
     public static Connection getInstanceConnection() {
         if (!(conn instanceof Connection)) {
-            System.out.println("Conectando a la BD.");
+//            System.out.println("Conectando a la BD.");
             try {
                 Class.forName(dbdriver);
                 conn = DriverManager.getConnection(url, username, password);
             } catch (ClassNotFoundException ex) {
-                System.out.println(ex.getMessage());
+//                System.out.println(ex.getMessage());
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
-                System.out.println(e.getMessage());
+//                System.out.println(e.getMessage());
             }
         }
 //        System.out.println(conn);
@@ -63,13 +63,13 @@ public class HibernateUtil {
             if (conn instanceof Connection) {
                 conn.close();
                 conn = null;
-                System.out.println("Se ha cerrado la conexion de BD con exito.");
+//                System.out.println("Se ha cerrado la conexion de BD con exito.");
             }
 
         } catch (SQLException se) {
-            System.out.println(se.toString());
-            System.err.println("Se ha producido un error al cerrar la conexi�n de BD.");
-            System.err.println(se.getMessage());
+//            System.out.println(se.toString());
+//            System.err.println("Se ha producido un error al cerrar la conexi�n de BD.");
+//            System.err.println(se.getMessage());
         }
     }
 
@@ -78,7 +78,7 @@ public class HibernateUtil {
             createStatement();
             st.executeUpdate(sql);
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
+//            System.err.println("Got an exception! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -90,7 +90,7 @@ public class HibernateUtil {
             conn = DriverManager.getConnection(url, username, password);
             st = conn.createStatement();
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
+//            System.err.println("Got an exception! ");
             e.printStackTrace();
             System.exit(0);
         }
@@ -107,7 +107,7 @@ public class HibernateUtil {
 
     public static void checkData(String sql) {
         String[] starray = sql.split(" ");
-        System.out.println("\n******** Table: " + starray[starray.length - 1] + " *******");
+//        System.out.println("\n******** Table: " + starray[starray.length - 1] + " *******");
         try {
             createStatement();
             ResultSet r = st.executeQuery(sql);
@@ -155,7 +155,7 @@ public class HibernateUtil {
         divider.setCharAt(linewidth - 1, '+');
 
         // Begin the table output with a divider line
-        System.out.println(divider);
+//        System.out.println(divider);
 
         // The next line of the table contains the column labels.
         // Begin with a blank line, and put the column names and column
@@ -167,8 +167,8 @@ public class HibernateUtil {
             overwrite(line, pos, labels[i]);
             overwrite(line, colpos[i] + colwidths[i], " |");
         }
-        System.out.println(line);
-        System.out.println(divider);
+//        System.out.println(line);
+//        System.out.println(divider);
 
         while (rs.next()) {
             line = new StringBuffer(blankline.toString());
@@ -180,9 +180,9 @@ public class HibernateUtil {
                     overwrite(line, colpos[i] + colwidths[i], " |");
                 }
             }
-            System.out.println(line);
+//            System.out.println(line);
         }
-        System.out.println(divider);
+//        System.out.println(divider);
     }
 
     static void overwrite(StringBuffer b, int pos, String s) {

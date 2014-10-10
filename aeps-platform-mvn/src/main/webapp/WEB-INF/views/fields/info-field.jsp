@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String table = "display:none";%>
+<% String table = "display:none;";%>
 <% String label = "";%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
-<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
-<% UsersDao usrDao = new UsersDao(); %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<% Users userFie  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% UsersDao usrFieDao = new UsersDao(); %>
+<% Integer entTypeFieId = new EntitiesDao().getEntityTypeId(userFie.getIdUsr()); %>
 
 <s:if test="listLot.size() > 0">
     <% table = "";%>
-    <% label = "display:none";%> 
+    <% label = "display:none;";%> 
 </s:if>            
 <% int pageNow = (request.getParameter("page") != null) ? Integer.parseInt(String.valueOf(request.getParameter("page"))) : 1;%>
 <% //int pageNow     = Integer.parseInt(String.valueOf(request.getParameter("page")));  %>
@@ -41,11 +43,13 @@
 
 <div class="msgWin" id="messageWin"></div>
 <div id="divFields" class="w-box">
-    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/create")) { %>      
-        <% if (value.equals("lot")) {%>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showField.action?action=create&viewInfo=${viewInfo}', 'idField', '', 'Crear Lote', 1050, 550)">
-                <i class="icon-plus"></i> Agregar lote
-            </button>
+    <% if (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/create")) { %>   
+        <% if (entTypeFieId!=3) { %>
+            <% if (value.equals("lot")) {%>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showField.action?action=create&viewInfo=${viewInfo}', 'idField', '', 'Crear Lote', 1050, 550)">
+                    <i class="icon-plus"></i> Agregar lote
+                </button>
+            <% } %>
         <% } %>
     <% } %>
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblFields'>
@@ -57,6 +61,9 @@
                     <% }%>
                 <% }%>
                 <!-- <th>#</th> -->
+                <% if (entTypeFieId==3) { %>    
+                    <th>Agronomo</th>
+                <% } %>
                 <th>Nombre</th>
                 <th>Tipo lote</th>
                 <th>Area</th>
@@ -65,7 +72,7 @@
                 <th>Altura</th>
                 <th>Municipio</th>
                 <th>Fecha de creación</th>
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "field/delete"))) { %>                
+                <% if (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/modify") || (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/delete"))) { %>                
                     <% if (value == "lot" || value.equals("lot")) {%>
                         <th>Accion</th>
                     <% }%>
@@ -88,7 +95,7 @@
                     <% action = "selectItem('formRasta_nameField', 'formField_idField', '" + request.getAttribute("name_far") + "', '" + request.getAttribute("id_lot") + "', '" + divShow + "', '" + divHide + "')"; %>
                     <% //action += "getInfo('/GetRastasXField.action','idField','" + valId + "','divDataRastas','divMessage');";%>
                 </s:if>
-                <tr onclick="<%= action%>" id="trLot<s:property value="id_lot" />>">
+                <tr onclick="<%= action%>" class="selectVal" id="trLot<s:property value="id_lot" />>">
                     <%@ include file="row-field.jsp" %>                                
                 </tr>
             </s:iterator>

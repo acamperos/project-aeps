@@ -46,7 +46,7 @@
                                 <div class="formIngress">
                                     <% if (user != null) {%>
                                     <p style="margin-bottom:0px">Ya te encuentras registrado</p>
-                                    <a style="float: right" href="signin.action" class="btn btn-initial btn-large">Ingresar</a>
+                                    <a style="float: right" href="signin.action" class="btn btn-initial">Ingresar</a>
                                     <% } else {%>
                                     <s:url id="ingress" namespace="/" action="signin" >
                                         <%--<s:param name="request_locale" ><%= request.getParameter("lang") %></s:param>--%>                                    

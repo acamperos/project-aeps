@@ -25,7 +25,7 @@
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
-        <div id="divMessage" style="display:none"></div>
+        <div id="divMessage" style="display:none;"></div>
         <div id="login-wrapper" class="clearfix">
             <div class="main-col">
                 <!-- <img src="img/beoro.png" alt="" class="logo_img" /> -->

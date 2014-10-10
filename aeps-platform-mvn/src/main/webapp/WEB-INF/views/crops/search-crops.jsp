@@ -3,10 +3,46 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<s:actionerror theme="bootstrap"/>
-<s:actionmessage theme="bootstrap"/>
-<s:fielderror theme="bootstrap"/>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
 <s:form id="formCropSearch" action="searchCrop.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Busqueda de evento productivos">
+    <% if (entTypeId==3) { %>
+        <div class="row">
+            <div class="span5">
+                <div class="control-group">
+                    <s:label for="formCropSearch_name_agronomist" cssClass="control-label" value="Listado de agronomos:"></s:label>
+                    <s:select        
+                        multiple="multiple"
+                        name="name_agronomist" 
+                        list="list_agronomist" 
+                        listKey="idEnt" 
+                        listValue="nameEnt" 
+                    />
+                </div> 
+            </div> 
+            <div class="span0">
+                <div class="control-group">
+                    <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListCrop" onCompleteTopics="completeSearchCrop"><i class="icon-search"></i></sj:submit>
+                </div> 
+            </div> 
+            <div class="span2">
+                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportCrop.action', 'formCropSearch', 'cropsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+            </div>    
+        </div>
+        <script>
+            $("#formCropSearch_name_agronomist").multipleSelect({
+                placeholder: "---",
+                selectAllText: 'Todos',
+                allSelected: 'Todos',
+                countSelected: '# de % seleccionados',
+                noMatchesFound: 'No coincidencias encontradas'
+            });
+            $("#formCropSearch_name_agronomist").multipleSelect('checkAll');
+        </script>
+    <% } %>
     <s:hidden name="searchFromCrop" value="1"/>    
     <div class="control-group" id="searchBasicCrop">
         <!--<div class="span6">-->

@@ -3,10 +3,42 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<s:actionerror theme="bootstrap"/>
-<s:actionmessage theme="bootstrap"/>
-<s:fielderror theme="bootstrap"/>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
 <s:form id="formFieldSearch" theme="bootstrap" action="searchField.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="Buscar un lote">
+    <% if (entTypeId==3) { %>
+        <div class="row-fluid">
+            <div class="span5">
+                <s:select        
+                    label="Listado de agronomos:"
+                    multiple="multiple"
+                    name="name_agronomist" 
+                    list="list_agronomist" 
+                    listKey="idEnt" 
+                    listValue="nameEnt" 
+                />
+            </div> 
+            <div class="span1" style="padding-left: 28px">
+                <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFields" onCompleteTopics="completeField"><i class="icon-search"></i></sj:submit>
+            </div> 
+            <div class="span2">
+                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportField.action', 'formFieldSearch', 'fieldsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+            </div>
+        </div>
+        <script>
+            $("#formFieldSearch_name_agronomist").multipleSelect({
+                placeholder: "---",
+                selectAllText: 'Todos',
+                allSelected: 'Todos',
+                countSelected: '# de % seleccionados',
+                noMatchesFound: 'No coincidencias encontradas'
+            });
+            $("#formFieldSearch_name_agronomist").multipleSelect('checkAll');
+        </script>
+    <% } %>    
     <s:hidden name="searchFromField" value="1"/>    
     <div class="control-group" id="searchBasicField">
         <s:textfield cssClass="form-control" name="search_field" placeholder="Buscar" theme="simple" />

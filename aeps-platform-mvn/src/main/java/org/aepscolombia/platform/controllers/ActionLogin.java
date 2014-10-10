@@ -11,10 +11,12 @@ import java.security.NoSuchProviderException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaFactory;
 import net.tanesha.recaptcha.ReCaptchaResponse;
+import org.aepscolombia.platform.models.dao.AssociationDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
@@ -22,6 +24,7 @@ import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.dao.UserEntityDao;
 import org.aepscolombia.platform.models.dao.UsersProfilesDao;
+import org.aepscolombia.platform.models.entity.Association;
 import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Profiles;
@@ -97,7 +100,9 @@ public class ActionLogin extends BaseAction {
     private String pageLink;
     private String direction;
     private String nameAsso;
-    private String nameAssoExt;
+//    private String nameAssoExt;
+    private String idAssoExt;    
+    private List<Association> association_list;
 
     public int getTypeUser() {
         return typeUser;
@@ -114,6 +119,14 @@ public class ActionLogin extends BaseAction {
     public void setEmailUser(String emailUser) {
         this.emailUser = emailUser;
     }
+
+    public List<Association> getAssociation_list() {
+        return association_list;
+    }
+
+    public void setAssociation_list(List<Association> association_list) {
+        this.association_list = association_list;
+    }   
 
     public Integer getWorkType() {
         return workType;
@@ -155,12 +168,12 @@ public class ActionLogin extends BaseAction {
         this.nameAsso = nameAsso;
     }
 
-    public String getNameAssoExt() {
-        return nameAssoExt;
+    public String getIdAssoExt() {
+        return idAssoExt;
     }
 
-    public void setNameAssoExt(String nameAssoExt) {
-        this.nameAssoExt = nameAssoExt;
+    public void setIdAssoExt(String idAssoExt) {
+        this.idAssoExt = idAssoExt;
     }
 
     public String getCelphoneUser() {
@@ -239,6 +252,11 @@ public class ActionLogin extends BaseAction {
     public void setUser(Users user) {
         this.user = user;
     }   
+    
+    @Override
+    public void prepare() throws Exception {
+        this.setAssociation_list(new AssociationDao().findAll());
+    }
 
     /**
      * Encargado de verificar si un usuario se encuentra registrado en el sistema
@@ -596,7 +614,8 @@ public class ActionLogin extends BaseAction {
      * Metodo encargado de validar el formulario de un nuevo usuario a registrar
      */
     @Override
-    public void validate() {
+    public void validate() 
+    {
         /*
          * Se evalua dependiendo a la accion realizada:
          * 1) login: Al momento de ingresar al sistema
@@ -637,7 +656,9 @@ public class ActionLogin extends BaseAction {
             required.put("typeUser", typeUser);
             if (typeUser==1) {            
                 required.put("workType", workType);
-                if (workType==3 || workType==4 || workType==5) required.put("nameAssoExt", nameAssoExt);
+                if (workType==3 || workType==4 || workType==5) {
+                    required.put("idAssoExt", idAssoExt);
+                }
             } else if (typeUser==3) {
                 if (this.getEmailRep()!=null || !this.getEmailRep().isEmpty()) {
                     if (!ValidatorUtil.validateEmail(this.getEmailRep())) {
@@ -778,7 +799,8 @@ public class ActionLogin extends BaseAction {
      * Encargado de guardar la informacion al momento de crear un nuevo usuario
      * @return Estado del proceso
      */
-    public String saveData() {
+    public String saveData() 
+    {
         String action = "C";
 //        if (actExe.equals("save")) {
 //            action = "C";
@@ -858,12 +880,17 @@ public class ActionLogin extends BaseAction {
 //                logDao.save(logPro);
 
             } else if (this.getTypeUser() == 1) {
+                Integer idAss = Integer.parseInt(this.getIdAssoExt());
                 ExtensionAgents ext = new ExtensionAgents();
                 ext.setIdExtAge(null);
                 ext.setEntities(ent);
                 ext.setWorkTypeExtAge(new WorkTypeExtAgent(this.getWorkType()));
-                ext.setNameAssoExtAge(this.getNameAssoExt());
-                ext.setStatus(true);
+                ext.setIdAssoExtAge(new Association(idAss));
+                if (workType==3 || workType==4 || workType==5) {
+                    ext.setStatus(false);
+                } else {
+                    ext.setStatus(true);
+                }
                 session.saveOrUpdate(ext);
 
                 LogEntities logPro = new LogEntities();
@@ -876,6 +903,22 @@ public class ActionLogin extends BaseAction {
                 session.saveOrUpdate(logPro);
 //                logDao.save(logPro);
 
+            } else if (this.getTypeUser() == 3) {
+                Association asc = new Association();
+                asc.setIdAsc(null);
+                asc.setEntities(ent);
+                asc.setNameAsc(this.getNameAsso());
+                asc.setStatus(false);
+                session.saveOrUpdate(asc);
+
+                LogEntities logPro = new LogEntities();
+                logPro.setIdLogEnt(null);
+                logPro.setIdEntityLogEnt(ent.getIdEnt());
+                logPro.setIdObjectLogEnt(asc.getIdAsc());
+                logPro.setTableLogEnt("association");
+                logPro.setDateLogEnt(new Date());
+                logPro.setActionTypeLogEnt(action);
+                session.saveOrUpdate(logPro);
             }
 
             String nameUser = null;
@@ -987,6 +1030,7 @@ public class ActionLogin extends BaseAction {
                     GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation));
                     info  = "El usuario agronomo ha sido agregado con exito,<br> confirmar la inscripcion a traves de su correo";//Tener la posibilidad de enviarlo por celular
                 } else {
+                    //Enviar correo al representante del gremio o empresa privada encargado (PENDING)
                     GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()));
                     info  = "El usuario agronomo ha sido agregado con exito,<br> se envia un correo a los administradores del sistema para validar su informacion";//Tener la posibilidad de enviarlo por celular
                 }

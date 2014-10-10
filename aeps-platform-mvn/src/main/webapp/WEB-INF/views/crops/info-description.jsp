@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String tableDes = "display:none";%>
+<% String tableDes = "display:none;";%>
 <% String labelDes = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users userDes  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrDesDao = new UsersDao(); %>
+<% Integer entTypeDesId = new EntitiesDao().getEntityTypeId(userDes.getIdUsr()); %>
 
 <s:if test="listDesPro.size() > 0">
     <% tableDes = "";%>
-    <% labelDes = "display:none";%> 
+    <% labelDes = "display:none;";%> 
 </s:if>            
 
 <div class="msgWin" id="divMessListDes"></div>
@@ -22,9 +24,11 @@
     <fieldset>
         <legend>Lista de observaciones</legend>
         <% if (usrDesDao.getPrivilegeUser(userDes.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showDescrip.action?action=create', 'idCrop', '${idCrop}', 'Crear Observación', 1050, 550);">
-                <i class="icon-plus"></i> Agregar Observacion
-            </button>
+            <% if (entTypeDesId!=3) { %>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showDescrip.action?action=create', 'idCrop', '${idCrop}', 'Crear Observación', 1050, 550);">
+                    <i class="icon-plus"></i> Agregar Observacion
+                </button>
+            <% } %>
         <% } %>
         <table class="table table-bordered table-hover" style="<%= tableDes %>" id='tblDes'>
             <thead>

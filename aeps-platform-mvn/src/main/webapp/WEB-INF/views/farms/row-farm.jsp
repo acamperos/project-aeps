@@ -7,6 +7,9 @@
         <td><img src="/img/check.ico"/></td>
     <% }%>                        
 <% }%>
+<% if (entTypeFarId==3) { %>    
+    <td><s:property value="nameAgro" /></td>
+<% } %>
 <td>
     Finca: <s:property value="name_farm" />
     <s:if test="%{typeEnt!=1}">
@@ -24,14 +27,14 @@
 <td><s:property value="%{#altFarm}" /></td>
 <s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
-<% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/delete"))) { %>
+<% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/modify") || (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete"))) { %>
     <% if (value.equals("property") || value == "property") {%>
         <td>
             <div class="btn-group">
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify")) { %>
+                <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/modify")) { %>
                     <a class="btn btn-small btn-edit" title="Editar Finca" onclick="viewForm('/showFarm.action?action=modify&page=<%=pageNow%>', 'idFar', <s:property value ="id_farm" />, 'Editar Finca', 1050, 550)"><i class="icon-pencil"></i></a>
                 <% } %>
-                <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/delete")) { %>
+                <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete")) { %>
                     <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Finca" onclick="showDialogDelete(this, 'confirm_dialog_property', 'deleteFarm.action?idFar=<s:property value ="id_farm" />', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>

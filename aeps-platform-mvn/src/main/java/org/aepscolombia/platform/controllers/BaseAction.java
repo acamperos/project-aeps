@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import java.io.InputStream;
 import java.util.Map;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.util.APConstants;
@@ -44,7 +45,7 @@ public class BaseAction extends ActionSupport implements Preparable, SessionAwar
     protected boolean save;
     protected boolean next;
     protected boolean delete;
-    protected boolean cancel;
+    protected boolean cancel;    
    
 
     //Metodos getter y setter por cada boton de accion
@@ -193,7 +194,7 @@ public class BaseAction extends ActionSupport implements Preparable, SessionAwar
         return u;
     }
     
-    
+       
     /**
      * Bloque correspondiente a la sesion de un usuario
      *

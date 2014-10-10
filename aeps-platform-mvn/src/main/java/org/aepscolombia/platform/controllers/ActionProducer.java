@@ -4,13 +4,28 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import com.opensymphony.xwork2.ActionContext;
+import au.com.bytecode.opencsv.CSVWriter;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import com.opensymphony.xwork2.validator.annotations.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.net.UnknownHostException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.aepscolombia.platform.models.dao.AssociationDao;
 
 import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
 //import org.aepscolombia.plataforma.models.dao.ITiposDocumentosDao;
@@ -22,6 +37,7 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 
 import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.EntitiesTypes;
 import org.aepscolombia.platform.models.entity.DocumentsTypes;
@@ -30,7 +46,9 @@ import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.Municipalities;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.aepscolombia.platform.util.ValidatorUtil;
 import org.apache.commons.lang.StringUtils;
@@ -68,7 +86,7 @@ public class ActionProducer extends BaseAction {
     private List<Municipalities> city_producer;
     private int idProducer=0;   
     private int telephone_producer;
-    private long celphone_producer;
+    private Long celphone_producer;
     private String email_producer;
     private String identProducer;
     public List<HashMap> listProducers;
@@ -84,6 +102,8 @@ public class ActionProducer extends BaseAction {
     private String secondLastNameRep;
     private String emailRes;
     private UsersDao usrDao;
+    private List<Entities> list_agronomist;
+    private AssociationDao assDao;
     
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -240,6 +260,14 @@ public class ActionProducer extends BaseAction {
     public void setDirection_producer(String direction_producer) {
         this.direction_producer = direction_producer;
     }
+    
+    public List<Entities> getList_agronomist() {
+        return list_agronomist;
+    }
+
+    public void setList_agronomist(List<Entities> list_agronomist) {
+        this.list_agronomist = list_agronomist;
+    }  
 
     public List<Departments> getDepartment_producer() {
         return department_producer;
@@ -265,11 +293,11 @@ public class ActionProducer extends BaseAction {
         this.telephone_producer = telephone_producer;
     }
 
-    public long getCelphone_producer() {
+    public Long getCelphone_producer() {
         return celphone_producer;
     }
 
-    public void setCelphone_producer(long celphone_producer) {
+    public void setCelphone_producer(Long celphone_producer) {
         this.celphone_producer = celphone_producer;
     }
 
@@ -391,6 +419,7 @@ public class ActionProducer extends BaseAction {
         this.setCity_producer(mun);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+        assDao = new AssociationDao();
     }
 
     @Override
@@ -465,7 +494,7 @@ public class ActionProducer extends BaseAction {
                 addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
-            if (this.getCelphone_producer() == 0 && this.getTelephone_producer() == 0 && this.getEmail_producer().equals("")) {
+            if (this.getCelphone_producer() != null && this.getCelphone_producer() == 0 && this.getTelephone_producer() == 0 && this.getEmail_producer().equals("")) {
                 addFieldError("celphone_producer", "Uno de estos es obligatorio");
                 addFieldError("telephone_producer", "Uno de estos es obligatorio");
                 addFieldError("email_producer", "Uno de estos es obligatorio");
@@ -547,6 +576,34 @@ public class ActionProducer extends BaseAction {
         return "combo";
     }
     
+    private String name_agronomist;
+    private String selectAllname_agronomist;
+    private String selectItemname_agronomist;      
+
+    public String getName_agronomist() {
+        return name_agronomist;
+    }
+
+    public void setName_agronomist(String name_agronomist) {
+        this.name_agronomist = name_agronomist;
+    }  
+
+    public String getSelectAllname_agronomist() {
+        return selectAllname_agronomist;
+    }
+
+    public void setSelectAllname_agronomist(String selectAllname_agronomist) {
+        this.selectAllname_agronomist = selectAllname_agronomist;
+    }
+
+    public String getSelectItemname_agronomist() {
+        return selectItemname_agronomist;
+    }
+
+    public void setSelectItemname_agronomist(String selectItemname_agronomist) {
+        this.selectItemname_agronomist = selectItemname_agronomist;
+    }
+    
     /**
      * Encargado de buscar las coincidencias de un formulario de busqueda, para cada una de los
      * productores registrados a un usuario
@@ -566,13 +623,25 @@ public class ActionProducer extends BaseAction {
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
         viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
-        if(selected==null) selected="producer";
+        String selAll = "false";
+        if(selected==null) {
+            selected="producer";
+            selAll = "true";
+        }       
+        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
         additionals = new HashMap();
         additionals.put("selected", selected);
 //        additionals.add(mMap);
 //        this.setType_ident_producer(new DocumentsTypesDao().findAll());        
         HashMap findParams = new HashMap();
-        
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = entDao.getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        list_agronomist   = assDao.gelAllAgronomist(idEntSystem);
         if(searchFromProducer!=null && searchFromProducer==2) {
             search_producer = "";
         }
@@ -583,7 +652,7 @@ public class ActionProducer extends BaseAction {
 //                required.put("firstLastNameRep", firstLastNameRep);
 ////                required.put("secondLastNameRep", secondLastNameRep);
 //                required.put("dig_ver_producer", dig_ver_producer);
-//                required.put("emailRes", emailRes);
+//                required.put("emailRes", emailRes);        
         findParams.put("idEntUser", idEntSystem);
         findParams.put("search_producer", search_producer);
         findParams.put("nameCompany", nameCompany);
@@ -606,7 +675,7 @@ public class ActionProducer extends BaseAction {
         findParams.put("maxResults", this.getMaxResults());
         ProducersDao eventDao = new ProducersDao();
 //        System.out.println("entreeee");
-        listProducers = eventDao.findByParams(findParams);
+        listProducers     = eventDao.findByParams(findParams);        
         Integer valResult = eventDao.countData(findParams);
 //        this.setCountTotal(100);
         this.setCountTotal(Integer.parseInt(String.valueOf(listProducers.get(0).get("countTotal"))));
@@ -614,9 +683,52 @@ public class ActionProducer extends BaseAction {
         listProducers.remove(0);
 //        System.out.println("countTotal->"+this.getCountTotal());
         return SUCCESS;
+    }   
+    
+    /**
+     * Bloque correspondiente al tratamiento de creacion y lectura de archivos
+     *
+     */    
+    private InputStream inputStream;   
+    
+    public InputStream getInputStream() {  
+        return inputStream;  
+    }  
+  
+    public void setInputStream(InputStream inputStream) {  
+        this.inputStream = inputStream;  
     }
     
-//    private String action = "";
+    public String getReport() throws Exception {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        
+        String selAll = "false";        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
+        
+        HashMap findParams = new HashMap();
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = entDao.getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        findParams.put("idEntUser", idEntSystem);
+        String fileName  = "/var/www/document/producersInfo.csv";
+         
+//        CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+//        ResultSet proRes = proDao.getProducers(findParams, fileName);
+        proDao.getProducers(findParams, fileName);
+//        writer.writeAll(proRes, true);
+//        writer.writeNext(entries);  
+//        writer.close();  
+  
+        File f = new File(fileName);  
+        inputStream = new FileInputStream(f);  
+        return "OUTPUTCSV"; 
+    }
+    
 
     /**
      * Encargado de mostrar en un formulario la informacion de un productor apartir de la identificacion
@@ -769,7 +881,7 @@ public class ActionProducer extends BaseAction {
             ent.setMunicipalities(new Municipalities(Integer.parseInt(cityPro)));
 //            ent.setIdMunicipalityEnt(new Municipalities(Integer.parseInt(cityPro), new Departments(Integer.parseInt(depPro))));
             if(telephone_producer>0) ent.setPhoneEnt(telephone_producer);
-            if(celphone_producer>0) ent.setCellphoneEnt(celphone_producer);
+            if(celphone_producer!=null && celphone_producer>0) ent.setCellphoneEnt(celphone_producer);
             ent.setStatus(true);
             session.saveOrUpdate(ent);
             
@@ -807,6 +919,79 @@ public class ActionProducer extends BaseAction {
             session.saveOrUpdate(log);
 //            logDao.save(log);                   
 //            HashMap producerInfo = proDao.findById(idProducer);
+            
+            /*
+            "90": "Tipo de documento" => docType
+            "91": "Numero de documento" => docNum
+            "92": "Primer nombre" => firstName1
+            "93": "Segundo nombre" => firstName2
+            "94": "Primer apellido" => lastName1
+            "95": "Segundo apellido" => lastName2
+            "96": "Direccion" => direction
+            "99": "Telefono fijo" => phone
+            "251": "Celular" => cellphone
+            "252": "Correo electrónico" => email
+            "260": "Dígito de verificacion" => validation
+            "261": "Departamento" => department
+            "262": "Municipio (Valle del Cauca)" => municipality
+            */
+            
+            //Manejo para ingresar datos en MongoDB
+            /*SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+
+            HashMap valInfo = new HashMap();
+            valInfo.put("entId", ent.getIdEnt());
+            valInfo.put("prodId", idProducer);
+            valInfo.put("docType", typeIdent);
+            valInfo.put("docNum", ent.getDocumentNumberEnt());
+            valInfo.put("firstName1", ent.getFirstName1Ent());
+            valInfo.put("firstName2", ent.getFirstName2Ent());
+            valInfo.put("lastName1", ent.getLastName1Ent());
+            valInfo.put("lastName2", ent.getLastName2Ent());
+            valInfo.put("direction", ent.getAddressEnt());
+            valInfo.put("phone", telephone_producer);
+            valInfo.put("cellphone", celphone_producer);
+            valInfo.put("email", ent.getEmailEnt());
+            valInfo.put("validation", digVer);
+            valInfo.put("department", proData.get("id_dep"));
+            valInfo.put("municipality", cityPro);
+            valInfo.put("userMobileId", sfUser.getId());      
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+ent.getIdEnt());
+            query.put("form_id", "4");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+
+            DBCursor cursor    = col.find(query);
+            WriteResult result = null;
+            BasicDBObject jsonField = null;
+            jsonField          = GlobalFunctions.generateJSONProducer(valInfo);
+            
+//            while(cursor.hasNext()) {
+//                System.out.println(cursor.next());
+//            }
+            
+            if (cursor.count()>0) {
+                System.out.println("actualizo mongo");
+//                result = col.update(query, jsonField);
+            } else {
+                System.out.println("inserto mongo");
+//                result = col.insert(jsonField);
+            }
+            */
+//            if (!result.getError().equals("")) {
+//                throw new HibernateException("");
+//            }
+            
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {

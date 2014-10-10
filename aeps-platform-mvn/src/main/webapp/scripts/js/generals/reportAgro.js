@@ -8,23 +8,13 @@ function chargeInfographic(divId) {
     var dataTemp = eval(objResult.values);
     var valCat   = eval(objResult.categories);
     var valOut   = eval(objResult.outlier);
-//    $.each(objResult.values, function(index, info) {
-//        var pos = index+1;
-//        if (index!=(objResult.values.length-1)) {
-//            dataTemp += '{ label: "'+pos+'", data: '+info.point+', color: "'+info.color+'" },';		
-//        } else {
-//            dataTemp += '{ label: "'+pos+'", data: '+info.point+', color: "'+info.color+'" }]';	
-//        }
-//    });
-
-//    var dataset = [{label: "Rendimientos", data: dataTemp}];
     $(function() {
         $('#'+divId).highcharts({
             chart: {
                 type: 'boxplot'
             },
             title: {
-                text: 'Rendimientos por produccion'
+                text: 'Rendimientos por producción'
             },
             legend: {
                 enabled: false
@@ -37,7 +27,7 @@ function chargeInfographic(divId) {
             },
             yAxis: {
                 title: {
-                    text: 'Observaciones'
+                    text: 'Rendimientos'
                 }
                 /*,
                 plotLines: [{
@@ -53,26 +43,43 @@ function chargeInfographic(divId) {
                         }
                     }]*/
             },
-            series: [{
-                    name: 'Observaciones',
-                    data: dataTemp,
-                    tooltip: {
-                        headerFormat: '<em>Semestre {point.key}</em><br/>'
+            plotOptions: {
+                boxplot: {
+                    fillColor: '#F0F0E0',
+                    lineWidth: 2,
+                    medianColor: '#0C5DA5',
+                    medianWidth: 3,
+                    stemColor: '#A63400',
+                    stemDashStyle: 'dot',
+                    stemWidth: 1,
+                    whiskerColor: '#3D9200',
+                    whiskerLength: '20%',
+                    whiskerWidth: 3 
+                }
+            },
+            series: [
+                    {
+                        name: 'Observaciones',
+                        data: dataTemp,
+                        tooltip: {
+                            headerFormat: '<em>Semestre {point.key}</em><br/>',
+                            pointFormat:'<span style="color:{series.color}">●</span> <b> {series.name}</b><br/>Maximo: {point.high}<br/>Cuartil superior: {point.q3}<br/>Mediana: {point.median}<br/>Cuartil inferior: {point.q1}<br/>Minimo: {point.low}<br/>'
+                        }
+                    }, {
+                        name: 'Atipicos',
+                        color: Highcharts.getOptions().colors[0],
+                        type: 'scatter',
+                        data: valOut,
+                        marker: {
+                            fillColor: 'white',
+                            lineWidth: 1,
+                            lineColor: Highcharts.getOptions().colors[0]
+                        },
+                        tooltip: {
+                            pointFormat: 'Valor: {point.y}'
+                        }
                     }
-                }, {
-                    name: 'Atipicos',
-                    color: Highcharts.getOptions().colors[0],
-                    type: 'scatter',
-                    data: valOut,
-                    marker: {
-                        fillColor: 'white',
-                        lineWidth: 1,
-                        lineColor: Highcharts.getOptions().colors[0]
-                    },
-                    tooltip: {
-                        pointFormat: 'Valor: {point.y}'
-                    }
-                }]
+            ]
 
         });
     });

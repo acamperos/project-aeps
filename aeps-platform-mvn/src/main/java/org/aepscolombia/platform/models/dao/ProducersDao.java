@@ -1,12 +1,19 @@
 package org.aepscolombia.platform.models.dao;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import org.aepscolombia.platform.models.entity.Entities;
-import org.aepscolombia.platform.models.entity.Municipalities;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -15,7 +22,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.util.HibernateUtil;
-import org.hibernate.Criteria;
 
 /**
  * Clase ProducersDao
@@ -166,19 +172,37 @@ public class ProducersDao
         List<HashMap> result = new ArrayList<HashMap>();
         
         String sql = "";
+        String entType = String.valueOf(args.get("entType"));
         
 //        sql += "select p.*, e.* from productores p";
         sql += "select p.id_pro, e.id_ent, e.document_number_ent, e.document_type_ent, e.name_ent, e.document_issue_place_ent,";
         sql += " e.cellphone_ent, e.cellphone2_ent, e.phone_ent, e.address_ent, m.name_mun, e.email_ent,";
         sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status, e.entity_type_ent, e.agent_name_ent, e.validation_number_ent,";
-        sql += " le.date_log_ent";
-        sql += " from producers p";
-        sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";		
+        if (entType.equals("3")) {
+            sql += " le.date_log_ent, entLe.name_ent as nameAgro";
+        } else {
+            sql += " le.date_log_ent";
+        }
+        sql += " from producers p";        
+        sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";       
         sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";		
-        sql += " inner join log_entities le on (le.id_object_log_ent=e.id_ent and le.table_log_ent='entities' and le.action_type_log_ent='C')";		
+        sql += " inner join log_entities le on (le.id_object_log_ent=p.id_pro and le.table_log_ent='producers' and le.action_type_log_ent='C')";		
+        if (entType.equals("3")) {
+            sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
+            sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
         sql += " where e.status=1 and e.entity_type_ent=2";        
-        if (args.containsKey("idEntUser")) {
+        
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            String selAll  = String.valueOf(args.get("selAll"));
+            if (selAll.equals("true")) {
+                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+            } else {
+                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+            }
         }
 //        System.out.println("sql=>"+sql);
         
@@ -310,6 +334,9 @@ public class ProducersDao
                 temp.put("agentName", data[17]);
                 temp.put("digVer", data[18]);
                 temp.put("dateLog", data[19]);
+                if (entType.equals("3")) {
+                    temp.put("nameAgro", data[20]);
+                }
                 result.add(temp);
             }
 //            System.out.println(result);
@@ -336,16 +363,25 @@ public class ProducersDao
         Integer result = 0;
         
         String sql = "";
+        String entType = String.valueOf(args.get("entType"));
         
 //        sql += "select p.*, e.* from productores p";
         sql += "select count(p.id_pro), p.id_entity_pro";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";
-        sql += " inner join log_entities le on (le.id_object_log_ent=e.id_ent and le.table_log_ent='entities' and le.action_type_log_ent='C')";		
-        sql += " where e.status=1 and e.entity_type_ent=2";        
-        if (args.containsKey("idEntUser")) {
-            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        sql += " inner join log_entities le on (le.id_object_log_ent=p.id_pro and le.table_log_ent='producers' and le.action_type_log_ent='C')";		
+        if (entType.equals("3")) {
+            sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
+            sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
         }
+        sql += " where e.status=1 and e.entity_type_ent=2";       
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            sql += " and ass.id_entity_asc="+args.get("idEntUser");
+        }
+        
 //        System.out.println("sql=>"+sql);
         try {
             tx = session.beginTransaction();
@@ -455,4 +491,105 @@ public class ProducersDao
             session.close();
         }
     }
+    
+    public void getProducers(HashMap args, String fileName)
+    {        
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> events = null;
+        Transaction tx = null;             
+
+        String sql = "";
+        String entType = String.valueOf(args.get("entType"));
+
+        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, ";
+        sql += "ent.cellphone_ent as CELULAR, ent.phone_ent as TELEFONO, ent.email_ent as CORREO_ELE, dep.name_dep as DEPARTAMENTO";
+        sql += " from producers p";
+        sql += " inner join entities ent on ent.ID_ENT = p.id_entity_pro";
+        sql += " inner join log_entities le on le.id_object_log_ent = p.id_pro AND le.table_log_ent = 'producers'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.ID_ENT";
+        if (entType.equals("3")) {
+            sql += " inner join extension_agents ext on (ext.id_entity_ext_age=e.id_ent)";
+            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
+        sql += " inner join municipalities m on m.id_mun = ent.id_municipality_ent";
+        sql += " inner join departments dep on dep.id_dep=m.id_department_mun";
+        sql += " where le.action_type_log_ent = 'C'";
+        sql += " and ent.status=1";
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            String selAll  = String.valueOf(args.get("selAll"));
+            if (selAll.equals("true")) {
+                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+            } else {
+                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+            }
+        }
+        sql += " and le.id_object_log_ent not in (";
+        sql += "	select le.id_object_log_ent from log_entities le ";
+        if (entType.equals("3")) {
+            sql += "	inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
+            sql += "	inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += "	inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+        }
+        sql += "	where le.action_type_log_ent = 'D' AND le.table_log_ent = 'producers'";
+        if (!entType.equals("3") && args.containsKey("idEntUser")) {
+            sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+        } else {
+            String selAll  = String.valueOf(args.get("selAll"));
+            if (selAll.equals("true")) {
+                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+            } else {
+                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+            }
+        }
+        sql += ")";
+        sql += " order by e.name_ent";
+//        System.out.println("sql=>"+sql);
+        
+        try {
+            tx = session.beginTransaction();
+            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            Query query  = session.createSQLQuery(sql);
+            events = query.list();  
+            String[] val = {
+                "USUARIO",
+                "PRODUCTOR",
+                "CEDULA",
+                "CELULAR",
+                "TELEFONO",
+                "CORREO_ELE",
+                "DEPARTAMENTO"
+            };
+            writer.writeNext(val);
+            for (Object[] data : events) {
+                String[] valTemp = {
+                    String.valueOf(data[0]),
+                    String.valueOf(data[1]),
+                    String.valueOf(data[2]),
+                    String.valueOf(data[3]),
+                    String.valueOf(data[4]),
+                    String.valueOf(data[5]),
+                    String.valueOf(data[6])
+                };
+                writer.writeNext(valTemp);
+            }
+            writer.close();
+//            stmt   = con.prepareStatement(sql);     
+//            result = stmt.executeQuery();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (IOException ex) {
+//            Logger.getLogger(ProducersDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            session.close();
+        }
+//        return result;
+    }
+    
 }

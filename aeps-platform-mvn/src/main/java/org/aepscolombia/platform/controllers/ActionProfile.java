@@ -464,6 +464,8 @@ public class ActionProfile extends BaseAction {
     public String getValues() {
         HashMap findParams = new HashMap();
         findParams.put("idEntUser", idEntSystem);
+        Integer entTypeId = entDao.getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
         numPro = new ProducersDao().countData(findParams);
         numFar = new FarmsDao().countData(findParams);
         numRas = new RastasDao().countData(findParams);        

@@ -414,47 +414,70 @@ public class ActionReport extends BaseAction {
         findParams.put("numDocDep", numDocDep);
         
         String semester = "";
+        String semesterVal = "";
+        String semesterOut = "";
         HashMap semA;
         HashMap semB;
         String categories = "";
         String outlier    = "";
         String values     = "";
         if (typeReport == 1) {
-            if (typeEnt==1 && name_producer==null && num_doc==null) {            
+//            if (typeEnt==1) {            
+            if (typeEnt==1 && (name_producer==null || name_producer.equals("")) && (num_doc==null || num_doc.equals(""))) {            
                 if (selYear == 1) {
                     semester = "'"+year_begin+"-01-01' and '"+year_begin+"-06-30'";
                     semA = cropDao.getReportAnnualAgronomist(findParams, semester, 0);
                     semester = "'"+year_begin+"-07-01' and '"+year_begin+"-12-31'";
                     semB = cropDao.getReportAnnualAgronomist(findParams, semester, 1);
-                    categories = "categories : ['semA("+year_begin+")', 'semB("+year_begin+")']";
-                    values     = "values: ["+semA.get("info")+","+semB.get("info")+"]";
+                    categories = "\"categories\" : \"['A ("+year_begin+")', 'B ("+year_begin+")']\"";
+                    values     = "\"values\": \"["+semA.get("info")+","+semB.get("info")+"]\"";
+                    outlier    = "\"outlier\": \"[";
+                    semesterOut   = String.valueOf(semA.get("out"));
+                    if (!semesterOut.isEmpty() && !semesterOut.equals("")) outlier  += semA.get("out")+",";
+                    semesterOut   = String.valueOf(semB.get("out"));
+                    if (!semesterOut.isEmpty() && !semesterOut.equals("")) outlier  += semB.get("out");
+                    outlier    += "]\"";
                 } else if (selYear == 2) { 
-                    Integer diff = year_end - year_begin;
-                    categories = "categories : [";
-                    values     = "values: [";
-                    int cont   = 1;
+                    Integer diff = (year_end - year_begin)+1;
+                    categories = "\"categories\" : \"[";
+                    values     = "\"values\": \"[";
+                    outlier    = "\"outlier\": \"[";
+                    int cont   = 0;
+                    int pos    = 0;
                     for (int i=1; i<=diff; i++) {
-                        semester = "'"+year_begin+"-01-01' and '"+year_begin+"-06-30'";
-                        semA = cropDao.getReportAnnualAgronomist(findParams, semester, (i-1));
-                        semester = "'"+year_begin+"-07-01' and '"+year_begin+"-12-31'";
-                        semB = cropDao.getReportAnnualAgronomist(findParams, semester, i);                        
-                        if (cont!=diff) {
-                            categories += "'semA("+year_begin+")', 'semB("+year_begin+")', ";
-                            values  += semA.get("info")+","+semB.get("info")+",";
+                        semester = "'"+(year_begin+cont)+"-01-01' and '"+(year_begin+cont)+"-06-30'";
+                        semA = cropDao.getReportAnnualAgronomist(findParams, semester, (pos));
+                        semester = "'"+(year_begin+cont)+"-07-01' and '"+(year_begin+cont)+"-12-31'";
+                        semB = cropDao.getReportAnnualAgronomist(findParams, semester, (pos+1));                        
+                        if (i!=diff) {
+                            categories += "'A ("+(year_begin+cont)+")', 'B ("+(year_begin+cont)+")', ";
+                            values   += semA.get("info")+","+semB.get("info")+",";
+                            semesterOut  = String.valueOf(semA.get("out"));
+                            if (!semesterOut.isEmpty() && !semesterOut.equals("")) outlier  += semA.get("out")+",";
+                            semesterOut  = String.valueOf(semB.get("out"));
+                            if (!semesterOut.isEmpty() && !semesterOut.equals("")) outlier  += semB.get("out")+",";
                         } else {
-                            categories += "'semA("+year_begin+")', 'semB("+year_begin+")'";
-                            values  += semA.get("info")+","+semB.get("info");
+                            categories += "'A ("+(year_begin+cont)+")', 'B ("+(year_begin+cont)+")'";
+                            values   += semA.get("info")+","+semB.get("info");
+                            semesterOut  = String.valueOf(semA.get("out"));
+                            if (!semesterOut.isEmpty() && !semesterOut.equals("")) outlier  += semA.get("out")+",";
+                            semesterOut  = String.valueOf(semB.get("out"));
+                            if (!semesterOut.isEmpty() && !semesterOut.equals("")) outlier  += semB.get("out");
                         }
-                        
+                        cont++;
+                        pos+=2;
                     }
-                    categories += "]";
-                    values += "]";
+                    categories += "]\"";
+                    outlier    += "]\"";
+                    values     += "]\"";
                 }
-                info    = "{"+categories+""+values+"}";
+                info    = "{"+categories+", "+outlier+", "+values+"}";
+//                info    = "";
                 return "reportBox";
             } else {
-                values  = "values: "+cropDao.getReportAnnualProducer(findParams);
-                info    = "{"+values+"}";
+                semA    = cropDao.getReportAnnualProducer(findParams);
+//                values  = "\"values\": "+cropDao.getReportAnnualProducer(findParams);
+                info    = "{"+semA.get("info")+","+semA.get("format")+"}";
                 return "reportDet";
             }
         } else if (typeReport == 2) {

@@ -1,8 +1,45 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
 <s:form id="formProducerSearch" action="searchProducer.action?selected=%{selected}" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="Buscar un productor">
-    <s:hidden name="searchFromProducer" value="1"/>    
+    <s:hidden name="searchFromProducer" value="1"/>
+    <% if (entTypeId==3) { %>
+        <div class="row-fluid">
+            <div class="span5">
+                <s:select        
+                    label="Listado de agronomos:"
+                    multiple="multiple"
+                    name="name_agronomist" 
+                    list="list_agronomist" 
+                    listKey="idEnt" 
+                    listValue="nameEnt" 
+                />
+            </div> 
+            <div class="span1" style="padding-left: 28px">
+                <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListProducers" onCompleteTopics="completeProducer"><i class="icon-search"></i></sj:submit>
+            </div>
+            <div class="span2">
+                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportProducer.action', 'formProducerSearch', 'producersData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+                <%--<s:url id="fileDownload" action="getReportProducer.action" includeParams="all" ></s:url>--%>
+                <%--<s:a type="button" href="%{fileDownload}" onclick="getReportCsv('getReportProducer.action', 'formProducerSearch', 'divMessage')" cssClass="btn btn-default"><i class="icon-file-text"></i> Exportar Datos</s:a>--%>
+            </div>
+        </div>        
+        <script>
+            $("#formProducerSearch_name_agronomist").multipleSelect({
+                placeholder: "---",
+                selectAllText: 'Todos',
+                allSelected: 'Todos',
+                countSelected: '# de % seleccionados',
+                noMatchesFound: 'No coincidencias encontradas'
+            });
+            $("#formProducerSearch_name_agronomist").multipleSelect('checkAll');
+        </script>
+    <% } %>
     <div class="control-group" id="searchBasicProducer">
         <s:textfield cssClass="form-control" name="search_producer" placeholder="Buscar" theme="simple" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListProducers" onCompleteTopics="completeProducer"><i class="icon-search"></i></sj:submit>

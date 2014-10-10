@@ -116,10 +116,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <button type="button" class="btn btn-initial btn-space" onclick="viewPosition('/viewPositionFarm.action', 'formFarm', 'latitude_property', 'formFarm_latitude_property', 'length_property', 'formFarm_length_property', 'divFarmsForm', 'divListFarmsForm');">
-                                <i class="icon-map-marker"></i> Cambiar ubicacion
-                            </button>
+                        <div class="control-group">   
+                            <div class="controls">
+                                <button type="button" class="btn btn-initial btn-space" onclick="viewPosition('/viewPositionFarm.action', 'formFarm', 'latitude_property', 'formFarm_latitude_property', 'length_property', 'formFarm_length_property', 'divFarmsForm', 'divListFarmsForm');">
+                                    <i class="icon-map-marker" style="font-size: 18px"></i> Visualizar/editar las coordenadas en un mapa
+                                </button>                                          
+                            </div>
                         </div>
                         <div class="control-group">
                             <label for="formFarm_altitude_property" class="control-label req">

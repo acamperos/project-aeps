@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String tableRes = "display:none";%>
+<% String tableRes = "display:none;";%>
 <% String labelRes = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users userRes  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrResDao = new UsersDao(); %>
+<% Integer entTypeResId = new EntitiesDao().getEntityTypeId(userRes.getIdUsr()); %>
 
 <s:if test="listResMan.size() > 0">
     <% tableRes = "";%>
-    <% labelRes = "display:none";%> 
+    <% labelRes = "display:none;";%> 
 </s:if>            
 
 <div class="msgWin" id="divMessListRes"></div>
@@ -22,9 +24,11 @@
     <fieldset>
         <legend>Lista de rastrojos</legend>
         <% if (usrResDao.getPrivilegeUser(userRes.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showResidual.action?action=create', 'idCrop', '${idCrop}', 'Crear Rastrojo', 1050, 550);">
-                <i class="icon-plus"></i> Agregar Manejo de Rastrojos
-            </button>
+            <% if (entTypeResId!=3) { %>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showResidual.action?action=create', 'idCrop', '${idCrop}', 'Crear Rastrojo', 1050, 550);">
+                    <i class="icon-plus"></i> Agregar Manejo de Rastrojos
+                </button>
+            <% } %>
         <% } %>
         <table class="table table-bordered table-hover" style="<%= tableRes %>" id='tblRes'>
             <thead>

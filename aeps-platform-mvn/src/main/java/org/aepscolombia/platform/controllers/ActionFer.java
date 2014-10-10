@@ -407,15 +407,19 @@ public class ActionFer extends BaseAction {
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
             required.put("fer.dateFer", fer.getDateFer());      
+            required.put("fer.amountProductUsedFer", fer.getAmountProductUsedFer());      
 //            required.put("fer.fertilizationsTypes.idFerTyp", fer.getFertilizationsTypes().getIdFerTyp());                  
             
             if (chemFert.size()<0 && orgFert.size()<0 && amenFert.size()<0) {
                 addActionError("Se debe ingresar por lo menos alguna fertilizacion");
             }
             
+            Double amountTotal = 0.0;
+            
             int contFer = 0;
             for (ChemicalFertilizationsObj ferCheTemp : chemFert) {
                 if (ferCheTemp!=null) {
+                    if (ferCheTemp.getAmountProductUsedCheFer()!=null) amountTotal += ferCheTemp.getAmountProductUsedCheFer();
                     required.put("chemFert["+contFer+"].chemicalFertilizers.idCheFer", ferCheTemp.getChemicalFertilizers().getIdCheFer());
                     required.put("chemFert["+contFer+"].amountProductUsedCheFer", ferCheTemp.getAmountProductUsedCheFer());
                     required.put("chemFert["+contFer+"].unitCheFer", ferCheTemp.getUnitCheFer());
@@ -431,6 +435,7 @@ public class ActionFer extends BaseAction {
             int contOrg = 0;
             for (OrganicFertilizations ferOrgTemp : orgFert) {
                 if (ferOrgTemp!=null) {
+                    if (ferOrgTemp.getAmountProductUsedOrgFer()!=null) amountTotal += ferOrgTemp.getAmountProductUsedOrgFer();
                     required.put("orgFert["+contOrg+"].organicFertilizers.idOrgFer", ferOrgTemp.getOrganicFertilizers().getIdOrgFer());
                     required.put("orgFert["+contOrg+"].amountProductUsedOrgFer", ferOrgTemp.getAmountProductUsedOrgFer());
                     if (ferOrgTemp.getOrganicFertilizers().getIdOrgFer() == 1000000) {
@@ -444,6 +449,7 @@ public class ActionFer extends BaseAction {
             int contAme = 0;
             for (AmendmentsFertilizations ferAmeTemp : amenFert) {
                 if (ferAmeTemp!=null) {
+                    if (ferAmeTemp.getAmountProductUsedAmeFer()!=null) amountTotal += ferAmeTemp.getAmountProductUsedAmeFer();
                     required.put("amenFert["+contAme+"].amendmentsFertilizers.idAmeFer", ferAmeTemp.getAmendmentsFertilizers().getIdAmeFer());
                     required.put("amenFert["+contAme+"].amountProductUsedAmeFer", ferAmeTemp.getAmountProductUsedAmeFer());
                     if (ferAmeTemp.getAmendmentsFertilizers().getIdAmeFer() == 1000000) {
@@ -451,7 +457,31 @@ public class ActionFer extends BaseAction {
                     }
                 }
                 contAme++;
-            }                        			       	               
+            }               
+
+//            System.out.println("amountTotal=>"+amountTotal);
+//            System.out.println("fer.getAmountProductUsedFer()=>"+fer.getAmountProductUsedFer());
+            double sumTotal = amountTotal.doubleValue();
+            double sumUser  = fer.getAmountProductUsedFer().doubleValue();
+            if (sumTotal!=sumUser) {
+                addFieldError("fer.amountProductUsedFer", "Los valores no coinciden");      
+                contFer = 0;
+                for (ChemicalFertilizationsObj ferCheTemp : chemFert) {
+                    addFieldError("chemFert["+contFer+"].amountProductUsedCheFer", "Los valores no coinciden");
+                    contFer++;
+                }
+                contOrg = 0;
+                for (OrganicFertilizations ferOrgTemp : orgFert) {
+                    addFieldError("orgFert["+contOrg+"].amountProductUsedOrgFer", "Los valores no coinciden");
+                    contOrg++;
+                }
+                contAme = 0;
+                for (AmendmentsFertilizations ferAmeTemp : amenFert) {      
+                    addFieldError("amenFert["+contAme+"].amountProductUsedAmeFer", "Los valores no coinciden");
+                    contAme++;
+                }  
+                addActionError("La cantidad del producto total debe ser igual a la suma de todas las cantidades individuales");
+            }
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();

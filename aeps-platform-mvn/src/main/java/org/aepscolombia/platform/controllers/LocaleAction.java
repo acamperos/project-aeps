@@ -5,7 +5,6 @@
 package org.aepscolombia.platform.controllers;
 
 import com.opensymphony.xwork2.ActionContext;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import org.aepscolombia.platform.util.APConstants;
@@ -45,7 +44,42 @@ public class LocaleAction extends BaseAction {
             userSession.put(APConstants.SESSION_LANG, lang);
             this.setSession(userSession);
         }
+        /*
+        MongoClient mongo = new MongoClient("localhost", 27017);
+        DB db = mongo.getDB("ciat");
+         
+        DBCollection col = db.getCollection("log_form_records");
+        
+//        Set<String> collections = db.getCollectionNames();
+//        System.out.println(collections);
+        
+//        DBObject query = BasicDBObjectBuilder.start()
+//                .add("InsertedId", 614)
+//                .add("form_id", 5).get();
+        BasicDBObject query = new BasicDBObject();
+		query.put("InsertedId", "614");
+		query.put("form_id", "5");
+        
+        DBCursor cursor = col.find(query);
+        while(cursor.hasNext()) {
+            System.out.println(cursor.next());
+        }
+        String csv = "producersInfo.csv";
+        CSVWriter writer = new CSVWriter(new FileWriter(csv));
+
+        //Create record
+        String [] record = "4,David,Miller,Australia,30".split(",");
+        //Write the record to file
+        writer.writeNext(record);
+//        System.out.println("prince royce");
+
+        //close the writer
+        writer.flush();
+        writer.close();*/
+//        return Response.ok(writer).header("Content-Disposition", "attachment; filename=producersInfo.csv").build();
+        
 //        return "states";
         return SUCCESS;
     }
+     
 }

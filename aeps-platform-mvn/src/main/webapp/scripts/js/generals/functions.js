@@ -1864,7 +1864,7 @@ function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
 //    alert(navigator.language);
 //    var valNumDecimal = $('#'+valDec).val(); 
 //    alert(navigator.language);    
-    var valNumDecimal = parseCommaSeparated($('#'+valDec).val()); 
+    var valNumDecimal = parseCommaSeparated($('#'+valDec).val());
     if ($('#'+valDec).val()!=null && $('#'+valDec).val()!="") {
         var d = Math.floor (valNumDecimal);
         var minfloat = (valNumDecimal-d)*60;
@@ -1896,7 +1896,8 @@ function parsePointSeparated( strVal ) {
     var decimal=  /^[-+]?[0-9]+\,[0-9]+$/;   
     if (strVal=="") {
         strVal = "";
-    } else if ((!isNaN(strVal)) && strVal.match(decimal)) {
+//    } else if ((!isNaN(strVal)) && strVal.match(decimal)) {
+    } else if (strVal.match(decimal)) {
         return strVal.replace(',','.');
     }
     return strVal;
@@ -2111,4 +2112,56 @@ function selValPos(formLatId, valIdLat, formLonId, valIdLon)
 {
     $("#"+formLatId).val($("#"+valIdLat).val());
     $("#"+formLonId).val($("#"+valIdLon).val());    
+}
+
+function showDialogWarning(hRef) 
+{
+    $.colorbox({
+        initialHeight: '0',
+        initialWidth: '0',
+        href: "#"+hRef,
+        inline: true,        
+        opacity: '0.3',        
+        onComplete: function(){
+            $('.confirm_ok').click(function(e){
+                e.preventDefault();
+                $.colorbox.close(); 
+            });
+        }
+    });       
+}
+
+function optSel(idCheck, div) 
+{
+   var valSel = $("input[name='"+idCheck+"']:checked").val();
+//   var valSel = $("#"+idCheck).val();
+   if (valSel=='true') {
+       $("#"+div).show();
+       $("#"+div).removeClass("hide");       
+   } else {
+       $("#"+div).hide();
+       $("#"+div).addClass("hide");       
+   }
+    
+}
+
+function getReportCsv(url, formId, filename)
+{
+    var data = $('#'+formId).serializeArray();
+    var xmlRequest = $.ajax({
+        type: "POST",
+        url: url,
+        data: data
+    });
+    xmlRequest.done( function (response){        
+        var uri = "data:text/csv;charset=utf-8," + escape(response);
+        var downloadLink  = document.createElement("a");
+        downloadLink.href = uri;
+        downloadLink.download = filename;
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+//        window.open( "data:text/csv;charset=utf-8," + escape(response));         
+    });
 }

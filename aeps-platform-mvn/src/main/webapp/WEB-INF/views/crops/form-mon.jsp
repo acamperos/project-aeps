@@ -48,19 +48,55 @@
                             </tr>
                             <tr>
                                 <th>Hace monitoreo a</th>
-                                <td>
+                                <td style="width: 230px;">
                                     <div class="controls radioSelect">
-                                        <s:radio list="#{'true':'Si', 'false':'No'}" name="mon.monitorPestsMon"/>
+                                        <s:radio list="#{'true':'Si', 'false':'No'}" name="mon.monitorPestsMon" onclick="optSel('mon.monitorPestsMon', 'divMonPest')" />
+                                        <div id="divMonPest" class="span2 hide control-group" style="margin-top: 30px;">
+                                            <s:select
+                                                name="mon.pests.idPes"
+                                                list="type_pest_con" 
+                                                listKey="idPes" 
+                                                listValue="namePes"            
+                                                headerKey="-1" 
+                                                headerValue="---"
+                                                onchange="showOtherElement(this.value, 'divNewObjControlPes')"
+                                            />
+                                            <s:textfield name="mon.perImpactPestMon" placeholder="Porcentaje de incidencia" />
+                                        </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td style="width: 230px;">
                                     <div class="controls radioSelect">
-                                        <s:radio list="#{'true':'Si', 'false':'No'}" name="mon.monitorDiseasesMon"/>
+                                        <s:radio list="#{'true':'Si', 'false':'No'}" name="mon.monitorDiseasesMon" onclick="optSel('mon.monitorDiseasesMon', 'divMonDisease')"/>
+                                        <div id="divMonDisease" class="span2 hide control-group" style="margin-top: 30px;">
+                                            <s:select
+                                                name="mon.diseases.idDis"
+                                                list="type_dis_con" 
+                                                listKey="idDis" 
+                                                listValue="nameDis"            
+                                                headerKey="-1" 
+                                                headerValue="---"
+                                                onchange="showOtherElement(this.value, 'divNewObjControlDis')"
+                                            />
+                                            <s:textfield name="mon.perImpactDiseaseMon" placeholder="Porcentaje de incidencia" />
+                                        </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td style="width: 230px;">
                                     <div class="controls radioSelect">
-                                        <s:radio list="#{'true':'Si', 'false':'No'}" name="mon.monitorWeedsMon"/>
+                                        <s:radio list="#{'true':'Si', 'false':'No'}" name="mon.monitorWeedsMon" onclick="optSel('mon.monitorWeedsMon', 'divMonWeed')"/>
+                                        <div id="divMonWeed" class="span2 hide control-group" style="margin-top: 30px;">
+                                            <s:select
+                                                name="mon.weeds.idWee"
+                                                list="type_weeds_con" 
+                                                listKey="idWee" 
+                                                listValue="nameWee"            
+                                                headerKey="-1" 
+                                                headerValue="---"
+                                                onchange="showOtherElement(this.value, 'divNewObjControlWee')"
+                                            />
+                                            <s:textfield name="mon.perImpactWeedMon" placeholder="Porcentaje de incidencia" />                                            
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -68,6 +104,9 @@
                     </table>
                     <p class="warnField reqBef">Campos Requeridos</p>
                     <script>
+                        optSel('mon.monitorPestsMon', 'divMonPest');
+                        optSel('mon.monitorDiseasesMon', 'divMonDisease');
+                        optSel('mon.monitorWeedsMon', 'divMonWeed');
                         $("#formCropMonGen_mon_dateMon").datepicker({dateFormat: 'dd/mm/yy'});
                         $("#formCropMonGen_mon_dateMon").mask("99/99/9999", {placeholder: " "});
                     </script>

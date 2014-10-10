@@ -4,15 +4,20 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import org.aepscolombia.platform.models.dao.AssociationDao;
 import org.aepscolombia.platform.models.dao.BeansDao;
 import org.aepscolombia.platform.models.dao.CassavasDao;
 import org.aepscolombia.platform.models.dao.ChemicalsSowingDao;
 import org.aepscolombia.platform.models.dao.ControlsDao;
 import org.aepscolombia.platform.models.dao.CropsTypesDao;
+import org.aepscolombia.platform.models.dao.DepartmentsDao;
 import org.aepscolombia.platform.models.dao.DescriptionsProductionEventDao;
 import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
 import org.aepscolombia.platform.models.dao.DoseUnitsDao;
@@ -45,6 +50,7 @@ import org.aepscolombia.platform.models.entity.Beans;
 import org.aepscolombia.platform.models.entity.Cassavas;
 import org.aepscolombia.platform.models.entity.ChemicalsSowing;
 import org.aepscolombia.platform.models.entity.CropsTypes;
+import org.aepscolombia.platform.models.entity.Departments;
 import org.aepscolombia.platform.models.entity.DocumentsTypes;
 import org.aepscolombia.platform.models.entity.DoseUnits;
 import org.aepscolombia.platform.models.entity.Entities;
@@ -136,6 +142,7 @@ public class ActionCrop extends BaseAction {
     private List<SeedsOrigins> type_seed_org;
     private List<SeedsTypes> type_seed_type;   
     private List<SowingTypes> type_sow_types;   
+    private List<Departments> list_departments;
     
     private List<CropsTypes> type_crops;
     private Integer searchFromCrop;
@@ -152,6 +159,8 @@ public class ActionCrop extends BaseAction {
     private Sowing sowing = new Sowing();
     private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
+    private List<Entities> list_agronomist;
+    private AssociationDao assDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -229,12 +238,36 @@ public class ActionCrop extends BaseAction {
         this.date_harvest = date_harvest;
     }
 
+    public List<Entities> getList_agronomist() {
+        return list_agronomist;
+    }
+
+    public void setList_agronomist(List<Entities> list_agronomist) {
+        this.list_agronomist = list_agronomist;
+    }
+
+    public AssociationDao getAssDao() {
+        return assDao;
+    }
+
+    public void setAssDao(AssociationDao assDao) {
+        this.assDao = assDao;
+    }   
+
     public String getNameField() {
         return nameField;
     }
 
     public void setNameField(String nameField) {
         this.nameField = nameField;
+    } 
+
+    public List<Departments> getList_departments() {
+        return list_departments;
+    }
+
+    public void setList_departments(List<Departments> list_departments) {
+        this.list_departments = list_departments;
     } 
     
     public String getOtherCrop() {
@@ -644,11 +677,13 @@ public class ActionCrop extends BaseAction {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         this.setType_ident_producer(new DocumentsTypesDao().findAll());
+        this.setList_departments(new DepartmentsDao().findAll());
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
+        assDao = new AssociationDao();
 //        if (user.getIdUsr()!=null) idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
     }
     
@@ -899,6 +934,34 @@ public class ActionCrop extends BaseAction {
         info = chain;
         return "combo";
     }
+    
+    private String name_agronomist;
+    private String selectAllname_agronomist;
+    private String selectItemname_agronomist;      
+
+    public String getName_agronomist() {
+        return name_agronomist;
+    }
+
+    public void setName_agronomist(String name_agronomist) {
+        this.name_agronomist = name_agronomist;
+    }  
+
+    public String getSelectAllname_agronomist() {
+        return selectAllname_agronomist;
+    }
+
+    public void setSelectAllname_agronomist(String selectAllname_agronomist) {
+        this.selectAllname_agronomist = selectAllname_agronomist;
+    }
+
+    public String getSelectItemname_agronomist() {
+        return selectItemname_agronomist;
+    }
+
+    public void setSelectItemname_agronomist(String selectItemname_agronomist) {
+        this.selectItemname_agronomist = selectItemname_agronomist;
+    }
 
     /**
      * Encargado de buscar las coincidencias de un formulario de busqueda, para cada uno de los
@@ -915,18 +978,28 @@ public class ActionCrop extends BaseAction {
         valName     = (String)(this.getRequest().getParameter("valName"));
         valId       = (String)(this.getRequest().getParameter("valId"));
         selected    = (String)(this.getRequest().getParameter("selected"));
-        if(selected==null) selected="crop";
+        String selAll = "false";
+        if(selected==null) {
+            selected="crop";
+            selAll = "true";
+        }       
+        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
         
         additionals = new HashMap();
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        list_agronomist   = assDao.gelAllAgronomist(idEntSystem);
         
         if(searchFromCrop!=null && searchFromCrop==2) {
             search_crop = "";
         } 
-        
-        System.out.println("date_sowing=>"+date_sowing);
-        System.out.println("date_harvest=>"+date_harvest);
         
         findParams.put("idEntUser", idEntSystem);
         findParams.put("search_crop", search_crop);
@@ -955,6 +1028,44 @@ public class ActionCrop extends BaseAction {
         listCrops.remove(0);
 //        System.out.println("countTotal->"+this.getCountTotal());
         return SUCCESS;
+    }
+    
+    /**
+     * Bloque correspondiente al tratamiento de creacion y lectura de archivos
+     *
+     */    
+    private InputStream inputStream;   
+    
+    public InputStream getInputStream() {  
+        return inputStream;  
+    }  
+  
+    public void setInputStream(InputStream inputStream) {  
+        this.inputStream = inputStream;  
+    }
+    
+    public String getReport() throws Exception {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        
+        String selAll = "false";        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
+        
+        HashMap findParams = new HashMap();
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        findParams.put("idEntUser", idEntSystem);
+        String fileName  = "/var/www/document/cropsInfo.csv";
+        cropDao.getProductionEvents(findParams, fileName);
+  
+        File f = new File(fileName);  
+        inputStream = new FileInputStream(f);  
+        return "OUTPUTCSV"; 
     }
     
 

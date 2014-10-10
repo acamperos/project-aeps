@@ -22,6 +22,7 @@ public class EntitiesTypes  implements java.io.Serializable {
 
      private Integer idEntTyp;
      private String nameEntTyp;
+     private Boolean statusEntTyp;
 
     public EntitiesTypes() {
     }
@@ -30,8 +31,9 @@ public class EntitiesTypes  implements java.io.Serializable {
         this.idEntTyp = idEntTyp;
     }
 	
-    public EntitiesTypes(String nameEntTyp) {
-        this.nameEntTyp = nameEntTyp;
+    public EntitiesTypes(String nameEntTyp, Boolean statusEntTyp) {
+        this.nameEntTyp   = nameEntTyp;
+        this.statusEntTyp = statusEntTyp;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -52,6 +54,15 @@ public class EntitiesTypes  implements java.io.Serializable {
     
     public void setNameEntTyp(String nameEntTyp) {
         this.nameEntTyp = nameEntTyp;
+    }
+    
+    @Column(name="status_ent_typ")
+    public Boolean getStatusEntTyp() {
+        return this.statusEntTyp;
+    }
+    
+    public void setStatusEntTyp(Boolean statusEntTyp) {
+        this.statusEntTyp = statusEntTyp;
     }
 
 }

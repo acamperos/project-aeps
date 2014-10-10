@@ -4,17 +4,19 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="org.aepscolombia.platform.util.JavascriptHelper"%>            
-<% String tableFerGen = "display:none";%>
+<% String tableFerGen = "display:none;";%>
 <% String labelFerGen = "";%>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users userFer  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrFerDao = new UsersDao(); %>
+<% Integer entTypeFerId = new EntitiesDao().getEntityTypeId(userFer.getIdUsr()); %>
 
 <s:if test="listFert.size() > 0">
     <% tableFerGen = "";%>
-    <% labelFerGen = "display:none";%> 
+    <% labelFerGen = "display:none;";%> 
 </s:if>            
 
 <div class="msgWin" id="divFer"></div>   
@@ -22,9 +24,11 @@
     <fieldset>
         <legend>Lista de fertilizaciones</legend>        
         <% if (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/create")) { %>
-            <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showFer.action?action=create', 'idCrop', '${idCrop}', 'Crear Fertilizacion', 1050, 550);">
-                <i class="icon-plus"></i> Agregar Fertilizacion
-            </button>
+            <% if (entTypeFerId!=3) { %>
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showFer.action?action=create', 'idCrop', '${idCrop}', 'Crear Fertilizacion', 1050, 550);">
+                    <i class="icon-plus"></i> Agregar Fertilizacion
+                </button>
+            <% } %>
         <% } %>
         <table class="table table-bordered table-hover" style="<%= tableFerGen %>" id='tblFerGen'>
             <thead>

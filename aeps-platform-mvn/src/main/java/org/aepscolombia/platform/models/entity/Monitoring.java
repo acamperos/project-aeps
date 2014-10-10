@@ -34,6 +34,12 @@ public class Monitoring  implements java.io.Serializable {
      private Boolean monitorWeedsMon;
      private Boolean status;
      private Integer createdBy;
+     private Diseases diseases;
+     private Weeds weeds;
+     private Pests pests;
+     private Double perImpactPestMon;
+     private Double perImpactDiseaseMon;
+     private Double perImpactWeedMon;
 
     public Monitoring() {
     }
@@ -42,7 +48,13 @@ public class Monitoring  implements java.io.Serializable {
     public Monitoring(ProductionEvents productionEvents) {
         this.productionEvents = productionEvents;
     }
-    public Monitoring(ProductionEvents productionEvents, MonitoringTypes monitoringTypes, Date dateMon, Boolean monitorPestsMon, Boolean monitorDiseasesMon, Boolean monitorWeedsMon, Boolean status, Integer createdBy) {
+    public Monitoring(Diseases diseases, Weeds weeds, Pests pests, Double perImpactDiseaseMon, Double perImpactWeedMon, Double perImpactPestMon, ProductionEvents productionEvents, MonitoringTypes monitoringTypes, Date dateMon, Boolean monitorPestsMon, Boolean monitorDiseasesMon, Boolean monitorWeedsMon, Boolean status, Integer createdBy) {
+       this.diseases = diseases;
+       this.weeds = weeds;
+       this.pests = pests;
+       this.perImpactDiseaseMon = perImpactDiseaseMon;
+       this.perImpactWeedMon = perImpactWeedMon;
+       this.perImpactPestMon = perImpactPestMon;
        this.productionEvents = productionEvents;
        this.monitoringTypes = monitoringTypes;
        this.dateMon = dateMon;
@@ -81,6 +93,63 @@ public class Monitoring  implements java.io.Serializable {
     public void setMonitoringTypes(MonitoringTypes monitoringTypes) {
         this.monitoringTypes = monitoringTypes;
     }
+    
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_disease_mon")
+    public Diseases getDiseases() {
+        return this.diseases;
+    }
+    
+    public void setDiseases(Diseases diseases) {
+        this.diseases = diseases;
+    }
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_weed_mon")
+    public Weeds getWeeds() {
+        return this.weeds;
+    }
+
+    public void setWeeds(Weeds weeds) {
+        this.weeds = weeds;
+    }
+    
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_pest_mon")
+    public Pests getPests() {
+        return this.pests;
+    }
+    
+    public void setPests(Pests pests) {
+        this.pests = pests;
+    }
+    
+    @Column(name="percentage_impact_pest_mon", precision=22, scale=0)
+    public Double getPerImpactPestMon() {
+        return this.perImpactPestMon;
+    }
+    
+    public void setPerImpactPestMon(Double perImpactPestMon) {
+        this.perImpactPestMon = perImpactPestMon;
+    }
+    
+    @Column(name="percentage_impact_disease_mon", precision=22, scale=0)
+    public Double getPerImpactDiseaseMon() {
+        return this.perImpactDiseaseMon;
+    }
+    
+    public void setPerImpactDiseaseMon(Double perImpactDiseaseMon) {
+        this.perImpactDiseaseMon = perImpactDiseaseMon;
+    }
+    
+    @Column(name="percentage_impact_weed_mon", precision=22, scale=0)
+    public Double getPerImpactWeedMon() {
+        return this.perImpactWeedMon;
+    }
+    
+    public void setPerImpactWeedMon(Double perImpactWeedMon) {
+        this.perImpactWeedMon = perImpactWeedMon;
+    }
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_mon", length=19)
     public Date getDateMon() {

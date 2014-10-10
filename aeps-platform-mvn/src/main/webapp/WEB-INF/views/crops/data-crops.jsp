@@ -15,11 +15,13 @@
                 <li><span>Informacion del cultivo</span></li>
             </ul>
         </div>
+        <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
         <%@page import="org.aepscolombia.platform.models.entity.Users"%>
         <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
         <%@page import="org.aepscolombia.platform.util.APConstants"%>
         <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
-        <% UsersDao usrDao = new UsersDao(); %>
+        <% UsersDao usrDao   = new UsersDao(); %>
+        <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
         <div class="container" id="divDataInfoCrop">
             <%@ include file="data-infocrop.jsp" %>                 
         </div>             

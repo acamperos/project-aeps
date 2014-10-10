@@ -13,10 +13,19 @@
         </div>
         <div class="row">
             <div class="span12">
-                <div style="width:100%; margin-left: 40%; position: absolute;"> 
+                <div style="margin-left: 40%; position: absolute;"> 
                     <button class="btn btn-large bt_cancel_field" onclick="toggleAndClean('divFarmsForm', 'divListFarmsForm');"><i class="icon-arrow-left"></i>  Atras</button>
                     <button class="btn btn-large bt_cancel_field" onclick="selValPos('formFarm_latitude_property', 'latitude_property', 'formFarm_length_property', 'length_property'); generateDegrees('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property');
                     generateDegrees('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property'); toggleAndClean('divFarmsForm', 'divListFarmsForm');"><i class="icon-check"></i>  Seleccionar punto</button>
+                </div>
+            </div>
+            <div class="span12">
+                <div style="margin-left:75%; margin-top:100px; position: absolute;"> 
+                    <div class="alert mapAdv">
+                        <h4>Información de interes:</h4>
+                        <p>En este mapa usted podrá visualizar las coordenadas que acaba de registrar. Si no están exactamente en el sitio indicado, 
+                        usted puede dar click al punto y arrastrarlo para posicionarlo con mas precisión.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +44,7 @@
             mapTypeControl: true,
             mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
             navigationControl: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.HYBRID 
           }
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             gicons["red"] = new google.maps.MarkerImage("img/mapIcons/marker_red.png",

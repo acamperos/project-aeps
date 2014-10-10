@@ -51,16 +51,14 @@
         </div>
         <script>
             var actionName   = '<%= session.getAttribute("action") %>';
-//            alert(actionName);            
-            if (actionName!='null' && actionName!='' && actionName!='initial' && actionName!='login') {
+            if (actionName!='null' && actionName!='' && actionName!='dashboard' && actionName!='initial' && actionName!='login') {
                 showInfoPage(''+actionName+'.action', 'divBodyLayout');                 
             }
-            if (actionName=='null' || actionName=='' || actionName=='initial') {
+            if (actionName=='null' || actionName=='' || actionName=='dashboard' || actionName=='initial') {
               actionName = 'home';                  
             }
             activeOption('ulOptionsMenu', actionName+'Cls');
             $(document).ready(function() {
-                //* scroll to top button
                 beoro_scrollToTop.init();
             })
         </script>

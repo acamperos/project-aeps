@@ -159,9 +159,9 @@ public class FertilizationsDao
 ////                tempList.put("organic", resultOrg);			
 ////                tempList.put("amendment", resultAme);		
 //        result.add(tempList);
-        for (HashMap data : result) {
-            System.out.println("values=>"+data);
-        }
+//        for (HashMap data : result) {
+//            System.out.println("values=>"+data);
+//        }
         return result;
     }    
     
@@ -207,19 +207,21 @@ public class FertilizationsDao
                     temp.put("idFerTyp", data[2]);             
                     temp.put("idFerChe", data[5]);      
                     String appTyp = String.valueOf(data[6]);
-                    
-                    if (appTyp.equals("2")) {
-                        HashMap tempFoliar = new HashMap();
-                        tempFoliar.put("idFerChe", "");
-                        tempFoliar.put("nameFerTyp", "");
-                        tempFoliar.put("ferTyp", "Quimica");
-                        tempFoliar.put("idFerTyp", "");             
-                        tempFoliar.put("otherProduct", ""); 
-                        tempFoliar.put("amountUsed", data[7]); 
-                        temp.put("infoFert", tempFoliar);
-                    } else {
-                        temp.put("infoFert", getChemicalsElements(String.valueOf(temp.get("idFerChe")), 0.0));	   
-                    }                    
+                    String idFerChe = String.valueOf(data[5]);                    
+                    if (!idFerChe.equals("") || idFerChe!=null) {
+                        if (appTyp.equals("2")) {
+                            HashMap tempFoliar = new HashMap();
+                            tempFoliar.put("idFerChe", "");
+                            tempFoliar.put("nameFerTyp", "");
+                            tempFoliar.put("ferTyp", "Quimica");
+                            tempFoliar.put("idFerTyp", "");             
+                            tempFoliar.put("otherProduct", ""); 
+                            tempFoliar.put("amountUsed", data[7]); 
+                            temp.put("infoFert", tempFoliar);
+                        } else {
+                            temp.put("infoFert", getChemicalsElements(String.valueOf(temp.get("idFerChe")), 0.0));	   
+                        }         
+                    }
                     temp.put("contFert", getTotalFertilizations(String.valueOf(temp.get("idFer"))));
                                      
                     resultChe.add(temp);

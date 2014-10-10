@@ -106,7 +106,6 @@ public class UsersDao
      * @param password:  Contraseña del usuario
      * @return Objeto del usuario o vacio (NULL) en caso de no encontrar nada
      */
-//    @Override
     public Users getUserByLogin(String username, String password) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
@@ -116,7 +115,8 @@ public class UsersDao
 
         sql += "select usr.id_usr, usr.name_user_usr, usr.salt_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
         sql += " from users usr";
-        sql += " where usr.status=1";
+//        sql += " where usr.status=1";
+        sql += " where usr.status<>0";
         if (username!=null && username!="") {
             sql += " and usr.name_user_usr='"+username+"'";
         }  

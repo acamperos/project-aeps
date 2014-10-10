@@ -3,17 +3,52 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<s:actionerror theme="bootstrap"/>
-<s:actionmessage theme="bootstrap"/>
-<s:fielderror theme="bootstrap"/>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<%@page import="org.aepscolombia.platform.models.entity.Users"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
+<% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+<% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
 <s:form id="formRastaSearch" action="searchSoil.action?selected=%{selected}" cssClass="form-horizontal formClassSoil" label="Busqueda del rasta">
+    <% if (entTypeId==3) { %>
+        <div class="row">
+            <div class="span5">
+                <div class="control-group">
+                    <s:label for="formRastaSearch_name_agronomist" cssClass="control-label" value="Listado de agronomos:"></s:label>
+                    <s:select        
+                        label="Listado de agronomos:"
+                        multiple="multiple"
+                        name="name_agronomist" 
+                        list="list_agronomist" 
+                        listKey="idEnt" 
+                        listValue="nameEnt" 
+                    />
+                </div> 
+            </div> 
+            <div class="span0">
+                <div class="control-group">
+                    <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><i class="icon-search"></i></sj:submit>
+                </div> 
+            </div> 
+            <div class="span2">
+                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportSoil.action', 'formRastaSearch', 'soilsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+            </div>   
+        </div>
+        <script>
+            $("#formRastaSearch_name_agronomist").multipleSelect({
+                placeholder: "---",
+                selectAllText: 'Todos',
+                allSelected: 'Todos',
+                countSelected: '# de % seleccionados',
+                noMatchesFound: 'No coincidencias encontradas'
+            });
+            $("#formRastaSearch_name_agronomist").multipleSelect('checkAll');
+        </script>
+    <% } %>
     <s:hidden name="searchFromSoil" value="1"/>    
     <div class="control-group" id="searchBasicSoil">
         <!--<div class="span6">-->
             <s:textfield cssClass="form-control" name="search_soil" placeholder="Buscar" />
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><i class="icon-search"></i></sj:submit>
-        <!--</div>-->
-        <!--<div class="span2">-->
             <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
             <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         <!--</div>-->

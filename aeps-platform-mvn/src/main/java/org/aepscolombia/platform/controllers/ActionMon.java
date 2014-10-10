@@ -11,18 +11,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import org.aepscolombia.platform.models.dao.DiseasesDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
 import org.aepscolombia.platform.models.dao.MonitoringDao;
+import org.aepscolombia.platform.models.dao.PestsDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
+import org.aepscolombia.platform.models.dao.WeedsDao;
+import org.aepscolombia.platform.models.entity.Diseases;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.Monitoring;
+import org.aepscolombia.platform.models.entity.Pests;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entity.Weeds;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -58,6 +64,9 @@ public class ActionMon extends BaseAction {
     private Monitoring mon = new Monitoring();
     private Sowing sowing = new Sowing();
     private UsersDao usrDao;
+    private List<Pests> type_pest_con;
+    private List<Weeds> type_weeds_con;
+    private List<Diseases> type_dis_con;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -114,6 +123,30 @@ public class ActionMon extends BaseAction {
     public List<HashMap> getListMont() {
         return listMont;
     }  
+    
+    public List<Pests> getType_pest_con() {
+        return type_pest_con;
+    }
+
+    public void setType_pest_con(List<Pests> type_pest_con) {
+        this.type_pest_con = type_pest_con;
+    }
+
+    public List<Diseases> getType_dis_con() {
+        return type_dis_con;
+    }
+
+    public void setType_dis_con(List<Diseases> type_dis_con) {
+        this.type_dis_con = type_dis_con;
+    }
+    
+    public List<Weeds> getType_weeds_con() {
+        return type_weeds_con;
+    }
+
+    public void setType_weeds_con(List<Weeds> type_weeds_con) {
+        this.type_weeds_con = type_weeds_con;
+    }
     
     
     //Atributos generales de clase
@@ -182,7 +215,20 @@ public class ActionMon extends BaseAction {
             boolean enter = false;
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
-            required.put("mon.dateMon", mon.getDateMon());      
+            required.put("mon.dateMon", mon.getDateMon());   
+            
+            if (mon.getMonitorPestsMon()!=null && mon.getMonitorPestsMon()) {
+                required.put("mon.pests.idPes", mon.getPests().getIdPes());
+                required.put("mon.perImpactPestMon", mon.getPerImpactPestMon());   
+            }      
+            if (mon.getMonitorWeedsMon()!=null && mon.getMonitorWeedsMon()) {
+                required.put("mon.weeds.idWee", mon.getWeeds().getIdWee());
+                required.put("mon.perImpactWeedMon", mon.getPerImpactWeedMon());   
+            }      
+            if (mon.getMonitorDiseasesMon()!=null && mon.getMonitorDiseasesMon()) {
+                required.put("mon.diseases.idDis", mon.getDiseases().getIdDis());
+                required.put("mon.perImpactDiseaseMon", mon.getPerImpactDiseaseMon());   
+            }      
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -271,7 +317,9 @@ public class ActionMon extends BaseAction {
         HashMap prod  = cropDao.findById(idCrop);
         Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
 //        System.out.println("tyCro=>"+tyCro);
-        
+        this.setType_dis_con(new DiseasesDao().findAllByTypeCrop(tyCro));
+        this.setType_pest_con(new PestsDao().findAllByTypeCrop(tyCro));
+        this.setType_weeds_con(new WeedsDao().findAllByTypeCrop(tyCro));
         try {
             this.setIdMon(Integer.parseInt(this.getRequest().getParameter("idMon")));
         } catch (NumberFormatException e) {
@@ -319,6 +367,16 @@ public class ActionMon extends BaseAction {
             
             mon.setProductionEvents(new ProductionEvents(idCrop));
             mon.setDateMon(dateMon);          
+            if (mon.getMonitorPestsMon()==null || !mon.getMonitorPestsMon()) {
+                mon.setPests(null);   
+            }      
+            if (mon.getMonitorWeedsMon()==null || !mon.getMonitorWeedsMon()) {
+                mon.setWeeds(null);
+            }      
+            if (mon.getMonitorDiseasesMon()==null || !mon.getMonitorDiseasesMon()) {
+                mon.setDiseases(null);
+            }   
+            
 //            if (mon.getMonitorPestsMon()==null && mon.getMonitorDiseasesMon()==null && mon.getMonitorWeedsMon()==null) {
 //            if (sowing.getChemicalsSowing().getIdCheSow()==-1) {
 //                sowing.setChemicalsSowing(null);

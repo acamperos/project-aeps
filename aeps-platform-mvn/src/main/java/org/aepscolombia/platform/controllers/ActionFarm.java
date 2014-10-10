@@ -4,7 +4,17 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import com.opensymphony.xwork2.ActionContext;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +22,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.aepscolombia.platform.models.dao.AssociationDao;
 import org.aepscolombia.platform.models.dao.DepartmentsDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 
@@ -20,6 +33,7 @@ import org.aepscolombia.platform.models.dao.FarmsDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 
 import org.aepscolombia.platform.models.entity.Departments;
@@ -30,7 +44,9 @@ import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Municipalities;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
+import org.aepscolombia.platform.util.GlobalFunctions;
 
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.apache.commons.lang.StringUtils;
@@ -82,6 +98,8 @@ public class ActionFarm extends BaseAction {
     private Integer searchFromFarm;
     private String search_farm;    
     private UsersDao usrDao;
+    private List<Entities> list_agronomist;
+    private AssociationDao assDao;
 
     //Metodos getter y setter por cada variable del formulario 
     /**
@@ -110,8 +128,22 @@ public class ActionFarm extends BaseAction {
     public void setSearch_farm(String search_farm) {
         this.search_farm = search_farm;
     }
-    
-    
+
+    public List<Entities> getList_agronomist() {
+        return list_agronomist;
+    }
+
+    public void setList_agronomist(List<Entities> list_agronomist) {
+        this.list_agronomist = list_agronomist;
+    }
+
+    public AssociationDao getAssDao() {
+        return assDao;
+    }
+
+    public void setAssDao(AssociationDao assDao) {
+        this.assDao = assDao;
+    }   
     
     public List<HashMap> getListProperties() {
         return listProperties;
@@ -396,6 +428,7 @@ public class ActionFarm extends BaseAction {
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());           
         this.setCity_property(mun);
+        assDao = new AssociationDao();
 //        HashMap route = new HashMap();
 //        route.put("getting", getText("email.from"));
 //        listRoute.add(route);
@@ -646,6 +679,34 @@ public class ActionFarm extends BaseAction {
         return "combo";
     }  
     
+    private String name_agronomist;
+    private String selectAllname_agronomist;
+    private String selectItemname_agronomist;      
+
+    public String getName_agronomist() {
+        return name_agronomist;
+    }
+
+    public void setName_agronomist(String name_agronomist) {
+        this.name_agronomist = name_agronomist;
+    }  
+
+    public String getSelectAllname_agronomist() {
+        return selectAllname_agronomist;
+    }
+
+    public void setSelectAllname_agronomist(String selectAllname_agronomist) {
+        this.selectAllname_agronomist = selectAllname_agronomist;
+    }
+
+    public String getSelectItemname_agronomist() {
+        return selectItemname_agronomist;
+    }
+
+    public void setSelectItemname_agronomist(String selectItemname_agronomist) {
+        this.selectItemname_agronomist = selectItemname_agronomist;
+    }
+    
     /**
      * Encargado de buscar las coincidencias de un formulario de busqueda, para cada una de las
      * fincas registradas a un usuario
@@ -663,11 +724,23 @@ public class ActionFarm extends BaseAction {
         valId       = (String) (this.getRequest().getParameter("valId"));
         selected    = (String) (this.getRequest().getParameter("selected"));
         viewInfo    = (String) (this.getRequest().getParameter("viewInfo"));
-        if (selected == null) selected = "property";
+        String selAll = "false";
+        if(selected==null) {
+            selected="property";
+            selAll = "true";
+        }       
+        
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
         additionals = new HashMap();
         additionals.put("selected", selected);
         HashMap findParams = new HashMap();
-        
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        list_agronomist   = assDao.gelAllAgronomist(idEntSystem);
         if(searchFromFarm!=null && searchFromFarm==2) {
             search_farm = "";
         }
@@ -692,9 +765,9 @@ public class ActionFarm extends BaseAction {
         }
         findParams.put("pageNow", pageReq);
         findParams.put("maxResults", this.getMaxResults());
-        FarmsDao eventoDao = new FarmsDao();
+        FarmsDao farmDao = new FarmsDao();
 //        System.out.println("entreeee");
-        listProperties = eventoDao.findByParams(findParams);
+        listProperties = farmDao.findByParams(findParams);
 //        this.setCountTotal(100);
 //        System.out.println("entreeee->"+listProperties.get(0).get("countTotal"));
         this.setCountTotal(Integer.parseInt(String.valueOf(listProperties.get(0).get("countTotal"))));
@@ -702,6 +775,44 @@ public class ActionFarm extends BaseAction {
         listProperties.remove(0);
 //        System.out.println("countTotal->"+this.getCountTotal());
         return SUCCESS;
+    }
+    
+    /**
+     * Bloque correspondiente al tratamiento de creacion y lectura de archivos
+     *
+     */    
+    private InputStream inputStream;   
+    
+    public InputStream getInputStream() {  
+        return inputStream;  
+    }  
+  
+    public void setInputStream(InputStream inputStream) {  
+        this.inputStream = inputStream;  
+    }
+    
+    public String getReport() throws Exception {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "farm/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        
+        String selAll = "false";           
+        if (selectAllname_agronomist!=null) {
+            selAll = "true";
+        }
+        
+        HashMap findParams = new HashMap();
+        findParams.put("selAll", selAll);
+        findParams.put("selItem", selectItemname_agronomist);
+        Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
+        findParams.put("entType", entTypeId);
+        findParams.put("idEntUser", idEntSystem);
+        String fileName  = "/var/www/document/farmsInfo.csv";
+        farDao.getFarms(findParams, fileName);
+  
+        File f = new File(fileName);  
+        inputStream = new FileInputStream(f);  
+        return "OUTPUTCSV"; 
     }
 
     /**
@@ -782,7 +893,8 @@ public class ActionFarm extends BaseAction {
         ProducersDao proDao = new ProducersDao();
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
-        Transaction tx = null;
+        Transaction tx  = null;
+        HashMap proData = proDao.findById(idProducer); 
 
         Double altPro = Double.parseDouble(altitude_property.replace(',','.'));
         Double latPro = Double.parseDouble(latitude_property.replace(',','.'));
@@ -856,6 +968,62 @@ public class ActionFarm extends BaseAction {
             log.setActionTypeLogEnt(action);
             session.saveOrUpdate(log);
 //            logDao.save(log);
+            
+            /*
+            "102": "Nombre de la finca" => nameFarm
+            "103": "-30.98664622,-64.10017675,601" Capturar posicion => lat, lng, alt
+            "105": "Vereda" => district
+            "108": "Indicación (como llegar)" => address
+            "241": "Seleccione el productor asociado" => Seleccion (solo dato seleccionado) => prodId
+            "336": "Departamento" => department
+            "338": "Municipio (Amazonas)" => municipality
+            */
+            
+            //Manejo para ingresar datos en MongoDB
+            /*SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+
+            HashMap valInfo = new HashMap();
+            valInfo.put("farmId", far.getIdFar());
+            valInfo.put("nameFarm", far.getNameFar());
+            valInfo.put("prodId", idProducer);
+            valInfo.put("nameProd", proData.get("name"));
+            valInfo.put("district", far.getNameCommuneFar());
+            valInfo.put("address", far.getAddressFar());
+            valInfo.put("lat", latPro);
+            valInfo.put("lng", lonPro);
+            valInfo.put("alt", altPro);
+            valInfo.put("department", proData.get("id_dep"));
+            valInfo.put("municipality", cityFar);
+            valInfo.put("userMobileId", sfUser.getId());      
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", '"'+far.getIdFar()+'"');
+            query.put("form_id", "3");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+
+            DBCursor cursor    = col.find(query);
+            WriteResult result = null;
+            BasicDBObject jsonField = null;
+            jsonField          = GlobalFunctions.generateJSONProducer(valInfo);
+            
+            if (cursor.count()>0) {
+                result = col.update(query, jsonField);
+            } else {
+                result = col.insert(jsonField);
+            }
+            
+            if (!result.getError().equals("")) {
+                throw new HibernateException("");
+            }*/
 
             tx.commit();
             state = "success";

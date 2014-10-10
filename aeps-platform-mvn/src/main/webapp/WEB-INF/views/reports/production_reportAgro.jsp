@@ -5,18 +5,15 @@
 <!DOCTYPE html>
 <html>
 	<head>							
-        <script type="text/javascript" src="scripts/js/highcharts/highcharts.js"></script>
-        <script type="text/javascript" src="scripts/js/highcharts/highcharts-more.js"></script>
-        <script type="text/javascript" src="scripts/js/highcharts/exporting.js"></script>
 		<script type="text/javascript" src="scripts/js/generals/reportAgro.js"></script>
 	</head>
 	<body>		
         <s:hidden name="info"/>
-        <div id="container" style="height: 400px; margin: auto; min-width: 310px; max-width: 600px"></div>
+        <div id="container" style="height: 400px; margin: auto; width: auto"></div>
 		<script>
-            //alert($("#info").val());
+//            alert($("#info").val());
             objResult = JSON.parse($("#info").val());
-			chargeInfographic();
+			chargeInfographic('container');
 		</script>
 	</body>
 </html>

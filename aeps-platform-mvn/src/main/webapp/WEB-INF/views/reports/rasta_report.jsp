@@ -15,41 +15,43 @@
         <link rel="stylesheet" href="scripts/css/generals/report.css">
 	</head>
 	<body>		
-		<div class="row">			
-			<div class="span7" style="padding-left: 30px;">
-				<table border="1">
+		<div class="row w-box">			
+			<div class="span7">
+                <table border="1" class="table table-bordered">
+                    <s:if test="typeEnt==1">                        
+                        <tr>
+                            <th><i class="icon-producer"></i>Productor</th>
+                            <td id="producerId" class="infoGeneral"></td>
+                        </tr>
+                    </s:if> 
 					<tr>
-						<th>Productor</th>
-						<td id="producerId" class="infoGeneral"></td>
-					</tr>
-					<tr>
-						<th>PH</th>
+						<th><i class="icon-ph"></i>PH</th>
 						<td id="phId" class="infoGeneral"></td>
 					</tr>
 					<tr>
-						<th>Estructura</th>
+						<th><i class="icon-struct"></i>Estructura</th>
 						<td id="structureId" class="infoGeneral"></td>
 					</tr>
 					<tr>
-						<th>Exposición Solar</th>
+						<th><i class="icon-expose"></i>Exposición Solar</th>
 						<td id="exposeId" class="infoGeneral"></td>
 					</tr>
 					<tr>
-						<th>Recubrimiento del Lote</th>
+						<th><i class="icon-cover"></i>Recubrimiento del Lote</th>
 						<td id="coveringId" class="infoGeneral"></td>
 					</tr>
 					<tr>
-						<th>Drenaje Interno</th>
+						<th><i class="icon-intdra"></i>Drenaje Interno</th>
 						<td id="drainIntId" class="infoGeneral"></td>
 					</tr>
 					<tr>
-						<th>Drenaje Externo</th>
+						<th><i class="icon-extdra"></i>Drenaje Externo</th>
 						<td id="drainExtId" class="infoGeneral"></td>
 					</tr>
-					<tr>
-						<th>Profundidad  efectiva (cm)</th>
+<!--					<tr>
+						<th><i class="icon-depth"></i>Profundidad  efectiva (cm)</th>
 						<td id="depthId" class="infoGeneral"></td>
-					</tr>
+					</tr>-->
 				</table>
 			</div>		
 			<div class="span3">

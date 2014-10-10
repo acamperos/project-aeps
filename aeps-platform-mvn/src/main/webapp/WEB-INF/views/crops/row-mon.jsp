@@ -1,8 +1,26 @@
 <s:date name="dateMon" format="dd/MM/yyyy" var="dateTransformRowMon"/>
 <td><s:property value="%{#dateTransformRowMon}" /></td>
-<td><s:property value="monDesPet" /></td>
-<td><s:property value="monDesDis" /></td>
-<td><s:property value="monDesWee" /></td>
+<td>
+    <s:property value="monDesPet" /><br />
+    <s:if test="%{!namePets.equals('')}">
+        Nom. Plaga: <s:property value="namePets" /><br />
+        Porcentaje: <s:property value="perPets" />
+    </s:if>
+</td>
+<td>
+    <s:property value="monDesDis" /><br />
+    <s:if test="%{!nameDis.equals('')}">
+        Nom. Enfermedad: <s:property value="nameDis" /><br />
+        Porcentaje: <s:property value="perDis" />
+    </s:if>
+</td>
+<td>
+    <s:property value="monDesWee" /><br />
+    <s:if test="%{!nameWee.equals('')}">
+        Nom. Maleza: <s:property value="nameWee" /><br />
+        Porcentaje: <s:property value="perWee" />
+    </s:if>
+</td>
 <td>
     <% if (usrMonDao.getPrivilegeUser(userMon.getIdUsr(), "crop/modify") || (usrMonDao.getPrivilegeUser(userMon.getIdUsr(), "crop/delete"))) { %>
         <div class="btn-group">

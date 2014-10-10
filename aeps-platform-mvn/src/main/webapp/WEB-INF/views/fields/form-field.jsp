@@ -133,9 +133,11 @@
                             </div>
                         </div>    
                         <div class="control-group">
-                            <button type="button" class="btn btn-initial btn-space" onclick="viewPosition('/viewPositionField.action', 'formField', 'latitude_lot', 'formField_latitude_lot', 'length_lot', 'formField_length_lot', 'divFieldsForm', 'divListFieldsForm');">
-                                <i class="icon-map-marker"></i> Cambiar ubicacion
-                            </button>
+                            <div class="controls">
+                                <button type="button" class="btn btn-initial btn-space" onclick="viewPosition('/viewPositionField.action', 'formField', 'latitude_lot', 'formField_latitude_lot', 'length_lot', 'formField_length_lot', 'divFieldsForm', 'divListFieldsForm');">
+                                    <i class="icon-map-marker" style="font-size: 18px"></i> Visualizar/editar las coordenadas en un mapa
+                                </button>
+                            </div>
                         </div>
                         <div class="control-group">
                             <label for="formField_altitude_lot" class="control-label req">

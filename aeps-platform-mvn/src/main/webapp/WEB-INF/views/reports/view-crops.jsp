@@ -6,5 +6,5 @@
     </div>     
 </div>     
 <div class="container" id="divConListCrop">
-    <%@ include file="info-crops.jsp" %>            
+    <%--<%@ include file="info-crops.jsp" %>--%>            
 </div>     

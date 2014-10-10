@@ -1,3 +1,6 @@
+<% if (entTypeSoilId==3) { %>    
+    <td><s:property value="nameAgro" /></td>
+<% } %>
 <td>
     Lote: #<s:property value="num_field" />-<s:property value="name_field" />,<br />
     Finca: #<s:property value="num_farm" />-<s:property value="name_farm" />
@@ -17,13 +20,13 @@
 <td><s:property value="carbonates" /></td>
 <s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
-<% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/delete"))) { %>
+<% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify") || (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete"))) { %>
     <td>
         <div class="btn-group">
-            <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify")) { %>
+            <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify")) { %>
                 <a class="btn btn-small btn-edit" title="Editar Rasta" onclick="viewForm('/soil/showSoil.action?action=modify&page=<%=pageNow%>', 'idRasta', <s:property value ="id_ras" />, 'Editar Rasta', 1050, 550)"><i class="icon-pencil"></i></a>
             <% } %>
-            <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/delete")) { %>
+            <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete")) { %>
                 <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Rasta" onclick="showDialogDelete(this, 'confirm_dialog_lot', 'deleteSoil.action?idRasta=<s:property value ="id_ras" />', 'searchSoil.action?page=<%=pageNow%>', 'divRasta', '<%=divHide%>');"><i class="icon-trash"></i></a>
             <% } %>
         </div>

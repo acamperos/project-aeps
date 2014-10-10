@@ -127,9 +127,11 @@
                         </div>
                     </div>   
                     <div class="control-group">
-                        <button type="button" class="btn btn-initial btn-space" onclick="viewPositionRasta('/soil/viewPositionSoil.action', 'formRasta', 'rasta.latitudRas', 'formRasta_rasta_latitudRas', 'rasta.longitudRas', 'formRasta_rasta_longitudRas', 'divRastaForm', 'divListRastaForm');">
-                            <i class="icon-map-marker"></i> Cambiar ubicacion
-                        </button>
+                        <div class="controls">
+                            <button type="button" class="btn btn-initial btn-space" onclick="viewPositionRasta('/soil/viewPositionSoil.action', 'formRasta', 'rasta.latitudRas', 'formRasta_rasta_latitudRas', 'rasta.longitudRas', 'formRasta_rasta_longitudRas', 'divRastaForm', 'divListRastaForm');">
+                                <i class="icon-map-marker" style="font-size: 18px"></i> Visualizar/editar las coordenadas en un mapa
+                            </button>
+                        </div>
                     </div>
                     <div class="control-group">
                         <s:label for="formRasta_rasta_altitudRas" cssClass="control-label req" value="Altitud del rasta (metros):"></s:label>
@@ -239,7 +241,7 @@
                     <legend>Pedregosidad</legend>
                     <div class="row-fluid">
                         <div class="span8 control-group">
-                            <s:label for="formRasta_rasta_rocasSuperficieRas" cssClass="control-label" value="Pedregosidad superficial:"></s:label>
+                            <s:label for="formRasta_rasta_rocasSuperficieRas" cssClass="control-label req" value="Pedregosidad superficial:"></s:label>
                             <!--</div>-->
                             <!--<div class="span4 control-group">-->
                             <div class="controls">
@@ -262,7 +264,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span8 control-group">
-                            <s:label for="formRasta_rasta_rocasPerfilRas" cssClass="control-label" value="Pedregosidad en el Perfil:"></s:label>
+                            <s:label for="formRasta_rasta_rocasPerfilRas" cssClass="control-label req" value="Pedregosidad en el Perfil:"></s:label>
                             <div class="controls">
                                 <s:select
                                     name="rasta.rocasPerfilRas"
