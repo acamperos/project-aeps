@@ -174,4 +174,102 @@ public class DescriptionsProductionEventDao
             session.close();
         }
     }
+    
+    public static String getDescriptions(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";  
+        sql += "select DATE_FORMAT(des.date_des_pro,'%Y-%m-%d') as dateDes, des.obs_des_pro";
+        sql += " from descriptions_production_event des"; 
+        sql += " where des.status=1";
+        sql += " and des.id_production_event_des_pro="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[395]\":\""+data[0]+"\","+
+                           "\"survey_solution[396]\":\""+data[1]+"\","+ 
+                           "\"subform_id\":\""+54+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[395]\":\""+data[0]+"\","+
+                           "\"survey_solution[396]\":\""+data[1]+"\","+ 
+                           "\"subform_id\":\""+54+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
+    public static String getDescriptionsBeans(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";  
+        sql += "select DATE_FORMAT(des.date_des_pro,'%Y-%m-%d') as dateDes, des.obs_des_pro";
+        sql += " from descriptions_production_event des"; 
+        sql += " where des.status=1";
+        sql += " and des.id_production_event_des_pro="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[449]\":\""+data[0]+"\","+
+                           "\"survey_solution[450]\":\""+data[1]+"\","+ 
+                           "\"subform_id\":\""+63+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[449]\":\""+data[0]+"\","+
+                           "\"survey_solution[450]\":\""+data[1]+"\","+ 
+                           "\"subform_id\":\""+63+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
 }

@@ -728,6 +728,7 @@ public class ActionField extends BaseAction {
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
         String fileName  = "/var/www/document/fieldsInfo.csv";
+//        String fileName  = "fieldsInfo.csv";
         lotDao.getFields(findParams, fileName);
   
         File f = new File(fileName);  
@@ -769,7 +770,7 @@ public class ActionField extends BaseAction {
             //Pasar la conversion a grados, min, seg por defecto ??
 //            this.setIdProductor(Integer.parseInt(String.valueOf(fieldInfo.get("id_productor"))));
             this.setIdFarm(Integer.parseInt(String.valueOf(fieldInfo.get("id_farm"))));
-            this.setIdField(Integer.parseInt(String.valueOf(fieldInfo.get("id_lot"))));
+//            this.setIdField(Integer.parseInt(String.valueOf(fieldInfo.get("id_lot"))));
 //            this.setIdProducer(Integer.parseInt(String.valueOf(fieldInfo.get("id_producer"))));
             this.setTypeLot(Integer.parseInt(String.valueOf(fieldInfo.get("type_lot"))));
             this.setName_producer_lot(String.valueOf(fieldInfo.get("name_producer")));
@@ -834,6 +835,8 @@ public class ActionField extends BaseAction {
         try {
             int idProOld = 0;
             tx = session.beginTransaction();
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
             Fields lot = null;
 //            FarmsDao farmDao = new FarmsDao();
             HashMap objFarm = new FarmsDao().findById(idFarm);
@@ -858,6 +861,11 @@ public class ActionField extends BaseAction {
             lot.setLongitudeFie(lonLot);
             if (areaLot!=null) lot.setAreaFie(areaLot);            
             lot.setFieldTypes(new FieldTypes(typeLot));
+            Integer idUserMobile = null;
+            if (sfUser!=null) {
+                idUserMobile = sfUser.getId().intValue();
+            }
+            lot.setCreatedBy(idUserMobile);
 //            lot.setControlPlagasLot(true);
 //            lot.setControlEnfermedadesLot(true);       
             session.saveOrUpdate(lot);
@@ -890,14 +898,14 @@ public class ActionField extends BaseAction {
                 session.saveOrUpdate(fiePro);
             }
             
-            LogEntities log = new LogEntities();
+            /*LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
             log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(lot.getIdFie());
             log.setTableLogEnt("fields");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);*/
 //            logDao.save(log);            
             
             /*
@@ -908,24 +916,22 @@ public class ActionField extends BaseAction {
             "89": "Área del Lote" => areaField
             */
             
-            //Manejo para ingresar datos en MongoDB
-            /*SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            //Manejo para ingresar datos en MongoDB            
 
             HashMap valInfo = new HashMap();
             valInfo.put("fieldId", lot.getIdFie());
             valInfo.put("farmId", idFarm);
-            valInfo.put("nameFarm", String.valueOf(objFarm.get("name_farm")));
+            valInfo.put("nameFarm", objFarm.get("name_farm"));
             valInfo.put("typeField", typeLot);
             valInfo.put("nameField", name_lot);
             valInfo.put("lat", latLot);
             valInfo.put("lng", lonLot);
             valInfo.put("alt", altLot);
             valInfo.put("areaField", areaLot);
-            valInfo.put("userMobileId", sfUser.getId());      
+            valInfo.put("userMobileId", idUserMobile);      
             
             BasicDBObject query = new BasicDBObject();
-            query.put("InsertedId", '"'+lot.getIdFie()+'"');
+            query.put("InsertedId", ""+lot.getIdFie());
             query.put("form_id", "5");
             
             MongoClient mongo = null;
@@ -940,18 +946,21 @@ public class ActionField extends BaseAction {
             DBCursor cursor    = col.find(query);
             WriteResult result = null;
             BasicDBObject jsonField = null;
-            jsonField          = GlobalFunctions.generateJSONProducer(valInfo);
+            jsonField          = GlobalFunctions.generateJSONField(valInfo);
             
             if (cursor.count()>0) {
+                System.out.println("actualizo mongo");
                 result = col.update(query, jsonField);
             } else {
+                System.out.println("inserto mongo");
                 result = col.insert(jsonField);
             }
             
-            if (!result.getError().equals("")) {
+            if (result.getError()!=null) {
                 throw new HibernateException("");
-            }*/
+            }
             
+            mongo.close();
             tx.commit();           
             state = "success";
             if (action.equals("C")) {
@@ -1017,6 +1026,29 @@ public class ActionField extends BaseAction {
             log.setActionTypeLogEnt("D");
             session.saveOrUpdate(log);
 //            logDao.save(log);
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+lot.getIdFie());
+            query.put("form_id", "5");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+            WriteResult result = null;
+            
+            System.out.println("borro mongo");
+            result = col.remove(query);
+            
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }
+            mongo.close();
+            
             tx.commit();         
             state = "success";
             info  = "El lote ha sido borrado con exito";

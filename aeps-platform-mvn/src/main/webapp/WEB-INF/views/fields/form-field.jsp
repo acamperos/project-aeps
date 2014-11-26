@@ -165,7 +165,7 @@
                         <s:hidden name="viewInfo"/>
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "field/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "field/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formField'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
+                            <sj:submit id="btnField" type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formField'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeField" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Lote</sj:submit>
                         <% } %>
                         <!--<button class="btn btn_per bt_send_lot" onclick="sendForm('../actions/Actions.php?action=saveField', 'formLot', 'divMessage')"><i class="icon-save"></i>  Guardar informaci&oacute;n</button>-->
                         <button class="btn btn-large bt_cancel_field" onclick="resetForm('formField'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
@@ -201,6 +201,16 @@
                         generateDegrees('formField_latitude_lot', 'formField_latitude_degrees_lot', 'formField_latitude_minutes_lot', 'formField_latitude_seconds_lot');
                         generateDegrees('formField_length_lot', 'formField_length_degrees_lot', 'formField_length_minutes_lot', 'formField_length_seconds_lot');
                         $.subscribe('completeField', function(event, data) {
+                            var actExeFie = $("#formField_actExe").val();
+                            if (actExeFie=='create') {
+                                $('#btnField').on('click', function() {
+                                    ga('send', 'event', 'Fields', 'click', 'Create');
+                                });
+                            } else if (actExeFie=='modify') {
+                                $('#btnField').on('click', function() {
+                                    ga('send', 'event', 'Fields', 'click', 'Update');
+                                });                
+                            }
                             completeFormGetting('dialog-form', 'formField', 'divFields', event.originalEvent.request.responseText);
                             setTimeout( function() {
                                 showInfo("searchField.action?page="+$("#formField_page").val(), "divConListFields");

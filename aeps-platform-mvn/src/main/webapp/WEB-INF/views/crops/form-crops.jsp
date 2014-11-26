@@ -88,7 +88,7 @@
                     <s:hidden name="newRow" value="1"/>    
                     <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                     <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCrop'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeCrop" validate="true" validateFunction="validationForm"><i class="icon-save"></i> Guardar Evento Productivo</sj:submit>
+                        <sj:submit id="btnCrop" type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCrop'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeCrop" validate="true" validateFunction="validationForm"><i class="icon-save"></i> Guardar Evento Productivo</sj:submit>
                     <% } %>
                     <button class="btn btn-large bt_cancel_crop" onclick="resetForm('formCrop'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                 </div>    
@@ -99,6 +99,16 @@
                 $("#formCrop_performObj").numeric();
                 $("#formCrop_performObj").val(parsePointSeparated($("#formCrop_performObj").val()));        
                 $.subscribe('completeCrop', function(event, data) {
+                    var actExeCrop = $("#formCrop_actExe").val();
+                    if (actExeCrop=='create') {
+                        $('#btnCrop').on('click', function() {
+                            ga('send', 'event', 'Crops', 'click', 'Create');
+                        });
+                    } else if (actExeCrop=='modify') {
+                        $('#btnCrop').on('click', function() {
+                            ga('send', 'event', 'Crops', 'click', 'Update');
+                        });                
+                    }
                     completeFormGetting('dialog-form', 'formCrop', 'divCrops', event.originalEvent.request.responseText);
 //                    alert(action);
                     var json = jQuery.parseJSON(event.originalEvent.request.responseText);

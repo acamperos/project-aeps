@@ -81,6 +81,7 @@
         </script>
     </head>
     <body>
+        <%@ include file="../generals/googleAnalytics.jsp" %>
         <div id="divMessage" style="display:none;"></div>        
         <div id="login-wrapper" class="clearfix">            
             <div class="main-col">
@@ -152,7 +153,7 @@
                         </div>                 
                     </s:form>
                     <div class="submit_sect">
-                        <sj:submit type="button" formIds="formLogin" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" onCompleteTopics="completeLogin" validate="true" validateFunction="validationForm"><s:property value="%{getText('button.signin.login')}"/></sj:submit>
+                        <sj:submit type="button" formIds="formLogin" cssClass="btn btn-initial btn-large" onclick="addMessageProcess(); ga('send', 'event', 'Register', 'click', 'SingIn');" onCompleteTopics="completeLogin" validate="true" validateFunction="validationForm"><s:property value="%{getText('button.signin.login')}"/></sj:submit>
                     </div>
                     <script>
                         $.subscribe('completeLogin', function(event,data) {
@@ -173,7 +174,7 @@
                             <%--<s:textfield id="formValidate_noidentify" name="noidentify" />--%>
                         </div> -->
                             <div class="span6 control-group">
-                                <label class="control-label" for="formValidate_infoUser">Ingrese su correo/celular</label>
+                                <label class="control-label" for="formValidate_infoUser">Ingrese su correo</label>
                                 <div class="controls">
                                     <s:textfield id="formValidate_infoUser" name="infoUser" />
                                 </div>
@@ -188,7 +189,7 @@
                                 </a>
                             </div>
                             <div class="submit_sect">
-                                <sj:submit type="button" id="btRestore" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeRestore" validate="true" validateFunction="validationForm">Recuperar</sj:submit>
+                                <sj:submit type="button" id="btRestore" cssClass="btn btn-initial btn-large" onclick="addMessageProcess(); ga('send', 'event', 'Register', 'click', 'Remember');" targets="divMessage" onCompleteTopics="completeRestore" validate="true" validateFunction="validationForm">Recuperar</sj:submit>
                             </div>
                         </div>
                     </s:form>
@@ -247,7 +248,7 @@
                             </div>
                             <div class="hide" id="divAssociationAdd">
                                 <div class="form-group control-group">
-                                    <label class="control-label req" for="formNewUser_nameAssoExt">Sitio donde trabaja:</label>
+                                    <label class="control-label req" for="formNewUser_idAssoExt">Sitio donde trabaja:</label>
                                     <div class="controls">
                                         <s:select
                                             name="idAssoExt" 
@@ -375,7 +376,7 @@
                             </div>                            
                             <div class="span4">
                                 <!--<button type="submit" class="btn btn-primary">Crear usuario</button>-->
-                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
+                                <sj:submit cssClass="btn btn-initial btn-large" onclick="addMessageProcess(); ga('send', 'event', 'Register', 'click', 'SignUp');" targets="divMessage" onCompleteTopics="completeUser" value="Crear usuario" validate="true" validateFunction="validationForm"/>
                             </div>
                         </div>                            
                     </s:form>

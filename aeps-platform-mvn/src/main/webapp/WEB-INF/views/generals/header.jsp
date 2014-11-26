@@ -31,7 +31,7 @@
                         <!--<div class="container">-->
                             <ul class="nav" id="ulOptionsMenu">
                                 <li class="active homeCls">
-                                    <s:a href="home.action" onclick="activeOption('ulOptionsMenu')"><i class="icon-home"></i><s:property value="getText('button.home.platform')" /></s:a>
+                                    <s:a href="locale.action" onclick="activeOption('ulOptionsMenu')"><i class="icon-home"></i><s:property value="getText('button.home.platform')" /></s:a>
                                 </li>
                                 <li class="aboutCls">
                                     <s:a href="about.action" onclick="activeOption('ulOptionsMenu')"><s:property value="getText('button.howis.platform')" /></s:a>

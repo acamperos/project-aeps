@@ -262,13 +262,13 @@
                 <%--<sj:submit cssClass="btn btn-inverse" targets="divBodyLayout" onCompleteTopics="completeProducer" value="Guardar productor" validate="true" validateFunction="validationForm"/>--%>
                 <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                 <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "producer/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "producer/modify"))) { %>
-                    <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formProducer'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
+                    <sj:submit id="btnProducer" type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formProducer'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeProducer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar productor</sj:submit>
                 <% } %>
                 <!--<button class="btn btn-inverse" onclick="saveData('saveProducer.action','searchProducer.action?page=<%=pageNow%>','formProducer');">Guardar productor</button>-->
                 <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
             </div>
         </s:form>
-        <script>
+        <script>           
             var idPro  = $("#formProducer_idProducer").val();
             var action = $("#formProducer_actExe").val();
             var page   = $("#formProducer_page").val();
@@ -295,6 +295,16 @@
             $("#formProducer_telephone_producer").mask("9999999",{placeholder:""});
             $("#formProducer_celphone_producer").mask("h999999999",{placeholder:""});
             $.subscribe('completeProducer', function(event, data) {
+                var actExePro = $("#formProducer_actExe").val();
+                if (actExePro=='create') {
+                    $('#btnProducer').on('click', function() {
+                        ga('send', 'event', 'Producers', 'click', 'Create');
+                    });
+                } else if (actExePro=='modify') {
+                    $('#btnProducer').on('click', function() {
+                        ga('send', 'event', 'Producers', 'click', 'Update');
+                    });                
+                }
                 //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
                 //     '\n\nThe output div should have already been updated with the responseText.');
                 //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);

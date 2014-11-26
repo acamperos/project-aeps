@@ -112,7 +112,7 @@ public class PreparationsDao
         String sql = "";     
         String sqlAdd = "";     
                       
-        sql  += "select p.id_prep, p.date_prep, tp.name_pre_typ, p.other_preparation_type_prep, p.depth_prep";
+        sql  += "select p.id_prep, p.date_prep, tp.name_pre_typ, p.other_preparation_type_prep, p.depth_prep, p.passings_number_prep";
         sql += " from preparations p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_prep";    
         sql += " left join preparations_types tp on tp.id_pre_typ=p.preparation_type_prep and tp.status_pre_typ=1";     
@@ -147,6 +147,7 @@ public class PreparationsDao
                 temp.put("namePrep", data[2]);             
                 temp.put("otherNamePrep", data[3]);                
                 temp.put("depthPrep", data[4]);            
+                temp.put("passNum", data[5]);            
                 result.add(temp);
             }
             tx.commit();
@@ -228,5 +229,117 @@ public class PreparationsDao
         } finally {
             session.close();
         }
+    }
+    
+    public static String getPreparations(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";                   
+        sql += "select DATE_FORMAT(p.date_prep,'%Y-%m-%d') as datePrep, p.preparation_type_prep, p.other_preparation_type_prep, FORMAT(p.depth_prep,0),";
+        sql += " FORMAT(p.passings_number_prep,0), p.id_prep";
+        sql += " from preparations p"; 
+        sql += " where p.status=1";
+        sql += " and p.id_production_event_prep="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[200]\":\""+data[0]+"\","+
+                           "\"survey_solution[201]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[202]\":\""+data[2]+"\","+ 
+                           "\"survey_solution[203]\":\""+data[3]+"\","+ 
+                           "\"survey_solution[378]\":\""+data[4]+"\","+ 
+                           "\"subform_id\":\""+46+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[200]\":\""+data[0]+"\","+
+                           "\"survey_solution[201]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[202]\":\""+data[2]+"\","+ 
+                           "\"survey_solution[203]\":\""+data[3]+"\","+ 
+                           "\"survey_solution[378]\":\""+data[4]+"\","+ 
+                           "\"subform_id\":\""+46+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
+    public static String getPreparationsBeans(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";                   
+        sql += "select DATE_FORMAT(p.date_prep,'%Y-%m-%d') as datePrep, p.preparation_type_prep, p.other_preparation_type_prep, FORMAT(p.depth_prep,0),";
+        sql += " FORMAT(p.passings_number_prep,0), p.id_prep";
+        sql += " from preparations p"; 
+        sql += " where p.status=1";
+        sql += " and p.id_production_event_prep="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[404]\":\""+data[0]+"\","+
+                           "\"survey_solution[405]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[406]\":\""+data[2]+"\","+ 
+                           "\"survey_solution[407]\":\""+data[3]+"\","+ 
+                           "\"survey_solution[408]\":\""+data[4]+"\","+ 
+                           "\"subform_id\":\""+57+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[404]\":\""+data[0]+"\","+
+                           "\"survey_solution[405]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[406]\":\""+data[2]+"\","+ 
+                           "\"survey_solution[407]\":\""+data[3]+"\","+ 
+                           "\"survey_solution[408]\":\""+data[4]+"\","+ 
+                           "\"subform_id\":\""+57+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
     }
 }

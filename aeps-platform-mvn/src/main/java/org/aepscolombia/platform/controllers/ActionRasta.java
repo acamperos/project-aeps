@@ -4,10 +4,17 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +23,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.script.*;
 import org.aepscolombia.platform.models.dao.AssociationDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
@@ -23,6 +32,7 @@ import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.RastasDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.Fields;
@@ -31,7 +41,9 @@ import org.aepscolombia.platform.models.entity.HorizontesRasta;
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Rastas;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -1024,6 +1036,7 @@ public class ActionRasta extends BaseAction {
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
         String fileName  = "/var/www/document/rastasInfo.csv";
+//        String fileName  = "rastasInfo.csv";
         rastaDao.getRastas(findParams, fileName);
   
         File f = new File(fileName);  
@@ -1123,6 +1136,8 @@ public class ActionRasta extends BaseAction {
         try {
 //            int idProOld = 0;
             tx = session.beginTransaction();
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
 //            Fields lot = null;
 //            if (rasta.getIdRas()<=0) {
 //                lot = new Fields();
@@ -1146,9 +1161,12 @@ public class ActionRasta extends BaseAction {
             
             String dmy     = new SimpleDateFormat("yyyy-MM-dd").format(rasta.getFechaRas());
             Date dateRasta = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
+            String dateRastaIn = dmy;
+            
             rasta.setFields(new Fields(idField));            
             rasta.setFechaRas(dateRasta);            
             rasta.setStatus(true);
+//            rasta.setCreatedBy(sfUser.getId().intValue());
             session.saveOrUpdate(rasta);    
             
             rasta.setNumeroCajuelaRas(rasta.getIdRas());
@@ -1157,31 +1175,179 @@ public class ActionRasta extends BaseAction {
 //            rastaDao.save(lot);
             
             //Agregar los horizontes
-            int numCaj = 0;
+            int numCaj    = 0;
+            String valHor = "[";   
+            
             for (HorizontesRasta horizon : additionalsAtrib) {
-                if (horizon.getColorHumedoHorRas()!=null){
+                if (horizon.getColorSecoHorRas()!=null || horizon.getColorHumedoHorRas()!=null){
                     horizon.setRastas(rasta);
     //                horizon.setResistenciasRompimiento(new ResistenciasRompimiento(horizon.getResistenciasRompimientoId()));
     //                horizon.setTextures(new Textures(horizon.getTexturesId()));
                     horizon.setStatus(true);
                     session.saveOrUpdate(horizon);
                     numCaj++;
+                    
+                    if (additionalsAtrib.size()==numCaj) {
+                        valHor += "{\"survey_solution[242]\":\""+horizon.getNumeroHorizonteHorRas()+"\","+
+                               "\"survey_solution[116]\":\""+horizon.getEspesorHorRas()+"\","+ 
+                               "\"survey_solution[117]\":\""+horizon.getColorSecoHorRas()+"\","+ 
+                               "\"survey_solution[118]\":\""+horizon.getColorHumedoHorRas()+"\","+ 
+                               "\"survey_solution[119]\":\""+horizon.getTextures().getIdTex()+"\","+ 
+                               "\"survey_solution[120]\":\""+horizon.getResistenciasRompimiento().getIdResRom()+"\","+ 
+                               "\"subform_id\":\""+30+"\","+ 
+                               "\"idx\":"+numCaj+"}"; 
+                    } else {
+                        valHor += "{\"survey_solution[242]\":\""+horizon.getNumeroHorizonteHorRas()+"\","+
+                               "\"survey_solution[116]\":\""+horizon.getEspesorHorRas()+"\","+ 
+                               "\"survey_solution[117]\":\""+horizon.getColorSecoHorRas()+"\","+ 
+                               "\"survey_solution[118]\":\""+horizon.getColorHumedoHorRas()+"\","+ 
+                               "\"survey_solution[119]\":\""+horizon.getTextures().getIdTex()+"\","+ 
+                               "\"survey_solution[120]\":\""+horizon.getResistenciasRompimiento().getIdResRom()+"\","+ 
+                               "\"subform_id\":\""+30+"\","+ 
+                               "\"idx\":"+numCaj+"},"; 
+                    }
                 }
             }
+            valHor += "]";            
             rasta.setNumeroCapasRas(numCaj);
             session.saveOrUpdate(rasta);
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
             log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
-//            log.setIdEntityLogEnt(1);
             log.setIdObjectLogEnt(rasta.getIdRas());
             log.setTableLogEnt("rastas");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
             session.saveOrUpdate(log);
-//            logDao.save(log);            
+//            logDao.save(log);   
             
+            /*
+            "109": "Fecha del Rasta" => dateRasta
+            "110": "Coordenadas" Capturar posicion => lat, lng, alt
+            "112": "Pendiente" => pend
+            "113": "Terreno circundante" => terreno
+            "114": "Posicion del perfil" => position
+            "115": "Horizontes [[\"survey_solution[242]\":"Numero" => number,\"survey_solution[116]\":"Espesor (cm)" => espesor,\"survey_solution[117]\":"Color seco" => colSeco,\"survey_solution[118]\":"Color humedo" => colHum,\"survey_solution[119]\":"Textura" => textura,\"survey_solution[120]\":"Resistencia al rompimiento" => resistencia,\"subform_id\":\"30\",\"idx\":1]]"
+            "121": "Caracteristicas y Observaciones" => caract
+            "122": "Carbonatos" => carbonato
+            "123": "Profundidad Carbonatos (cm)" => profCar
+            "124": "Pedregosidad superficial rocas" => pedrSupRo
+            "125": "Pedregosidad superficial piedras" => pedrSupPie
+            "126": "Pedregosidad en el Perfil rocas" => pedrPerRo
+            "127": "Pedregosidad en el Perfil piedras" => pedrPerPie
+            "128": "Horizonte pedregoso o rocoso" => horPed
+            "129": "Profundidad de horizonte pedregoso o rocoso (cm)" => profHorPedr
+            "130": "Espesor de horizonte pedregoso o rocoso (cm)" => espHor
+            "131": "Profundidad de primeras rocas o piedras (cm)" => profPri
+            "132": "Capas endurecidas" => capasEnd
+            "133": "Profundidad de capas endurecidas (cm)" => profCap
+            "134": "Espesor de capas endurecidas (cm)" => espCap
+            "135": "Moteados" => moteado
+            "136": "Profundidad de moteados (cm)" => profMot
+            "137": "Moteados mas bajo de 70cm" => moteadoBajo
+            "138": "Estructura del suelo" => estSuelo
+            "139": "Erosion" => erosion
+            "140": "Moho" => moho
+            "141": "Costras duras" => cosDur
+            "142": "Sitio expuesto a sol" => sitioSol
+            "143": "Costras blancas" => cosBlan
+            "144": "Costras negras" => cosNeg
+            "145": "Region seca" => regSeca
+            "146": "Raices vivas" => regViva
+            "147": "Profundidad de raices vivas (cm)" => profRai
+            "148": "Crecimiento de las plantas afectadas" => crecPlan
+            "149": "Mucha hojarasca" => muchaHoja
+            "150": "Suelo es muy negro, muy blando" => sueNegro
+            "151": "Cuchillo entra sin ningún esfuerzo" => cuchilloEnt
+            "152": "Cerca de agua subterránea muy superficial" => cercaAgua
+            "153": "Recubrimiento vegetal del suelo" => recVeg
+            "247": "Seleccion el lote asociado" => Seleccion => selLote
+            */
+            
+            //Manejo para ingresar datos en MongoDB            
+
+            HashMap valInfo = new HashMap();            
+            valInfo.put("dateRasta", dateRastaIn);
+            valInfo.put("pend", rasta.getPendienteTerrenoRas());
+            valInfo.put("terreno", rasta.getTerrenoCircundanteRas());
+            valInfo.put("position", rasta.getPosicionPerfilRas());
+            valInfo.put("pH", rasta.getPhRas());
+            valInfo.put("carbonato", rasta.getCarbonatosRas());
+            valInfo.put("profCar", rasta.getProfundidadCarbonatosRas());
+            valInfo.put("pedrSupRo", rasta.getRocasSuperficieRas());
+            valInfo.put("pedrSupPie", rasta.getPiedrasSuperficieRas());
+            valInfo.put("pedrPerRo", rasta.getRocasPerfilRas());
+            valInfo.put("pedrPerPie", rasta.getPiedrasPerfilRas());
+            valInfo.put("horPed", rasta.getHorizontePedrogosoRocosoRas());
+            valInfo.put("profHorPedr", rasta.getProfundidadHorizontePedregosoRas());
+            valInfo.put("espHor", rasta.getEspesorHorizontePedregosoRas());
+            valInfo.put("profPri", rasta.getProfundidadPrimerasPiedrasRas());
+            valInfo.put("capasEnd", rasta.getCapasEndurecidasRas());
+            valInfo.put("profCap", rasta.getPrufundidadCapasRas());
+            valInfo.put("espCap", rasta.getEspesorCapaEndurecidaRas());
+            valInfo.put("moteado", rasta.getMoteadosRas());
+            valInfo.put("profMot", rasta.getProfundidadMoteadosRas());
+            valInfo.put("moteadoBajo", rasta.getMoteadosMas70cmRas());
+            valInfo.put("estSuelo", rasta.getEstructuraRas());
+            valInfo.put("erosion", rasta.getErosionRas());
+            valInfo.put("moho", rasta.getMohoRas());
+            valInfo.put("cosDur", rasta.getCostrasDurasRas());
+            valInfo.put("sitioSol", rasta.getExposicionSolRas());
+            valInfo.put("cosBlan", rasta.getCostrasBlancasRas());
+            valInfo.put("cosNeg", rasta.getCostrasNegrasRas());
+            valInfo.put("regSeca", rasta.getRegionSecaRas());
+            valInfo.put("raiViva", rasta.getRaicesVivasRas());
+            valInfo.put("profRai", rasta.getProfundidadRaicesRas());
+            valInfo.put("crecPlan", rasta.getPlantasPequenasRas());
+            valInfo.put("muchaHoja", rasta.getHojarascaRas());
+            valInfo.put("sueNegro", rasta.getSueloNegroBlandoRas());
+            valInfo.put("cuchilloEnt", rasta.getCuchilloPrimerHorizonteRas());
+            valInfo.put("cercaAgua", rasta.getCercaRiosQuebradasRas());
+            valInfo.put("recVeg", rasta.getRecubrimientoVegetalRas());
+            valInfo.put("rastaId", rasta.getIdRas());
+            valInfo.put("valHorizons", valHor);
+            
+            valInfo.put("fieldId", idField);
+            HashMap fieldInfo = lotDao.findById(idField);
+            valInfo.put("nameField", String.valueOf(fieldInfo.get("name_lot")));
+            
+            valInfo.put("lat", rasta.getLatitudRas());
+            valInfo.put("lng", rasta.getLongitudRas());
+            valInfo.put("alt", rasta.getAltitudRas());
+            valInfo.put("userMobileId", sfUser.getId());      
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+rasta.getIdRas());
+            query.put("form_id", "6");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+
+            DBCursor cursor    = col.find(query);
+            WriteResult result = null;
+            BasicDBObject jsonField = null;
+            jsonField          = GlobalFunctions.generateJSONSoil(valInfo);
+            
+            if (cursor.count()>0) {
+                System.out.println("actualizo mongo");
+                result = col.update(query, jsonField);
+            } else {
+                System.out.println("inserto mongo");
+                result = col.insert(jsonField);
+            }
+            
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }
+            
+            mongo.close();
             tx.commit();           
             state = "success";
             if (action.equals("C")) {
@@ -1251,6 +1417,29 @@ public class ActionRasta extends BaseAction {
             log.setActionTypeLogEnt("D");
             session.saveOrUpdate(log);
 //            logDao.save(log);
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+ras.getIdRas());
+            query.put("form_id", "6");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+            WriteResult result = null;
+            
+            System.out.println("borro mongo");
+            result = col.remove(query);
+            
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }            
+            mongo.close();
+            
             tx.commit();         
             state = "success";
             info  = "El rasta ha sido borrado con exito";

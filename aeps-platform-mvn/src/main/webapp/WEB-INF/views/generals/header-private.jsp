@@ -60,7 +60,7 @@
                                                 <li><s:a href="%{contextPath}/configuration.action"><i class="icon-wrench"></i> Configuración</s:a></li>
                                                 <li>-</li>
                                                 <!--<li><a href="logout.action"><i class="icon-off">Salir</i></a></li>-->
-                                                <li><a href="<%= request.getContextPath() %>/logout.action"><i class="icon-signout"></i> Salir</a></li>
+                                                <li><a href="<%= request.getContextPath() %>/logout.action" onclick="ga('send', 'event', 'Register', 'click', 'LogOut');"><i class="icon-signout"></i> Salir</a></li>
                                             </ul>
                                         </div>
                                     </div>

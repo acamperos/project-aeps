@@ -29,7 +29,7 @@
                 <a href="/crop/dataCrop.action?idCrop=${idCrop}&page=<%=pageNow%>" class="btn btn-small" title="Ver Evento Productivo">Actualizar información <i class="icon-eye-open"></i></a>
             <% } %>
             <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/delete")) { %>
-                <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Evento Productivo" onclick="showDialogDelete(this, 'confirm_dialog_crop', 'deleteCrop.action?idCrop=<s:property value="idCrop" />', 'searchCrop.action?page=<%=pageNow%>', 'divCrops', '<%=divHide%>');"><i class="icon-trash"></i></a>
+                <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Evento Productivo" onclick="showDialogDelete(this, 'confirm_dialog_crop', 'deleteCrop.action?idCrop=<s:property value="idCrop" />', 'searchCrop.action?page=<%=pageNow%>', 'divCrops', '<%=divHide%>'); ga('send', 'event', 'Crops', 'click', 'Delete');"><i class="icon-trash"></i></a>
             <% } %>
         </div>
     <% } %>

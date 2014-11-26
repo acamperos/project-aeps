@@ -18,6 +18,7 @@
         <script type="text/javascript" src="scripts/js/flot-charts/jquery.flot.axislabels.js"></script>
     </head>
     <body>   
+        <%@ include file="../generals/googleAnalytics.jsp" %>
         <div class="container">
             <ul id="breadcrumbs">
                 <li><s:a href="%{request.getContextPath()}/dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>

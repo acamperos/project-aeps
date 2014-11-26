@@ -16,6 +16,7 @@ import org.aepscolombia.platform.models.dao.CassavasDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.MaizeDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Beans;
@@ -27,7 +28,9 @@ import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -319,6 +322,13 @@ public class ActionSowing extends BaseAction {
 //            event.setStatus(event.isStatus());
             session.saveOrUpdate(event);
             
+            if (sowing.getIdSow()==null) {
+                Sowing sowTemp = sowDao.objectById(idCrop);
+                if (sowTemp!=null) {
+                    sowing.setIdSow(sowTemp.getIdSow());
+                }
+            }
+            
             sowing.setProductionEvents(new ProductionEvents(idCrop));
             sowing.setDateSow(dateSow);          
             if (sowing.getChemicalsSowing().getIdCheSow()==-1) {
@@ -361,8 +371,9 @@ public class ActionSowing extends BaseAction {
             log.setTableLogEnt("sowing");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
-            tx.commit();           
+            session.saveOrUpdate(log);           
+            
+            tx.commit();             
             state = "success";            
             if (action.equals("C")) {
                 info  = "La siembra ha sido agregada con exito";
@@ -371,6 +382,9 @@ public class ActionSowing extends BaseAction {
                 info  = "La siembra ha sido modificada con exito";
 //                return "list";
             }
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

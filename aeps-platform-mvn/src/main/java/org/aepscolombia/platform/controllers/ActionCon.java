@@ -21,6 +21,7 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.OrganicControlsDao;
 import org.aepscolombia.platform.models.dao.PestsDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.TargetsTypesDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
@@ -39,6 +40,7 @@ import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.TargetsTypes;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entity.Weeds;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -560,7 +562,7 @@ public class ActionCon extends BaseAction {
         type_prod_org_con = new OrganicControlsDao().findAllByTargetType(0, tyCro);
         type_prod_che_con = new ChemicalsControlsDao().findAllByTargetType(0, tyCro);
         this.setType_tar_typ(new TargetsTypesDao().findAll());
-        this.setType_dose_units(new DoseUnitsDao().findByParams("2,3,5,6"));
+        this.setType_dose_units(new DoseUnitsDao().findByParams("2,3,5"));
         this.setType_con_typ(new ControlsTypesDao().findAllByTypeCrop(tyCro));
         this.setType_dis_con(new DiseasesDao().findAllByTypeCrop(tyCro));
         this.setType_pest_con(new PestsDao().findAllByTypeCrop(tyCro));
@@ -730,7 +732,7 @@ public class ActionCon extends BaseAction {
             log.setTableLogEnt("controls");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);            
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -740,6 +742,11 @@ public class ActionCon extends BaseAction {
                 info  = "El control ha sido modificado con exito";
 //                return "list";
             }
+            HashMap prod  = cropDao.findById(idCrop);
+            Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

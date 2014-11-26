@@ -3,6 +3,7 @@
 <td><s:property value="depthPrep" /></td>
 <td><s:property value="namePrep" /></td>
 <td><s:property value="otherNamePrep" /></td>
+<td><s:property value="passNum" /></td>
 <td>
     <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/modify") || (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/delete"))) { %>
         <div class="btn-group">

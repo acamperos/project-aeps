@@ -502,7 +502,7 @@ public class ProducersDao
         String sql = "";
         String entType = String.valueOf(args.get("entType"));
 
-        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, ";
+        sql += "select p.id_pro as ID_PROD, e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, ";
         sql += "ent.cellphone_ent as CELULAR, ent.phone_ent as TELEFONO, ent.email_ent as CORREO_ELE, dep.name_dep as DEPARTAMENTO";
         sql += " from producers p";
         sql += " inner join entities ent on ent.ID_ENT = p.id_entity_pro";
@@ -554,6 +554,7 @@ public class ProducersDao
             Query query  = session.createSQLQuery(sql);
             events = query.list();  
             String[] val = {
+                "ID_PROD",
                 "USUARIO",
                 "PRODUCTOR",
                 "CEDULA",
@@ -571,7 +572,8 @@ public class ProducersDao
                     String.valueOf(data[3]),
                     String.valueOf(data[4]),
                     String.valueOf(data[5]),
-                    String.valueOf(data[6])
+                    String.valueOf(data[6]),
+                    String.valueOf(data[7])
                 };
                 writer.writeNext(valTemp);
             }

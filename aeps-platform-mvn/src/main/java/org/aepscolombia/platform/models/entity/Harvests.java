@@ -109,7 +109,7 @@ public class Harvests  implements java.io.Serializable {
         this.productionEvents = productionEvents;
     }
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_har", nullable=false, length=19)
+    @Column(name="date_har", length=19)
     public Date getDateHar() {
         return this.dateHar;
     }
@@ -136,7 +136,7 @@ public class Harvests  implements java.io.Serializable {
         this.productionHar = productionHar;
     }
     
-    @Column(name="yield_har", nullable=false, precision=22, scale=0)
+    @Column(name="yield_har", precision=22, scale=0)
     public Double getYieldHar() {
         return this.yieldHar;
     }

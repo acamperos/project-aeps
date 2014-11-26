@@ -82,20 +82,18 @@
         <tbody>
             <s:iterator value="listLot" var="lot">
                 <% String action = "";%>
-                <% if (value != "lot") { %>
-                <%--<s:if test="!value.equals('lot')">--%>
-                    <% action = "selectItem('" + valName + "', '" + valId + "', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "','" + divShow + "', '" + divHide + "');";%>
-                    <!--<?php $action = "selectItem('".$additionals['valName']."', '".$additionals['valId']."', '".$lot['nombre']."', '".$lot['id_lote']."'); " ?>-->
-                <%--</s:if>--%>
-                <% } %>
-                <s:if test="%{value.equals('crop')}">
-                    <% //action += "getInfo('/cultivosAsociados.action?idProd=" + idProducer + "','idField','" + valId + "','divDataCrop','divMessage');";%>
-                </s:if>
-                <s:if test="%{value.equals('rasta')}">
-                    <% action = "selectItem('formRasta_nameField', 'formField_idField', '" + request.getAttribute("name_far") + "', '" + request.getAttribute("id_lot") + "', '" + divShow + "', '" + divHide + "')"; %>
-                    <% //action += "getInfo('/GetRastasXField.action','idField','" + valId + "','divDataRastas','divMessage');";%>
-                </s:if>
-                <tr onclick="<%= action%>" class="selectVal" id="trLot<s:property value="id_lot" />>">
+                <% //if (value != "lot") { %>
+                    <% //action = "selectItem('" + valName + "', '" + valId + "', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "','" + divShow + "', '" + divHide + "');";%>
+                <% //} %>
+                <% 
+                    if (value.equals("crop")) { 
+                        action = "selectItem('formCrop_nameField', 'formCrop_idField', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "','" + divShow + "', '" + divHide + "');";
+                    } 
+                    if (value.equals("rasta")) {
+                        action = "selectItem('formRasta_nameField', 'formRasta_idField', '" + request.getAttribute("name_far") + "', '" + request.getAttribute("id_lot") + "', '" + divShow + "', '" + divHide + "')";
+                    }                 
+                %>
+                <tr onclick="<%= action%>" class="selectVal" id="trLot${id_lot}">
                     <%@ include file="row-field.jsp" %>                                
                 </tr>
             </s:iterator>

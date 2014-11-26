@@ -139,6 +139,17 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name="states" type="json"></result>
         </action>
+        
+        <action name="chargeValues" method="chargeValues" class="org.aepscolombia.platform.controllers.ActionContact">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+        </action>
+        
+        <action name="sendMessage" method="sendMessage" class="org.aepscolombia.platform.controllers.ActionContact">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+        </action>
+        
         <!-- End public part -->
         
         <!-- Private part -->
@@ -168,6 +179,13 @@
             <interceptor-ref name="defaultStackAeps"/>                        
             <interceptor-ref name="viewAction"/>            
             <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+        </action>
+        <action name="homePrivate">
+            <interceptor-ref name="defaultStackAeps"/>  
+            <interceptor-ref name="validateI18n"/>                                  
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/generals/dashboard.jsp</result>
         </action>
         <action name="getting" method="getValues" class="org.aepscolombia.platform.controllers.ActionProfile">
             <interceptor-ref name="defaultStackAeps"/>

@@ -1,8 +1,15 @@
 package org.aepscolombia.platform.models.dao;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.aepscolombia.platform.controllers.ActionField;
 import org.aepscolombia.platform.models.entity.Entities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
@@ -21,6 +31,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Fields;
 import org.aepscolombia.platform.models.entity.FieldsProducers;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -513,7 +525,7 @@ public class FieldsDao
         String sql = "";
         String entType = String.valueOf(args.get("entType"));
         
-        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, n.name_fie as LOTE,";
+        sql += "select n.id_fie as ID_LOTE, f.id_far as ID_FINCA, p.id_pro as ID_PROD, e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, n.name_fie as LOTE,";
         sql += "ft.name_fie_typ as CONTRATO, n.latitude_fie as LATITUD, n.longitude_fie as LONGITUD, n.altitude_fie as ALTITUD, n.area_fie as AREA, m.name_mun as MUNICIPIO";
         sql += " from fields n";
         sql += " inner join field_types ft on ft.id_fie_typ=n.contract_type_fie";
@@ -569,10 +581,11 @@ public class FieldsDao
             CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
             Query query  = session.createSQLQuery(sql);
             events = query.list();  
-        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, n.name_fie as LOTE,";
-        sql += "ft.name_fie_typ as CONTRATO, n.latitude_fie as LATITUD, n.longitude_fie as LONGITUD, n.altitude_fie as ALTITUD, n.area_fie as AREA, m.name_mun as MUNICIPIO";
         
             String[] val = {
+                "ID_LOTE",
+                "ID_FINCA",
+                "ID_PROD",
                 "USUARIO",
                 "PRODUCTOR",
                 "CEDULA",
@@ -596,7 +609,10 @@ public class FieldsDao
                     String.valueOf(data[6]),
                     String.valueOf(data[7]),
                     String.valueOf(data[8]),
-                    String.valueOf(data[9])
+                    String.valueOf(data[9]),
+                    String.valueOf(data[10]),
+                    String.valueOf(data[11]),
+                    String.valueOf(data[12])
                 };
                 writer.writeNext(valTemp);
             }
@@ -615,6 +631,128 @@ public class FieldsDao
             session.close();
         }
 //        return result;
+    }
+    
+    
+    public void setInfoMongo() 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
+        sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, l.id_project_fie, ent.name_ent, f.name_far,";
+        sql += " ent.entity_type_ent, m.name_mun,";
+        sql += " le.date_log_ent, e.email_ent as emailUser";
+        sql += " from fields l";
+        sql += " inner join fields_producers lp on lp.id_field_fie_pro = l.id_fie";
+        sql += " inner join farms f on l.id_farm_fie=f.id_far";
+        sql += " inner join farms_producers fp on f.id_far = fp.id_farm_far_pro";
+        sql += " inner join producers p on p.id_pro = fp.id_producer_far_pro";
+        sql += " inner join entities ent on ent.id_ent = p.id_entity_pro";
+        sql += " inner join municipalities m on m.id_mun  = f.id_municipipality_far";
+        sql += " inner join departments d on d.id_dep=m.id_department_mun";
+        sql += " inner join log_entities le on le.id_object_log_ent = l.id_fie AND le.table_log_ent = 'fields'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
+        sql += " where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823)";
+        sql += " and le.action_type_log_ent = 'C'";
+        sql += " and l.status=1 and f.status=1 and ent.status=1";
+        sql += " and le.id_object_log_ent not in (select le.id_object_log_ent from log_entities le where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823) and le.action_type_log_ent = 'D' AND le.table_log_ent = 'fields')";
+
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("id_lot", data[0]);
+                temp.put("id_farm", data[1]);
+                temp.put("type_lot", data[2]);             
+                temp.put("name_lot", data[3]);                
+                temp.put("altitude_lot", data[4]);
+                temp.put("latitude_lot", data[5]);
+                temp.put("length_lot", data[6]);                
+                temp.put("area_lot", data[7]);                
+                temp.put("status", data[8]);
+                temp.put("name_producer", data[10]);
+                temp.put("name_far", data[11]);
+                temp.put("typeEnt", data[12]);
+                temp.put("city", data[13]);
+                temp.put("dateLog", data[14]);       
+                
+                String emailUser = String.valueOf(data[15]);
+                
+                SfGuardUserDao sfDao = new SfGuardUserDao();
+                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                Integer idUserMobile = null;
+                if (sfUser!=null) {
+                    idUserMobile = sfUser.getId().intValue();
+                }
+                
+                HashMap valInfo = new HashMap();
+                valInfo.put("fieldId", temp.get("id_lot"));
+                valInfo.put("farmId", temp.get("id_farm"));
+                valInfo.put("nameFarm", temp.get("name_far"));
+                valInfo.put("typeField", temp.get("type_lot"));
+                valInfo.put("nameField", temp.get("name_lot"));
+                valInfo.put("lat", temp.get("latitude_lot"));
+                valInfo.put("lng", temp.get("length_lot"));
+                valInfo.put("alt", temp.get("altitude_lot"));
+                valInfo.put("areaField", temp.get("area_lot"));
+                valInfo.put("userMobileId", idUserMobile);      
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+temp.get("id_lot"));
+                queryMongo.put("form_id", "5");
+
+                MongoClient mongo = null;
+                try {
+                    mongo = new MongoClient("localhost", 27017);
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+
+                DBCursor cursor    = col.find(queryMongo);
+                WriteResult result = null;
+                BasicDBObject jsonField = null;
+                jsonField          = GlobalFunctions.generateJSONField(valInfo);
+
+                if (cursor.count()>0) {
+                    System.out.println("actualizo mongo");
+                    result = col.update(queryMongo, jsonField);
+                } else {
+                    System.out.println("inserto mongo");
+                    result = col.insert(jsonField);
+                }
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }
+
+                mongo.close();
+                
+            }   
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
     }
     
 }

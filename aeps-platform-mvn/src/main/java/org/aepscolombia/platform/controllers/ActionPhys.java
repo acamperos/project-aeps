@@ -14,6 +14,7 @@ import java.util.Iterator;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.PhysiologicalMonitoringDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 
@@ -22,6 +23,7 @@ import org.aepscolombia.platform.models.entity.PhysiologicalMonitoring;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -290,6 +292,13 @@ public class ActionPhys extends BaseAction {
                 phys.setFloweringDatePhyMon(dateFlow);
             }
             
+            if (phys.getIdPhyMon()==null) {
+                PhysiologicalMonitoring physTemp = physDao.objectById(idCrop);
+                if (physTemp!=null) {
+                    phys.setIdPhyMon(physTemp.getIdPhyMon());
+                }
+            }
+            
             phys.setProductionEvents(new ProductionEvents(idCrop));     
             phys.setStatus(true);
             session.saveOrUpdate(phys);
@@ -301,8 +310,8 @@ public class ActionPhys extends BaseAction {
             log.setTableLogEnt("physiological_monitoring");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
-            tx.commit();           
+            session.saveOrUpdate(log);           
+            tx.commit();                  
             state = "success";            
             if (action.equals("C")) {
                 info  = "El monitoreo fisiologíco ha sido agregado con exito";
@@ -311,6 +320,11 @@ public class ActionPhys extends BaseAction {
                 info  = "El monitoreo fisiologíco ha sido modificado con exito";
 //                return "list";
             }
+            HashMap prod  = cropDao.findById(idCrop);
+            Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

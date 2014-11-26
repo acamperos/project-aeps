@@ -37,6 +37,7 @@
                     <th>Profundidad del trabajo (cm)</th>
                     <th>Tipo de preparación</th>
                     <th>Otro tipo de preparación</th>
+                    <th>Numero de pases</th>
                     <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/modify") || (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/delete"))) { %>
                         <th>Accion</th>
                     <% } %>

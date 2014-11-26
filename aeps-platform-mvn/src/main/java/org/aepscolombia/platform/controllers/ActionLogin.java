@@ -409,6 +409,7 @@ public class ActionLogin extends BaseAction {
         } catch (NoSuchProviderException ex) {
 //            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
         }        
+        this.setAssociation_list(null);
         Users loggedUser = userDao.getUserByLogin(nameUser.trim(), "");
         if (loggedUser != null) {
 //          LOG.info("User " + user.getEmail() + " logged in successfully.");
@@ -560,7 +561,7 @@ public class ActionLogin extends BaseAction {
             Double salt = (Math.floor(Math.random()*999999+100000));
 //            int valAss = salt.intValue();
             
-            
+            this.setAssociation_list(null);
 //            String passTransform = GlobalFunctions.generateSHA1(this.getPasswordUser());
 //            String passRes = GlobalFunctions.generateSHA1(this.getPassRest(), saltUsr);
 
@@ -816,6 +817,7 @@ public class ActionLogin extends BaseAction {
                 return "states";
             }
         }
+        this.setAssociation_list(null);
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx  = session.beginTransaction();       
@@ -837,7 +839,7 @@ public class ActionLogin extends BaseAction {
             ent.setIdEnt(null);
 //            ent.setEntityTypeEnt(1);
             ent.setEntitiesTypes(new EntitiesTypes(this.getTypeUser()));
-            if(this.getCelphoneUser()!=null && !celphoneUser.equals("")) ent.setCellphoneEnt(Long.parseLong(this.getCelphoneUser()));
+            if(this.getCelphoneUser()!=null && !this.getCelphoneUser().equals("")) ent.setCellphoneEnt(Long.parseLong(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long) Integer.parseInt(this.getCelphoneUser()));
 //            ent.setCellphoneEnt((long)317524765);
             ent.setEmailEnt(this.getEmailUser());
@@ -851,14 +853,14 @@ public class ActionLogin extends BaseAction {
             session.saveOrUpdate(ent);
 //            entDao.save(ent);
 
-            LogEntities log = new LogEntities();
+            /*LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
             log.setIdEntityLogEnt(ent.getIdEnt());
             log.setIdObjectLogEnt(ent.getIdEnt());
             log.setTableLogEnt("entities");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);*/
 //            logDao.save(log);
                         
 //            System.out.println("Result = "+result);
@@ -869,38 +871,40 @@ public class ActionLogin extends BaseAction {
                 pro.setStatus(true);
                 session.saveOrUpdate(pro);
 
-                LogEntities logPro = new LogEntities();
+                /*LogEntities logPro = new LogEntities();
                 logPro.setIdLogEnt(null);
                 logPro.setIdEntityLogEnt(ent.getIdEnt());
                 logPro.setIdObjectLogEnt(pro.getIdPro());
                 logPro.setTableLogEnt("producers");
                 logPro.setDateLogEnt(new Date());
                 logPro.setActionTypeLogEnt(action);
-                session.saveOrUpdate(logPro);
+                session.saveOrUpdate(logPro);*/
 //                logDao.save(logPro);
 
-            } else if (this.getTypeUser() == 1) {
-                Integer idAss = Integer.parseInt(this.getIdAssoExt());
+            } else if (this.getTypeUser() == 1) {                
                 ExtensionAgents ext = new ExtensionAgents();
                 ext.setIdExtAge(null);
                 ext.setEntities(ent);
                 ext.setWorkTypeExtAge(new WorkTypeExtAgent(this.getWorkType()));
-                ext.setIdAssoExtAge(new Association(idAss));
+                if (this.getIdAssoExt()!=null && !this.getIdAssoExt().equals(" ")) {
+                    Integer idAss = Integer.parseInt(this.getIdAssoExt());
+                    ext.setIdAssoExtAge(new Association(idAss));
+                }
                 if (workType==3 || workType==4 || workType==5) {
                     ext.setStatus(false);
                 } else {
                     ext.setStatus(true);
                 }
-                session.saveOrUpdate(ext);
+                session.saveOrUpdate(ext);                
 
-                LogEntities logPro = new LogEntities();
+                /*LogEntities logPro = new LogEntities();
                 logPro.setIdLogEnt(null);
                 logPro.setIdEntityLogEnt(ent.getIdEnt());
                 logPro.setIdObjectLogEnt(ext.getIdExtAge());
                 logPro.setTableLogEnt("extension_agents");
                 logPro.setDateLogEnt(new Date());
                 logPro.setActionTypeLogEnt(action);
-                session.saveOrUpdate(logPro);
+                session.saveOrUpdate(logPro);*/
 //                logDao.save(logPro);
 
             } else if (this.getTypeUser() == 3) {
@@ -911,14 +915,14 @@ public class ActionLogin extends BaseAction {
                 asc.setStatus(false);
                 session.saveOrUpdate(asc);
 
-                LogEntities logPro = new LogEntities();
+                /*LogEntities logPro = new LogEntities();
                 logPro.setIdLogEnt(null);
                 logPro.setIdEntityLogEnt(ent.getIdEnt());
                 logPro.setIdObjectLogEnt(asc.getIdAsc());
                 logPro.setTableLogEnt("association");
                 logPro.setDateLogEnt(new Date());
                 logPro.setActionTypeLogEnt(action);
-                session.saveOrUpdate(logPro);
+                session.saveOrUpdate(logPro);*/
             }
 
             String nameUser = null;
@@ -971,14 +975,14 @@ public class ActionLogin extends BaseAction {
 //            userDao.save(user);
             
             
-            LogEntities logPro = new LogEntities();
+            /*LogEntities logPro = new LogEntities();
             logPro.setIdLogEnt(null);
             logPro.setIdEntityLogEnt(ent.getIdEnt());
             logPro.setIdObjectLogEnt(user.getIdUsr());
             logPro.setTableLogEnt("users");
             logPro.setDateLogEnt(new Date());
             logPro.setActionTypeLogEnt(action);
-            session.saveOrUpdate(logPro);
+            session.saveOrUpdate(logPro);*/
 //            logDao.save(logPro);
 //            throw new HibernateException("Error creando usuario entidades");
 //            tx.rollback();
@@ -1010,13 +1014,13 @@ public class ActionLogin extends BaseAction {
                 profile = 5;
             }
 //            boolean resUsrPro;
-            UsersProfiles usrPer = new UsersProfiles();
+            /*UsersProfiles usrPer = new UsersProfiles();
             Profiles prof = new Profiles(profile);
             usrPer.setId(new UsersProfilesId(user.getIdUsr(), prof.getIdPro()));
             usrPer.setUsers(user);
             usrPer.setProfiles(prof);
             usrPer.setIdProjectUsrPro(null);
-            session.saveOrUpdate(usrPer);
+            session.saveOrUpdate(usrPer);*/
 
             tx.commit();
             state = "success";
@@ -1052,6 +1056,7 @@ public class ActionLogin extends BaseAction {
 //            java.util.logging.Logger.getLogger(ActionLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
                 // TODO handle custom exceptions here
+            ex.printStackTrace();
             state = "failure";
             info  = "Fallo el servicio para crear el usuario en la aplicacion movil";
         } finally {

@@ -1,0 +1,160 @@
+{
+    "form": {
+        "id": "NumberInt(5)",
+        "name": "Lote",
+        "description": "Formulario para agregar/editar lotes al sistema",
+        "del": false,
+        "qid": "87",
+        "main_table": "fields",
+        "HiddenFields": [
+            {
+                "id_survey_hidden_field": "10",
+                "target_table": "fields",
+                "target_column": "pests_control_fie",
+                "value": "1"
+            },
+            {
+                "id_survey_hidden_field": "11",
+                "target_table": "fields",
+                "target_column": "status",
+                "value": "1"
+            },
+            {
+                "id_survey_hidden_field": "12",
+                "target_table": "fields",
+                "target_column": "diseases_control_fie",
+                "value": "1"
+            }
+        ],
+        "Questions": [
+            {
+                "id": "NumberInt(86)",
+                "name": "Seleccione el tipo de lote",
+                "help": "Seleccione su tipo de lote",
+                "subject": "Lote",
+                "position": "NumberInt(6)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "fields",
+                    "target_column": "contract_type_fie",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "No aplica",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "Propio",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "3",
+                        "name": "Arrendado",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "4",
+                        "name": "Uso sin contrato",
+                        "position": "NumberInt(4)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(87)",
+                "name": "Nombre de Lote",
+                "help": "Escriba el nombre del lote",
+                "subject": "Lote",
+                "position": "NumberInt(7)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(1)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "minlength": "NumberInt(1)",
+                    "maxlength": "NumberInt(60)",
+                    "pattern": ""
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "fields",
+                    "target_column": "name_fie",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(88)",
+                "name": "Capturar posicion",
+                "help": "",
+                "subject": "Lote",
+                "position": "NumberInt(8)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(5)",
+                "widget": "NumberInt(7)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "fields",
+                    "target_column": "latitude_fie",
+                    "target_column_lng": "longitude_fie",
+                    "target_column_alt": "altitude_fie",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(89)",
+                "name": "Área del Lote (ha)",
+                "help": "Ingrese aquí el área de su lote en hectáreas",
+                "subject": "Lote",
+                "position": "NumberInt(9)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(8)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": 0.001,
+                    "max": "NumberInt(400)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "fields",
+                    "target_column": "area_fie",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            }
+        ]
+    },
+    "form_id": "5",
+    "inserted_at": "2014-07-28 08:18:38",
+    "inserted_by": {
+        "user_id": "0",
+        "user_uid": "0",
+        "user_fullname": "ANONYMUS",
+        "ip_address": "181.118.144.200"
+    },
+    "user_id": "150"
+}

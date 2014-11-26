@@ -509,7 +509,7 @@
                     <s:hidden name="newRow" value="1"/>    
                     <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                     <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "soil/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify"))) { %>                
-                        <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formRasta'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
+                        <sj:submit id="btnSoil" type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formRasta'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeRasta" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Rasta</sj:submit>
                     <% } %>
                     <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formRasta'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                 </div>    
@@ -611,6 +611,16 @@
                 $("#formRasta_rasta_profundidadRaicesRas").val(parsePointSeparated($("#formRasta_rasta_profundidadRaicesRas").val()));
                 
                 $.subscribe('completeRasta', function(event, data) {
+                    var actExeSoil = $("#formRasta_actExe").val();
+                    if (actExeSoil=='create') {
+                        $('#btnSoil').on('click', function() {
+                            ga('send', 'event', 'Soils', 'click', 'Create');
+                        });
+                    } else if (actExeSoil=='modify') {
+                        $('#btnSoil').on('click', function() {
+                            ga('send', 'event', 'Soils', 'click', 'Update');
+                        });                
+                    }
                     completeFormGetting('dialog-form', 'formRasta', 'divRasta', event.originalEvent.request.responseText);
                     setTimeout(function() {
                         showInfo("searchSoil.action?page=" + page, "divConListRasta");

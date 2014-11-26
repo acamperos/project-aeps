@@ -7,6 +7,7 @@
         <link rel="icon" type="image/ico" href="img/favicon.ico">
     </head>
     <body>     
+        <%@ include file="../generals/googleAnalytics.jsp" %>
         <div class="container">
             <ul id="breadcrumbs">
                 <li><s:a href="%{request.getContextPath()}/dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>

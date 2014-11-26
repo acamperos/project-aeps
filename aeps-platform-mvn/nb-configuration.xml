@@ -17,8 +17,12 @@ You can copy and paste the single properties, into the pom.xml file and the IDE 
 That way multiple projects can share the same settings (useful for formatting rules for example).
 Any value defined here will override the pom.xml file value but is only applicable to the current project.
 -->
-        <netbeans.hint.j2eeVersion>1.6-web</netbeans.hint.j2eeVersion>
+        <netbeans.hint.j2eeVersion>1.7-web</netbeans.hint.j2eeVersion>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_NewWebService>http://localhost:8084/PuebaServices/NewWebService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_NewWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_SfUserWebService>http://localhost:8083/aeps-plataforma-mvn/SfUserWebService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_SfUserWebService>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_service>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/service.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_service>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_services>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/services.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_services>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_getservice>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_getservice>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_index>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com_443/wsdl/getservice.wsdl/index.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_index>
     </properties>
 </project-shared-configuration>

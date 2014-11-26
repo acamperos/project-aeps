@@ -1,8 +1,15 @@
 package org.aepscolombia.platform.models.dao;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.aepscolombia.platform.controllers.ActionField;
 import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.Municipalities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
@@ -24,6 +34,8 @@ import org.aepscolombia.platform.models.entity.Farms;
 import org.aepscolombia.platform.models.entity.FarmsProducers;
 import org.aepscolombia.platform.models.entity.FarmsProducersId;
 import org.aepscolombia.platform.models.entity.Producers;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.hibernate.Criteria;
 
@@ -495,8 +507,8 @@ public class FarmsDao
         String sql = "";
         String entType = String.valueOf(args.get("entType"));
         
-        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, f.name_far as FINCA,";
-        sql += "f.address_far as DIRECCION, f.latitude_far as LATITUD, f.longitude_far as LONGITUD, f.altitude_far as ALTITUD, f.area_far as AREA, m.name_mun as MUNICIPIO";
+        sql += "select f.id_far as ID_FINCA, p.id_pro as ID_PROD, e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, f.name_far as FINCA,";
+        sql += "f.address_far as DIRECCION, f.latitude_far as LATITUD, f.longitude_far as LONGITUD, f.altitude_far as ALTITUD, m.name_mun as MUNICIPIO";
         sql += " from farms f";
         sql += " inner join farms_producers fp on f.id_far = fp.id_farm_far_pro";
         sql += " inner join producers p on p.id_pro = fp.id_producer_far_pro";
@@ -550,6 +562,8 @@ public class FarmsDao
             events = query.list();  
         
             String[] val = {
+                "ID_FINCA",
+                "ID_PROD",                
                 "USUARIO",
                 "PRODUCTOR",
                 "CEDULA",
@@ -558,7 +572,6 @@ public class FarmsDao
                 "LATITUD",
                 "LONGITUD",
                 "ALTITUD",
-                "AREA",
                 "MUNICIPIO"
             };
             writer.writeNext(val);
@@ -573,7 +586,8 @@ public class FarmsDao
                     String.valueOf(data[6]),
                     String.valueOf(data[7]),
                     String.valueOf(data[8]),
-                    String.valueOf(data[9])
+                    String.valueOf(data[9]),
+                    String.valueOf(data[10])
                 };
                 writer.writeNext(valTemp);
             }
@@ -593,4 +607,123 @@ public class FarmsDao
         }
 //        return result;
     }
+    
+    public void setInfoMongo() 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select fp.id_producer_far_pro, f.id_far, ent.name_ent, f.name_far, f.address_far, f.phone_far, f.id_district_far,";
+        sql += "f.georef_far, f.latitude_far, f.longitude_far, f.altitude_far, f.name_commune_far, m.id_mun, m.name_mun, dep.id_dep, dep.name_dep, f.status, ";
+        sql += " ent.entity_type_ent, e.email_ent,";
+        sql += " le.date_log_ent";
+        sql += " from farms f";
+        sql += " inner join farms_producers fp on f.id_far = fp.id_farm_far_pro";
+        sql += " inner join producers p on p.id_pro = fp.id_producer_far_pro";
+        sql += " inner join entities ent on ent.id_ent = p.id_entity_pro";
+        sql += " inner join municipalities m on m.id_mun  = f.id_municipipality_far";
+        sql += " inner join departments dep on dep.id_dep=m.id_department_mun";
+        sql += " inner join log_entities le on le.id_object_log_ent = f.id_far AND le.table_log_ent = 'farms'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.ID_ENT";
+        sql += " where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823)";
+        sql += " and le.action_type_log_ent = 'C'";
+        sql += " and f.status=1 and ent.status=1";
+        sql += " and le.id_object_log_ent not in (select le.id_object_log_ent from log_entities le where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823) and le.action_type_log_ent = 'D' AND le.table_log_ent = 'farms')";
+
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("id_producer", data[0]);
+                temp.put("id_farm", data[1]);
+                temp.put("name_producer", data[2]);
+                temp.put("name_farm", data[3]);
+                temp.put("dir_farm", data[4]);                
+                temp.put("latitude_farm", data[8]);
+                temp.put("length_farm", data[9]);
+                temp.put("altitude_farm", data[10]);                
+                temp.put("lane_farm", data[11]);
+                temp.put("id_mun", data[12]);
+                temp.put("id_dep", data[14]);        
+                temp.put("dateLog", data[19]);           
+                
+                String emailUser = String.valueOf(data[18]);
+                
+                SfGuardUserDao sfDao = new SfGuardUserDao();
+                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                Integer idUserMobile = null;
+                if (sfUser!=null) {
+                    idUserMobile = sfUser.getId().intValue();
+                }
+                
+                HashMap valInfo = new HashMap();
+                valInfo.put("farmId", temp.get("id_farm"));
+                valInfo.put("nameFarm", temp.get("name_farm"));
+                valInfo.put("prodId", temp.get("id_producer"));
+                valInfo.put("nameProd", temp.get("name_producer"));
+                valInfo.put("district", temp.get("lane_farm"));
+                valInfo.put("address", temp.get("dir_farm"));
+                valInfo.put("lat", temp.get("latitude_farm"));
+                valInfo.put("lng", temp.get("length_farm"));
+                valInfo.put("alt", temp.get("altitude_farm"));
+                valInfo.put("department", temp.get("id_dep"));
+                valInfo.put("municipality", temp.get("id_mun"));
+                valInfo.put("userMobileId", idUserMobile); 
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+temp.get("id_farm"));
+                queryMongo.put("form_id", "3");
+
+                MongoClient mongo = null;
+                try {
+                    mongo = new MongoClient("localhost", 27017);
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+
+                DBCursor cursor    = col.find(queryMongo);
+                WriteResult result = null;
+                BasicDBObject jsonField = GlobalFunctions.generateJSONFarm(valInfo);
+
+                if (cursor.count()>0) {
+                    System.out.println("actualizo mongo");
+                    result = col.update(queryMongo, jsonField);
+                } else {
+                    System.out.println("inserto mongo");
+                    result = col.insert(jsonField);
+                }
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }
+
+                mongo.close();
+                
+            }   
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (Exception ex) {
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
+    }
+    
+    
 }

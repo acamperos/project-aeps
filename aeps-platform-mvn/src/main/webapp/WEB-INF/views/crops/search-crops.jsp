@@ -29,7 +29,7 @@
                 </div> 
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportCrop.action', 'formCropSearch', 'cropsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportCrop.action', 'formCropSearch', 'cropsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
             </div>    
         </div>
         <script>
@@ -52,6 +52,9 @@
         <!--<div class="span2">-->
             <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
             <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
+            <% if (entTypeId!=3) { %>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportCrop.action', 'formCropSearch', 'cropsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+            <% } %>
         <!--</div>-->
     </div> 
     <div id="searchAdvanceCrop" class="hide">

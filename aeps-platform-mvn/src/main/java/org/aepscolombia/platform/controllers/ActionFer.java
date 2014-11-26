@@ -26,6 +26,7 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.OrganicFertilizationsDao;
 import org.aepscolombia.platform.models.dao.OrganicFertilizersDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.AmendmentsFertilizations;
@@ -44,6 +45,7 @@ import org.aepscolombia.platform.models.entity.OrganicFertilizations;
 import org.aepscolombia.platform.models.entity.OrganicFertilizers;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -407,7 +409,7 @@ public class ActionFer extends BaseAction {
             sowing = sowDao.objectById(this.getIdCrop());
             HashMap required = new HashMap();
             required.put("fer.dateFer", fer.getDateFer());      
-            required.put("fer.amountProductUsedFer", fer.getAmountProductUsedFer());      
+//            required.put("fer.amountProductUsedFer", fer.getAmountProductUsedFer());      
 //            required.put("fer.fertilizationsTypes.idFerTyp", fer.getFertilizationsTypes().getIdFerTyp());                  
             
             if (chemFert.size()<0 && orgFert.size()<0 && amenFert.size()<0) {
@@ -461,7 +463,7 @@ public class ActionFer extends BaseAction {
 
 //            System.out.println("amountTotal=>"+amountTotal);
 //            System.out.println("fer.getAmountProductUsedFer()=>"+fer.getAmountProductUsedFer());
-            double sumTotal = amountTotal.doubleValue();
+            /*double sumTotal = amountTotal.doubleValue();
             double sumUser  = fer.getAmountProductUsedFer().doubleValue();
             if (sumTotal!=sumUser) {
                 addFieldError("fer.amountProductUsedFer", "Los valores no coinciden");      
@@ -481,7 +483,7 @@ public class ActionFer extends BaseAction {
                     contAme++;
                 }  
                 addActionError("La cantidad del producto total debe ser igual a la suma de todas las cantidades individuales");
-            }
+            }*/
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -686,7 +688,7 @@ public class ActionFer extends BaseAction {
             fer.setStatus(true);
             session.saveOrUpdate(fer);
             
-            Double amountProduct=null;
+            double amountProduct=0;
             
             if (action.equals("M")) {
                 if (fer.getIdFer()>0) {
@@ -753,7 +755,7 @@ public class ActionFer extends BaseAction {
                             }
                         }             
                         
-//                        amountProduct += ferCheTemp.getAmountProductUsedCheFer();
+                        amountProduct += ferCheTemp.getAmountProductUsedCheFer();
                         ChemicalFertilizations chemFer = new ChemicalFertilizations();           
                         Integer idCheFer = ferCheTemp.getIdCheFer();
 //                        chemFer.setIdCheFer(idCheFer);
@@ -785,7 +787,7 @@ public class ActionFer extends BaseAction {
                         }
                         ferOrgNew.setFertilizations(fer);
                         ferOrgNew.setStatus(true);
-//                        amountProduct += ferOrgNew.getAmountProductUsedOrgFer();
+                        amountProduct += ferOrgNew.getAmountProductUsedOrgFer();
                         session.saveOrUpdate(ferOrgNew);    
                     }
                 }
@@ -802,14 +804,14 @@ public class ActionFer extends BaseAction {
                         }
                         ferAmeNew.setFertilizations(fer);
                         ferAmeNew.setStatus(true);
-//                        amountProduct += ferAmeNew.getAmountProductUsedAmeFer();
+                        amountProduct += ferAmeNew.getAmountProductUsedAmeFer();
                         session.saveOrUpdate(ferAmeNew);  
                     }
                 }
             }     
             
-//            fer.setAmountProductUsedFer(amountProduct);
-//            session.saveOrUpdate(fer);
+            fer.setAmountProductUsedFer(amountProduct);
+            session.saveOrUpdate(fer);
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
@@ -818,7 +820,7 @@ public class ActionFer extends BaseAction {
             log.setTableLogEnt("fertilizations");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);           
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -828,6 +830,11 @@ public class ActionFer extends BaseAction {
                 info  = "La fertilizacion ha sido modificada con exito";
 //                return "list";
             }
+            HashMap prod  = cropDao.findById(idCrop);
+            Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

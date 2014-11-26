@@ -808,6 +808,7 @@ public class ActionFarm extends BaseAction {
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
         String fileName  = "/var/www/document/farmsInfo.csv";
+//        String fileName  = "farmsInfo.csv";
         farDao.getFarms(findParams, fileName);
   
         File f = new File(fileName);  
@@ -913,6 +914,8 @@ public class ActionFarm extends BaseAction {
 
         try {
             tx = session.beginTransaction();
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
             Farms far = null;
             int idProOld = 0;
             if (idFarm<=0) {
@@ -924,7 +927,7 @@ public class ActionFarm extends BaseAction {
             } else {
                 HashMap fieldInfo = farDao.findById(idFarm);
                 idProOld = Integer.parseInt(String.valueOf(fieldInfo.get("id_producer")));
-                far = farDao.objectById(idFarm);
+                far = farDao.objectById(idFarm);                
             }     
             far.setNameFar(name_property);
             far.setAddressFar(direction_property);            
@@ -933,7 +936,14 @@ public class ActionFarm extends BaseAction {
             far.setAltitudeFar(altPro);            
             far.setNameCommuneFar(lane_property);     
             far.setMunicipalities(new Municipalities(Integer.parseInt(cityFar)));
+            Integer idUserMobile = null;
+            if (sfUser!=null) {
+                idUserMobile = sfUser.getId().intValue();
+            }
+            far.setCreatedBy(idUserMobile);
             session.saveOrUpdate(far);
+            depFar   = String.valueOf(MunicipalitiesDao.getDepartmentId(Integer.parseInt(cityFar)));
+            
 //            farDao.save(far);
 //            System.out.println("valId->"+far.getIdFar());            
             
@@ -959,14 +969,14 @@ public class ActionFarm extends BaseAction {
                 session.saveOrUpdate(farPro);
             }
 
-            LogEntities log = new LogEntities();
+            /*LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
             log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(far.getIdFar());
             log.setTableLogEnt("farms");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);*/
 //            logDao.save(log);
             
             /*
@@ -979,9 +989,7 @@ public class ActionFarm extends BaseAction {
             "338": "Municipio (Amazonas)" => municipality
             */
             
-            //Manejo para ingresar datos en MongoDB
-            /*SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            //Manejo para ingresar datos en MongoDB            
 
             HashMap valInfo = new HashMap();
             valInfo.put("farmId", far.getIdFar());
@@ -993,12 +1001,13 @@ public class ActionFarm extends BaseAction {
             valInfo.put("lat", latPro);
             valInfo.put("lng", lonPro);
             valInfo.put("alt", altPro);
-            valInfo.put("department", proData.get("id_dep"));
+            valInfo.put("department", depFar);
             valInfo.put("municipality", cityFar);
-            valInfo.put("userMobileId", sfUser.getId());      
+            valInfo.put("userMobileId", idUserMobile); 
+//            System.out.println("valInfo=>"+valInfo);
             
             BasicDBObject query = new BasicDBObject();
-            query.put("InsertedId", '"'+far.getIdFar()+'"');
+            query.put("InsertedId", ""+far.getIdFar());
             query.put("form_id", "3");
             
             MongoClient mongo = null;
@@ -1012,19 +1021,21 @@ public class ActionFarm extends BaseAction {
 
             DBCursor cursor    = col.find(query);
             WriteResult result = null;
-            BasicDBObject jsonField = null;
-            jsonField          = GlobalFunctions.generateJSONProducer(valInfo);
+            BasicDBObject jsonField = GlobalFunctions.generateJSONFarm(valInfo);
             
             if (cursor.count()>0) {
+                System.out.println("actualizo mongo");
                 result = col.update(query, jsonField);
             } else {
+                System.out.println("inserto mongo");
                 result = col.insert(jsonField);
             }
             
-            if (!result.getError().equals("")) {
+            if (result.getError()!=null) {
                 throw new HibernateException("");
-            }*/
-
+            }
+            
+            mongo.close();
             tx.commit();
             state = "success";
             if (action.equals("C")) {
@@ -1091,6 +1102,29 @@ public class ActionFarm extends BaseAction {
             log.setActionTypeLogEnt("D");
             session.saveOrUpdate(log);
 //            logDao.save(log);
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+far.getIdFar());
+            query.put("form_id", "3");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+            WriteResult result = null;
+            
+            System.out.println("borro mongo");
+            result = col.remove(query);
+            
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }
+            mongo.close();
+            
             tx.commit();
             state = "success";
             info = "La finca ha sido borrada con exito";

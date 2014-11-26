@@ -26,7 +26,6 @@ public class ExtensionAgents  implements java.io.Serializable {
      private Integer createdBy;
      private WorkTypeExtAgent workTypeExtAge;
      private Association idAssoExtAge;
-     private String nameAssoExtAge;
 
     public ExtensionAgents() {
     }
@@ -82,15 +81,6 @@ public class ExtensionAgents  implements java.io.Serializable {
     
     public void setIdAssoExtAge(Association idAssoExtAge) {
         this.idAssoExtAge = idAssoExtAge;
-    }
-    
-    @Column(name="name_asso_ext_age", length=200)
-    public String getNameAssoExtAge() {
-        return this.nameAssoExtAge;
-    }
-    
-    public void setNameAssoExtAge(String nameAssoExtAge) {
-        this.nameAssoExtAge = nameAssoExtAge;
     }
     
     @Column(name="status")

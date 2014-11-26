@@ -14,6 +14,7 @@ import org.aepscolombia.platform.models.dao.HarvestsDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Harvests;
@@ -22,6 +23,7 @@ import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -301,6 +303,12 @@ public class ActionHarvest extends BaseAction {
             
             String dmy     = new SimpleDateFormat("yyyy-MM-dd").format(harv.getDateHar());
             Date dateHar   = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
+            if (harv.getIdHar()==null) {
+                Harvests harvTemp = harDao.objectById(idCrop);
+                if (harvTemp!=null) {
+                    harv.setIdHar(harvTemp.getIdHar());
+                }
+            }           
             
             harv.setProductionEvents(new ProductionEvents(idCrop));
 //            harv.setDateHar(new Date());
@@ -317,7 +325,8 @@ public class ActionHarvest extends BaseAction {
             log.setTableLogEnt("harvests");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);            
+            
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -327,6 +336,12 @@ public class ActionHarvest extends BaseAction {
                 info  = "La cosecha ha sido modificada con exito";
 //                return "list";
             }
+            HashMap prod  = cropDao.findById(idCrop);
+            Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+            
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

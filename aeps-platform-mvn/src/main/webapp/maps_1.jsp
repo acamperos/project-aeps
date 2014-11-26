@@ -229,6 +229,46 @@
 //        gml.parse();
         var myParser = new geoXML3.parser({map: map, suppressInfoWindows: true});
         myParser.parse('Lotes_maiz.kml');
+        
+            var position = new google.maps.LatLng(40.714728,-73.998672);
+            var locations = [];
+            locations.push(position);        
+            var positionalRequest = {
+              'locations': locations
+            }
+            var valAssig=[];
+            elevator = new google.maps.ElevationService();
+            elevator.getElevationForLocations(positionalRequest, function(results, status) {
+              if (status == google.maps.ElevationStatus.OK) {
+                if (results[0]) {
+                  valAssig.push(results[0].elevation.toFixed(3) + " m");
+                } else {
+                  alert('No results found');
+                }
+              } else {
+                alert('Elevation service failed due to: ' + status);
+              }
+            });
+            alert(valAssig);
+        
+        
+        
+//        $.ajax({
+//            type: "POST",
+//            url: "https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034",
+//            success: function(information) {
+//                var obj = jQuery.parseJSON(information);
+//                alert(obj);
+//            }
+//        });
+
+//        var xmlHttp = null;
+//        xmlHttp = new XMLHttpRequest();
+//        xmlHttp.open( "GET", "http://maps.google.com/maps/api/elevation/xml?locations=44.49,11.34&amp;sensor=false", false );
+//        xmlHttp.send( null );
+//        alert(xmlHttp.responseText);
+//        jQuery.parseJSON(information);
+        
         //]]>
     </script> 
 

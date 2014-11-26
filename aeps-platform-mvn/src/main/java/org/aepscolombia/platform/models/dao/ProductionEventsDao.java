@@ -1,8 +1,15 @@
 package org.aepscolombia.platform.models.dao;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.aepscolombia.platform.controllers.ActionField;
 import org.aepscolombia.platform.models.entity.Entities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
@@ -23,6 +31,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -85,7 +95,7 @@ public class ProductionEventsDao
                     }
                     temp.put("otherCrop", "");
                 }
-                result = (temp);
+                result = temp;
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -657,8 +667,8 @@ public class ProductionEventsDao
         String sql = "";
         String entType = String.valueOf(args.get("entType"));
         
-        sql += "select e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, f.name_far as FINCA, l.latitude_fie as LAT_LOTE, l.longitude_fie as LONG_LOTE, ";
-        sql += "sie.date_sow as FECHA_SIEMBRA, sie.sowing_type_sow as TIPO_SIEMBRA, sie.seeds_number_sow as NUM_SEMILLAS, sie.treated_seeds_sow as SEM_TRATADAS, sie.furrows_distance_sow as DIST_SURCOS, sie.sites_distance_sow as DIST_PLANTAS, ";
+        sql += "select ep.id_pro_eve as ID_CULTIVO, l.id_fie as ID_LOTE, f.id_far as ID_FINCA, p.id_pro as ID_PROD, e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, f.name_far as FINCA, l.latitude_fie as LAT_LOTE, l.longitude_fie as LONG_LOTE, ";
+        sql += "sie.date_sow as FECHA_SIEMBRA, sie.sowing_type_sow as TIPO_SIEMBRA, sie.seeds_number_sow as NUM_SEMILLAS, IF(sie.treated_seeds_sow=true,'SI','NO') as SEM_TRATADAS, sie.furrows_distance_sow as DIST_SURCOS, sie.sites_distance_sow as DIST_PLANTAS, ";
         sql += "tc.name_cro_typ as TIPO_CULTIVO, IF(tc.id_cro_typ=1,csem.color_see_col,'N/A') as COLOR_ENDOSPERMO, IF(tc.id_cro_typ=2,fr.seeds_number_site_bea,'N/A') as SEM_POR_SITIO, IF(tc.id_cro_typ=2,ts.name_see_typ,'N/A') as TIPO_DE_SEMILLA, ";
         sql += "IF(tc.id_cro_typ=2,IF(fr.growing_environment_bea = 1, 'Arbustivo',IF(fr.growing_environment_bea = 2, 'Voluble', '')),'N/A') as HABITO_CRECIMIENTO, mg.name_gen as MATERIAL_GENETICO, ";
         sql += "ep.expected_production_pro_eve as OBJ_RDT, t.name_cro_typ as CULT_ANT, ep.draining_pro_eve as DRENAJE, ";
@@ -733,6 +743,10 @@ public class ProductionEventsDao
             events = query.list();
         
             String[] val = {
+                "ID_CULTIVO",
+                "ID_LOTE",
+                "ID_FINCA",
+                "ID_PROD",
                 "USUARIO",
                 "PRODUCTOR",
                 "CEDULA",
@@ -792,7 +806,11 @@ public class ProductionEventsDao
                     String.valueOf(data[24]),
                     String.valueOf(data[25]),
                     String.valueOf(data[26]),
-                    String.valueOf(data[27])
+                    String.valueOf(data[27]),
+                    String.valueOf(data[28]),
+                    String.valueOf(data[29]),
+                    String.valueOf(data[30]),
+                    String.valueOf(data[31])
                 };
                 writer.writeNext(valTemp);
             }
@@ -812,4 +830,275 @@ public class ProductionEventsDao
         }
 //        return result;
     }
+    
+    public HashMap getDataCropById(Integer id) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        HashMap result = new HashMap();
+        
+        String sql = "";        
+        /*
+        "191": "Fecha de cosecha" => "dateHar"
+        "192": "Método de cosecha" => "methodHar"
+        "193": "Producto esperado" => "expectedProduct"
+        "194": "% de Humedad de la cosecha" => "humPer"
+        "195": "Rendimiento (kg/ha)" => "yield" 
+        "205": "Fecha de siembra" => "dateSow"
+        "206": "Método de siembra" => "methodSow"
+        "207": "Kilogramos de semilla sembrada X hectárea (kg/ha)" => "seedsNumber"
+        "208": "Tipo de material" => "genotyteType"
+        "211": "Material genético (Blanco)" => "genotypeWhite"
+        "212": "Material genético (Amarillo)" => "genotypeYellow"
+        "213": "Color del endospermo" => "grainColor"
+        "214": "Semillas tratadas ?" => "treatedSeeds"
+        "226": "Cultivo anterior" => "formerCrop"
+        "227": "Se hace drenaje en la parcela" => "drainingPro"
+        "230": "Fecha de emergencia" => "emergencePhy"
+        "231": "Poblacion a los 20 días" => "twentyDaysPopulation"
+        "232": "Fecha de floración" => "floweringDate"
+        "233": "Cantidad total (kg)" => "productionHar"
+        "234": "Observaciones que afectaron la producción" => "commentHar"
+        "240": "Seleccione el lote asociado" => "idField"
+        "371": "Mejor rendimiento obtenido en el lote (kg/ha)" => "expectedProduction"
+        "372": "Producto usado" => "usedChemical" ("treatedSeeds")
+        "373": "Distancia entre surcos (m)" => "furrowsDistance" ("treatedSeeds")
+        "374": "Distancia entre sitios (m)" => "sitesDistance" ("treatedSeeds")
+        "375": "Numero de semillas por sitio" => "seedsNumberSite"
+        "386": "Porcentaje de resiembra" => "percentageRes"
+        "387": "Numero de bulto (ha)" => "numberSacks"
+        "388": "Peso promedio de un bulto (kg/bulto)" => "weightAvg"
+        "389": "Peso promedio de la bolsa" => "weightAvgPouch"
+        */
+        
+        sql += "select DATE_FORMAT(ha.date_har,'%Y-%m-%d') as dateHar, ha.method_har, ha.expected_product_type_har, ha.humidity_percentage_har, FORMAT(ha.yield_har,0),"; //4
+        sql += " ha.storage_har, ha.production_har, ha.comment_har, ha.number_sacks_sow, ha.weight_avg_sacks_sow,";//9
+        sql += " DATE_FORMAT(s.date_sow,'%Y-%m-%d') as dateSow, s.sowing_type_sow, FORMAT(s.seeds_number_sow,0), s.genotyte_type_seed_sow, s.genotype_sow, s.treated_seeds_sow,";//15
+        sql += " s.used_chemical_sow, FORMAT(s.furrows_distance_sow,0), FORMAT(s.sites_distance_sow,0),";//18
+        sql += " mai.grain_color_mai, FORMAT(mai.seeds_number_site_mai,0),";//20
+        sql += " DATE_FORMAT(pm.emergence_phy_mon,'%Y-%m-%d') as dateEmer, pm.20_days_population_mon_fis, DATE_FORMAT(pm.flowering_date_phy_mon,'%Y-%m-%d') as dateFlow, pm.percentage_reseeding_phy_mon,";//24
+        sql += " pe.id_field_pro_eve, pe.former_crop_pro_eve, pe.draining_pro_eve, FORMAT(pe.expected_production_pro_eve,0),";//28
+        sql += " pe.id_pro_eve, pe.status, ha.id_har, s.id_sow, mai.id_mai, pm.id_phy_mon,";//34
+        sql += " l.id_fie, l.name_fie, s.seed_origin_sow, be.seeds_number_site_bea, be.seeds_inoculation_bea,";//39
+        sql += " be.otro_inoculation_bea, be.growing_environment_bea, ha.load_hectare_sow, be.id_bea, pe.id_crop_type_pro_eve";//44
+        sql += " from production_events pe";
+        sql += " inner join fields l on pe.id_field_pro_eve = l.id_fie";
+        sql += " left join harvests ha on ha.id_production_event_har=pe.id_pro_eve";   
+        sql += " left join sowing s on s.id_production_event_sow=pe.id_pro_eve";   
+        sql += " left join maize mai on mai.id_production_event_mai=pe.id_pro_eve";   
+        sql += " left join beans be on be.id_production_event_bea=pe.id_pro_eve";   
+        sql += " left join physiological_monitoring pm on pm.id_production_event_phy_mon=pe.id_pro_eve";   
+        sql += " where pe.status=1 and l.status=1";
+        if (id!=null) {
+            sql += " and pe.id_pro_eve="+id;
+        }
+        
+//        System.out.println("sql->"+sql);        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {
+                
+                HashMap temp = new HashMap();
+                temp.put("dateHar", data[0]);
+                temp.put("methodHar", data[1]);
+                temp.put("expectedProduct", data[2]);             
+                temp.put("humPer", data[3]);      
+                temp.put("yield", data[4]);        
+                temp.put("dateSow", data[10]);
+                temp.put("methodSow", data[11]);                         
+                temp.put("seedsNumber", data[12]);              
+                temp.put("genotyteType", data[13]);           
+                
+                temp.put("grainColor", data[19]);      
+                String seedColor = String.valueOf(temp.get("grainColor"));
+                if (seedColor.equals("1")) {
+                    temp.put("genotypeWhite", data[14]);                
+                    temp.put("genotypeYellow", ""); 
+                } else if (seedColor.equals("2")) {
+                    temp.put("genotypeWhite", "");                
+                    temp.put("genotypeYellow", data[14]); 
+                }                         
+                
+                temp.put("treatedSeeds", data[15]);
+                temp.put("formerCrop", data[26]);
+                temp.put("drainingPro", data[27]);
+                temp.put("emergencePhy", data[21]);
+                temp.put("twentyDaysPopulation", data[22]);
+                temp.put("floweringDate", data[23]);
+                temp.put("productionHar", data[6]);
+                
+                temp.put("commentHar", data[7]);
+                temp.put("idField", data[25]);
+                temp.put("expectedProduction", data[28]);
+                temp.put("usedChemical", data[16]);
+                temp.put("furrowsDistance", data[17]);
+                temp.put("sitesDistance", data[18]);
+                temp.put("seedsNumberSite", data[20]);
+                temp.put("percentageRes", data[24]);
+                temp.put("numberSacks", data[8]);
+                temp.put("storage", data[5]);
+                
+                //3 - Mazorca => peso bulto
+                //4 - Ensilaje => peso bolsa
+                String valProduct = String.valueOf(temp.get("expectedProduct"));
+                if (valProduct.equals("3")) {
+                    temp.put("weightAvg", data[9]);
+                    temp.put("weightAvgPouch", "");
+                } else if (valProduct.equals("4")) {
+                    temp.put("weightAvg", "");
+                    temp.put("weightAvgPouch", data[9]);
+                }                
+                
+                
+                String cropType = String.valueOf(data[44]);
+                String prep="", fert="", mont="", cont="", res="", irr="", obs="";
+                if (cropType.equals("1")) {
+                    prep = new PreparationsDao().getPreparations(id);
+                    fert = new FertilizationsDao().getFertilizations(id);
+                    mont = new MonitoringDao().getMonitorings(id);
+                    cont = new ControlsDao().getControls(id);
+                    res  = new ResidualsManagementDao().getResiduals(id);
+                    irr  = new IrrigationDao().getIrrigations(id);
+                    obs  = new DescriptionsProductionEventDao().getDescriptions(id);
+                } else if (cropType.equals("2")) {
+                    prep = new PreparationsDao().getPreparationsBeans(id);
+                    fert = new FertilizationsDao().getFertilizationsBeans(id);
+                    mont = new MonitoringDao().getMonitoringsBeans(id);
+                    cont = new ControlsDao().getControlsBeans(id);
+                    res  = new ResidualsManagementDao().getResidualsBeans(id);
+                    irr  = new IrrigationDao().getIrrigationsBeans(id);
+                    obs  = new DescriptionsProductionEventDao().getDescriptionsBeans(id);
+                }
+                
+//                System.out.println("prep=>"+prep);
+//                System.out.println("fert=>"+fert);
+//                System.out.println("mont=>"+mont);
+//                System.out.println("cont=>"+cont);
+//                System.out.println("res=>"+res);
+//                System.out.println("irr=>"+irr);
+//                System.out.println("obs=>"+obs);
+                
+                temp.put("preparations", prep);
+                temp.put("fertilizations", fert);
+                temp.put("monitorings", mont);
+                temp.put("controls", cont);
+                temp.put("residuals", res);
+                temp.put("irrigations", irr);
+                temp.put("observations", obs);
+                
+                temp.put("idCrop", data[29]);
+                temp.put("status", data[30]);
+                temp.put("idHar", data[31]);
+                temp.put("idSow", data[32]);
+                temp.put("idMaize", data[33]);
+                temp.put("idPhys", data[34]);
+                temp.put("lat", "");
+                temp.put("lng", "");
+                temp.put("alt", ""); 
+                
+                temp.put("fieldId", data[35]);
+                temp.put("nameField", data[36]); 
+                
+                //Nuevas de Frijol
+                temp.put("origin", data[37]); 
+                temp.put("seedsNumber", data[38]); 
+                temp.put("seedsIn", data[39]); 
+                temp.put("otherIn", data[40]); 
+                temp.put("growingEnv", data[41]); 
+                temp.put("loadHec", data[42]); 
+                temp.put("idBean", data[43]); 
+                temp.put("cropType", data[44]); 
+                
+                String growingEnv = String.valueOf(temp.get("growingEnv"));
+                if (growingEnv.equals("1")) {
+                    temp.put("genotypeArb", data[14]);                
+                    temp.put("genotypeVol", ""); 
+                } else if (growingEnv.equals("2")) {
+                    temp.put("genotypeArb", "");                
+                    temp.put("genotypeVol", data[14]); 
+                }
+                
+                result = temp;
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    
+    
+    public void setInfoMongo() 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select ep.id_pro_eve, ep.id_crop_type_pro_eve, e.email_ent";
+        sql += " from production_events ep";
+        sql += " inner join fields l on ep.id_field_pro_eve = l.id_fie";
+        sql += " inner join farms f on l.id_farm_fie=f.id_far";
+        sql += " inner join log_entities le on le.id_object_log_ent = ep.id_pro_eve AND le.table_log_ent = 'production_events'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
+        sql += " where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823)";
+        sql += " and le.action_type_log_ent = 'C'";
+        sql += " and ep.status=1 and l.status=1 and f.status=1";
+        sql += " and le.id_object_log_ent not in (select le.id_object_log_ent from log_entities le where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823) and le.action_type_log_ent = 'D' AND le.table_log_ent = 'production_events')";
+
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("idCrop", data[0]);
+                temp.put("typeCrop", data[1]);     
+                
+                String emailUser = String.valueOf(data[2]);
+                
+                SfGuardUserDao sfDao = new SfGuardUserDao();
+                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                Long idUserMobile    = null;
+                if (sfUser!=null) {
+                    idUserMobile = sfUser.getId();
+                }                
+                
+                Integer idCrop   = Integer.parseInt(String.valueOf(temp.get("idCrop")));
+                Integer typeCrop = Integer.parseInt(String.valueOf(temp.get("typeCrop")));                
+                
+                GlobalFunctions.sendInformationCrop(idCrop, typeCrop, idUserMobile);
+                
+            }   
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
+    }
+    
 }

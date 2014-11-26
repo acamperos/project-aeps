@@ -8,6 +8,7 @@
         <link rel="icon" type="image/ico" href="img/favicon.ico">
     </head>
     <body>
+        <%@ include file="../generals/googleAnalytics.jsp" %>
         <%@page import="org.aepscolombia.platform.models.entity.Users"%>
         <%@page import="org.aepscolombia.platform.models.dao.UsersDao"%>
         <%@page import="org.aepscolombia.platform.util.APConstants"%>

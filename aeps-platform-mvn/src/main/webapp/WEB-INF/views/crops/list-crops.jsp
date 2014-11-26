@@ -5,8 +5,10 @@
 <html>
     <head>
         <link rel="icon" type="image/ico" href="img/favicon.ico">
+        <!--<script src="/scripts/js/generals/googleAnalytics.js"></script>-->
     </head>
     <body>
+        <%@ include file="../generals/googleAnalytics.jsp" %>
         <!--<div id="divMessage" style="display:none"></div>-->       
         <div class="container">
             <ul id="breadcrumbs">

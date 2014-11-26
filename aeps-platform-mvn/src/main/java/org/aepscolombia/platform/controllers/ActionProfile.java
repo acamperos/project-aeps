@@ -434,7 +434,7 @@ public class ActionProfile extends BaseAction {
             if (this.getChangePass()) {
                 String saltUsr=user.getSaltUsr();
 //                String passRes = GlobalFunctions.generateSHA1(this.getPassActual(), saltUsr);
-                String passRes = GlobalFunctions.generateMD5(saltUsr+this.getPassActual());
+                String passRes = GlobalFunctions.generateSHA1(saltUsr+this.getPassActual());
 
                 Users loggedUser = userDao.login(user.getNameUserUsr(), passRes);
                 if (loggedUser == null) {
@@ -505,6 +505,7 @@ public class ActionProfile extends BaseAction {
                 ent.setLastName2Ent(secondLastNameRep);
                 ent.setValidationNumberEnt(digVer);
             } else {
+                ent.setNameEnt(firstName+" "+secondName+" "+firstLastName+" "+secondLastName);
                 ent.setFirstName1Ent(firstName);
                 ent.setFirstName2Ent(secondName);
                 ent.setLastName1Ent(firstLastName);
@@ -593,5 +594,5 @@ public class ActionProfile extends BaseAction {
             session.close();
         }
         return "states";
-    }
+    }  
 }

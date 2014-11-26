@@ -1,0 +1,2220 @@
+{
+    "form": {
+        "id": "NumberInt(16)",
+        "name": "Maiz",
+        "description": "Tipo de cultivo a caracterizar",
+        "del": true,
+        "qid": "205",
+        "main_table": "production_events",
+        "HiddenFields": [
+            {
+                "id_survey_hidden_field": "1",
+                "target_table": "production_events",
+                "target_column": "id_project_pro_eve",
+                "value": "1"
+            },
+            {
+                "id_survey_hidden_field": "2",
+                "target_table": "production_events",
+                "target_column": "id_crop_type_pro_eve",
+                "value": "1"
+            },
+            {
+                "id_survey_hidden_field": "3",
+                "target_table": "production_events",
+                "target_column": "status",
+                "value": "1"
+            }
+        ],
+        "Questions": [
+            {
+                "id": "NumberInt(226)",
+                "name": "Cultivo anterior",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(2)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "production_events",
+                    "target_column": "former_crop_pro_eve",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Maiz",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "Frijol",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "3",
+                        "name": "Yuca",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "4",
+                        "name": "Arroz",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "5",
+                        "name": "Algodón",
+                        "position": "NumberInt(5)"
+                    },
+                    {
+                        "id": "6",
+                        "name": "Soya",
+                        "position": "NumberInt(6)"
+                    },
+                    {
+                        "id": "7",
+                        "name": "Pastos",
+                        "position": "NumberInt(7)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(379)",
+                "name": "Manejo de rastrojos",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(3)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(52)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(52)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(380)",
+                            "name": "Fecha del manejo del rastrojo",
+                            "help": "",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(151)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(3)",
+                            "widget": "NumberInt(5)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "residuals_management",
+                                "target_column": "date_res_man",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_res_man"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(381)",
+                            "name": "Tipo de manejo del rastrojo",
+                            "help": "",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(152)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "residuals_management",
+                                "target_column": "id_residuals_type_res_man",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_res_man"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Quema",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Integracion al suelo",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Picados (desbrozadora o combinada)",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Rastrillo",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "11",
+                                    "name": "Retirados de la parcela",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "1000000",
+                                    "name": "Otro",
+                                    "position": "NumberInt(6)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(382)",
+                            "name": "Nuevo manejo del rastrojo",
+                            "help": "",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(153)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(1)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "residuals_management",
+                                "target_column": "other_residuals_management_res_man",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_res_man"
+                            },
+                            "Choices": [
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "residuals_management",
+                    "target_column": "id_production_event_res_man",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(199)",
+                "name": "Preparación de la parcela",
+                "help": "Labores de adecuación y preparación del suelo antes de sembrar",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(4)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(46)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(46)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(200)",
+                            "name": "Fecha de trabajo",
+                            "help": "Cuando fue realizada la preparación",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(1)",
+                            "is_required": true,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(3)",
+                            "widget": "NumberInt(5)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "preparations",
+                                "target_column": "date_prep",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_prep"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(201)",
+                            "name": "Tipo de preparación",
+                            "help": "",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(2)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "preparations",
+                                "target_column": "preparation_type_prep",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_prep"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Subsolador",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Cincel",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Arado",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Rastra",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Rastrillo",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "6",
+                                    "name": "Micronivelación",
+                                    "position": "NumberInt(6)"
+                                },
+                                {
+                                    "id": "7",
+                                    "name": "Embalconado",
+                                    "position": "NumberInt(7)"
+                                },
+                                {
+                                    "id": "8",
+                                    "name": "Encamado",
+                                    "position": "NumberInt(8)"
+                                },
+                                {
+                                    "id": "12",
+                                    "name": "Ninguna (siembra directa)",
+                                    "position": "NumberInt(9)"
+                                },
+                                {
+                                    "id": "1000000",
+                                    "name": "Otro",
+                                    "position": "NumberInt(10)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(202)",
+                            "name": "Otro tipo de preparación",
+                            "help": "Indique aquí cual fue el modo de preparación utilizado",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(3)",
+                            "is_required": false,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(1)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "preparations",
+                                "target_column": "other_preparation_type_prep",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_prep"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(203)",
+                            "name": "Profundidad de trabajo",
+                            "help": "Profundidad de trabajo de la herramienta, en centímetros (cm)",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(4)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(2)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": {
+                                "min": "NumberInt(0)",
+                                "max": "NumberInt(200)"
+                            },
+                            "Subform": null,
+                            "target": {
+                                "target_table": "preparations",
+                                "target_column": "depth_prep",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_prep"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(378)",
+                            "name": "Numero de pases",
+                            "help": "",
+                            "subject": "Establecimiento del cultivo",
+                            "position": "NumberInt(5)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(2)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "preparations",
+                                "target_column": "passings_number_prep",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_prep"
+                            },
+                            "Choices": [
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "preparations",
+                    "target_column": "id_production_event_prep",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(205)",
+                "name": "Fecha de siembra",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(5)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(3)",
+                "widget": "NumberInt(5)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": null,
+                    "max": null
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "date_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(206)",
+                "name": "Método de siembra",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(6)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "sowing_type_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Mecanizado",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "3",
+                        "name": "Manual",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(371)",
+                "name": "Mejor rendimiento obtenido en el lote (kg/ha)",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(7)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "production_events",
+                    "target_column": "expected_production_pro_eve",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(227)",
+                "name": "Se hace drenaje en la parcela",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(8)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "production_events",
+                    "target_column": "draining_pro_eve",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(207)",
+                "name": "Kilogramos de semilla sembrada X hectárea (kg/ha)",
+                "help": "Cantidad de semilla usada a la siembra",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(9)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(1)",
+                    "max": "NumberInt(200)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "seeds_number_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(214)",
+                "name": "Semillas tratadas ?",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(10)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "treated_seeds_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(372)",
+                "name": "Producto usado",
+                "help": "Que tipo de producto uso para tratar la semilla",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(11)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "used_chemical_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Fungicidas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "Insecticidas",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "4",
+                        "name": "Desconocido",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "5",
+                        "name": "Fungicida+Insecticida",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "1000000",
+                        "name": "Otro",
+                        "position": "NumberInt(5)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(373)",
+                "name": "Distancia entre surcos (m)",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(12)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(20)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "furrows_distance_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(374)",
+                "name": "Distancia entre sitios (m)",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(13)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(20)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "sites_distance_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(375)",
+                "name": "Numero de semillas por sitio",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(14)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(1)",
+                    "max": "NumberInt(20)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "seeds_number_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(208)",
+                "name": "Tipo de material",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(15)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "genotyte_type_seed_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Variedad",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "Hibrido",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "3",
+                        "name": "OGM",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "4",
+                        "name": "Semilla Campesina",
+                        "position": "NumberInt(4)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(213)",
+                "name": "Color del endospermo",
+                "help": "",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(16)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "maize",
+                    "target_column": "grain_color_mai",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_mai"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Blanco",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "Amarillo",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(211)",
+                "name": "Material genético (Blanco)",
+                "help": "Elige el maíz blanco que se sembró",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(17)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "genotype_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "PIONEER 30F32",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "PIONEER 30F32HW",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "3",
+                        "name": "PIONEER 30F32 H",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "4",
+                        "name": "PIONEER 30F32 HRR",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "5",
+                        "name": "FNC 3056",
+                        "position": "NumberInt(5)"
+                    },
+                    {
+                        "id": "6",
+                        "name": "FNC 514",
+                        "position": "NumberInt(6)"
+                    },
+                    {
+                        "id": "7",
+                        "name": "DK 234",
+                        "position": "NumberInt(7)"
+                    },
+                    {
+                        "id": "8",
+                        "name": "DK 777",
+                        "position": "NumberInt(8)"
+                    },
+                    {
+                        "id": "9",
+                        "name": "DK 234 YGRR",
+                        "position": "NumberInt(9)"
+                    },
+                    {
+                        "id": "10",
+                        "name": "DK 777 YGRR",
+                        "position": "NumberInt(10)"
+                    },
+                    {
+                        "id": "11",
+                        "name": "DK 777 YG",
+                        "position": "NumberInt(11)"
+                    },
+                    {
+                        "id": "12",
+                        "name": "DK 777 RR",
+                        "position": "NumberInt(12)"
+                    },
+                    {
+                        "id": "13",
+                        "name": "ICA V 156",
+                        "position": "NumberInt(13)"
+                    },
+                    {
+                        "id": "1000000",
+                        "name": "Otro",
+                        "position": "NumberInt(14)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(212)",
+                "name": "Material genético (Amarillo)",
+                "help": "Elige el maíz amarillo que se sembró",
+                "subject": "Establecimiento del cultivo",
+                "position": "NumberInt(18)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "sowing",
+                    "target_column": "genotype_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_sow"
+                },
+                "Choices": [
+                    {
+                        "id": "14",
+                        "name": "PIONEER 30F35",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "15",
+                        "name": "PIONEER 30F35 H",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "16",
+                        "name": "PIONEER 30F35 HRR",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "17",
+                        "name": "PIONEER 30 K 75",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "18",
+                        "name": "PIONEER 30K73",
+                        "position": "NumberInt(5)"
+                    },
+                    {
+                        "id": "19",
+                        "name": "GALILEO DE 33 (FNC 515)",
+                        "position": "NumberInt(6)"
+                    },
+                    {
+                        "id": "20",
+                        "name": "GALILEO 29 (FNC 516)",
+                        "position": "NumberInt(7)"
+                    },
+                    {
+                        "id": "21",
+                        "name": "GALILEO5 (FNC 517)",
+                        "position": "NumberInt(8)"
+                    },
+                    {
+                        "id": "22",
+                        "name": "FNC318",
+                        "position": "NumberInt(9)"
+                    },
+                    {
+                        "id": "23",
+                        "name": "FNC 114",
+                        "position": "NumberInt(10)"
+                    },
+                    {
+                        "id": "24",
+                        "name": "PAC 105",
+                        "position": "NumberInt(11)"
+                    },
+                    {
+                        "id": "25",
+                        "name": "ICA V 305",
+                        "position": "NumberInt(12)"
+                    },
+                    {
+                        "id": "26",
+                        "name": "ICA V 109",
+                        "position": "NumberInt(13)"
+                    },
+                    {
+                        "id": "27",
+                        "name": "FNC 3059",
+                        "position": "NumberInt(14)"
+                    },
+                    {
+                        "id": "28",
+                        "name": "PIONER 30F80",
+                        "position": "NumberInt(15)"
+                    },
+                    {
+                        "id": "29",
+                        "name": "DK 003",
+                        "position": "NumberInt(16)"
+                    },
+                    {
+                        "id": "30",
+                        "name": "DK 1596",
+                        "position": "NumberInt(17)"
+                    },
+                    {
+                        "id": "31",
+                        "name": "DK 1040",
+                        "position": "NumberInt(18)"
+                    },
+                    {
+                        "id": "32",
+                        "name": "DK 4004",
+                        "position": "NumberInt(19)"
+                    },
+                    {
+                        "id": "33",
+                        "name": "DK7088",
+                        "position": "NumberInt(20)"
+                    },
+                    {
+                        "id": "34",
+                        "name": "DK 003YGRR",
+                        "position": "NumberInt(21)"
+                    },
+                    {
+                        "id": "35",
+                        "name": "DK 003RR",
+                        "position": "NumberInt(22)"
+                    },
+                    {
+                        "id": "36",
+                        "name": "DK 1040 YGRR",
+                        "position": "NumberInt(23)"
+                    },
+                    {
+                        "id": "37",
+                        "name": "DK 4004 YGRR",
+                        "position": "NumberInt(24)"
+                    },
+                    {
+                        "id": "38",
+                        "name": "DK 4004 YG",
+                        "position": "NumberInt(25)"
+                    },
+                    {
+                        "id": "39",
+                        "name": "DK 4004 RR",
+                        "position": "NumberInt(26)"
+                    },
+                    {
+                        "id": "40",
+                        "name": "CORPOICA V 114",
+                        "position": "NumberInt(27)"
+                    },
+                    {
+                        "id": "1000000",
+                        "name": "Otro",
+                        "position": "NumberInt(28)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(390)",
+                "name": "Riego",
+                "help": "",
+                "subject": "Riego",
+                "position": "NumberInt(19)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(53)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(53)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(391)",
+                            "name": "Fecha del riego",
+                            "help": "",
+                            "subject": "Riego",
+                            "position": "NumberInt(158)",
+                            "is_required": true,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(3)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "irrigation",
+                                "target_column": "date_irr",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_irr"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(392)",
+                            "name": "Tipo de riego",
+                            "help": "",
+                            "subject": "Riego",
+                            "position": "NumberInt(159)",
+                            "is_required": true,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "irrigation",
+                                "target_column": "irrigation_type_irr",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_irr"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Aspersion",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Gravedad",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Goteo",
+                                    "position": "NumberInt(3)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(393)",
+                            "name": "Cantidad aportada por hectárea (metros cúbicos)",
+                            "help": "",
+                            "subject": "Riego",
+                            "position": "NumberInt(160)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(8)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "irrigation",
+                                "target_column": "amount_irr",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_irr"
+                            },
+                            "Choices": [
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "irrigation",
+                    "target_column": "id_production_event_irr",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(215)",
+                "name": "Fertilización",
+                "help": "",
+                "subject": "Nutricion",
+                "position": "NumberInt(20)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(47)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(47)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(216)",
+                            "name": "Fecha de aplicación",
+                            "help": "",
+                            "subject": "Nutricion",
+                            "position": "NumberInt(98)",
+                            "is_required": true,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(3)",
+                            "widget": "NumberInt(5)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "fertilizations",
+                                "target_column": "date_fer",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_fer"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(217)",
+                            "name": "Tipo de abono",
+                            "help": "",
+                            "subject": "Nutricion",
+                            "position": "NumberInt(99)",
+                            "is_required": true,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "fertilizations",
+                                "target_column": "fertilization_type_fer",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_fer"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Química",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Orgánica",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Enmiendas",
+                                    "position": "NumberInt(3)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(218)",
+                            "name": "Cantidad aportada (kg/ha)",
+                            "help": "",
+                            "subject": "Nutricion",
+                            "position": "NumberInt(100)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(2)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "fertilizations",
+                                "target_column": "amount_product_used_fer",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_fer"
+                            },
+                            "Choices": [
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "fertilizations",
+                    "target_column": "id_production_event_fer",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(235)",
+                "name": "Manejo Fitosanitario",
+                "help": "",
+                "subject": "Manejo Fitosanitario",
+                "position": "NumberInt(21)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(49)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(49)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(236)",
+                            "name": "Fecha del control",
+                            "help": "",
+                            "subject": "Manejo Fitosanitario",
+                            "position": "NumberInt(1)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(3)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "controls",
+                                "target_column": "date_con",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_con"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(237)",
+                            "name": "Tipo de objetivo",
+                            "help": "",
+                            "subject": "Manejo Fitosanitario",
+                            "position": "NumberInt(2)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "controls",
+                                "target_column": "target_type_con",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_con"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Plagas",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Malezas",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Enfermedades",
+                                    "position": "NumberInt(3)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(383)",
+                            "name": "Objetivo del control (Plagas)",
+                            "help": "",
+                            "subject": "Manejo Fitosanitario",
+                            "position": "NumberInt(3)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "controls",
+                                "target_column": "id_pest_con",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_con"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "10",
+                                    "name": "Barrenador - Diatraea saccharalis",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "13",
+                                    "name": "Chicharras (Dalbulus maidis o Dalbulus spp)",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "8",
+                                    "name": "Chinche de la Raíz - Blissus spp",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Chizas",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "9",
+                                    "name": "Cogollero del maíz - Spodoptera fugiperda",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "7",
+                                    "name": "Cucarron - Eutheola bidentata",
+                                    "position": "NumberInt(6)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Cucarroncito - Diabrótica",
+                                    "position": "NumberInt(7)"
+                                },
+                                {
+                                    "id": "6",
+                                    "name": "Elasmopalpus - lignosellus",
+                                    "position": "NumberInt(8)"
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Gallina ciega (Phyllophaga spp o Cylcephala sp)",
+                                    "position": "NumberInt(9)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Gusanos alambres (Elateridae o Tenebrionidae)",
+                                    "position": "NumberInt(10)"
+                                },
+                                {
+                                    "id": "12",
+                                    "name": "H amiguera",
+                                    "position": "NumberInt(11)"
+                                },
+                                {
+                                    "id": "11",
+                                    "name": "Helicoverpa zea",
+                                    "position": "NumberInt(12)"
+                                },
+                                {
+                                    "id": "1",
+                                    "name": "Hormiga - Solenopsis sp",
+                                    "position": "NumberInt(13)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(384)",
+                            "name": "Objetivo del control (Malezas)",
+                            "help": "",
+                            "subject": "Manejo Fitosanitario",
+                            "position": "NumberInt(4)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "controls",
+                                "target_column": "id_weed_con",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_con"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "6",
+                                    "name": "Barba de indio",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Batatilla",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Caminadora",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "1",
+                                    "name": "Coquito",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Guardarocío",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "7",
+                                    "name": "Lechosa",
+                                    "position": "NumberInt(6)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Pasto Johnson",
+                                    "position": "NumberInt(7)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(385)",
+                            "name": "Objetivo del control (Enfermedades)",
+                            "help": "",
+                            "subject": "Manejo Fitosanitario",
+                            "position": "NumberInt(5)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "controls",
+                                "target_column": "id_disease_con",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_con"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "6",
+                                    "name": "Bandeado de la hoja",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "15",
+                                    "name": "Carbón común",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "1",
+                                    "name": "Complejo Mancha de Asfalto",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Complejo Mancha Gris",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "16",
+                                    "name": "Falso carbón",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Mancha Parda",
+                                    "position": "NumberInt(6)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Manchas foliares por Helmintosporium",
+                                    "position": "NumberInt(7)"
+                                },
+                                {
+                                    "id": "7",
+                                    "name": "Mildeo velloso",
+                                    "position": "NumberInt(8)"
+                                },
+                                {
+                                    "id": "11",
+                                    "name": "Pudrición acuosa del tallo",
+                                    "position": "NumberInt(9)"
+                                },
+                                {
+                                    "id": "14",
+                                    "name": "Pudrición gris por Physalospora",
+                                    "position": "NumberInt(10)"
+                                },
+                                {
+                                    "id": "12",
+                                    "name": "Pudrición por Diplodia",
+                                    "position": "NumberInt(11)"
+                                },
+                                {
+                                    "id": "13",
+                                    "name": "Pudrición rosada por Fusarium",
+                                    "position": "NumberInt(12)"
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Royas",
+                                    "position": "NumberInt(13)"
+                                },
+                                {
+                                    "id": "8",
+                                    "name": "Virus del Mosaico del enanismo del maíz",
+                                    "position": "NumberInt(14)"
+                                },
+                                {
+                                    "id": "10",
+                                    "name": "Virus del Mosaico del maíz",
+                                    "position": "NumberInt(15)"
+                                },
+                                {
+                                    "id": "9",
+                                    "name": "Virus del Rayado fino",
+                                    "position": "NumberInt(16)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(239)",
+                            "name": "Tipo de control",
+                            "help": "",
+                            "subject": "Manejo Fitosanitario",
+                            "position": "NumberInt(6)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "controls",
+                                "target_column": "control_type_con",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_con"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Biológico",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Químico",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Mecanizado",
+                                    "position": "NumberInt(3)"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "controls",
+                    "target_column": "id_production_event_con",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(220)",
+                "name": "Monitoreo del cultivo",
+                "help": "En esta sección, registrar lo que se observa en el cultivo en términos de fase fisiológicas y daños por eventuales plagas y enfermedades",
+                "subject": "Monitoreo",
+                "position": "NumberInt(22)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(48)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(48)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(221)",
+                            "name": "Fecha del monitoreo",
+                            "help": "Cuando se realizaron las observaciones",
+                            "subject": "Monitoreo",
+                            "position": "NumberInt(102)",
+                            "is_required": true,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(3)",
+                            "widget": "NumberInt(5)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "monitoring",
+                                "target_column": "date_mon",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_mon"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(223)",
+                            "name": "Observo enfermedad ?",
+                            "help": "",
+                            "subject": "Monitoreo",
+                            "position": "NumberInt(103)",
+                            "is_required": false,
+                            "is_filterable": true,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(2)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "monitoring",
+                                "target_column": "monitor_diseases_mon",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_mon"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "0",
+                                    "name": "No",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "1",
+                                    "name": "Si",
+                                    "position": "NumberInt(2)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(228)",
+                            "name": "Observo maleza ?",
+                            "help": "",
+                            "subject": "Monitoreo",
+                            "position": "NumberInt(105)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(2)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "monitoring",
+                                "target_column": "monitor_weeds_mon",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_mon"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "0",
+                                    "name": "No",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "1",
+                                    "name": "Si",
+                                    "position": "NumberInt(2)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(229)",
+                            "name": "Observo plaga ?",
+                            "help": "",
+                            "subject": "Monitoreo",
+                            "position": "NumberInt(106)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(2)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "monitoring",
+                                "target_column": "monitor_pests_mon",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_production_event_mon"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "0",
+                                    "name": "No",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "1",
+                                    "name": "Si",
+                                    "position": "NumberInt(2)"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "monitoring",
+                    "target_column": "id_production_event_mon",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(230)",
+                "name": "Fecha de emergencia",
+                "help": "",
+                "subject": "Monitoreo",
+                "position": "NumberInt(23)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(3)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "physiological_monitoring",
+                    "target_column": "emergence_phy_mon",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_phy_mon"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(231)",
+                "name": "Poblacion a los 20 días",
+                "help": "",
+                "subject": "Monitoreo",
+                "position": "NumberInt(24)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "physiological_monitoring",
+                    "target_column": "20_days_population_mon_fis",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_phy_mon"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(232)",
+                "name": "Fecha de floración",
+                "help": "",
+                "subject": "Monitoreo",
+                "position": "NumberInt(25)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(3)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "physiological_monitoring",
+                    "target_column": "flowering_date_phy_mon",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_phy_mon"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(386)",
+                "name": "Porcentaje de resiembra",
+                "help": "",
+                "subject": "Monitoreo",
+                "position": "NumberInt(26)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(8)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "physiological_monitoring",
+                    "target_column": "percentage_reseeding_phy_mon",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_phy_mon"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(191)",
+                "name": "Fecha de cosecha",
+                "help": "Cuando fue cosechado el lote ?",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(27)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(3)",
+                "widget": "NumberInt(5)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "date_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(192)",
+                "name": "Método de cosecha",
+                "help": "Como se realizo la cosecha ?",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(28)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "method_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Mecanizada",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "2",
+                        "name": "Manual",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(193)",
+                "name": "Producto esperado",
+                "help": "Que tipo de maíz se esta produciendo ?",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(29)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "expected_product_type_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                    {
+                        "id": "1",
+                        "name": "Grano seco",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "3",
+                        "name": "Mazorca (fresca)",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "4",
+                        "name": "Ensilaje",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(194)",
+                "name": "% de Humedad de la cosecha",
+                "help": "para cosechas de grano seco",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(30)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(100)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "humidity_percentage_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(195)",
+                "name": "Rendimiento (kg/ha)",
+                "help": "En kilogramos por hectárea",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(31)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(30000)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "yield_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(196)",
+                "name": "Almacenamiento en finca",
+                "help": "",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(32)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "storage_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(233)",
+                "name": "Cantidad total (kg)",
+                "help": "",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(33)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": null
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "production_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(234)",
+                "name": "Observaciones que afectaron la producción",
+                "help": "",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(34)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(1)",
+                "widget": "NumberInt(4)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "comment_har",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(387)",
+                "name": "Numero de bulto (ha)",
+                "help": "",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(35)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "number_sacks_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(388)",
+                "name": "Peso promedio de un bulto (kg/bulto)",
+                "help": "",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(36)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(8)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "weight_avg_sacks_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(389)",
+                "name": "Peso promedio de la bolsa",
+                "help": "",
+                "subject": "Datos de la cosecha",
+                "position": "NumberInt(37)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(8)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "harvests",
+                    "target_column": "weight_avg_sacks_sow",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": "id_production_event_har"
+                },
+                "Choices": [
+                ]
+            }
+        ]
+    }
+}

@@ -1,10 +1,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<!--<html>
-    <head>-->
-<!--    </head>
-    <body>-->
+<html>
+    <head>
+    </head>
+    <body>
+        <%@ include file="googleAnalytics.jsp" %>
         <div class="container">
             <div id="carousel-487454" class="carousel slide">
                 <div class="carousel-inner">
@@ -92,5 +93,5 @@
                 </div>
             </div>
         </div>
-<!--    </body>
-</html>-->
+    </body>
+</html>

@@ -3,8 +3,10 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+    </head>
     <body>
+        <%@ include file="googleAnalytics.jsp" %>
         <div class="container">
             <div class="panel">
                 <div class="panel-body">

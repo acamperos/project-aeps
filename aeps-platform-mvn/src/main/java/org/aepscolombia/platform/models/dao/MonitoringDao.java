@@ -269,4 +269,118 @@ public class MonitoringDao
             session.close();
         }
     }
+    
+    public static String getMonitorings(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        HashMap decision = new HashMap();
+        decision.put("true","1");
+        decision.put("false","0");
+        
+        String sql = "";      
+        sql += "select DATE_FORMAT(m.date_mon,'%Y-%m-%d') as dateMon, m.monitor_diseases_mon, m.monitor_weeds_mon, m.monitor_pests_mon";
+        sql += " from monitoring m"; 
+        sql += " where m.status=1";
+        sql += " and m.id_production_event_mon="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[221]\":\""+data[0]+"\","+
+                           "\"survey_solution[223]\":\""+decision.get(""+data[1])+"\","+ 
+                           "\"survey_solution[228]\":\""+decision.get(""+data[2])+"\","+ 
+                           "\"survey_solution[229]\":\""+decision.get(""+data[3])+"\","+ 
+                           "\"subform_id\":\""+48+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[221]\":\""+data[0]+"\","+
+                           "\"survey_solution[223]\":\""+decision.get(""+data[1])+"\","+ 
+                           "\"survey_solution[228]\":\""+decision.get(""+data[2])+"\","+ 
+                           "\"survey_solution[229]\":\""+decision.get(""+data[3])+"\","+ 
+                           "\"subform_id\":\""+48+"\","+ 
+                           "\"idx\":"+numCaj+"},";
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
+    public static String getMonitoringsBeans(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        HashMap decision = new HashMap();
+        decision.put("true","1");
+        decision.put("false","0");
+        
+        String sql = "";      
+        sql += "select DATE_FORMAT(m.date_mon,'%Y-%m-%d') as dateMon, m.monitor_diseases_mon, m.monitor_weeds_mon, m.monitor_pests_mon";
+        sql += " from monitoring m"; 
+        sql += " where m.status=1";
+        sql += " and m.id_production_event_mon="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[444]\":\""+data[0]+"\","+
+                           "\"survey_solution[445]\":\""+decision.get(""+data[1])+"\","+ 
+                           "\"survey_solution[446]\":\""+decision.get(""+data[2])+"\","+ 
+                           "\"survey_solution[447]\":\""+decision.get(""+data[3])+"\","+ 
+                           "\"subform_id\":\""+62+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[444]\":\""+data[0]+"\","+
+                           "\"survey_solution[445]\":\""+decision.get(""+data[1])+"\","+ 
+                           "\"survey_solution[446]\":\""+decision.get(""+data[2])+"\","+ 
+                           "\"survey_solution[447]\":\""+decision.get(""+data[3])+"\","+ 
+                           "\"subform_id\":\""+62+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
 }

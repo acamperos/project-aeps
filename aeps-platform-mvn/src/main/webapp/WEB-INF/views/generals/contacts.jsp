@@ -2,10 +2,11 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 <!DOCTYPE html>
-<!--<html>
-    <head>-->
-<!--    </head>
-    <body>-->
+<html>
+    <head>
+    </head>
+    <body>
+        <%@ include file="googleAnalytics.jsp" %>
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
@@ -92,5 +93,5 @@
                 </div>
             </div>
         </div>
-<!--    </body>
-</html>-->
+    </body>
+</html>

@@ -85,7 +85,7 @@ public class ActionProducer extends BaseAction {
     private List<Departments> department_producer;
     private List<Municipalities> city_producer;
     private int idProducer=0;   
-    private int telephone_producer;
+    private Integer telephone_producer;
     private Long celphone_producer;
     private String email_producer;
     private String identProducer;
@@ -285,11 +285,11 @@ public class ActionProducer extends BaseAction {
         this.city_producer = city_producer;
     }
 
-    public int getTelephone_producer() {
+    public Integer getTelephone_producer() {
         return telephone_producer;
     }
 
-    public void setTelephone_producer(int telephone_producer) {
+    public void setTelephone_producer(Integer telephone_producer) {
         this.telephone_producer = telephone_producer;
     }
 
@@ -494,7 +494,7 @@ public class ActionProducer extends BaseAction {
                 addActionError("Faltan campos por ingresar por favor digitelos");
             }
             
-            if (this.getCelphone_producer() != null && this.getCelphone_producer() == 0 && this.getTelephone_producer() == 0 && this.getEmail_producer().equals("")) {
+            if (this.getCelphone_producer() == null && this.getTelephone_producer() == null && this.getEmail_producer().equals("")) {
                 addFieldError("celphone_producer", "Uno de estos es obligatorio");
                 addFieldError("telephone_producer", "Uno de estos es obligatorio");
                 addFieldError("email_producer", "Uno de estos es obligatorio");
@@ -716,6 +716,7 @@ public class ActionProducer extends BaseAction {
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
         String fileName  = "/var/www/document/producersInfo.csv";
+//        String fileName  = "producersInfo.csv";
          
 //        CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
 //        ResultSet proRes = proDao.getProducers(findParams, fileName);
@@ -837,6 +838,8 @@ public class ActionProducer extends BaseAction {
 
         try {
             tx = session.beginTransaction();
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
             HashMap proData  = proDao.findById(idProducer); 
             int idEnt        = 0;
 //            System.out.println("values->"+proData);
@@ -879,10 +882,16 @@ public class ActionProducer extends BaseAction {
             ent.setEmailEnt(email_producer);
             ent.setAddressEnt(direction_producer);
             ent.setMunicipalities(new Municipalities(Integer.parseInt(cityPro)));
+            depPro  = String.valueOf(MunicipalitiesDao.getDepartmentId(Integer.parseInt(cityPro)));
 //            ent.setIdMunicipalityEnt(new Municipalities(Integer.parseInt(cityPro), new Departments(Integer.parseInt(depPro))));
-            if(telephone_producer>0) ent.setPhoneEnt(telephone_producer);
+            if(telephone_producer!=null && telephone_producer>0) ent.setPhoneEnt(telephone_producer);
             if(celphone_producer!=null && celphone_producer>0) ent.setCellphoneEnt(celphone_producer);
             ent.setStatus(true);
+            Integer idUserMobile = null;
+            if (sfUser!=null) {
+                idUserMobile = sfUser.getId().intValue();
+            }
+            ent.setCreatedBy(idUserMobile);
             session.saveOrUpdate(ent);
             
 //            entDao.save(ent);          
@@ -893,10 +902,12 @@ public class ActionProducer extends BaseAction {
                 pro.setIdPro(null);
                 pro.setEntities(ent);
                 pro.setStatus(true);    
+                pro.setAddressPro(direction_producer);
+                pro.setCreatedBy(idUserMobile);
                 session.saveOrUpdate(pro);
 //                proDao.save(pro);
                 
-                LogEntities logPro = new LogEntities();
+                /*LogEntities logPro = new LogEntities();
                 logPro.setIdLogEnt(null);
                 logPro.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
                 logPro.setIdObjectLogEnt(pro.getIdPro());
@@ -904,19 +915,19 @@ public class ActionProducer extends BaseAction {
                 logPro.setDateLogEnt(new Date());
                 logPro.setActionTypeLogEnt(action);
                 session.saveOrUpdate(logPro);
-                idProducer = pro.getIdPro();
+                idProducer = pro.getIdPro();*/
 //                logDao.save(logPro);
             }
 
             
-            LogEntities log = new LogEntities();
+            /*LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
             log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
             log.setIdObjectLogEnt(ent.getIdEnt());
             log.setTableLogEnt("entities");
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            session.saveOrUpdate(log);*/
 //            logDao.save(log);                   
 //            HashMap producerInfo = proDao.findById(idProducer);
             
@@ -936,9 +947,7 @@ public class ActionProducer extends BaseAction {
             "262": "Municipio (Valle del Cauca)" => municipality
             */
             
-            //Manejo para ingresar datos en MongoDB
-            /*SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            //Manejo para ingresar datos en MongoDB            
 
             HashMap valInfo = new HashMap();
             valInfo.put("entId", ent.getIdEnt());
@@ -954,9 +963,9 @@ public class ActionProducer extends BaseAction {
             valInfo.put("cellphone", celphone_producer);
             valInfo.put("email", ent.getEmailEnt());
             valInfo.put("validation", digVer);
-            valInfo.put("department", proData.get("id_dep"));
+            valInfo.put("department", depPro);
             valInfo.put("municipality", cityPro);
-            valInfo.put("userMobileId", sfUser.getId());      
+            valInfo.put("userMobileId", idUserMobile);      
             
             BasicDBObject query = new BasicDBObject();
             query.put("InsertedId", ""+ent.getIdEnt());
@@ -982,16 +991,17 @@ public class ActionProducer extends BaseAction {
             
             if (cursor.count()>0) {
                 System.out.println("actualizo mongo");
-//                result = col.update(query, jsonField);
+                result = col.update(query, jsonField);
             } else {
                 System.out.println("inserto mongo");
-//                result = col.insert(jsonField);
+                result = col.insert(jsonField);
             }
-            */
-//            if (!result.getError().equals("")) {
-//                throw new HibernateException("");
-//            }
             
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }
+            
+            mongo.close();
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -1056,24 +1066,52 @@ public class ActionProducer extends BaseAction {
             session.saveOrUpdate(ent);//Tambien si fuera el caso borrar datos de la tabla intermedia farms_producers y fields_producers
 //            session.delete(ent);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
-            log.setIdObjectLogEnt(ent.getIdEnt());
-            log.setTableLogEnt("entities");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt("D");
-            session.saveOrUpdate(log);
+//            Producers proObj = new Producers();
+//            proObj.setIdPro(idPro);
+//            proObj.setEntities(ent);
+//            proObj.setStatus(false);     
+//            session.saveOrUpdate(proObj);
+            
+//            LogEntities log = new LogEntities();
+//            log.setIdLogEnt(null);
+//            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
+//            log.setIdObjectLogEnt(ent.getIdEnt());
+//            log.setTableLogEnt("entities");
+//            log.setDateLogEnt(new Date());
+//            log.setActionTypeLogEnt("D");
+//            session.saveOrUpdate(log);
 //            logDao.save(log);
 //            
-            LogEntities logPro = new LogEntities();
-            logPro.setIdLogEnt(null);
-            logPro.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
-            logPro.setIdObjectLogEnt(idPro);
-            logPro.setTableLogEnt("producers");
-            logPro.setDateLogEnt(new Date());
-            logPro.setActionTypeLogEnt("D");
-            session.saveOrUpdate(logPro);
+//            LogEntities logPro = new LogEntities();
+//            logPro.setIdLogEnt(null);
+//            logPro.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
+//            logPro.setIdObjectLogEnt(idPro);
+//            logPro.setTableLogEnt("producers");
+//            logPro.setDateLogEnt(new Date());
+//            logPro.setActionTypeLogEnt("D");
+//            session.saveOrUpdate(logPro);
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+ent.getIdEnt());
+            query.put("form_id", "4");
+            
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+            WriteResult result = null;
+            
+            System.out.println("borro mongo");
+            result = col.remove(query);
+            
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }
+            mongo.close();
             
 //            logDao.save(logPro);
             tx.commit();            

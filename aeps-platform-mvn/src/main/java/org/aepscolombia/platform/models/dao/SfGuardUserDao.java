@@ -33,10 +33,10 @@ public class SfGuardUserDao {
 //        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
         sql += " from sf_guard_user usr";
 //        sql += " where usr.status=1";
-        if (username!=null && username!="") {
-            sql += " where usr.username='"+username+"'";
+        if (username!=null && !username.equals("")) {
+            sql += " where usr.email_address='"+username+"'";
         }  
-        if (password!=null && password!="") {
+        if (password!=null && !password.equals("")) {
             sql += " and usr.password='"+password+"'";
         }  
 //        System.out.println("sql->"+sql);

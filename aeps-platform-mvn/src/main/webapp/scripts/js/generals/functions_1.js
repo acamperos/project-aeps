@@ -14,7 +14,6 @@ function setPropertyVal(url, nameData, valData, valName, valId, title, width, he
         // url: url,
         // data: "productor="+valAdd,
         // success: function(information) {
-        // $('.ajaxgif').hide();
         // var obj = jQuery.parseJSON(information);
         // alert(obj.state);
         // if (obj.state == 'failure') {
@@ -24,54 +23,6 @@ function setPropertyVal(url, nameData, valData, valName, valId, title, width, he
 
         // }
         // });
-    }
-}
-
-function setLotVal(url, optSel, nameProd, valProd, nameProp, valProp, valName, valId, title, width, height) {
-    var valAdd = $("#" + optSel).val();
-    // if(valAdd == "") {
-    // alert("Complete la opcion 'El lote es'");
-    // } else 
-// 		if(valAdd == 1) {
-    if ($("#" + valProp).val() == "") {
-        alert("Debe tener una finca seleccionada previamente");
-    } else {
-        listInfo(url, nameProp, valProp, valName, valId, title, width, height);
-    }
-// 		} else {
-//       if($("#"+valProd).val() == "") {
-//         alert("Debe tener un productor seleccionado previamente");  
-//       } else { 
-//         listInfo(url, nameProd, valProd, valName, valId, title, width, height);
-//       }  
-//     }
-}
-
-function getListVal(url, nameData, valData, title, width, height) {
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: nameData + '=' + valData,
-        success: function(information) {
-            // $('.ajaxgif').hide();
-            var obj = jQuery.parseJSON(information);
-            if (obj.state == 'failure') {
-                $('#' + message).html(obj.info);
-                // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);
-            } else if (obj.state == 'success') {
-                // alert(obj.info);
-                showWindow(title, width, height, obj.info);
-            }
-        }
-    });
-}
-
-function selLot(valSel, divShow) {
-//     var valAdd = $("#"+field).val();
-    if (valSel == 1) {
-        $("#" + divShow).removeClass("hide");
-    } else {
-        $("#" + divShow).addClass("hide");
     }
 }
 
@@ -88,7 +39,6 @@ function setLabelsObj(valSel, labSetObj, labSetNew) {
     }
 }
 
-
 function showElement(valSel, divShow) {
     if (valSel != '' && valSel != '1000000') {
         $("#" + divShow).show();
@@ -98,10 +48,13 @@ function showElement(valSel, divShow) {
 }
 
 function showInfoRiego(valSel, divShow) {
-    if (valSel == 1) {
+//    if (valSel == 1) {
+    if (valSel=='true') {
         $("#" + divShow).show();
+        $("#" + divShow).removeClass("hide");
     } else {
         $("#" + divShow).hide();
+        $("#" + divShow).addClass("hide");
     }
 }
 
@@ -121,11 +74,83 @@ function showOtherElement(valSel, divShow) {
     }
 }
 
-function showProductUse(valSel, divShow) {
-    if (valSel == true) {
+function showApplicationProduct(idAppTyp, idSel, divShowApp, divShowOther, divShowPer) {
+    var valAppTyp = $('#'+idAppTyp).val();
+//    alert(valAppTyp)
+    if (valAppTyp==1) {
+        $("#"+divShowApp).show();
+        $("#"+divShowOther).hide().removeClass("hide");
+        $("#"+divShowPer).show();
+    } else if (valAppTyp==2) {
+        $("#"+divShowApp).hide().removeClass("hide");
+        $("#"+divShowOther).show();
+        $("#"+divShowPer).hide().removeClass("hide");
+        $('#'+idSel).val(1000000);
+    } else {
+        $("#"+divShowApp).hide().removeClass("hide");
+        $("#"+divShowOther).hide().removeClass("hide");
+        $("#"+divShowPer).hide().removeClass("hide");
+    }
+}
+
+function showOtherElementChemical(idSel, idAppTyp, divShow) {
+    var valSel = $('#'+idSel).val();
+    var valAppTyp = $('#'+idAppTyp).val();
+    if (valAppTyp==2) {
+        
+    } else if (valSel == 1000000 && valAppTyp==1) {
         $("#" + divShow).show();
     } else {
         $("#" + divShow).hide();
+    }
+}
+
+function showProductUse(valSel, divShow) {
+    if (valSel=='true') {
+        $("#" + divShow).show();
+        $("#" + divShow).removeClass("hide");
+    } else {
+        $("#" + divShow).hide();
+        $("#" + divShow).addClass("hide");
+    }
+}
+
+function showSelectionRasta(valSel, divShow) {
+    if (valSel=='true') {
+        $("#" + divShow).show();
+        $("#" + divShow).removeClass("hide");
+    } else {
+        $("#" + divShow).hide();
+        $("#" + divShow).addClass("hide");
+    }
+}
+
+function showOtherElementCarbonato(valSel, divShow) {
+    if (valSel == 'no tiene' || valSel == -1) {
+        $("#" + divShow).hide();
+    } else {
+        $("#" + divShow).show();
+    }
+}
+
+function showOtherElementWorkType(valSel, divShow) {
+    if (valSel == 3 || valSel == 4 || valSel == 5) {
+        $("#" + divShow).show();
+    } else {
+        $("#" + divShow).hide();
+    }
+}
+
+function showOtherElementUser(valSel, divShowAg, divShowAss) {
+    if (valSel == 1) {
+        $("#" + divShowAg).show();
+        $("#" + divShowAss).hide();
+    } else if (valSel == 3) {
+        $("#" + divShowAss).show();
+        $("#" + divShowAg).hide();
+    } else {
+        $("#" + divShowAg).hide();
+        $("#" + divShowAss).hide();
     }
 }
 
@@ -144,11 +169,73 @@ function selConf(valSel, inputId) {
     } else if (valSel == 'CE') {
         $("#" + inputId).mask("999999?9999", {placeholder: ""});
     } else if (valSel == 'NIT') {
-        $("#" + inputId).mask("9999999999", {placeholder: ""});
+        $("#" + inputId).mask("999999999?9", {placeholder: ""});
     } else if (valSel == 'PS') {
         //$("#"+inputId).mask("999999?9999",{placeholder:""});
     } else if (valSel == 'RC') {
         //$("#"+inputId).mask("999999?9999",{placeholder:""});
+    }
+}
+
+function showTypeFertilizerSel(valSel, divShowA, divShowB, divShowC) {
+    var valIng = $("#"+valSel).val();
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+    } else if (valIng == 2) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).hide();
+    } else if (valIng == 3) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).show();
+    } else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+    }
+}
+
+function showTypeFertilizerControl(valSel, divShowA, divShowB, divShowC, divShowD, divShowE) {
+    var valIng = $("#"+valSel).val();
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 2) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 3) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).show();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 4) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).show();
+        $("#" + divShowE).hide();
+    } else if (valIng == 5) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).show();
+    } else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
     }
 }
 
@@ -184,7 +271,7 @@ function showEnabled(valSel, divShowA, divShowB) {
     }
 }
 
-function showTipoAbono(valSel, divShowA, divShowB, divShowC) {
+function showTypeFertilizer(valSel, divShowA, divShowB, divShowC) {
     if (valSel == 1) {
         $("#" + divShowA).show();
         $("#" + divShowB).hide();
@@ -205,23 +292,44 @@ function showTipoAbono(valSel, divShowA, divShowB, divShowC) {
 }
 
 function showElementRate(valSel, divShow) {
-    if (valSel == 1 || valSel == 4) {
+//    if (valSel == 1 || valSel == 4) {
+    if (valSel == 1) {
         $("#" + divShow).show();
     } else {
         $("#" + divShow).hide();
     }
 }
 
-function showOtherElementPrep(valSel, divShowA, divShowB) {
+function showOtherElementPrep(valSel, divShowA, divShowB, lblDepth) {
     if (valSel == 1000000) {
-        $("#" + divShowA).hide();
+//        $("#" + divShowA).hide();
+        $("#" + divShowA).show();
         $("#" + divShowB).show();
-    } else if (valSel >= 1 && valSel <= 5) {
+        $("#" + lblDepth).addClass("req");
+    } else if ((valSel >= 1 && valSel <= 5) || (valSel >= 12 && valSel <= 16)) {
         $("#" + divShowA).show();
         $("#" + divShowB).hide();
+        if ((valSel >= 12 && valSel <= 16)) {
+            $("#" + lblDepth).removeClass("req");
+        } else {
+            $("#" + lblDepth).addClass("req");
+        }
     } else {
         $("#" + divShowA).hide();
         $("#" + divShowB).hide();
+    }
+}
+
+function showOtherElementProductUsed(valSel, divShowA, divShowB) {
+    if (valSel == 1000000) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).show();
+    } else if (valSel == 3) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+    } else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
     }
 }
 
@@ -236,7 +344,6 @@ function setCropVal(url, field, fieldFill) {
         // url: url,
         // data: "lot="+valAdd,
         // success: function(information) {
-        // $('.ajaxgif').hide();
         // var obj = jQuery.parseJSON(information);
         // alert(obj.state);
         // if (obj.state == 'failure') {
@@ -250,6 +357,7 @@ function setCropVal(url, field, fieldFill) {
 }
 
 function showWindow(title, width, height, htmlInfo) {
+//    $(".header").hide();
     $("#dialog-form").html(htmlInfo);
     $("#dialog-form").dialog({
         autoOpen: true,
@@ -258,9 +366,10 @@ function showWindow(title, width, height, htmlInfo) {
         width: width,
         modal: true,
         close: function() {
+//            $(".header").show();
             // allFields.val( "" ).removeClass( "ui-state-error" );
         }
-    });
+    });    
 }
 
 function closeWindow() {
@@ -278,7 +387,6 @@ function viewInfoRasta(url, nameData, valData, title, width, height) {
         url: url,
         data: nameData + '=' + valData,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var obj = jQuery.parseJSON(information);
             if (obj.state == 'failure') {
                 $('#' + message).html(obj.info);
@@ -300,7 +408,6 @@ function viewForm(url, nameData, valData, title, width, height) {
 //        data: nameData + '=' + $("#" + valData).val(),
         data: nameData + '=' + valData,
         success: function(information) {
-            // $('.ajaxgif').hide();
 //            var obj = jQuery.parseJSON(information);
 //            if (obj.state == 'failure') {
 //                $('#' + message).html(obj.info);
@@ -319,7 +426,6 @@ function listInfo(url, valName, valId, divShow, divHide) {
         url: url,
         data: '&valName=' + valName + '&valId=' + valId,
         success: function(information) {
-            // $('.ajaxgif').hide();
 //            var obj = jQuery.parseJSON(information);
 //            if (obj.state == 'failure') {
 //                $('#' + message).html(obj.info);
@@ -336,16 +442,15 @@ function listInfo(url, valName, valId, divShow, divHide) {
 }
 
 function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, divHide) {
-    var valAdd = $("#" + valData).val();
-    if (valAdd == "") {
-        alert("Debe tener un productor seleccionado previamente");
-    } else {
+//    var valAdd = $("#" + valData).val();
+//    if (valAdd == "") {
+//        alert("Debe tener un productor seleccionado previamente");
+//    } else {
         $.ajax({
             type: "POST",
             url: url,
             data: nameData + '=' + $("#"+valData).val() + '&valName=' + valName + '&valId=' + valId,
             success: function(information) {
-                // $('.ajaxgif').hide();
     //            var obj = jQuery.parseJSON(information);
     //            if (obj.state == 'failure') {
     //                $('#' + message).html(obj.info);
@@ -365,7 +470,7 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
                 $('#'+divShow).html(information);
             }
         });
-    }
+//    }
 }
 
 
@@ -387,7 +492,6 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
 //        url: url,
 //        data: nameData + '=' + $("#" + valData).val() + '&valName=' + valName + '&valId=' + valId,
 //        success: function(information) {
-//            // $('.ajaxgif').hide();
 //            var obj = jQuery.parseJSON(information);
 //            if (obj.state == 'failure') {
 //                $('#' + message).html(obj.info);
@@ -445,7 +549,6 @@ function listInfoLot(url, nameData, valData, valName, valId, title, width, heigh
         url: url,
         data: nameData + '=' + $("#" + valData).val() + '&valName=' + valName + '&valId=' + valId,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var obj = jQuery.parseJSON(information);
             if (obj.state == 'failure') {
                 $('#' + message).html(obj.info);
@@ -467,7 +570,7 @@ function listInfoLot(url, nameData, valData, valName, valId, title, width, heigh
 var requestSent = false;
 function deleteItem(url, urlAction, divTable, divShow)
 {
-    $('#'+divTable).find("div.alert-info").remove();
+    $('#'+divTable).find("div.alert-success").remove();
     $('#'+divTable).find("div.error").removeClass("error");
     $('#'+divTable).find("span.s2_help_inline").remove();
     $('#'+divTable).find("div.s2_validation_errors").remove();
@@ -507,20 +610,26 @@ function deleteItem(url, urlAction, divTable, divShow)
 
 function showMessInfo(idLoc, info)
 {
-    var infoDiv = $("<div class='alert alert-info messageAlerts'></div>");
-    $('#'+idLoc).prepend(infoDiv);
+    var infoDiv = $("<div class='alert alert-success messageAlerts'>");
     infoDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+    infoDiv.append('<i class=\"icon-info-sign\"></i> <strong>Mensaje Exitoso</strong>');
+    infoDiv.append('<hr class=\"message-inner-separator\"></div>');
+    $('#'+idLoc).prepend(infoDiv);    
     infoDiv.append('<p>' + info + '</p>\n');    
-    $('#'+idLoc).append(setTimerToMessage(8));
+    $('#'+idLoc).focus();
+    $('#'+idLoc).append(setTimerToMessage(20));
 }
 
 function showMessError(idLoc, info)
 {
-    var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'></div>");
-    $('#'+idLoc).prepend(errorDiv);
+    var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'>");
     errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+    errorDiv.append('<i class=\"icon-remove-sign\"></i> <strong>Mensaje de Error</strong>');
+    errorDiv.append('<hr class=\"message-inner-separator\"></div>');
+    $('#'+idLoc).prepend(errorDiv);    
     errorDiv.append('<p>' + info + '</p>\n');  
-    $('#'+idLoc).append(setTimerToMessage(8));
+    $('#'+idLoc).focus();
+    $('#'+idLoc).append(setTimerToMessage(20));
 }
 
 
@@ -547,7 +656,6 @@ function viewInfo(url, title, divShow, divHide)
         type: "POST",
         url: url,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var obj = jQuery.parseJSON(information);
             if (obj.state == 'failure') {
                 $("#" + message).html(obj.info);
@@ -567,11 +675,11 @@ function viewInfo(url, title, divShow, divHide)
 function getInfo(url, valName, valId, divShow, message)
 {
     $('#' + message).html('');
-    var datos = valName + '=' + $('#' + valId).val();
+    var data = valName + '=' + $('#' + valId).val();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -589,11 +697,11 @@ function getInfo(url, valName, valId, divShow, message)
 function viewInfoCropNew(url, elTiCul, idEvent, divShow, divShowB, message)
 {
     $('#' + message).html('');
-    var datos = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
+    var data = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -613,11 +721,11 @@ function viewInfoCropNew(url, elTiCul, idEvent, divShow, divShowB, message)
 function viewInfoCrop(url, elTiCul, idEvent, divShow, message)
 {
     $('#' + message).html('');
-    var datos = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
+    var data = 'tipoCul=' + $('#' + elTiCul).val() + '&idEvent=' + idEvent;
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -637,11 +745,11 @@ function viewInfoList(url, divShow, message)
 {
     // $('#'+divShow).html('<h1>Hola Mundo</h1>');
     $('#' + message).html('');
-    // var datos  = 'tipoCul='+$('#'+elTiCul).val()+'&idEvent='+idEvent;
+    // var data  = 'tipoCul='+$('#'+elTiCul).val()+'&idEvent='+idEvent;
     $.ajax({
         type: "POST",
         url: url,
-        // data: datos,
+        // data: data,
         success: function(information) {
             var json = jQuery.parseJSON(information);
 //         alert(event);
@@ -657,17 +765,31 @@ function viewInfoList(url, divShow, message)
     });
 }
 
+function showInfoPage(url, valFill)
+{
+    var data;
+    $('#' + valFill).html('');
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {
+            $('#' + valFill).html(information);
+        }
+    });
+}
+
 function chargeValues(url, valName, valSend, valFill, formId)
 {
-    var datos;
+    var data;
     // if (valSend) {
-    datos = '&' + valName + '=' + valSend;
+    data = '&' + valName + '=' + valSend;
     // }
     $('#' + valFill).html('');
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
             var json = jQuery.parseJSON(information);
             if (json.state == 'failure') {
@@ -733,18 +855,19 @@ function showDialogDelete(divDialog, hRef, url, urlAction, divTable, divShow) {
     });       
 }
 
-function changePage(url, valName, valSend, valFill, message)
+function changePage(url, valName, valSend, valFill, formId, message)
 {
-//     alert(11)
-    var datos;
+//    alert(formId);
+//    var data = $('#'+formId).serializeArray();
     // if (valSend) {
-    datos = '&' + valName + '=' + valSend;
+    var data = '&' + valName + '=' + valSend;
+    var dataForm = $('#'+formId).serializeArray();
     // }
     $('#' + valFill).html('');
     $.ajax({
         type: "POST",
-        url: url,
-        data: datos,
+        url: url+data,
+        data: dataForm,
         success: function(information) {
 //            alert(information);
             $('#' + valFill).html(information);
@@ -763,17 +886,16 @@ function changePage(url, valName, valSend, valFill, message)
 function chargeValuesMercado(url, valName, valSend, valFill, divShow, message)
 {
 //     alert(11)
-    var datos;
+    var data;
     // if (valSend) {
-    datos = '&' + valName + '=' + valSend;
+    data = '&' + valName + '=' + valSend;
     // }
     $('#' + valFill).html('');
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            // $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             if (json.state == 'failure') {
                 $('#' + message).html(json.info);
@@ -799,32 +921,123 @@ function showInfoVende(valSel, divShow) {
     }
 }
 
-function chargeValuesObjective(url, valName, valSend, valFill, valFillAdd, message)
+function chargeValuesControls(url, valName, valSendId, valNameCon, valSenIdCon, valFillChe, valFillOrg, message)
 {
-//     alert(11)
-    var datos;
-    // if (valSend) {
-    datos = '&' + valName + '=' + valSend;
-    // }
-    $('#' + valFill).html('');
-    $('#' + valFillAdd).html('');
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: datos,
-        success: function(information) {
-            // $('.ajaxgif').hide();
-            var json = jQuery.parseJSON(information);
-            if (json.state == 'failure') {
-                $('#' + message).html(json.info);
-                $('#' + message).focus();
-            } else if (json.state == 'success') {
-                $('#' + valFill).html(json.info);
-                $('#' + valFillAdd).html(json.info);
-            }
+    var data;    
+//    var valSend    = $('#' + valSendId).val();
+    var valSend    = $( "input[name='"+valSendId+"']:checked").val();
+    var valSendCon = $('#' + valSenIdCon).val();
+    if (valSend!==-1 && valSendCon!=-1) {
+        data  = '&' + valName + '=' + valSend;
+        data += '&' + valNameCon + '=' + valSendCon;
+        $('#' + valFillChe).html('');
+        $('#' + valFillOrg).html('');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(information) {
+                var json = jQuery.parseJSON(information);
+                if (json.state == 'failure') {
+                    $('#' + message).html(json.info);
+                    $('#' + message).focus();
+                } else if (json.state == 'success') {
+                    if (valSendCon==1){
+                        $('#' + valFillOrg).html(json.info);
+                    } else if (valSendCon==2){
+                        $('#' + valFillChe).html(json.info);
+                    }            
+                }
 
+            }
+        });
+    }
+}
+
+function hideInformationControls(divPes, divWee, divDis, divChe, divOrg) {
+	$('#'+divPes).removeClass('hide').addClass('hide');
+	$('#'+divWee).removeClass('hide').addClass('hide');
+	$('#'+divDis).removeClass('hide').addClass('hide');
+	$('#'+divChe).removeClass('hide').addClass('hide');
+	$('#'+divOrg).removeClass('hide').addClass('hide');
+}
+
+
+function changeOptionsHarvest(valSendId, divYield, divHumidity, divNumberSacks, lblNumberId, lblNumTextA, lblNumTextB, lblWeightId, lblWeightTextA, lblWeightTextB)
+{
+    var valSend = $('#' + valSendId).val();
+    if (valSend==1 || valSend==2 || valSend==5){
+        $('#' + divYield).removeClass("hide");
+        $('#' + divHumidity).removeClass("hide");
+        $('#' + divNumberSacks).addClass("hide");
+    } else if (valSend==3){
+        $('#' + divYield).addClass("hide");
+        $('#' + divHumidity).addClass("hide");
+        $('#' + divNumberSacks).removeClass("hide");
+        $('#'+lblNumberId).text(lblNumTextA);
+        $('#'+lblWeightId).text(lblWeightTextA);
+    } else if (valSend==4){
+        $('#' + divYield).removeClass("hide");
+        $('#' + divHumidity).addClass("hide");
+        $('#' + divNumberSacks).removeClass("hide");
+        $('#'+lblNumberId).text(lblNumTextB);
+        $('#'+lblWeightId).text(lblWeightTextB);
+    } else {
+        $('#' + divYield).addClass("hide");
+        $('#' + divHumidity).addClass("hide");
+        $('#' + divNumberSacks).addClass("hide");
+    }
+}
+
+//function chargeValuesObjective(url, valName, valSendId, valFillPest, divPest, valFillWee, divWee, valFillDis, divDis, message)
+function chargeValuesObjective(valSendId, divPest, divWee, divDis)
+{
+//    var valSend = $('#' + valSendId).val();
+    var valSend = $( "input[name='"+valSendId+"']:checked").val();
+    if (valSend!=null) {
+        $('#' + divPest).addClass("hide");
+        $('#' + divWee).addClass("hide");
+        $('#' + divDis).addClass("hide");
+        if (valSend==1){
+            $('#' + divPest).removeClass("hide");
+        } else if (valSend==2){
+            $('#' + divWee).removeClass("hide");
+        } else if (valSend==3){
+            $('#' + divDis).removeClass("hide");
         }
-    });
+//        var data;
+//        data = '&' + valName + '=' + valSend;
+//        $('#' + valFillPest).html('');
+//        $('#' + valFillWee).html('');
+//        $('#' + valFillDis).html('');
+//        $.ajax({
+//            type: "POST",
+//            url: url,
+//            data: data,
+//            success: function(information) {
+//                var json = jQuery.parseJSON(information);
+//                if (json.state == 'failure') {
+//                    $('#' + message).html(json.info);
+//                    $('#' + message).focus();
+//                } else if (json.state == 'success') {
+//                    $('#' + divPest).addClass("hide");
+//                    $('#' + divWee).addClass("hide");
+//                    $('#' + divDis).addClass("hide");
+//                    if (valSend==1){
+//                        $('#' + valFillPest).html(json.info);
+//                        $('#' + divPest).removeClass("hide");
+//                    } else if (valSend==2){
+//                        $('#' + valFillWee).html(json.info);
+//                        $('#' + divWee).removeClass("hide");
+//                    } else if (valSend==3){
+//                        $('#' + valFillDis).html(json.info);
+//                        $('#' + divDis).removeClass("hide");
+//                    }               
+//                }
+//
+//            }
+//        });
+    }
 }
 
 function selValue(objSel, divShow)
@@ -881,13 +1094,12 @@ function autenticateUser(url, formId, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-//         $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
 //         alert(event);
             if (json.state == 'invalid') {
@@ -922,7 +1134,7 @@ function setTimerToMessage(fade)
 function completeForm(dialogId, formId, information) 
 {
 //    bootstrapValidation(form, errors);
-//    form.find("div.alert-info").remove();
+//    form.find("div.alert-success").remove();
     
 
     //Handle non field errors
@@ -934,11 +1146,13 @@ function completeForm(dialogId, formId, information)
 //        });
 //    }
 //    alert(123456)    
-//    Recaptcha.reload();
+    Recaptcha.reload();
     $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
     if (dialogId!='') {
-        $('#'+dialogId).find("div.alert-info").remove();
+        $('#'+dialogId).find("div.alert-success").remove();
     }    
     // alert(message);
 //    if (json.state == 'failure') {
@@ -958,6 +1172,29 @@ function completeForm(dialogId, formId, information)
         $('#'+formId).append(setTimerToMessage(8));
     } else if (json.state == 'success') {
         showMessInfo(formId, json.info);
+        document.location='#'+formId;
+        $('#'+formId)[0].reset();
+    }
+    if (dialogId!='') {
+        $('#'+dialogId).dialog("close");
+    }  
+}
+
+function completeFormChange(dialogId, formId, information) 
+{
+    $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
+    var json = jQuery.parseJSON(information);
+    if (dialogId!='') {
+        $('#'+dialogId).find("div.alert-success").remove();
+    }    
+    if (json.state == 'failure') {
+        showMessError(formId, json.info);
+        $('#'+formId).append(setTimerToMessage(8));
+    } else if (json.state == 'success') {
+        showMessInfo(formId, json.info);
+        document.location='#'+formId;
         $('#'+formId)[0].reset();
     }
     if (dialogId!='') {
@@ -967,21 +1204,50 @@ function completeForm(dialogId, formId, information)
 
 function completeFormGetting(dialogId, formId, divId, information) 
 {
-    $('#'+divId).find("div.alert-info").remove();
+    $('#'+divId).find("div.alert-success").remove();
     $('#'+divId).find("div.alert-error").remove();
     $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
     var json = jQuery.parseJSON(information);
 //    if (dialogId!='') {
-//        $('#'+dialogId).find("div.alert-info").remove();
+//        $('#'+dialogId).find("div.alert-success").remove();
 //    }    
     if (json.state == 'failure') {
         showMessError(divId, json.info);
         $('#'+divId).append(setTimerToMessage(8));
     } else if (json.state == 'success') {
 //        requestSent = false;
-        $('#'+divId).find("div.alert-info").remove();
+        $('#'+divId).find("div.alert-success").remove();
         showMessInfo(divId, json.info);
+        document.location='#'+divId;
         $('#'+formId)[0].reset();
+    }
+    if (dialogId!='') {
+        $('#'+dialogId).dialog("close");
+    }  
+}
+
+function completeFormCrop(dialogId, formId, divId, information) 
+{
+    $('#'+divId).find("div.alert-success").remove();
+    $('#'+divId).find("div.alert-error").remove();
+    $.unblockUI();
+    $('#'+formId).find("div.error").removeClass("error");
+    $('#'+formId).find("span.s2_help_inline").remove();
+    var json = jQuery.parseJSON(information);
+//    if (dialogId!='') {
+//        $('#'+dialogId).find("div.alert-success").remove();
+//    }    
+    if (json.state == 'failure') {
+        showMessError(divId, json.info);
+        $('#'+divId).append(setTimerToMessage(8));
+    } else if (json.state == 'success') {
+//        requestSent = false;
+        $('#'+divId).find("div.alert-success").remove();
+        showMessInfo(divId, json.info);
+        document.location='#'+divId;
+        restoreDecimalNumber(formId);
     }
     if (dialogId!='') {
         $('#'+dialogId).dialog("close");
@@ -1004,7 +1270,7 @@ function addMessageProcess()
             opacity: .5, 
             color: '#fff' 
         },
-        message: '<h1><img src="img/ajax.gif" />Procesando....</h1>' 
+        message: '<div class="view-process"><div><h3><i style="font-size:30px" class="icon-spinner icon-spin"></i><br>Procesando....</h3></div></div>' 
     }); 
 //    $.blockUI({ 
 //        message: '<img src="img/ajax.gif" />Procesando....' 
@@ -1016,25 +1282,34 @@ function validationForm(form, errors)
 //    bootstrapValidation(form, errors);
     form.find("div.error").removeClass("error");
 //    form.find("div.info").removeClass("error");
-    form.find("div.alert-info").remove();
+    form.find("div.alert-success").remove();
     form.find("div.alert-error").remove();
     form.find("span.s2_help_inline").remove();
-    form.find("div.s2_validation_errors").remove();
-//    Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
+    form.find("div.s2_validation_errors").remove();    
     $.unblockUI();
     //Handle non field errors
-    if (errors.errors && errors.errors.length > 0) {        
-        var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts'></div>");
-        form.prepend(errorDiv);
+    if (errors.errors && errors.errors.length > 0) { 
+//        Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
+        var errorDiv = $("<div class='alert alert-error s2_validation_errors messageAlerts' name='messageUsers'>");
         errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+        errorDiv.append('<i class=\"icon-remove-sign\"></i> <strong>Mensaje de Error</strong>');
+        errorDiv.append('<hr class=\"message-inner-separator\"></div>');
+        form.prepend(errorDiv);
+//        errorDiv.append('<button type="button" class="close" data-dismiss="alert">&times;</button>');
         $.each(errors.errors, function(index, value) {
             errorDiv.append('<p>' + value + '</p>\n');
         });
-        form.append(setTimerToMessage(8));
+        restoreDecimalNumber(form.attr('id'));
+//        $('[name=errorRasta]').;
+//        document.location='#messageUsers';
+//        alert(form.attr('id'));
+        document.location='#'+form.attr('id');
+        form.append(setTimerToMessage(20));
     }
 
     //Handle field errors
     if (errors.fieldErrors) {
+//        Recaptcha.reload();//Recarga y genera un nuevo captcha a causa del error cometido
         $.each(errors.fieldErrors, function(index, value) {
             var element = form.find(":input[name=\"" + index + "\"]"), controlGroup, controls;
             if (element && element.length > 0) {
@@ -1044,12 +1319,14 @@ function validationForm(form, errors)
                 controlGroup.addClass('error');
                 controls = controlGroup.find("div.controls");
                 if (controls) {
-                    controls.append("<span class='help-inline s2_help_inline'>" + value[0] + "</span>");
+                    if (value[0]!="") {
+                        controls.append("<span class='help-inline s2_help_inline' style='display: block; margin-top:5px; font-size:10px;'>" + value[0] + "</span>");
+                    }
                 }
             }
         });
     }
-//    form.find("div.alert-info").remove();
+//    form.find("div.alert-success").remove();
     
 
     //Handle non field errors
@@ -1068,7 +1345,7 @@ function validationForm(form, errors)
 //        });
 //        $(errorDiv).focus();
 //    } else if (errors.state == 'success') {
-//        var errorDiv = $("<div class='alert alert-info s2_validation_info'></div>");
+//        var errorDiv = $("<div class='alert alert-success s2_validation_info'></div>");
 //        form.prepend(errorDiv);
 //        $.each(errors.info, function(index, value) {
 //            errorDiv.append('<p>' + value + '</p>\n');
@@ -1077,20 +1354,39 @@ function validationForm(form, errors)
 //    }
 }
 
+function searchDecimalNumber(formId) {
+    
+    $('#'+formId+' *').filter(':input').each(function(key, elem){
+        var decimal=  /^[-+]?[0-9]+\.[0-9]+$/;   
+        var valTemp = elem.value;
+        if (elem.value!='' && valTemp.match(decimal)) elem.value = elem.value.replace('.',',');
+    });
+    
+}
+
+function restoreDecimalNumber(formId) {
+    
+    $('#'+formId+' *').filter(':input').each(function(key, elem){
+        var decimal=  /^[-+]?[0-9]+\,[0-9]+$/;   
+        var valTemp = elem.value;
+        if (elem.value!='' && valTemp.match(decimal)) elem.value = elem.value.replace(',','.');
+    });
+    
+}
+
 function saveData(url, urlAction, formId, divShow)
 {
-    var datos = $('#'+formId).serializeArray();
+    var data = $('#'+formId).serializeArray();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         complete: function(information) {
             validationForm($('#'+formId),information);
             completeFormGetting('dialog-form', formId, divShow, information);
             setTimeout( function() {
                 showInfo(urlAction, divShow);
             }, 2000);
-//            $('.ajaxgif').hide();
 //            var json = jQuery.parseJSON(information);
 //            // alert(message);
 //            if (json.state == 'invalid') {
@@ -1143,8 +1439,7 @@ function sendForm(url, formId, message)
     // $(".mensaje").focus().after("<span class='error'>Ingrese un mensaje</span>");
     // return false;
     // } else {
-    // $('.ajaxgif').removeClass('hide');
-    // var datos  = $('.'+formClass).serializeArray();
+    // var data  = $('.'+formClass).serializeArray();
     // $('#'+message).text('');
     $('#' + message).html('');
     // $('#'+formId).toggleClass('error');
@@ -1156,15 +1451,14 @@ function sendForm(url, formId, message)
     // alert(fieldErrors[i])
     // // $(fieldErrors[i]).removeClass('error');
     // }
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     // $('.msg').text('Hubo un error!').addClass('msg_error').animate({ 'right' : '130px' }, 300);
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1191,7 +1485,6 @@ function sendForm(url, formId, message)
 
         }
         // , error: function() {
-        // $('.ajaxgif').hide();
         // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);	
         // }
     });
@@ -1207,14 +1500,13 @@ function sendFormRasta(url, formId, divTable, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1243,7 +1535,6 @@ function sendFormRasta(url, formId, divTable, message)
 
         }
         // , error: function() {
-        // $('.ajaxgif').hide();
         // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);	
         // }
     });
@@ -1263,15 +1554,14 @@ function sendFormProtection(url, formId, divHide, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     // $('.msg').text('Hubo un error!').addClass('msg_error').animate({ 'right' : '130px' }, 300);
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1315,14 +1605,13 @@ function sendFormCrop(url, formId, divHide, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1357,14 +1646,13 @@ function sendFormHarvest(url, formId, divShow, divHide, message)
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1400,14 +1688,13 @@ function sendFormHarvestChange(url, formId, divShowA, divShowB, divHide, message
     // $('#'+formId).toggleClass('error');
 
     $('div').removeClass("error");
-    var datos = $('#' + formId).serializeArray();
+    var data = $('#' + formId).serializeArray();
     // $('.error').fadeOut();
     $.ajax({
         type: "POST",
         url: url,
-        data: datos,
+        data: data,
         success: function(information) {
-            $('.ajaxgif').hide();
             var json = jQuery.parseJSON(information);
             // alert(message);
             if (json.state == 'invalid') {
@@ -1438,21 +1725,450 @@ function sendFormHarvestChange(url, formId, divShowA, divShowB, divHide, message
     });
 }
 
-function activeOption(ulId) 
+function activeOption(ulId, classId) 
 {
-    $('#'+ulId).find("li.active").removeClass("active");
-    $(document.activeElement).parent('li').addClass("active");
-//    $('#'+ulId+' li').addClass(function(index, currentClass ) {
-//        var addedClass;
-//        alert(currentClass)
-//        if (currentClass === "homeCls") {
-//          addedClass = "active";
-//        } else if (currentClass === "aboutCls") {
-//          addedClass = "active";
-//        } else if (currentClass === "contactCls") {
-//          addedClass = "active";
-//        } 
-//        return addedClass;
-//    });
+//    alert(classId)
+    if($('.'+classId)) {
+        $('#'+ulId).find("li.active").removeClass("active");
+        $('.'+classId).addClass("active");    
+    }
+}
+
+//function activeOption(ulId) 
+//{
+//    $('#'+ulId).find("li.active").removeClass("active");
+//    $(document.activeElement).parent('li').addClass("active");
+////    $('#'+ulId+' li').addClass(function(index, currentClass ) {
+////        var addedClass;
+////        alert(currentClass)
+////        if (currentClass === "homeCls") {
+////          addedClass = "active";
+////        } else if (currentClass === "aboutCls") {
+////          addedClass = "active";
+////        } else if (currentClass === "contactCls") {
+////          addedClass = "active";
+////        } 
+////        return addedClass;
+////    });
+//    
+//}
+
+function showInfoPassword(divId, fieldId) 
+{
+    var valAdd = $("#"+fieldId).val();
+    if (valAdd=="false") {
+        $('#'+divId).show();
+        $("#"+fieldId).val("true");
+    } else if (valAdd=="true") {
+        $('#'+divId).hide();
+        $("#"+fieldId).val("false");
+    }
     
+}
+
+function showSearchAdvance(divSearchBasic, divSearchAdvance, valAsig, valSel)
+{
+    $("#"+valAsig).val(valSel);
+    if (valSel==2) {
+        $('#'+divSearchBasic).hide();
+        $('#'+divSearchAdvance).show();
+    } else {
+        $('#'+divSearchBasic).show();
+        $('#'+divSearchAdvance).hide();        
+    }
+    
+}
+
+function showRowAdditionalItem(url, divUpdate)
+{
+    var rows  = $('#'+divUpdate).children("tr");
+    var child = $(rows)[rows.length-1];
+//    alert($(child).attr("value"));
+    var data  = '&numRows='+$(child).attr("value");
+//    var data  = '&numRows='+rows.length;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {
+            // responseContent = transport.responseText;
+            // responseContent = information;
+//            $('#'+divUpdate).insert({'bottom': information});
+            $('#'+divUpdate).append(information);
+        }
+    });
+}
+
+function showRowAdditionalFert(url, idTypeApp, divUpdateChe, divUpdateOrg, divUpdateAme)
+{
+//    var valTypeApp  = $('#'+idTypeApp).val();
+    var valTypeApp  = idTypeApp;
+    var rows;
+    if (valTypeApp==1) {
+        rows  = $('#'+divUpdateChe).children("tr");
+    } else if (valTypeApp==2) {
+        rows  = $('#'+divUpdateOrg).children("tr");
+    } else if (valTypeApp==3) {
+        rows  = $('#'+divUpdateAme).children("tr");
+    }
+        
+    
+    var child = $(rows)[rows.length-1];
+//    var data  = $('#'+formId).serialize();
+    var data;
+    data  += '&numRows='+$(child).attr("value")+'&appTyp='+valTypeApp;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {
+            $('#'+idTypeApp).val(-1);
+            if (valTypeApp==1) {
+                rows  = $('#'+divUpdateChe).append(information);
+            } else if (valTypeApp==2) {
+                rows  = $('#'+divUpdateOrg).append(information);
+            } else if (valTypeApp==3) {
+                rows  = $('#'+divUpdateAme).append(information);
+            }
+        }
+    });
+}
+
+function changeChemicalFoliar(typeAppId, lblProductId, lblText) {
+    var valTypeApp  = $('#'+typeAppId).val();
+    if (valTypeApp==2) {
+        $('#'+lblProductId).text(lblText);
+    }
+    
+}
+
+function generateDecimals(valDec, valDegrees, valMinutes, valSeconds) {
+    var valNumDegrees = parseFloat($('#'+valDegrees).val());
+    var valNumMinutes = $('#'+valMinutes).val();
+    var valNumSeconds = $('#'+valSeconds).val();
+    if ($('#'+valDegrees).val()!=null && $('#'+valDegrees).val()!="" && valNumMinutes!=null && valNumMinutes!="" && valNumSeconds!=null && valNumSeconds!="") {
+        var latLot = parseFloat((valNumMinutes/60) + (valNumSeconds/3600));
+    //    alert(latLot)
+        if (latLot===0) latLot = ".0";
+        latLot = (valNumDegrees<0) ? ((Math.abs(valNumDegrees))+latLot)*-1 : (valNumDegrees+latLot);
+        latLot = ""+latLot;
+        latLot = parsePointSeparated(latLot);
+    //    alert(latLot)
+        $('#'+valDec).val(latLot); 
+    } else {
+        $('#'+valDec).val(""); 
+    }
+}
+
+function generateDegrees(valDec, valDegrees, valMinutes, valSeconds) {
+    
+//    alert(navigator.language);
+//    var valNumDecimal = $('#'+valDec).val(); 
+//    alert(navigator.language);    
+    var valNumDecimal = parseCommaSeparated($('#'+valDec).val());
+    if ($('#'+valDec).val()!=null && $('#'+valDec).val()!="") {
+        var d = Math.floor (valNumDecimal);
+        var minfloat = (valNumDecimal-d)*60;
+        var m = Math.floor(minfloat);
+        var secfloat = (minfloat-m)*60;
+        var s = Math.round(secfloat);   
+
+        if (s==60) {
+          m++;
+          s=0;
+        }
+        if (m==60) {
+          d++;
+          m=0;
+        }
+
+        $('#'+valDegrees).val(d);
+        $('#'+valMinutes).val(m);
+        $('#'+valSeconds).val(s);
+    } else {
+        $('#'+valDegrees).val("");
+        $('#'+valMinutes).val("");
+        $('#'+valSeconds).val("");
+    }
+}
+
+function parsePointSeparated( strVal ) {
+//    alert(strVal)
+    var decimal=  /^[-+]?[0-9]+\,[0-9]+$/;   
+    if (strVal=="") {
+        strVal = "";
+//    } else if ((!isNaN(strVal)) && strVal.match(decimal)) {
+    } else if (strVal!=null && strVal.match(decimal)) {
+        return strVal.replace(',','.');
+    }
+    return strVal;
+//    if (strVal!=null) {
+//        if(navigator.language=='es-ES' || navigator.language=='es') {return strVal.replace('.',','); } // remove commas before parse
+//        if(navigator.language=='en-EN' || navigator.language=='en') {return strVal.replace(',','.'); }// remove commas before parse
+//    }
+}
+
+function parseCommaSeparated( strVal ) {
+    if(navigator.language=='es-ES' || navigator.language=='es') return parseFloat(strVal.replace(',','.')); // remove commas before parse
+    if(navigator.language=='en-EN' || navigator.language=='en') return parseFloat(strVal.replace('.',',')); // remove commas before parse
+}
+
+function parseValueInt(strVal) {
+    if (strVal!="") return parseInt(strVal);
+}
+
+beoro_scrollToTop = {
+    init: function() {
+        $('body').append('<div class="refTop"><a href="javascript:void(0)" class="scrollup refTop" style="display:none; font-size:80px; text-align:center;"><p style="font-size:14px;">Arriba</p><i class="icon-chevron-sign-up icon-white"></i></a></div>');
+
+        $(window).scroll(function(){
+            if ($(this).scrollTop() > 100) {
+                $('.scrollup').fadeIn();
+            } else {
+                $('.scrollup').fadeOut();
+            }
+        });
+
+        $('.scrollup').click(function(e){
+            $("html, body").animate({ scrollTop: 0 }, 600);
+            e.preventDefault();
+        });
+    }
+};
+
+function checkValue(valSelId, limitVal) {
+    var valSel = $("#" + valSelId).val();
+    if (valSel>limitVal) {
+       $("#" + valSelId).val('');         
+    }
+}
+
+function checkValueSecond(valSelId, limitVal) {
+    var valSel = $("#" + valSelId).val();
+    if (valSel>limitVal || valSel==limitVal) {
+       $("#" + valSelId).val('');         
+    }
+}
+
+function showOtherTypeDocument(valSel, divCom, divPer) {
+    if (valSel == 'NIT') {
+        $("#" + divCom).show();
+        $("#" + divPer).hide();
+    } else if (valSel == -1) {
+        $("#" + divCom).hide();
+        $("#" + divPer).hide();
+    } else {
+        $("#" + divCom).hide();
+        $("#" + divPer).show();
+    }
+}
+
+function showElementChemical(valSel, divShow) {
+    if (valSel == 1) {
+        $("#" + divShow).show();
+    } else {
+        $("#" + divShow).hide();
+    }
+}
+
+function showDialogReport(divDialog, hRef, urlAction, nameData, valData, title, width, height) {
+    $(divDialog).colorbox({
+        initialHeight: '0',
+        initialWidth: '0',
+        href: "#"+hRef,
+        inline: true,        
+        opacity: '0.3',        
+        onComplete: function(){
+            $('.confirm_yes').click(function(e){
+                e.preventDefault();
+                viewForm(urlAction, nameData, valData, title, width, height);
+                $.colorbox.close();
+            });
+            $('.confirm_no').click(function(e){
+                e.preventDefault();
+                $.colorbox.close(); 
+            });
+        }
+    });       
+}
+
+
+function changeReport(valSelId, divRepA, divRepB) {
+    var valSel = $("#" + valSelId).val();
+    if (valSel==1) {
+        $("#"+divRepA).removeClass("hide");
+        $("#"+divRepB).addClass("hide");
+    } else if (valSel==2) {
+        $("#"+divRepA).addClass("hide");
+        $("#"+divRepB).removeClass("hide");
+    }
+    
+}
+
+function changeRepYear(valSelId, divRepA, divRepB) {
+    var valSel = $("#" + valSelId).val();         
+    if (valSel==1) {
+        $("#"+divRepA).removeClass("hide");
+        $("#"+divRepB).addClass("hide");
+    } else if (valSel==2) {
+        $("#"+divRepA).removeClass("hide");
+        $("#"+divRepB).removeClass("hide");
+    } 
+    
+}
+
+
+function viewPositionRasta(url, formId, valNameLat, valLatId, valNameLon, valLonId, divHide, divShow)
+{
+    var strValLat = $("#"+valLatId).val();
+    strValLat = strValLat.replace('.',',');
+    
+    var strValLon = $("#"+valLonId).val();
+    strValLon = strValLon.replace('.',',');
+    
+    $("#"+valLatId).val(strValLat);
+    $("#"+valLonId).val(strValLon);
+    var valLat  = $('#'+valLatId).val();
+    var valLon  = $('#'+valLonId).val();
+    var data    = '';
+    data  += '&'+valNameLat+'='+valLat+'&'+valNameLon+'='+valLon;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {     
+            var json = information;
+            if (json.state == 'failure') {
+                $.each(json.fieldError, function(index, value) {
+                    var form = $("#"+formId);
+                    var element = form.find(":input[name=\"" + index + "\"]"), controlGroup, controls;
+                    if (element && element.length > 0) {
+                        element  = $(element[0]);
+                        controlGroup = element.closest("div.control-group");
+                        controlGroup.addClass('error');
+                        controls = controlGroup.find("div.controls");
+                        controls.find("span.s2_help_inline").remove();
+                        if (controls) {
+                            if (value[0]!="") {
+                                controls.append("<span class='help-inline s2_help_inline' style='display: block; margin-top:5px; font-size:10px;'>" + value[0] + "</span>");
+                            }
+                        }
+                    }
+                });
+            } else {
+                $("#"+divHide).hide();
+                $("#"+divShow).show();
+                $("#"+divShow).html(information);       
+            }
+            
+        }
+    });
+}
+
+function viewPosition(url, formId, valNameLat, valLatId, valNameLon, valLonId, divHide, divShow)
+{
+    var valLat  = $('#'+valLatId).val();
+    var valLon  = $('#'+valLonId).val();    
+    var data    = '';
+    data  += '&'+valNameLat+'='+valLat+'&'+valNameLon+'='+valLon;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(information) {     
+//            alert(information.state)
+//            var json = jQuery.parseJSON(information);
+            var json = information;
+            if (json.state == 'failure') {
+                $.each(json.fieldError, function(index, value) {
+                    var form = $("#"+formId);
+                    var element = form.find(":input[name=\"" + index + "\"]"), controlGroup, controls;
+                    if (element && element.length > 0) {
+                        element  = $(element[0]);
+                        controlGroup = element.closest("div.control-group");
+                        controlGroup.addClass('error');
+                        controls = controlGroup.find("div.controls");
+                        controls.find("span.s2_help_inline").remove();
+                        if (controls) {
+                            if (value[0]!="") {
+                                controls.append("<span class='help-inline s2_help_inline' style='display: block; margin-top:5px; font-size:10px;'>" + value[0] + "</span>");
+                            }
+                        }
+                    }
+                });
+                
+//                showMessError(divHide, json.info);
+//                $("#"+divHide).append(setTimerToMessage(8));
+            } else {
+                $("#"+divHide).hide();
+                $("#"+divShow).show();
+                $("#"+divShow).html(information);       
+            }
+            
+        }
+    });
+}
+
+function selValPos(formLatId, valIdLat, formLonId, valIdLon) 
+{
+    $("#"+formLatId).val($("#"+valIdLat).val());
+    $("#"+formLonId).val($("#"+valIdLon).val());    
+}
+
+function showDialogWarning(hRef) 
+{
+    $.colorbox({
+        initialHeight: '0',
+        initialWidth: '0',
+        href: "#"+hRef,
+        inline: true,        
+        opacity: '0.3',        
+        onComplete: function(){
+            $('.confirm_ok').click(function(e){
+                e.preventDefault();
+                $.colorbox.close(); 
+            });
+        }
+    });       
+}
+
+function optSel(idCheck, div) 
+{
+   var valSel = $("input[name='"+idCheck+"']:checked").val();
+//   var valSel = $("#"+idCheck).val();
+   if (valSel=='true') {
+       $("#"+div).show();
+       $("#"+div).removeClass("hide");       
+   } else {
+       $("#"+div).hide();
+       $("#"+div).addClass("hide");       
+   }
+    
+}
+
+function getReportCsv(url, formId, filename)
+{
+    var data = $('#'+formId).serializeArray();
+    var xmlRequest = $.ajax({
+        type: "POST",
+        url: url,
+        data: data
+    });
+    xmlRequest.done( function (response){        
+        var uri = "data:text/csv;charset=utf-8," + escape(response);
+        var downloadLink  = document.createElement("a");
+        downloadLink.href = uri;
+        downloadLink.download = filename;
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        $.unblockUI();
+//        window.open( "data:text/csv;charset=utf-8," + escape(response));         
+    });
+}
+
+function seeDate(valSel, labChange) 
+{
+    $("#"+labChange).html("&nbsp;la aplicacion del "+valSel);
 }

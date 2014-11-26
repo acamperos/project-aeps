@@ -4,10 +4,11 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
-import javax.script.*;
-import org.renjin.sexp.ListVector;
+import org.aepscolombia.platform.models.dao.EntitiesDao;
+import org.aepscolombia.platform.models.dao.FarmsDao;
+import org.aepscolombia.platform.models.dao.FieldsDao;
+import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.RastasDao;
 
 
 /**
@@ -30,7 +31,7 @@ public class ActionContact extends BaseAction {
     }
     
     public String getReport() {        
-        ScriptEngineManager manager = new ScriptEngineManager();
+        /*ScriptEngineManager manager = new ScriptEngineManager();
         // create a Renjin engine:
         ScriptEngine engine = manager.getEngineByName("Renjin");
         // check if the engine has loaded correctly:
@@ -105,9 +106,44 @@ public class ActionContact extends BaseAction {
         } catch (FileNotFoundException ex) {
 //            System.out.println("Error leyendo el archivo");
 //                Logger.getLogger(ActionContact.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
         return SUCCESS;       
     }
     
+    public String chargeValues() {
+        EntitiesDao entDao = new EntitiesDao();
+        FarmsDao farDao    = new FarmsDao();
+        FieldsDao fieDao   = new FieldsDao();
+        ProductionEventsDao cropDao = new ProductionEventsDao();
+        RastasDao rasDao   = new RastasDao();
+        
+        entDao.setInfoMongo();
+        farDao.setInfoMongo();
+        fieDao.setInfoMongo();
+        cropDao.setInfoMongo();
+        rasDao.setInfoMongo();
+        
+        return "states";
+    }
+    
+    public String sendMessage() 
+    { 
+        /*try { // Call Web Service Operation
+            com.sigmamovil.smsapp.soap.sigmamovilservice.SigmaMovilService service = new com.sigmamovil.smsapp.soap.sigmamovilservice.SigmaMovilService();
+            com.sigmamovil.smsapp.soap.sigmamovilservice.SigmaMovilServicePortType port = service.getSigmaMovilServicePort();
+            // TODO initialize WS operation arguments here
+            java.lang.String user = "ciatsms";
+            java.lang.String password = "ciat001";
+            java.lang.String teldestino = "3175274183";
+            java.lang.String mensaje = "Una prueba";
+            // TODO process result here
+            com.sigmamovil.smsapp.soap.sigmamovilservice.WSResSendSMS result = port.newSendSMS(user, password, teldestino, mensaje);
+            System.out.println("Result = "+result);
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+            ex.printStackTrace();
+        }*/
+        return "states";
+    }
 }

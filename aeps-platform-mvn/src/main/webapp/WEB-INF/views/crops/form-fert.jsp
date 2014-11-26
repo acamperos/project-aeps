@@ -21,6 +21,8 @@
                     <legend>Formulario de Fertilizacion</legend>  
                     <div class="row">
                         <div class="span5">
+                            <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
+                            <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
                             <s:hidden name="idCrop"/>
                             <s:hidden name="typeCrop"/>
                             <s:hidden name="actExe"/>
@@ -31,51 +33,23 @@
                                 </label>
                                 <div class="date controls">
                                     <s:date name="fer.dateFer" format="dd/MM/yyyy" var="dateTransformFer"/>
-                                    <s:textfield name="fer.dateFer" value="%{#dateTransformFer}" readonly="true"/>
+                                    <s:textfield name="fer.dateFer" value="%{#dateTransformFer}" readonly="true" onchange="seeDate(this.value, 'lblDateApp')"/>
                                     <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
                         </div>       
                     </div>
-                    <div class="row">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label for="formCropFer_fer_amountProductUsedFer" class="control-label req">
-                                    Cantidad de producto (kg/ha):
-                                </label>
-                                <div class="controls">
-                                    <s:textfield name="fer.amountProductUsedFer" />
-                                </div>                         
-                            </div>                          
-                        </div>
-                    </div>
-                    <div class="row">
-                        <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
-                        <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
-                        <div class="span5">
-                            <div class="control-group">
-                                <label for="formCropFer_fer_fertilizationsTypes_idFerTyp" class="control-label req">
-                                    Tipo:
-                                </label>
-                                <div class="controls">
-                                    <s:select
-                                        name="fer.fertilizationsTypes.idFerTyp"
-                                        list="type_fer_typ" 
-                                        listKey="idFerTyp" 
-                                        listValue="nameFerTyp"            
-                                        headerKey="-1" 
-                                        headerValue="---"
-                                    />
-                                </div>                         
-                            </div>                          
-                        </div> 
-                        <div class="span3">
-                            <button type="button" class="btn btn-default" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', 'formCropFer_fer_fertilizationsTypes_idFerTyp', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> Agregar</button>
-                        </div>
-                    </div>
+                    <div style="margin-bottom: 30px">
+                        <label class="textFloat">
+                            A continuacion, listar los fertilizantes que fueron usados en                            
+                        </label>
+                        <label id="lblDateApp" class="textFloat">&nbsp; esta aplicacion</label>
+                    </div>            
                     <fieldset>
-                        <legend>Fertilizaciones Quimicas</legend>
+                        <div class="span3">
+                            <button type="button" class="btn btn-chemical btn-large" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', '1', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> Agregar fertilizante Quimico</button>
+                        </div>
                         <table class="table" style="width: 100%;">
                             <tbody id="tableAditFertChem">
                                 <s:if test="chemFert.size()>0">
@@ -94,7 +68,9 @@
                         </table>
                     </fieldset>
                     <fieldset>
-                        <legend>Fertilizaciones Organicas</legend>
+                        <div class="span3">
+                            <button type="button" class="btn btn-organic btn-large" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', '2', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> Agregar fertilizante Organico</button>
+                        </div>
                         <table class="table" style="width: 100%;">
                             <tbody id="tableAditFertOrg">
                                 <s:if test="orgFert.size()>0">
@@ -113,7 +89,9 @@
                         </table>
                     </fieldset>
                     <fieldset>
-                        <legend>Fertilizaciones Enmiendas</legend>
+                        <div class="span3">
+                            <button type="button" class="btn btn-amendment btn-large" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', '3', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> Agregar fertilizante de Enmienda</button>
+                        </div>
                         <table class="table" style="width: 100%;">
                             <tbody id="tableAditFertAmen">
                                 <s:if test="amenFert.size()>0">

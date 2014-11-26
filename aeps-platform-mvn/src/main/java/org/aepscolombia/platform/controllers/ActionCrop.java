@@ -4,13 +4,22 @@
  */
 package org.aepscolombia.platform.controllers;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.aepscolombia.platform.models.dao.AssociationDao;
 import org.aepscolombia.platform.models.dao.BeansDao;
 import org.aepscolombia.platform.models.dao.CassavasDao;
@@ -43,6 +52,7 @@ import org.aepscolombia.platform.models.dao.SeedsColorsDao;
 import org.aepscolombia.platform.models.dao.SeedsInoculationsDao;
 import org.aepscolombia.platform.models.dao.SeedsOriginsDao;
 import org.aepscolombia.platform.models.dao.SeedsTypesDao;
+import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.SowingTypesDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
@@ -73,7 +83,9 @@ import org.aepscolombia.platform.models.entity.SeedsTypes;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.SowingTypes;
 import org.aepscolombia.platform.models.entity.Users;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
+import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -1061,6 +1073,7 @@ public class ActionCrop extends BaseAction {
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
         String fileName  = "/var/www/document/cropsInfo.csv";
+//        String fileName  = "cropsInfo.csv";
         cropDao.getProductionEvents(findParams, fileName);
   
         File f = new File(fileName);  
@@ -1223,8 +1236,13 @@ public class ActionCrop extends BaseAction {
             log.setDateLogEnt(new Date());
             log.setActionTypeLogEnt(action);
             session.saveOrUpdate(log);
-            idCrop = pro.getIdProEve();
+            idCrop = pro.getIdProEve();            
             tx.commit();           
+            
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
+            
             state = "success";            
             if (action.equals("C")) {
                 info  = "El cultivo ha sido agregado con exito";
@@ -1291,6 +1309,34 @@ public class ActionCrop extends BaseAction {
             log.setActionTypeLogEnt("D");
             session.saveOrUpdate(log);
 //            logDao.save(log);
+            
+            BasicDBObject query = new BasicDBObject();
+            query.put("InsertedId", ""+idCrop);        
+            typeCrop = pro.getCropsTypes().getIdCroTyp();
+            if (typeCrop==1) {
+                query.put("form_id", "16");
+            } else if (typeCrop==2) {
+                query.put("form_id", "39");
+            }            
+
+            MongoClient mongo = null;
+            try {
+                mongo = new MongoClient("localhost", 27017);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DB db = mongo.getDB("ciat");
+            DBCollection col = db.getCollection("log_form_records");
+            WriteResult result = null;
+            
+            System.out.println("borro mongo");
+            result = col.remove(query);
+
+            if (result.getError()!=null) {
+                throw new HibernateException("");
+            }
+            mongo.close();
+                        
             tx.commit();         
             state = "success";
             info  = "El cultivo ha sido borrado con exito";

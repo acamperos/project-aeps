@@ -24,7 +24,7 @@
                 <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListProducers" onCompleteTopics="completeProducer"><i class="icon-search"></i></sj:submit>
             </div>
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportProducer.action', 'formProducerSearch', 'producersData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportProducer.action', 'formProducerSearch', 'producersData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
                 <%--<s:url id="fileDownload" action="getReportProducer.action" includeParams="all" ></s:url>--%>
                 <%--<s:a type="button" href="%{fileDownload}" onclick="getReportCsv('getReportProducer.action', 'formProducerSearch', 'divMessage')" cssClass="btn btn-default"><i class="icon-file-text"></i> Exportar Datos</s:a>--%>
             </div>
@@ -48,6 +48,9 @@
         <s:if test="%{#valSel.equals('producer')}">
             <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         </s:if>
+        <% if (entTypeId!=3) { %>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportProducer.action', 'formProducerSearch', 'producersData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+        <% } %>
     </div>   
     <div id="searchAdvanceProducer" class="hide">
         <div class="control-group">

@@ -61,6 +61,9 @@ public class ViewActionInterceptor extends AbstractInterceptor
     if (actionActual.equals(actionNext) && !actionActual.equals("dashboard") && !actionActual.equals("initial")) {
         session.put("action", "");
         result = invocation.invoke();      
+    } else if (actionActual.equals("home") || actionActual.equals("homePrivate")) {
+        session.put("action", "");
+        result = invocation.invoke();
     } else {
         session.put("actionUrl", actionActual+".action"+addValues);
         session.put("action", actionActual);

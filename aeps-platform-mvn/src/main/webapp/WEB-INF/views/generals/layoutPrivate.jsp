@@ -42,7 +42,7 @@
             <%@ include file="header-private.jsp" %>
         </div>
         <div class="body" id="divBodyLayout">
-            <%@ include file="dashboard.jsp" %>
+            <%--<%@ include file="dashboard.jsp" %>--%>
         </div>
         <div class="footer">
             <%@ include file="footer.jsp" %>
@@ -53,6 +53,8 @@
             activeOption('ulOptionsMenu', actionName+'Cls');
             if (actionName!='' && actionName!='dashboard') {
                 showInfoPage(''+actionUrl, 'divBodyLayout');                       
+            } else if(actionName=='dashboard' || actionName=='') {
+                showInfoPage('homePrivate.action', 'divBodyLayout');
             }
             $(document).ready(function() {
                 beoro_scrollToTop.init();

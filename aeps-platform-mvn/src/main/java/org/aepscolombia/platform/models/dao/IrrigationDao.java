@@ -231,4 +231,107 @@ public class IrrigationDao
             session.close();
         }
     }
+    
+    public static String getIrrigations(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";  
+        sql += "select DATE_FORMAT(ir.date_irr,'%Y-%m-%d') as dateIrr, ir.irrigation_type_irr, ir.amount_irr";
+        sql += " from irrigation ir"; 
+        sql += " where ir.status=1";
+        sql += " and ir.id_production_event_irr="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[391]\":\""+data[0]+"\","+
+                           "\"survey_solution[392]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[393]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+53+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[391]\":\""+data[0]+"\","+
+                           "\"survey_solution[392]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[393]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+53+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
+    public static String getIrrigationsBeans(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";  
+        sql += "select DATE_FORMAT(ir.date_irr,'%Y-%m-%d') as dateIrr, ir.irrigation_type_irr, ir.amount_irr";
+        sql += " from irrigation ir"; 
+        sql += " where ir.status=1";
+        sql += " and ir.id_production_event_irr="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[427]\":\""+data[0]+"\","+
+                           "\"survey_solution[428]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[429]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+58+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[427]\":\""+data[0]+"\","+
+                           "\"survey_solution[428]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[429]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+58+"\","+ 
+                           "\"idx\":"+numCaj+"},";
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
 }

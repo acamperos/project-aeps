@@ -25,7 +25,7 @@
                 <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFields" onCompleteTopics="completeField"><i class="icon-search"></i></sj:submit>
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportField.action', 'formFieldSearch', 'fieldsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportField.action', 'formFieldSearch', 'fieldsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
             </div>
         </div>
         <script>
@@ -48,6 +48,9 @@
         <s:if test="%{#valSel.equals('lot')}">
             <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
         </s:if>
+        <% if (entTypeId!=3) { %>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportField.action', 'formFieldSearch', 'fieldsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+        <% } %>
     </div>   
     <div id="searchAdvanceField" class="hide">
         <div class="control-group">

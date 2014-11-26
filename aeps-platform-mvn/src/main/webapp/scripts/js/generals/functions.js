@@ -1801,7 +1801,8 @@ function showRowAdditionalItem(url, divUpdate)
 
 function showRowAdditionalFert(url, idTypeApp, divUpdateChe, divUpdateOrg, divUpdateAme)
 {
-    var valTypeApp  = $('#'+idTypeApp).val();
+//    var valTypeApp  = $('#'+idTypeApp).val();
+    var valTypeApp  = idTypeApp;
     var rows;
     if (valTypeApp==1) {
         rows  = $('#'+divUpdateChe).children("tr");
@@ -1897,7 +1898,7 @@ function parsePointSeparated( strVal ) {
     if (strVal=="") {
         strVal = "";
 //    } else if ((!isNaN(strVal)) && strVal.match(decimal)) {
-    } else if (strVal.match(decimal)) {
+    } else if (strVal!=null && strVal.match(decimal)) {
         return strVal.replace(',','.');
     }
     return strVal;
@@ -2162,6 +2163,12 @@ function getReportCsv(url, formId, filename)
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
+        $.unblockUI();
 //        window.open( "data:text/csv;charset=utf-8," + escape(response));         
     });
+}
+
+function seeDate(valSel, labChange) 
+{
+    $("#"+labChange).html("&nbsp;la aplicacion del "+valSel);
 }

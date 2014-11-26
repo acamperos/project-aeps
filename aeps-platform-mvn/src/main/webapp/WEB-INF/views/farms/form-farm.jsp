@@ -191,7 +191,7 @@
                         <s:hidden name="viewInfo"/>
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "farm/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "farm/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formFarm'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
+                            <sj:submit id="btnFarm" type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formFarm'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeFarm" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Finca</sj:submit>
                         <% } %>
                         <!--<button class="btn btn_per bt_send_property" onclick="sendForm('../actions/Actions.php?action=AgregarFinca', 'formProperty', 'divMessage')"><i class="icon-save"></i> Guardar informaci&oacute;n</button>-->
                         <button class="btn btn-large bt_cancel_farm" onclick="resetForm('formFarm'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
@@ -232,6 +232,16 @@
                     generateDegrees('formFarm_latitude_property', 'formFarm_latitude_degrees_property', 'formFarm_latitude_minutes_property', 'formFarm_latitude_seconds_property');
                     generateDegrees('formFarm_length_property', 'formFarm_length_degrees_property', 'formFarm_length_minutes_property', 'formFarm_length_seconds_property');
                     $.subscribe('completeFarm', function(event, data) {
+                        var actExeFarm = $("#formFarm_actExe").val();
+                        if (actExeFarm=='create') {
+                            $('#btnFarm').on('click', function() {
+                                ga('send', 'event', 'Farms', 'click', 'Create');
+                            });
+                        } else if (actExeFarm=='modify') {
+                            $('#btnFarm').on('click', function() {
+                                ga('send', 'event', 'Farms', 'click', 'Update');
+                            });                
+                        }
                         //   	 alert('status: ' + event.originalEvent.status + '\n\nresponseText: \n' + event.originalEvent.request.responseText + 
                         //     '\n\nThe output div should have already been updated with the responseText.');
                         //        var json = jQuery.parseJSON(event.originalEvent.request.responseText);

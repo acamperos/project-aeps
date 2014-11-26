@@ -1,8 +1,15 @@
 package org.aepscolombia.platform.models.dao;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.aepscolombia.platform.controllers.ActionField;
 import org.aepscolombia.platform.models.entity.HorizontesRasta;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
@@ -23,6 +31,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Rastas;
+import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
@@ -769,7 +778,7 @@ public class RastasDao
         String sql = "";
         String entType = String.valueOf(args.get("entType"));
         
-        sql += "select e.name_ent as USUARIO, r.PENDIENTE_TERRENO_RAS as PENDIENTE,";
+        sql += "select r.ID_RAS as ID_RASTA, l.id_fie as ID_LOTE, f.id_far as ID_FINCA, p.id_pro as ID_PROD, e.name_ent as USUARIO, r.PENDIENTE_TERRENO_RAS as PENDIENTE,";
         sql += "UPPER(r.TERRENO_CIRCUNDANTE_RAS) as TERRENO, UPPER(r.POSICION_PERFIL_RAS) as POSICION, r.NUMERO_CAPAS_RAS as CAPAS, espesorRasta(r.ID_RAS, le.id_entity_log_ent) as ESPESORES, cSecoRasta(r.ID_RAS, le.id_entity_log_ent) as COLORES_SECOS, cHumedoRasta(r.ID_RAS, le.id_entity_log_ent) as COLORES_HUMEDOS, ";
         sql += "texturaRasta(r.ID_RAS, le.id_entity_log_ent) as TEXTURAS, resistenciaRasta(r.ID_RAS, le.id_entity_log_ent) as RESISTENCIAS, r.PH_RAS as PH, UPPER(r.CARBONATOS_RAS) as CARBONATOS, IF(r.CARBONATOS_RAS='no tiene','NA',r.PROFUNDIDAD_CARBONATOS_RAS) as PROF_CARBONATOS, UPPER(r.PIEDRAS_SUPERFICIE_RAS) as PIEDRAS_SUPERFICIE,";
         sql += "UPPER(r.ROCAS_SUPERFICIE_RAS) as ROCAS_SUPERFICIE, UPPER(r.PIEDRAS_PERFIL_RAS) as PIEDRAS_PERFIL, UPPER(r.ROCAS_PERFIL_RAS) as ROCAS_PERFIL, IF(r.HORIZONTE_PEDROGOSO_ROCOSO_RAS=1,'SI','NO') as HORIZONTE_PEDREGOSO, ";
@@ -833,6 +842,10 @@ public class RastasDao
             events = query.list();
         
             String[] val = {
+                "ID_RASTA",
+                "ID_LOTE",
+                "ID_FINCA",
+                "ID_PROD",
                 "USUARIO",
                 "PENDIENTE",
                 "TERRENO",
@@ -922,7 +935,11 @@ public class RastasDao
                     String.valueOf(data[39]),
                     String.valueOf(data[40]),
                     String.valueOf(data[41]),
-                    String.valueOf(data[42])
+                    String.valueOf(data[42]),
+                    String.valueOf(data[43]),
+                    String.valueOf(data[44]),
+                    String.valueOf(data[45]),
+                    String.valueOf(data[46])
                 };
                 writer.writeNext(valTemp);
             }
@@ -941,6 +958,209 @@ public class RastasDao
             session.close();
         }
 //        return result;
+    }
+    
+    public String getHorizons(Integer idRasta) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";                   
+        sql += "select hr.numero_horizonte_hor_ras, FORMAT(hr.espesor_hor_ras,0), hr.color_seco_hor_ras, hr.color_humedo_hor_ras,";
+        sql += " hr.textura_hor_ras, hr.resistencia_rompimiento_hor_ras"; 
+        sql += " from horizontes_rasta hr"; 
+        sql += " where hr.status=1";
+        sql += " and hr.id_rasta_hor_ras="+idRasta;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[242]\":\""+data[0]+"\","+
+                               "\"survey_solution[116]\":\""+data[1]+"\","+ 
+                               "\"survey_solution[117]\":\""+data[2]+"\","+ 
+                               "\"survey_solution[118]\":\""+data[3]+"\","+ 
+                               "\"survey_solution[119]\":\""+data[4]+"\","+ 
+                               "\"survey_solution[120]\":\""+data[5]+"\","+ 
+                               "\"subform_id\":\""+30+"\","+ 
+                               "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[242]\":\""+data[0]+"\","+
+                               "\"survey_solution[116]\":\""+data[1]+"\","+ 
+                               "\"survey_solution[117]\":\""+data[2]+"\","+ 
+                               "\"survey_solution[118]\":\""+data[3]+"\","+ 
+                               "\"survey_solution[119]\":\""+data[4]+"\","+ 
+                               "\"survey_solution[120]\":\""+data[5]+"\","+ 
+                               "\"subform_id\":\""+30+"\","+ 
+                               "\"idx\":"+numCaj+"},";
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
+    public void setInfoMongo() 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select l.id_fie, r.id_ras, l.name_fie, e.email_ent";
+        sql += " from rastas r";
+        sql += " inner join fields l on r.id_lote_ras = l.id_fie";
+        sql += " inner join fields_producers lp on lp.id_field_fie_pro = l.id_fie";
+        sql += " inner join farms f on l.id_farm_fie=f.id_far";
+        sql += " inner join log_entities le on le.id_object_log_ent = r.ID_RAS AND le.table_log_ent = 'rastas'";
+        sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
+        sql += " where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823)";
+        sql += " and le.action_type_log_ent = 'C'";
+        sql += " and r.status=1 and l.status=1 and f.status=1";
+        sql += " and le.id_object_log_ent not in (select le.id_object_log_ent from log_entities le where le.id_entity_log_ent in (3,4,5,6,8,200,201,202,665,706,707,708,709,710,711,712,713,714,715,823) and le.action_type_log_ent = 'D' AND le.table_log_ent = 'rastas')";
+
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("idField", data[0]);
+                temp.put("idRasta", data[1]);
+                temp.put("nameField", data[2]);
+                
+                String emailUser = String.valueOf(data[3]);
+                
+                SfGuardUserDao sfDao = new SfGuardUserDao();
+                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                Integer idUserMobile = null;
+                if (sfUser!=null) {
+                    idUserMobile = sfUser.getId().intValue();
+                }
+                
+                Integer idRasta = Integer.parseInt(String.valueOf(temp.get("idRasta")));
+                Rastas rasta = this.objectById(idRasta);
+//                System.out.println("idRasta=>"+idRasta);
+                
+                String dateRastaIn = new SimpleDateFormat("yyyy-MM-dd").format(rasta.getFechaRas());
+                String valHor = this.getHorizons(idRasta);
+                
+                HashMap valInfo = new HashMap();            
+                valInfo.put("dateRasta", dateRastaIn);
+                valInfo.put("pend", rasta.getPendienteTerrenoRas());
+                valInfo.put("terreno", rasta.getTerrenoCircundanteRas());
+                valInfo.put("position", rasta.getPosicionPerfilRas());
+                valInfo.put("pH", rasta.getPhRas());
+                valInfo.put("carbonato", rasta.getCarbonatosRas());
+                valInfo.put("profCar", rasta.getProfundidadCarbonatosRas());
+                valInfo.put("pedrSupRo", rasta.getRocasSuperficieRas());
+                valInfo.put("pedrSupPie", rasta.getPiedrasSuperficieRas());
+                valInfo.put("pedrPerRo", rasta.getRocasPerfilRas());
+                valInfo.put("pedrPerPie", rasta.getPiedrasPerfilRas());
+                valInfo.put("horPed", rasta.getHorizontePedrogosoRocosoRas());
+                valInfo.put("profHorPedr", rasta.getProfundidadHorizontePedregosoRas());
+                valInfo.put("espHor", rasta.getEspesorHorizontePedregosoRas());
+                valInfo.put("profPri", rasta.getProfundidadPrimerasPiedrasRas());
+                valInfo.put("capasEnd", rasta.getCapasEndurecidasRas());
+                valInfo.put("profCap", rasta.getPrufundidadCapasRas());
+                valInfo.put("espCap", rasta.getEspesorCapaEndurecidaRas());
+                valInfo.put("moteado", rasta.getMoteadosRas());
+                valInfo.put("profMot", rasta.getProfundidadMoteadosRas());
+                valInfo.put("moteadoBajo", rasta.getMoteadosMas70cmRas());
+                valInfo.put("estSuelo", rasta.getEstructuraRas());
+                valInfo.put("erosion", rasta.getErosionRas());
+                valInfo.put("moho", rasta.getMohoRas());
+                valInfo.put("cosDur", rasta.getCostrasDurasRas());
+                valInfo.put("sitioSol", rasta.getExposicionSolRas());
+                valInfo.put("cosBlan", rasta.getCostrasBlancasRas());
+                valInfo.put("cosNeg", rasta.getCostrasNegrasRas());
+                valInfo.put("regSeca", rasta.getRegionSecaRas());
+                valInfo.put("raiViva", rasta.getRaicesVivasRas());
+                valInfo.put("profRai", rasta.getProfundidadRaicesRas());
+                valInfo.put("crecPlan", rasta.getPlantasPequenasRas());
+                valInfo.put("muchaHoja", rasta.getHojarascaRas());
+                valInfo.put("sueNegro", rasta.getSueloNegroBlandoRas());
+                valInfo.put("cuchilloEnt", rasta.getCuchilloPrimerHorizonteRas());
+                valInfo.put("cercaAgua", rasta.getCercaRiosQuebradasRas());
+                valInfo.put("recVeg", rasta.getRecubrimientoVegetalRas());
+                valInfo.put("rastaId", rasta.getIdRas());
+                valInfo.put("valHorizons", valHor);
+
+                valInfo.put("fieldId", temp.get("idField"));
+                valInfo.put("nameField", temp.get("nameField"));
+                valInfo.put("lat", rasta.getLatitudRas());
+                valInfo.put("lng", rasta.getLongitudRas());
+                valInfo.put("alt", rasta.getAltitudRas());
+                valInfo.put("userMobileId", idUserMobile);      
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+rasta.getIdRas());
+                queryMongo.put("form_id", "6");
+
+                MongoClient mongo = null;
+                try {
+                    mongo = new MongoClient("localhost", 27017);
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+
+                DBCursor cursor    = col.find(queryMongo);
+                WriteResult result = null;
+                BasicDBObject jsonField = null;
+                jsonField          = GlobalFunctions.generateJSONSoil(valInfo);
+
+                if (cursor.count()>0) {
+                    System.out.println("actualizo mongo");
+                    result = col.update(queryMongo, jsonField);
+                } else {
+                    System.out.println("inserto mongo");
+                    result = col.insert(jsonField);
+                }
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }
+
+                mongo.close();
+                
+            }   
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
     }
     
 }

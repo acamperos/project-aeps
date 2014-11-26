@@ -178,7 +178,7 @@ public class FertilizationsDao
                       
         sql += "select p.id_fer, p.date_fer, p.fertilization_type_fer, ";
 		sql += " tp.name_fer_typ, p.amount_product_used_fer, chfer.id_che_fer, ";
-        sql += " chfer.application_type_che_fer, chfer.amount_product_used_che_fer";
+        sql += " chfer.application_type_che_fer, chfer.amount_product_used_che_fer, chfer.other_product_che_fer";
         sql += " from fertilizations p"; 
         sql += " inner join chemical_fertilizations chfer on p.id_fer=chfer.id_fertilization_che_fer";    
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_fer";    
@@ -214,8 +214,8 @@ public class FertilizationsDao
                             tempFoliar.put("idFerChe", "");
                             tempFoliar.put("nameFerTyp", "");
                             tempFoliar.put("ferTyp", "Quimica");
-                            tempFoliar.put("idFerTyp", "");             
-                            tempFoliar.put("otherProduct", ""); 
+                            tempFoliar.put("idFerTyp", null);             
+                            tempFoliar.put("otherProduct", data[8]); 
                             tempFoliar.put("amountUsed", data[7]); 
                             temp.put("infoFert", tempFoliar);
                         } else {
@@ -569,5 +569,107 @@ public class FertilizationsDao
         } finally {
             session.close();
         }
+    }
+    
+    public static String getFertilizations(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";      
+        sql += "select DATE_FORMAT(p.date_fer,'%Y-%m-%d') as dateFer, p.fertilization_type_fer, FORMAT(p.amount_product_used_fer,0)";
+        sql += " from fertilizations p"; 
+        sql += " where p.status=1";
+        sql += " and p.id_production_event_fer="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[216]\":\""+data[0]+"\","+
+                           "\"survey_solution[217]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[218]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+47+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[216]\":\""+data[0]+"\","+
+                           "\"survey_solution[217]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[218]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+47+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
+    }
+    
+    public static String getFertilizationsBeans(Integer idCrop) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        String result = "[";
+        
+        String sql = "";      
+        sql += "select DATE_FORMAT(p.date_fer,'%Y-%m-%d') as dateFer, p.fertilization_type_fer, FORMAT(p.amount_product_used_fer,0)";
+        sql += " from fertilizations p"; 
+        sql += " where p.status=1";
+        sql += " and p.id_production_event_fer="+idCrop;
+//        System.out.println("sql->"+sql);
+        int numCaj    = 0;
+        int totResult = 0;
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events    = query.list(); 
+            totResult = events.size();
+
+            for (Object[] data : events) {
+                numCaj++;
+                if (totResult==numCaj) {
+                    result += "{\"survey_solution[432]\":\""+data[0]+"\","+
+                           "\"survey_solution[433]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[434]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+60+"\","+ 
+                           "\"idx\":"+numCaj+"}"; 
+                } else {
+                    result += "{\"survey_solution[432]\":\""+data[0]+"\","+
+                           "\"survey_solution[433]\":\""+data[1]+"\","+ 
+                           "\"survey_solution[434]\":\""+data[2]+"\","+ 
+                           "\"subform_id\":\""+60+"\","+ 
+                           "\"idx\":"+numCaj+"},"; 
+                }         
+            }
+            result += "]";
+            tx.commit();
+		} catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+		} finally {
+            session.close();
+		}
+        return result;
     }
 }

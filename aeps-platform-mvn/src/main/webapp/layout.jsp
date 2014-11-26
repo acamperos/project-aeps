@@ -35,7 +35,7 @@
         <!--<script type="text/javascript" src="scripts/js/colorbox/jquery.colorbox.min.js"></script>-->
         <!--<link rel="stylesheet" href="scripts/css/colorbox/colorbox.css"/>-->			
         <!--<script src="scripts/js/generals/main.js"></script>-->				
-        <script src="scripts/js/generals/responsiveslides.js"></script>
+        <script src="scripts/js/generals/responsiveslides.js"></script>        
     </head>
     <body>
         <div id="divMessage"></div>
@@ -44,7 +44,7 @@
             <%@ include file="WEB-INF/views/generals/header.jsp" %>
         </div>
         <div class="body" id="divBodyLayout">
-            <%@ include file="WEB-INF/views/generals/home.jsp" %>
+            <%--<%@ include file="WEB-INF/views/generals/home.jsp" %>--%>
         </div>
         <div class="footer">
             <%@ include file="WEB-INF/views/generals/footer.jsp" %>            
@@ -53,6 +53,8 @@
             var actionName   = '<%= session.getAttribute("action") %>';
             if (actionName!='null' && actionName!='' && actionName!='dashboard' && actionName!='initial' && actionName!='login') {
                 showInfoPage(''+actionName+'.action', 'divBodyLayout');                 
+            } else if(actionName=='null' || actionName=='' || actionName=='initial') {
+                showInfoPage('home.action', 'divBodyLayout');
             }
             if (actionName=='null' || actionName=='' || actionName=='dashboard' || actionName=='initial') {
               actionName = 'home';                  

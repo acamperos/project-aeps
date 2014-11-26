@@ -6,6 +6,7 @@
         <link rel="icon" type="image/ico" href="img/favicon.ico">
     </head>
     <body>
+        <%@ include file="../generals/googleAnalytics.jsp" %>
         <!--<div id="divMessage" style="display:none"></div>-->      
         <div class="container">
             <ul id="breadcrumbs">

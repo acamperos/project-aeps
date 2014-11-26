@@ -29,7 +29,7 @@
                     <a class="btn btn-small btn-edit" title="Editar Productor" onclick="viewForm('/showProducer.action?action=modify&page=<%=pageNow%>', 'idPro', <s:property value ="id_producer" />, 'Editar Productor', 1050, 550)"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Productor" onclick="showDialogDelete(this, 'confirm_dialog_producer', 'deleteProducer.action?idPro=<s:property value ="id_producer" />', 'searchProducer.action?page=<%=pageNow%>', 'divProducers', '<%=divHide%>');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Productor" onclick="showDialogDelete(this, 'confirm_dialog_producer', 'deleteProducer.action?idPro=<s:property value ="id_producer" />', 'searchProducer.action?page=<%=pageNow%>', 'divProducers', '<%=divHide%>'); ga('send', 'event', 'Producers', 'click', 'Delete');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         </td>

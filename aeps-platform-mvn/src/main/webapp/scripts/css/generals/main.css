@@ -596,7 +596,7 @@ form {
 #img_farmer { min-width: 250px; width: 250px; min-height: 200px; height: 200px; }
 
 body {
-    font-family: "Istok Web";
+    font-family: "Istok Web" !important;
     /*font-family: "Open Sans", Arial, sans-serif;*/
     /*font-size: 20px;*/
     color: #333333;
@@ -860,5 +860,54 @@ body {
 
 .links {
     margin-bottom: 20px;
+}
+
+.textFloat {
+    float: left;
+}
+
+.btn-chemical {
+    background-color: #1E90FF;
+    background-image: linear-gradient(to bottom, #1E90FF, #1E90FF);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-chemical:hover, .btn-chemical:focus, .btn-chemical:active, .btn-chemical.active, .btn-chemical.disabled, .btn-chemical[disabled] {
+    background-color: #1FBCFF;
+    background-image: linear-gradient(to bottom, #1FBCFF, #1FBCFF);
+    color: #FFFFFF;
+}
+
+.btn-organic {
+    background-color: #228B22;
+    background-image: linear-gradient(to bottom, #228B22, #228B22);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-organic:hover, .btn-organic:focus, .btn-organic:active, .btn-organic.active, .btn-organic.disabled, .btn-organic[disabled] {
+    background-color: #32C132;
+    background-image: linear-gradient(to bottom, #32C132, #32C132);
+    color: #FFFFFF;
+}
+
+.btn-amendment {
+    background-color: #A0522D;
+    background-image: linear-gradient(to bottom, #A0522D, #A0522D);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-amendment:hover, .btn-amendment:focus, .btn-amendment:active, .btn-amendment.active, .btn-amendment.disabled, .btn-amendment[disabled] {
+    background-color: #CB683B;
+    background-image: linear-gradient(to bottom, #CB683B, #CB683B);
+    color: #FFFFFF;
 }
 

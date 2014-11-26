@@ -23,7 +23,7 @@
                 <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFarms" onCompleteTopics="completeFarm"><i class="icon-search"></i></sj:submit>
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportFarm.action', 'formFarmSearch', 'farmsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportFarm.action', 'formFarmSearch', 'farmsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
             </div>
         </div>
         <script>
@@ -45,7 +45,10 @@
         <s:set name="valSel" value="selected"/> 
         <s:if test="%{#valSel.equals('property')}">
             <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
-        </s:if>        
+        </s:if>     
+        <% if (entTypeId!=3) { %>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportFarm.action', 'formFarmSearch', 'farmsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+        <% } %>
     </div>   
     <div id="searchAdvanceFarm" class="hide">
         <div class="control-group">

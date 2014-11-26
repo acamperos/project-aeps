@@ -30,7 +30,7 @@
                 </div> 
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="getReportCsv('getReportSoil.action', 'formRastaSearch', 'soilsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportSoil.action', 'formRastaSearch', 'soilsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
             </div>   
         </div>
         <script>
@@ -51,6 +51,9 @@
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><i class="icon-search"></i></sj:submit>
             <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 2)" class="radioSelect">Busqueda avanzada </a><i class="icon-chevron-down"></i>
             <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> Volver al listado</s:a>
+            <% if (entTypeId!=3) { %>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportSoil.action', 'formRastaSearch', 'soilsData.csv')"><i class="icon-file-text"></i> Exportar Datos</s:submit>
+            <% } %>
         <!--</div>-->
     </div> 
     <div id="searchAdvanceSoil" class="hide">

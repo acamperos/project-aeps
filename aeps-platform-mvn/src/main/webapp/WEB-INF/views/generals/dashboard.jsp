@@ -4,7 +4,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <head>
+    </head>
     <body>
+        <%@ include file="googleAnalytics.jsp" %>
+        <%@page import="org.aepscolombia.platform.util.APConstants"%>
+        <%@page import="org.aepscolombia.platform.models.entity.Users"%>
+        <%@page import="org.aepscolombia.platform.models.entity.Entities"%>
+        <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+        <% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
+        <% String entType = new EntitiesDao().getEntityType(user.getIdUsr()); %>
         <div class="container">
             <nav>
                 <ul id="menu" class="nav">
