@@ -1,5 +1,12 @@
 <% //HashMap add   = (HashMap) request.getAttribute("additionals");%>
 <% //String value  = (String) (add.get("selected"));%>
+<% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/modify") || (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete"))) { %>
+    <% if (value.equals("property") || value == "property") {%>
+        <td>
+            <input type="checkbox" class="chkNumber" value="${id_farm}" onclick="clickSelOne('chkSelectAll', 'chkNumber', 'btnDelFar')"/>
+        </td>
+    <% } %>
+<% } %>
 <% if (value != "property") {%>
     <% if (value.equals("lot")) {%>
         <td><img src="/img/check.ico"/></td>

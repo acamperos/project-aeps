@@ -18,7 +18,7 @@
         <div class="row-fluid" id="divConForm">
             <s:form id="formCropCon" action="saveCon" cssClass="form-horizontal">
                 <fieldset>
-                    <legend>Formulario de Control</legend>  
+                    <legend><s:property value="getText('title.controlform.crop')" /></legend>  
                     <div class="row">
                         <div class="span5">
                             <s:hidden name="idCrop"/>
@@ -27,7 +27,7 @@
                             <s:hidden name="con.idCon"/>
                             <div class="control-group">
                                 <label for="formCropCon_con_dateCon" class="control-label req">
-                                    Fecha del control:
+                                    <s:property value="getText('text.controldate.crop')" />:
                                 </label>
                                 <div class="date controls">
                                     <s:date name="con.dateCon" format="dd/MM/yyyy" var="dateTransformCont"/>
@@ -41,9 +41,6 @@
                     <div class="row">
                         <div class="span5">
                             <div class="control-group">
-<!--                                <label for="formCropCon_con_targetsTypes_idTarTyp" class="control-label req">
-                                    Tipo de objetivo:
-                                </label>-->
                                 <div class="controls radioSelect">
                                     <s:radio
                                         name="con.targetsTypes.idTarTyp"
@@ -56,8 +53,6 @@
                                                   chargeValuesControls('/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'con.targetsTypes.idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
                                                   hideInformationControls('divNewObjControlPes', 'divNewObjControlWee', 'divNewObjControlDis', 'divNewProCheCon', 'divNewProOrgCon');"
                                     />
-                                    <!--onchange="chargeValuesObjective('/crop/comboListObjectives.action', 'idTarget', 'con.targetsTypes.idTarTyp', 'formCropCon_con_pests_idPes', 'divListPest', 'formCropCon_con_weeds_idWee', 'divListWee', 'formCropCon_con_diseases_idDis', 'divListDis', 'divMessage');--> 
-                                    <!--onchange="chargeValuesObjective('/crop/comboListObjectives.action', 'idTarget', this.value, 'params_objetive_control_pro', 'params_obj_mas_afecta', 'divMessProtection'); chargeValues('../actions/Actions.php?action=ListarQuimicosXObjetivo&idEvent=<?php echo $options['idEvent'] ?>&tipoCul=<?php echo $options['tipoCul'] ?>', 'valSel', this.value, 'params_family_mol_che', 'divMessProtection'); chargeValues('../actions/Actions.php?action=ListarBiologicosXObjetivo&idEvent=<?php echo $options['idEvent'] ?>&tipoCul=<?php echo $options['tipoCul'] ?>', 'valSel', this.value, 'params_type_biologic', 'divMessProtection')"-->
                                 </div>                         
                             </div>                          
                         </div>   
@@ -80,7 +75,7 @@
                         <div class="span5">
                             <div class="control-group">
                                 <label for="formCropCon_con_pests_idPes" class="control-label req">
-                                    Objetivo del control:
+                                    <s:property value="getText('text.targetpest.crop')" />:
                                 </label>
                                 <div class="controls">
                                     <s:select
@@ -104,7 +99,7 @@
                             <div class="span4" style="padding-left: 28px">
                                 <div class="control-group">
                                     <label for="formCropCon_con_otherPestCon" class="control-label req">
-                                         Nuevo objetivo del control:
+                                        <s:property value="getText('text.newtargetpest.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="con.otherPestCon"/>
@@ -117,7 +112,7 @@
                         <div class="span5">
                             <div class="control-group">
                                 <label for="formCropCon_con_weeds_idWee" class="control-label req">
-                                    Objetivo del control:
+                                    <s:property value="getText('text.targetweed.crop')" />:
                                 </label>
                                 <div class="controls">
                                     <s:select
@@ -141,7 +136,7 @@
                             <div class="span4" style="padding-left: 28px">
                                 <div class="control-group">
                                     <label for="formCropCon_con_otroWeedCon" class="control-label req">
-                                         Nuevo objetivo del control:
+                                        <s:property value="getText('text.newtargetweed.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="con.otroWeedCon"/>
@@ -154,7 +149,7 @@
                         <div class="span5">
                             <div class="control-group">
                                 <label for="formCropCon_con_diseases_idDis" class="control-label req">
-                                    Objetivo del control:
+                                    <s:property value="getText('text.targetdiseases.crop')" />:
                                 </label>
                                 <div class="controls">
                                     <s:select
@@ -178,7 +173,7 @@
                             <div class="span4" style="padding-left: 28px">
                                 <div class="control-group">
                                     <label for="formCropCon_con_otherDiseaseCon" class="control-label req">
-                                         Nuevo objetivo del control:
+                                        <s:property value="getText('text.newtargetdiseases.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="con.otherDiseaseCon"/>
@@ -191,7 +186,7 @@
                         <div class="span5">
                             <div class="control-group">
                                 <label for="formCropCon_con_controlsTypes_idConTyp" class="control-label req">
-                                    Tipo de control:
+                                    <s:property value="getText('text.controltype.crop')" />:
                                 </label>
                                 <div class="controls">
                                     <s:select
@@ -214,7 +209,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_con_chemicalsControls_idCheCon" class="control-label req">
-                                        Ingrediente activo:
+                                        <s:property value="getText('text.chemicalcontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -238,7 +233,7 @@
                                 <div class="span4" style="padding-left: 28px">
                                     <div class="control-group">
                                         <label for="formCropCon_con_otherChemicalProductCon" class="control-label req">
-                                             Nueva familia de molecula:
+                                            <s:property value="getText('text.newchemicalcontrol.crop')" />:
                                         </label>
                                         <div class="controls">
                                             <s:textfield name="con.otherChemicalProductCon"/>
@@ -251,7 +246,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_dosisConChe" class="control-label">
-                                        Dosis:
+                                        <s:property value="getText('text.dosechemicalcontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="dosisConChe"/>
@@ -261,7 +256,7 @@
                             <div class="span4" style="padding-left: 6px">
                                 <div class="control-group">
                                     <label for="formCropCon_doseUnitsChe" class="control-label">
-                                         Unidad:
+                                        <s:property value="getText('text.doseunitchecontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -282,7 +277,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_con_organicControls_idOrgCon" class="control-label req">
-                                        Tipo de producto:
+                                        <s:property value="getText('text.organiccontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -306,7 +301,7 @@
                                 <div class="span4" style="padding-left: 28px">
                                     <div class="control-group">
                                         <label for="formCropCon_con_otherOrganicProductCon" class="control-label req">
-                                             Nuevo tipo de producto:
+                                            <s:property value="getText('text.neworganiccontrol.crop')" />:
                                         </label>
                                         <div class="controls">
                                             <s:textfield name="con.otherOrganicProductCon"/>
@@ -319,7 +314,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_dosisConOrg" class="control-label">
-                                        Dosis:
+                                        <s:property value="getText('text.doseorgcontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="dosisConOrg"/>
@@ -329,7 +324,7 @@
                             <div class="span4" style="padding-left: 6px">
                                 <div class="control-group">
                                     <label for="formCropCon_doseUnitsOrg" class="control-label">
-                                         Unidad:
+                                        <s:property value="getText('text.doseunitorgcontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -352,7 +347,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_dosisConMec" class="control-label">
-                                        Dosis:
+                                        <s:property value="getText('text.dosemeccontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="dosisConMec"/>
@@ -362,7 +357,7 @@
                             <div class="span4" style="padding-left: 6px">
                                 <div class="control-group">
                                     <label for="formCropCon_doseUnitsMec" class="control-label">
-                                         Unidad:
+                                        <s:property value="getText('text.doseunitmeccontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -383,7 +378,7 @@
                             <div class="span5">
                                 <div class="control-group">
                                     <label for="formCropCon_dosisConMan" class="control-label">
-                                        Dosis:
+                                        <s:property value="getText('text.dosemancontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:textfield name="dosisConMan"/>
@@ -393,7 +388,7 @@
                             <div class="span4" style="padding-left: 6px">
                                 <div class="control-group">
                                     <label for="formCropCon_doseUnitsMan" class="control-label">
-                                         Unidad:
+                                        <s:property value="getText('text.doseunitmancontrol.crop')" />:
                                     </label>
                                     <div class="controls">
                                         <s:select
@@ -409,7 +404,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="warnField reqBef">Campos Requeridos</p>
+                    <p class="warnField reqBef"><s:property value="getText('text.requirefields')" /></p>
                     <script>
                         $("#formCropCon_con_dateCon").datepicker({dateFormat: 'dd/mm/yy'});
                         $("#formCropCon_con_dateCon").mask("99/99/9999", {placeholder: " "});
@@ -422,9 +417,9 @@
                     <div id="divBtCon">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropCon'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeCon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Control</sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropCon'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeCon" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.controlsave.crop')" /></sj:submit>
                         <% } %>
-                        <button class="btn btn_default btn-large" onclick="resetForm('formCropCon'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
+                        <button class="btn btn_default btn-large" onclick="resetForm('formCropCon'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
                     </div>
                 </fieldset>
             </s:form>	

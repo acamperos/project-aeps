@@ -2172,3 +2172,75 @@ function seeDate(valSel, labChange)
 {
     $("#"+labChange).html("&nbsp;la aplicacion del "+valSel);
 }
+
+function clickSelAll(classAll, classNum, btnId) 
+{
+    $('.'+classAll).click();
+//    $('.'+classNum).prop('checked', $(this).is(':checked'));
+    if ($('.'+classAll).prop('checked')) {
+        $('#'+btnId).prop('disabled', false);
+        $('#'+btnId).removeClass('disabled');
+        $('.'+classNum).prop('checked', true);
+    } else {
+        $('#'+btnId).prop('disabled', true);
+        $('#'+btnId).addClass('disabled');            
+        $('.'+classNum).prop('checked', false);
+    }        
+
+}
+
+function clickSelOne(classAll, classNum, btnId) 
+{
+    if ($('.'+classNum+':checked').length == $('.'+classNum).length) {
+        $('.'+classAll).prop('checked', true);
+    } else {
+        $('.'+classAll).prop('checked', false);
+    }
+    
+    var chkId = '';
+    $('.'+classNum+':checked').each(function () {
+        chkId += $(this).val() + "|";
+    });
+
+    if (chkId!='') {
+        $('#'+btnId).prop('disabled', false);
+        $('#'+btnId).removeClass('disabled');
+    } else {
+        $('#'+btnId).prop('disabled', true);
+        $('#'+btnId).addClass('disabled');            
+    }      
+}
+
+function showDialogDeleteAll(divDialog, classNum, hRef, url, urlAction, divTable, divShow) 
+{
+    if ($('.'+classNum+':checked').length) {
+        var chkId = '';
+        $('.'+classNum+':checked').each(function () {
+            chkId += $(this).val() + ",";
+        });
+        chkId = chkId.slice(0, -1);
+    }
+    url += '?valSel='+chkId;
+//    $('<input>').attr({type: 'hidden',id: 'valDel'}).appendTo('#divRasta');
+    $(divDialog).colorbox({
+        initialHeight: '0',
+        initialWidth: '0',
+        href: "#"+hRef,
+        inline: true,        
+        opacity: '0.3',     
+        onComplete: function() {
+            $('.confirm_yes').click(function(e){
+//                $("#valDel").val('1');
+                deleteItem(url, urlAction, divTable, divShow);            
+                $.colorbox.close();
+                e.preventDefault();
+//                e.stopPropagation();
+            });
+            $('.confirm_no').click(function(e){    
+                $.colorbox.close(); 
+                e.preventDefault();
+//                e.stopPropagation();
+            });
+        }
+    }); 
+}

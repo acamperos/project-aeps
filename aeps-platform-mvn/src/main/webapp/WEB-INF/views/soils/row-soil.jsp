@@ -1,3 +1,10 @@
+<% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify") || (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete"))) { %>
+    <% if (value == "rasta" || value.equals("rasta")) {%>
+        <td>
+            <input type="checkbox" class="chkNumber" value="${id_ras}" onclick="clickSelOne('chkSelectAll', 'chkNumber', 'btnDelSoil')"/>
+        </td>
+    <% } %>
+<% } %>
 <% if (entTypeSoilId==3) { %>    
     <td><s:property value="nameAgro" /></td>
 <% } %>
@@ -21,14 +28,16 @@
 <s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify") || (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete"))) { %>
-    <td>
-        <div class="btn-group">
-            <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify")) { %>
-                <a class="btn btn-small btn-edit" title="Editar Rasta" onclick="viewForm('/soil/showSoil.action?action=modify&page=<%=pageNow%>', 'idRasta', <s:property value ="id_ras" />, 'Editar Rasta', 1050, 550)"><i class="icon-pencil"></i></a>
-            <% } %>
-            <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete")) { %>
-                <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Rasta" onclick="showDialogDelete(this, 'confirm_dialog_lot', 'deleteSoil.action?idRasta=<s:property value ="id_ras" />', 'searchSoil.action?page=<%=pageNow%>', 'divRasta', '<%=divHide%>'); ga('send', 'event', 'Soils', 'click', 'Delete');"><i class="icon-trash"></i></a>
-            <% } %>
-        </div>
-    </td>
+    <% if (value == "rasta" || value.equals("rasta")) {%>
+        <td>
+            <div class="btn-group">
+                <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify")) { %>
+                    <a class="btn btn-small btn-edit" title="Editar Rasta" onclick="viewForm('/soil/showSoil.action?action=modify&page=<%=pageNow%>', 'idRasta', <s:property value ="id_ras" />, 'Editar Rasta', 1050, 550)"><i class="icon-pencil"></i></a>
+                <% } %>
+                <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete")) { %>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="Borrar Rasta" onclick="showDialogDelete(this, 'confirm_dialog_lot', 'deleteSoil.action?idRasta=<s:property value ="id_ras" />', 'searchSoil.action?page=<%=pageNow%>', 'divRasta', '<%=divHide%>'); ga('send', 'event', 'Soils', 'click', 'Delete');"><i class="icon-trash"></i></a>
+                <% } %>
+            </div>
+        </td>
+    <% } %>
 <% } %>

@@ -42,6 +42,13 @@
     <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/create")) { %>
         <% if (entTypeFarId!=3) { %>    
             <% if (value.equals("property")) {%>
+                <div class="btn btn-group btn-space" onclick="clickSelAll('chkSelectAll', 'chkNumber', 'btnDelFar');">
+                    <input type="checkbox" class="chkSelectAll textFloat" />
+                    <label class="textFloat" style="padding-left: 7px; margin-bottom: 0;">Todos</label>
+                </div>
+                <button type="button" id="btnDelFar" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_property', 'deleteAllFarm.action', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');">
+                    <i class="icon-trash"></i> Borrar selección
+                </button>
                 <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', 'Crear Finca', 1050, 550)">
                     <i class="icon-plus"></i> Agregar finca
                 </button>
@@ -51,6 +58,11 @@
     <table class="table table-bordered table-hover" style="<%= table%> max-width: 100%" id='tblFarms'>
         <thead>
             <tr>
+                <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/modify") || (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete"))) { %>
+                    <% if (value.equals("property") || value == "property") { %>
+                        <th></th>
+                    <% }%>
+                <% } %>
                 <% if (value != "property") {%>
                     <% if (value.equals("lot") || value.equals("crop")) {%>
                         <th></th>

@@ -9,7 +9,7 @@
     .clearfix:after { clear: both }
     a {color:#368CA9;text-decoration:none}
     a:hover {text-decoration:underline}
-    #login-wrapper {position:relative;border:1px solid #ddd;width:600px;margin:0 auto;background:#fff;padding:10px;-webkit-border-radius: 8px;-moz-border-radius: 8px;-ms-border-radius: 8px;border-radius: 8px}
+    #login-wrapper {position:relative;border:1px solid #ddd;width:650px;margin:0 auto;background:#fff;padding:10px;-webkit-border-radius: 8px;-moz-border-radius: 8px;-ms-border-radius: 8px;border-radius: 8px}
     .main-col {float:left;padding:10px 0;position:relative;margin-left:230px;padding-left:40px;border-left:1px solid #ddd}
     .logo_img {position:absolute;top:50%;margin:-32px 0 0 -270px}
     .main-col .heading_main {/*font-family:"Open Sans Condensed",sans-serif;font-size:22px;*/margin-bottom:20px}

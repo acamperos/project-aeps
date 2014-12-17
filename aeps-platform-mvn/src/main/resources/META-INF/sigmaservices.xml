@@ -73,7 +73,7 @@
 <part name="user" type="xsd:string"/>
 <part name="password" type="xsd:string"/>
 <part name="teldestino" type="xsd:string"/>
-<part name="mensaje" type="xsd:string"/>
+<part name="mensaje" type="xsd:string"/>
 </message>
 <message name="newSendSMSResponse">
 <part name="return" type="tns:WSResSendSMS"/>
@@ -136,7 +136,8 @@ Programa el envio de un SMS a diferentes destinatarios (celulares)
 <documentation>Consulta el estado de tus envios</documentation>
 <input message="tns:getExtendedSMSInfoRequest"/>
 <output message="tns:getExtendedSMSInfoResponse"/>
-</operation>
+</operation>
+
     </portType>
 <binding name="SigmaMovilServiceBinding" type="tns:SigmaMovilServicePortType">
 <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>

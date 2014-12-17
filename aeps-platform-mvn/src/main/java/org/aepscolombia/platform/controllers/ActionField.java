@@ -32,6 +32,8 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.FieldTypesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
+import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.RastasDao;
 import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Entities;
@@ -727,7 +729,7 @@ public class ActionField extends BaseAction {
         Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
-        String fileName  = "/var/www/document/fieldsInfo.csv";
+        String fileName  = ""+getText("file.docfield");
 //        String fileName  = "fieldsInfo.csv";
         lotDao.getFields(findParams, fileName);
   
@@ -757,7 +759,7 @@ public class ActionField extends BaseAction {
         } catch (NumberFormatException e) {
 //            LOG.error("There was an error trying to parse the activityId parameter");
             this.setIdField(-1);
-        }
+        } 
 
         this.setType_property_lot(new FieldTypesDao().findAll());
 
@@ -836,7 +838,7 @@ public class ActionField extends BaseAction {
             int idProOld = 0;
             tx = session.beginTransaction();
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");
             Fields lot = null;
 //            FarmsDao farmDao = new FarmsDao();
             HashMap objFarm = new FarmsDao().findById(idFarm);
@@ -1049,6 +1051,12 @@ public class ActionField extends BaseAction {
             }
             mongo.close();
             
+            ProductionEventsDao cropDao = new ProductionEventsDao();
+            cropDao.deleteCropsMongo(idField);
+
+            RastasDao rasDao = new RastasDao();
+            rasDao.deleteRastasMongo(idField);
+            
             tx.commit();         
             state = "success";
             info  = "El lote ha sido borrado con exito";
@@ -1065,5 +1073,37 @@ public class ActionField extends BaseAction {
         
         return "states";
 //        return SUCCESS;
+    }
+    
+    /**
+     * Encargado de borrar la informacion de los lotes que se han seleccionado
+     * @param valSel:  Valores que se han seleccionado para borrar
+     * @return Estado del proceso
+     */
+    public String deleteAll() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "field/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        String valSel = "";        
+        try {
+            valSel = String.valueOf(this.getRequest().getParameter("valSel"));
+        } catch (NumberFormatException e) {
+            valSel = "-1";
+        }
+        
+        if (valSel.equals("-1")) {
+            state = "failure";
+            info  = "Fallo al momento de obtener la informacion a borrar";
+            return "states";
+        }
+        
+        state = lotDao.deleteAllFields(valSel, idEntSystem);
+        if (state.equals("success")) {
+            info  = "El lote ha sido borrado con exito";
+        } else if (state.equals("failure")) {
+            info  = "Fallo al momento de borrar un lote";
+        }
+        
+        return "states";
     }
 }

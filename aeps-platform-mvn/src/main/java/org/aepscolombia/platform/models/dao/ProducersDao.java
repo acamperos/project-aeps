@@ -1,8 +1,14 @@
 package org.aepscolombia.platform.models.dao;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.aepscolombia.platform.controllers.ActionField;
+import org.aepscolombia.platform.models.entity.Entities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -592,6 +600,72 @@ public class ProducersDao
             session.close();
         }
 //        return result;
+    }
+    
+    public String deleteAllEntities(String valSel) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        List<Entities> events = null;
+        Transaction tx = null;
+        String sql = "";
+        String state = "failure";
+
+        sql += "select usr.id_ent, usr.id_project_ent, usr.entity_type_ent, usr.document_number_ent, usr.document_type_ent, usr.document_issue_place_ent,"; 	
+        sql += "usr.name_ent, usr.in_association_ent, usr.email_ent, usr.email_2_ent, usr.address_ent, usr.id_municipality_ent,"; 	
+        sql += "usr.cellphone2_ent, usr.phone_ent, usr.cellphone_ent, usr.status, usr.gender_ent, usr.civil_status_ent,"; 	
+        sql += "usr.validation_number_ent, usr.education_level_ent, usr.date_of_birth_ent, usr.first_name_1_ent, usr.person_type_ent,"; 	
+        sql += "usr.first_name_2_ent, usr.last_name_1_ent, usr.last_name_2_ent, usr.agent_name_ent, usr.page_link_ent, usr.created_by";
+        sql += " from entities usr";
+        if (!valSel.equals("")) sql += " where usr.status=1 and usr.id_ent in ("+valSel+")";
+//        System.out.println("sql=>"+sql);
+        
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("usr", Entities.class);
+            events = query.list();
+            Producers pTemp   = null;
+            MongoClient mongo = new MongoClient("localhost", 27017);
+            for (Entities ent : events) {
+                pTemp = this.objectByEntityId(ent.getIdEnt());  
+//                System.out.println("entId->"+ent.getIdEnt());
+//                System.out.println("proId->"+pTemp.getIdPro());
+                ent.setStatus(false);     
+                session.saveOrUpdate(ent);
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+ent.getIdEnt());
+                queryMongo.put("form_id", "4");
+                
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }                
+
+                FarmsDao farDao = new FarmsDao();
+                farDao.deleteFarmsMongo(pTemp.getIdPro());
+            }
+            mongo.close();
+            tx.commit();
+            state = "success";
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            session.close();
+        } 
+        return state;
     }
     
 }

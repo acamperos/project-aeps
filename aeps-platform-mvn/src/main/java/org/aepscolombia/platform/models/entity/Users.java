@@ -30,18 +30,20 @@ public class Users  implements java.io.Serializable {
     private String codValidationUsr;
     private Integer status;
     private Date lastInUsr;
+    private Integer createdBy;
 
     public Users() {
     }
 
 	
-    public Users(String nameUserUsr, String passwordUsr, String saltUsr, Date lastInUsr, String codValidationUsr, Integer status) {
+    public Users(String nameUserUsr, String passwordUsr, String saltUsr, Date lastInUsr, String codValidationUsr, Integer status, Integer createdBy) {
         this.nameUserUsr = nameUserUsr;
         this.passwordUsr = passwordUsr;
         this.saltUsr     = saltUsr;
         this.lastInUsr   = lastInUsr;
         this.codValidationUsr = codValidationUsr;
         this.status = status;
+        this.createdBy = createdBy;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -109,7 +111,14 @@ public class Users  implements java.io.Serializable {
     public void setLastInUsr(Date lastInUsr) {
         this.lastInUsr = lastInUsr;
     }
+    
+    @Column(name="created_by")
+    public Integer getCreatedBy() {
+        return this.createdBy;
+    }
+    
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
 }
-
-

@@ -49,25 +49,26 @@
             })(jQuery);
             $(document).ready(function() {
                 $('#remPass').click(function() {
-                    //$('.panel:visible').slideUp('200',function() {
-                    //$('.panel').not($(this)).slideDown('200');
-                    //});
                     $('#divRegisterUser').slideUp('200');
                     $('#divNewUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
                     $('#divRestoreUser').slideDown('200');
-                    //$(this).children('span').toggle();
                 });
 
                 $('#accessSystem').click(function() {
                     $('#divNewUser').slideUp('200');
                     $('#divRestoreUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
                     $('#divRegisterUser').slideDown('200');
-                    //$(this).children('span').toggle();
                 });
 
                 $('#newUser').click(function() {
                     $('#divRegisterUser').slideUp('200');
                     $('#divRestoreUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
                     $('#divNewUser').slideDown('200');
                     //$(this).children('span').toggle();
                 });
@@ -75,7 +76,41 @@
                 $('#accessSystemUser').click(function() {
                     $('#divNewUser').slideUp('200');
                     $('#divRestoreUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
                     $('#divRegisterUser').slideDown('200');
+                });
+                
+                $('#accessSystemUserVer').click(function() {
+                    $('#divNewUser').slideUp('200');
+                    $('#divRestoreUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
+                    $('#divRegisterUser').slideDown('200');
+                });
+                
+                $('#verUser').click(function() {
+                    $('#divNewUser').slideUp('200');
+                    $('#divRestoreUser').slideUp('200');
+                    $('#divRegisterUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
+                    $('#divValidateUser').slideDown('200');
+                });
+                
+                $('#accessSystemChangePass').click(function() {
+                    $('#divNewUser').slideUp('200');
+                    $('#divRestoreUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideUp('200');
+                    $('#divRegisterUser').slideDown('200');
+                });
+                
+                $('#changePass').click(function() {
+                    $('#divNewUser').slideUp('200');
+                    $('#divRestoreUser').slideUp('200');
+                    $('#divRegisterUser').slideUp('200');
+                    $('#divValidateUser').slideUp('200');
+                    $('#divChangePass').slideDown('200');
                 });
             });
         </script>
@@ -149,6 +184,16 @@
                                     <span><s:property value="getText('text.signup.login')" /></span>
                                 </a>
                             </div>
+                            <div class="login_links span6">
+                                <a href="javascript:void(0)" id="verUser">
+                                    <span><s:property value="getText('button.verifyuser.login')" /></span>
+                                </a>
+                            </div>
+                            <div class="login_links span6">
+                                <a href="javascript:void(0)" id="changePass">
+                                    <span><s:property value="getText('button.changepasscel.login')" /></span>
+                                </a>
+                            </div>
                             <!-- </div> -->                            
                         </div>                 
                     </s:form>
@@ -165,7 +210,7 @@
                 </div>
                 <!--<div id="result"></div>-->
                 <div class="panel" style="display:none;" id="divRestoreUser">
-                    <h3 class="heading_main">No puede ingresar?</h3>
+                    <h3 class="heading_main">No puede ingresar ?</h3>
                     <s:form id="formValidate" action="restorePassword.action">
                         <s:hidden name="actExe" value="restuser"/>
                         <div class="row">
@@ -174,7 +219,7 @@
                             <%--<s:textfield id="formValidate_noidentify" name="noidentify" />--%>
                         </div> -->
                             <div class="span6 control-group">
-                                <label class="control-label" for="formValidate_infoUser">Ingrese su correo</label>
+                                <label class="control-label" for="formValidate_infoUser">Ingrese su correo ó celular</label>
                                 <div class="controls">
                                     <s:textfield id="formValidate_infoUser" name="infoUser" />
                                 </div>
@@ -196,7 +241,7 @@
                     <div class="hide">
                         <div id="confirm_dialog" class="cbox_content">
                             <div class="sepH_c">
-                                <p>El correo  que le mandamos puede ser filtrado como spam. <br />Si no encuentra el correo en su buzon principal,<br /> 
+                                <p>El correo electrónico que le mandamos puede ser filtrado como spam. <br />Si no encuentra el correo en su buzon principal,<br /> 
                                 por favor no olvide de revisar el buzon de spam.</p>
                             </div>
                             <div>
@@ -289,9 +334,15 @@
                             </div>
                         </div>
                         <div class="form-group control-group">
-                            <label class="control-label req" for="formNewUser_emailUser">Correo Electr&oacute;nico:</label>
+                            <label class="control-label" for="formNewUser_emailUser">Correo Electrónico:</label>
                             <div class="controls">
-                                <s:textfield type="email" class="form-control" id="formNewUser_emailUser" name="emailUser" placeholder="Ingrese correo"/>
+                                <s:textfield type="email" class="form-control" id="formNewUser_emailUser" name="emailUser" placeholder="Ingrese el correo"/>
+                            </div>
+                        </div>
+                        <div class="form-group control-group">
+                            <label class="control-label" for="formNewUser_celphoneUser">Celular:</label>
+                            <div class="controls">
+                                <s:textfield class="form-control" id="formNewUser_celphoneUser" name="celphoneUser"/>                                   
                             </div>
                         </div>
                         <div class="form-group control-group">
@@ -349,13 +400,7 @@
                                 <s:password class="form-control" id="formNewUser_passwordRepUser" name="passwordRepUser"/>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="span4 control-group">
-                                <label class="control-label" for="formNewUser_celphoneUser">Celular:</label>
-                                <div class="controls">
-                                    <s:textfield class="form-control" id="formNewUser_celphoneUser" name="celphoneUser"/>                                   
-                                </div>
-                            </div>
+                        <div class="row">                            
                             <div class="login_links span6">
                                 <a href="javascript:void(0)" id="accessSystemUser">
                                     <span>Ingreso al sistema</span>
@@ -389,6 +434,105 @@
                         }
                     </script>
                 </div>
+                <div class="panel" style="display:none;" id="divValidateUser">
+                    <h3 class="heading_main"><s:property value="getText('title.validatedata.login')" /></h3>
+                    <s:form id="formVerify" action="verifyUserManual.action">
+                        <s:hidden name="actExe" value="verifyuser"/>
+                        <div class="row">
+                            <div class="span6 control-group">
+                                <label class="control-label req" for="formVerify_nameUser">
+                                    <s:property value="getText('text.verifycel.login')" />
+                                </label>
+                                <div class="controls">
+                                    <s:textfield id="formVerify_nameUser" name="nameUser"/>
+                                </div>                         
+                            </div>                                            
+                        </div>    
+                        <div class="row">
+                            <div class="span6 control-group">
+                                <label class="control-label req" for="formVerify_codVal">
+                                    <s:property value="getText('text.codvalidation.login')" />
+                                </label>
+                                <div class="controls">
+                                    <s:textfield id="formVerify_codVal" name="codVal"/>
+                                </div>                         
+                            </div>                                            
+                        </div> 
+                        <div class="row">    
+                            <div class="login_links span6">
+                                <a href="javascript:void(0)" id="accessSystemUserVer">
+                                    <span>Ingreso al sistema</span>
+                                </a>
+                            </div>
+                        </div> 
+                    </s:form>
+                    <div class="submit_sect">
+                        <sj:submit type="button" formIds="formVerify" cssClass="btn btn-initial btn-large" onclick="addMessageProcess(); ga('send', 'event', 'Register', 'click', 'VerifyUser');" targets="divMessage" onCompleteTopics="completeVerify" validate="true" validateFunction="validationForm"><s:property value="%{getText('button.verifyuser.login')}"/></sj:submit>
+                    </div>
+                    <script>
+                        $.subscribe('completeVerify', function(event,data) {                            
+                            var json = jQuery.parseJSON(event.originalEvent.request.responseText);
+                            if (json.state == 'failure') {
+                                completeForm('', 'formVerify', event.originalEvent.request.responseText);
+                            } else {
+                                $.unblockUI();
+//                                alert(json.info);
+                                var host = window.location.host;
+                                var protocol = window.location.protocol;
+                                document.location = protocol+'//'+host+'/'+json.info;
+                            }
+                        });
+                    </script>
+                </div>
+                <div class="panel" style="display:none;" id="divChangePass">
+                    <h3 class="heading_main"><s:property value="getText('button.changepasscel.login')" /></h3>
+                    <s:form id="formChangePass" action="verifyUserToRestoreMan.action">
+                        <s:hidden name="actExe" value="changePassUser"/>
+                        <div class="row">
+                            <div class="span6 control-group">
+                                <label class="control-label req" for="formChangePass_nameUser">
+                                    <s:property value="getText('text.verifycel.login')" />
+                                </label>
+                                <div class="controls">
+                                    <s:textfield id="formChangePass_nameUser" name="nameUser"/>
+                                </div>                         
+                            </div>                                            
+                        </div>    
+                        <div class="row">
+                            <div class="span6 control-group">
+                                <label class="control-label req" for="formChangePass_codVal">
+                                    <s:property value="getText('text.codvalidation.login')" />
+                                </label>
+                                <div class="controls">
+                                    <s:textfield id="formChangePass_codVal" name="codVal"/>
+                                </div>                         
+                            </div>                                            
+                        </div> 
+                        <div class="row">    
+                            <div class="login_links span6">
+                                <a href="javascript:void(0)" id="accessSystemChangePass">
+                                    <span>Ingreso al sistema</span>
+                                </a>
+                            </div>
+                        </div> 
+                    </s:form>
+                    <div class="submit_sect">
+                        <sj:submit type="button" formIds="formChangePass" cssClass="btn btn-initial btn-large" onclick="addMessageProcess(); ga('send', 'event', 'Register', 'click', 'ChangePass');" targets="divMessage" onCompleteTopics="completeChangePass" validate="true" validateFunction="validationForm"><s:property value="%{getText('button.verifychangepass.login')}"/></sj:submit>
+                    </div>
+                    <script>
+                        $.subscribe('completeChangePass', function(event,data) {                            
+                            var json = jQuery.parseJSON(event.originalEvent.request.responseText);
+                            if (json.state == 'failure') {
+                                completeForm('', 'formChangePass', event.originalEvent.request.responseText);
+                            } else {
+                                $.unblockUI();
+                                var host = window.location.host;
+                                var protocol = window.location.protocol;
+                                document.location = protocol+'//'+host+'/'+json.info;
+                            }
+                        });
+                    </script>
+                </div>
             </div>
         </div>
         <% String logSel = String.valueOf(request.getParameter("logSel"));%>
@@ -400,8 +544,10 @@
             });
             var val = "<%=logSel%>";
             if (val == 'new') {
-                $('#divRegisterUser').slideUp();
-                $('#divRestoreUser').slideUp();
+                $('#divRegisterUser').slideUp('200');
+                $('#divRestoreUser').slideUp('200');
+                $('#divValidateUser').slideUp('200');
+                $('#divChangePass').slideUp('200');
                 $('#divNewUser').slideDown();
             }            
         </script>

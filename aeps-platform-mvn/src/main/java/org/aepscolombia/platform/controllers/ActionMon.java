@@ -410,7 +410,7 @@ public class ActionMon extends BaseAction {
             HashMap prod  = cropDao.findById(idCrop);
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
             GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {

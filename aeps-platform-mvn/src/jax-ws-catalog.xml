@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" uri="wsdl/smsapp.sigmamovil.com_443/wsdl/getservice.wsdl/index.wsdl"/>
-    <system systemId="http://smsapp.sigmamovil.com/wsdl/getservice?wsdl" uri="wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl"/>
     <system systemId="file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl" uri="wsdl/getservice.wsdl"/>
     <system systemId="https://smsapp.sigmamovil.com/wsdl/getservice?wsdl" uri="wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl"/>
     <system systemId="file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com_443/wsdl/getservice.wsdl/index.wsdl" uri="wsdl/index.wsdl"/>
     <system systemId="file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/getservice.wsdl" uri="wsdl/getservice.wsdl"/>
+    <system systemId="http://smsapp.sigmamovil.com/wsdl/getservice?wsdl" uri="wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl"/>
+    <system systemId="file:/C:/Users/jfrodriguez/Documents/sigmaservices.wsdl" uri="wsdl/sigmaservices.wsdl"/>
 </catalog>

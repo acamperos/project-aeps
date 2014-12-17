@@ -1,5 +1,12 @@
 <% String valAsig = (String)value; %>
 <% valAsig = (String) request.getAttribute("selected"); %>
+<% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/delete"))) { %>
+    <% if (valAsig.equals("producer") || valAsig == "producer") {%>
+        <td>
+            <input type="checkbox" class="chkNumber" value="${id_entity}" onclick="clickSelOne('chkSelectAll', 'chkNumber', 'btnDelPro')"/>
+        </td>
+    <% } %>
+<% } %>
 <% if (valAsig != "producer") {%>    
     <% if (valAsig.equals("property") || valAsig.equals("lot") || valAsig.equals("crop")) {%>
         <td><img src="/img/check.ico"/></td>      

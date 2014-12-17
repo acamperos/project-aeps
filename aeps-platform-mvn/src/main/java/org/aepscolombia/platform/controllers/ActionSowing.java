@@ -383,7 +383,7 @@ public class ActionSowing extends BaseAction {
 //                return "list";
             }
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
             GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {

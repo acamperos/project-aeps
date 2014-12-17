@@ -30,6 +30,7 @@ import org.aepscolombia.platform.models.dao.EntitiesDao;
 
 import org.aepscolombia.platform.models.entity.Farms;
 import org.aepscolombia.platform.models.dao.FarmsDao;
+import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
@@ -806,8 +807,8 @@ public class ActionFarm extends BaseAction {
         findParams.put("selItem", selectItemname_agronomist);
         Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
-        findParams.put("idEntUser", idEntSystem);
-        String fileName  = "/var/www/document/farmsInfo.csv";
+        findParams.put("idEntUser", idEntSystem);        
+        String fileName  = ""+getText("file.docfarm");
 //        String fileName  = "farmsInfo.csv";
         farDao.getFarms(findParams, fileName);
   
@@ -915,7 +916,7 @@ public class ActionFarm extends BaseAction {
         try {
             tx = session.beginTransaction();
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");
             Farms far = null;
             int idProOld = 0;
             if (idFarm<=0) {
@@ -1125,6 +1126,9 @@ public class ActionFarm extends BaseAction {
             }
             mongo.close();
             
+            FieldsDao fieDao = new FieldsDao();
+            fieDao.deleteFieldsMongo(far.getIdFar());
+            
             tx.commit();
             state = "success";
             info = "La finca ha sido borrada con exito";
@@ -1141,5 +1145,37 @@ public class ActionFarm extends BaseAction {
 
         return "states";
 //        return SUCCESS;
+    }
+    
+    /**
+     * Encargado de borrar la informacion de las fincas que se han seleccionado
+     * @param valSel:  Valores que se han seleccionado para borrar
+     * @return Estado del proceso
+     */
+    public String deleteAll() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "farm/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        String valSel = "";        
+        try {
+            valSel = String.valueOf(this.getRequest().getParameter("valSel"));
+        } catch (NumberFormatException e) {
+            valSel = "-1";
+        }
+        
+        if (valSel.equals("-1")) {
+            state = "failure";
+            info  = "Fallo al momento de obtener la informacion a borrar";
+            return "states";
+        }
+        
+        state = farDao.deleteAllFarms(valSel, idEntSystem);
+        if (state.equals("success")) {
+            info = "La finca ha sido borrada con exito";
+        } else if (state.equals("failure")) {
+            info = "Fallo al momento de borrar una finca";
+        }
+        
+        return "states";
     }
 }

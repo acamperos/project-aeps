@@ -10,10 +10,10 @@
         <%@ include file="../generals/googleAnalytics.jsp" %>
         <div class="container">
             <ul id="breadcrumbs">
-                <li><s:a href="%{request.getContextPath()}/dashboard.action" targets="divBodyLayout"><i class="icon-home"></i>Inicio</s:a></li>
-                <li><s:a href="%{request.getContextPath()}/getting.action" targets="divBodyLayout">Recolectar datos</s:a></li>
-                <li><s:a href="%{request.getContextPath()}/crop/listCrop.action" targets="divBodyLayout">Listar cultivos</s:a></li>
-                <li><span>Informacion del cultivo</span></li>
+                <li><s:a href="%{request.getContextPath()}/dashboard.action" targets="divBodyLayout"><i class="icon-home"></i><s:property value="getText('text.home.dashboard')" /></s:a></li>
+                <li><s:a href="%{request.getContextPath()}/getting.action" targets="divBodyLayout"><s:property value="getText('text.getting.dashboard')" /></s:a></li>
+                <li><s:a href="%{request.getContextPath()}/crop/listCrop.action" targets="divBodyLayout"><s:property value="getText('text.listCrops.getting')" /></s:a></li>
+                <li><span><s:property value="getText('text.infoCrop.crop')" /></span></li>
             </ul>
         </div>
         <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
@@ -28,12 +28,11 @@
         </div>             
         <% int typeCrop = (request.getAttribute("typeCrop") != null) ? Integer.parseInt(String.valueOf(request.getAttribute("typeCrop"))) : 1;%>                    
         <div class="container panel" id="divDataExtendCrop" style="margin-top: 20px"> 
-            <%--<%@ include file="info-crops.jsp" %>--%>
             <div class="accordion" id="accordion2" style="margin-bottom: 0">
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-                            <h4>Establecimiento del cultivo <i class="colOne icon-chevron-down"></i></h4> 
+                            <h4><s:property value="getText('text.establishment.crop')" /> <i class="colOne icon-chevron-down"></i></h4> 
                         </a>
                     </div>
                     <div id="collapseOne" class="accordion-body collapse">				
@@ -45,7 +44,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix">
-                            <h4>Riego <i class="colSix icon-chevron-down"></i></h4>
+                            <h4><s:property value="getText('text.irrigation.crop')" /> <i class="colSix icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseSix" class="accordion-body collapse">				
@@ -57,7 +56,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                            <h4>Nutrici&oacute;n <i class="colTwo icon-chevron-down"></i></h4>
+                            <h4><s:property value="getText('text.nutrition.crop')" /> <i class="colTwo icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseTwo" class="accordion-body collapse">				
@@ -69,7 +68,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
-                            <h4>Manejo Fitosanitario <i class="colThree icon-chevron-down"></i></h4>
+                            <h4><s:property value="getText('text.fertilizationMan.crop')" /> <i class="colThree icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseThree" class="accordion-body collapse">				
@@ -81,20 +80,19 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
-                            <h4>Monitoreo <i class="colFour icon-chevron-down"></i></h4>
+                            <h4><s:property value="getText('text.monitoring.crop')" /> <i class="colFour icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseFour" class="accordion-body collapse">				
                         <div class="accordion-inner">
                             <%@ include file="monitoring.jsp" %>
-                            <!--<?php include_once('control.php') ?>-->
                         </div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven">
-                            <h4>Observaciones <i class="colSeven icon-chevron-down"></i></h4> 
+                            <h4><s:property value="getText('text.observations.crop')" /> <i class="colSeven icon-chevron-down"></i></h4> 
                         </a>
                     </div>
                     <div id="collapseSeven" class="accordion-body collapse">				
@@ -106,7 +104,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive">
-                            <h4>Cosecha <i class="colFive icon-chevron-down"></i></h4>
+                            <h4><s:property value="getText('text.harvest.crop')" /> <i class="colFive icon-chevron-down"></i></h4>
                         </a>
                     </div>
                     <div id="collapseFive" class="accordion-body collapse">                        

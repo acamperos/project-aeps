@@ -22,7 +22,8 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-maven-jaxws._5f_C_5f_SfUserWebService>http://localhost:8083/aeps-plataforma-mvn/SfUserWebService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_SfUserWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_service>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/service.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_service>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_services>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/services.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_services>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_getservice>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_getservice>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_index>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com_443/wsdl/getservice.wsdl/index.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_index>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_getservice_5f_1>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/getservice.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_getservice_5f_1>
+        <org-netbeans-modules-maven-jaxws._5f_C_5f_sigmaservices_5f_2>file:/C:/Users/jfrodriguez/Documents/sigmaservices.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_sigmaservices_5f_2>
     </properties>
 </project-shared-configuration>

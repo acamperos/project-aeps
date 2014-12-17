@@ -1,3 +1,10 @@
+<% if (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/modify") || (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/delete"))) { %>                
+    <% if (value.equals("lot") || value == "lot") {%>
+        <td>
+            <input type="checkbox" class="chkNumber" value="${id_lot}" onclick="clickSelOne('chkSelectAll', 'chkNumber', 'btnDelFie')"/>
+        </td>
+    <% }%>
+<% } %>
 <% if (value != "lot") {%>
     <% if (value.equals("crop")) { %>
         <td><img src="/img/check.ico"/></td>          
@@ -21,7 +28,6 @@
 <td><s:property value="latitude_lot" /></td>
 <td><s:property value="length_lot" /></td>
 <td><s:property value="altitude_lot" /></td>
-<td><s:property value="city" /></td>
 <s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/modify") || (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/delete"))) { %>                

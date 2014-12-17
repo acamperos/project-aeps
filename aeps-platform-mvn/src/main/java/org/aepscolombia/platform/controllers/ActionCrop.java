@@ -1072,7 +1072,7 @@ public class ActionCrop extends BaseAction {
         Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
-        String fileName  = "/var/www/document/cropsInfo.csv";
+        String fileName  = ""+getText("file.doccrop");
 //        String fileName  = "cropsInfo.csv";
         cropDao.getProductionEvents(findParams, fileName);
   
@@ -1240,7 +1240,7 @@ public class ActionCrop extends BaseAction {
             tx.commit();           
             
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getNameUserUsr(), "");            
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
             GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
             
             state = "success";            
@@ -1302,7 +1302,7 @@ public class ActionCrop extends BaseAction {
             
             LogEntities log = new LogEntities();
             log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
+            log.setIdEntityLogEnt(idEntSystem);
             log.setIdObjectLogEnt(pro.getIdProEve());
             log.setTableLogEnt("production_events");
             log.setDateLogEnt(new Date());
@@ -1354,4 +1354,37 @@ public class ActionCrop extends BaseAction {
         return "states";
 //        return SUCCESS;
     }
+    
+    /**
+     * Encargado de borrar la informacion de los cultivos que se han seleccionado
+     * @param valSel:  Valores que se han seleccionado para borrar
+     * @return Estado del proceso
+     */
+    public String deleteAll() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        String valSel = "";        
+        try {
+            valSel = String.valueOf(this.getRequest().getParameter("valSel"));
+        } catch (NumberFormatException e) {
+            valSel = "-1";
+        }
+        
+        if (valSel.equals("-1")) {
+            state = "failure";
+            info  = "Fallo al momento de obtener la informacion a borrar";
+            return "states";
+        }
+        
+        state = cropDao.deleteAllCrops(valSel, idEntSystem);
+        if (state.equals("success")) {
+            info  = "El cultivo ha sido borrado con exito";
+        } else if (state.equals("failure")) {
+            info  = "Fallo al momento de borrar un cultivo";
+        }
+        
+        return "states";
+    }
+    
 }

@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
 import org.aepscolombia.platform.models.entity.Entities;
+import org.aepscolombia.platform.models.entity.LogEntities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -1099,6 +1100,151 @@ public class ProductionEventsDao
         } finally {
             session.close();
         }
+    }
+    
+    public void deleteCropsMongo(Integer idField) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select ep.id_pro_eve, ep.id_crop_type_pro_eve";
+        sql += " from production_events ep";
+        sql += " where ep.status=1";
+        if (idField!=null) {
+            sql += " and ep.id_field_pro_eve="+idField;
+        }        
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            MongoClient mongo = null;
+            mongo = new MongoClient("localhost", 27017);
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("id_crop", data[0]);
+                temp.put("type_crop", data[1]);          
+                
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+temp.get("id_crop"));
+                
+                Integer typeCrop = Integer.parseInt(String.valueOf(temp.get("type_crop")));                
+                if (typeCrop==1) {
+                    queryMongo.put("form_id", "16");
+                } else if (typeCrop==2) {
+                    queryMongo.put("form_id", "39");
+                }
+                
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }                        
+                
+            }   
+            
+            mongo.close();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
+    }
+    
+    public String deleteAllCrops(String valSel, Integer idEntSystem) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        List<ProductionEvents> events = null;
+        Transaction tx = null;
+        String sql = "";
+        String state = "failure";         
+
+        sql += "select ep.id_pro_eve, ep.id_field_pro_eve, ep.id_crop_type_pro_eve, ep.comment_pro_eve, ep.id_project_pro_eve, ep.status,"; 	
+        sql += "ep.expected_production_pro_eve, ep.former_crop_pro_eve, ep.draining_pro_eve, ep.data_capture_date_pro_eve, ep.did_soil_analysis_pro_eve,";
+        sql += "ep.reason_soil_analysis_pro_eve, ep.irrigate_pro_eve, ep.main_pest_pro_eve, ep.main_disease_pro_eve, ep.main_weed_pro_eve,";
+        sql += "ep.other_former_crop_pro_eve, ep.other_main_pest_pro_eve, ep.other_main_disease_pro_eve, ep.other_main_weed_pro_eve,";
+        sql += "ep.num_cycles_before_pro_eve, ep.main_crop_problem_pro_eve, ep.created_by";
+        sql += " from production_events ep";
+        if (!valSel.equals("")) sql += " where ep.status=1 and ep.id_pro_eve in ("+valSel+")";
+//        System.out.println("sql=>"+sql);          
+        
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("ep", ProductionEvents.class);
+            events = query.list();
+            MongoClient mongo = new MongoClient("localhost", 27017);
+            int typeCrop  = 0;
+            for (ProductionEvents pro : events) {
+//                System.out.println("cropId->"+pro.getIdProEve());
+                pro.setStatus(false);
+                session.saveOrUpdate(pro);
+
+                LogEntities log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(pro.getIdProEve());
+                log.setTableLogEnt("production_events");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt("D");
+                session.saveOrUpdate(log);
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+pro.getIdProEve());        
+                typeCrop = pro.getCropsTypes().getIdCroTyp();
+                if (typeCrop==1) {
+                    queryMongo.put("form_id", "16");
+                } else if (typeCrop==2) {
+                    queryMongo.put("form_id", "39");
+                }            
+                
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }
+            }
+            mongo.close();
+            tx.commit();
+            state = "success";
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            session.close();
+        } 
+        return state;
     }
     
 }

@@ -36,6 +36,13 @@
 <div id="divRasta" class="w-box">
     <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/create")) { %>
         <% if (entTypeSoilId!=3) { %>
+            <div class="btn btn-group btn-space" onclick="clickSelAll('chkSelectAll', 'chkNumber', 'btnDelSoil');">
+                <input type="checkbox" class="chkSelectAll textFloat" />
+                <label class="textFloat" style="padding-left: 7px; margin-bottom: 0;">Todos</label>
+            </div>
+            <button type="button" id="btnDelSoil" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_lot', 'deleteAllSoil.action', 'searchSoil.action?page=<%=pageNow%>', 'divRasta', '<%=divHide%>');">
+                <i class="icon-trash"></i> Borrar selección
+            </button>
             <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/soil/showSoil.action?action=create', 'idRasta', '', 'Crear Rasta', 1050, 700)">
                 <i class="icon-plus"></i> Agregar rasta
             </button>
@@ -45,6 +52,11 @@
         <thead>
             <tr>
                 <!-- <th>#</th> -->
+                <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify") || (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete"))) { %>                
+                    <% if (value == "rasta" || value.equals("rasta")) {%>
+                        <th></th>
+                    <% } %>
+                <% } %>
                 <% if (entTypeSoilId==3) { %>    
                     <th>Agronomo</th>
                 <% } %>

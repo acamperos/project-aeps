@@ -36,6 +36,13 @@
 <div id="divCrops" class="w-box">    
     <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/create")) { %>
         <% if (entTypeCropId!=3) { %>
+            <div class="btn btn-group btn-space" onclick="clickSelAll('chkSelectAll', 'chkNumber', 'btnDelCrop');">
+                <input type="checkbox" class="chkSelectAll textFloat" />
+                <label class="textFloat" style="padding-left: 7px; margin-bottom: 0;">Todos</label>
+            </div>
+            <button type="button" id="btnDelCrop" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_crop', 'deleteAllCrop.action', 'searchCrop.action?page=<%=pageNow%>', 'divCrops', '<%=divHide%>');">
+                <i class="icon-trash"></i> Borrar selección
+            </button>
             <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showCrop.action?action=create', 'idCrop', '', 'Crear Evento Productivo', 1050, 700)">
                 <i class="icon-plus"></i> Agregar Evento Productivo
             </button>
@@ -44,6 +51,11 @@
     <table class="table table-bordered table-hover" style="<%= table %>" id='tblCrops'>
         <thead>
             <tr>
+                <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/modify") || (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/delete"))) { %>
+                    <% if (value == "crop" || value.equals("crop")) {%>
+                        <th></th>
+                    <% }%>
+                <% } %>
                 <% if (entTypeCropId==3) { %>    
                     <th>Agronomo</th>
                 <% } %>

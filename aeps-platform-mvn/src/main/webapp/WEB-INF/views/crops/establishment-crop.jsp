@@ -10,7 +10,7 @@
 <div id="divMessSowing"></div>
 <s:form id="formCropSow" action="saveSowing" cssClass="form-horizontal">
     <fieldset>
-        <legend>Formulario de Siembra</legend>    
+        <legend><s:property value="getText('title.formsowing.crop')" /></legend>    
         <div class="row">
             <div class="span5">
                 <s:hidden name="idCrop"/>
@@ -19,7 +19,7 @@
                 <s:hidden name="sowing.idSow"/>
                 <div class="control-group">
                     <label for="formCropSow_sowing_dateSow" class="control-label req">
-                        Fecha de siembra:
+                        <s:property value="getText('text.sowdate.crop')" />:
                     </label>
                     <div class="date controls">
                         <s:date name="sowing.dateSow" format="dd/MM/yyyy" var="dateTransformDateSow"/>
@@ -32,7 +32,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropSow_sowing_sowingTypes_idSowTyp" class="control-label req">
-                        Método de siembra:
+                        <s:property value="getText('text.datesow.crop')" />:
                     </label>
                     <div class="controls">
                         <s:select
@@ -50,7 +50,7 @@
             <div class="span5">
                 <div class="control-group">
                     <label for="formCropSow_event_expected_production_pro_eve" class="control-label">
-                        Mejor rendimiento obtenido del lote (kg/ha):
+                        <s:property value="getText('text.bestperform.crop')" /> (kg/ha):
                         <i class="icon-info-sign s2b_tooltip pop-over" data-content="Ingrese el rendimiento histórico obtenido." data-title="Información" data-placement="right" data-trigger="hover"></i>
                     </label>
                     <div class="controls">
@@ -68,7 +68,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropSow_event_drainingProEve" class="control-label">
-                        Se hace drenaje a la parcela:
+                        <s:property value="getText('text.drainparcel.crop')" />:
                     </label>
                     <div class="controls radioSelect">
                         <s:radio list="#{'true':'Si', 'false':'No'}" name="event.drainingProEve" />
@@ -81,10 +81,10 @@
                 <div class="control-group">
                     <label for="formCropSow_sowing_seedsNumberSow" class="control-label req">
                         <% if (typeCrop==1) { %>
-                            Kilogramo de semilla utilizada X hectarea:
+                            <s:property value="getText('text.kgseedha.crop')" />:
                             <i class="icon-info-sign s2b_tooltip pop-over" data-content="Por favor hacer la conversión a número de semillas." data-title="Información" data-placement="right" data-trigger="hover"></i> 
                         <% } else if (typeCrop==2) { %>
-                            Cantidad de semillas en kilos/lote:
+                            <s:property value="getText('text.seednumber.crop')" />:
                         <% } %>                        
                     </label>
                     <div class="controls">
@@ -95,7 +95,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropSow_sowing_treatedSeedsSow" class="control-label req">
-                        Semillas tratadas:
+                        <s:property value="getText('text.treatmentseed.crop')" />:
                     </label>
                     <div class="controls radioSelect">
                         <s:radio list="#{'true':'Si', 'false':'No'}" name="sowing.treatedSeedsSow" onclick="showProductUse(this.value, 'divNewProductUse');" />
@@ -113,7 +113,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_sowing_chemicalsSowing_idCheSow" class="control-label">
-                            Producto usado:
+                            <s:property value="getText('text.productused.crop')" />:
                         </label>
                         <div class="controls">
                             <s:select
@@ -135,7 +135,7 @@
                 <div class="span4 <%= classProSow %>" style="padding-left: 28px" id="divNewProductSowing">
                     <div class="control-group">
                         <label for="formCropSow_sowing_otherChemicalUsedSow" class="control-label">
-                             Nuevo producto usuado:
+                            <s:property value="getText('text.newprodused.crop')" />:
                         </label>
                         <div class="controls">
                             <s:textfield name="sowing.otherChemicalUsedSow"/>
@@ -148,7 +148,7 @@
             <div class="span5">
                 <div class="control-group">
                     <label for="formCropSow_sowing_furrowsDistanceSow" class="control-label req">
-                        Distancia entre surcos (m):
+                        <s:property value="getText('text.furrowdistance.crop')" /> (m):
                     </label>
                     <div class="controls">
                         <s:textfield name="sowing.furrowsDistanceSow"/>
@@ -158,7 +158,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropSow_sowing_sitesDistanceSow" class="control-label req">
-                        Distancia entre sitios (m):
+                        <s:property value="getText('text.sitesdistance.crop')" /> (m):
                     </label>
                     <div class="controls">
                         <s:textfield name="sowing.sitesDistanceSow"/>
@@ -171,7 +171,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_maize_seedsNumberSiteMai" class="control-label req">
-                            Numero de semillas por sitio:
+                            <s:property value="getText('text.seednumbersite.crop')" />:
                         </label>
                         <div class="controls">
                             <s:textfield name="maize.seedsNumberSiteMai"/>
@@ -183,7 +183,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_sowing_genotypesSowing_idGenSow" class="control-label req">
-                            Tipo de material:
+                            <s:property value="getText('text.genotypesow.crop')" />:
                         </label>
                         <div class="controls">
                             <s:select
@@ -200,7 +200,7 @@
                 <div class="span4" style="padding-left: 28px">
                     <div class="control-group">
                         <label for="formCropSow_maize_seedsColors_idSeeCol" class="control-label req">
-                            Color del endospermo:
+                            <s:property value="getText('text.seedcolor.crop')" />:
                         </label>
                         <div class="controls">
                             <s:select
@@ -221,7 +221,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_beans_seedsNumberSiteBea" class="control-label req">
-                            Numero de semillas por sitio:
+                            <s:property value="getText('text.seednumbersite.crop')" />:
                         </label>
                         <div class="controls">
                             <s:textfield name="beans.seedsNumberSiteBea"/>
@@ -233,7 +233,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_sowing_seedsOrigins_idSeeOri" class="control-label req">
-                            Procedencia:
+                            <s:property value="getText('text.seedorigin.crop')" />:
                         </label>
                         <div class="controls">
                             <s:select
@@ -252,7 +252,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_beans_seedsInoculations_idSeeIno" class="control-label">
-                            Inoculación de semillas:
+                            <s:property value="getText('text.seedinoculation.crop')" />:
                         </label>
                         <div class="controls">
                             <s:select
@@ -275,7 +275,7 @@
                 <div class="span4 <%= classInoculation %>" style="padding-left: 28px" id="divNewInoculationSeed">
                     <div class="control-group">
                         <label for="formCropSow_beans_otroInoculationBea" class="control-label req">
-                            Nueva inoculación de semillas:
+                            <s:property value="getText('text.newinoculation.crop')" />:
                         </label>
                         <div class="controls">
                             <s:textfield name="beans.otroInoculationBea"/>
@@ -287,7 +287,7 @@
                 <div class="span5">
                     <div class="control-group">
                         <label for="formCropSow_beans_growingEnvironment_idGroEnv" class="control-label req">
-                            Hábito de Crecimiento:
+                            <s:property value="getText('text.growenv.crop')" />:
                         </label>
                         <div class="controls">
                             <s:select
@@ -308,7 +308,7 @@
             <div class="span5">
                 <div class="control-group">
                     <label for="formCropSow_sowing_genotypes_idGen" class="control-label req">
-                        Material genético (nombre):
+                        <s:property value="getText('text.genotypename.crop')" />:
                     </label>
                     <div class="controls">
                         <s:select
@@ -331,7 +331,7 @@
             <div class="span4 <%= classNewMat %>" style="padding-left: 28px" id="divNewMatGenet">
                 <div class="control-group">
                     <label for="formCropSow_sowing_otherGenotypeSow" class="control-label req">
-                        Nuevo material genético:
+                        <s:property value="getText('text.newgenotypename.crop')" />:
                     </label>
                     <div class="controls">
                         <s:textfield name="sowing.otherGenotypeSow"/>
@@ -339,7 +339,7 @@
                 </div>
             </div>
         </div>
-        <p class="warnField reqBef">Campos Requeridos</p>
+        <p class="warnField reqBef"><s:property value="getText('text.requirefields')" /></p>
         <script>
             $("#formCropSow_sowing_dateSow").datepicker({dateFormat: 'dd/mm/yy'});
             $("#formCropSow_sowing_dateSow").mask("99/99/9999", {placeholder: " "});
@@ -353,18 +353,13 @@
             $("#formCropSow_sowing_seedsNumberSow").val(parsePointSeparated($("#formCropSow_sowing_seedsNumberSow").val())); 
             $("#formCropSow_sowing_furrowsDistanceSow").val(parsePointSeparated($("#formCropSow_sowing_furrowsDistanceSow").val())); 
             $("#formCropSow_sowing_sitesDistanceSow").val(parsePointSeparated($("#formCropSow_sowing_sitesDistanceSow").val())); 
-//            $("#formCropSow_sowing_productionHar").numeric({decimal: false, negative: false});
-//            $("#formCropSow_sowing_yieldHar").numeric({negative: false});
-//            $("#formCropSow_sowing_productionPerPlantHar").numeric({negative: false});
-//            $("#formCropSow_sowing_humidityPercentageHar").numeric({negative: false});
         </script>
     </fieldset>
 </s:form>	
 <% String actExeSow   = String.valueOf(request.getAttribute("actExe")); %>
 <% if ((actExeSow=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeSow=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
     <div style="margin-bottom: 15px" id="divBtSowing">
-        <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropSow'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  Guardar Siembra</sj:submit>
-        <%--<sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="addMessageProcess()" targets="divMessage" validate="true" onCompleteTopics="completeSowing"><i class="icon-save"></i>  Guardar Siembra</sj:submit>--%>
+        <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropSow'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.sowingsave.crop')" /></sj:submit>
     </div>
 <% } %>
 <script>

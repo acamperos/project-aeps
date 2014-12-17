@@ -5,7 +5,7 @@
     <!--<constant name="struts.enable.DynamicMethodInvocation" value="false" />-->
     <constant name="struts.devMode" value="false" />   
     <constant name="struts.custom.i18n.resources" value="global"></constant>
-    <constant name="struts.action.excludePattern" value="/NewWebService,/SfUserWebService"/>
+    <!--<constant name="struts.action.excludePattern" value="/sendMessage.*,/MessageSms.java"/>-->
     <!--<constant name="struts.locale" value="en_US" />-->
     <!--<constant name="struts.convention.action.packages" value="org.aepscolombia.platform.controllers"/>-->     
     <constant name="struts.i18n.reload" value="false"/>
@@ -83,6 +83,13 @@
             <result name="page">/layout.jsp</result>
             <result>/WEB-INF/views/generals/contacts.jsp</result>
         </action>
+        
+        <action name="verifyUserManual" method="verifyUserManual" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>    
+            <interceptor-ref name="jsonValidationWorkflowStack"/>        
+            <result name="states" type="json"></result>        
+            <result name="input">/WEB-INF/views/login/login.jsp</result>
+        </action>  
         <action name="verifyUser"  method="verifyUser" class="org.aepscolombia.platform.controllers.ActionLogin">
 <!--            <result>/WEB-INF/views/layoutPrivate.jsp</result>-->
             <interceptor-ref name="basicStack"/>
@@ -109,6 +116,12 @@
             <interceptor-ref name="basicStack"/>
             <result>/WEB-INF/views/login/restorePass.jsp</result>
         </action> 
+        
+        <action name="verifyUserToRestoreMan"  method="verifyUserToRestoreMan" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>    
+            <interceptor-ref name="jsonValidationWorkflowStack"/>        
+            <result name="states" type="json"></result>
+        </action>
         <action name="changePassUser"  method="changePassUser" class="org.aepscolombia.platform.controllers.ActionLogin">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="states" type="json"></result>
@@ -285,6 +298,10 @@
             <!--<interceptor-ref name="defaultStackAeps"/>-->
             <result name = "states" type="json"></result>
         </action>   
+        <action name="deleteAllProducer" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name = "states" type="json"></result>
+        </action> 
         <action name="getReportProducer" method="getReport" class="org.aepscolombia.platform.controllers.ActionProducer">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <!--<interceptor-ref name="defaultStackAeps"/>-->  
@@ -348,6 +365,10 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action>
+        <action name="deleteAllFarm" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>
         <action name="getReportFarm" method="getReport" class="org.aepscolombia.platform.controllers.ActionFarm">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <!--<interceptor-ref name="defaultStackAeps"/>-->  
@@ -408,7 +429,11 @@
         <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
-        </action>     
+        </action>    
+        <action name="deleteAllField" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>      
         <action name="getReportField" method="getReport" class="org.aepscolombia.platform.controllers.ActionField">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <!--<interceptor-ref name="defaultStackAeps"/>-->  
@@ -459,6 +484,10 @@
             <result name = "states" type="json"></result>
         </action>
         <action name="deleteSoil" method="delete" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>
+        <action name="deleteAllSoil" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionRasta">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
         </action> 
@@ -544,7 +573,11 @@
         <action name="deleteCrop" method="delete" class="org.aepscolombia.platform.controllers.ActionCrop">
             <interceptor-ref name="defaultStackAeps"/>
             <result name = "states" type="json"></result>
-        </action>     
+        </action>   
+        <action name="deleteAllCrop" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name = "states" type="json"></result>
+        </action>  
         <action name="getReportCrop" method="getReport" class="org.aepscolombia.platform.controllers.ActionCrop">
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <!--<interceptor-ref name="defaultStackAeps"/>-->  

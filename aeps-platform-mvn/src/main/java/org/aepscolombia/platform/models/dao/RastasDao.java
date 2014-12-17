@@ -10,11 +10,6 @@ import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
 import org.aepscolombia.platform.models.entity.HorizontesRasta;
+import org.aepscolombia.platform.models.entity.LogEntities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -1161,6 +1157,143 @@ public class RastasDao
         } finally {
             session.close();
         }
+    }
+    
+    public void deleteRastasMongo(Integer idField) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select ep.id_ras, ep.fecha_ras";
+        sql += " from rastas ep";
+        sql += " where ep.status=1";
+        if (idField!=null) {
+            sql += " and ep.id_lote_ras="+idField;
+        }        
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            MongoClient mongo = null;
+            mongo = new MongoClient("localhost", 27017);
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("id_ras", data[0]);
+                temp.put("date_ras", data[1]);          
+                
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+temp.get("id_ras"));
+                queryMongo.put("form_id", "6");
+                
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }                        
+                
+            }   
+            
+            mongo.close();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
+    }
+    
+    public String deleteAllRastas(String valSel, Integer idEntSystem) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        List<Rastas> events = null;
+        Transaction tx = null;
+        String sql = "";
+        String state = "failure";         
+
+        sql += "select r.id_ras, r.id_lote_ras, r.fecha_ras, r.numero_cajuela_ras, r.altitud_ras, r.latitud_ras, r.longitud_ras, r.pendiente_terreno_ras,"; 	
+        sql += "r.terreno_circundante_ras, r.posicion_perfil_ras, r.numero_capas_ras, r.ph_ras, r.carbonatos_ras, r.profundidad_carbonatos_ras,"; 	
+        sql += "r.piedras_superficie_ras, r.rocas_superficie_ras, r.piedras_perfil_ras, r.rocas_perfil_ras, r.horizonte_pedrogoso_rocoso_ras,";	
+        sql += "r.profundidad_horizonte_pedregoso_ras, r.profundidad_primeras_piedras_ras, r.espesor_horizonte_pedregoso_ras, r.capas_endurecidas_ras,"; 	
+        sql += "r.prufundidad_capas_ras, r.espesor_capa_endurecida_ras, r.moteados_ras, r.profundidad_moteados_ras, r.moteados_mas_70cm_ras, r.estructura_ras,"; 	
+        sql += "r.erosion_ras, r.moho_ras, r.costras_duras_ras, r.exposicion_sol_ras, r.costras_blancas_ras, r.costras_negras_ras, r.region_seca_ras,"; 	
+        sql += "r.raices_vivas_ras, r.profundidad_raices_ras, r.plantas_pequenas_ras, r.hojarasca_ras, r.suelo_negro_blando_ras, r.cuchillo_primer_horizonte_ras,"; 	
+        sql += "r.cerca_rios_quebradas_ras, r.recubrimiento_vegetal_ras, r.materia_organica_ras, r.profundidad_efectiva_ras, r.drenaje_interno_ras,"; 	
+        sql += "r.dranaje_externo_ras, r.created_by, r.salinidad_ras, r.sodicidad_ras, r.id_proyecto_ras, r.status";
+        sql += " from rastas r";
+        if (!valSel.equals("")) sql += " where r.status=1 and r.id_ras in ("+valSel+")";
+//        System.out.println("sql=>"+sql);          
+        
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("r", Rastas.class);
+            events = query.list();
+            MongoClient mongo = new MongoClient("localhost", 27017);
+            for (Rastas ras : events) {
+//                System.out.println("rasId->"+ras.getIdRas());
+                ras.setStatus(false);     
+                session.saveOrUpdate(ras);
+
+                LogEntities log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(ras.getIdRas());
+                log.setTableLogEnt("rastas");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt("D");
+                session.saveOrUpdate(log);
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+ras.getIdRas());
+                queryMongo.put("form_id", "6");
+
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }
+            }
+            mongo.close();
+            tx.commit();
+            state = "success";
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            session.close();
+        } 
+        return state;
     }
     
 }

@@ -1035,7 +1035,7 @@ public class ActionRasta extends BaseAction {
         Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
-        String fileName  = "/var/www/document/rastasInfo.csv";
+        String fileName  = ""+getText("file.docrasta");
 //        String fileName  = "rastasInfo.csv";
         rastaDao.getRastas(findParams, fileName);
   
@@ -1137,7 +1137,7 @@ public class ActionRasta extends BaseAction {
 //            int idProOld = 0;
             tx = session.beginTransaction();
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");
 //            Fields lot = null;
 //            if (rasta.getIdRas()<=0) {
 //                lot = new Fields();
@@ -1457,4 +1457,37 @@ public class ActionRasta extends BaseAction {
         return "states";
 //        return SUCCESS;
     }
+    
+    /**
+     * Encargado de borrar la informacion de los rastas que se han seleccionado
+     * @param valSel:  Valores que se han seleccionado para borrar
+     * @return Estado del proceso
+     */
+    public String deleteAll() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "soil/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        String valSel = "";        
+        try {
+            valSel = String.valueOf(this.getRequest().getParameter("valSel"));
+        } catch (NumberFormatException e) {
+            valSel = "-1";
+        }
+        
+        if (valSel.equals("-1")) {
+            state = "failure";
+            info  = "Fallo al momento de obtener la informacion a borrar";
+            return "states";
+        }
+        
+        state = rastaDao.deleteAllRastas(valSel, idEntSystem);
+        if (state.equals("success")) {
+            info  = "Los rastas han sido borrados con exito";
+        } else if (state.equals("failure")) {
+            info  = "Fallo al momento de borrar los rastas";
+        }
+//        state = "success";
+        return "states";
+    }
+    
 }

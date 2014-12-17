@@ -16,6 +16,14 @@
     <welcome-file-list>
         <welcome-file>layout.jsp</welcome-file>
     </welcome-file-list>
+    <servlet>  
+        <servlet-name>SigmaMovilService</servlet-name>  
+        <servlet-class>com.sigmamovil.smsapp.soap.sigmamovilservice.SigmaMovilService</servlet-class>  
+    </servlet>  
+    <servlet-mapping>  
+        <servlet-name>SigmaMovilService</servlet-name>  
+        <url-pattern>/com/*</url-pattern>  
+    </servlet-mapping>  
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/noFound.jsp</location>

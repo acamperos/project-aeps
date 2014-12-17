@@ -10,9 +10,7 @@ import com.mongodb.WriteResult;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
-import org.aepscolombia.platform.models.entity.Entities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -31,6 +28,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Fields;
 import org.aepscolombia.platform.models.entity.FieldsProducers;
+import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
@@ -753,6 +751,150 @@ public class FieldsDao
         } finally {
             session.close();
         }
+    }
+    
+    public void deleteFieldsMongo(Integer idFarm) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        
+        List<Object[]> events = null;
+        Transaction tx = null;
+        
+        String sql = "";
+        
+        sql += "select f.id_fie, f.name_fie";
+        sql += " from fields f";
+        sql += " where f.status=1";
+        if (idFarm!=null) {
+            sql += " and f.id_farm_fie="+idFarm;
+        }        
+        
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);            
+            events = query.list();         
+            
+            MongoClient mongo = null;
+            mongo = new MongoClient("localhost", 27017);
+            
+            for (Object[] data : events) {
+//                System.out.println(data);
+                HashMap temp = new HashMap();
+                temp.put("id_fie", data[0]);
+                temp.put("name_fie", data[1]);          
+                
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+temp.get("id_fie"));
+                queryMongo.put("form_id", "5");
+                
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }                
+                
+                Integer idField = Integer.parseInt(String.valueOf(temp.get("id_fie")));
+                
+                ProductionEventsDao cropDao = new ProductionEventsDao();
+                cropDao.deleteCropsMongo(idField);
+                
+                RastasDao rasDao = new RastasDao();
+                rasDao.deleteRastasMongo(idField);
+                
+            }   
+            
+            mongo.close();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            System.out.println("Error ingresando al MongoDB");
+        } finally {
+            session.close();
+        }
+    }
+    
+    public String deleteAllFields(String valSel, Integer idEntSystem) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        List<Fields> events = null;
+        Transaction tx = null;
+        String sql = "";
+        String state = "failure";         
+
+        sql += "select f.id_fie, f.id_farm_fie, f.name_fie, f.altitude_fie, f.latitude_fie, f.longitude_fie, f.area_fie, f.measure_unit_fie,"; 	
+        sql += "f.pests_control_fie, f.diseases_control_fie, f.status, f.id_project_fie, f.contract_type_fie, f.created_by";
+        sql += " from fields f";
+        if (!valSel.equals("")) sql += " where f.status=1 and f.id_fie in ("+valSel+")";
+//        System.out.println("sql=>"+sql);          
+        
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("f", Fields.class);
+            events = query.list();
+            MongoClient mongo = new MongoClient("localhost", 27017);
+            for (Fields fie : events) {
+//                System.out.println("fieId->"+fie.getIdFie());
+                fie.setStatus(false);     
+                session.saveOrUpdate(fie);
+
+                LogEntities log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(fie.getIdFie());
+                log.setTableLogEnt("fields");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt("D");
+                session.saveOrUpdate(log);
+
+                BasicDBObject queryMongo = new BasicDBObject();
+                queryMongo.put("InsertedId", ""+fie.getIdFie());
+                queryMongo.put("form_id", "5");
+
+                DB db = mongo.getDB("ciat");
+                DBCollection col = db.getCollection("log_form_records");
+                WriteResult result = null;
+
+                System.out.println("borro mongo");
+                result = col.remove(queryMongo);
+
+                if (result.getError()!=null) {
+                    throw new HibernateException("");
+                }
+
+                ProductionEventsDao cropDao = new ProductionEventsDao();
+                cropDao.deleteCropsMongo(fie.getIdFie());
+
+                RastasDao rasDao = new RastasDao();
+                rasDao.deleteRastasMongo(fie.getIdFie());
+            }
+            mongo.close();
+            tx.commit();
+            state = "success";
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ActionField.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            session.close();
+        } 
+        return state;
     }
     
 }

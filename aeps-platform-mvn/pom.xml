@@ -15,6 +15,11 @@
             <name>bedatadriven public repo</name>
             <url>http://nexus.bedatadriven.com/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
     </repositories>
 
     <properties>
@@ -23,6 +28,11 @@
         <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>SigmaMovilService</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -224,23 +234,6 @@
                 <groupId>org.jvnet.jax-ws-commons</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
                 <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <wsdlFiles>
-                                <wsdlFile>getservice.wsdl</wsdlFile>
-                            </wsdlFiles>
-                            <packageName>org.aepscolombia.platform.webservices</packageName>
-                            <wsdlLocation>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl</wsdlLocation>
-                            <staleFile>${project.build.directory}/jaxws/stale/getservice.stale</staleFile>
-                        </configuration>
-                        <id>wsimport-generate-getservice</id>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>javax.xml</groupId>

@@ -39,6 +39,26 @@ public class ValidatorUtil {
 
     }   
     
+    /**
+     * Encargado de validar si un dato es un valor numerico
+     * @param value Valor a comprobar
+     * @return <ul>
+     *          <li>true: Caso de exito de verificacion</li>
+     *          <li>false: Caso de falla de verificacion</li>
+     *         </ul>
+     */
+    public static boolean validateNumber(String value) {
+        try {
+            Pattern pattern = Pattern.compile("^[0-9]+$");
+            Matcher matcher = pattern.matcher(value);
+            return matcher.matches();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }   
+    
     public static boolean verifyCaptcha(String remoteAddr, String recaptChallenge, String recaptResponse) {
         ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
 //        reCaptcha.setPublicKey("6Lfh2O0SAAAAANN4PftAGB-KQF26H4qUoyUMH69F");

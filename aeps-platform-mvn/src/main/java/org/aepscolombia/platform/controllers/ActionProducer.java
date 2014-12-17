@@ -4,7 +4,6 @@
  */
 package org.aepscolombia.platform.controllers;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -14,12 +13,9 @@ import com.mongodb.WriteResult;
 import com.opensymphony.xwork2.validator.annotations.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.UnknownHostException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +29,7 @@ import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
 import org.aepscolombia.platform.models.entity.Departments;
 import org.aepscolombia.platform.models.dao.DepartmentsDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
+import org.aepscolombia.platform.models.dao.FarmsDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 
 import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
@@ -42,7 +39,6 @@ import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.EntitiesTypes;
 import org.aepscolombia.platform.models.entity.DocumentsTypes;
 import org.aepscolombia.platform.models.entity.Entities;
-import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.Municipalities;
 import org.aepscolombia.platform.models.entity.Users;
@@ -66,7 +62,7 @@ import org.hibernate.Transaction;
  * @version 1.0
  */
 public class ActionProducer extends BaseAction {
-    
+
     //Atributos del formulario 
     /**
      * Atributos provenientes del formulario
@@ -80,11 +76,11 @@ public class ActionProducer extends BaseAction {
     private String last_names_producer_1;
     private String last_names_producer_2;
     private String direction_producer;
-    private String depPro  = "";
+    private String depPro = "";
     private String cityPro = "";
     private List<Departments> department_producer;
     private List<Municipalities> city_producer;
-    private int idProducer=0;   
+    private int idProducer = 0;
     private Integer telephone_producer;
     private Long celphone_producer;
     private String email_producer;
@@ -94,8 +90,8 @@ public class ActionProducer extends BaseAction {
     private Integer idEntSystem;
     private Integer idUsrSystem;
     private Integer searchFromProducer;
-    private String search_producer; 
-    private String nameCompany;                            
+    private String search_producer;
+    private String nameCompany;
     private String firstNameRep;
     private String secondNameRep;
     private String firstLastNameRep;
@@ -104,7 +100,7 @@ public class ActionProducer extends BaseAction {
     private UsersDao usrDao;
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
-    
+
     //Metodos getter y setter por cada variable del formulario 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -131,8 +127,8 @@ public class ActionProducer extends BaseAction {
 
     public void setSearchFromProducer(Integer searchFromProducer) {
         this.searchFromProducer = searchFromProducer;
-    }   
-    
+    }
+
     public String getTypeIdent() {
         return typeIdent;
     }
@@ -155,7 +151,7 @@ public class ActionProducer extends BaseAction {
 
     public void setCityPro(String cityPro) {
         this.cityPro = cityPro;
-    }    
+    }
 
     public String getNameCompany() {
         return nameCompany;
@@ -195,7 +191,7 @@ public class ActionProducer extends BaseAction {
 
     public void setSecondLastNameRep(String secondLastNameRep) {
         this.secondLastNameRep = secondLastNameRep;
-    }  
+    }
 
     public String getEmailRes() {
         return emailRes;
@@ -203,8 +199,8 @@ public class ActionProducer extends BaseAction {
 
     public void setEmailRes(String emailRes) {
         this.emailRes = emailRes;
-    }  
-    
+    }
+
     public String getNum_ident_producer() {
         return num_ident_producer;
     }
@@ -260,14 +256,14 @@ public class ActionProducer extends BaseAction {
     public void setDirection_producer(String direction_producer) {
         this.direction_producer = direction_producer;
     }
-    
+
     public List<Entities> getList_agronomist() {
         return list_agronomist;
     }
 
     public void setList_agronomist(List<Entities> list_agronomist) {
         this.list_agronomist = list_agronomist;
-    }  
+    }
 
     public List<Departments> getDepartment_producer() {
         return department_producer;
@@ -318,7 +314,7 @@ public class ActionProducer extends BaseAction {
 //        ArrayList<TiposDocumentos> prueba = new ArrayList<TiposDocumentos>();
 //        prueba.add(new TiposDocumentos("cc", "cedula"));
         return type_ident_producer;
-    }    
+    }
 
     public String getIdentProducer() {
         return identProducer;
@@ -326,7 +322,7 @@ public class ActionProducer extends BaseAction {
 
     public void setIdentProducer(String identProducer) {
         this.identProducer = identProducer;
-    }    
+    }
 
     public List<HashMap> getListProducers() {
         return listProducers;
@@ -336,21 +332,21 @@ public class ActionProducer extends BaseAction {
 //        user = (Users) this.getSession().get(APConstants.SESSION_USER);
 //        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
 //        super();
-    }    
-    
+    }
+
     //Atributos generales de clase
     /**
      * Atributos generales de clase
-     */    
+     */
     private HashMap additionals;
     private int page = 1, countTotal, maxResults = 10;
-    
-    private EntitiesDao entDao    = new EntitiesDao();
-    private ProducersDao proDao  = new ProducersDao();
+
+    private EntitiesDao entDao = new EntitiesDao();
+    private ProducersDao proDao = new ProducersDao();
     private LogEntitiesDao logDao = new LogEntitiesDao();
-    private String valId="", valName="", selected="";
+    private String valId = "", valName = "", selected = "";
     private String state = "";
-    private String info  = "";
+    private String info = "";
 
     //Metodos getter y setter por cada variable general de la clase
     /**
@@ -370,7 +366,7 @@ public class ActionProducer extends BaseAction {
 
     public void setSelected(String selected) {
         this.selected = selected;
-    }    
+    }
 
     public void setPage(int page) {
         this.page = page;
@@ -398,7 +394,7 @@ public class ActionProducer extends BaseAction {
 
     public HashMap getAdditionals() {
         return additionals;
-    }   
+    }
 
     public String getState() {
         return state;
@@ -407,7 +403,7 @@ public class ActionProducer extends BaseAction {
     public String getInfo() {
         return info;
     }
-    
+
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
@@ -415,7 +411,7 @@ public class ActionProducer extends BaseAction {
         this.setType_ident_producer(new DocumentsTypesDao().findAll());
         this.setDepartment_producer(new DepartmentsDao().findAll());
         List<Municipalities> mun = new ArrayList<Municipalities>();
-        mun.add(new Municipalities());           
+        mun.add(new Municipalities());
         this.setCity_producer(mun);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
@@ -423,12 +419,12 @@ public class ActionProducer extends BaseAction {
     }
 
     @Override
-    public String execute() throws Exception {        
+    public String execute() throws Exception {
 //        this.setType_ident_producer(new DocumentsTypesDao().findAll());
 //        this.setDepartment_producer(new DepartmentsDao().findAll());
         return SUCCESS;
-    } 
-    
+    }
+
     /**
      * Metodo encargado de validar el formulario de Productores
      */
@@ -448,7 +444,7 @@ public class ActionProducer extends BaseAction {
 //            Object required[] = {typeIdent, department_producer, city_producer, num_ident_producer, names_producer_1, last_names_producer_1};
             HashMap required = new HashMap();
             required.put("typeIdent", typeIdent);
-            required.put("num_ident_producer", num_ident_producer);            
+            required.put("num_ident_producer", num_ident_producer);
             required.put("depPro", depPro);
             required.put("cityPro", cityPro);
             if (typeIdent.equals("NIT")) {
@@ -480,7 +476,7 @@ public class ActionProducer extends BaseAction {
                 String sV = (String) required.get(sK);
 //                System.out.println(sK + " : " + sV);
 //                addFieldError(sK, "El campo es requerido");
-                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV)==null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
+                if (StringUtils.trim(sV).equals("null") || StringUtils.trim(sV) == null || StringUtils.trim(sV).equals("") || sV.equals("-1")) {
 //                if (StringUtils.trim(sV).equals("") || sV.equals("-1")) {
                     enterFields = true;
                     // if (trim($data[$name])=='') {
@@ -489,11 +485,11 @@ public class ActionProducer extends BaseAction {
                     addFieldError(sK, "El campo es requerido");
                 }
             }
-            
+
             if (enterFields) {
                 addActionError("Faltan campos por ingresar por favor digitelos");
             }
-            
+
             if (this.getCelphone_producer() == null && this.getTelephone_producer() == null && this.getEmail_producer().equals("")) {
                 addFieldError("celphone_producer", "Uno de estos es obligatorio");
                 addFieldError("telephone_producer", "Uno de estos es obligatorio");
@@ -502,35 +498,37 @@ public class ActionProducer extends BaseAction {
             }
 
             //        System.out.println("errors"+getFieldErrors());            
-            if (!this.getEmail_producer().equals("")) {                       
-                if(!ValidatorUtil.validateEmail(this.getEmail_producer())) {
+            if (!this.getEmail_producer().equals("")) {
+                if (!ValidatorUtil.validateEmail(this.getEmail_producer())) {
                     addFieldError("email_producer", "Correo invalido");
                     addActionError("Se ingreso un email invalido");
-                }                
+                }
             }
-            
-            if (!this.getEmailRes().equals("")) {                       
-                if(!ValidatorUtil.validateEmail(this.getEmailRes())) {
+
+            if (!this.getEmailRes().equals("")) {
+                if (!ValidatorUtil.validateEmail(this.getEmailRes())) {
                     addFieldError("emailRes", "Correo invalido");
                     addActionError("Se ingreso un email invalido");
-                }                
+                }
             }
-            
-            if (actExe.equals("create")) {
-                if (this.getTypeIdent()!=null && this.getNum_ident_producer()!=null) {
-                    Entities entReg = entDao.checkEntityIdent(this.getTypeIdent(),this.getNum_ident_producer());
 
-                    if (entReg!=null) {      
+            if (actExe.equals("create")) {
+                if (this.getTypeIdent() != null && this.getNum_ident_producer() != null) {
+                    Entities entReg = entDao.checkEntityIdent(this.getTypeIdent(), this.getNum_ident_producer());
+
+                    if (entReg != null) {
                         addFieldError("num_ident_producer", "El numero de identificacion ya existe");
                         addActionError("El numero de identificacion ya se encuentra en el sistema");
                     }
                 }
             }
-        }    
-    }    
+        }
+    }
 
     /**
-     * Se obtiene la lista de opciones de cada uno de los tipos de documentos registrados en BD
+     * Se obtiene la lista de opciones de cada uno de los tipos de documentos
+     * registrados en BD
+     *
      * @return lista de tipos de documentos
      */
     public String comboDocumentsTypes() {
@@ -541,7 +539,9 @@ public class ActionProducer extends BaseAction {
     }
 
     /**
-     * Se obtiene la lista de opciones de cada uno de los departamentos registrados en BD
+     * Se obtiene la lista de opciones de cada uno de los departamentos
+     * registrados en BD
+     *
      * @return lista de departamentos
      */
     public String comboDepartments() {
@@ -549,25 +549,25 @@ public class ActionProducer extends BaseAction {
         department_producer = eventDao.findAll();
         return "combo";
     }
-    
-    
+
     /**
-     * Se obtiene la lista de opciones de cada uno de los municipios registrados en BD
-     * apartir de un departamento seleccionado previamente
+     * Se obtiene la lista de opciones de cada uno de los municipios registrados
+     * en BD apartir de un departamento seleccionado previamente
+     *
      * @param depId: Identificacion de un departamento
      * @return lista de municipios
      */
     public String comboMunicipalities() {
 //        int depId = Integer.parseInt(depPro);
         String chain = "<option value=\"\">---</option>";
-        if(!this.getRequest().getParameter("depId").equals(" ")) {
+        if (!this.getRequest().getParameter("depId").equals(" ")) {
             int depId = Integer.parseInt(this.getRequest().getParameter("depId"));
             MunicipalitiesDao eventDao = new MunicipalitiesDao();
-            city_producer = eventDao.findAll(depId);            
+            city_producer = eventDao.findAll(depId);
             int i = 0;
             for (Municipalities data : city_producer) {
-    //            System.out.println(data.toString());
-                chain += "<option value=\"" + data.getIdMun() + "\">" + data.getNameMun()+ "</option>";
+                //            System.out.println(data.toString());
+                chain += "<option value=\"" + data.getIdMun() + "\">" + data.getNameMun() + "</option>";
             }
         }
         city_producer = null;
@@ -575,10 +575,10 @@ public class ActionProducer extends BaseAction {
         info = chain;
         return "combo";
     }
-    
+
     private String name_agronomist;
     private String selectAllname_agronomist;
-    private String selectItemname_agronomist;      
+    private String selectItemname_agronomist;
 
     public String getName_agronomist() {
         return name_agronomist;
@@ -586,7 +586,7 @@ public class ActionProducer extends BaseAction {
 
     public void setName_agronomist(String name_agronomist) {
         this.name_agronomist = name_agronomist;
-    }  
+    }
 
     public String getSelectAllname_agronomist() {
         return selectAllname_agronomist;
@@ -603,12 +603,13 @@ public class ActionProducer extends BaseAction {
     public void setSelectItemname_agronomist(String selectItemname_agronomist) {
         this.selectItemname_agronomist = selectItemname_agronomist;
     }
-    
+
     /**
-     * Encargado de buscar las coincidencias de un formulario de busqueda, para cada una de los
-     * productores registrados a un usuario
-     * @param valName:  Nombre del valor a buscar
-     * @param valId:    Identificacion del valor a buscar
+     * Encargado de buscar las coincidencias de un formulario de busqueda, para
+     * cada una de los productores registrados a un usuario
+     *
+     * @param valName: Nombre del valor a buscar
+     * @param valId: Identificacion del valor a buscar
      * @param selected: Valor seleccionado
      * @return lista de productores
      */
@@ -618,18 +619,18 @@ public class ActionProducer extends BaseAction {
         }
 //        additionals  = new ArrayList<HashMap<String, String>>();
 //        HashMap mMap = new HashMap();
-        String result = (String)this.getSession().get("result");
-        valName     = (String)(this.getRequest().getParameter("valName"));
-        valId       = (String)(this.getRequest().getParameter("valId"));
-        selected    = (String)(this.getRequest().getParameter("selected"));
-        viewInfo    = (String)(this.getRequest().getParameter("viewInfo"));
+        String result = (String) this.getSession().get("result");
+        valName = (String) (this.getRequest().getParameter("valName"));
+        valId = (String) (this.getRequest().getParameter("valId"));
+        selected = (String) (this.getRequest().getParameter("selected"));
+        viewInfo = (String) (this.getRequest().getParameter("viewInfo"));
         String selAll = "false";
-        if(selected==null) {
-            selected="producer";
+        if (selected == null) {
+            selected = "producer";
             selAll = "true";
-        }       
-        
-        if (selectAllname_agronomist!=null) {
+        }
+
+        if (selectAllname_agronomist != null) {
             selAll = "true";
         }
         additionals = new HashMap();
@@ -641,8 +642,8 @@ public class ActionProducer extends BaseAction {
         findParams.put("selItem", selectItemname_agronomist);
         Integer entTypeId = entDao.getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
-        list_agronomist   = assDao.gelAllAgronomist(idEntSystem);
-        if(searchFromProducer!=null && searchFromProducer==2) {
+        list_agronomist = assDao.gelAllAgronomist(idEntSystem);
+        if (searchFromProducer != null && searchFromProducer == 2) {
             search_producer = "";
         }
 //        System.out.println("search_producer->"+search_producer);
@@ -668,14 +669,14 @@ public class ActionProducer extends BaseAction {
         int pageReq;
         if (this.getRequest().getParameter("page") == null) {
             pageReq = this.getPage();
-        } else {            
+        } else {
             pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
         }
         findParams.put("pageNow", pageReq);
         findParams.put("maxResults", this.getMaxResults());
         ProducersDao eventDao = new ProducersDao();
 //        System.out.println("entreeee");
-        listProducers     = eventDao.findByParams(findParams);        
+        listProducers = eventDao.findByParams(findParams);
         Integer valResult = eventDao.countData(findParams);
 //        this.setCountTotal(100);
         this.setCountTotal(Integer.parseInt(String.valueOf(listProducers.get(0).get("countTotal"))));
@@ -683,72 +684,73 @@ public class ActionProducer extends BaseAction {
         listProducers.remove(0);
 //        System.out.println("countTotal->"+this.getCountTotal());
         return SUCCESS;
-    }   
-    
+    }
+
     /**
      * Bloque correspondiente al tratamiento de creacion y lectura de archivos
      *
-     */    
-    private InputStream inputStream;   
-    
-    public InputStream getInputStream() {  
-        return inputStream;  
-    }  
-  
-    public void setInputStream(InputStream inputStream) {  
-        this.inputStream = inputStream;  
+     */
+    private InputStream inputStream;
+
+    public InputStream getInputStream() {
+        return inputStream;
     }
-    
+
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
+
     public String getReport() throws Exception {
         if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/list")) {
             return BaseAction.NOT_AUTHORIZED;
         }
-        
-        String selAll = "false";        
-        if (selectAllname_agronomist!=null) {
+
+        String selAll = "false";
+        if (selectAllname_agronomist != null) {
             selAll = "true";
         }
-        
+
         HashMap findParams = new HashMap();
         findParams.put("selAll", selAll);
         findParams.put("selItem", selectItemname_agronomist);
         Integer entTypeId = entDao.getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
-        String fileName  = "/var/www/document/producersInfo.csv";
+        String fileName = "" + getText("file.docproducer");
 //        String fileName  = "producersInfo.csv";
-         
+
 //        CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
 //        ResultSet proRes = proDao.getProducers(findParams, fileName);
         proDao.getProducers(findParams, fileName);
 //        writer.writeAll(proRes, true);
 //        writer.writeNext(entries);  
 //        writer.close();  
-  
-        File f = new File(fileName);  
-        inputStream = new FileInputStream(f);  
-        return "OUTPUTCSV"; 
+
+        File f = new File(fileName);
+        inputStream = new FileInputStream(f);
+        return "OUTPUTCSV";
     }
-    
 
     /**
-     * Encargado de mostrar en un formulario la informacion de un productor apartir de la identificacion
-     * @param idPro:  Identificacion del productor
+     * Encargado de mostrar en un formulario la informacion de un productor
+     * apartir de la identificacion
+     *
+     * @param idPro: Identificacion del productor
      * @return Informacion del productor
      */
-    public String show() {   
+    public String show() {
         if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/create") || !usrDao.getPrivilegeUser(idUsrSystem, "producer/modify")) {
             return BaseAction.NOT_AUTHORIZED;
         }
-        actExe = (String)(this.getRequest().getParameter("action"));
-        viewInfo = (String)(this.getRequest().getParameter("viewInfo"));
+        actExe = (String) (this.getRequest().getParameter("action"));
+        viewInfo = (String) (this.getRequest().getParameter("viewInfo"));
         int pageReq;
         if (this.getRequest().getParameter("page") != null) {
             pageReq = Integer.parseInt(StringUtils.trim(this.getRequest().getParameter("page")));
             this.setPage(pageReq);
         }
         try {
-            this.setIdProducer(Integer.parseInt(this.getRequest().getParameter("idPro")));            
+            this.setIdProducer(Integer.parseInt(this.getRequest().getParameter("idPro")));
         } catch (NumberFormatException e) {
             // If there was an error trying to parse the URL parameter
 //            LOG.error("There was an error trying to parse the activityId parameter");
@@ -767,10 +769,10 @@ public class ActionProducer extends BaseAction {
 //            System.out.println("id_productor->"+this.getIdProductor());
             HashMap producerInfo = proDao.findById(this.getIdProducer());
 //            System.out.println("valores->" + producerInfo);
-            
+
             this.setTypeIdent(String.valueOf(producerInfo.get("type_document")));
             this.setNum_ident_producer(String.valueOf(producerInfo.get("document")));
-            
+
             if (this.getTypeIdent().equals("NIT")) {
                 this.setNameCompany(String.valueOf(producerInfo.get("name")));
                 this.setDig_ver_producer(String.valueOf(producerInfo.get("digit")));
@@ -779,7 +781,7 @@ public class ActionProducer extends BaseAction {
                 this.setFirstLastNameRep(String.valueOf(producerInfo.get("last_name_1")));
                 this.setSecondLastNameRep(String.valueOf(producerInfo.get("last_name_2")));
                 this.setEmailRes(String.valueOf(producerInfo.get("e_mail_2")));
-            } else {            
+            } else {
                 this.setNames_producer_1(String.valueOf(producerInfo.get("name_1")));
                 this.setNames_producer_2(String.valueOf(producerInfo.get("name_2")));
                 this.setLast_names_producer_1(String.valueOf(producerInfo.get("last_name_1")));
@@ -799,7 +801,7 @@ public class ActionProducer extends BaseAction {
 //            this.setCity_producer(new MunicipiosDao().findAll(Integer.parseInt(""+productorInfo.get("id_dep"))));
         } else {
             List<Municipalities> mun = new ArrayList<Municipalities>();
-            mun.add(new Municipalities());           
+            mun.add(new Municipalities());
             this.setCity_producer(mun);
         }
 //        if (this.getIdentProductor()!=null) {        
@@ -807,10 +809,12 @@ public class ActionProducer extends BaseAction {
 //        }
 
         return SUCCESS;
-    }    
+    }
 
     /**
-     * Encargado de guardar la informacion suministrada por el usuario para un lote
+     * Encargado de guardar la informacion suministrada por el usuario para un
+     * lote
+     *
      * @return Estado del proceso
      */
     public String saveData() {
@@ -825,130 +829,130 @@ public class ActionProducer extends BaseAction {
          * 2) modify: Al momento de modificar un registro
          * 3) delete: Al momento de borrar un registro
          */
-        
+
         if (actExe.equals("create")) {
             action = "C";
         } else if (actExe.equals("modify")) {
             action = "M";
-        }        
+        }
 
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
-        Transaction tx  = null;
+        Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
             SfGuardUserDao sfDao = new SfGuardUserDao();
-            SfGuardUser sfUser = sfDao.getUserByLogin(user.getNameUserUsr(), "");
-            HashMap proData  = proDao.findById(idProducer); 
-            int idEnt        = 0;
+            SfGuardUser sfUser = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");
+            HashMap proData = proDao.findById(idProducer);
+            int idEnt = 0;
 //            System.out.println("values->"+proData);
             if (!proData.isEmpty() && proData.containsKey("id_entity")) {
-                idEnt        = ((String.valueOf(proData.get("id_entity")))!=null) ? (Integer.parseInt(String.valueOf(proData.get("id_entity")))) : null;
+                idEnt = ((String.valueOf(proData.get("id_entity"))) != null) ? (Integer.parseInt(String.valueOf(proData.get("id_entity")))) : null;
             }
 //            System.out.println("idEnt->"+idEnt);
-            int digVer       = (dig_ver_producer.equals("")) ? -1 : Integer.parseInt(dig_ver_producer); 
+            int digVer = (dig_ver_producer.equals("")) ? -1 : Integer.parseInt(dig_ver_producer);
             Entities ent = null;
-            if (idEnt<=0) {
+            if (idEnt <= 0) {
                 ent = new Entities();
                 ent.setIdEnt(null);
                 ent.setEntitiesTypes(new EntitiesTypes(2));
             } else {
                 ent = entDao.findById(idEnt);
-            }            
-            
+            }
+
 //            ent.setEntityTypeEnt(2);
 //            ent.setDocumentsTypes(typeIdent);
             if (typeIdent.equals("NIT")) {
-                if (digVer>-1) ent.setValidationNumberEnt(digVer);
+                if (digVer > -1) {
+                    ent.setValidationNumberEnt(digVer);
+                }
                 ent.setNameEnt(nameCompany);
-                ent.setAgentNameEnt(firstNameRep+" "+secondNameRep+" "+firstLastNameRep+" "+secondLastNameRep);
+                ent.setAgentNameEnt(firstNameRep + " " + secondNameRep + " " + firstLastNameRep + " " + secondLastNameRep);
                 ent.setEmail2Ent(emailRes);
                 ent.setFirstName1Ent(firstNameRep);
                 ent.setFirstName2Ent(secondNameRep);
                 ent.setLastName1Ent(firstLastNameRep);
                 ent.setLastName2Ent(secondLastNameRep);
             } else {
-                ent.setNameEnt(names_producer_1+" "+names_producer_2+" "+last_names_producer_1+" "+last_names_producer_2);
+                ent.setNameEnt(names_producer_1 + " " + names_producer_2 + " " + last_names_producer_1 + " " + last_names_producer_2);
                 ent.setFirstName1Ent(names_producer_1);
                 ent.setFirstName2Ent(names_producer_2);
                 ent.setLastName1Ent(last_names_producer_1);
                 ent.setLastName2Ent(last_names_producer_2);
             }
             ent.setDocumentsTypes(new DocumentsTypes(typeIdent));
-            ent.setDocumentNumberEnt(num_ident_producer);            
-            
-            
+            ent.setDocumentNumberEnt(num_ident_producer);
+
             ent.setEmailEnt(email_producer);
             ent.setAddressEnt(direction_producer);
             ent.setMunicipalities(new Municipalities(Integer.parseInt(cityPro)));
-            depPro  = String.valueOf(MunicipalitiesDao.getDepartmentId(Integer.parseInt(cityPro)));
+            depPro = String.valueOf(MunicipalitiesDao.getDepartmentId(Integer.parseInt(cityPro)));
 //            ent.setIdMunicipalityEnt(new Municipalities(Integer.parseInt(cityPro), new Departments(Integer.parseInt(depPro))));
-            if(telephone_producer!=null && telephone_producer>0) ent.setPhoneEnt(telephone_producer);
-            if(celphone_producer!=null && celphone_producer>0) ent.setCellphoneEnt(celphone_producer);
+            if (telephone_producer != null && telephone_producer > 0) {
+                ent.setPhoneEnt(telephone_producer);
+            }
+            if (celphone_producer != null && celphone_producer > 0) {
+                ent.setCellphoneEnt(celphone_producer);
+            }
             ent.setStatus(true);
             Integer idUserMobile = null;
-            if (sfUser!=null) {
+            if (sfUser != null) {
                 idUserMobile = sfUser.getId().intValue();
             }
             ent.setCreatedBy(idUserMobile);
             session.saveOrUpdate(ent);
-            
+
 //            entDao.save(ent);          
 //            System.out.println("pruebaCrea");
-
-            if (idProducer<=0) {
+            if (idProducer <= 0) {
                 Producers pro = new Producers();
                 pro.setIdPro(null);
                 pro.setEntities(ent);
-                pro.setStatus(true);    
+                pro.setStatus(true);
                 pro.setAddressPro(direction_producer);
                 pro.setCreatedBy(idUserMobile);
                 session.saveOrUpdate(pro);
 //                proDao.save(pro);
-                
+
                 /*LogEntities logPro = new LogEntities();
-                logPro.setIdLogEnt(null);
-                logPro.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
-                logPro.setIdObjectLogEnt(pro.getIdPro());
-                logPro.setTableLogEnt("producers");
-                logPro.setDateLogEnt(new Date());
-                logPro.setActionTypeLogEnt(action);
-                session.saveOrUpdate(logPro);
-                idProducer = pro.getIdPro();*/
+                 logPro.setIdLogEnt(null);
+                 logPro.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
+                 logPro.setIdObjectLogEnt(pro.getIdPro());
+                 logPro.setTableLogEnt("producers");
+                 logPro.setDateLogEnt(new Date());
+                 logPro.setActionTypeLogEnt(action);
+                 session.saveOrUpdate(logPro);
+                 idProducer = pro.getIdPro();*/
 //                logDao.save(logPro);
             }
 
-            
             /*LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
-            log.setIdObjectLogEnt(ent.getIdEnt());
-            log.setTableLogEnt("entities");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);*/
+             log.setIdLogEnt(null);
+             log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
+             log.setIdObjectLogEnt(ent.getIdEnt());
+             log.setTableLogEnt("entities");
+             log.setDateLogEnt(new Date());
+             log.setActionTypeLogEnt(action);
+             session.saveOrUpdate(log);*/
 //            logDao.save(log);                   
 //            HashMap producerInfo = proDao.findById(idProducer);
-            
             /*
-            "90": "Tipo de documento" => docType
-            "91": "Numero de documento" => docNum
-            "92": "Primer nombre" => firstName1
-            "93": "Segundo nombre" => firstName2
-            "94": "Primer apellido" => lastName1
-            "95": "Segundo apellido" => lastName2
-            "96": "Direccion" => direction
-            "99": "Telefono fijo" => phone
-            "251": "Celular" => cellphone
-            "252": "Correo electrónico" => email
-            "260": "Dígito de verificacion" => validation
-            "261": "Departamento" => department
-            "262": "Municipio (Valle del Cauca)" => municipality
-            */
-            
+             "90": "Tipo de documento" => docType
+             "91": "Numero de documento" => docNum
+             "92": "Primer nombre" => firstName1
+             "93": "Segundo nombre" => firstName2
+             "94": "Primer apellido" => lastName1
+             "95": "Segundo apellido" => lastName2
+             "96": "Direccion" => direction
+             "99": "Telefono fijo" => phone
+             "251": "Celular" => cellphone
+             "252": "Correo electrónico" => email
+             "260": "Dígito de verificacion" => validation
+             "261": "Departamento" => department
+             "262": "Municipio (Valle del Cauca)" => municipality
+             */
             //Manejo para ingresar datos en MongoDB            
-
             HashMap valInfo = new HashMap();
             valInfo.put("entId", ent.getIdEnt());
             valInfo.put("prodId", idProducer);
@@ -965,12 +969,12 @@ public class ActionProducer extends BaseAction {
             valInfo.put("validation", digVer);
             valInfo.put("department", depPro);
             valInfo.put("municipality", cityPro);
-            valInfo.put("userMobileId", idUserMobile);      
-            
+            valInfo.put("userMobileId", idUserMobile);
+
             BasicDBObject query = new BasicDBObject();
-            query.put("InsertedId", ""+ent.getIdEnt());
+            query.put("InsertedId", "" + ent.getIdEnt());
             query.put("form_id", "4");
-            
+
             MongoClient mongo = null;
             try {
                 mongo = new MongoClient("localhost", 27017);
@@ -980,35 +984,34 @@ public class ActionProducer extends BaseAction {
             DB db = mongo.getDB("ciat");
             DBCollection col = db.getCollection("log_form_records");
 
-            DBCursor cursor    = col.find(query);
+            DBCursor cursor = col.find(query);
             WriteResult result = null;
             BasicDBObject jsonField = null;
-            jsonField          = GlobalFunctions.generateJSONProducer(valInfo);
-            
+            jsonField = GlobalFunctions.generateJSONProducer(valInfo);
+
 //            while(cursor.hasNext()) {
 //                System.out.println(cursor.next());
 //            }
-            
-            if (cursor.count()>0) {
+            if (cursor.count() > 0) {
                 System.out.println("actualizo mongo");
                 result = col.update(query, jsonField);
             } else {
                 System.out.println("inserto mongo");
                 result = col.insert(jsonField);
             }
-            
-            if (result.getError()!=null) {
+
+            if (result.getError() != null) {
                 throw new HibernateException("");
             }
-            
+
             mongo.close();
-            tx.commit();           
-            state = "success";            
+            tx.commit();
+            state = "success";
             if (action.equals("C")) {
-                info  = "El productor ha sido agregado con exito";
+                info = "El productor ha sido agregado con exito";
 //                return "list";
             } else if (action.equals("M")) {
-                info  = "El productor ha sido modificado con exito";
+                info = "El productor ha sido modificado con exito";
 //                return "list";
             }
         } catch (HibernateException e) {
@@ -1018,18 +1021,20 @@ public class ActionProducer extends BaseAction {
             e.printStackTrace();
 //            System.out.println("error->"+e.getMessage());
             state = "failure";
-            info  = "Fallo al momento de agregar un productor";
+            info = "Fallo al momento de agregar un productor";
         } finally {
             session.close();
-        }       
-        
+        }
+
         return "states";
 //        return ERROR;
     }
 
     /**
-     * Encargado de borrar la informacion de un productor apartir de su identificacion
-     * @param idPro:  Identificacion del productor
+     * Encargado de borrar la informacion de un productor apartir de su
+     * identificacion
+     *
+     * @param idPro: Identificacion del productor
      * @return Estado del proceso
      */
     public String delete() {
@@ -1038,40 +1043,39 @@ public class ActionProducer extends BaseAction {
         }
 //        System.out.println("idUsr->"+user.getIdUsr());
 //        idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        Integer idPro = 0;        
+        Integer idPro = 0;
         try {
             idPro = Integer.parseInt(this.getRequest().getParameter("idPro"));
         } catch (NumberFormatException e) {
             idPro = -1;
         }
-        
-        if (idPro==-1) {
+
+        if (idPro == -1) {
             state = "failure";
-            info  = "Fallo al momento de obtener la informacion a borrar";
+            info = "Fallo al momento de obtener la informacion a borrar";
             return "states";
         }
-        
+
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
-            HashMap pro   = proDao.findById(idPro);   
+            HashMap pro = proDao.findById(idPro);
 //            System.out.println("dataPro->"+pro);
-            Entities ent  = entDao.findById(Integer.parseInt(String.valueOf(pro.get("id_entity"))));      
+            Entities ent = entDao.findById(Integer.parseInt(String.valueOf(pro.get("id_entity"))));
 //            System.out.println("idEnt->"+pro.get("id_entity"));
 //            System.out.println("numEnt->"+ent.getDocumentNumberEnt());
-            ent.setStatus(false);     
+            ent.setStatus(false);
             session.saveOrUpdate(ent);//Tambien si fuera el caso borrar datos de la tabla intermedia farms_producers y fields_producers
 //            session.delete(ent);
-            
+
 //            Producers proObj = new Producers();
 //            proObj.setIdPro(idPro);
 //            proObj.setEntities(ent);
 //            proObj.setStatus(false);     
 //            session.saveOrUpdate(proObj);
-            
 //            LogEntities log = new LogEntities();
 //            log.setIdLogEnt(null);
 //            log.setIdEntityLogEnt(idEntSystem); //Colocar el usuario registrado en el sistema
@@ -1090,11 +1094,10 @@ public class ActionProducer extends BaseAction {
 //            logPro.setDateLogEnt(new Date());
 //            logPro.setActionTypeLogEnt("D");
 //            session.saveOrUpdate(logPro);
-            
             BasicDBObject query = new BasicDBObject();
-            query.put("InsertedId", ""+ent.getIdEnt());
+            query.put("InsertedId", "" + ent.getIdEnt());
             query.put("form_id", "4");
-            
+
             MongoClient mongo = null;
             try {
                 mongo = new MongoClient("localhost", 27017);
@@ -1104,31 +1107,71 @@ public class ActionProducer extends BaseAction {
             DB db = mongo.getDB("ciat");
             DBCollection col = db.getCollection("log_form_records");
             WriteResult result = null;
-            
+
             System.out.println("borro mongo");
             result = col.remove(query);
-            
-            if (result.getError()!=null) {
+
+            if (result.getError() != null) {
                 throw new HibernateException("");
             }
             mongo.close();
-            
+
+            FarmsDao farDao = new FarmsDao();
+            farDao.deleteFarmsMongo(idPro);
+
 //            logDao.save(logPro);
-            tx.commit();            
+            tx.commit();
             state = "success";
-            info  = "El productor ha sido borrado con exito";
+            info = "El productor ha sido borrado con exito";
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
             e.printStackTrace();
             state = "failure";
-            info  = "Fallo al momento de borrar un productor";
+            info = "Fallo al momento de borrar un productor";
         } finally {
             session.close();
-        }      
-        
+        }
+
         return "states";
 //        return SUCCESS;
     }
+
+    /**
+     * Encargado de borrar la informacion de los productores que se han
+     * seleccionado
+     *
+     * @param valSel: Valores que se han seleccionado para borrar
+     * @return Estado del proceso
+     */
+    public String deleteAll() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "producer/delete")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        String valSel = "";        
+        try {
+            valSel = String.valueOf(this.getRequest().getParameter("valSel"));
+        } catch (NumberFormatException e) {
+            valSel = "-1";
+        }
+        
+        if (valSel.equals("-1")) {
+            state = "failure";
+            info  = "Fallo al momento de obtener la informacion a borrar";
+            return "states";
+        }
+        
+        state = proDao.deleteAllEntities(valSel);
+        if (state.equals("success")) {
+            info  = "El productor ha sido borrado con exito";
+        } else if (state.equals("failure")) {
+            info  = "Fallo al momento de borrar un productor";
+        }
+//        GlobalFunctions.sendSms("3175274183", "Una prueba mi pez");
+        
+//        state = "success";
+        return "states";
+    }
+
 }

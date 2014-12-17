@@ -18,7 +18,7 @@
         <div class="row-fluid" id="divFerForm">
             <s:form id="formCropFer" action="saveFer" cssClass="form-horizontal">
                 <fieldset>
-                    <legend>Formulario de Fertilizacion</legend>  
+                    <legend><s:property value="getText('title.fertsurvey.crop')" /></legend>  
                     <div class="row">
                         <div class="span5">
                             <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
@@ -29,7 +29,7 @@
                             <s:hidden name="fer.idFer"/>
                             <div class="control-group">
                                 <label for="formCropFer_fer_dateFer" class="control-label req">
-                                    Fecha de aplicación:
+                                    <s:property value="getText('text.appdate.crop')" />:
                                 </label>
                                 <div class="date controls">
                                     <s:date name="fer.dateFer" format="dd/MM/yyyy" var="dateTransformFer"/>
@@ -42,13 +42,13 @@
                     </div>
                     <div style="margin-bottom: 30px">
                         <label class="textFloat">
-                            A continuacion, listar los fertilizantes que fueron usados en                            
+                            <s:property value="getText('text.nextlist.crop')" />                            
                         </label>
-                        <label id="lblDateApp" class="textFloat">&nbsp; esta aplicacion</label>
+                        <label id="lblDateApp" class="textFloat">&nbsp; <s:property value="getText('text.thisapplication.crop')" /></label>
                     </div>            
                     <fieldset>
                         <div class="span3">
-                            <button type="button" class="btn btn-chemical btn-large" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', '1', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> Agregar fertilizante Quimico</button>
+                            <button type="button" class="btn btn-chemical btn-large" onclick="showRowAdditionalFert('../crop/showRowAddFer?action=<%=actionOpt%>', '1', 'tableAditFertChem', 'tableAditFertOrg', 'tableAditFertAmen')"><i class="icon-plus"></i> <s:property value="getText('button.addchemfert.crop')" /></button>
                         </div>
                         <table class="table" style="width: 100%;">
                             <tbody id="tableAditFertChem">

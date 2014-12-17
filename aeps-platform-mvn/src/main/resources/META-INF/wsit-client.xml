@@ -6,4 +6,5 @@
  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="mainclientconfig" 
  >
     <import location="getservice.xml" namespace="http://smsapp.sigmamovil.com/soap/SigmaMovilService"/>
+    <import location="sigmaservices.xml" namespace="http://smsapp.sigmamovil.com/soap/SigmaMovilService"/>
 </definitions>
