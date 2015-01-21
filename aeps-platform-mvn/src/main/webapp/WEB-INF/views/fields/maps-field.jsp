@@ -47,17 +47,20 @@
             mapTypeId: google.maps.MapTypeId.HYBRID
           }
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-            gicons["red"] = new google.maps.MarkerImage("img/mapIcons/marker_red.png",
+//            gicons["red"] = new google.maps.MarkerImage("img/mapIcons/marker_red.png",
+            gicons["red"] = new google.maps.MarkerImage("img/mapIcons/marker_undefined.png",
             new google.maps.Size(20, 34),
             new google.maps.Point(0,0),
             new google.maps.Point(9, 34));
 
-        var iconImage = new google.maps.MarkerImage('img/mapIcons/marker_red.png',
+//        var iconImage = new google.maps.MarkerImage('img/mapIcons/marker_red.png',
+        var iconImage = new google.maps.MarkerImage('img/mapIcons/marker_undefined.png',
             new google.maps.Size(20, 34),
             new google.maps.Point(0,0),
             new google.maps.Point(9, 34));
             
-        var iconShadow = new google.maps.MarkerImage('img/mapIcons/marker_shadow.png',
+//        var iconShadow = new google.maps.MarkerImage('img/mapIcons/marker_shadow.png',
+        var iconShadow = new google.maps.MarkerImage('img/mapIcons/marker_undefined.png',
             new google.maps.Size(37, 34),
             new google.maps.Point(0,0),
             new google.maps.Point(9, 34));
@@ -67,7 +70,8 @@
             iconColor = "red"; 
          }
          if (!gicons[iconColor]) {
-            gicons[iconColor] = new google.maps.MarkerImage("img/mapIcons/marker_"+ iconColor +".png",
+            //gicons[iconColor] = new google.maps.MarkerImage("img/mapIcons/marker_"+ iconColor +".png",
+            gicons[iconColor] = new google.maps.MarkerImage("img/mapIcons/marker_undefined.png",
             new google.maps.Size(20, 34),
             new google.maps.Point(0,0),
             new google.maps.Point(9, 34));
@@ -83,8 +87,8 @@
             var contentString = html;
             var marker = new google.maps.Marker({
                 position: latlng,
-                icon: gicons[color],
-                shadow: iconShadow,
+//                icon: gicons[color],
+//                shadow: iconShadow,
                 draggable:true,
                 map: map,
                 title: name,
@@ -96,11 +100,13 @@
             });
             
             google.maps.event.addListener(marker, "mouseover", function() {
-                marker.setIcon(gicons["yellow"]);
+//                marker.setIcon(gicons["yellow"]);
+                marker.setIcon();
             });
             
             google.maps.event.addListener(marker, "mouseout", function() {
-                marker.setIcon(gicons["blue"]);
+//                marker.setIcon(gicons["blue"]);
+                marker.setIcon();
             });
 
             google.maps.event.addListener(marker, 'dragend', function(event) { 

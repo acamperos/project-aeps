@@ -504,7 +504,7 @@ public class ActionFer extends BaseAction {
             if (sowing != null) {
                 dateSowing = sowing.getDateSow();
                 String dmySow  = new SimpleDateFormat("dd/MM/yyyy").format(sowing.getDateSow());
-		
+
                 if (!dmySow.equals("") && fer.getDateFer()!=null) {
 
                     Integer valDiffBef = GlobalFunctions.compareDateBeforeSowing(fer.getDateFer(), sowing.getDateSow());
@@ -512,9 +512,9 @@ public class ActionFer extends BaseAction {
                     if (valDiffBef==2 && valDiffAff==2) {
                         addFieldError("fer.dateFer", "Dato invalido");                
                         addActionError("Se ingreso una fecha de aplicación que no se encuentra 6 meses antes de la siembra o 10 meses despues de la siembra ("+dmySow+")");
-                    }				
+                    }
 
-                }	
+                }
             }
             
             if (chemFert!=null) {
@@ -530,14 +530,14 @@ public class ActionFer extends BaseAction {
                                 int cont = 0;
                                 for (ChemicalElements chem : ferCheTemp.getAdditionalsElem()) {
                                     if (chem.getValueCheEle()!=null) {
-                                        entry = true;					
-                                    }				
+                                        entry = true;
+                                    }
 
                                     if (chem.getValueCheEle()!=null && (chem.getValueCheEle()<0 || chem.getValueCheEle()>100)) {
                                         addFieldError("chemFert["+contFer+"].additionalsElem["+cont+"].valueCheEle", "Dato invalido");
-                                        errorCom = true;					
+                                        errorCom = true;
                                     }                                
-                                }		
+                                }
 
                                 if (errorCom) {
                                     addActionError("Se ingresaron composiciones invalidas, por favor ingresar valores entre 0 y 100");
@@ -747,7 +747,7 @@ public class ActionFer extends BaseAction {
                                     chem.setChemicalElements(elem);
                                     chem.setChemicalFertilizers(cheFer);
                                     chem.setPercentageCheFerCom(elem.getValueCheEle());
-                                    Double quant = (ferCheTemp.getAmountProductUsedCheFer()*elem.getValueCheEle())/100;		
+                                    Double quant = (ferCheTemp.getAmountProductUsedCheFer()*elem.getValueCheEle())/100;
 
                                     chem.setRawElementQuantityCheFerCom(quant);
                                     session.saveOrUpdate(chem);

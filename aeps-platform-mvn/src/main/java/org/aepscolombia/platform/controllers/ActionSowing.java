@@ -214,7 +214,7 @@ public class ActionSowing extends BaseAction {
             if (sowing.getGenotypes().getIdGen()!=null && sowing.getGenotypes().getIdGen()==1000000) {
                 required.put("sowing.otherGenotypeSow", sowing.getOtherGenotypeSow());
             }
-	
+
             if (typeCrop==1) {
               required.put("sowing.genotypesSowing.idGenSow", sowing.getGenotypesSowing().getIdGenSow());
               required.put("maize.seedsColors.idSeeCol", maize.getSeedsColors().getIdSeeCol());

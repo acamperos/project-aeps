@@ -35,7 +35,7 @@ public class Users  implements java.io.Serializable {
     public Users() {
     }
 
-	
+
     public Users(String nameUserUsr, String passwordUsr, String saltUsr, Date lastInUsr, String codValidationUsr, Integer status, Integer createdBy) {
         this.nameUserUsr = nameUserUsr;
         this.passwordUsr = passwordUsr;

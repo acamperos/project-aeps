@@ -79,6 +79,7 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tb3_a" data-toggle="tab"><s:property value="getText('text.link.report')" /></a></li>
                             <li><a href="#tb3_b" data-toggle="tab"><s:property value="getText('text.link.info')" /></a></li>
+                            <li><a href="#tb3_c" data-toggle="tab"><s:property value="getText('text.link.guide')" /></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tb3_a">
@@ -87,6 +88,24 @@
                             </div>
                             <div class="tab-pane" id="tb3_b">
                                 <pre><s:property value="getText('text.description.info')" /></pre>
+                            </div>
+                            <div class="tab-pane" id="tb3_c">
+                                <div class="control-group">
+                                    <s:text name="%{getText('text.title.guide')}"/>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="row-fluid">
+                                            <div class="span3">
+                                                <a href="http://www.open-aeps.org/RASTA.pdf"><div class="img img-rasta"></div></a>
+                                                <s:text name="%{getText('text.link.guidedownload')}"/>  
+                                            </div>
+                                            <div class="span8">
+                                                <s:text name="%{getText('text.description.guide')}"/>                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
                             </div>
                         </div>
                     </div>

@@ -27,8 +27,8 @@ public class SfGuardUserDao {
         String sql = "";        
 
         if (idUser!=null || (username!=null && !username.equals(""))) {
-            sql += "select usr.id, usr.email_address, usr.first_name, usr.last_name, usr.algorithm, usr.salt, usr.password,"; 	
-            sql += " usr.is_super_admin, usr.last_login, usr.username, usr.is_active, usr.created_by, usr.updated_by,";  	
+            sql += "select usr.id, usr.email_address, usr.first_name, usr.last_name, usr.algorithm, usr.salt, usr.password,";
+            sql += " usr.is_super_admin, usr.last_login, usr.username, usr.is_active, usr.created_by, usr.updated_by,";
             sql += " usr.created_at, usr.updated_at, usr.deleted_at, usr.deleted_by, usr.can_login";  
     //        sql += "select usr.id_usr, usr.name_user_usr, usr.password_usr, usr.last_in_usr, usr.cod_validation_usr, usr.status, usr.created_by";
             sql += " from sf_guard_user usr";
@@ -43,7 +43,7 @@ public class SfGuardUserDao {
             if (password!=null && !password.equals("")) {
                 sql += " and usr.password='"+password+"'";
             }  
-            System.out.println("sql->"+sql);
+//        System.out.println("sql->"+sql);
 
             try {
                 tx = session.beginTransaction();

@@ -251,15 +251,15 @@ public class ActionMon extends BaseAction {
             if (sowing != null) {
                 dateSowing = sowing.getDateSow();
                 String dmySow  = new SimpleDateFormat("dd/MM/yyyy").format(sowing.getDateSow());
-		
+
                 if (!dmySow.equals("") && mon.getDateMon()!=null) {
                     Integer valDiffAff = GlobalFunctions.compareDateAfterSowing(mon.getDateMon(), sowing.getDateSow(), 0);
                     if (valDiffAff==2) {
                         addFieldError("mon.dateMon", "Dato invalido");                
                         addActionError("Se ingreso una fecha de monitoreo que no se encuentra dentro de los 10 meses despues de la siembra ("+dmySow+")");
-                    }				
+                    }
 
-                }	
+                }
             }
 
             if (mon.getMonitorPestsMon()==null && mon.getMonitorDiseasesMon()==null && mon.getMonitorWeedsMon()==null) {

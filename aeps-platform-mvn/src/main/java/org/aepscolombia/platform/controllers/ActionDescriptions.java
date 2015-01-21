@@ -205,18 +205,18 @@ public class ActionDescriptions extends BaseAction {
 //            if (sowing != null) {
 //                dateSowing = sowing.getDateSow();
 //                String dmySow  = new SimpleDateFormat("dd/MM/yyyy").format(sowing.getDateSow());
-//		
+//﻿  ﻿  
 ////                if (sowing.getDateSow()!=null && prep.getDatePrep()!=null) {
 //                if (!dmySow.equals("") && desPro.getDateDesPro()!=null) {
 //
 //                    Integer valDiffAff = GlobalFunctions.compareDateBeforeSowing(desPro.getDateDesPro(), sowing.getDateSow());
 //                    if (valDiffAff==2) {
-//        //				$fails[]  = $prefix.'date_harvest_crop';
+//        //﻿  ﻿  ﻿  ﻿  $fails[]  = $prefix.'date_harvest_crop';
 //                        addFieldError("resMan.dateResMan", "Dato invalido");                
 //                        addActionError("Se ingreso una fecha de trabajo de mas de 6 meses antes de la siembra ("+dmySow+")");
-//                    }				
+//                    }﻿  ﻿  ﻿  ﻿  
 //
-//                }	
+//                }﻿  
 //            }
             sowing=null;            
         }

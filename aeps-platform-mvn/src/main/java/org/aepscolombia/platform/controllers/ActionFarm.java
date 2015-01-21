@@ -1171,7 +1171,7 @@ public class ActionFarm extends BaseAction {
         
         state = farDao.deleteAllFarms(valSel, idEntSystem);
         if (state.equals("success")) {
-            info = "La finca ha sido borrada con exito";
+            info = "La o las finca(s) ha(n) sido borrada(s) con exito";
         } else if (state.equals("failure")) {
             info = "Fallo al momento de borrar una finca";
         }

@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com/wsdl/getservice.wsdl" uri="src/main/resources/jaxb/SigmaMovilService/getservice.wsdl"/>
 </catalog>

@@ -1051,7 +1051,7 @@ public class RastasDao
                 String emailUser = String.valueOf(data[3]);
                 
                 SfGuardUserDao sfDao = new SfGuardUserDao();
-                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                SfGuardUser sfUser   = sfDao.getUserByLogin(null, emailUser, "");
                 Integer idUserMobile = null;
                 if (sfUser!=null) {
                     idUserMobile = sfUser.getId().intValue();

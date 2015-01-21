@@ -1,11 +1,10 @@
-
 function setPropertyVal(url, nameData, valData, valName, valId, title, width, height) {
     var valAdd = $("#" + valData).val();
     if (valAdd == "") {
         alert("Debe tener un productor seleccionado previamente");
     } else {
         listInfo(url, nameData, valData, valName, valId, title, width, height);
-// 			$("#"+fieldFill).val(valAdd);
+// ﻿  ﻿  ﻿  $("#"+fieldFill).val(valAdd);
 //       alert(1)
 //       $("#"+fieldFill).html(valAdd);
 
@@ -19,7 +18,7 @@ function setPropertyVal(url, nameData, valData, valName, valId, title, width, he
         // if (obj.state == 'failure') {
         // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);
         // } else if (obj.state == 'success') { 
-        // }									
+        // }﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  
 
         // }
         // });
@@ -349,7 +348,7 @@ function setCropVal(url, field, fieldFill) {
         // if (obj.state == 'failure') {
         // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);
         // } else if (obj.state == 'success') { 
-        // }									
+        // }﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  
 
         // }
         // });
@@ -460,7 +459,7 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
     //                showWindow(title, width, height, obj.info);
     //                // $("#window-productor")
     //                // .button()
-    //                // .click(function() {				
+    //                // .click(function() {﻿  ﻿  ﻿  ﻿  
     //                // $( "#dialog-form" ).removeClass("hide");
     //                // });                   
     //            }
@@ -501,7 +500,7 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
 //                showWindow(title, width, height, obj.info);
 //                // $("#window-productor")
 //                // .button()
-//                // .click(function() {				
+//                // .click(function() {﻿  ﻿  ﻿  ﻿  
 //                // $( "#dialog-form" ).removeClass("hide");
 //                // });                   
 //            }
@@ -511,7 +510,7 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
 //
 //    // $("#window-productor")
 //    // .button()
-//    // .click(function() {				
+//    // .click(function() {﻿  ﻿  ﻿  ﻿  
 //    // // $( "#dialog-form" ).removeClass("hide");
 //    // // $( "#dialog-form" ).dialog( "open" );
 //    // });
@@ -955,11 +954,11 @@ function chargeValuesControls(url, valName, valSendId, valNameCon, valSenIdCon, 
 }
 
 function hideInformationControls(divPes, divWee, divDis, divChe, divOrg) {
-	$('#'+divPes).removeClass('hide').addClass('hide');
-	$('#'+divWee).removeClass('hide').addClass('hide');
-	$('#'+divDis).removeClass('hide').addClass('hide');
-	$('#'+divChe).removeClass('hide').addClass('hide');
-	$('#'+divOrg).removeClass('hide').addClass('hide');
+﻿  $('#'+divPes).removeClass('hide').addClass('hide');
+﻿  $('#'+divWee).removeClass('hide').addClass('hide');
+﻿  $('#'+divDis).removeClass('hide').addClass('hide');
+﻿  $('#'+divChe).removeClass('hide').addClass('hide');
+﻿  $('#'+divOrg).removeClass('hide').addClass('hide');
 }
 
 
@@ -1418,7 +1417,7 @@ function saveData(url, urlAction, formId, divShow)
 
 function sendForm(url, formId, message)
 {
-    // $(".bt_send").click(function() {		
+    // $(".bt_send").click(function() {﻿  ﻿  
     // var nombre = $(".nombre").val();
     // email = $(".email").val();
     // // validacion_email = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
@@ -1485,7 +1484,7 @@ function sendForm(url, formId, message)
 
         }
         // , error: function() {
-        // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);	
+        // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);﻿  
         // }
     });
     // alert(1)
@@ -1530,12 +1529,12 @@ function sendFormRasta(url, formId, divTable, message)
                 window.parent.closeWindow();
                 // $('#'+message).html(json.info);
                 // $('#'+message).focus();
-                // $("#"+formId)[0].reset();									
+                // $("#"+formId)[0].reset();﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  ﻿  
             }
 
         }
         // , error: function() {
-        // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);	
+        // $('.msg').text('Error').addClass('msg_error').fadeOut(1000);﻿  
         // }
     });
 }

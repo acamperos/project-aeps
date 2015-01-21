@@ -20,10 +20,13 @@ Any value defined here will override the pom.xml file value but is only applicab
         <netbeans.hint.j2eeVersion>1.7-web</netbeans.hint.j2eeVersion>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_NewWebService>http://localhost:8084/PuebaServices/NewWebService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_NewWebService>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_SfUserWebService>http://localhost:8083/aeps-plataforma-mvn/SfUserWebService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_SfUserWebService>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_service>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/service.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_service>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_services>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/services.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_services>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_index>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/smsapp.sigmamovil.com_443/wsdl/getservice.wsdl/index.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_index>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_getservice_5f_1>file:/C:/Users/jfrodriguez/Documents/NetBeansProjects/aeps-platform-mvn/src/wsdl/getservice.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_getservice_5f_1>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_sigmaservices_5f_2>file:/C:/Users/jfrodriguez/Documents/sigmaservices.wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_sigmaservices_5f_2>
+        <org-netbeans-modules-css-prep.sass_2e_compiler_2e_options/>
+        <org-netbeans-modules-css-prep.less_2e_mappings>/less:/css</org-netbeans-modules-css-prep.less_2e_mappings>
+        <org-netbeans-modules-css-prep.less_2e_enabled>false</org-netbeans-modules-css-prep.less_2e_enabled>
+        <org-netbeans-modules-css-prep.sass_2e_mappings>/scss:/css</org-netbeans-modules-css-prep.sass_2e_mappings>
+        <org-netbeans-modules-css-prep.sass_2e_enabled>false</org-netbeans-modules-css-prep.sass_2e_enabled>
+        <org-netbeans-modules-css-prep.less_2e_compiler_2e_options/>
+        <org-netbeans-modules-web-clientproject-api.js_2e_libs_2e_folder>scripts/js/jquery/jquery-ui/ui/i18n</org-netbeans-modules-web-clientproject-api.js_2e_libs_2e_folder>
+        <org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_deploy_2e_server>Tomcat</org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_deploy_2e_server>
     </properties>
 </project-shared-configuration>

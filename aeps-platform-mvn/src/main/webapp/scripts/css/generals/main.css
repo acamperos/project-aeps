@@ -819,7 +819,7 @@ body {
     text-decoration: none;
 }
 
-#clients .client .client1 {
+.client1 {
     /*background: url("../../../img/client1.png") 0 -75px;*/
     background: url("../../../img/logo-ciat.png") no-repeat;
     background-size: 100%;
@@ -910,4 +910,10 @@ body {
     background-image: linear-gradient(to bottom, #CB683B, #CB683B);
     color: #FFFFFF;
 }
+
+.img-rasta {
+    background: url("../../../img/rasta.png") 41% no-repeat;
+    background-size: 100%;
+    height: 300px;
+} 
 

@@ -57,7 +57,7 @@ public class ProducersDao
         sql += " e.email_2_ent, e.in_association_ent, e.id_project_ent, e.status, e.validation_number_ent, m.id_department_mun,";
         sql += " m.id_mun, e.first_name_1_ent, e.first_name_2_ent, e.last_name_1_ent, e.last_name_2_ent";
         sql += " from producers p";
-        sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";	
+        sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";
         sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";
         sql += " where e.status=1";
         if (id!=null) {
@@ -193,8 +193,8 @@ public class ProducersDao
         }
         sql += " from producers p";        
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";       
-        sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";		
-        sql += " inner join log_entities le on (le.id_object_log_ent=p.id_pro and le.table_log_ent='producers' and le.action_type_log_ent='C')";		
+        sql += " inner join municipalities m on (m.id_mun=e.id_municipality_ent)";
+        sql += " inner join log_entities le on (le.id_object_log_ent=p.id_pro and le.table_log_ent='producers' and le.action_type_log_ent='C')";
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
@@ -377,7 +377,7 @@ public class ProducersDao
         sql += "select count(p.id_pro), p.id_entity_pro";
         sql += " from producers p";
         sql += " inner join entities e on (p.id_entity_pro=e.id_ent)";
-        sql += " inner join log_entities le on (le.id_object_log_ent=p.id_pro and le.table_log_ent='producers' and le.action_type_log_ent='C')";		
+        sql += " inner join log_entities le on (le.id_object_log_ent=p.id_pro and le.table_log_ent='producers' and le.action_type_log_ent='C')";
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
@@ -535,13 +535,13 @@ public class ProducersDao
             }
         }
         sql += " and le.id_object_log_ent not in (";
-        sql += "	select le.id_object_log_ent from log_entities le ";
+        sql += "﻿  select le.id_object_log_ent from log_entities le ";
         if (entType.equals("3")) {
-            sql += "	inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
-            sql += "	inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += "	inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += "﻿  inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
+            sql += "﻿  inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += "﻿  inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
         }
-        sql += "	where le.action_type_log_ent = 'D' AND le.table_log_ent = 'producers'";
+        sql += "﻿  where le.action_type_log_ent = 'D' AND le.table_log_ent = 'producers'";
         if (!entType.equals("3") && args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
         } else {
@@ -612,10 +612,10 @@ public class ProducersDao
         String sql = "";
         String state = "failure";
 
-        sql += "select usr.id_ent, usr.id_project_ent, usr.entity_type_ent, usr.document_number_ent, usr.document_type_ent, usr.document_issue_place_ent,"; 	
-        sql += "usr.name_ent, usr.in_association_ent, usr.email_ent, usr.email_2_ent, usr.address_ent, usr.id_municipality_ent,"; 	
-        sql += "usr.cellphone2_ent, usr.phone_ent, usr.cellphone_ent, usr.status, usr.gender_ent, usr.civil_status_ent,"; 	
-        sql += "usr.validation_number_ent, usr.education_level_ent, usr.date_of_birth_ent, usr.first_name_1_ent, usr.person_type_ent,"; 	
+        sql += "select usr.id_ent, usr.id_project_ent, usr.entity_type_ent, usr.document_number_ent, usr.document_type_ent, usr.document_issue_place_ent,";
+        sql += "usr.name_ent, usr.in_association_ent, usr.email_ent, usr.email_2_ent, usr.address_ent, usr.id_municipality_ent,";
+        sql += "usr.cellphone2_ent, usr.phone_ent, usr.cellphone_ent, usr.status, usr.gender_ent, usr.civil_status_ent,";
+        sql += "usr.validation_number_ent, usr.education_level_ent, usr.date_of_birth_ent, usr.first_name_1_ent, usr.person_type_ent,";
         sql += "usr.first_name_2_ent, usr.last_name_1_ent, usr.last_name_2_ent, usr.agent_name_ent, usr.page_link_ent, usr.created_by";
         sql += " from entities usr";
         if (!valSel.equals("")) sql += " where usr.status=1 and usr.id_ent in ("+valSel+")";

@@ -73,7 +73,7 @@
 <part name="user" type="xsd:string"/>
 <part name="password" type="xsd:string"/>
 <part name="teldestino" type="xsd:string"/>
-<part name="mensaje" type="xsd:string"/>
+<part name="mensaje" type="xsd:string"/>
 </message>
 <message name="newSendSMSResponse">
 <part name="return" type="tns:WSResSendSMS"/>
@@ -106,13 +106,7 @@
 <message name="getExtendedSMSInfoResponse">
 <part name="return" type="tns:WSResInfoX"/>
 </message>
-    <wsdl:message name="NewOperationRequest">
-    	<wsdl:part name="NewOperationRequest" type="xsd:string"></wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="NewOperationResponse">
-    	<wsdl:part name="NewOperationResponse" type="xsd:string"></wsdl:part>
-    </wsdl:message>
-    <portType name="SigmaMovilServicePortType">
+<portType name="SigmaMovilServicePortType">
 <operation name="newSendSMS">
 <documentation>
 Envia un SMS a diferentes destinatarios (celulares)
@@ -136,8 +130,8 @@ Programa el envio de un SMS a diferentes destinatarios (celulares)
 <documentation>Consulta el estado de tus envios</documentation>
 <input message="tns:getExtendedSMSInfoRequest"/>
 <output message="tns:getExtendedSMSInfoResponse"/>
-</operation>
-    </portType>
+</operation>
+</portType>
 <binding name="SigmaMovilServiceBinding" type="tns:SigmaMovilServicePortType">
 <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
 <operation name="newSendSMS">

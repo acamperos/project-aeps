@@ -740,7 +740,7 @@ public class ActionRasta extends BaseAction {
 //                System.out.println("horizon->"+horizon);
 //                if ((horizon.getNumeroHorizonteHorRas()<0) && (horizon.getEspesorHorRas()<0) && (horizon.getColorSecoHorRas()<0) && (horizon.getColorHumedoHorRas()<0) && (horizon.getTexturesId()<0) && (horizon.getResistenciasRompimientoId()<0)) {
                 if ((horizon.getNumeroHorizonteHorRas()!=null && horizon.getNumeroHorizonteHorRas()>0) && (horizon.getEspesorHorRas()!=null && horizon.getEspesorHorRas()>0) && ((horizon.getColorSecoHorRas()!=null && horizon.getColorSecoHorRas()>0) || (horizon.getColorHumedoHorRas()!=null && horizon.getColorHumedoHorRas()>0)) && (horizon.getTextures()!=null) && (horizon.getResistenciasRompimiento()!=null)) {
-                    entry = false;					
+                    entry = false;
                 }
 //                System.out.println("horizon.getColorSecoHorRas()->"+horizon.getColorSecoHorRas());
 
@@ -845,7 +845,7 @@ public class ActionRasta extends BaseAction {
                     }
                     addFieldError("additionalsAtrib["+i+"].textures", "");
                     addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "");            
-//                    $fails[] = $prefix.'horizontes_'.$index.'_num_horizonte';				
+//                    $fails[] = $prefix.'horizontes_'.$index.'_num_horizonte';
 //                    cont++;
                     i++;
                 }
@@ -859,7 +859,7 @@ public class ActionRasta extends BaseAction {
                     addFieldError("additionalsAtrib["+i+"].colorSecoHorRas", "");
                     addFieldError("additionalsAtrib["+i+"].colorHumedoHorRas", "");
                     addFieldError("additionalsAtrib["+i+"].textures", "");
-                    addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "");         		
+                    addFieldError("additionalsAtrib["+i+"].resistenciasRompimiento", "");
                 }
                 addActionError("Se debe ingresar espesores de maximo 150 centimetros");   
             }

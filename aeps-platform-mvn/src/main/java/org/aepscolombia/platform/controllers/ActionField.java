@@ -541,7 +541,7 @@ public class ActionField extends BaseAction {
 
 //                if (length_property) {    
                     
-//                }			
+//                }﻿  ﻿  ﻿  
 
 //            } else if (option_geo_lot == 2) {
 
@@ -561,7 +561,7 @@ public class ActionField extends BaseAction {
 //                if ((latitude_seconds_lot<0 || latitude_seconds_lot>60)) {
 //                    addFieldError("latitude_seconds_lot", "Dato invalido");
 //                    addActionError("Se ingreso una latitud en segundos invalida, por favor ingresar un valor entre 0 y 60");
-//                }		
+//                }﻿  ﻿  
             
             }
             
@@ -1099,7 +1099,7 @@ public class ActionField extends BaseAction {
         
         state = lotDao.deleteAllFields(valSel, idEntSystem);
         if (state.equals("success")) {
-            info  = "El lote ha sido borrado con exito";
+            info  = "El o los lote(s) ha(n) sido borrado(s) con exito";
         } else if (state.equals("failure")) {
             info  = "Fallo al momento de borrar un lote";
         }

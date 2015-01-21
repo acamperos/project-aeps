@@ -190,7 +190,7 @@ public class ActionHarvest extends BaseAction {
                 
 //                if (harv.getResultingProducts().getIdResPro()==1 || harv.getResultingProducts().getIdResPro()==4) {
 //                    required.put("harv.humidityPercentageHar", harv.getHumidityPercentageHar());
-//                }		
+//                }﻿  ﻿  
             } 
             
 //            System.out.println("value=>"+harv.getYieldHar());
@@ -228,7 +228,7 @@ public class ActionHarvest extends BaseAction {
 //                } catch (IllegalArgumentException ex) {
 //                }
 //            }
-		
+
 //                if (sowing.getDateSow()!=null && harv.getDateHar()!=null) {
                 if (!dmySow.equals("") && harv.getDateHar()!=null) {
 
@@ -236,21 +236,21 @@ public class ActionHarvest extends BaseAction {
                     if (valDiffAff==2) {
         //				$fails[]  = $prefix.'date_harvest_crop';
                         addFieldError("harv.dateHar", "Dato invalido");                
-                        if (typeCrop==3) {	
+                        if (typeCrop==3) {
                             addActionError("Se ingreso una fecha de la cosecha que no se encuentra dentro de los 18 meses despues de la siembra ("+dateSowing+")");
                         } else {
                             addActionError("Se ingreso una fecha de la cosecha que no se encuentra dentro de los 10 meses despues de la siembra ("+dateSowing+")");
-                        }	
-                    }				
+                        }
+                    }
 
-                }	
+                }
             }
 
             if (harv.getProductionHar()!=null && harv.getProductionHar()!=0) {
                 if (harv.getProductionHar()<0) {
                     addFieldError("harv.productionHar", "Dato invalido valor mayor a 0");
                     addActionError("Se ingreso una cantidad de produccion invalida, por favor ingresar un valor mayor a 0");
-                }	
+                }
             }
 
             if (harv.getYieldHar()!=null && harv.getYieldHar()!=0) {
@@ -264,7 +264,7 @@ public class ActionHarvest extends BaseAction {
                 if (harv.getHumidityPercentageHar()<0 || harv.getHumidityPercentageHar()>100) {
                     addFieldError("harv.humidityPercentageHar", "Dato invalido valor entre 0 y 100");
                     addActionError("Se ingreso un porcentaje de humedad invalido, por favor ingresar un valor entre 0 y 100");
-                }	
+                }
             }
             sowing=null;
         }

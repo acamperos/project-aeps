@@ -198,7 +198,7 @@ public class ActionResiduals extends BaseAction {
 
             if (resMan.getResidualsClasification().getIdResCla() == 1000000) {
                 required.put("resMan.otherResidualsManagementResMan", resMan.getOtherResidualsManagementResMan());
-            }           	               
+            }
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -219,7 +219,7 @@ public class ActionResiduals extends BaseAction {
             if (sowing != null) {
                 dateSowing = sowing.getDateSow();
                 String dmySow  = new SimpleDateFormat("dd/MM/yyyy").format(sowing.getDateSow());
-		
+
 //                if (sowing.getDateSow()!=null && prep.getDatePrep()!=null) {
                 if (!dmySow.equals("") && resMan.getDateResMan()!=null) {
 
@@ -228,9 +228,9 @@ public class ActionResiduals extends BaseAction {
         //				$fails[]  = $prefix.'date_harvest_crop';
                         addFieldError("resMan.dateResMan", "Dato invalido");                
                         addActionError("Se ingreso una fecha de trabajo de mas de 6 meses antes de la siembra ("+dmySow+")");
-                    }				
+                    }
 
-                }	
+                }
             }
             sowing=null;            
         }

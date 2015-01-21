@@ -209,7 +209,7 @@ public class ActionPrep extends BaseAction {
             required.put("prep.preparationsTypes.idPreTyp", prep.getPreparationsTypes().getIdPreTyp());            
 //            required.put("prep.residualsClasification.idResCla", prep.getResidualsClasification().getIdResCla());
             
-				
+
             if (prep.getPreparationsTypes().getIdPreTyp() == 1000000) {
                 required.put("prep.otherPreparationTypePrep", prep.getOtherPreparationTypePrep());
                 required.put("prep.passingsNumberPrep", prep.getPassingsNumberPrep());
@@ -221,7 +221,7 @@ public class ActionPrep extends BaseAction {
 
 //            if (prep.getResidualsClasification().getIdResCla() == 1000000) {
 //                required.put("prep.otherResidualsManagementPrep", prep.getOtherResidualsManagementPrep());
-//            }           	               
+//            }           
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -242,7 +242,7 @@ public class ActionPrep extends BaseAction {
             if (sowing != null) {
                 dateSowing = sowing.getDateSow();
                 String dmySow  = new SimpleDateFormat("dd/MM/yyyy").format(sowing.getDateSow());
-		
+
 //                if (sowing.getDateSow()!=null && prep.getDatePrep()!=null) {
                 if (!dmySow.equals("") && prep.getDatePrep()!=null) {
 
@@ -251,9 +251,9 @@ public class ActionPrep extends BaseAction {
         //				$fails[]  = $prefix.'date_harvest_crop';
                         addFieldError("prep.datePrep", "Dato invalido");                
                         addActionError("Se ingreso una fecha de trabajo de mas de 6 meses antes de la siembra ("+dmySow+")");
-                    }				
+                    }
 
-                }	
+                }
             }
 
             if (prep.getDepthPrep()!=null) {

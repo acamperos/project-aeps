@@ -129,7 +129,7 @@
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropFer'); closeWindow();"><i class="icon-ban-circle"></i>  Cancelar</button>
                     </div>
                 </fieldset>
-            </s:form>	
+            </s:form>
             <script>      
                 $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completeFer', function(event, data) {             

@@ -355,7 +355,7 @@
             $("#formCropSow_sowing_sitesDistanceSow").val(parsePointSeparated($("#formCropSow_sowing_sitesDistanceSow").val())); 
         </script>
     </fieldset>
-</s:form>	
+</s:form>
 <% String actExeSow   = String.valueOf(request.getAttribute("actExe")); %>
 <% if ((actExeSow=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeSow=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
     <div style="margin-bottom: 15px" id="divBtSowing">

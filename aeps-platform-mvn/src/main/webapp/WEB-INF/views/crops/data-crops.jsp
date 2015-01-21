@@ -35,7 +35,7 @@
                             <h4><s:property value="getText('text.establishment.crop')" /> <i class="colOne icon-chevron-down"></i></h4> 
                         </a>
                     </div>
-                    <div id="collapseOne" class="accordion-body collapse">				
+                    <div id="collapseOne" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <%@ include file="establishment-crop.jsp" %>
                         </div>
@@ -47,7 +47,7 @@
                             <h4><s:property value="getText('text.irrigation.crop')" /> <i class="colSix icon-chevron-down"></i></h4>
                         </a>
                     </div>
-                    <div id="collapseSix" class="accordion-body collapse">				
+                    <div id="collapseSix" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <%@ include file="irrigation.jsp" %>
                         </div>
@@ -59,7 +59,7 @@
                             <h4><s:property value="getText('text.nutrition.crop')" /> <i class="colTwo icon-chevron-down"></i></h4>
                         </a>
                     </div>
-                    <div id="collapseTwo" class="accordion-body collapse">				
+                    <div id="collapseTwo" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <%@ include file="nutrition.jsp" %>
                         </div>
@@ -71,7 +71,7 @@
                             <h4><s:property value="getText('text.fertilizationMan.crop')" /> <i class="colThree icon-chevron-down"></i></h4>
                         </a>
                     </div>
-                    <div id="collapseThree" class="accordion-body collapse">				
+                    <div id="collapseThree" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <%@ include file="protection.jsp" %>
                         </div>
@@ -83,7 +83,7 @@
                             <h4><s:property value="getText('text.monitoring.crop')" /> <i class="colFour icon-chevron-down"></i></h4>
                         </a>
                     </div>
-                    <div id="collapseFour" class="accordion-body collapse">				
+                    <div id="collapseFour" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <%@ include file="monitoring.jsp" %>
                         </div>
@@ -95,7 +95,7 @@
                             <h4><s:property value="getText('text.observations.crop')" /> <i class="colSeven icon-chevron-down"></i></h4> 
                         </a>
                     </div>
-                    <div id="collapseSeven" class="accordion-body collapse">				
+                    <div id="collapseSeven" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <%@ include file="descriptions.jsp" %>
                         </div>
@@ -110,8 +110,8 @@
                     <div id="collapseFive" class="accordion-body collapse">                        
                         <div class="accordion-inner">
                             <%@ include file="harvest.jsp" %>                            
-                        </div>				
-                    </div>				
+                        </div>
+                    </div>
                 </div>      
             </div>               
         </div>   

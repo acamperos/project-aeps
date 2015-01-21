@@ -688,7 +688,7 @@ public class FieldsDao
                 String emailUser = String.valueOf(data[15]);
                 
                 SfGuardUserDao sfDao = new SfGuardUserDao();
-                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                SfGuardUser sfUser   = sfDao.getUserByLogin(null, emailUser, "");
                 Integer idUserMobile = null;
                 if (sfUser!=null) {
                     idUserMobile = sfUser.getId().intValue();

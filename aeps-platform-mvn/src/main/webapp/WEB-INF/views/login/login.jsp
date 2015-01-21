@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">
         <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>
         <!--<link rel="stylesheet" href="scripts/css/generals/main.css">-->
-        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	
+        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>﻿  
         <script type="text/javascript">            
             (function(a) {
                 a.fn.vAlign = function() {

@@ -203,7 +203,7 @@ public class ActionIrr extends BaseAction {
                 required.put("irr.dateIrr", irr.getDateIrr());
 //                required.put("irr.amountIrr", irr.getAmountIrr());
                 required.put("irr.irrigationsTypes.idIrrTyp", irr.getIrrigationsTypes().getIdIrrTyp());
-//            }           			       	               
+//            }           ﻿  ﻿  ﻿         ﻿                 
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -224,7 +224,7 @@ public class ActionIrr extends BaseAction {
             if (sowing != null) {
                 dateSowing = sowing.getDateSow();
                 String dmySow  = new SimpleDateFormat("dd/MM/yyyy").format(sowing.getDateSow());
-		
+
                 if (!dmySow.equals("") && irr.getDateIrr()!=null) {
 
                     Integer valDiffBef = GlobalFunctions.compareDateBeforeSowing(irr.getDateIrr(), sowing.getDateSow());
@@ -232,9 +232,9 @@ public class ActionIrr extends BaseAction {
                     if (valDiffBef==2 && valDiffAff==2) {
                         addFieldError("irr.dateIrr", "Dato invalido");                
                         addActionError("Se ingreso una fecha de riego que no se encuentra 6 meses antes de la siembra o 10 meses despues de la siembra ("+dmySow+")");
-                    }				
+                    }
 
-                }	
+                }
             }
 
             if (irr.getAmountIrr()!=null) {

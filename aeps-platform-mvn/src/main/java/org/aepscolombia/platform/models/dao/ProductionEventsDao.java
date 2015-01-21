@@ -1076,7 +1076,7 @@ public class ProductionEventsDao
                 String emailUser = String.valueOf(data[2]);
                 
                 SfGuardUserDao sfDao = new SfGuardUserDao();
-                SfGuardUser sfUser   = sfDao.getUserByLogin(emailUser, "");
+                SfGuardUser sfUser   = sfDao.getUserByLogin(null, emailUser, "");
                 Long idUserMobile    = null;
                 if (sfUser!=null) {
                     idUserMobile = sfUser.getId();

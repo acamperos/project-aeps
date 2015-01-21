@@ -1379,7 +1379,7 @@ public class ActionCrop extends BaseAction {
         
         state = cropDao.deleteAllCrops(valSel, idEntSystem);
         if (state.equals("success")) {
-            info  = "El cultivo ha sido borrado con exito";
+            info  = "El o los cultivo(s) ha(n) sido borrado(s) con exito";
         } else if (state.equals("failure")) {
             info  = "Fallo al momento de borrar un cultivo";
         }

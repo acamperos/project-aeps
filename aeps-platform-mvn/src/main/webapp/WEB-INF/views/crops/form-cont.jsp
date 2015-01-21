@@ -422,7 +422,7 @@
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropCon'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
                     </div>
                 </fieldset>
-            </s:form>	
+            </s:form>﻿  
             <script>                
                 $.ui.dialog.prototype._focusTabbable = function(){};
                 $.subscribe('completeCon', function(event, data) {             
