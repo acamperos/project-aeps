@@ -1,0 +1,1866 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>Lotes_maiz</name>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Antonio  Morales</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91004397</SimpleData>
+		<SimpleData name="ID_LOTE">203</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Carretera</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">7.485555556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.468333329999993</SimpleData>
+		<SimpleData name="ALTURA_LOT">112.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">3.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.46833333,7.485555556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Gustavo  Rueda Villavona</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:79449640</SimpleData>
+		<SimpleData name="ID_LOTE">205</SimpleData>
+		<SimpleData name="NOMBRE_LOT">La Palma</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">7.494444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.529444440000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">14.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.52944444,7.494444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Jos� Vicente Pati�o Sanchez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1101200300</SimpleData>
+		<SimpleData name="ID_LOTE">195</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Casa</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">7.485555556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.475833330000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">3.400000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.47583333,7.485555556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Evaristo  Pati�o Sanchez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91516168</SimpleData>
+		<SimpleData name="ID_LOTE">198</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Fondo</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.483055556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.473055560000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">17.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.47305556,7.483055556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Juan  Pati�o Sanchez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:9127314</SimpleData>
+		<SimpleData name="ID_LOTE">200</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Canal</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">7.468333333</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.468888890000002</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.46888889,7.468333333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Mariela  Dur�n  Mar�n</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:37875410</SimpleData>
+		<SimpleData name="ID_LOTE">202</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Embudo</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.496111111</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.528611110000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.52861111,7.496111111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Jos� Vicente Pati�o Sanchez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1101200300</SimpleData>
+		<SimpleData name="ID_LOTE">204</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Casa</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.445277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.454444440000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">114.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.45444444,7.445277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Gustavo  Rueda Villavona</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:79449640</SimpleData>
+		<SimpleData name="ID_LOTE">206</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Dos</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.429166667</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.418333329999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">112.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.41833333,7.429166667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Jose del Carmen  Pe�a Moreno</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:19208310</SimpleData>
+		<SimpleData name="ID_LOTE">123</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Uno</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.490277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.529444440000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">10.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.52944444,7.490277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Jos� Vicente Pati�o Sanchez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1101200300</SimpleData>
+		<SimpleData name="ID_LOTE">197</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Carretera</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.470555556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.472499999999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">17.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.4725,7.470555556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Evaristo  Pati�o Sanchez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91516168</SimpleData>
+		<SimpleData name="ID_LOTE">199</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Fondo</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.483055556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.473055560000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">110.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">17.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.47305556,7.483055556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Carlos Peluha</SimpleData>
+		<SimpleData name="PRODUCTOR">Luis Ariel Pe�a Dur�n</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:13749287</SimpleData>
+		<SimpleData name="ID_LOTE">201</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Uno</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">7.430555556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.418611110000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">115.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">8.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SABANA DE TORRES</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.41861111,7.430555556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">ADOLFO  KATO NIKAIDO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6348512</SimpleData>
+		<SimpleData name="ID_LOTE">31</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA TRINIDAD</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.539166667</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.072500000000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">930.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">11.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.0725,4.539166667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">ADOLFO  KATO NIKAIDO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6348512</SimpleData>
+		<SimpleData name="ID_LOTE">32</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA TRINIDAD</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.539166667</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.072500000000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">930.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">11.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.0725,4.539166667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">ALBEIRO  MONROY MONTOYA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16800937</SimpleData>
+		<SimpleData name="ID_LOTE">29</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA RANCHERA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.513888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.061111109999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">924.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">10.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.06111111,4.513888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">ALBEIRO  MONROY MONTOYA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16800937</SimpleData>
+		<SimpleData name="ID_LOTE">30</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA RANCHERA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.513888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.061111109999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">924.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">10.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.06111111,4.513888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">BERNARDO  MILLAN MAYOR</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6444135</SimpleData>
+		<SimpleData name="ID_LOTE">8</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.436666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.086944439999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">935.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">9.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.08694444,4.436666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">CELSO  ROJAS OSORIO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16800350</SimpleData>
+		<SimpleData name="ID_LOTE">25</SimpleData>
+		<SimpleData name="NOMBRE_LOT">PARCELA No 22</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.509722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.063333330000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">923.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">9.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.06333333,4.509722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">EDUARDO  MOLINA  ARCE</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:2584733</SimpleData>
+		<SimpleData name="ID_LOTE">22</SimpleData>
+		<SimpleData name="NOMBRE_LOT">BUENOS AIRES</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.514722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.057777779999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">931.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.05777778,4.514722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">EVELIO  VARELA GARCIA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6557330</SimpleData>
+		<SimpleData name="ID_LOTE">12</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA BODEGUITA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.446111111</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.082499999999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">933.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.0825,4.446111111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">hebert  mondragon mondragon</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16240314</SimpleData>
+		<SimpleData name="ID_LOTE">24</SimpleData>
+		<SimpleData name="NOMBRE_LOT">idilia dora</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.341944444</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.168333329999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">961.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">BOL?VAR</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.16833333,4.341944444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">HECTOR FABIO VARELA RUIZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:14740007</SimpleData>
+		<SimpleData name="ID_LOTE">17</SimpleData>
+		<SimpleData name="NOMBRE_LOT">MALAGANA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.476666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.101111110000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">933.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.10111111,4.476666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">HORACIO  RADA BACCA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6380891</SimpleData>
+		<SimpleData name="ID_LOTE">10</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA FRONTERA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.405</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.102777779999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">942.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">3.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.10277778,4.405</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">JHON FABIO GARCIA CLAVIJO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16550493</SimpleData>
+		<SimpleData name="ID_LOTE">16</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.476388889</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.099166670000002</SimpleData>
+		<SimpleData name="ALTURA_LOT">941.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.09916667,4.476388889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">JOSE IGNACIO CARRILLO SOTO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:14987170</SimpleData>
+		<SimpleData name="ID_LOTE">14</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA BARBOSA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.406388889</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.120277779999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">941.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.12027778,4.406388889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">JULIAN ALBERTO GUZMAN POSSO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16550065</SimpleData>
+		<SimpleData name="ID_LOTE">13</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.498611111</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.091944440000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">950.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">8.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.09194444,4.498611111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">Justiniano  Vasquez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:94225056</SimpleData>
+		<SimpleData name="ID_LOTE">9</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LAS BRISAS</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.429444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.112777780000002</SimpleData>
+		<SimpleData name="ALTURA_LOT">911.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.11277778,4.429444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">LUIS ALFONSO MOLINA GOMEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:2627553</SimpleData>
+		<SimpleData name="ID_LOTE">15</SimpleData>
+		<SimpleData name="NOMBRE_LOT">YARUMAL</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.473611111</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.098888889999998</SimpleData>
+		<SimpleData name="ALTURA_LOT">917.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.09888889,4.473611111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">LUIS FERNANDO QUICENO ARISTIZABAL</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:7529699</SimpleData>
+		<SimpleData name="ID_LOTE">21</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LAS MARGARITAS</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.519444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.005555560000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">970.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA VICTORIA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.00555556,4.519444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">MARIA FERNANDA ESCARRIA RUIZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1113779100</SimpleData>
+		<SimpleData name="ID_LOTE">19</SimpleData>
+		<SimpleData name="NOMBRE_LOT">PERIGORRON</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.476388889</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.097777780000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">949.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.09777778,4.476388889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">MARTHA LUCIA AYALA DE REYES</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:29768808</SimpleData>
+		<SimpleData name="ID_LOTE">11</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA CAMPI�A</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.405833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.125833330000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">941.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.12583333,4.405833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">NELSON  CLAVIJO QUINTANA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:16340386</SimpleData>
+		<SimpleData name="ID_LOTE">18</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA ALEJANDRA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.417222222</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.102777779999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">936.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ROLDANILLO</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.10277778,4.417222222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">PABLO EMILIO MESA TAPASCO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6244971</SimpleData>
+		<SimpleData name="ID_LOTE">23</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LAS BRISAS</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.514444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.058333329999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">942.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">3.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.05833333,4.514444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Gustavo lemos</SimpleData>
+		<SimpleData name="PRODUCTOR">YESID  GUTIERREZ GUTIERREZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:14690028</SimpleData>
+		<SimpleData name="ID_LOTE">27</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA GLORIA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.517777778</SimpleData>
+		<SimpleData name="LONGITUD_L">-76.062777780000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">928.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">10.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA UNI?N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-76.06277778,4.517777778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">RODRIGO  RODRIGUEZ GUARNIZO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93122804</SimpleData>
+		<SimpleData name="ID_LOTE">181</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.162777778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.925833330000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">373.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.100000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.92583333,4.162777778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">CARLOS JULIO GOMES</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93125878</SimpleData>
+		<SimpleData name="ID_LOTE">183</SimpleData>
+		<SimpleData name="NOMBRE_LOT">NATAIMA2-1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.7975</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.876666670000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">34.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.87666667,4.7975</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">EDGAR  LEAL</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93381729</SimpleData>
+		<SimpleData name="ID_LOTE">170</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.069166667</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.949722219999998</SimpleData>
+		<SimpleData name="ALTURA_LOT">369.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.94972222,4.069166667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">MONICA VIVIANA CARDENAS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1105681802</SimpleData>
+		<SimpleData name="ID_LOTE">187</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.808055556</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.891111109999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">367.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">20.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.89111111,4.808055556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">ALBEIRO  VEGA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:5863801</SimpleData>
+		<SimpleData name="ID_LOTE">172</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.155277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.933333329999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">360.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">14.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.93333333,4.155277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">HERMIDES  SANCHEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93117560</SimpleData>
+		<SimpleData name="ID_LOTE">189</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LAS PALMAS</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.164722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.919166669999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">374.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.91916667,4.164722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">ANIBAL  HERNANDEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93126221</SimpleData>
+		<SimpleData name="ID_LOTE">174</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.166111111</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.947500000000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">370.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">14.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.9475,4.166111111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">FERNANDO  OSUNA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93124193</SimpleData>
+		<SimpleData name="ID_LOTE">176</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.195</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.932500000000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">370.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.100000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.9325,4.195</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">JOSE HERMIDES FORERO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93124057</SimpleData>
+		<SimpleData name="ID_LOTE">178</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.896111111</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.896111110000007</SimpleData>
+		<SimpleData name="ALTURA_LOT">376.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.200000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.89611111,4.896111111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">CIRO HERNANDEZ CUBOS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:19136575</SimpleData>
+		<SimpleData name="ID_LOTE">180</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.2025</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.960833330000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">361.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.96083333,4.2025</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">WILLIAM  CARDENAS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93125434</SimpleData>
+		<SimpleData name="ID_LOTE">182</SimpleData>
+		<SimpleData name="NOMBRE_LOT">nataima lote 2-9b</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.798888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.882222220000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">358.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.88222222,4.798888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">CELINA   CARDENAS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1111111111</SimpleData>
+		<SimpleData name="ID_LOTE">184</SimpleData>
+		<SimpleData name="NOMBRE_LOT">2-Jan</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.169722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.891944440000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">370.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.800000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.89194444,4.169722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">MILTON   CARDENAS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93127153</SimpleData>
+		<SimpleData name="ID_LOTE">168</SimpleData>
+		<SimpleData name="NOMBRE_LOT">MARRA�ONES ICA  5-1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.313333333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.819444439999998</SimpleData>
+		<SimpleData name="ALTURA_LOT">384.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">25.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.81944444,4.313333333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">GUSTAVO  ARTUNDUAGA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93123976</SimpleData>
+		<SimpleData name="ID_LOTE">186</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.153055556</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.949722219999998</SimpleData>
+		<SimpleData name="ALTURA_LOT">366.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.600000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.94972222,4.153055556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">JULIO  BARRERO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93121041</SimpleData>
+		<SimpleData name="ID_LOTE">171</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.154444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.933055560000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">357.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.300000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.93305556,4.154444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">SIXTO   SANCHEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93115134</SimpleData>
+		<SimpleData name="ID_LOTE">188</SimpleData>
+		<SimpleData name="NOMBRE_LOT">CURAR CASA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.169722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.921666669999993</SimpleData>
+		<SimpleData name="ALTURA_LOT">3800.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.92166667,4.169722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">MISAEL  CARDOZO CARVAJAL</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93116428</SimpleData>
+		<SimpleData name="ID_LOTE">173</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.165833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.938888890000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">359.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">17.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.93888889,4.165833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">MILTON   CARDENAS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93127153</SimpleData>
+		<SimpleData name="ID_LOTE">175</SimpleData>
+		<SimpleData name="NOMBRE_LOT">5-Jan</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.765555556</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.950000000000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">384.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">25.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.95,4.765555556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">ANDRES MAURICIO OLIVAR QUINTERO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1070592294</SimpleData>
+		<SimpleData name="ID_LOTE">177</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.730833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.858333329999994</SimpleData>
+		<SimpleData name="ALTURA_LOT">380.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.100000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.85833333,4.730833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Hernando sabogal</SimpleData>
+		<SimpleData name="PRODUCTOR">RAUL  HERRAN</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:93128232</SimpleData>
+		<SimpleData name="ID_LOTE">179</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.1675</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.924999999999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">360.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.800000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">ESPINAL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.925,4.1675</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Jose Gabriel ospina</SimpleData>
+		<SimpleData name="PRODUCTOR">JORGE  ROBINSON LONDO�O ZAPATA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:98559221</SimpleData>
+		<SimpleData name="ID_LOTE">158</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA AGUACATERA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.265222222</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.379333329999994</SimpleData>
+		<SimpleData name="ALTURA_LOT">2150.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1400.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN VICENTE FERRER</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.37933333,6.265222222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Jose Gabriel ospina</SimpleData>
+		<SimpleData name="PRODUCTOR">LEONEL  CASTA�O</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3562732</SimpleData>
+		<SimpleData name="ID_LOTE">160</SimpleData>
+		<SimpleData name="NOMBRE_LOT">COMERCIAL</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.239277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.355666670000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">2199.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">18.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN VICENTE FERRER</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.35566667,6.239277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Jose Gabriel ospina</SimpleData>
+		<SimpleData name="PRODUCTOR">JESUS DAIRO HENAO MARIN</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:70286799</SimpleData>
+		<SimpleData name="ID_LOTE">157</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA ALAJA CASA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.260972222</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.366833330000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">2199.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">22.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN VICENTE FERRER</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.36683333,6.260972222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Jose Gabriel ospina</SimpleData>
+		<SimpleData name="PRODUCTOR">PASTOR EMILIO ALZATE</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:70753420</SimpleData>
+		<SimpleData name="ID_LOTE">159</SimpleData>
+		<SimpleData name="NOMBRE_LOT">CHAPA</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.257138889</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.366638890000004</SimpleData>
+		<SimpleData name="ALTURA_LOT">2215.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN VICENTE FERRER</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.36663889,6.257138889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">CARLOS HERNANDO ARAGON CRESPO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:14885400</SimpleData>
+		<SimpleData name="ID_LOTE">165</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">-4.3</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.996660000000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">1106.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">40.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CAICEDONIA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.99666,-4.3</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">CARLOS HERNANDO ARAGON CRESPO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:14885400</SimpleData>
+		<SimpleData name="ID_LOTE">33</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.35137</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.811779999999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">1167.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">60.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CAICEDONIA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.81178,4.35137</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">JORGE  GONZALEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:9807682</SimpleData>
+		<SimpleData name="ID_LOTE">35</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.4678</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.821100000000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">1240.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">35.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA TEBAIDA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.8211,4.4678</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">DAVID  MORENO MU�OZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:94254827</SimpleData>
+		<SimpleData name="ID_LOTE">20</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.43943</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.857380000000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">1221.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA TEBAIDA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.85738,4.43943</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">JOSE OLMEDO MARIN ARIAS</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:18412562</SimpleData>
+		<SimpleData name="ID_LOTE">26</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.34766</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.799189999999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">1100.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">30.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CAICEDONIA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.79919,4.34766</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">JORGE GUILLERMO RAMIREZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:9807656</SimpleData>
+		<SimpleData name="ID_LOTE">28</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.3442</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.796679999999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">1113.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">40.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">LA TEBAIDA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.79668,4.3442</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Juan Pablo Garzon</SimpleData>
+		<SimpleData name="PRODUCTOR">ALBERTO ARNOBIO FORERO LEON</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:11389111</SimpleData>
+		<SimpleData name="ID_LOTE">34</SimpleData>
+		<SimpleData name="NOMBRE_LOT">1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">4.354137</SimpleData>
+		<SimpleData name="LONGITUD_L">-75.814970000000002</SimpleData>
+		<SimpleData name="ALTURA_LOT">1172.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CAICEDONIA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-75.81497,4.354137</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">EDGAR  ROMERO SUAREZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:1100949505</SimpleData>
+		<SimpleData name="ID_LOTE">131</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.613333333</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.149722220000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">1624.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14972222,6.613333333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">VALERIO  ALBINO ALBINO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91043206</SimpleData>
+		<SimpleData name="ID_LOTE">133</SimpleData>
+		<SimpleData name="NOMBRE_LOT">EL HORNO</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.610277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135277779999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">1599.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13527778,6.610277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">ERNESTO  ROMERO DELGADO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:5581821</SimpleData>
+		<SimpleData name="ID_LOTE">135</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.608888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135555560000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">1598.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13555556,6.608888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">LUIS EDUARDO NARI�O</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91065078</SimpleData>
+		<SimpleData name="ID_LOTE">137</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.601666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135833329999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">1583.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">VILLANUEVA</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13583333,6.601666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">TERESA  JIMENEZ JIMENEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:27991293</SimpleData>
+		<SimpleData name="ID_LOTE">139</SimpleData>
+		<SimpleData name="NOMBRE_LOT">EL ALTO</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.615</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135833329999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">1620.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13583333,6.615</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">NILSO  GALVIS GONZALEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91073740</SimpleData>
+		<SimpleData name="ID_LOTE">141</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOS NARANJOS</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.612222222</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.145555560000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">1627.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14555556,6.612222222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">EXPEDITO  GOMEZ GOMEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:13637607</SimpleData>
+		<SimpleData name="ID_LOTE">126</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.615277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.148333330000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">1640.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14833333,6.615277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">JUAN CARLOS CARDOZO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91075922</SimpleData>
+		<SimpleData name="ID_LOTE">143</SimpleData>
+		<SimpleData name="NOMBRE_LOT">EL PASTAL</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.609722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.142222219999994</SimpleData>
+		<SimpleData name="ALTURA_LOT">1636.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14222222,6.609722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">CIRO ANTONIO  GOMEZ GOMEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:5581381</SimpleData>
+		<SimpleData name="ID_LOTE">128</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.6125</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.148611110000004</SimpleData>
+		<SimpleData name="ALTURA_LOT">1640.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14861111,6.6125</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">JUAN CARLOS CARDOZO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91075922</SimpleData>
+		<SimpleData name="ID_LOTE">145</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA CORRALEJA</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.609444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.143055559999993</SimpleData>
+		<SimpleData name="ALTURA_LOT">1633.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14305556,6.609444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">CARLOS ALBERTO ROMERO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:5743724</SimpleData>
+		<SimpleData name="ID_LOTE">130</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.611666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.148055560000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">1638.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14805556,6.611666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">EMILIO  ROMERO SUAREZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91080696</SimpleData>
+		<SimpleData name="ID_LOTE">132</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 2</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.611944444</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135000000000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">1610.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.135,6.611944444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">EDUARDO  ROMERO PATI�O</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91075314</SimpleData>
+		<SimpleData name="ID_LOTE">134</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.613611111</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135277779999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">1593.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13527778,6.613611111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">CECILIA  ROMERO SUAREZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:37900004</SimpleData>
+		<SimpleData name="ID_LOTE">136</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LAS FLORES</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.607222222</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.135277779999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">1606.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.250000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13527778,6.607222222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">RAMIRO  ROMERO ROMERO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:5744065</SimpleData>
+		<SimpleData name="ID_LOTE">138</SimpleData>
+		<SimpleData name="NOMBRE_LOT">EL PLAN</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.601666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.142499999999998</SimpleData>
+		<SimpleData name="ALTURA_LOT">1586.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.1425,6.601666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">MAURICIO  JIMENEZ JIMENEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91073827</SimpleData>
+		<SimpleData name="ID_LOTE">140</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA BATEA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.601666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.138055559999998</SimpleData>
+		<SimpleData name="ALTURA_LOT">1607.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.250000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13805556,6.601666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">MYRIAM  JIMENEZ JIMENEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:37899133</SimpleData>
+		<SimpleData name="ID_LOTE">142</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 1</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">6.601666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.146944439999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">1631.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14694444,6.601666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">BERNARDA  GOMEZ DE GOMEZ</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:27992079</SimpleData>
+		<SimpleData name="ID_LOTE">127</SimpleData>
+		<SimpleData name="NOMBRE_LOT">EL TANQUE</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.615833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.147222220000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">1641.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14722222,6.615833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">JUAN CARLOS CARDOZO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:91075922</SimpleData>
+		<SimpleData name="ID_LOTE">144</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LA LAGUNA</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.610555556</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.139722219999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">1634.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.500000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.13972222,6.610555556</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Leilan Bermudez</SimpleData>
+		<SimpleData name="PRODUCTOR">HUGO ALBERTO BARRAGAN DELGADO</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:13637664</SimpleData>
+		<SimpleData name="ID_LOTE">129</SimpleData>
+		<SimpleData name="NOMBRE_LOT">LOTE 2</SimpleData>
+		<SimpleData name="TIPO_LOT">Propio</SimpleData>
+		<SimpleData name="LATITUD_LO">6.615277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-73.148611110000004</SimpleData>
+		<SimpleData name="ALTURA_LOT">1637.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">0.750000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SAN GIL</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-73.14861111,6.615277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Arcadio  Yepes</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:288168</SimpleData>
+		<SimpleData name="ID_LOTE">146</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.492777778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.716388890000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">537.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">10.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71638889,4.492777778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Ana Cecilia Villamil D�?az</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:20611050</SimpleData>
+		<SimpleData name="ID_LOTE">163</SimpleData>
+		<SimpleData name="NOMBRE_LOT">35A</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.498611111</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.710833330000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">533.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71083333,4.498611111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Pedro Julioi Zabala L�pez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:11290919</SimpleData>
+		<SimpleData name="ID_LOTE">148</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Villa Martha</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.495277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.722222220000006</SimpleData>
+		<SimpleData name="ALTURA_LOT">470.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">9.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.72222222,4.495277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Roberto  R�?os</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:421278</SimpleData>
+		<SimpleData name="ID_LOTE">150</SimpleData>
+		<SimpleData name="NOMBRE_LOT">La Guayacona</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.5</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.707777780000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">529.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70777778,4.5</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Gustavo  Bernal</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3208872</SimpleData>
+		<SimpleData name="ID_LOTE">62</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 10</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.517777778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.706388889999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">400.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70638889,4.517777778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Gilberto  Barbosa</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:455444</SimpleData>
+		<SimpleData name="ID_LOTE">152</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Los Naranjuelos</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.508888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.714722219999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">435.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71472222,4.508888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">David  Granados</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:7490435</SimpleData>
+		<SimpleData name="ID_LOTE">71</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Buenos Aires</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.528333333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.683333329999996</SimpleData>
+		<SimpleData name="ALTURA_LOT">479.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">8.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.68333333,4.528333333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Jos� Guillermo Cruz Duque</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3063031</SimpleData>
+		<SimpleData name="ID_LOTE">154</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 8</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.516944444</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.712222220000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">440.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71222222,4.516944444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Nohelia  Colmenares</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:21016177</SimpleData>
+		<SimpleData name="ID_LOTE">73</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 4</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.531944444</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.687777780000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">413.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.68777778,4.531944444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Nelson  Pulecio</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:11291182</SimpleData>
+		<SimpleData name="ID_LOTE">156</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 2</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.523333333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.701944440000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">388.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70194444,4.523333333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Rozo  Rico Villalba</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3207364</SimpleData>
+		<SimpleData name="ID_LOTE">75</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Guayacanes</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.514722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.710555560000003</SimpleData>
+		<SimpleData name="ALTURA_LOT">413.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71055556,4.514722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Rafael  Orjuela</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:79313104</SimpleData>
+		<SimpleData name="ID_LOTE">162</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela  # 3</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.521666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.704722219999994</SimpleData>
+		<SimpleData name="ALTURA_LOT">399.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70472222,4.521666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Mar�?a  Ascenci�n Lozano</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:20612149</SimpleData>
+		<SimpleData name="ID_LOTE">147</SimpleData>
+		<SimpleData name="NOMBRE_LOT">El Sombrerito</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.491388889</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.713611110000002</SimpleData>
+		<SimpleData name="ALTURA_LOT">569.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">9.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71361111,4.491388889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Calixto  Junco Mart�nez</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:6747512</SimpleData>
+		<SimpleData name="ID_LOTE">164</SimpleData>
+		<SimpleData name="NOMBRE_LOT">La  Rosita</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.536666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.694999999999993</SimpleData>
+		<SimpleData name="ALTURA_LOT">356.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">2.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.695,4.536666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Gonzalo  Castiblanco Soto</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3063177</SimpleData>
+		<SimpleData name="ID_LOTE">149</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.500277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.713611110000002</SimpleData>
+		<SimpleData name="ALTURA_LOT">495.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71361111,4.500277778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Manuel  Parra</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:80358219</SimpleData>
+		<SimpleData name="ID_LOTE">151</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.500833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.706111109999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">546.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70611111,4.500833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Ernesto  Pedreros</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:32071181</SimpleData>
+		<SimpleData name="ID_LOTE">63</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 18</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.519722222</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.685555559999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">469.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">4.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.68555556,4.519722222</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Jos� Guillermo Cruz Duque</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3063031</SimpleData>
+		<SimpleData name="ID_LOTE">153</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.516944444</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.712222220000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">440.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">7.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.71222222,4.516944444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Germ�n  Veloza</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:3072402</SimpleData>
+		<SimpleData name="ID_LOTE">72</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela #10</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.53</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.683055560000000</SimpleData>
+		<SimpleData name="ALTURA_LOT">473.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.68305556,4.53</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Evangelina  Marentes</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:51789633</SimpleData>
+		<SimpleData name="ID_LOTE">155</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 5</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.522777778</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.706111109999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">430.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">15.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70611111,4.522777778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Nohelia  Colmenares</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:21016177</SimpleData>
+		<SimpleData name="ID_LOTE">74</SimpleData>
+		<SimpleData name="NOMBRE_LOT">Parcela # 4</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.531944444</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.687777780000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">413.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">6.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.68777778,4.531944444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Luis Hernando Arevalo Reyes</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:79253311</SimpleData>
+		<SimpleData name="ID_LOTE">192</SimpleData>
+		<SimpleData name="NOMBRE_LOT">La Despensa</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.528333333</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.486666670000005</SimpleData>
+		<SimpleData name="ALTURA_LOT">1670.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">SUPAT?</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.48666667,4.528333333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Luis hernando Arevalo</SimpleData>
+		<SimpleData name="PRODUCTOR">Jorge  Cotrino</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:17141701</SimpleData>
+		<SimpleData name="ID_LOTE">161</SimpleData>
+		<SimpleData name="NOMBRE_LOT">El  Pentagono</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">4.518888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-74.706388889999999</SimpleData>
+		<SimpleData name="ALTURA_LOT">402.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">5.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">JERUSAL�N</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-74.70638889,4.518888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">CLIMAS  CORDERO MESTRA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78016654</SimpleData>
+		<SimpleData name="ID_LOTE">45</SimpleData>
+		<SimpleData name="NOMBRE_LOT">PALMAR</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">5.758888889</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.878611109999994</SimpleData>
+		<SimpleData name="ALTURA_LOT">12.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.87861111,5.758888889</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">LUIS  GENES</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78017701</SimpleData>
+		<SimpleData name="ID_LOTE">47</SimpleData>
+		<SimpleData name="NOMBRE_LOT">VILLA LUZ</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">5.766666667</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.847499999999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">19.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.8475,5.766666667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">ARNULFO  PERNETH</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78025580</SimpleData>
+		<SimpleData name="ID_LOTE">42</SimpleData>
+		<SimpleData name="NOMBRE_LOT">VILLA GABRIELA</SimpleData>
+		<SimpleData name="TIPO_LOT">Arrendado</SimpleData>
+		<SimpleData name="LATITUD_LO">5.765833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.879999999999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">13.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.88,5.765833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">ARNULFO  PERNETH</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78025580</SimpleData>
+		<SimpleData name="ID_LOTE">44</SimpleData>
+		<SimpleData name="NOMBRE_LOT">SANTA MARTA</SimpleData>
+		<SimpleData name="TIPO_LOT">Arrendado</SimpleData>
+		<SimpleData name="LATITUD_LO">5.764444444</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.877222219999993</SimpleData>
+		<SimpleData name="ALTURA_LOT">12.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.87722222,5.764444444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">CLIMAS  CORDERO MESTRA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78016654</SimpleData>
+		<SimpleData name="ID_LOTE">46</SimpleData>
+		<SimpleData name="NOMBRE_LOT">DONDE FIDEL</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">5.759166667</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.876388890000001</SimpleData>
+		<SimpleData name="ALTURA_LOT">16.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.87638889,5.759166667</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">MARIA   PASTRANA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:25845395</SimpleData>
+		<SimpleData name="ID_LOTE">51</SimpleData>
+		<SimpleData name="NOMBRE_LOT">VILLA MARIA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">5.7675</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.847499999999997</SimpleData>
+		<SimpleData name="ALTURA_LOT">14.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.8475,5.7675</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">ARNULFO  PERNETH</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78025580</SimpleData>
+		<SimpleData name="ID_LOTE">40</SimpleData>
+		<SimpleData name="NOMBRE_LOT">VILLA GABRIELA</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">5.765833333</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.879999999999995</SimpleData>
+		<SimpleData name="ALTURA_LOT">13.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.88,5.765833333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#Lotes_maiz">
+		<SimpleData name="Usuario">Pluvio Otero</SimpleData>
+		<SimpleData name="PRODUCTOR">JORGE   MESTRA</SimpleData>
+		<SimpleData name="PROD_CEDUL">CC:78023452</SimpleData>
+		<SimpleData name="ID_LOTE">43</SimpleData>
+		<SimpleData name="NOMBRE_LOT">VILLA LOURDES</SimpleData>
+		<SimpleData name="TIPO_LOT">No aplica</SimpleData>
+		<SimpleData name="LATITUD_LO">5.765277778</SimpleData>
+		<SimpleData name="LONGITUD_L">-80.879166670000004</SimpleData>
+		<SimpleData name="ALTURA_LOT">15.000000000000000</SimpleData>
+		<SimpleData name="AREA_LOT">1.000000000000000</SimpleData>
+		<SimpleData name="NOMBRE_MUN">CERET�</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>-80.87916667,5.765277778</coordinates></Point>
+  </Placemark>
+</Folder>
+<Schema name="Lotes_maiz" id="Lotes_maiz">
+	<SimpleField name="Usuario" type="string"></SimpleField>
+	<SimpleField name="PRODUCTOR" type="string"></SimpleField>
+	<SimpleField name="PROD_CEDUL" type="string"></SimpleField>
+	<SimpleField name="ID_LOTE" type="int"></SimpleField>
+	<SimpleField name="NOMBRE_LOT" type="string"></SimpleField>
+	<SimpleField name="TIPO_LOT" type="string"></SimpleField>
+	<SimpleField name="LATITUD_LO" type="string"></SimpleField>
+	<SimpleField name="LONGITUD_L" type="float"></SimpleField>
+	<SimpleField name="ALTURA_LOT" type="float"></SimpleField>
+	<SimpleField name="AREA_LOT" type="float"></SimpleField>
+	<SimpleField name="NOMBRE_MUN" type="string"></SimpleField>
+</Schema>
+</Document></kml>

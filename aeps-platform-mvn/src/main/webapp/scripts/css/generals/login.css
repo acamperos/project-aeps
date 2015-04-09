@@ -1,0 +1,108 @@
+    body {padding-top:40px;font-family: "Istok Web";}
+		
+    .clearfix { *zoom: 1 }
+    .clearfix:before,
+    .clearfix:after { display: table; line-height: 0; content: ""; }
+    .clearfix:after { clear: both }
+		
+    a {color:#368CA9;text-decoration:none}
+		
+    a:hover {text-decoration:underline}
+		
+    #login-wrapper {position:relative;border:1px solid #ddd;width:650px;margin:0 auto;background:#fff;padding:10px;-webkit-border-radius: 8px;-moz-border-radius: 8px;-ms-border-radius: 8px;border-radius: 8px}
+    
+    .main-col {float:left;padding:10px 0;position:relative;margin-left:230px;padding-left:40px;border-left:1px solid #ddd}
+		
+    .logo_img {position:absolute;top:50%;margin:-32px 0 0 -270px}
+		
+    .main-col .heading_main {margin-bottom:20px}
+		
+    .main-col label {display:block;font-size:15px;margin-bottom:4px;color:#888}
+		
+    .span5 h3 {
+			line-height: 20px;
+    }
+    
+    #pwdMeter .pwdText {
+			font-size: 11px;
+			font-weight: 700;
+			height: 20px;
+			left: -95px;
+			line-height: 20px;
+			position: absolute;
+			text-align: center;
+			text-transform: uppercase;
+			width: 100%;
+    }
+		
+    .warnField {
+			background: none repeat scroll 0 0 rgba(0, 0, 0, 0.1);
+			border-radius: 6px;
+			line-height: 1;
+			padding: 3px 4px 5px 5px;
+			width: 47%;
+    }
+		
+    .req:after { content: " *"; color: #ff0000; }
+		
+    .reqBef:before { content: "* "; color: #ff0000; }
+		
+    .main-col label.checkbox {margin-top:-6px;position:relative;color:#333}
+		
+    input[type="checkbox"] {margin:0 4px 0 0;margin-top: 1px \9;*margin-top: 0;line-height: normal;cursor: pointer;vertical-align:-2px}
+		
+    .submit_sect {padding-left:20px; padding-top:18px}
+		
+    .main-col label.error {font-weight:700;color:#b94a48;margin:-10px 0 10px 0;display:block}
+		
+    .main-col label.error + label.checkbox {margin-top:4px}
+		
+    .login_links {font-size:15px; padding-bottom:10px;} 
+		
+    .alert-success {
+			background-color: #DFF0D8;
+			border-color: #D6E9C6;
+			color: #468847;
+			width: 55%;
+    }
+		
+    .alert-error {
+			background-color: #F2DEDE;
+			border-color: #EED3D7;
+			color: #B94A48;
+			width: 55%;
+    }
+		
+    .alert-info {
+			background-color: #D9EDF7;
+			border-color: #BCE8F1;
+			color: #3A87AD;
+			width: 55%;
+    }   
+		
+    .btn-initial {
+			background-color: #AD68A3;
+			background-image: linear-gradient(to bottom, #AD68A3, #AD68A3);
+			background-repeat: repeat-x;
+			border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+			color: #FFFFFF;
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-initial:hover, .btn-initial:focus, .btn-initial:active, .btn-initial.active, .btn-initial.disabled, .btn-initial[disabled] {
+			background-color: #87398A;
+			background-image: linear-gradient(to bottom, #87398A, #87398A);
+			color: #FFFFFF;
+    }
+		
+    input, button, select, textarea {
+			font-family: "Istok Web";
+    }
+		
+    .arrowSituate {
+			top: 22px !important;
+    }
+    
+    #pwdMeter .pwdTextRes {
+			left: -25px;
+    }

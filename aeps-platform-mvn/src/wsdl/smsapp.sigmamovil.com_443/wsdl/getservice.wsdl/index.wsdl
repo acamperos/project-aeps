@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://smsapp.sigmamovil.com/soap/SigmaMovilService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://smsapp.sigmamovil.com/soap/SigmaMovilService">
+<types>
+<xsd:schema targetNamespace="http://smsapp.sigmamovil.com/soap/SigmaMovilService">
+<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+<xsd:complexType name="WSResSendSMS">
+<xsd:all>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="idMessage" type="xsd:string"/>
+<xsd:element name="desc" type="xsd:string"/>
+<xsd:element name="totalPhones" type="xsd:int"/>
+<xsd:element name="badPhones" type="xsd:int"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="WSResInfo">
+<xsd:all>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="filter" type="xsd:string"/>
+<xsd:element name="idmessage" type="xsd:string"/>
+<xsd:element name="date" type="xsd:string"/>
+<xsd:element name="count" type="xsd:int"/>
+<xsd:element name="desc" type="xsd:string"/>
+<xsd:element name="cellphones" type="tns:getInfoTicketArray"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="InfoPhone">
+<xsd:all>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="number" type="xsd:string"/>
+<xsd:element name="date" type="xsd:string"/>
+<xsd:element name="desc" type="xsd:string"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="getInfoTicketArray">
+<xsd:complexContent>
+<xsd:restriction base="SOAP-ENC:Array">
+<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:InfoPhone[]"/>
+</xsd:restriction>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="WSResInfoX">
+<xsd:all>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="filter" type="xsd:string"/>
+<xsd:element name="idmessage" type="xsd:string"/>
+<xsd:element name="date" type="xsd:string"/>
+<xsd:element name="count" type="xsd:int"/>
+<xsd:element name="desc" type="xsd:string"/>
+<xsd:element name="cellphones" type="tns:phoneInfoArrayX"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="InfoPhoneX">
+<xsd:all>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="number" type="xsd:string"/>
+<xsd:element name="date" type="xsd:string"/>
+<xsd:element name="desc" type="xsd:string"/>
+<xsd:element name="dlr" type="xsd:string"/>
+<xsd:element name="dlrDate" type="xsd:string"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="phoneInfoArrayX">
+<xsd:complexContent>
+<xsd:restriction base="SOAP-ENC:Array">
+<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:InfoPhoneX[]"/>
+</xsd:restriction>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>
+</types>
+<message name="newSendSMSRequest">
+<part name="user" type="xsd:string"/>
+<part name="password" type="xsd:string"/>
+<part name="teldestino" type="xsd:string"/>
+<part name="mensaje" type="xsd:string"/>
+</message>
+<message name="newSendSMSResponse">
+<part name="return" type="tns:WSResSendSMS"/>
+</message>
+<message name="programSMSRequest">
+<part name="user" type="xsd:string"/>
+<part name="password" type="xsd:string"/>
+<part name="teldestino" type="xsd:string"/>
+<part name="mensaje" type="xsd:string"/>
+<part name="fecha" type="xsd:string"/>
+</message>
+<message name="programSMSResponse">
+<part name="return" type="tns:WSResSendSMS"/>
+</message>
+<message name="getInfoSMSRequest">
+<part name="user" type="xsd:string"/>
+<part name="password" type="xsd:string"/>
+<part name="ticket" type="xsd:string"/>
+<part name="filter" type="xsd:string"/>
+</message>
+<message name="getInfoSMSResponse">
+<part name="return" type="tns:WSResInfo"/>
+</message>
+<message name="getExtendedSMSInfoRequest">
+<part name="user" type="xsd:string"/>
+<part name="password" type="xsd:string"/>
+<part name="ticket" type="xsd:string"/>
+<part name="filter" type="xsd:string"/>
+</message>
+<message name="getExtendedSMSInfoResponse">
+<part name="return" type="tns:WSResInfoX"/>
+</message>
+<portType name="SigmaMovilServicePortType">
+<operation name="newSendSMS">
+<documentation>
+Envia un SMS a diferentes destinatarios (celulares)
+</documentation>
+<input message="tns:newSendSMSRequest"/>
+<output message="tns:newSendSMSResponse"/>
+</operation>
+<operation name="programSMS">
+<documentation>
+Programa el envio de un SMS a diferentes destinatarios (celulares)
+</documentation>
+<input message="tns:programSMSRequest"/>
+<output message="tns:programSMSResponse"/>
+</operation>
+<operation name="getInfoSMS">
+<documentation>Consulta el estado de tus envios</documentation>
+<input message="tns:getInfoSMSRequest"/>
+<output message="tns:getInfoSMSResponse"/>
+</operation>
+<operation name="getExtendedSMSInfo">
+<documentation>Consulta el estado de tus envios</documentation>
+<input message="tns:getExtendedSMSInfoRequest"/>
+<output message="tns:getExtendedSMSInfoResponse"/>
+</operation>
+</portType>
+<binding name="SigmaMovilServiceBinding" type="tns:SigmaMovilServicePortType">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="newSendSMS">
+<soap:operation soapAction="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" style="rpc"/>
+<input>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="programSMS">
+<soap:operation soapAction="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" style="rpc"/>
+<input>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="getInfoSMS">
+<soap:operation soapAction="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" style="rpc"/>
+<input>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="getExtendedSMSInfo">
+<soap:operation soapAction="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" style="rpc"/>
+<input>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="https://smsapp.sigmamovil.com:443/wsdl/getservice?wsdl/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+</binding>
+<service name="SigmaMovilService">
+<port name="SigmaMovilServicePort" binding="tns:SigmaMovilServiceBinding">
+<soap:address location="https://smsapp.sigmamovil.com:443/wsdl/getservice"/>
+</port>
+</service>
+</wsdl:definitions>

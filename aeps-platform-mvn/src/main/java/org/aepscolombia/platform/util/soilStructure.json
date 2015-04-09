@@ -1,0 +1,1582 @@
+{
+    "form": {
+        "id": "NumberInt(6)",
+        "name": "Suelo RASTA",
+        "description": "",
+        "del": true,
+        "qid": "109",
+        "main_table": "rastas",
+        "HiddenFields": [
+            {
+                "id_survey_hidden_field": "13",
+                "target_table": "rastas",
+                "target_column": "numero_cajuela_ras",
+                "value": "1"
+            },
+            {
+                "id_survey_hidden_field": "14",
+                "target_table": "rastas",
+                "target_column": "status",
+                "value": "1"
+            }
+        ],
+        "Questions": [
+            {
+                "id": "NumberInt(109)",
+                "name": "Fecha",
+                "help": "Ingrese la fecha del rasta",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(2)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(3)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "fecha_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(110)",
+                "name": "Capturar posicion",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(3)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(5)",
+                "widget": "NumberInt(7)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "latitud_ras",
+                    "target_column_lng": "longitud_ras",
+                    "target_column_alt": "altitud_ras",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(112)",
+                "name": "1 - Pendiente (%)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(4)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(8)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(1000)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "pendiente_terreno_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(113)",
+                "name": "2 - Terreno circundante",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(5)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "terreno_circundante_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "95",
+                        "name": "plano o llano",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "96",
+                        "name": "ondulado",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "97",
+                        "name": "montañoso",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "98",
+                        "name": "ondulado y montañoso",
+                        "position": "NumberInt(4)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(114)",
+                "name": "2.1 - Posicion del perfil",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(6)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "posicion_perfil_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "99",
+                        "name": "meseta",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "100",
+                        "name": "cima",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "101",
+                        "name": "ladera convexa",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "102",
+                        "name": "ladera cóncava",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "103",
+                        "name": "ladera plana",
+                        "position": "NumberInt(5)"
+                    },
+                    {
+                        "id": "104",
+                        "name": "plano",
+                        "position": "NumberInt(6)"
+                    },
+                    {
+                        "id": "105",
+                        "name": "plano con ondulaciones",
+                        "position": "NumberInt(7)"
+                    },
+                    {
+                        "id": "106",
+                        "name": "pie de una elevación",
+                        "position": "NumberInt(8)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(115)",
+                "name": "Horizontes",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(7)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(6)",
+                "widget": "NumberInt(8)",
+                "survey_subform_id": "NumberInt(30)",
+                "restrictions": null,
+                "Subform": {
+                    "id": "NumberInt(30)",
+                    "name": null,
+                    "description": null,
+                    "del": true,
+                    "qid": null,
+                    "main_table": null,
+                    "HiddenFields": [
+                    ],
+                    "Questions": [
+                        {
+                            "id": "NumberInt(242)",
+                            "name": "Numero",
+                            "help": "",
+                            "subject": "Suelos",
+                            "position": "NumberInt(1)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(2)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "horizontes_rasta",
+                                "target_column": "numero_horizonte_hor_ras",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_rasta_hor_ras"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(116)",
+                            "name": "Espesor (cm)",
+                            "help": "",
+                            "subject": "Suelos",
+                            "position": "NumberInt(2)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(8)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "horizontes_rasta",
+                                "target_column": "espesor_hor_ras",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_rasta_hor_ras"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(117)",
+                            "name": "Color seco",
+                            "help": "",
+                            "subject": "Suelos",
+                            "position": "NumberInt(3)",
+                            "is_required": false,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(2)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": {
+                                "min": "NumberInt(1)",
+                                "max": "NumberInt(54)"
+                            },
+                            "Subform": null,
+                            "target": {
+                                "target_table": "horizontes_rasta",
+                                "target_column": "color_seco_hor_ras",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_rasta_hor_ras"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(118)",
+                            "name": "Color humedo",
+                            "help": "",
+                            "subject": "Suelos",
+                            "position": "NumberInt(4)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(2)",
+                            "widget": "NumberInt(6)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": {
+                                "min": "NumberInt(1)",
+                                "max": "NumberInt(54)"
+                            },
+                            "Subform": null,
+                            "target": {
+                                "target_table": "horizontes_rasta",
+                                "target_column": "color_humedo_hor_ras",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_rasta_hor_ras"
+                            },
+                            "Choices": [
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(119)",
+                            "name": "Textura",
+                            "help": "",
+                            "subject": "Suelos",
+                            "position": "NumberInt(5)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "horizontes_rasta",
+                                "target_column": "textura_hor_ras",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_rasta_hor_ras"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Arenoso (A)",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Limoso (L)",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Franco Limoso (FL)",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Franco (F)",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Franco Arenoso (FA)",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "6",
+                                    "name": "Areno Franco (AF)",
+                                    "position": "NumberInt(6)"
+                                },
+                                {
+                                    "id": "7",
+                                    "name": "Franco Arcilloso (FAr)",
+                                    "position": "NumberInt(7)"
+                                },
+                                {
+                                    "id": "8",
+                                    "name": "Arcillo Arenoso (ArA)",
+                                    "position": "NumberInt(8)"
+                                },
+                                {
+                                    "id": "9",
+                                    "name": "Arcillo Limoso (ArL)",
+                                    "position": "NumberInt(9)"
+                                },
+                                {
+                                    "id": "10",
+                                    "name": "Arcilloso (Ar)",
+                                    "position": "NumberInt(10)"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "NumberInt(120)",
+                            "name": "Resistencia al rompimiento",
+                            "help": "",
+                            "subject": "Suelos",
+                            "position": "NumberInt(6)",
+                            "is_required": true,
+                            "is_filterable": false,
+                            "data_type": "NumberInt(10)",
+                            "widget": "NumberInt(1)",
+                            "survey_subform_id": "NumberInt(0)",
+                            "restrictions": null,
+                            "Subform": null,
+                            "target": {
+                                "target_table": "horizontes_rasta",
+                                "target_column": "resistencia_rompimiento_hor_ras",
+                                "target_column_lng": "",
+                                "target_column_alt": "",
+                                "target_column_self": "id_rasta_hor_ras"
+                            },
+                            "Choices": [
+                                {
+                                    "id": "1",
+                                    "name": "Friable",
+                                    "position": "NumberInt(1)"
+                                },
+                                {
+                                    "id": "2",
+                                    "name": "Firme",
+                                    "position": "NumberInt(2)"
+                                },
+                                {
+                                    "id": "3",
+                                    "name": "Extremadamente firme",
+                                    "position": "NumberInt(3)"
+                                },
+                                {
+                                    "id": "4",
+                                    "name": "Blando",
+                                    "position": "NumberInt(4)"
+                                },
+                                {
+                                    "id": "5",
+                                    "name": "Duro",
+                                    "position": "NumberInt(5)"
+                                },
+                                {
+                                    "id": "6",
+                                    "name": "Extremadamente duro",
+                                    "position": "NumberInt(6)"
+                                },
+                                {
+                                    "id": "7",
+                                    "name": "Plastico",
+                                    "position": "NumberInt(7)"
+                                },
+                                {
+                                    "id": "8",
+                                    "name": "Muy plastico",
+                                    "position": "NumberInt(8)"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "target": {
+                    "target_table": "horizontes_rasta",
+                    "target_column": "id_rasta_hor_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(121)",
+                "name": "4 - pH",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(8)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(8)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(14)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "ph_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(123)",
+                "name": "5.1 - Profundidad Carbonatos (cm)",
+                "help": "Ingrese la profundidad de carbonatos en centimetros",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(9)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": {
+                    "min": "NumberInt(0)",
+                    "max": "NumberInt(300)"
+                },
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "profundidad_carbonatos_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(122)",
+                "name": "5 - Carbonatos",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(9)",
+                "is_required": true,
+                "is_filterable": true,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "carbonatos_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "125",
+                        "name": "no tiene",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "126",
+                        "name": "bajos a muy bajos",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "127",
+                        "name": "medios",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "128",
+                        "name": "altos",
+                        "position": "NumberInt(4)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(124)",
+                "name": "6.2 - Pedregosidad superficial rocas",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(9)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "rocas_superficie_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "129",
+                        "name": "sin rocas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "130",
+                        "name": "rocoso",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "131",
+                        "name": "muy rocoso",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(125)",
+                "name": "6.1 - Pedregosidad superficial piedras",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(9)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "piedras_superficie_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "132",
+                        "name": "sin piedras",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "133",
+                        "name": "pedregoso",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "134",
+                        "name": "muy pedregoso",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(126)",
+                "name": "6.4 - Pedregosidad en el Perfil rocas",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(9)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "rocas_perfil_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "135",
+                        "name": "sin rocas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "136",
+                        "name": "rocoso",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "137",
+                        "name": "muy rocoso",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(127)",
+                "name": "6.3 - Pedregosidad en el Perfil piedras",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(9)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "piedras_perfil_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "138",
+                        "name": "sin piedras",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "139",
+                        "name": "pedregoso",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "140",
+                        "name": "muy pedregoso",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(128)",
+                "name": "6.5 - Horizonte pedregoso o rocoso",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(10)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "horizonte_pedrogoso_rocoso_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(129)",
+                "name": "6.6 - Profundidad de horizonte pedregoso o rocoso (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(11)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "profundidad_horizonte_pedregoso_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(130)",
+                "name": "6.7 - Espesor de horizonte pedregoso o rocoso (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(12)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "espesor_horizonte_pedregoso_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(131)",
+                "name": "6.8 - Profundidad de primeras rocas o piedras (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(13)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "profundidad_primeras_piedras_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(132)",
+                "name": "7 - Capas endurecidas",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(14)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "capas_endurecidas_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(133)",
+                "name": "7.1 - Profundidad de capas endurecidas (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(15)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "prufundidad_capas_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(134)",
+                "name": "7.2 - Espesor de capas endurecidas (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(16)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "espesor_capa_endurecida_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(135)",
+                "name": "8 - Moteados",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(17)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "moteados_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(136)",
+                "name": "8.1 - Profundidad de moteados (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(18)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "profundidad_moteados_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(137)",
+                "name": "8.2 - Moteados mas bajo de 70cm",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(19)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "moteados_mas_70cm_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(138)",
+                "name": "9 - Estructura del suelo",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(20)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "estructura_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "149",
+                        "name": "granular",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "150",
+                        "name": "aterronada",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "151",
+                        "name": "prismática",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "152",
+                        "name": "columnar",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "153",
+                        "name": "laminar",
+                        "position": "NumberInt(5)"
+                    },
+                    {
+                        "id": "154",
+                        "name": "suelta o polvosa",
+                        "position": "NumberInt(6)"
+                    },
+                    {
+                        "id": "155",
+                        "name": "masiva",
+                        "position": "NumberInt(7)"
+                    },
+                    {
+                        "id": "250",
+                        "name": "sin estructura",
+                        "position": "NumberInt(8)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(139)",
+                "name": "10 - Erosion",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(21)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "erosion_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(140)",
+                "name": "11 - Moho",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(22)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "moho_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(141)",
+                "name": "12 - Costras duras",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(23)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "costras_duras_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "160",
+                        "name": "muy marcadas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "161",
+                        "name": "poco marcadas",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "162",
+                        "name": "no hay",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(142)",
+                "name": "13 - Sitio expuesto a sol",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(24)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "exposicion_sol_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "163",
+                        "name": "la mañana y la tarde",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "164",
+                        "name": "la mañana",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "165",
+                        "name": "la tarde",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(143)",
+                "name": "14 - Costras blancas",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(25)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "costras_blancas_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "166",
+                        "name": "muy marcadas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "167",
+                        "name": "poco marcadas",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "168",
+                        "name": "no hay",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(144)",
+                "name": "15 - Costras negras",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(26)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "costras_negras_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "169",
+                        "name": "muy marcadas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "170",
+                        "name": "poco marcadas",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "171",
+                        "name": "no hay",
+                        "position": "NumberInt(3)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(145)",
+                "name": "16 - Region seca",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(27)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "region_seca_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(146)",
+                "name": "17 - Raices vivas",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(28)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "raices_vivas_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(147)",
+                "name": "17.1 - Profundidad de raices vivas (cm)",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(29)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(2)",
+                "widget": "NumberInt(6)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "profundidad_raices_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                ]
+            },
+            {
+                "id": "NumberInt(148)",
+                "name": "18 - Crecimiento de las plantas afectadas",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(30)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "plantas_pequenas_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "176",
+                        "name": "poco afectadas",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "177",
+                        "name": "muy afectadas",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "178",
+                        "name": "plantas normales",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "179",
+                        "name": "no hay cultivo",
+                        "position": "NumberInt(4)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(149)",
+                "name": "19 - Mucha hojarasca",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(31)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "hojarasca_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(150)",
+                "name": "20 - Suelo es muy negro, muy blando",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(32)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "suelo_negro_blando_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(151)",
+                "name": "21 - Cuchillo entra sin ningún esfuerzo",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(33)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "cuchillo_primer_horizonte_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(152)",
+                "name": "22 - Cerca de agua subterránea muy superficial",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(34)",
+                "is_required": false,
+                "is_filterable": false,
+                "data_type": "NumberInt(10)",
+                "widget": "NumberInt(2)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "cerca_rios_quebradas_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "0",
+                        "name": "No",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "1",
+                        "name": "Si",
+                        "position": "NumberInt(2)"
+                    }
+                ]
+            },
+            {
+                "id": "NumberInt(153)",
+                "name": "23 - Recubrimiento vegetal del suelo",
+                "help": "",
+                "subject": "Caracteristicas y Observaciones",
+                "position": "NumberInt(35)",
+                "is_required": true,
+                "is_filterable": false,
+                "data_type": "NumberInt(9)",
+                "widget": "NumberInt(1)",
+                "survey_subform_id": "NumberInt(0)",
+                "restrictions": null,
+                "Subform": null,
+                "target": {
+                    "target_table": "rastas",
+                    "target_column": "recubrimiento_vegetal_ras",
+                    "target_column_lng": "",
+                    "target_column_alt": "",
+                    "target_column_self": ""
+                },
+                "Choices": [
+                    {
+                        "id": "188",
+                        "name": "muy bueno",
+                        "position": "NumberInt(1)"
+                    },
+                    {
+                        "id": "189",
+                        "name": "bueno",
+                        "position": "NumberInt(2)"
+                    },
+                    {
+                        "id": "190",
+                        "name": "regular",
+                        "position": "NumberInt(3)"
+                    },
+                    {
+                        "id": "191",
+                        "name": "espaciado",
+                        "position": "NumberInt(4)"
+                    },
+                    {
+                        "id": "192",
+                        "name": "sin cobertura",
+                        "position": "NumberInt(5)"
+                    }
+                ]
+            }
+        ]
+    }
+}	
