@@ -1,0 +1,1 @@
+En este sistema se va poder realizar capturas de información referentes a productores, fincas, lotes y cultivos, y a partir de esta generar información para la toma de decisiones.
