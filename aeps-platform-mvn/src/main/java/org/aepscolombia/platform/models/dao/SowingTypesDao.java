@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import org.aepscolombia.platform.models.entity.Entities;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -27,14 +28,23 @@ import org.aepscolombia.platform.util.HibernateUtil;
  */
 public class SowingTypesDao 
 {        
-    public List<SowingTypes> findAll() {
+    public List<SowingTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<SowingTypes> events = null;
         Transaction tx = null;
+        String sql  = "";        
+//        sql += " select d.id_sow_typ, d.name_sow_typ, d.country_sow_typ, d.status_sow_typ from sowing_types d";
+//        sql += " where d.status_sow_type=1";
+//        if (countryCode!=null && !countryCode.equals("")) {
+//            sql += " and d.country_sow_type='"+countryCode+"'";
+//        }
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from SowingTypes");
+//            Query query = session.createQuery("from SowingTypes");
+//            Query query = session.createSQLQuery(sql).addEntity("d", SowingTypes.class);
+            Query query = session.createQuery("from SowingTypes WHERE countrySowTyp.acronymIdCo = :country_code");
+            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -48,7 +58,7 @@ public class SowingTypesDao
         return events;
     }
     
-    public List<SowingTypes> findAllByTypeCrop(Integer idTypeCrop) {
+    public List<SowingTypes> findAllByTypeCrop(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -56,10 +66,13 @@ public class SowingTypesDao
         List<SowingTypes> event = null;
         Transaction tx = null;
 				
-        sql += " select d.id_sow_typ, d.name_sow_typ, d.status_sow_type from sowing_types d";
+        sql += " select d.id_sow_typ, d.name_sow_typ, d.status_sow_typ, d.country_sow_typ from sowing_types d";
         sql += " inner join sowing_types_crops_types pm on pm.id_sowing_type_sow_typ_cro=d.id_sow_typ";
         sql += " where d.status_sow_type=1";
         sql += " and pm.id_crop_type_sow_typ_cro="+idTypeCrop;
+        if (countryCode!=null && !countryCode.equals("")) {
+            sql += " and d.country_sow_type='"+countryCode+"'";
+        }
 				
         try {
             tx = session.beginTransaction();

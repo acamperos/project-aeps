@@ -85,10 +85,10 @@
         </div>
         </div>
         <% if (user != null) {%>
-        <script>
-            $('.homeCls').removeClass("hide");
-            $('.dashCls').addClass("hide");
-        </script>
+            <script>
+                $('.homeCls').removeClass("hide");
+                $('.dashCls').addClass("hide");
+            </script>
         <% }%>
     </body>
 </html>

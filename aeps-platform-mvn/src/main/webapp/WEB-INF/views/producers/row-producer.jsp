@@ -26,7 +26,7 @@
 <td><s:property value="phone" /></td>
 <td><s:property value="cellphone" /></td>
 <td><s:property value="e_mail_1" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/delete"))) { %>
     <% if (valAsig.equals("producer") || valAsig == "producer") {%>

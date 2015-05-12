@@ -88,6 +88,7 @@ public class ActionProfile extends BaseAction {
     private Integer numRas;
     private Integer numFie;
     private Integer numEve;
+    private String coCode="";
 
     public String getEmailUser() {
         return emailUser;
@@ -326,14 +327,17 @@ public class ActionProfile extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) ActionContext.getContext().getSession().get(APConstants.SESSION_USER);
 //        user = (Users) this.getSession().get(APConstants.SESSION_USER);
+        coCode = (String) ActionContext.getContext().getSession().get(APConstants.COUNTRY_CODE);
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
         ent = entDao.findById(idEntSystem);
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setDepartment_producer(new DepartmentsDao().findAll());
+        this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
+        this.setDepartment_producer(new DepartmentsDao().findAll(coCode));
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());         
         this.setTypeDocument("-1");
         this.setCity_producer(mun);
+//        user.setCountryUsr(null);
     }
     
 
@@ -552,7 +556,7 @@ public class ActionProfile extends BaseAction {
 //                String passRes = GlobalFunctions.generateSHA1(newPass, saltUsr);
                 Double salt = (Math.floor(Math.random()*999999+100000));
                 String saltUsr = GlobalFunctions.generateMD5(salt+user.getNameUserUsr());
-                String passRes = GlobalFunctions.generateMD5(saltUsr+newPass);
+                String passRes = GlobalFunctions.generateSHA1(saltUsr+this.getNewPass());
 
                 user.setSaltUsr(saltUsr);
                 user.setPasswordUsr(passRes);

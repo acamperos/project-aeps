@@ -33,8 +33,9 @@
         <div class="footer">
             <%@ include file="footer.jsp" %>
         </div>
-        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/generals/functions.min.js"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/generals/functions.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.maskedinput.js"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.base64.min.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery-ui/ui/jquery-ui.js"></script>	

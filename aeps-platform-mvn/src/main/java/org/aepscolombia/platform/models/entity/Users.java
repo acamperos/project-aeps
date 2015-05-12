@@ -5,9 +5,12 @@ package org.aepscolombia.platform.models.entity;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,6 +34,7 @@ public class Users  implements java.io.Serializable {
     private Integer status;
     private Date lastInUsr;
     private Integer createdBy;
+    private IdiomCountry countryUsr;
 
     public Users() {
     }
@@ -119,6 +123,16 @@ public class Users  implements java.io.Serializable {
     
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_usr")
+    public IdiomCountry getCountryUsr() {
+        return this.countryUsr;
+    }
+    
+    public void setCountryUsr(IdiomCountry countryUsr) {
+        this.countryUsr = countryUsr;
     }
 
 }

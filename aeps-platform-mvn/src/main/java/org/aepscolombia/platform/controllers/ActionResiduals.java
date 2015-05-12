@@ -325,14 +325,18 @@ public class ActionResiduals extends BaseAction {
             resMan.setStatus(true);
             session.saveOrUpdate(resMan);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(resMan.getIdResMan());
-            log.setTableLogEnt("residuals_management");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);          
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, resMan.getIdResMan(), "residuals_management", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(resMan.getIdResMan());
+                log.setTableLogEnt("residuals_management");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }          
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -346,7 +350,7 @@ public class ActionResiduals extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

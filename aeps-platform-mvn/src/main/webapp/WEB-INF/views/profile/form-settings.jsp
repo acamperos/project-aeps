@@ -36,7 +36,7 @@
 														var mediumLogin = "";
 														var strongLogin = "";
 														var veryStrongLogin = "";
-														if(navigator.language=='es-ES' || navigator.language=='es') {
+														if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
 															veryWeakLogin = "Muy Debil";
 															weakLogin = "Debil";
 															mediumLogin = "Normal";

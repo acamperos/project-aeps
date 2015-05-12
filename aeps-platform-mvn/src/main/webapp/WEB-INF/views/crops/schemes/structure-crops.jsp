@@ -23,6 +23,8 @@
         <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
         <% UsersDao usrDao   = new UsersDao(); %>
         <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+        <% //String coCode     = user.getCountryUsr().getAcronymIdCo(); %>
+        <% String coCode     = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
         <div class="container" id="divDataInfoCrop">
             <%@ include file="../generals/data-crops.jsp" %>                 
         </div>             
@@ -41,18 +43,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix">
-                            <h4><s:property value="getText('link.irrigation.crop')" /> <i class="colSix icon-chevron-down"></i></h4>
-                        </a>
-                    </div>
-                    <div id="collapseSix" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                            <%@ include file="view-irrigations.jsp" %>
+                <% if (coCode.equals("NI")) { %>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+                                <h4><s:property value="getText('link.fertilizationMan.crop')" /> <i class="colThree icon-chevron-down"></i></h4>
+                            </a>
+                        </div>
+                        <div id="collapseThree" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <%@ include file="view-controls.jsp" %>
+                            </div>
+                        </div>
+                    </div>  
+                <% } else if (coCode.equals("CO")) { %>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix">
+                                <h4><s:property value="getText('link.irrigation.crop')" /> <i class="colSix icon-chevron-down"></i></h4>
+                            </a>
+                        </div>
+                        <div id="collapseSix" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <%@ include file="view-irrigations.jsp" %>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <% } %>
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
@@ -65,18 +82,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
-                            <h4><s:property value="getText('link.fertilizationMan.crop')" /> <i class="colThree icon-chevron-down"></i></h4>
-                        </a>
-                    </div>
-                    <div id="collapseThree" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                            <%@ include file="view-controls.jsp" %>
+                <% if (coCode.equals("NI")) { %>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix">
+                                <h4><s:property value="getText('link.irrigation.crop')" /> <i class="colSix icon-chevron-down"></i></h4>
+                            </a>
+                        </div>
+                        <div id="collapseSix" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <%@ include file="view-irrigations.jsp" %>
+                            </div>
                         </div>
                     </div>
-                </div>  
+                <% } else if (coCode.equals("CO")) { %>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+                                <h4><s:property value="getText('link.fertilizationMan.crop')" /> <i class="colThree icon-chevron-down"></i></h4>
+                            </a>
+                        </div>
+                        <div id="collapseThree" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <%@ include file="view-controls.jsp" %>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>                  
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">

@@ -1,22 +1,27 @@
 package org.aepscolombia.platform.models.dao;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
@@ -32,6 +37,10 @@ import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Clase FieldsDao
@@ -520,7 +529,7 @@ public class FieldsDao
         String entType = String.valueOf(args.get("entType"));
         
         sql += "select n.id_fie as ID_LOTE, f.id_far as ID_FINCA, p.id_pro as ID_PROD, e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, n.name_fie as LOTE,";
-        sql += "ft.name_fie_typ as CONTRATO, n.latitude_fie as LATITUD, n.longitude_fie as LONGITUD, n.altitude_fie as ALTITUD, n.area_fie as AREA, m.name_mun as MUNICIPIO";
+        sql += "ft.name_fie_typ as CONTRATO, n.latitude_fie as LATITUD, n.longitude_fie as LONGITUD, n.altitude_fie as ALTITUD, n.area_fie as AREA, m.name_mun as MUNICIPIO, d.name_dep as DEPARTAMENTO";
         sql += " from fields n";
         sql += " inner join field_types ft on ft.id_fie_typ=n.contract_type_fie";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro = n.id_fie";
@@ -572,11 +581,18 @@ public class FieldsDao
 //        System.out.println("sql=>"+sql);
         try {
             tx = session.beginTransaction();
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            File myFileTemp = new File("fieldsTemp.xls");
+            FileInputStream fis = new FileInputStream(myFileTemp);
+            
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);            
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            
+            Map<String, Object[]> dataSheet = new TreeMap<String, Object[]>();
+//            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
             Query query  = session.createSQLQuery(sql);
             events = query.list();  
         
-            String[] val = {
+            Object[] val = {
                 "ID_LOTE",
                 "ID_FINCA",
                 "ID_PROD",
@@ -589,28 +605,64 @@ public class FieldsDao
                 "LONGITUD",
                 "ALTITUD",
                 "AREA",
-                "MUNICIPIO"
+                "MUNICIPIO",
+                "DEPARTAMENTO"
             };
-            writer.writeNext(val);
+//            writer.writeNext(val);
+            dataSheet.put("1", val);
+            Integer cont = 2;
             for (Object[] data : events) {
-                String[] valTemp = {
-                    String.valueOf(data[0]),
-                    String.valueOf(data[1]),
-                    String.valueOf(data[2]),
-                    String.valueOf(data[3]),
-                    String.valueOf(data[4]),
-                    String.valueOf(data[5]),
-                    String.valueOf(data[6]),
-                    String.valueOf(data[7]),
-                    String.valueOf(data[8]),
-                    String.valueOf(data[9]),
-                    String.valueOf(data[10]),
-                    String.valueOf(data[11]),
-                    String.valueOf(data[12])
+                Object[] valTemp = {
+                    data[0],
+                    data[1],
+                    data[2],
+                    data[3],
+                    data[4],
+                    data[5],
+                    data[6],
+                    data[7],
+                    data[8],
+                    data[9],
+                    data[10],
+                    data[11],
+                    data[12],
+                    data[13]
                 };
-                writer.writeNext(valTemp);
+//                writer.writeNext(valTemp);
+                dataSheet.put(""+cont, valTemp);
+                cont++;
             }
-            writer.close();
+//            writer.close();
+            Set<String> keyset = dataSheet.keySet();
+            int rownum = 0;
+            for (String key : keyset)
+            {
+                Row row = sheet.createRow(rownum++);
+                Object [] objArr = dataSheet.get(key);
+                int cellnum = 0;
+                for (Object obj : objArr)
+                {
+                    Cell cell = row.createCell(cellnum++);
+                    if (obj instanceof String) {
+                        cell.setCellValue((String) obj);
+                    } else if (obj instanceof Boolean) {
+                        cell.setCellValue((Boolean) obj);
+                    } else if (obj instanceof Timestamp) {
+                        cell.setCellValue((Timestamp) obj);
+                    } else if (obj instanceof Date) {
+                        cell.setCellValue((Date) obj);
+                    } else if (obj instanceof Double) {
+                        cell.setCellValue((Double) obj);
+                    } else if (obj instanceof Integer) {
+                        cell.setCellValue((Integer) obj);
+                    } 
+                }
+            }
+            File myFile = new File(fileName);
+            if (!myFile.exists()) myFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(myFile);
+            workbook.write(out);
+            out.close();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

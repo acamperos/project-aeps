@@ -65,7 +65,7 @@
 												var strongRess = "";
 												var veryStrongRess = "";
 												
-												if(navigator.language=='es-ES' || navigator.language=='es') {
+												if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
 													veryWeakRess = "Muy Debil";
 													weakRess = "Debil";
 													mediumRess = "Normal";
@@ -99,6 +99,7 @@
                             completeFormChange('', 'formRestCon', event.originalEvent.request.responseText);
                             setTimeout( function() {
                                 document.location = "signin.action";
+//                                document.location = "aeps/signin.action";
                             }, 3000);
                         });
                     </script>

@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ public class SeedsInoculations  implements java.io.Serializable {
 
      private int idSeeIno;
      private String nameSeeIno;
+     private IdiomCountry countrySeeIno;
 
     public SeedsInoculations() {
     }
@@ -48,6 +51,16 @@ public class SeedsInoculations  implements java.io.Serializable {
     
     public void setNameSeeIno(String nameSeeIno) {
         this.nameSeeIno = nameSeeIno;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_see_ino")
+    public IdiomCountry getCountrySeeIno() {
+        return this.countrySeeIno;
+    }
+    
+    public void setCountrySeeIno(IdiomCountry countrySeeIno) {
+        this.countrySeeIno = countrySeeIno;
     }
 
 }

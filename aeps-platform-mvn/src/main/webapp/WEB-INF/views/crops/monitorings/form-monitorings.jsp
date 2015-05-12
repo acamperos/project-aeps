@@ -30,9 +30,9 @@
                                     <s:property value="getText('text.datemonitoring.monitoring')" />:
                                 </label>
                                 <div class="date controls">
-                                    <s:date name="mon.dateMon" format="dd/MM/yyyy" var="dateTransformMon"/>
+                                    <s:date name="mon.dateMon" format="MM/dd/yyyy" var="dateTransformMon"/>
                                     <s:textfield name="mon.dateMon" value="%{#dateTransformMon}" readonly="true"/>
-                                    <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                                    <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
@@ -107,7 +107,7 @@
                         optSel('mon.monitorPestsMon', 'divMonPest');
                         optSel('mon.monitorDiseasesMon', 'divMonDisease');
                         optSel('mon.monitorWeedsMon', 'divMonWeed');
-                        $("#formCropMonGen_mon_dateMon").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropMonGen_mon_dateMon").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropMonGen_mon_dateMon").mask("99/99/9999", {placeholder: " "});
                     </script>
                     <div id="divBtMon">

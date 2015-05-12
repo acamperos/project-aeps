@@ -1,6 +1,7 @@
 package org.aepscolombia.platform.models.dao;
 
 import java.util.List;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.models.entity.TargetsTypes;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
@@ -50,8 +51,8 @@ public class TargetsTypesDao {
         TargetsTypes event = null;
         Transaction tx = null;
 				
-        sql += "select p.id_cro_typ, p.name_cro_typ, p.status_cro_typ";
-        sql += " from crops_types p";
+        sql += "select p.id_cro_typ, p.name_cro_typ, p.status_cro_typ, p.country_tar_typ";
+        sql += " from targets_types p";
         sql += " where p.id_cro_typ="+id;
         try {
             tx = session.beginTransaction();
@@ -76,7 +77,7 @@ public class TargetsTypesDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select id_cro_typ, name_cro_typ, status_cro_typ from documents_types");
+            Query query = session.createSQLQuery("select id_cro_typ, name_cro_typ, status_cro_typ, country_tar_typ from targets_types");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -90,7 +91,7 @@ public class TargetsTypesDao {
         return events;
     }
 
-    public List<TargetsTypes> findAll() {
+    public List<TargetsTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<TargetsTypes> events = null;
@@ -98,6 +99,8 @@ public class TargetsTypesDao {
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from TargetsTypes");
+//            Query query = session.createQuery("from TargetsTypes WHERE countryTarTyp.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class SeedsTypes  implements java.io.Serializable {
      private Integer idSeeTyp;
      private String nameSeeTyp;
      private boolean statusSeeTyp;
+     private IdiomCountry countrySeeTyp;
 
     public SeedsTypes() {
     }
@@ -60,6 +63,16 @@ public class SeedsTypes  implements java.io.Serializable {
     
     public void setStatusSeeTyp(boolean statusSeeTyp) {
         this.statusSeeTyp = statusSeeTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_see_typ")
+    public IdiomCountry getCountrySeeTyp() {
+        return this.countrySeeTyp;
+    }
+    
+    public void setCountrySeeTyp(IdiomCountry countrySeeTyp) {
+        this.countrySeeTyp = countrySeeTyp;
     }
 
 }

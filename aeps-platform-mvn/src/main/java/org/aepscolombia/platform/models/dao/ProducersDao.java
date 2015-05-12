@@ -6,6 +6,9 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -13,11 +16,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
@@ -30,6 +37,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Clase ProducersDao
@@ -517,13 +528,13 @@ public class ProducersDao
             }
         }
         sql += " and le.id_object_log_ent not in (";
-        sql += "﻿  select le.id_object_log_ent from log_entities le ";
+        sql += "  select le.id_object_log_ent from log_entities le ";
         if (entType.equals("3")) {
-            sql += "﻿  inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
-            sql += "﻿  inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += "﻿  inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += "  inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
+            sql += "  inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
+            sql += "  inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
         }
-        sql += "﻿  where le.action_type_log_ent = 'D' AND le.table_log_ent = 'producers'";
+        sql += "  where le.action_type_log_ent = 'D' AND le.table_log_ent = 'producers'";
         if (!entType.equals("3") && args.containsKey("idEntUser")) {
             sql += " and le.id_entity_log_ent="+args.get("idEntUser");
         } else {
@@ -536,14 +547,21 @@ public class ProducersDao
         }
         sql += ")";
         sql += " order by e.name_ent";
-//        System.out.println("sql=>"+sql);
+        System.out.println("sql=>"+sql);
         
         try {
             tx = session.beginTransaction();
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            File myFileTemp = new File("producersTemp.xls");
+            FileInputStream fis = new FileInputStream(myFileTemp);
+            
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);            
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            
+            Map<String, Object[]> dataSheet = new TreeMap<String, Object[]>();
+//            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
             Query query  = session.createSQLQuery(sql);
             events = query.list();  
-            String[] val = {
+            Object[] val = {
                 "ID_PROD",
                 "USUARIO",
                 "PRODUCTOR",
@@ -553,21 +571,55 @@ public class ProducersDao
                 "CORREO_ELE",
                 "DEPARTAMENTO"
             };
-            writer.writeNext(val);
+//            writer.writeNext(val);
+            dataSheet.put("1", val);
+            Integer cont = 2;
             for (Object[] data : events) {
-                String[] valTemp = {
-                    String.valueOf(data[0]),
-                    String.valueOf(data[1]),
-                    String.valueOf(data[2]),
-                    String.valueOf(data[3]),
-                    String.valueOf(data[4]),
-                    String.valueOf(data[5]),
-                    String.valueOf(data[6]),
-                    String.valueOf(data[7])
+                Object[] valTemp = {
+                    data[0],
+                    data[1],
+                    data[2],
+                    data[3],
+                    data[4],
+                    data[5],
+                    data[6],
+                    data[7]
                 };
-                writer.writeNext(valTemp);
+//                writer.writeNext(valTemp);
+                dataSheet.put(""+cont, valTemp);
+                cont++;
             }
-            writer.close();
+//            writer.close();
+            Set<String> keyset = dataSheet.keySet();
+            int rownum = 0;
+            for (String key : keyset)
+            {
+                Row row = sheet.createRow(rownum++);
+                Object [] objArr = dataSheet.get(key);
+                int cellnum = 0;
+                for (Object obj : objArr)
+                {
+                    Cell cell = row.createCell(cellnum++);
+                    if (obj instanceof String) {
+                        cell.setCellValue((String) obj);
+                    } else if (obj instanceof Boolean) {
+                        cell.setCellValue((Boolean) obj);
+                    } else if (obj instanceof Timestamp) {
+                        cell.setCellValue((Timestamp) obj);
+                    } else if (obj instanceof Date) {
+                        cell.setCellValue((Date) obj);
+                    } else if (obj instanceof Double) {
+                        cell.setCellValue((Double) obj);
+                    } else if (obj instanceof Integer) {
+                        cell.setCellValue((Integer) obj);
+                    } 
+                }
+            }
+            File myFile = new File(fileName);
+            if (!myFile.exists()) myFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(myFile);
+            workbook.write(out);
+            out.close();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

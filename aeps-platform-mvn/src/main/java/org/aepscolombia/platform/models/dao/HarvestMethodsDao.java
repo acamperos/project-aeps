@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.HarvestMethods;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -54,7 +55,7 @@ public class HarvestMethodsDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select acronym_doc_typ, name_doc_typ from harvest_methods");
+            Query query = session.createSQLQuery("select id_har_met, name_har_met from harvest_methods");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -68,7 +69,7 @@ public class HarvestMethodsDao {
         return events;
     }
 
-    public List<HarvestMethods> findAll() {
+    public List<HarvestMethods> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<HarvestMethods> events = null;
@@ -76,6 +77,8 @@ public class HarvestMethodsDao {
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from HarvestMethods");
+//            Query query = session.createQuery("from HarvestMethods WHERE countryHarMet.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

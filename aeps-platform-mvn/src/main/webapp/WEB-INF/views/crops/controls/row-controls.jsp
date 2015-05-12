@@ -1,4 +1,4 @@
-<s:date name="dateCon" format="dd/MM/yyyy" var="dateTransformRowCon"/>
+<s:date name="dateCon" format="MM/dd/yyyy" var="dateTransformRowCon"/>
 <td><s:property value="%{#dateTransformRowCon}" /></td>
 <td><s:property value="nameTarTyp" /></td>
 <td><s:property value="nameConTyp" /></td>
@@ -7,27 +7,29 @@
     <td><s:property value="orgCon" /><br />(<s:property value="getText('td.biologic.control')" />)</td>  
     <td><s:property value="doseCon" /></td>
 </s:if>
-<s:elseif test="%{conType==2}">
+<s:elseif test="%{conType==2 || conType==6}">
     <td><s:property value="chemCon" /><br />(<s:property value="getText('td.chemical.control')" />)</td>  
     <td><s:property value="doseCon" /></td>
 </s:elseif>
-<s:elseif test="%{conType==4}">
+<s:elseif test="%{conType==4 || conType==8}">
     <td>(<s:property value="getText('td.machined.control')" />)</td>  
     <td><s:property value="doseCon" /></td>    
 </s:elseif>
-<s:else>
+<s:elseif test="%{conType==5 || conType==9}">
     <td>(<s:property value="getText('td.manual.control')" />)</td>
     <td><s:property value="doseCon" /></td>    
-</s:else>
+</s:elseif>
 <td>
     <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify") || (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete"))) { %>
-        <div class="btn-group">
-            <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify")) { %>
-                <a class="btn btn-small btn-edit" title="<s:property value="getText('link.controledit.control')" />" onclick="viewForm('/crop/showCon.action?action=modify&idCrop=${idCrop}', 'idCon', ${idCon}, '<s:property value="getText('title.controledit.control')" />', 1050, 550);"><i class="icon-pencil"></i></a>
-            <% } %>
-            <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete")) { %>
-                <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.controldelete.control')" />" onclick="showDialogDelete(this, 'confirm_dialog_con', 'deleteCon.action?idCon=${idCon}', 'searchCon.action?idCrop=${idCrop}', 'divPro', 'divListPro');"><i class="icon-trash"></i></a>
-            <% } %>
-        </div>
+        <% if (entTypeProId!=3) { %>
+            <div class="btn-group">
+                <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/modify")) { %>
+                    <a class="btn btn-small btn-edit" title="<s:property value="getText('link.controledit.control')" />" onclick="viewForm('/crop/showCon.action?action=modify&idCrop=${idCrop}', 'idCon', ${idCon}, '<s:property value="getText('title.controledit.control')" />', 1050, 550);"><i class="icon-pencil"></i></a>
+                <% } %>
+                <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete")) { %>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.controldelete.control')" />" onclick="showDialogDelete(this, 'confirm_dialog_con', 'deleteCon.action?idCon=${idCon}', 'searchCon.action?idCrop=${idCrop}', 'divPro', 'divListPro');"><i class="icon-trash"></i></a>
+                <% } %>
+            </div>
+        <% } %>
     <% } %>
 </td>

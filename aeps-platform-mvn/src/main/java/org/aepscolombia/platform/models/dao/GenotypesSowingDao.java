@@ -15,6 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.GenotypesSowing;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -27,7 +28,7 @@ import org.aepscolombia.platform.util.HibernateUtil;
  */
 public class GenotypesSowingDao 
 {        
-    public List<GenotypesSowing> findAll() {
+    public List<GenotypesSowing> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<GenotypesSowing> events = null;
@@ -35,6 +36,8 @@ public class GenotypesSowingDao
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from GenotypesSowing");
+//            Query query = session.createQuery("from GenotypesSowing WHERE countryGenSow.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -48,7 +51,7 @@ public class GenotypesSowingDao
         return events;
     }
     
-    public List<GenotypesSowing> findAllByTypeCrop(Integer idTypeCrop) {
+    public List<GenotypesSowing> findAllByTypeCrop(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -56,12 +59,16 @@ public class GenotypesSowingDao
         List<GenotypesSowing> event = null;
         Transaction tx = null;
 				
-        sql += "select ms.id_gen_sow, ms.name_gen_sow, ms.status_gen_sow from genotypes_sowing ms";
+        sql += "select ms.id_gen_sow, ms.name_gen_sow, ms.status_gen_sow, ms.country_gen_sow from genotypes_sowing ms";
         sql += " inner join genotypes_sowing_crop_types t on t.id_gentoypes_sowing_gen_sow_cro=ms.id_gen_sow";
         sql += " where ms.status_gen_sow=1";
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_gen_sow_cro="+idTypeCrop;
         }
+        
+//        if (countryCode!=null && !countryCode.equals("")) {
+//            sql += " and ms.country_gen_sow='"+countryCode+"'";
+//        }
 				
         try {
             tx = session.beginTransaction();

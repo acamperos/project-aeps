@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +26,7 @@ public class ControlsTypes  implements java.io.Serializable {
      private Integer idConTyp;
      private String nameConType;
      private Boolean statusConTyp;
+     private IdiomCountry countryConTyp;
 
     public ControlsTypes() {
     }
@@ -65,6 +67,16 @@ public class ControlsTypes  implements java.io.Serializable {
     
     public void setStatusConTyp(Boolean statusConTyp) {
         this.statusConTyp = statusConTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_con_typ")
+    public IdiomCountry getCountryConTyp() {
+        return this.countryConTyp;
+    }
+    
+    public void setCountryConTyp(IdiomCountry countryConTyp) {
+        this.countryConTyp = countryConTyp;
     }
 
 }

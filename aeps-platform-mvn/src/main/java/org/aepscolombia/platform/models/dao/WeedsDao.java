@@ -40,7 +40,7 @@ public class WeedsDao
         return events;
     }
     
-    public List<Weeds> findAllByTypeCrop(Integer idTypeCrop) {
+    public List<Weeds> findAllByTypeCrop(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -49,10 +49,14 @@ public class WeedsDao
         Transaction tx = null;
 				
         sql += "select ms.id_wee, ms.name_wee, ms.status_wee from weeds ms";
+        sql += " inner join weeds_country cheCon on cheCon.id_selwee_wee_co=ms.id_wee";
         sql += " inner join weeds_crops_types t on t.id_weed_wee_cro=ms.id_wee";
         sql += " where ms.status_wee=1";
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_wee_cro="+idTypeCrop;
+        }
+        if (countryCode!=null && !countryCode.equals("")) {
+            sql += " and cheCon.country_wee_co='"+countryCode+"'";
         }
         sql += " order by ms.name_wee ASC";
 				

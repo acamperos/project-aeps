@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,17 +23,15 @@ public class AmendmentsFertilizers  implements java.io.Serializable {
 
      private Integer idAmeFer;
      private String nameAmeFer;
-     private String countryAmeFer;
+     private IdiomCountry countryAmeFer;
      private Boolean statusAmeFer;
 
     public AmendmentsFertilizers() {
     }
     
-    public AmendmentsFertilizers(Integer idAmeFer, String nameAmeFer, String countryAmeFer, Boolean statusAmeFer) {
+    public AmendmentsFertilizers(Integer idAmeFer, String nameAmeFer) {
        this.idAmeFer = idAmeFer;       
        this.nameAmeFer = nameAmeFer;
-       this.countryAmeFer = countryAmeFer;
-       this.statusAmeFer = statusAmeFer;
     }
 
     public AmendmentsFertilizers(String nameAmeFer, Boolean statusAmeFer) {
@@ -59,12 +59,13 @@ public class AmendmentsFertilizers  implements java.io.Serializable {
         this.nameAmeFer = nameAmeFer;
     }
     
-    @Column(name="country_ame_fer", length=50)
-    public String getCountryAmeFer() {
+    @ManyToOne
+    @JoinColumn(name="country_ame_fer")
+    public IdiomCountry getCountryAmeFer() {
         return this.countryAmeFer;
     }
     
-    public void setCountryAmeFer(String countryAmeFer) {
+    public void setCountryAmeFer(IdiomCountry countryAmeFer) {
         this.countryAmeFer = countryAmeFer;
     }
     

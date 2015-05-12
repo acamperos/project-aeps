@@ -22,12 +22,12 @@ public class LogEntitiesDao {
 
     /**
      * Encargado de obtener la fecha en que fue registrado el usuario
-     * @param idUser:  Identificacion de la entidad en el sistema
+     * @param idEnt:  Identificacion de la entidad en el sistema
      * @param idUser:  Identificacion del usuario en el sistema
-     * @return Identificacion (Int) de la entidad
+     * @return Fecha de ingreso en el sistema
      */
     public static Date getDateIngress(Integer idEnt, Integer idUser) 
-	{
+    {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session  = sessions.openSession();
         Date dateIngress = null;
@@ -57,7 +57,7 @@ public class LogEntitiesDao {
             session.close();
         }
         return dateIngress;
-	}
+    }
     
     public LogEntities findById(Integer id) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
@@ -138,5 +138,48 @@ public class LogEntitiesDao {
         } finally {
             session.close();
         }
+    }
+    
+    /**
+     * Encargado de obtener el registro historico de un dato
+     * @param idEnt:  Identificacion de la entidad en el sistema
+     * @param idObj:  Identificacion del objeto que se encuentra en el sitema
+     * @param tableName:  Nombre de la tabla relacionada
+     * @param actionName:  Accion realizada
+     * @return Objeto (LogEntities) relacionado
+     */
+    public static LogEntities getData(Integer idEnt, Integer idObj, String tableName, String actionName) 
+    {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session  = sessions.openSession();
+        LogEntities logEnt  = null;
+        Transaction tx   = null;
+        String sql = "";        
+        sql  = "select ue.id_log_ent, ue.id_entity_log_ent, ue.id_object_log_ent, ue.table_log_ent, ue.date_log_ent, ue.action_type_log_ent ";
+        sql += " from log_entities ue";
+        if (idEnt!=null) {
+            sql += " where ue.id_entity_log_ent="+idEnt;
+            sql += " and ue.id_object_log_ent="+idObj;
+        } else {
+            sql += " where ue.id_object_log_ent="+idObj;
+        }		        
+        sql += " and ue.table_log_ent='"+tableName+"'";
+        sql += " and ue.action_type_log_ent='"+actionName+"'";
+//        System.out.println("sql->"+sql);
+        
+        try {
+            tx    = session.beginTransaction();
+            Query query = session.createSQLQuery(sql).addEntity("ue", LogEntities.class);
+            logEnt      = (LogEntities) query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return logEnt;
     }
 }

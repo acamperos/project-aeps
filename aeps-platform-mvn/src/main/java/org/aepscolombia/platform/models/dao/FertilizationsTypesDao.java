@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.FertilizationsTypes;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -20,7 +21,7 @@ import org.aepscolombia.platform.util.HibernateUtil;
  */
 public class FertilizationsTypesDao 
 {        
-    public List<FertilizationsTypes> findAll() {
+    public List<FertilizationsTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<FertilizationsTypes> events = null;
@@ -28,6 +29,8 @@ public class FertilizationsTypesDao
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from FertilizationsTypes");
+//            Query query = session.createQuery("from FertilizationsTypes WHERE countryFerTyp.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -41,7 +44,7 @@ public class FertilizationsTypesDao
         return events;
     }
     
-    public List<FertilizationsTypes> findAllByStatus(Integer idTypeCrop) {
+    public List<FertilizationsTypes> findAllByStatus(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -49,15 +52,18 @@ public class FertilizationsTypesDao
         List<FertilizationsTypes> event = null;
         Transaction tx = null;
         
-        sql += "select cr.id_irr_typ, cr.name_irr_typ, cr.status_irr_typ from fertilizations_types cr";
+        sql += "select cr.id_irr_typ, cr.name_irr_typ, cr.status_irr_typ, cr.country_fer_typ from fertilizations_types cr";
 //		sql += " inner join irrigations_types_crops_types t on t.id_irrigation_type_irr_typ_cro=cr.id_irr_typ";
 		sql += " where cr.status_irr_typ=1";
         if (idTypeCrop!=null) {
             //sql += " and t.id_crop_type_irr_typ_cro="+idTypeCrop;
         }
+//        if (countryCode!=null && !countryCode.equals("")) {
+//            sql += " and cr.country_fer_typ='"+countryCode+"'";
+//        } 
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", FertilizationsTypes.class);
+            Query query = session.createSQLQuery(sql).addEntity("cr", FertilizationsTypes.class);
             event = query.list();
             tx.commit();
         } catch (HibernateException e) {

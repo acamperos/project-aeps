@@ -14,12 +14,11 @@
         <link rel="stylesheet" href="scripts/css/generals/beoro.min.css">        
         <sj:head jqueryui="false"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>        
-        <link rel="stylesheet" href="scripts/css/generals/main.min.css">
+        <link rel="stylesheet" href="scripts/css/generals/main.css">
         <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">   
         <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>        
     </head>
     <body>
-        <%@page import="org.aepscolombia.platform.util.APConstants"%>
         <div id="divMessage"></div>
         <div id="dialog-form"></div>
         <div class="header">
@@ -34,7 +33,7 @@
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>        
-        <script type="text/javascript" src="scripts/js/generals/functions.min.js"></script>	 
+        <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	 
         <script src="scripts/js/generals/responsiveslides.js"></script>        
         <script>            
             function doAction() {
@@ -43,7 +42,7 @@
                 if (actionName!='null' && actionName!='' && actionName!='dashboard' && actionName!='initial' && actionName!='principal' && actionName!='login') {
                     showInfoPage(''+actionName+'.action?countryCode='+countryCode, 'divBodyLayout');                 
                 } else if(actionName=='null' || actionName=='') {
-                    document.location = '<%= request.getContextPath() %>initial.action?countryCode='+countryCode;
+                    document.location = '<%= request.getContextPath() %>/initial.action?countryCode='+countryCode;
                 } else if(actionName=='initial') {
                     showInfoPageCountry('home.action', countryCode, 'divBodyLayout');
                 }

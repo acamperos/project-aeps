@@ -7,14 +7,21 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
@@ -29,6 +36,10 @@ import org.aepscolombia.platform.models.entity.Rastas;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Clase RastasDao
@@ -811,11 +822,18 @@ public class RastasDao
 //        System.out.println("sql=>"+sql);
         try {
             tx = session.beginTransaction();
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            File myFileTemp = new File("soilsTemp.xls");
+            FileInputStream fis = new FileInputStream(myFileTemp);
+            
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);            
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            
+            Map<String, Object[]> dataSheet = new TreeMap<String, Object[]>();
+//            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
             Query query  = session.createSQLQuery(sql);
             events = query.list();
         
-            String[] val = {
+            Object[] val = {
                 "ID_RASTA",
                 "ID_LOTE",
                 "ID_FINCA",
@@ -864,60 +882,94 @@ public class RastasDao
                 "CERCA_RIOS_QUEBRADAS",
                 "RECUBRIMIENTO_VEGETAL"
             };
-            writer.writeNext(val);
+//            writer.writeNext(val);
+            dataSheet.put("1", val);
+            Integer cont = 2;
             for (Object[] data : events) {
-                String[] valTemp = {
-                    String.valueOf(data[0]),
-                    String.valueOf(data[1]),
-                    String.valueOf(data[2]),
-                    String.valueOf(data[3]),
-                    String.valueOf(data[4]),
-                    String.valueOf(data[5]),
-                    String.valueOf(data[6]),
-                    String.valueOf(data[7]),
-                    String.valueOf(data[8]),
-                    String.valueOf(data[9]),
-                    String.valueOf(data[10]),
-                    String.valueOf(data[11]),
-                    String.valueOf(data[12]),
-                    String.valueOf(data[13]),
-                    String.valueOf(data[14]),
-                    String.valueOf(data[15]),
-                    String.valueOf(data[16]),
-                    String.valueOf(data[17]),
-                    String.valueOf(data[18]),
-                    String.valueOf(data[19]),
-                    String.valueOf(data[20]),
-                    String.valueOf(data[21]),
-                    String.valueOf(data[22]),
-                    String.valueOf(data[23]),
-                    String.valueOf(data[24]),
-                    String.valueOf(data[25]),
-                    String.valueOf(data[26]),
-                    String.valueOf(data[27]),
-                    String.valueOf(data[28]),
-                    String.valueOf(data[29]),
-                    String.valueOf(data[30]),
-                    String.valueOf(data[31]),
-                    String.valueOf(data[32]),
-                    String.valueOf(data[33]),
-                    String.valueOf(data[34]),
-                    String.valueOf(data[35]),
-                    String.valueOf(data[36]),
-                    String.valueOf(data[37]),
-                    String.valueOf(data[38]),
-                    String.valueOf(data[39]),
-                    String.valueOf(data[40]),
-                    String.valueOf(data[41]),
-                    String.valueOf(data[42]),
-                    String.valueOf(data[43]),
-                    String.valueOf(data[44]),
-                    String.valueOf(data[45]),
-                    String.valueOf(data[46])
+                Object[] valTemp = {
+                    data[0],
+                    data[1],
+                    data[2],
+                    data[3],
+                    data[4],
+                    data[5],
+                    data[6],
+                    data[7],
+                    data[8],
+                    data[9],
+                    data[10],
+                    data[11],
+                    data[12],
+                    data[13],
+                    data[14],
+                    data[15],
+                    data[16],
+                    data[17],
+                    data[18],
+                    data[19],
+                    data[20],
+                    data[21],
+                    data[22],
+                    data[23],
+                    data[24],
+                    data[25],
+                    data[26],
+                    data[27],
+                    data[28],
+                    data[29],
+                    data[30],
+                    data[31],
+                    data[32],
+                    data[33],
+                    data[34],
+                    data[35],
+                    data[36],
+                    data[37],
+                    data[38],
+                    data[39],
+                    data[40],
+                    data[41],
+                    data[42],
+                    data[43],
+                    data[44],
+                    data[45],
+                    data[46]
                 };
-                writer.writeNext(valTemp);
+//                writer.writeNext(valTemp);
+                dataSheet.put(""+cont, valTemp);
+                cont++;
             }
-            writer.close();
+//            writer.close();
+            Set<String> keyset = dataSheet.keySet();
+            int rownum = 0;
+            for (String key : keyset)
+            {
+                Row row = sheet.createRow(rownum++);
+                Object [] objArr = dataSheet.get(key);
+                int cellnum = 0;
+                for (Object obj : objArr)
+                {
+                    Cell cell = row.createCell(cellnum++);
+                    if (obj instanceof String) {
+                        cell.setCellValue((String) obj);
+                    } else if (obj instanceof Boolean) {
+                        cell.setCellValue((Boolean) obj);
+                    } else if (obj instanceof Timestamp) {
+                        cell.setCellValue((Timestamp) obj);
+                    } else if (obj instanceof Date) {
+                        cell.setCellValue((Date) obj);
+                    } else if (obj instanceof Double) {
+                        cell.setCellValue((Double) obj);
+                    } else if (obj instanceof Integer) {
+                        cell.setCellValue((Integer) obj);
+                    } 
+                }
+            }
+            File myFile = new File(fileName);
+            if (!myFile.exists()) myFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(myFile);
+            workbook.write(out);
+            out.close();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

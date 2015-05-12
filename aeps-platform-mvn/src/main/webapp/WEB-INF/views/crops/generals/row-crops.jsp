@@ -24,10 +24,10 @@
 <td>
     #<s:property value="num_crop" />
 </td>
-<s:date name="date_sowing" format="dd/MM/yyyy" var="dateTransformSow"/>
+<s:date name="date_sowing" format="MM/dd/yyyy" var="dateTransformSow"/>
 <td><s:property value="%{#dateTransformSow}" /></td>
 <td><s:property value="name_genotype" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/modify") || (usrCropDao.getPrivilegeUser(userCrop.getIdUsr(), "crop/delete"))) { %>
     <% if (value == "crop" || value.equals("crop")) {%>

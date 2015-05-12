@@ -118,4 +118,9 @@
   <table-filter match-name="residuals_management"/>
   <table-filter match-name="descriptions_production_event"/>
   <table-filter match-name="association"/>
+  <table-filter match-name="idiom_country"/>
+  <table-filter match-name="rice"/>
+  <table-filter match-name="rice_system"/>
+  <table-filter match-name="wet_soils"/>
+  <table-filter match-name="use_irrigation"/>
 </hibernate-reverse-engineering>

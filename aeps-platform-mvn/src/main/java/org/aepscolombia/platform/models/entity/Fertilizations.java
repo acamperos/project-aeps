@@ -34,6 +34,7 @@ public class Fertilizations  implements java.io.Serializable {
      private String otherWhereBoughtFer;
      private Boolean status;
      private Integer createdBy;
+     private WetSoils wetSoils;
 
     public Fertilizations() {
     }
@@ -160,6 +161,16 @@ public class Fertilizations  implements java.io.Serializable {
     
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="wet_soil_fer")
+    public WetSoils getWetSoils() {
+        return this.wetSoils;
+    }
+    
+    public void setWetSoils(WetSoils wetSoils) {
+        this.wetSoils = wetSoils;
     }
     
 }

@@ -27,11 +27,16 @@ public class Irrigation  implements java.io.Serializable {
      private IrrigationsTypes irrigationsTypes;
      private ProductionEvents productionEvents;
      private WaterSourcesTypes waterSourcesTypes;
-     private Date dateIrr;
+     private Date dateIrr;     
      private Boolean useIrrigationIrr;
      private Double amountIrr;
      private Boolean status;
      private Integer createdBy;
+     
+     private Double thicknessSheetIrr;
+     private Double durationIrr;
+     private UseIrrigation whatDoYouUseIrr;
+     private Date dateWetIrr;
 
     public Irrigation() {
     }
@@ -134,9 +139,44 @@ public class Irrigation  implements java.io.Serializable {
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
+    
+    @Column(name="thickness_sheet_irr", precision=22, scale=0)
+    public Double getThicknessSheetIrr() {
+        return this.thicknessSheetIrr;
+    }
+    
+    public void setThicknessSheetIrr(Double thicknessSheetIrr) {
+        this.thicknessSheetIrr = thicknessSheetIrr;
+    }
+    
+    @Column(name="duration_irr")
+    public Double getDurationIrr() {
+        return this.durationIrr;
+    }
+    
+    public void setDurationIrr(Double durationIrr) {
+        this.durationIrr = durationIrr;
+    }   
 
-
-
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="what_do_you_use_irr")
+    public UseIrrigation getWhatDoYouUseIrr() {
+        return this.whatDoYouUseIrr;
+    }
+    
+    public void setWhatDoYouUseIrr(UseIrrigation whatDoYouUseIrr) {
+        this.whatDoYouUseIrr = whatDoYouUseIrr;
+    }
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_wet_irr", length=19)
+    public Date getDateWetIrr() {
+        return this.dateWetIrr;
+    }
+    
+    public void setDateWetIrr(Date dateWetIrr) {
+        this.dateWetIrr = dateWetIrr;
+    }
 
 }
 

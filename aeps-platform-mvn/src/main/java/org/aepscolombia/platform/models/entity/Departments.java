@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -26,6 +28,7 @@ public class Departments  implements java.io.Serializable {
      private Integer idDep;
      private String codeDep;
      private String nameDep;
+     private IdiomCountry countryDep;
 
     public Departments() {
     }
@@ -63,6 +66,16 @@ public class Departments  implements java.io.Serializable {
     
     public void setNameDep(String nameDep) {
         this.nameDep = nameDep;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_dep")
+    public IdiomCountry getCountryDep() {
+        return this.countryDep;
+    }
+    
+    public void setCountryDep(IdiomCountry countryDep) {
+        this.countryDep = countryDep;
     }
     
 }

@@ -20,14 +20,25 @@ import org.aepscolombia.platform.util.HibernateUtil;
  */
 public class ApplicationTypesDao 
 {        
-    public List<ApplicationTypes> findAll() {
+    public List<ApplicationTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<ApplicationTypes> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
+//            String sql = "select p.id_ame_fer, p.id_fertilization_ame_fer, p.id_product_ame_fer,";
+//            sql += " p.other_product_ame_fer, p.amount_product_used_ame_fer, p.country_ame_fer, p.status, p.created_by"; 
+//            sql += " from amendments_fertilizations p";
+//            sql += " where p.id_fertilization_ame_fer="+idFert;
+            
+            /*if (countryCode!=null && !countryCode.equals("")) {
+                sql += " and p.country_ame_fer='"+countryCode+"'";
+            }*/
+//            Query query = session.createSQLQuery(sql).addEntity("p", ApplicationTypes.class);
             Query query = session.createQuery("from ApplicationTypes");
+//            Query query = session.createQuery("from ApplicationTypes WHERE countryAppTyp.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -49,10 +60,10 @@ public class ApplicationTypesDao
         List<ApplicationTypes> event = null;
         Transaction tx = null;
         
-        sql += "select cr.id_app_typ, cr.name_app_typ from application_types cr";
+        sql += "select cr.id_app_typ, cr.name_app_typ, cr.country_app_typ from application_types cr";
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", ApplicationTypes.class);
+            Query query = session.createSQLQuery(sql).addEntity("cr", ApplicationTypes.class);
             event = query.list();
             tx.commit();
         } catch (HibernateException e) {

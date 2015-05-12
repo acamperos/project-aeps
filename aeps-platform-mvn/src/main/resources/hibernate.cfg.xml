@@ -112,5 +112,10 @@
     <mapping class="org.aepscolombia.platform.models.entity.ChemicalFertilizationsChemicalElements"/>
     <mapping class="org.aepscolombia.platform.models.entity.ResidualsManagement"/>
     <mapping class="org.aepscolombia.platform.models.entity.DescriptionsProductionEvent"/>
+    <mapping class="org.aepscolombia.platform.models.entity.IdiomCountry"/>
+    <mapping class="org.aepscolombia.platform.models.entity.Rice"/>
+    <mapping class="org.aepscolombia.platform.models.entity.RiceSystem"/>
+    <mapping class="org.aepscolombia.platform.models.entity.WetSoils"/>
+    <mapping class="org.aepscolombia.platform.models.entity.UseIrrigation"/>
   </session-factory>
 </hibernate-configuration>

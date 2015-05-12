@@ -30,9 +30,9 @@
                                     <s:property value="getText('text.controldate.crop')" />:
                                 </label>
                                 <div class="date controls">
-                                    <s:date name="con.dateCon" format="dd/MM/yyyy" var="dateTransformCont"/>
+                                    <s:date name="con.dateCon" format="MM/dd/yyyy" var="dateTransformCont"/>
                                     <s:textfield name="con.dateCon" value="%{#dateTransformCont}" readonly="true"/>
-                                    <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                                    <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
@@ -406,7 +406,7 @@
                     </div>
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
-                        $("#formCropCon_con_dateCon").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropCon_con_dateCon").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropCon_con_dateCon").mask("99/99/9999", {placeholder: " "});
                         $("#formCropCon_dosisConOrg").numeric({ negative: false });
                         $("#formCropCon_dosisConOrg").val(parsePointSeparated($("#formCropCon_dosisConOrg").val())); 

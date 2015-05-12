@@ -41,7 +41,7 @@ public class PestsDao
         return events;
     }
     
-    public List<Pests> findAllByTypeCrop(Integer idTypeCrop) {
+    public List<Pests> findAllByTypeCrop(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -50,10 +50,15 @@ public class PestsDao
         Transaction tx = null;
 				
         sql += "select ms.id_pes, ms.name_pes, ms.status_pes from pests ms";
+        sql += " inner join pests_country cheCon on cheCon.id_selpes_pes_co=ms.id_pes";
         sql += " inner join pests_crops_types t on t.id_pest_pes_cro_typ=ms.id_pes";
         sql += " where ms.status_pes=1";
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_pes_cro_typ="+idTypeCrop;
+        }
+        
+        if (countryCode!=null && !countryCode.equals("")) {
+            sql += " and cheCon.country_pes_co='"+countryCode+"'";
         }
         sql += " order by ms.name_pes ASC";
 				

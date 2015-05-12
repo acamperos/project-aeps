@@ -65,6 +65,7 @@ public class ActionMon extends BaseAction {
     private List<Pests> type_pest_con;
     private List<Weeds> type_weeds_con;
     private List<Diseases> type_dis_con;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -187,8 +188,11 @@ public class ActionMon extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr()); 
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+//        user.setCountryUsr(null);
     }
     
     
@@ -319,9 +323,9 @@ public class ActionMon extends BaseAction {
         HashMap prod  = cropDao.findById(idCrop);
         Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
 //        System.out.println("tyCro=>"+tyCro);
-        this.setType_dis_con(new DiseasesDao().findAllByTypeCrop(tyCro));
-        this.setType_pest_con(new PestsDao().findAllByTypeCrop(tyCro));
-        this.setType_weeds_con(new WeedsDao().findAllByTypeCrop(tyCro));
+        this.setType_dis_con(new DiseasesDao().findAllByTypeCrop(tyCro, coCode));
+        this.setType_pest_con(new PestsDao().findAllByTypeCrop(tyCro, coCode));
+        this.setType_weeds_con(new WeedsDao().findAllByTypeCrop(tyCro, coCode));
         try {
             this.setIdMon(Integer.parseInt(this.getRequest().getParameter("idMon")));
         } catch (NumberFormatException e) {
@@ -390,14 +394,18 @@ public class ActionMon extends BaseAction {
             mon.setStatus(true);
             session.saveOrUpdate(mon);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(mon.getIdMon());
-            log.setTableLogEnt("monitoring");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);           
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, mon.getIdMon(), "monitoring", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(mon.getIdMon());
+                log.setTableLogEnt("monitoring");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }           
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -411,7 +419,7 @@ public class ActionMon extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

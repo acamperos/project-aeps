@@ -32,7 +32,7 @@
 <td><s:property value="length_farm" /></td>
 <s:number name="altitude_farm" type="integer" var="altFarm" />
 <td><s:property value="%{#altFarm}" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/modify") || (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete"))) { %>
     <% if (value.equals("property") || value == "property") {%>

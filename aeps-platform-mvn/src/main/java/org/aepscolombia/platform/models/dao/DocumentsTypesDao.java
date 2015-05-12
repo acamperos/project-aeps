@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.DocumentsTypes;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -74,15 +75,16 @@ public class DocumentsTypesDao {
         return events;
     }
 
-    public List<DocumentsTypes> findAll() 
-		{
+    public List<DocumentsTypes> findAll(String countryCode) 
+    {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<DocumentsTypes> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from DocumentsTypes");
+            Query query = session.createQuery("from DocumentsTypes WHERE countryDocTyp.acronymIdCo = :country_code");
+            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

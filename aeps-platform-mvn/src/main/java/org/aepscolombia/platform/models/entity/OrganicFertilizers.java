@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class OrganicFertilizers  implements java.io.Serializable {
      private Integer idOrgFer;
      private String nameOrgFer;
      private Boolean statusOrgFer;
+     private IdiomCountry countryOrgFer;
 
     public OrganicFertilizers() {
     }
@@ -64,6 +67,16 @@ public class OrganicFertilizers  implements java.io.Serializable {
     
     public void setStatusOrgFer(Boolean statusOrgFer) {
         this.statusOrgFer = statusOrgFer;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_org_fer")
+    public IdiomCountry getCountryOrgFer() {
+        return this.countryOrgFer;
+    }
+    
+    public void setCountryOrgFer(IdiomCountry countryOrgFer) {
+        this.countryOrgFer = countryOrgFer;
     }
 
 }

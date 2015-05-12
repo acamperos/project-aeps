@@ -108,6 +108,7 @@ public class ActionReport extends BaseAction {
     
     private Users user;
     private Integer idEntSystem;    
+    private String coCode;    
     private Integer idUsrSystem;    
     private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
@@ -315,14 +316,17 @@ public class ActionReport extends BaseAction {
     @Override
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
+//        coCode = user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setList_departments(new DepartmentsDao().findAll());
+        this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
+        this.setList_departments(new DepartmentsDao().findAll(coCode));
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
+//        user.setCountryUsr(null);
     }
     
     

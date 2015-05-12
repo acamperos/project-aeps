@@ -3,6 +3,7 @@
 <%@page import="org.aepscolombia.platform.models.entity.ChemicalElements"%>
 <%@page import="org.aepscolombia.platform.models.entity.ChemicalFertilizations"%>
 <%@page import="java.util.List"%>
+<%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% String valChe  = String.valueOf(request.getAttribute("numRows")); %>
 <% int numRowsChe = Integer.parseInt(valChe); %>
 <% if(numRowsChe==0) { %>
@@ -11,6 +12,7 @@
 <% request.setAttribute("formChe", "chemFert["+(numRowsChe-1)+"]"); %>
 <% request.setAttribute("formCheSel", "chemFert_"+(numRowsChe-1)); %>
 <% request.setAttribute("formCheId", "formCropFer_chemFert_"+(numRowsChe-1)); %>
+<% String coCode      = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
 <tr value="<%= numRowsChe %>" id="RowAdditChe_<%= numRowsChe %>">
     <td>
         <div id="divChemicalRow_<%= numRowsChe %>">
@@ -176,14 +178,25 @@
                             <s:property value="getText('select.unitchem.fertilization')" />:
                         </label>
                         <div class="controls">
-                            <s:select
-                                id="%{#attr.formCheId}__unitCheFer"
-                                name="%{#attr.formChe}.unitCheFer"
-                                value="%{#attr.unitCheFer}"
-                                list="#{'1':'kg/ha', '2':'lt/ha'}"           
-                                headerKey="-1" 
-                                headerValue="---"
-                            />
+                            <% if (coCode.equals("CO")) { %>
+                                <s:select
+                                    id="%{#attr.formCheId}__unitCheFer"
+                                    name="%{#attr.formChe}.unitCheFer"
+                                    value="%{#attr.unitCheFer}"
+                                    list="#{'10':'kg/ha', '11':'lt/ha'}"           
+                                    headerKey="-1" 
+                                    headerValue="---"
+                                />
+                            <% } else if (coCode.equals("NI")) { %>
+                                <s:select
+                                    id="%{#attr.formCheId}__unitCheFer"
+                                    name="%{#attr.formChe}.unitCheFer"
+                                    value="%{#attr.unitCheFer}"
+                                    list="#{'12':'q/mz', '13':'kg/ha', '14':'lt/ha'}"           
+                                    headerKey="-1" 
+                                    headerValue="---"
+                                />
+                            <% } %>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +26,7 @@ public class CropsTypes  implements java.io.Serializable {
      private Integer idCroTyp;
      private String nameCroTyp;
      private Boolean statusCroTyp;
+     private IdiomCountry countryCroTyp;
 
     public CropsTypes() {
     }
@@ -70,6 +72,16 @@ public class CropsTypes  implements java.io.Serializable {
     
     public void setStatusCroTyp(Boolean statusCroTyp) {
         this.statusCroTyp = statusCroTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_cro_typ")
+    public IdiomCountry getCountryCroTyp() {
+        return this.countryCroTyp;
+    }
+    
+    public void setCountryCroTyp(IdiomCountry countryCroTyp) {
+        this.countryCroTyp = countryCroTyp;
     }
 
 }

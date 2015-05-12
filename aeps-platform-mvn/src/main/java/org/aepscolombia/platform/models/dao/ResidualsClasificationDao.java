@@ -48,15 +48,15 @@ public class ResidualsClasificationDao
         List<ResidualsClasification> event = null;
         Transaction tx = null;
         
-        sql += "select cr.id_res_cla, cr.name_res_cla, cr.status_res_cla from residuals_clasification cr";
-		sql += " inner join residuals_clasifications_crops_types t on t.id_residuals_cla_cro_typ=cr.id_res_cla";
-		sql += " where cr.status_res_cla=1";
+        sql += "select cr.id_res_cla, cr.name_res_cla, cr.status_res_cla, cr.country_res_cla from residuals_clasification cr";
+        sql += " inner join residuals_clasifications_crops_types t on t.id_residuals_cla_cro_typ=cr.id_res_cla";
+        sql += " where cr.status_res_cla=1";
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_cro_typ="+idTypeCrop;
         }
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", ResidualsClasification.class);
+            Query query = session.createSQLQuery(sql).addEntity("cr", ResidualsClasification.class);
             event = query.list();
             tx.commit();
         } catch (HibernateException e) {

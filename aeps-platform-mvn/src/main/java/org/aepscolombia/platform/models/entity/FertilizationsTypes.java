@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +23,7 @@ public class FertilizationsTypes  implements java.io.Serializable {
 
      private Integer idFerTyp;
      private String nameFerTyp;
+     private IdiomCountry countryFerTyp;
 
     public FertilizationsTypes() {
     }
@@ -48,6 +51,16 @@ public class FertilizationsTypes  implements java.io.Serializable {
     
     public void setNameFerTyp(String nameFerTyp) {
         this.nameFerTyp = nameFerTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_fer_typ")
+    public IdiomCountry getCountryFerTyp() {
+        return this.countryFerTyp;
+    }
+    
+    public void setCountryFerTyp(IdiomCountry countryFerTyp) {
+        this.countryFerTyp = countryFerTyp;
     }
 
 }

@@ -28,7 +28,7 @@
 <td><s:property value="latitude_lot" /></td>
 <td><s:property value="length_lot" /></td>
 <td><s:property value="altitude_lot" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/modify") || (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/delete"))) { %>                
     <% if (value.equals("lot") || value == "lot") {%>
@@ -38,7 +38,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('button.fieldedit.field')" />" onclick="viewForm('/showField.action?action=modify&page=<%=pageNow%>', 'idField', <s:property value ="id_lot" />, '<s:property value="getText('title.fieldedit.field')" />', 1050, 550)"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrFieDao.getPrivilegeUser(userFie.getIdUsr(), "field/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('button.fielddel.field')" />" onclick="showDialogDelete(this, 'confirm_dialog_lot', 'deleteField.action?idFar=<s:property value ="id_lot" />', 'searchField.action?page=<%=pageNow%>', 'divFields', '<%=divHide%>'); ga('send', 'event', 'Fields', 'click', 'Delete');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('button.fielddel.field')" />" onclick="showDialogDelete(this, 'confirm_dialog_lot', 'deleteField.action?idField=<s:property value ="id_lot" />', 'searchField.action?page=<%=pageNow%>', 'divFields', '<%=divHide%>'); ga('send', 'event', 'Fields', 'click', 'Delete');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         </td>

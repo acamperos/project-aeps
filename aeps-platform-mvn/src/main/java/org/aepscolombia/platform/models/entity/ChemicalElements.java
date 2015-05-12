@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class ChemicalElements  implements java.io.Serializable {
      private String nameCheEle;
      private Double valueCheEle;
      private boolean statusCheEle;
+     private IdiomCountry countryCheEle;
 
     public ChemicalElements() {
     }
@@ -69,6 +72,16 @@ public class ChemicalElements  implements java.io.Serializable {
     
     public void setStatusCheEle(boolean statusCheEle) {
         this.statusCheEle = statusCheEle;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_che_ele")
+    public IdiomCountry getCountryCheEle() {
+        return this.countryCheEle;
+    }
+    
+    public void setCountryCheEle(IdiomCountry countryCheEle) {
+        this.countryCheEle = countryCheEle;
     }
 
 }

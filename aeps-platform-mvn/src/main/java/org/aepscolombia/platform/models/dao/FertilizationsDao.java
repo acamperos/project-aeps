@@ -117,9 +117,9 @@ public class FertilizationsDao
         if (args.containsKey("idEvent")) { 
             sql += " and p.id_production_event_fer="+args.get("idEvent");
         }
-        if (args.containsKey("idEntUser")) {
-			sql += " and le.id_entity_log_ent="+args.get("idEntUser");
-		}
+//        if (args.containsKey("idEntUser")) {
+//			sql += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}
 		sql += " order by p.id_fer ASC";
         
         try {
@@ -132,6 +132,7 @@ public class FertilizationsDao
                 HashMap temp = new HashMap();
                 temp.put("idFer", data[0]);
                 temp.put("idEntUser", args.get("idEntUser"));
+                temp.put("coCode", args.get("coCode"));
                 resultChe = getChemicals(temp);
                 resultOrg = getOrganics(temp);
                 resultAme = getAmendments(temp);
@@ -164,8 +165,8 @@ public class FertilizationsDao
         String sqlAdd = "";     
                       
         sql += "select p.id_fer, p.date_fer, p.fertilization_type_fer, ";
-		sql += " tp.name_fer_typ, p.amount_product_used_fer, chfer.id_che_fer, ";
-        sql += " chfer.application_type_che_fer, chfer.amount_product_used_che_fer, chfer.other_product_che_fer";
+        sql += " tp.name_fer_typ, p.amount_product_used_fer, chfer.id_che_fer, ";
+        sql += " chfer.application_type_che_fer, chfer.amount_product_used_che_fer, chfer.other_product_che_fer, chfer.unit_che_fer";
         sql += " from fertilizations p"; 
         sql += " inner join chemical_fertilizations chfer on p.id_fer=chfer.id_fertilization_che_fer";    
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_fer";    
@@ -203,10 +204,22 @@ public class FertilizationsDao
                             tempFoliar.put("ferTyp", "Quimica");
                             tempFoliar.put("idFerTyp", null);             
                             tempFoliar.put("otherProduct", data[8]); 
-                            tempFoliar.put("amountUsed", data[7]); 
+                            String doseInfo = String.valueOf(data[7]);
+                            String unit     = String.valueOf(data[9]);
+                            Double doseVal  = Double.parseDouble(doseInfo);
+                            Double amount   = null;
+                            if (args.containsKey("coCode")) {
+                                String coCode = String.valueOf(args.get("coCode"));
+                                if (coCode.equals("NI") && unit.equals("12")) {
+                                    amount = doseVal*0.01522;
+                                } else {
+                                    amount = doseVal;
+                                }
+                            }
+                            tempFoliar.put("amountUsed", amount); 
                             temp.put("infoFert", tempFoliar);
                         } else {
-                            temp.put("infoFert", getChemicalsElements(String.valueOf(temp.get("idFerChe")), 0.0));	   
+                            temp.put("infoFert", getChemicalsElements(String.valueOf(temp.get("idFerChe")), 0.0, String.valueOf(args.get("coCode"))));	   
                         }         
                     }
                     temp.put("contFert", getTotalFertilizations(String.valueOf(temp.get("idFer"))));
@@ -265,7 +278,7 @@ public class FertilizationsDao
         return total;
     }
     
-    public HashMap getChemicalsElements(String idFert, Double quantPro) {
+    public HashMap getChemicalsElements(String idFert, Double quantPro, String coCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<Object[]> events = null;
@@ -277,7 +290,7 @@ public class FertilizationsDao
         String sqlAdd = "";     		
         
         sql += "select fq.id_che_fer, fq.name_che_fer, ep.id_product_che_fer, ep.other_product_che_fer,";
-        sql += " eq.name_che_ele, p.percentage_che_fer_com, ep.amount_product_used_che_fer";
+        sql += " eq.name_che_ele, p.percentage_che_fer_com, ep.amount_product_used_che_fer, ep.unit_che_fer";
         sql += " from chemical_fertilizer_composition p"; 
         sql += " inner join chemical_fertilizers fq on fq.id_che_fer=p.id_chemical_fertilizer_che_fer_com";
         sql += " inner join chemical_fertilizations ep on ep.id_product_che_fer=fq.id_che_fer";    
@@ -319,7 +332,18 @@ public class FertilizationsDao
                 temp.put("ferTyp", "Quimica");
                 temp.put("idFerTyp", data[2]);             
                 temp.put("otherProduct", data[3]); 
-                temp.put("amountUsed", data[6]); 
+                String doseInfo = String.valueOf(data[6]);
+                String unit     = String.valueOf(data[7]);                
+                Double doseVal  = null;
+                if(doseInfo!=null && !doseInfo.equals("null")) doseVal  = Double.parseDouble(doseInfo);
+                Double amount   = null;
+                if (coCode.equals("NI") && unit.equals("12")) {
+                    amount = doseVal*0.01522;
+                } else {
+                    amount = doseVal;
+                }
+                
+                temp.put("amountUsed", amount); 
                 if (data[6]!=null) {
                     Double quantProTemp = Double.parseDouble(String.valueOf(data[6]));
 
@@ -408,8 +432,20 @@ public class FertilizationsDao
                 tempInfo.put("ferTyp", "Organica");
                 tempInfo.put("nameFerTyp", data[6]);        
                 tempInfo.put("idFerTyp", data[7]);             
-                tempInfo.put("otherProduct", data[8]);   
-                tempInfo.put("amountUsed", data[9]);
+                tempInfo.put("otherProduct", data[8]);  
+                String doseInfo = String.valueOf(data[9]);
+                Double doseVal  = null;
+                if(doseInfo!=null && !doseInfo.equals("null")) doseVal  = Double.parseDouble(doseInfo);
+                Double amount   = null;
+                if (args.containsKey("coCode")) {
+                    String coCode = String.valueOf(args.get("coCode"));
+                    if (coCode.equals("NI")) {
+                        amount = doseVal*0.01522;
+                    } else {
+                        amount = doseVal;
+                    }
+                }
+                tempInfo.put("amountUsed", amount); 
                 temp.put("infoFert",tempInfo);
                 resultOrg.add(temp);
             }
@@ -474,7 +510,18 @@ public class FertilizationsDao
                 tempInfo.put("nameFerTyp", data[6]);
                 tempInfo.put("idFerTyp", data[7]);             
                 tempInfo.put("otherProduct", data[8]);  
-                tempInfo.put("amountUsed", data[9]);
+                String doseInfo = String.valueOf(data[9]);
+                Double doseVal  = Double.parseDouble(doseInfo);
+                Double amount   = null;
+                if (args.containsKey("coCode")) {
+                    String coCode = String.valueOf(args.get("coCode"));
+                    if (coCode.equals("NI")) {
+                        amount = doseVal*0.01522;
+                    } else {
+                        amount = doseVal;
+                    }
+                }
+                tempInfo.put("amountUsed", amount);
                 temp.put("infoFert",tempInfo);                
                 resultAme.add(temp);
             }

@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,7 @@ public class TargetsTypes  implements java.io.Serializable {
      private Integer idTarTyp;
      private String nameTarTyp;
      private Boolean statusTarTyp;
+     private IdiomCountry countryTarTyp;
 
     public TargetsTypes() {
     }
@@ -62,6 +65,16 @@ public class TargetsTypes  implements java.io.Serializable {
     
     public void setStatusTarTyp(Boolean statusTarTyp) {
         this.statusTarTyp = statusTarTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_tar_typ")
+    public IdiomCountry getCountryTarTyp() {
+        return this.countryTarTyp;
+    }
+    
+    public void setCountryTarTyp(IdiomCountry countryTarTyp) {
+        this.countryTarTyp = countryTarTyp;
     }
     
 }

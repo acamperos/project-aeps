@@ -1,29 +1,30 @@
 package org.aepscolombia.platform.models.dao;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import java.io.FileWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
-import org.aepscolombia.platform.models.entity.Entities;
 import org.aepscolombia.platform.models.entity.LogEntities;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
@@ -35,6 +36,10 @@ import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Clase ProductionEventsDao
@@ -667,12 +672,14 @@ public class ProductionEventsDao
         String entType = String.valueOf(args.get("entType"));
         
         sql += "select ep.id_pro_eve as ID_CULTIVO, l.id_fie as ID_LOTE, f.id_far as ID_FINCA, p.id_pro as ID_PROD, e.name_ent as USUARIO, ent.name_ent as PRODUCTOR, concat(ent.document_type_ent, ':', ent.document_number_ent) as CEDULA, f.name_far as FINCA, l.latitude_fie as LAT_LOTE, l.longitude_fie as LONG_LOTE, ";
-        sql += "sie.date_sow as FECHA_SIEMBRA, sie.sowing_type_sow as TIPO_SIEMBRA, sie.seeds_number_sow as NUM_SEMILLAS, IF(sie.treated_seeds_sow=true,'SI','NO') as SEM_TRATADAS, sie.furrows_distance_sow as DIST_SURCOS, sie.sites_distance_sow as DIST_PLANTAS, ";
+        sql += "DATE_FORMAT(sie.date_sow,'%Y-%m-%d') as FECHA_SIEMBRA, sie.sowing_type_sow as TIPO_SIEMBRA, sie.seeds_number_sow as NUM_SEMILLAS, IF(sie.treated_seeds_sow=true,'SI','NO') as SEM_TRATADAS, sie.furrows_distance_sow as DIST_SURCOS, sie.sites_distance_sow as DIST_PLANTAS, ";
         sql += "tc.name_cro_typ as TIPO_CULTIVO, IF(tc.id_cro_typ=1,csem.color_see_col,'N/A') as COLOR_ENDOSPERMO, IF(tc.id_cro_typ=2,fr.seeds_number_site_bea,'N/A') as SEM_POR_SITIO, IF(tc.id_cro_typ=2,ts.name_see_typ,'N/A') as TIPO_DE_SEMILLA, ";
         sql += "IF(tc.id_cro_typ=2,IF(fr.growing_environment_bea = 1, 'Arbustivo',IF(fr.growing_environment_bea = 2, 'Voluble', '')),'N/A') as HABITO_CRECIMIENTO, mg.name_gen as MATERIAL_GENETICO, ";
         sql += "ep.expected_production_pro_eve as OBJ_RDT, t.name_cro_typ as CULT_ANT, ep.draining_pro_eve as DRENAJE, ";
-        sql += "mf.emergence_phy_mon as FECHA_EMERGENCIA, mf.20_days_population_mon_fis as POBLACION_20DIAS, mf.flowering_date_phy_mon as FECHA_FLORACION, ";
-        sql += "cs.date_har as FECHA_COSECHA, cs.method_har as METODO_COSECHA, cs.yield_har as RDT, pres.name_res_pro as PROD_ESPERADA";
+        sql += "DATE_FORMAT(mf.emergence_phy_mon,'%Y-%m-%d') as FECHA_EMERGENCIA, mf.20_days_population_mon_fis as POBLACION_20DIAS, DATE_FORMAT(mf.flowering_date_phy_mon,'%Y-%m-%d') as FECHA_FLORACION, ";
+        sql += "DATE_FORMAT(cs.date_har,'%Y-%m-%d') as FECHA_COSECHA, cs.method_har as METODO_COSECHA, cs.yield_har as RDT, pres.name_res_pro as PROD_COSECHADO, ";
+        sql += "l.name_fie as NOMBRE_LOTE, so.name_see_ori as ORIGEN_SEMILLA, si.name_see_ino, fr.otro_inoculation_bea, cheSo.name_che_sow, geSo.name_gen_sow, sie.other_genotype_sow, ep.other_former_crop_pro_eve, ";
+        sql += "mf.percentage_reseeding_phy_mon, cs.production_har, cs.humidity_percentage_har, IF(cs.storage_har=true,'SI','NO') as ALMACENAMIENTO_FINCA, cs.comment_har";
         sql += " from production_events ep";
         sql += " inner join fields l on ep.id_field_pro_eve = l.id_fie";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro = l.id_fie";
@@ -687,6 +694,10 @@ public class ProductionEventsDao
         sql += " left join genotypes mg on mg.id_gen=sie.genotype_sow and mg.status_gen=1";
         sql += " left join beans fr on fr.id_production_event_bea = ep.id_pro_eve";
         sql += " left join seeds_types ts on ts.id_see_typ = fr.seed_type_bea";
+        sql += " left join seeds_origins so on so.id_see_ori = sie.seed_origin_sow";
+        sql += " left join seeds_inoculations si on si.id_see_ino = fr.seeds_inoculation_bea";
+        sql += " left join chemicals_sowing cheSo on cheSo.id_che_sow = sie.used_chemical_sow";
+        sql += " left join genotypes_sowing geSo on geSo.id_gen_sow = sie.genotyte_type_seed_sow";
         sql += " left join maize ma on ma.id_production_event_mai = ep.id_pro_eve";
         sql += " left join seeds_colors csem on csem.id_see_col = ma.grain_color_mai and csem.status_see_col=1";
         sql += " left join rains ll on ll.id_production_event_rain = ep.id_pro_eve";
@@ -735,13 +746,34 @@ public class ProductionEventsDao
         sql += " order by ep.id_pro_eve, e.name_ent, ent.name_ent";
 
 //        System.out.println("sql=>"+sql);
+        HSSFWorkbook workbook = null;
         try {
             tx = session.beginTransaction();
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            
+            File myFileTemp = new File("cropsTemp.xls");
+            FileInputStream fis = new FileInputStream(myFileTemp);
+            
+            workbook = new HSSFWorkbook(fis);            
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            
+            Map<String, Object[]> dataSheet = new TreeMap<String, Object[]>();
+//            sheet.createFreezePane(0,0);
+//            System.out.println("num sheets=>"+sheet.getSheetName());
+//            for (Row row : sheet) {
+//                sheet.removeRow(row);
+//            }
+//            Iterator<Row> rowIterator = sheet.iterator();
+//            while (rowIterator.hasNext())
+//            {
+//                Row row = rowIterator.next();
+//                sheet.removeRow(row);
+//            }
+            
+//            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
             Query query  = session.createSQLQuery(sql);
             events = query.list();
         
-            String[] val = {
+            Object[] val = {
                 "ID_CULTIVO",
                 "ID_LOTE",
                 "ID_FINCA",
@@ -750,6 +782,7 @@ public class ProductionEventsDao
                 "PRODUCTOR",
                 "CEDULA",
                 "FINCA",
+                "LOTE",
                 "LAT_LOTE",
                 "LONG_LOTE",
                 "FECHA_SIEMBRA",
@@ -758,70 +791,136 @@ public class ProductionEventsDao
                 "SEM_TRATADAS",
                 "DIST_SURCOS",
                 "DIST_PLANTAS",
+                "PROCEDENCIA",
+                "INOCULACION_SEMILLAS",
+                "NUEVA_INOCULACION_SEMILLAS",
+                "PRODUCTO_USADO",
+                "TIPO_MATERIAL",
                 "TIPO_CULTIVO",
                 "COLOR_ENDOSPERMO",
                 "SEM_POR_SITIO",
                 "TIPO_SEMILLA",
                 "HABITO_CRECIMIENTO",
                 "MATERIAL_GENETICO",
+                "NUEVO_MATERIAL_GENETICO",
                 "OBJ_RDT",
                 "CULT_ANT",
+                "OTRO_CULT_ANT",
                 "DRENAJE",
                 "FECHA_EMERGENCIA",
                 "POBLACION_20DIAS",
                 "FECHA_FLORACION",
+                "RESIEMBRA",
                 "FECHA_COSECHA",
                 "METODO_COSECHA",
                 "RDT",
-                "PROD_ESPERADA"
+                "PROD_COSECHADO",
+                "CANTIDAD_TOTAL",
+                "%_HUMEDAD",
+                "ALMACENAMIENTO_FINCA",
+                "OBSERVACIONES_COSECHA"
             };
-            writer.writeNext(val);
+            dataSheet.put("1", val);
+            Integer cont = 2;
+            
+//            writer.writeNext(val);
             for (Object[] data : events) {
-                String[] valTemp = {
-                    String.valueOf(data[0]),
-                    String.valueOf(data[1]),
-                    String.valueOf(data[2]),
-                    String.valueOf(data[3]),
-                    String.valueOf(data[4]),
-                    String.valueOf(data[5]),
-                    String.valueOf(data[6]),
-                    String.valueOf(data[7]),
-                    String.valueOf(data[8]),
-                    String.valueOf(data[9]),
-                    String.valueOf(data[10]),
-                    String.valueOf(data[11]),
-                    String.valueOf(data[12]),
-                    String.valueOf(data[13]),
-                    String.valueOf(data[14]),
-                    String.valueOf(data[15]),
-                    String.valueOf(data[16]),
-                    String.valueOf(data[17]),
-                    String.valueOf(data[18]),
-                    String.valueOf(data[19]),
-                    String.valueOf(data[20]),
-                    String.valueOf(data[21]),
-                    String.valueOf(data[22]),
-                    String.valueOf(data[23]),
-                    String.valueOf(data[24]),
-                    String.valueOf(data[25]),
-                    String.valueOf(data[26]),
-                    String.valueOf(data[27]),
-                    String.valueOf(data[28]),
-                    String.valueOf(data[29]),
-                    String.valueOf(data[30]),
-                    String.valueOf(data[31])
+                Object[] valTemp = {
+                    data[0],
+                    data[1],
+                    data[2],
+                    data[3],
+                    data[4],
+                    data[5],
+                    data[6],
+                    data[7],
+                    data[32],
+                    data[8],
+                    data[9],
+                    data[10],
+                    data[11],
+                    data[12],
+                    data[13],
+                    data[14],
+                    data[15],
+                    data[33],
+                    data[34],
+                    data[35],
+                    data[36],
+                    data[37],
+                    data[16],
+                    data[17],
+                    data[18],
+                    data[19],
+                    data[20],
+                    data[21],
+                    data[38],
+                    data[22],
+                    data[23],
+                    data[39],
+                    data[24],
+                    data[25],
+                    data[26],
+                    data[27],
+                    data[40],
+                    data[28],
+                    data[29],
+                    data[30],
+                    data[31],
+                    data[41],
+                    data[42],
+                    data[43],
+                    data[44]
                 };
-                writer.writeNext(valTemp);
+                dataSheet.put(""+cont, valTemp);
+                cont++;
+//                writer.writeNext(valTemp);
             }
-            writer.close();
+            //Iterate over data and write to sheet
+            Set<String> keyset = dataSheet.keySet();
+            int rownum = 0;
+            for (String key : keyset)
+            {
+                Row row = sheet.createRow(rownum++);
+                Object [] objArr = dataSheet.get(key);
+                int cellnum = 0;
+                for (Object obj : objArr)
+                {
+                    Cell cell = row.createCell(cellnum++);
+                    if (obj instanceof String) {
+                        cell.setCellValue((String) obj);
+                    } else if (obj instanceof Boolean) {
+                        cell.setCellValue((Boolean) obj);
+                    } else if (obj instanceof Timestamp) {
+                        cell.setCellValue((Timestamp) obj);
+                    } else if (obj instanceof Date) {
+                        cell.setCellValue((Date) obj);
+                    } else if (obj instanceof Double) {
+                        cell.setCellValue((Double) obj);
+                    } else if (obj instanceof Integer) {
+                        cell.setCellValue((Integer) obj);
+                    } 
+                }
+            }
+//            ByteArrayOutputStream boas = new ByteArrayOutputStream();
+//            workbook.write(boas);
+            File myFile = new File(fileName);
+            if (!myFile.exists()) myFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(myFile);
+            workbook.write(out);
+            out.close();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
             e.printStackTrace();
-        } catch (IOException ex) {
+//        } catch (IOException ex) {
 //            Logger.getLogger(ProductionEventsDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ProductionEventsDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductionEventsDao.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             session.close();
         }

@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +23,7 @@ public class WorkTypeExtAgent  implements java.io.Serializable {
 
      private Integer idWorTyp;
      private String desWorTyp;
+     private IdiomCountry countryWorTyp;
 
     public WorkTypeExtAgent() {
     }
@@ -51,6 +54,16 @@ public class WorkTypeExtAgent  implements java.io.Serializable {
     
     public void setDesWorTyp(String desWorTyp) {
         this.desWorTyp = desWorTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_wor_typ")
+    public IdiomCountry getCountryWorTyp() {
+        return this.countryWorTyp;
+    }
+    
+    public void setCountryWorTyp(IdiomCountry countryWorTyp) {
+        this.countryWorTyp = countryWorTyp;
     }
 
 }

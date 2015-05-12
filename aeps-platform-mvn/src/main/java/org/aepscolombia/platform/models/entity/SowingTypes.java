@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,7 +25,8 @@ public class SowingTypes  implements java.io.Serializable {
 
      private Integer idSowTyp;
      private String nameSowTyp;
-     private boolean statusSowType;
+     private boolean statusSowTyp;
+     private IdiomCountry countrySowTyp;
 
     public SowingTypes() {
     }
@@ -34,9 +36,9 @@ public class SowingTypes  implements java.io.Serializable {
     }
 
 	
-    public SowingTypes(String nameSowTyp, boolean statusSowType) {
+    public SowingTypes(String nameSowTyp, boolean statusSowTyp) {
         this.nameSowTyp = nameSowTyp;
-        this.statusSowType = statusSowType;
+        this.statusSowTyp = statusSowTyp;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -59,13 +61,23 @@ public class SowingTypes  implements java.io.Serializable {
         this.nameSowTyp = nameSowTyp;
     }
     
-    @Column(name="status_sow_type", nullable=false)
-    public boolean isStatusSowType() {
-        return this.statusSowType;
+    @Column(name="status_sow_typ", nullable=false)
+    public boolean isStatusSowTyp() {
+        return this.statusSowTyp;
     }
     
-    public void setStatusSowType(boolean statusSowType) {
-        this.statusSowType = statusSowType;
+    public void setStatusSowTyp(boolean statusSowTyp) {
+        this.statusSowTyp = statusSowTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_sow_typ")
+    public IdiomCountry getCountrySowTyp() {
+        return this.countrySowTyp;
+    }
+    
+    public void setCountrySowTyp(IdiomCountry countrySowTyp) {
+        this.countrySowTyp = countrySowTyp;
     }
 
 }

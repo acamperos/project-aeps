@@ -8,6 +8,7 @@
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrDao = new UsersDao(); %>
+<% String coCode   = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -31,11 +32,19 @@
                     <div class="control-group">
                         <s:label for="formCrop_typeCrop" cssClass="control-label req" value="%{getText('select.croptype.crop')}:"></s:label>
                         <div class="controls">
-                            <s:select
-                                name="typeCrop"
-                                list="#{'1':'Maiz', '2':'Frijol'}"           
-                                headerKey="-1" 
-                                headerValue="---" />
+                            <% if (coCode.equals("NI")) { %>
+                                <s:select
+                                    name="typeCrop"
+                                    list="#{'4':'Arroz'}"           
+                                    headerKey="-1" 
+                                    headerValue="---" />
+                            <% } else if (coCode.equals("CO")) { %>
+                                <s:select
+                                    name="typeCrop"
+                                    list="#{'1':'Maiz', '2':'Frijol'}"           
+                                    headerKey="-1" 
+                                    headerValue="---" />
+                            <% }%>
                         </div>
                     </div>                             
                     <div class="row">
@@ -105,7 +114,8 @@
                     completeFormGetting('dialog-form', 'formCrop', 'divCrops', event.originalEvent.request.responseText);
                     var json = jQuery.parseJSON(event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        document.location = "/crop/dataCrop.action?idCrop="+json.idCrop;             
+                        document.location = "/crop/dataCrop.action?idCrop="+json.idCrop;     
+//                        document.location = "/aeps/crop/dataCrop.action?idCrop="+json.idCrop;     
                     }, 2000);
                 });
                 if($('.pop-over').length) {

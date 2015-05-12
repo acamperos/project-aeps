@@ -6,8 +6,11 @@
 <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
+<%@page import="java.util.HashMap"%>
 <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+<% HashMap addField    = (HashMap) request.getAttribute("additionals");%>
+<% String valueField   = (String) addField.get("selected");%>
 <s:form id="formFieldSearch" theme="bootstrap" action="searchField.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="%{getText('title.searchfield.field')}">
     <% if (entTypeId==3) { %>
         <div class="row-fluid">
@@ -24,15 +27,17 @@
             <div class="span1" style="padding-left: 28px">
                 <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFields" onCompleteTopics="completeField"><i class="icon-search"></i></sj:submit>
             </div> 
-            <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportField.action', 'formFieldSearch', 'fieldsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.exportdata.field')" /></s:submit>
-            </div>
+            <% if (valueField.equals("lot")) {%>
+                <div class="span2">
+                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportField.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.exportdata.field')" /></s:submit>
+                </div>
+            <% } %>
         </div>
         <script>
 						var allSelField = "";
 						var numSelField = "";
 						var notFoundField = "";
-						if(navigator.language=='es-ES' || navigator.language=='es') {
+						if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
 							allSelField = "Todos";
 							numSelField = "# de % seleccionados";
 							notFoundField = "No. coincidencias encontradas";
@@ -65,7 +70,9 @@
             <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.field')" /></s:a>
         </s:if>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportField.action', 'formFieldSearch', 'fieldsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.field')" /></s:submit>
+            <% if (valueField.equals("lot")) {%>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportField.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.field')" /></s:submit>
+            <% } %>
         <% } %>
     </div>   
     <div id="searchAdvanceField" class="hide">

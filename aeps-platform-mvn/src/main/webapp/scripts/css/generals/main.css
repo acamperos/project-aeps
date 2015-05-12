@@ -732,6 +732,21 @@ body {
     background-size: 70%;
 }
 
+#clients .client .client5 {
+    background: url("../../../img/logo-ccafs.png") no-repeat;
+    background-size: 100%;
+} 
+
+#clients .bigclient .client6 {
+    background: url("../../../img/logo-flar.png") no-repeat;
+    background-size: 100%;
+} 
+
+#clients .bigclient .client7 {
+    background: url("../../../img/logo-anar.jpg") no-repeat;
+    background-size: 100%;
+} 
+
 #clients .client .img:hover {
     cursor: pointer;
     border-radius: 5px;
@@ -740,6 +755,20 @@ body {
 			
 #clients .client .img {
     height: 50px;
+    cursor: pointer;
+    -webkit-transition: box-shadow .1s linear;
+    -moz-transition: box-shadow .1s linear;
+    transition: box-shadow .1s linear;
+}
+
+#clients .bigclient .img:hover {
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 #A4C300;
+}
+
+#clients .bigclient .img {
+    height: 113px;
     cursor: pointer;
     -webkit-transition: box-shadow .1s linear;
     -moz-transition: box-shadow .1s linear;

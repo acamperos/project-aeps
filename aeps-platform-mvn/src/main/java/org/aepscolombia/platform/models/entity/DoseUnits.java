@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class DoseUnits  implements java.io.Serializable {
      private Integer idDosUni;
      private String nameDosUni;
      private Boolean statusDosUni;
+     private IdiomCountry countryDosUni;
 
     public DoseUnits() {
     }
@@ -66,6 +69,16 @@ public class DoseUnits  implements java.io.Serializable {
     
     public void setStatusDosUni(Boolean statusDosUni) {
         this.statusDosUni = statusDosUni;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_dos_uni")
+    public IdiomCountry getCountryDosUni() {
+        return this.countryDosUni;
+    }
+    
+    public void setCountryDosUni(IdiomCountry countryDosUni) {
+        this.countryDosUni = countryDosUni;
     }
     
 }

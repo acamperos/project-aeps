@@ -98,7 +98,7 @@ public class OrganicFertilizationsDao
         return event;
     }
     
-    public List<OrganicFertilizations> getListOrgFert(Integer idFert) {
+    public List<OrganicFertilizations> getListOrgFert(Integer idFert, String coCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<OrganicFertilizations> eventsTemp = null;
@@ -113,6 +113,9 @@ public class OrganicFertilizationsDao
             Query query = session.createSQLQuery(sql).addEntity("p", OrganicFertilizations.class);
             eventsTemp = query.list();
             for (OrganicFertilizations data : eventsTemp) {
+                if (coCode.equals("NI")) {
+                    data.setAmountProductUsedOrgFer(data.getAmountProductUsedOrgFer()*0.01522);
+                }
                 if (data!=null && data.getOtherProductOrgFer()!=null && !data.getOtherProductOrgFer().equals("")) data.setOrganicFertilizers(new OrganicFertilizers(1000000, "Otro"));
                 result.add(data);
             }

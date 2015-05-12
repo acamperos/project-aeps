@@ -125,7 +125,7 @@
     <% }%>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchProducer.action?selected="+value, divHide, "", "", "formProducerSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchProducer.action?selected="+value, "divConListProducers", "", "", "formProducerSearch");%>    
     <%= result%>
 </div>
 <s:div id="divProperties" />

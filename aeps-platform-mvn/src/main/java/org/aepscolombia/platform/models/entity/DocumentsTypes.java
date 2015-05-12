@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,6 +21,7 @@ public class DocumentsTypes  implements java.io.Serializable {
 
      private String acronymDocTyp;
      private String nameDocTyp;
+     private IdiomCountry countryDocTyp;
 
     public DocumentsTypes() {
     }
@@ -50,6 +53,16 @@ public class DocumentsTypes  implements java.io.Serializable {
     
     public void setNameDocTyp(String nameDocTyp) {
         this.nameDocTyp = nameDocTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_doc_typ")
+    public IdiomCountry getCountryDocTyp() {
+        return this.countryDocTyp;
+    }
+    
+    public void setCountryDocTyp(IdiomCountry countryDocTyp) {
+        this.countryDocTyp = countryDocTyp;
     }
 
 }

@@ -53,6 +53,7 @@ public class ActionPhys extends BaseAction {
     private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
     private Sowing sowing = new Sowing();
     private UsersDao usrDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -139,6 +140,7 @@ public class ActionPhys extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
     }
@@ -233,6 +235,22 @@ public class ActionPhys extends BaseAction {
                             }
                         }
                     }
+                    
+                    if (coCode.equals("NI")) {
+                        if (!dmySow.equals("") && phys.getIniPrimorPhyMon()!=null) {
+                            Integer diffDays   = GlobalFunctions.diffDays(phys.getIniPrimorPhyMon(), sowing.getDateSow());
+                            if (diffDays<30 || diffDays>60) {
+                                addFieldError("phys.iniPrimorPhyMon", getText("message.primordateinvalidrank.physiological"));
+                                if (tyCro==1) {
+                                    addActionError(getText("desc.primordateinvalidrankmaize.physiological")+" ("+dmySow+")");
+                                } else if (tyCro==2) {
+                                    addActionError(getText("desc.primordateinvalidrankbeans.physiological")+" ("+dmySow+")");
+                                } else if (tyCro==4) {
+                                    addActionError(getText("desc.primordateinvalidrankrice.physiological")+" ("+dmySow+")");
+                                }
+                            }
+                        }
+                    }
                 } catch (ParseException ex) {
 //                    Logger.getLogger(ActionPhyMon.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -297,6 +315,13 @@ public class ActionPhys extends BaseAction {
                 phys.setFloweringDatePhyMon(dateFlow);
             }
             
+            if (phys.getIniPrimorPhyMon()!=null) {                
+                System.out.println("phys.getIniPrimorPhyMon()=>"+phys.getIniPrimorPhyMon());
+                dmyEmer = new SimpleDateFormat("yyyy-MM-dd").format(phys.getIniPrimorPhyMon());            
+                Date dateIniPrimor = new SimpleDateFormat("yyyy-MM-dd").parse(dmyEmer);
+                phys.setIniPrimorPhyMon(dateIniPrimor);
+            }
+            
             if (phys.getIdPhyMon()==null) {
                 PhysiologicalMonitoring physTemp = physDao.objectById(idCrop);
                 if (physTemp!=null) {
@@ -308,14 +333,18 @@ public class ActionPhys extends BaseAction {
             phys.setStatus(true);
             session.saveOrUpdate(phys);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(phys.getIdPhyMon());
-            log.setTableLogEnt("physiological_monitoring");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);           
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, phys.getIdPhyMon(), "physiological_monitoring", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(phys.getIdPhyMon());
+                log.setTableLogEnt("physiological_monitoring");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }           
             tx.commit();                  
             state = "success";            
             if (action.equals("C")) {
@@ -329,7 +358,7 @@ public class ActionPhys extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

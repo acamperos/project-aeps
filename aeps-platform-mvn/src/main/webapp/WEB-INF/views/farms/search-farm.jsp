@@ -4,8 +4,11 @@
 <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
+<%@page import="java.util.HashMap"%>
 <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+<% HashMap addFarm    = (HashMap) request.getAttribute("additionals");%>
+<% String valueFarm   = (String) (addFarm.get("selected"));%>
 <s:form id="formFarmSearch" theme="bootstrap" action="searchFarm.action?selected=%{selected}" cssClass="form-horizontal formClassProperty" label="%{getText('title.searchfarm.farm')}">
     <% if (entTypeId==3) { %>
         <div class="row-fluid">
@@ -22,15 +25,17 @@
             <div class="span1" style="padding-left: 28px">
                 <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListFarms" onCompleteTopics="completeFarm"><i class="icon-search"></i></sj:submit>
             </div> 
-            <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportFarm.action', 'formFarmSearch', 'farmsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
-            </div>
+            <% if (valueFarm.equals("property")) {%>
+                <div class="span2">
+                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportFarm.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
+                </div>
+            <% } %>
         </div>
         <script>
             var allSelFarm = "";
             var numSelFarm = "";
             var notFoundFarm = "";
-            if(navigator.language=='es-ES' || navigator.language=='es') {
+            if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
                     allSelFarm = "Todos";
                     numSelFarm = "# de % seleccionados";
                     notFoundFarm = "No. coincidencias encontradas";
@@ -62,7 +67,9 @@
             <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.farm')" /></s:a>
         </s:if>     
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportFarm.action', 'formFarmSearch', 'farmsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
+            <% if (valueFarm.equals("property")) {%>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportFarm.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
+            <% } %>
         <% } %>
     </div>   
     <div id="searchAdvanceFarm" class="hide">

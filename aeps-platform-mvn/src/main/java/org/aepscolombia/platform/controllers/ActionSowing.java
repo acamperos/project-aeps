@@ -1,7 +1,6 @@
 
 package org.aepscolombia.platform.controllers;
 
-import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,21 +12,21 @@ import org.aepscolombia.platform.models.dao.CassavasDao;
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.MaizeDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
+import org.aepscolombia.platform.models.dao.RiceDao;
 import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Beans;
 import org.aepscolombia.platform.models.entity.Cassavas;
-import org.aepscolombia.platform.models.entity.CropsTypes;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
 import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
+import org.aepscolombia.platform.models.entity.Rice;
 import org.aepscolombia.platform.models.entity.Sowing;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
-import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -58,9 +57,11 @@ public class ActionSowing extends BaseAction {
     private Beans beans   = new Beans();
     private Cassavas cass = new Cassavas();
     private Maize maize   = new Maize();
+    private Rice rice     = new Rice();
     private Sowing sowing = new Sowing();
     private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -88,6 +89,14 @@ public class ActionSowing extends BaseAction {
     public void setCass(Cassavas cass) {
         this.cass = cass;
     }
+
+    public Rice getRice() {
+        return rice;
+    }
+
+    public void setRice(Rice rice) {
+        this.rice = rice;
+    }   
 
     public Maize getMaize() {
         return maize;
@@ -137,6 +146,7 @@ public class ActionSowing extends BaseAction {
     private BeansDao beansDao     = new BeansDao();
     private CassavasDao cassDao   = new CassavasDao();
     private MaizeDao maizeDao     = new MaizeDao();
+    private RiceDao riceDao       = new RiceDao();
     private SowingDao sowDao      = new SowingDao();
     private LogEntitiesDao logDao = new LogEntitiesDao();
     
@@ -174,6 +184,7 @@ public class ActionSowing extends BaseAction {
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr()); 
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
     }
     
     
@@ -198,9 +209,11 @@ public class ActionSowing extends BaseAction {
             required.put("sowing.seedsNumberSow", sowing.getSeedsNumberSow());
             required.put("sowing.treatedSeedsSow", sowing.isTreatedSeedsSow());
             required.put("sowing.genotypes.idGen", sowing.getGenotypes().getIdGen());                
-            required.put("event.expected_production_pro_eve", event.getExpectedProductionProEve());     
-            required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
-            required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
+            required.put("event.expected_production_pro_eve", event.getExpectedProductionProEve()); 
+            if (typeCrop!=4) {        
+                required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
+                required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
+            }
             
 //            if (sowing.getGenotypesSowing().getIdGenSow()==1000000) {
             if (sowing.getGenotypes().getIdGen()!=null && sowing.getGenotypes().getIdGen()==1000000) {
@@ -221,6 +234,9 @@ public class ActionSowing extends BaseAction {
               if (beans.getOtroInoculationBea().equals("1000000")) {
                 required.put("sowing.otherGenotypeSow", sowing.getOtherGenotypeSow());
               }
+            } else if (typeCrop==4) {
+              required.put("sowing.genotypesSowing.idGenSow", sowing.getGenotypesSowing().getIdGenSow());
+              required.put("rice.riceSystem.idRieSys", rice.getRiceSystem().getIdRieSys());
             }                   
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
@@ -237,16 +253,18 @@ public class ActionSowing extends BaseAction {
                 addActionError(getText("message.missingfields.sowing"));
             }
             
-            required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
-            if (sowing.getFurrowsDistanceSow()!=null && sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
-                addFieldError("sowing.furrowsDistanceSow", getText("message.invaliddatafurrowsdistance.sowing"));
-                addActionError(getText("desc.invaliddatafurrowsdistance.sowing"));
-            }
+            if (typeCrop!=4) {        
+                required.put("sowing.furrowsDistanceSow", sowing.getFurrowsDistanceSow());
+                if (sowing.getFurrowsDistanceSow()!=null && sowing.getFurrowsDistanceSow()!=0 && (sowing.getFurrowsDistanceSow()<0 || sowing.getFurrowsDistanceSow()>10)) {
+                    addFieldError("sowing.furrowsDistanceSow", getText("message.invaliddatafurrowsdistance.sowing"));
+                    addActionError(getText("desc.invaliddatafurrowsdistance.sowing"));
+                }
 
-            required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
-            if (sowing.getFurrowsDistanceSow()!=null && sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
-                addFieldError("sowing.sitesDistanceSow", getText("message.invaliddatasitesdistance.sowing"));
-                addActionError(getText("desc.invaliddatasitesdistance.sowing"));
+                required.put("sowing.sitesDistanceSow", sowing.getSitesDistanceSow());
+                if (sowing.getFurrowsDistanceSow()!=null && sowing.getSitesDistanceSow()!=0 && (sowing.getSitesDistanceSow()<0 || sowing.getSitesDistanceSow()>10)) {
+                    addFieldError("sowing.sitesDistanceSow", getText("message.invaliddatasitesdistance.sowing"));
+                    addActionError(getText("desc.invaliddatasitesdistance.sowing"));
+                }
             }
                 
             if (typeCrop==2) {
@@ -310,6 +328,12 @@ public class ActionSowing extends BaseAction {
 //            event.setCropsTypes(new CropsTypes(2));
 //            event.setIdProjectProEve(event.getIdProjectProEve());
 //            event.setStatus(event.isStatus());
+            if (coCode.equals("NI")) {
+                Double seedNum = sowing.getSeedsNumberSow()*65.71;
+                Double expPro  = event.getExpectedProductionProEve()*65.71;
+                sowing.setSeedsNumberSow(seedNum.intValue());            
+                event.setExpectedProductionProEve(expPro);
+            } 
             session.saveOrUpdate(event);
             
             if (sowing.getIdSow()==null) {
@@ -329,7 +353,7 @@ public class ActionSowing extends BaseAction {
                 sowing.setDoseUnits(null);
             }
 //            sowing.setSowingTypes(new SowingTypes(idCrop));          
-            sowing.setStatus(true);
+            sowing.setStatus(true);     
             session.saveOrUpdate(sowing);
             
             
@@ -338,6 +362,9 @@ public class ActionSowing extends BaseAction {
             
             Beans beansOld  = beansDao.objectById(this.getIdCrop());
             if(beansOld!=null) session.delete(beansOld);
+            
+            Rice riceOld  = riceDao.objectById(this.getIdCrop());
+            if(riceOld!=null) session.delete(riceOld);
 
             if (typeCrop==1) {        
                 maize.setProductionEvents(new ProductionEvents(idCrop));
@@ -352,16 +379,24 @@ public class ActionSowing extends BaseAction {
 //                Cassavas ca = new Cassavas();
 //                ca.setIdCas(null);
 //                ca.setProductionEvents(pro);
+            } else if (typeCrop==4) {        
+                rice.setProductionEvents(new ProductionEvents(idCrop));
+                rice.setStatus(true);
+                session.saveOrUpdate(rice);
             }
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(sowing.getIdSow());
-            log.setTableLogEnt("sowing");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);           
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, sowing.getIdSow(), "sowing", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(sowing.getIdSow());
+                log.setTableLogEnt("sowing");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }          
             
             tx.commit();             
             state = "success";            
@@ -374,7 +409,7 @@ public class ActionSowing extends BaseAction {
             }
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

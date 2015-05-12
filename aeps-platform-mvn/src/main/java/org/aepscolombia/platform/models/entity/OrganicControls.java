@@ -26,6 +26,7 @@ public class OrganicControls  implements java.io.Serializable {
      private Integer idOrgCon;
      private TargetsTypes targetsTypes;
      private String nameOrgCon;
+     private IdiomCountry countryOrgCon;
 
     public OrganicControls() {
     }
@@ -67,6 +68,16 @@ public class OrganicControls  implements java.io.Serializable {
     
     public void setNameOrgCon(String nameOrgCon) {
         this.nameOrgCon = nameOrgCon;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_org_con")
+    public IdiomCountry getCountryOrgCon() {
+        return this.countryOrgCon;
+    }
+    
+    public void setCountryOrgCon(IdiomCountry countryOrgCon) {
+        this.countryOrgCon = countryOrgCon;
     }
 
 }

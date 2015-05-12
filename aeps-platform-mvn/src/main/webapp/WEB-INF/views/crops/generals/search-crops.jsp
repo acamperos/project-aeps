@@ -29,7 +29,7 @@
                 </div> 
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportCrop.action', 'formCropSearch', 'cropsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportCrop.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
             </div>    
         </div>
         <script>          
@@ -37,7 +37,7 @@
             var allSelCrop = "";
             var numSelCrop = "";
             var notFoundCrop = "";
-            if(navigator.language=='es-ES' || navigator.language=='es') {
+            if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
                 allSelCrop = "Todos";
                 numSelCrop = "# de % seleccionados";
                 notFoundCrop = "No. coincidencias encontradas";
@@ -66,7 +66,9 @@
         <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.crop')" /> </a><i class="icon-chevron-down"></i>
         <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.crop')" /></s:a>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportCrop.action', 'formCropSearch', 'cropsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportCrop.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
+            <%--<s:submit type="button" formIds="formCropSearch" action="getReportCrop.action" cssClass="btn btn-default" onclick="addMessageProcess();"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>--%>
+            <!--<a href="/crop/getReportCrop.action" style="float: left;text-align: center;">Export To Excel</a>-->
         <% } %>
     </div> 
     <div id="searchAdvanceCrop" class="hide">
@@ -158,7 +160,7 @@
                     <s:label for="formCropSearch_date_sowing" cssClass="control-label" value="%{getText('text.searchdatesow.crop')}"></s:label>
                     <div class="date controls">
                         <s:textfield name="date_sowing" readonly="true"/>
-                        <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>                          
                 </div>                          
@@ -173,7 +175,7 @@
 <script>
     $.mask.definitions['i'] = "[-0-9]";
     $.mask.definitions['f'] = "[-.0-9]";    
-    $("#formCropSearch_date_sowing").datepicker({dateFormat: 'dd/mm/yy'});
+    $("#formCropSearch_date_sowing").datepicker({dateFormat: 'mm/dd/yy'});
     $("#formCropSearch_date_sowing").mask("99/99/9999", {placeholder: ""});
     $("#formCropSearch_idCrop").numeric({decimal: false, negative: false});
     $("#formCropSearch_num_farm").numeric({decimal: false, negative: false});

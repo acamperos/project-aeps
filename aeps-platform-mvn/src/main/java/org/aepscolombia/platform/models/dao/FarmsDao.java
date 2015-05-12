@@ -7,14 +7,21 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.controllers.ActionField;
@@ -32,6 +39,10 @@ import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Clase FarmsDao
@@ -545,11 +556,18 @@ public class FarmsDao
 //        System.out.println("sql=>"+sql);
         try {
             tx = session.beginTransaction();
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
+            File myFileTemp = new File("farmsTemp.xls");
+            FileInputStream fis = new FileInputStream(myFileTemp);
+            
+            HSSFWorkbook workbook = new HSSFWorkbook(fis);            
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            sheet.createFreezePane(0,0);
+            Map<String, Object[]> dataSheet = new TreeMap<String, Object[]>();
+//            CSVWriter writer = new CSVWriter(new FileWriter(fileName), ';');
             Query query  = session.createSQLQuery(sql);
             events = query.list();  
         
-            String[] val = {
+            Object[] val = {
                 "ID_FINCA",
                 "ID_PROD",                
                 "USUARIO",
@@ -562,24 +580,58 @@ public class FarmsDao
                 "ALTITUD",
                 "MUNICIPIO"
             };
-            writer.writeNext(val);
+//            writer.writeNext(val);
+            dataSheet.put("1", val);
+            Integer cont = 2;
             for (Object[] data : events) {
-                String[] valTemp = {
-                    String.valueOf(data[0]),
-                    String.valueOf(data[1]),
-                    String.valueOf(data[2]),
-                    String.valueOf(data[3]),
-                    String.valueOf(data[4]),
-                    String.valueOf(data[5]),
-                    String.valueOf(data[6]),
-                    String.valueOf(data[7]),
-                    String.valueOf(data[8]),
-                    String.valueOf(data[9]),
-                    String.valueOf(data[10])
+                Object[] valTemp = {
+                    data[0],
+                    data[1],
+                    data[2],
+                    data[3],
+                    data[4],
+                    data[5],
+                    data[6],
+                    data[7],
+                    data[8],
+                    data[9],
+                    data[10]
                 };
-                writer.writeNext(valTemp);
+//                writer.writeNext(valTemp);
+                dataSheet.put(""+cont, valTemp);
+                cont++;
             }
-            writer.close();
+//            writer.close();
+            Set<String> keyset = dataSheet.keySet();
+            int rownum = 0;
+            for (String key : keyset)
+            {
+                Row row = sheet.createRow(rownum++);
+                Object [] objArr = dataSheet.get(key);
+                int cellnum = 0;
+                for (Object obj : objArr)
+                {
+                    Cell cell = row.createCell(cellnum++);
+                    if (obj instanceof String) {
+                        cell.setCellValue((String) obj);
+                    } else if (obj instanceof Boolean) {
+                        cell.setCellValue((Boolean) obj);
+                    } else if (obj instanceof Timestamp) {
+                        cell.setCellValue((Timestamp) obj);
+                    } else if (obj instanceof Date) {
+                        cell.setCellValue((Date) obj);
+                    } else if (obj instanceof Double) {
+                        cell.setCellValue((Double) obj);
+                    } else if (obj instanceof Integer) {
+                        cell.setCellValue((Integer) obj);
+                    } 
+                }
+            }
+            File myFile = new File(fileName);
+            if (!myFile.exists()) myFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(myFile);
+            workbook.write(out);
+            out.close();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

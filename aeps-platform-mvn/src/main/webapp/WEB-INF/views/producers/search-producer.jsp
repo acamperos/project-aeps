@@ -4,8 +4,11 @@
 <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
+<%@page import="java.util.HashMap"%>
 <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+<% HashMap addPro    = (HashMap) request.getAttribute("additionals");%>
+<% String valuePro   = (String) (addPro.get("selected"));%>
 <s:form id="formProducerSearch" action="searchProducer.action?selected=%{selected}" theme="bootstrap" cssClass="form-horizontal formClassProducer" label="%{getText('title.searchproducer.producer')}">
     <s:hidden name="searchFromProducer" value="1"/>
     <% if (entTypeId==3) { %>
@@ -23,27 +26,29 @@
             <div class="span1" style="padding-left: 28px">
                 <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListProducers" onCompleteTopics="completeProducer"><i class="icon-search"></i></sj:submit>
             </div>
-            <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportProducer.action', 'formProducerSearch', 'producersData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.producer')" /></s:submit>
-                <%--<s:url id="fileDownload" action="getReportProducer.action" includeParams="all" ></s:url>--%>
-                <%--<s:a type="button" href="%{fileDownload}" onclick="getReportCsv('getReportProducer.action', 'formProducerSearch', 'divMessage')" cssClass="btn btn-default"><i class="icon-file-text"></i> Exportar Datos</s:a>--%>
-            </div>
+            <% if (valuePro.equals("producer")) {%>
+                <div class="span2">
+                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportProducer.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.producer')" /></s:submit>
+                    <%--<s:url id="fileDownload" action="getReportProducer.action" includeParams="all" ></s:url>--%>
+                    <%--<s:a type="button" href="%{fileDownload}" onclick="getReportCsv('getReportProducer.action', 'formProducerSearch', 'divMessage')" cssClass="btn btn-default"><i class="icon-file-text"></i> Exportar Datos</s:a>--%>
+                </div>
+            <% } %>
         </div>        
         <script>
-						var allSelProducer = "";
-						var numSelProducer = "";
-						var notFoundProducer = "";
-						if(navigator.language=='es-ES' || navigator.language=='es') {
-							allSelProducer = "Todos";
-							numSelProducer = "# de % seleccionados";
-							notFoundProducer = "No. coincidencias encontradas";
-						}
-						
-						if(navigator.language=='en-EN' || navigator.language=='en') {
-							allSelProducer = "All";
-							numSelProducer = "# of % selected";
-							notFoundProducer = "Number of results";
-						}				
+            var allSelProducer = "";
+            var numSelProducer = "";
+            var notFoundProducer = "";
+            if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
+                    allSelProducer = "Todos";
+                    numSelProducer = "# de % seleccionados";
+                    notFoundProducer = "No. coincidencias encontradas";
+            }
+
+            if(navigator.language=='en-EN' || navigator.language=='en') {
+                    allSelProducer = "All";
+                    numSelProducer = "# of % selected";
+                    notFoundProducer = "Number of results";
+            }				
 				
             $("#formProducerSearch_name_agronomist").multipleSelect({
                 placeholder: "---",
@@ -64,7 +69,9 @@
             <s:a cssClass="btn btn-initial" href="listProducer.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.producer')" /></s:a>
         </s:if>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportProducer.action', 'formProducerSearch', 'producersData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.producer')" /></s:submit>
+            <% if (valuePro.equals("producer")) {%>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportProducer.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.producer')" /></s:submit>
+            <% } %>
         <% } %>
     </div>   
     <div id="searchAdvanceProducer" class="hide">

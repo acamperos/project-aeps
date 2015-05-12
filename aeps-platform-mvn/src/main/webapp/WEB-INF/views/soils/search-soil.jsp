@@ -29,7 +29,7 @@
                 </div> 
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportSoil.action', 'formRastaSearch', 'soilsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportSoil.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
             </div>   
         </div>
         <script>
@@ -37,7 +37,7 @@
             var allSelSoil = "";
             var numSelSoil = "";
             var notFoundSoil = "";
-            if(navigator.language=='es-ES' || navigator.language=='es') {
+            if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
                     allSelSoil = "Todos";
                     numSelSoil = "# de % seleccionados";
                     notFoundSoil = "No. coincidencias encontradas";
@@ -66,7 +66,7 @@
         <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.soil')" /> </a><i class="icon-chevron-down"></i>
         <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soil')" /></s:a>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportCsv('getReportSoil.action', 'formRastaSearch', 'soilsData.csv')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportSoil.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
         <% } %>
     </div> 
     <div id="searchAdvanceSoil" class="hide">
@@ -87,7 +87,7 @@
                     <s:label for="formRastaSearch_date" cssClass="control-label" value="%{getText('text.searchdaterasta.soil')}:"></s:label>
                     <div class="date controls">
                         <s:textfield name="date" readonly="true" />
-                        <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
 <script>
     $.mask.definitions['i'] = "[-0-9]";
     $.mask.definitions['f'] = "[-.0-9]";
-    $("#formRastaSearch_date").datepicker({dateFormat: 'dd/mm/yy'});
+    $("#formRastaSearch_date").datepicker({dateFormat: 'mm/dd/yy'});
     $("#formRastaSearch_date").mask("99/99/9999", {placeholder: ""});
     $("#formRastaSearch_num_rasta").numeric({decimal: false, negative: false});
     $("#formRastaSearch_pendant").numeric({decimal: false, negative: false});

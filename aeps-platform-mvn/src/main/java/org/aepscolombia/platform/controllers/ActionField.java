@@ -91,6 +91,7 @@ public class ActionField extends BaseAction {
     private UsersDao usrDao;
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
+    private String coCode;
 
     
     /**
@@ -276,6 +277,10 @@ public class ActionField extends BaseAction {
         return listLot;
     }   
     
+    public String getCoCode() {
+        return coCode;
+    }
+    
     /**
      * Atributos generales de clase
      */
@@ -379,13 +384,16 @@ public class ActionField extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        this.setType_property_lot(new FieldTypesDao().findAll());
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
+        this.setType_property_lot(new FieldTypesDao().findAll(coCode));
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
         assDao = new AssociationDao();
+//        user.setCountryUsr(null);
     }
     
     private Map fieldError;
@@ -404,8 +412,12 @@ public class ActionField extends BaseAction {
         Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
         Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
         info = "";
+        Double minlat = Double.parseDouble(getText("min.lat"));
+        Double maxlat = Double.parseDouble(getText("max.lat"));
+        Double minlon = Double.parseDouble(getText("min.lon"));
+        Double maxlon = Double.parseDouble(getText("max.lon"));
         if (latLot!=0) {
-            if (latLot < (-4.3) || latLot > (13.5)) {
+            if (latLot < (minlat) || latLot > (maxlat)) {
                 addFieldError("latitude_lot", getText("message.invalidranklatitude.field"));
                 state = "failure";
                 info  += getText("desc.invalidranklatitude.field");
@@ -417,7 +429,7 @@ public class ActionField extends BaseAction {
         }
 
         if (lonLot!=0) {
-            if (lonLot < (-81.8) || lonLot > (-66)) {
+            if (lonLot < (minlon) || lonLot > (maxlon)) {
                 addFieldError("length_lot", getText("message.invalidranklongitude.field"));
                 state = "failure";
                 info  += getText("desc.invalidranklongitude.field");
@@ -486,6 +498,15 @@ public class ActionField extends BaseAction {
                 addActionError(getText("message.missingfields.field"));
             }
             
+            Double minlat = Double.parseDouble(getText("min.lat"));
+            Double maxlat = Double.parseDouble(getText("max.lat"));
+            Double minlon = Double.parseDouble(getText("min.lon"));
+            Double maxlon = Double.parseDouble(getText("max.lon"));
+            Double minalt = Double.parseDouble(getText("min.alt"));
+            Double maxalt = Double.parseDouble(getText("max.alt"));
+            Double minarea = Double.parseDouble(getText("min.area"));
+            Double maxarea = Double.parseDouble(getText("max.area"));
+            
             Double altLot = (altitude_lot.equals("")) ? 0.0 : Double.parseDouble(altitude_lot.replace(',','.'));
             Double latLot = (latitude_lot.equals("")) ? 0.0 : Double.parseDouble(latitude_lot.replace(',','.'));
             Double lonLot = (length_lot.equals("")) ? 0.0 : Double.parseDouble(length_lot.replace(',','.'));
@@ -496,13 +517,13 @@ public class ActionField extends BaseAction {
 //            Double areaLot = (area_lot.equals("")) ? 0.0 : Double.parseDouble(area_lot);
             
 //            if (altitude_property) {    
-            if (altLot<0 || altLot>9000) {
+            if (altLot<minalt || altLot>maxalt) {
                 addFieldError("altitude_lot", getText("message.datainvalidaltitude.field"));
                 addActionError(getText("desc.datainvalidaltitude.field"));
             }
 //            }
                 
-            if (areaLot<0 || areaLot>3000) {
+            if (areaLot<minarea || areaLot>maxarea) {
                 addFieldError("area_lot", getText("message.datainvalidarea.field"));
                 addActionError(getText("desc.datainvalidarea.field"));
             }
@@ -526,7 +547,7 @@ public class ActionField extends BaseAction {
 //            if (option_geo_lot == 1) {
 //                if (latitude_property!=null) { 
             if (latLot!=0) {
-                if (latLot<(-4.3) || latLot>(13.5)) {
+                if (latLot<(minlat) || latLot>(maxlat)) {
                     addFieldError("latitude_lot", getText("message.invalidvalueranklatitude.field"));
                     addActionError(getText("desc.invalidvalueranklatitude.field"));                        
                 }
@@ -560,7 +581,7 @@ public class ActionField extends BaseAction {
             
             if (lonLot!=0) {
                 
-                if (lonLot<(-81.8) || lonLot>(-66)) {
+                if (lonLot<(minlon) || lonLot>(maxlon)) {
                     addFieldError("length_lot", getText("message.invalidvalueranklongitude.field"));
                     addActionError(getText("desc.invalidvalueranklongitude.field"));
                 }
@@ -593,7 +614,7 @@ public class ActionField extends BaseAction {
      */
     public String comboFieldTypes() {
         FieldTypesDao eventDao = new FieldTypesDao();
-        type_property_lot = eventDao.findAll();
+        type_property_lot = eventDao.findAll(coCode);
         return "combo";
     } 
     
@@ -722,6 +743,7 @@ public class ActionField extends BaseAction {
   
         File f = new File(fileName);  
         inputStream = new FileInputStream(f);  
+        f.delete();
         return "OUTPUTCSV"; 
     }
 
@@ -748,7 +770,7 @@ public class ActionField extends BaseAction {
             this.setIdField(-1);
         } 
 
-        this.setType_property_lot(new FieldTypesDao().findAll());
+        this.setType_property_lot(new FieldTypesDao().findAll(coCode));
 
         if (this.getIdField()!= -1) {
 //            LotsDao eventDao = new LotsDao();
@@ -934,19 +956,19 @@ public class ActionField extends BaseAction {
             DBCursor cursor    = col.find(query);
             WriteResult result = null;
             BasicDBObject jsonField = null;
-            jsonField          = GlobalFunctions.generateJSONField(valInfo);
+//            jsonField          = GlobalFunctions.generateJSONField(valInfo);
             
             if (cursor.count()>0) {
                 System.out.println("actualizo mongo");
-                result = col.update(query, jsonField);
+//                result = col.update(query, jsonField);
             } else {
                 System.out.println("inserto mongo");
-                result = col.insert(jsonField);
+//                result = col.insert(jsonField);
             }
             
-            if (result.getError()!=null) {
-                throw new HibernateException("");
-            }
+//            if (result.getError()!=null) {
+//                throw new HibernateException("");
+//            }
             
             mongo.close();
             tx.commit();           
@@ -986,7 +1008,7 @@ public class ActionField extends BaseAction {
         }
         Integer idField = 0;
         try {
-            idField = Integer.parseInt(this.getRequest().getParameter("idFar"));
+            idField = Integer.parseInt(this.getRequest().getParameter("idField"));
         } catch (NumberFormatException e) {
             idField = -1;
         }

@@ -129,9 +129,9 @@ public class ControlsDao
         if (args.containsKey("idEvent")) {
             sql += " and p.id_production_event_con="+args.get("idEvent");
         }
-		if (args.containsKey("idEntUser")) {
-			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
-		}
+//		if (args.containsKey("idEntUser")) {
+//			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}
 		sqlAdd += " order by p.id_con ASC";
 		sql += sqlAdd;
 //        args.get("countTotal");
@@ -158,8 +158,7 @@ public class ControlsDao
                     nameObj = (!String.valueOf(data[2]).equals("null") ? String.valueOf(data[2]) : String.valueOf(data[16]));
                 } else if (targetTy==3) {
                     nameObj = (!String.valueOf(data[3]).equals("null") ? String.valueOf(data[3]) : String.valueOf(data[17]));
-                }
-
+                }                
                 String nameChe = (!String.valueOf(data[4]).equals("null") ? String.valueOf(data[4]) : String.valueOf(data[5]));
                 String nameOrg = (!String.valueOf(data[6]).equals("null") ? String.valueOf(data[6]) : String.valueOf(data[7]));
                 HashMap temp = new HashMap();
@@ -171,10 +170,23 @@ public class ControlsDao
                 temp.put("chemCon", nameChe);
                 temp.put("orgCon", nameOrg);
                 String valUnit = "";
+                String unit    = String.valueOf(data[12]);
                 if(data[12]!=null) {
-                    valUnit = "-"+data[12];
+                    valUnit = "-"+unit;
                 }
-                temp.put("doseCon", data[11]+valUnit);                
+                String doseInfo = String.valueOf(data[11]);
+                Double doseVal  = null;
+                if (doseInfo!=null && !doseInfo.equals("null")) doseVal = Double.parseDouble(doseInfo);
+                Double doseCon  = null;
+                if (args.containsKey("coCode")) {
+                    String coCode = String.valueOf(args.get("coCode"));
+                    if (coCode.equals("NI") && unit.equals("q/mz")) {
+                        doseCon = doseVal*0.01522;
+                    } else {
+                        doseCon = doseVal;
+                    }
+                }
+                temp.put("doseCon", doseCon+valUnit);                
 //                temp.put("doseChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : data[11]);              
 //                temp.put("unitChemCon", (temp.get("chemCon").equals("null") || temp.get("chemCon").equals("")) ? "" : valUnit);                
 //                temp.put("doseOrgCon", (temp.get("orgCon").equals("null") || temp.get("orgCon").equals("")) ? "" : data[11]);

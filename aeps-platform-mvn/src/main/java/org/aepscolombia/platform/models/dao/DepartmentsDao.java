@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.Departments;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -67,15 +68,16 @@ public class DepartmentsDao {
         return eventos;
     }
 
-    public List<Departments> findAll() {
+    public List<Departments> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<Departments> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String hql  = "from Departments order by nameDep ASC";
+            String hql  = "from Departments WHERE countryDep.acronymIdCo = :country_code order by nameDep ASC";            
             Query query = session.createQuery(hql);
+            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

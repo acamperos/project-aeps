@@ -49,14 +49,14 @@ public class OrganicFertilizersDao
         List<OrganicFertilizers> event = null;
         Transaction tx = null;
         
-        sql += "select cr.id_org_fer, cr.name_org_fer, cr.status_org_fer from organic_fertilizers cr";
+        sql += "select cr.id_org_fer, cr.name_org_fer, cr.status_org_fer, cr.country_org_fer from organic_fertilizers cr";
 		sql += " where cr.status_org_fer=1";
 //        if (idTypeCrop!=null) {
             //sql += " and t.id_crop_type_irr_typ_cro="+idTypeCrop;
 //        }
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", OrganicFertilizers.class);
+            Query query = session.createSQLQuery(sql).addEntity("cr", OrganicFertilizers.class);
             event = query.list();
             OrganicFertilizers temp = new OrganicFertilizers();
             temp.setIdOrgFer(1000000);

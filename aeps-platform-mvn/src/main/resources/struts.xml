@@ -105,11 +105,13 @@
             <result>/WEB-INF/views/generals/accessPlatform.jsp</result>
         </action>
         <action name="restorePassword"  method="restorePassword" class="org.aepscolombia.platform.controllers.ActionLogin">
-            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>            
             <result name="states" type="json"></result>
         </action>
         
         <action name="sendInformation"  method="sendInformation" class="org.aepscolombia.platform.controllers.ActionLogin">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="states" type="json"></result>
         </action>
@@ -127,7 +129,8 @@
             <result name="states" type="json"></result>
         </action>
         <action name="changePassUser"  method="changePassUser" class="org.aepscolombia.platform.controllers.ActionLogin">
-            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>            
             <result name="states" type="json"></result>
         </action>
         <action name="login" method="login" class="org.aepscolombia.platform.controllers.ActionLogin">
@@ -139,8 +142,8 @@
             <result name="input">/WEB-INF/views/login/login.jsp</result>
         </action>
         <action name="saveUser" method="saveData" class="org.aepscolombia.platform.controllers.ActionLogin">    
-            <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="validateI18n"/> 
+            <interceptor-ref name="jsonValidationWorkflowStack"/>            
             <interceptor-ref name="defaultStack" />               
             <result name="states" type="json"></result>
         </action>
@@ -152,14 +155,15 @@
             <result>/WEB-INF/views/generals/sendIssue.jsp</result>
         </action>
         <action name="sendIssue" method="saveData" class="org.aepscolombia.platform.controllers.ActionIssues">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="defaultStackAeps"/>            
             <result name="states" type="json"></result>
         </action>
         
         <action name="chargeValues" method="chargeValues" class="org.aepscolombia.platform.controllers.ActionContact">
-            <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <result name = "states" type="json"></result>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>           
+            <result name="states" type="json"></result>
         </action> 
         <!-- End public part -->
         
@@ -185,7 +189,7 @@
                 <param name="namespace">/</param>
             </result>
         </action>    
-        <action name="dashboard">
+        <action name="dashboard">            
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>                        
             <interceptor-ref name="viewAction"/>            
@@ -220,14 +224,16 @@
             <result>/WEB-INF/views/profile/view-profile.jsp</result>
         </action>    
         <action name="saveProfile" method="saveProfile" class="org.aepscolombia.platform.controllers.ActionProfile">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
         </action>
         <action name="saveSetting" method="saveSetting" class="org.aepscolombia.platform.controllers.ActionProfile">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>      
         <!-- End private part -->
     </package>  
@@ -274,25 +280,29 @@
             <result>/WEB-INF/views/producers/form-producer.jsp</result>
         </action>
         <action name="saveProducer" method="saveData" class="org.aepscolombia.platform.controllers.ActionProducer">            
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>  
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteProducer" method="delete" class="org.aepscolombia.platform.controllers.ActionProducer">
-            <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <result name = "states" type="json"></result>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>            
+            <result name="states" type="json"></result>
         </action>   
         <action name="deleteAllProducer" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action> 
         <action name="getReportProducer" method="getReport" class="org.aepscolombia.platform.controllers.ActionProducer">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="OUTPUTCSV" type="stream">  
                 <param name="inputName">inputStream</param>  
-                <param name="contentType">application/csv</param>  
-                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
-                <param name="contentCharSet">charset=shift-jis</param>  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param>
+                <param name="bufferSize">1024</param>
             </result>  
         </action>     
     </package>
@@ -333,31 +343,36 @@
             <result>/WEB-INF/views/farms/form-farm.jsp</result>
         </action>
         <action name="viewPositionFarm" method="viewPosition" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
             <result>/WEB-INF/views/farms/maps-farm.jsp</result>
         </action>
         <action name="saveFarm" method="saveData" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteFarm" method="delete" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteAllFarm" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="getReportFarm" method="getReport" class="org.aepscolombia.platform.controllers.ActionFarm">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="OUTPUTCSV" type="stream">  
                 <param name="inputName">inputStream</param>  
-                <param name="contentType">application/csv</param>  
-                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
-                <param name="contentCharSet">charset=shift-jis</param>  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param>
+                <param name="bufferSize">1024</param>
             </result>  
         </action>
     </package>
@@ -392,31 +407,36 @@
             <result>/WEB-INF/views/fields/form-field.jsp</result>
         </action>
         <action name="viewPositionField" method="viewPosition" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
             <result>/WEB-INF/views/fields/maps-field.jsp</result>
         </action>
         <action name="saveField" method="saveData" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteField" method="delete" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>    
         <action name="deleteAllField" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>      
         <action name="getReportField" method="getReport" class="org.aepscolombia.platform.controllers.ActionField">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="OUTPUTCSV" type="stream">  
                 <param name="inputName">inputStream</param>  
-                <param name="contentType">application/csv</param>  
-                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
-                <param name="contentCharSet">charset=shift-jis</param>  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param>
+                <param name="bufferSize">1024</param>
             </result>  
         </action>  
     </package>
@@ -444,41 +464,47 @@
             <result>/WEB-INF/views/soils/info-soil.jsp</result>
         </action>   
         <action name="showSoil" method="show" class="org.aepscolombia.platform.controllers.ActionRasta">
-            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="defaultStackAeps"/>            
             <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/soils/form-soil.jsp</result>
         </action>        
         <action name="saveSoil" method="saveData" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteSoil" method="delete" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteAllSoil" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action> 
         <action name="getReportSoil" method="getReport" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="OUTPUTCSV" type="stream">  
                 <param name="inputName">inputStream</param>  
-                <param name="contentType">application/csv</param>  
-                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
-                <param name="contentCharSet">charset=shift-jis</param>  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param>
+                <param name="bufferSize">1024</param>
             </result>  
         </action>    
         <action name="viewPositionSoil" method="viewPosition" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
             <result>/WEB-INF/views/soils/maps-soil.jsp</result>
         </action>
         <action name="generateInf" method="generateInf" class="org.aepscolombia.platform.controllers.ActionRasta">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>      
+            <result name="states" type="json"></result>      
             <result>/WEB-INF/views/reports/rasta_report.jsp</result>
         </action>        
     </package>
@@ -530,25 +556,29 @@
             <result>/WEB-INF/views/crops/generals/form-crops.jsp</result>
         </action>
         <action name="saveCrop" method="saveData" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteCrop" method="delete" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>   
         <action name="deleteAllCrop" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>  
         <action name="getReportCrop" method="getReport" class="org.aepscolombia.platform.controllers.ActionCrop">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <result name="OUTPUTCSV" type="stream">  
                 <param name="inputName">inputStream</param>  
-                <param name="contentType">application/csv</param>  
-                <param name="contentDisposition">attachment;filename="%{fileName}"</param> 
-                <param name="contentCharSet">charset=shift-jis</param>  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param>
+                <param name="bufferSize">1024</param>
             </result>  
         </action>   
     </package>
@@ -578,28 +608,32 @@
             <result>/WEB-INF/views/reports/info-soil.jsp</result>
         </action>
         <action name="getReportPro" method="getReport" class="org.aepscolombia.platform.controllers.ActionReport">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>      
+            <result name="states" type="json"></result>      
             <result name = "reportBox">/WEB-INF/views/reports/production_reportAgro.jsp</result>
             <result name = "reportDet">/WEB-INF/views/reports/production_reportPro.jsp</result>
         </action>
     </package>
     <package name="sowing" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="saveSowing" method="saveData" class="org.aepscolombia.platform.controllers.ActionSowing">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>            
+            <interceptor-ref name="defaultStackAeps"/>       
             <result name="states" type="json"></result>
         </action>    
     </package>
     <package name="physiolo" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="savePhys" method="saveData" class="org.aepscolombia.platform.controllers.ActionPhys">
+            <interceptor-ref name="validateI18n"/>      
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>            
+            <interceptor-ref name="defaultStackAeps"/>                  
             <result name="states" type="json"></result>
         </action>    
     </package>
     <package name="harvest" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="saveHarvest" method="saveData" class="org.aepscolombia.platform.controllers.ActionHarvest">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
             <result name="states" type="json"></result>
@@ -617,13 +651,15 @@
             <result>/WEB-INF/views/crops/preparations/form-preparations.jsp</result>
         </action>
         <action name="savePrep" method="saveData" class="org.aepscolombia.platform.controllers.ActionPrep">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <interceptor-ref name="defaultStackAeps"/>         
+            <result name="states" type="json"></result>
         </action>
         <action name="deletePrep" method="delete" class="org.aepscolombia.platform.controllers.ActionPrep">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>
     <package name="residualpackage" extends="principal,struts-default,json-default" namespace="/crop">
@@ -638,13 +674,15 @@
             <result>/WEB-INF/views/crops/residuals/form-residuals.jsp</result>
         </action>
         <action name="saveResidual" method="saveData" class="org.aepscolombia.platform.controllers.ActionResiduals">
+            <interceptor-ref name="validateI18n"/>  
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <interceptor-ref name="defaultStackAeps"/>        
+            <result name="states" type="json"></result>
         </action>
-        <action name="deleteResidual" method="delete" class="org.aepscolombia.platform.controllers.ActionResiduals">
+        <action name="deleteResidual" method="delete" class="org.aepscolombia.platform.controllers.ActionResiduals">            
+            <interceptor-ref name="validateI18n"/>  
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>
     <package name="descriptionspackage" extends="principal,struts-default,json-default" namespace="/crop">
@@ -659,13 +697,15 @@
             <result>/WEB-INF/views/crops/descriptions/form-descriptions.jsp</result>
         </action>
         <action name="saveDescrip" method="saveData" class="org.aepscolombia.platform.controllers.ActionDescriptions">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteDescrip" method="delete" class="org.aepscolombia.platform.controllers.ActionDescriptions">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>    
     <package name="irrpackage" extends="principal,struts-default,json-default" namespace="/crop">
@@ -680,13 +720,15 @@
             <result>/WEB-INF/views/crops/irrigations/form-irrigations.jsp</result>
         </action>
         <action name="saveIrr" method="saveData" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteIrr" method="delete" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>
     <package name="monpackage" extends="principal,struts-default,json-default" namespace="/crop">
@@ -701,20 +743,25 @@
             <result>/WEB-INF/views/crops/monitorings/form-monitorings.jsp</result>
         </action>
         <action name="saveMon" method="saveData" class="org.aepscolombia.platform.controllers.ActionMon">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteMon" method="delete" class="org.aepscolombia.platform.controllers.ActionMon">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>
     <package name="ferpackage" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="showRowAddFer" method="showRowAdditional" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="defaultStackAeps"/>
             <result name = "chemical">/WEB-INF/views/crops/fertilizations/row_chemical_fer.jsp</result>
             <result name = "organic">/WEB-INF/views/crops/fertilizations/row_organic_fer.jsp</result>
             <result name = "amendment">/WEB-INF/views/crops/fertilizations/row_amendment_fer.jsp</result>
+            <!--<interceptor-ref name="validateI18n"/>-->
         </action>
         <action name="searchFer" method="search" class="org.aepscolombia.platform.controllers.ActionFer">
             <interceptor-ref name="defaultStackAeps"/>
@@ -727,13 +774,15 @@
             <result>/WEB-INF/views/crops/fertilizations/form-fertilizations.jsp</result>
         </action>
         <action name="saveFer" method="saveData" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteFer" method="delete" class="org.aepscolombia.platform.controllers.ActionFer">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>
     <package name="conpackage" extends="principal,struts-default,json-default" namespace="/crop">
@@ -753,14 +802,16 @@
             <interceptor-ref name="validateI18n"/>
             <result>/WEB-INF/views/crops/controls/form-controls.jsp</result>
         </action>
-        <action name="saveCon" method="saveData" class="org.aepscolombia.platform.controllers.ActionCon">
+        <action name="saveCon" method="saveData" class="org.aepscolombia.platform.controllers.ActionCon">            
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>
         <action name="deleteCon" method="delete" class="org.aepscolombia.platform.controllers.ActionCon">
+            <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
-            <result name = "states" type="json"></result>
+            <result name="states" type="json"></result>
         </action>     
     </package>
 </struts>

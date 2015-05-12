@@ -124,9 +124,9 @@ public class MonitoringDao
         if (args.containsKey("idEvent")) {
             sql += " and m.id_production_event_mon="+args.get("idEvent");
         }
-		if (args.containsKey("idEntUser")) {
-			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
-		}
+//		if (args.containsKey("idEntUser")) {
+//			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}
 		sqlAdd += " order by m.id_mon ASC";
 		sql += sqlAdd;
 //        args.get("countTotal");

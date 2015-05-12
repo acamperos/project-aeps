@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +26,7 @@ public class ChemicalsSowing  implements java.io.Serializable {
      private Integer idCheSow;
      private String nameCheSow;
      private Boolean statusCheSow;
+     private IdiomCountry countryCheSow;
 
     public ChemicalsSowing() {
     }
@@ -61,6 +63,16 @@ public class ChemicalsSowing  implements java.io.Serializable {
     
     public void setStatusCheSow(Boolean statusCheSow) {
         this.statusCheSow = statusCheSow;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_che_sow")
+    public IdiomCountry getCountryCheSow() {
+        return this.countryCheSow;
+    }
+    
+    public void setCountryCheSow(IdiomCountry countryCheSow) {
+        this.countryCheSow = countryCheSow;
     }
 
 }

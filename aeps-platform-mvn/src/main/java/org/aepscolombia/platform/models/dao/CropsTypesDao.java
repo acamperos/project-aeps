@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.aepscolombia.platform.models.entity.CropsTypes;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -55,7 +56,7 @@ public class CropsTypesDao {
         CropsTypes event = null;
         Transaction tx = null;
 				
-        sql += "select p.id_cro_typ, p.name_cro_typ, p.status_cro_typ";
+        sql += "select p.id_cro_typ, p.name_cro_typ, p.status_cro_typ, p.country_cro_typ";
         sql += " from crops_types p";
         sql += " where p.id_cro_typ="+id;
         try {
@@ -81,7 +82,7 @@ public class CropsTypesDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select id_cro_typ, name_cro_typ, status_cro_typ from documents_types");
+            Query query = session.createSQLQuery("select id_cro_typ, name_cro_typ, status_cro_typ, country_cro_typ from crops_types");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -95,7 +96,7 @@ public class CropsTypesDao {
         return events;
     }
 
-    public List<CropsTypes> findAll() {
+    public List<CropsTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<CropsTypes> events = null;
@@ -103,6 +104,8 @@ public class CropsTypesDao {
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from CropsTypes");
+//            Query query = session.createQuery("from CropsTypes WHERE countryCroTyp.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             CropsTypes temp = new CropsTypes();
             temp.setIdCroTyp(1000000);

@@ -121,7 +121,7 @@
     <% }%>
 </div>
 <div style="text-align:center; <%= table %>">
-    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchFarm.action?selected="+value, divHide, "", "", "formFarmSearch");%>    
+    <% String result = JavascriptHelper.pager_params_ajax(pageNow, countTotal, maxResults, "/searchFarm.action?selected="+value, "divConListFarms", "", "", "formFarmSearch");%>    
     <%= result%>
 </div>
 <s:div id="divProperties" />

@@ -197,7 +197,7 @@
                             }
                             completeFormGetting('dialog-form', 'formField', 'divFields', event.originalEvent.request.responseText);
                             setTimeout( function() {
-                                showInfo("searchField.action?page="+$("#formField_page").val(), "divConListFields");
+                                showInfo("/searchField.action?page="+$("#formField_page").val(), "divConListFields");
                             }, 2000);
                         });
                         if($('.pop-over').length) {

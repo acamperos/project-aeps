@@ -2,7 +2,6 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,9 +9,7 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +23,7 @@ public class ResultingProducts  implements java.io.Serializable {
      private Integer idResPro;
      private String nameResPro;
      private Boolean statusResPro;
+     private IdiomCountry countryResPro;
 
     public ResultingProducts() {
     }
@@ -62,6 +60,16 @@ public class ResultingProducts  implements java.io.Serializable {
     
     public void setStatusResPro(Boolean statusResPro) {
         this.statusResPro = statusResPro;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_res_pro")
+    public IdiomCountry getCountryResPro() {
+        return this.countryResPro;
+    }
+    
+    public void setCountryResPro(IdiomCountry countryResPro) {
+        this.countryResPro = countryResPro;
     }
 
 }

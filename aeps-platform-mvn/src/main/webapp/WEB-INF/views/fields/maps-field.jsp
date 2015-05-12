@@ -6,6 +6,7 @@
     <body>
         <s:hidden name="latitude_lot"/>
         <s:hidden name="length_lot"/>
+        <s:hidden name="coCode"/>
         <div class="row">
             <div class="span12">
                 <div id="map_canvas" style="width:98%; height:90%; position: absolute;"></div>
@@ -31,7 +32,14 @@
     </body>
     <script>                
         var valLat = $("#latitude_lot").val();     
-        var valLon = $("#length_lot").val();     
+        var valLon = $("#length_lot").val(); 
+        var codeCountry = $("#coCode").val();     
+        var posCountry = null;
+        if (codeCountry=='NI') {
+            posCountry = new google.maps.LatLng(12.1146, -84.2353);
+        } else if (codeCountry=='CO') {
+            posCountry = new google.maps.LatLng(3.721745231068953, -72.894287109375);
+        }
         var side_bar_html = ""; 
         var elevator;
 
@@ -39,7 +47,7 @@
         var gicons = [];
         var myOptions = {
             zoom: 5,
-            center: new google.maps.LatLng(3.721745231068953, -72.894287109375),
+            center: posCountry,
             mapTypeControl: true,
             mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
             navigationControl: true,
@@ -83,7 +91,7 @@
       gicons["yelow"] = getMarkerImage("yellow");
 			
 			var locateField = "";
-			if(navigator.language=='es-ES' || navigator.language=='es') {
+			if(navigator.language=='es-ES' || navigator.language=='es-CO' || navigator.language=='es-PE' || navigator.language=='es-NI' || navigator.language=='es') {
 				locateField = "Ubicacion";
 			}
 			

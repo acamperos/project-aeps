@@ -62,6 +62,7 @@ public class ActionPrep extends BaseAction {
     private List<PreparationsTypes> type_prep_typ;
     private List<ResidualsClasification> type_res_clas;
     private UsersDao usrDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -175,8 +176,11 @@ public class ActionPrep extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+//        user.setCountryUsr(null);
     }
     
     
@@ -313,7 +317,7 @@ public class ActionPrep extends BaseAction {
             this.setIdPrep(-1);
         }
 
-        this.setType_prep_typ(new PreparationsTypesDao().findAllByTypeCrop(tyCro));
+        this.setType_prep_typ(new PreparationsTypesDao().findAllByTypeCrop(tyCro, coCode));
         this.setType_res_clas(new ResidualsClasificationDao().findAllByTypeCrop(tyCro));
         if (this.getIdPrep()!= -1) {
             prep = prepDao.objectById(this.getIdPrep());
@@ -365,14 +369,18 @@ public class ActionPrep extends BaseAction {
             prep.setStatus(true);
             session.saveOrUpdate(prep);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(prep.getIdPrep());
-            log.setTableLogEnt("preparations");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);       
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, prep.getIdPrep(), "preparations", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(prep.getIdPrep());
+                log.setTableLogEnt("preparations");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }      
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -387,7 +395,7 @@ public class ActionPrep extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

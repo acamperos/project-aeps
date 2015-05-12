@@ -13,6 +13,7 @@
 <% Users userIrr  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrIrrDao = new UsersDao(); %>
 <% Integer entTypeIrrId = new EntitiesDao().getEntityTypeId(userIrr.getIdUsr()); %>
+<% String coCodeIrr   = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
 
 <s:if test="listIrr.size() > 0">
     <% tableIrr = "";%>
@@ -32,14 +33,26 @@
         <% } %>
         <table class="table table-bordered table-hover" style="<%= tableIrr %>" id='tblIrr'>
             <thead>
-                <tr>
-                    <th><s:property value="getText('tr.irrigationdate.irrigation')" /></th>                    
-                    <th><s:property value="getText('tr.amountirr.irrigation')" /></th>
-                    <th><s:property value="getText('tr.irrtypes.irrigation')" /></th>
-                    <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/modify") || (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/delete"))) { %>
-                        <th><s:property value="getText('tr.action.irrigation')" /></th>
-                    <% } %>
-                </tr>
+                <% if (coCodeIrr.equals("CO")) { %>
+                    <tr>
+                        <th><s:property value="getText('tr.irrigationdate.irrigation')" /></th>                    
+                        <th><s:property value="getText('tr.amountirr.irrigation')" /></th>
+                        <th><s:property value="getText('tr.irrtypes.irrigation')" /></th>
+                        <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/modify") || (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/delete"))) { %>
+                            <th><s:property value="getText('tr.action.irrigation')" /></th>
+                        <% } %>
+                    </tr>
+                <% } else if (coCodeIrr.equals("NI")) { %>
+                    <tr>
+                        <th><s:property value="getText('tr.establishmentdate.irrigation')" /></th>                    
+                        <th><s:property value="getText('tr.thickness.irrigation')" /></th>
+                        <th><s:property value="getText('tr.wetdate.irrigation')" /></th>
+                        <th><s:property value="getText('tr.duration.irrigation')" /></th>
+                        <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/modify") || (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/delete"))) { %>
+                            <th><s:property value="getText('tr.action.irrigation')" /></th>
+                        <% } %>
+                    </tr>
+                <% } %>
             </thead>
             <tbody>
                 <s:iterator value="listIrr" var="irr">

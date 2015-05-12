@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +26,7 @@ public class IrrigationsTypes  implements java.io.Serializable {
      private Integer idIrrTyp;
      private String nameIrrTyp;
      private boolean statusIrrTyp;
+     private IdiomCountry countryIrrTyp;
 
     public IrrigationsTypes() {
     }
@@ -62,6 +64,16 @@ public class IrrigationsTypes  implements java.io.Serializable {
     
     public void setStatusIrrTyp(boolean statusIrrTyp) {
         this.statusIrrTyp = statusIrrTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_irr_typ")
+    public IdiomCountry getCountryIrrTyp() {
+        return this.countryIrrTyp;
+    }
+    
+    public void setCountryIrrTyp(IdiomCountry countryIrrTyp) {
+        this.countryIrrTyp = countryIrrTyp;
     }
 
 }

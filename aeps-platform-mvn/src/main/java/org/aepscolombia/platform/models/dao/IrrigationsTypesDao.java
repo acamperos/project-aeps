@@ -1,6 +1,7 @@
 package org.aepscolombia.platform.models.dao;
 
 import java.util.List;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -20,14 +21,16 @@ import org.aepscolombia.platform.util.HibernateUtil;
  */
 public class IrrigationsTypesDao 
 {        
-    public List<IrrigationsTypes> findAll() {
+    public List<IrrigationsTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<IrrigationsTypes> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from IrrigationsTypes");
+//            Query query = session.createQuery("from IrrigationsTypes");
+            Query query = session.createQuery("from IrrigationsTypes WHERE countryIrrTyp.acronymIdCo = :country_code");
+            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -41,7 +44,7 @@ public class IrrigationsTypesDao
         return events;
     }
     
-    public List<IrrigationsTypes> findAllByTypeCrop(Integer idTypeCrop) {
+    public List<IrrigationsTypes> findAllByTypeCrop(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -49,15 +52,18 @@ public class IrrigationsTypesDao
         List<IrrigationsTypes> event = null;
         Transaction tx = null;
         
-        sql += "select cr.id_irr_typ, cr.name_irr_typ, cr.status_irr_typ from irrigations_types cr";
+        sql += "select cr.id_irr_typ, cr.name_irr_typ, cr.status_irr_typ, cr.country_irr_typ from irrigations_types cr";
 //		sql += " inner join irrigations_types_crops_types t on t.id_irrigation_type_irr_typ_cro=cr.id_irr_typ";
 		sql += " where cr.status_irr_typ=1";
         if (idTypeCrop!=null) {
             //sql += " and t.id_crop_type_irr_typ_cro="+idTypeCrop;
         }
+        if (countryCode!=null && !countryCode.equals("")) {
+            sql += " and cr.country_irr_typ='"+countryCode+"'";
+        }
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", IrrigationsTypes.class);
+            Query query = session.createSQLQuery(sql).addEntity("cr", IrrigationsTypes.class);
             event = query.list();
             tx.commit();
         } catch (HibernateException e) {

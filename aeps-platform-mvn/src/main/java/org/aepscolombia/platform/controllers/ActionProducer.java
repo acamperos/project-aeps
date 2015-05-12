@@ -95,6 +95,7 @@ public class ActionProducer extends BaseAction {
     private UsersDao usrDao;
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -400,14 +401,17 @@ public class ActionProducer extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setDepartment_producer(new DepartmentsDao().findAll());
+//        coCode = user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
+        this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
+        this.setDepartment_producer(new DepartmentsDao().findAll(coCode));
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());
         this.setCity_producer(mun);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
         assDao = new AssociationDao();
+//        user.setCountryUsr(null);
     }
 
     @Override
@@ -523,7 +527,7 @@ public class ActionProducer extends BaseAction {
     public String comboDocumentsTypes() {
         DocumentsTypesDao eventDao = new DocumentsTypesDao();
 //        List<Object[]> events = eventDao.findByParams(new String[0]);
-        type_ident_producer = eventDao.findAll();
+        type_ident_producer = eventDao.findAll(coCode);
         return "combo";
     }
 
@@ -535,7 +539,7 @@ public class ActionProducer extends BaseAction {
      */
     public String comboDepartments() {
         DepartmentsDao eventDao = new DepartmentsDao();
-        department_producer = eventDao.findAll();
+        department_producer = eventDao.findAll(coCode);
         return "combo";
     }
 
@@ -717,6 +721,7 @@ public class ActionProducer extends BaseAction {
 
         File f = new File(fileName);
         inputStream = new FileInputStream(f);
+        f.delete();
         return "OUTPUTCSV";
     }
 
@@ -750,8 +755,8 @@ public class ActionProducer extends BaseAction {
 //            actExe = ("");
         }
 //        System.out.println("action->"+actExe);
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setDepartment_producer(new DepartmentsDao().findAll());
+        this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
+        this.setDepartment_producer(new DepartmentsDao().findAll(coCode));
 
         if (this.getIdProducer() != -1) {
 //            ProducersDao eventDao = new ProducersDao();
@@ -975,22 +980,22 @@ public class ActionProducer extends BaseAction {
             DBCursor cursor = col.find(query);
             WriteResult result = null;
             BasicDBObject jsonField = null;
-            jsonField = GlobalFunctions.generateJSONProducer(valInfo);
+//            jsonField = GlobalFunctions.generateJSONProducer(valInfo);
 
 //            while(cursor.hasNext()) {
 //                System.out.println(cursor.next());
 //            }
             if (cursor.count() > 0) {
                 System.out.println("actualizo mongo");
-                result = col.update(query, jsonField);
+//                result = col.update(query, jsonField);
             } else {
                 System.out.println("inserto mongo");
-                result = col.insert(jsonField);
+//                result = col.insert(jsonField);
             }
 
-            if (result.getError() != null) {
-                throw new HibernateException("");
-            }
+//            if (result.getError() != null) {
+//                throw new HibernateException("");
+//            }
 
             mongo.close();
             tx.commit();

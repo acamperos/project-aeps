@@ -50,11 +50,13 @@
         </fieldset>
     </div>       
 </div>
-<% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify")) { %>
-    <button type="button" class="btn btn-initial" onclick="viewForm('/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', '<s:property value="getText('button.modifyprodevent.crop')" />', 1050, 700)">
-        <i class="icon-pencil"></i> <s:property value="getText('button.modifyprodevent.crop')" />
+<% if (entTypeId!=3) { %>                        
+    <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify")) { %>
+        <button type="button" class="btn btn-initial" onclick="viewForm('/crop/showCrop.action?action=modify', 'idCrop', '${idCrop}', '<s:property value="getText('button.modifyprodevent.crop')" />', 1050, 700)">
+            <i class="icon-pencil"></i> <s:property value="getText('button.modifyprodevent.crop')" />
+        </button>
+    <% } %>
+    <button type="button" class="btn btn-default" onclick="returnListCrop()">
+        <i class="icon-arrow-left"></i> <s:property value="getText('button.backtocroplist.crop')" />
     </button>
 <% } %>
-<button type="button" class="btn btn-default" onclick="document.location='/crop/listCrop.action';">
-    <i class="icon-arrow-left"></i> <s:property value="getText('button.backtocroplist.crop')" />
-</button>

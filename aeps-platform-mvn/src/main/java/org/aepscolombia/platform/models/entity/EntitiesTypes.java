@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class EntitiesTypes  implements java.io.Serializable {
      private Integer idEntTyp;
      private String nameEntTyp;
      private Boolean statusEntTyp;
+     private IdiomCountry countryEntTyp;
 
     public EntitiesTypes() {
     }
@@ -63,6 +66,16 @@ public class EntitiesTypes  implements java.io.Serializable {
     
     public void setStatusEntTyp(Boolean statusEntTyp) {
         this.statusEntTyp = statusEntTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_ent_typ")
+    public IdiomCountry getCountryEntTyp() {
+        return this.countryEntTyp;
+    }
+    
+    public void setCountryEntTyp(IdiomCountry countryEntTyp) {
+        this.countryEntTyp = countryEntTyp;
     }
 
 }

@@ -32,7 +32,7 @@
                     <s:label for="formRastaSearch_date" cssClass="control-label" value="%{getText('text.daterasta.report')}:"></s:label>
                     <div class="date controls">
                         <s:textfield name="date" readonly="true" />
-                        <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
 <script>
     $.mask.definitions['i'] = "[-0-9]";
     $.mask.definitions['f'] = "[-.0-9]";
-    $("#formRastaSearch_date").datepicker({dateFormat: 'dd/mm/yy'});
+    $("#formRastaSearch_date").datepicker({dateFormat: 'mm/dd/yy'});
     $("#formRastaSearch_date").mask("99/99/9999", {placeholder: ""});
     $("#formRastaSearch_num_rasta").numeric({decimal: false, negative: false});
     $("#formRastaSearch_pendant").numeric({decimal: false, negative: false});

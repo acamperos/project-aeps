@@ -310,14 +310,18 @@ public class ActionDescriptions extends BaseAction {
             desPro.setStatus(true);
             session.saveOrUpdate(desPro);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(desPro.getIdDesPro());
-            log.setTableLogEnt("descriptions");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);         
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, desPro.getIdDesPro(), "descriptions", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(desPro.getIdDesPro());
+                log.setTableLogEnt("descriptions");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }       
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -331,7 +335,7 @@ public class ActionDescriptions extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

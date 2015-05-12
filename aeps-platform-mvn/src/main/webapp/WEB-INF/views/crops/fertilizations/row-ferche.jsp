@@ -1,4 +1,4 @@
-<s:date name="dateFer" format="dd/MM/yyyy" var="dateTransformRowFer"/>
+<s:date name="dateFer" format="MM/dd/yyyy" var="dateTransformRowFer"/>
 <td><s:property value="%{#dateTransformRowFer}" /></td>
 <td><s:property value="amountUsed" /></td>
 <s:set name="useFerTyp" value="%{infoChe.get('idFerTyp')}"/>

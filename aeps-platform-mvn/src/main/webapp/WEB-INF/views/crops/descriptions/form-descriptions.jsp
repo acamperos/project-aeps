@@ -30,9 +30,9 @@
                                     <s:property value="getText('text.dateobs.crop')" />:
                                 </label>
                                 <div class="date controls">
-                                    <s:date name="desPro.dateDesPro" format="dd/MM/yyyy" var="dateTransformDesPro"/>
+                                    <s:date name="desPro.dateDesPro" format="MM/dd/yyyy" var="dateTransformDesPro"/>
                                     <s:textfield name="desPro.dateDesPro" value="%{#dateTransformDesPro}" readonly="true"/>
-                                    <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                                    <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
@@ -52,7 +52,7 @@
                     </div>
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
-                        $("#formCropDes_desPro_dateDesPro").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropDes_desPro_dateDesPro").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropDes_desPro_dateDesPro").mask("99/99/9999", {placeholder: " "});
                     </script>
                     <div id="divBtDes">

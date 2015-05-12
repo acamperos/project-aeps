@@ -44,8 +44,9 @@ public class LocaleAction extends BaseAction
         } 
         Map<String, Object> userSession=ActionContext.getContext().getSession();
         String langTemp    = (String)userSession.get(APConstants.SESSION_LANG);
-        System.out.println("langAssign=>"+langTemp);
+//        System.out.println("langAssign=>"+langTemp);
 //        System.out.println("lang=>"+lang);
+        countryCode = "CO";
         userSession.put(APConstants.COUNTRY_CODE, countryCode);
         Locale locale=null;
         if (langTemp!=null) locale = new Locale(langTemp);
@@ -53,7 +54,7 @@ public class LocaleAction extends BaseAction
         
         if ((langTemp==null || langTemp.equals("")) || ((lang!=null && !lang.equals("")) && !lang.equals("en"))) {
             String language = GlobalFunctions.getLanguageByCountryCode(countryCode);
-            System.out.println("language=>"+language+"-lang=>"+lang);
+//            System.out.println("language=>"+language+"-lang=>"+lang);
             if ((lang==null || lang.equals("")) || language.equals(lang)) {
                 lang = language+countryCode.toLowerCase();
             }                 

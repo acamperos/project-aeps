@@ -239,7 +239,7 @@
 //                        completeForm('dialog-form', 'formFarm', event.originalEvent.request.responseText);
                         completeFormGetting('dialog-form', 'formFarm', 'divFarms', event.originalEvent.request.responseText);
                         setTimeout( function() {
-                            showInfo("searchFarm.action?page="+$("#formFarm_page").val(), "divConListFarms");
+                            showInfo("/searchFarm.action?page="+$("#formFarm_page").val(), "divConListFarms");
                         }, 2000);
                     });
                     if($('.pop-over').length) {

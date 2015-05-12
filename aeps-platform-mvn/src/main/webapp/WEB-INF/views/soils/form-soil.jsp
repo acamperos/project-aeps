@@ -41,9 +41,9 @@
                     <div class="control-group">
                         <s:label for="formRasta_rasta_fechaRas" cssClass="control-label req" value="%{getText('text.daterasta.soil')}:"></s:label>
                         <div class="date controls">
-                            <s:date name="rasta.fechaRas" format="dd/MM/yyyy" var="dateTransform"/>
+                            <s:date name="rasta.fechaRas" format="MM/dd/yyyy" var="dateTransform"/>
                             <s:textfield cssClass="form-control" name="rasta.fechaRas" value="%{#dateTransform}" readonly="true"/>
-                            <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                            <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                             <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
                     </div>    
@@ -149,37 +149,41 @@
                         </div>   
                     </div>
                     <div class="control-group">
-                        <%@page import="java.lang.*"%>
-                        <%@page import="java.util.List"%>
-                        <%@page import="java.util.ArrayList"%>
-                        <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
-                        <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
-                        <table class="table table-condensed" style="width: auto;">
-                            <thead>
-                                <tr>
-                                    <th colspan="1" rowspan="1" style="width:128px;padding-left:0;text-align: center;"><s:property value="getText('tr.density.soil')" /></th>
-                                    <th colspan="1" rowspan="1" style="width:60px;padding-left:0;text-align: center;"><s:property value="getText('tr.drycolor.soil')" /></th>
-                                    <th colspan="1" rowspan="1" style="width:60px;padding-left:0;text-align: center;"><s:property value="getText('tr.wetcolor.soil')" /></th>
-                                    <th colspan="1" rowspan="1" style="width:175px;padding-left:0;text-align: center;"><s:property value="getText('tr.texture.soil')" /></th>
-                                    <th colspan="1" rowspan="1" style="width:250px;padding-left:0;text-align: center;"><s:property value="getText('tr.resistance.soil')" /></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableAdit">
-                                <s:if test="additionalsAtrib.size()>0">
-                                    <s:iterator value="additionalsAtrib" var="horizon" status="estatus">
-                                        <s:include value="row-additional-horizon.jsp">
-                                            <s:param name="numRows" value="#estatus.index+1" />
-                                            <s:param name="actionOpt" value="{request.actExe}" />
-                                        </s:include>
-                                    </s:iterator>
-                                </s:if>
-                                <s:else>
-                                    <tr value="0">
-                                    </tr>   
-                                </s:else>
-                            </tbody>
-                        </table>
-                        <button type="button" class="btn btn-default" onclick="showRowAdditionalItem('../soil/showRowAdditional?action=<%=actionOpt%>&rowNew=<%=rowNew%>', 'tableAdit')"><i class="icon-plus"></i> <s:property value="getText('button.addhorizon.soil')" /></button>
+                        <fieldset>         
+                            <legend><s:property value="getText('title.horizonts.soil')" /></legend>
+                            <%@page import="java.lang.*"%>
+                            <%@page import="java.util.List"%>
+                            <%@page import="java.util.ArrayList"%>
+                            <% String actionOpt = String.valueOf(request.getAttribute("actExe"));%>
+                            <% String rowNew    = String.valueOf(request.getAttribute("rowNew"));%>
+                            <table class="table table-condensed" style="width: auto;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="1" rowspan="1" style="width:64px;padding-left:0;text-align: center;"><s:property value="getText('tr.nolayer.soil')" /></th>
+                                        <th colspan="1" rowspan="1" style="width:64px;padding-left:0;text-align: center;"><s:property value="getText('tr.density.soil')" /></th>
+                                        <th colspan="1" rowspan="1" style="width:60px;padding-left:0;text-align: center;"><s:property value="getText('tr.drycolor.soil')" /></th>
+                                        <th colspan="1" rowspan="1" style="width:60px;padding-left:0;text-align: center;"><s:property value="getText('tr.wetcolor.soil')" /></th>
+                                        <th colspan="1" rowspan="1" style="width:175px;padding-left:0;text-align: center;"><s:property value="getText('tr.texture.soil')" /></th>
+                                        <th colspan="1" rowspan="1" style="width:250px;padding-left:0;text-align: center;"><s:property value="getText('tr.resistance.soil')" /></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableAdit">
+                                    <s:if test="additionalsAtrib.size()>0">
+                                        <s:iterator value="additionalsAtrib" var="horizon" status="estatus">
+                                            <s:include value="row-additional-horizon.jsp">
+                                                <s:param name="numRows" value="#estatus.index+1" />
+                                                <s:param name="actionOpt" value="{request.actExe}" />
+                                            </s:include>
+                                        </s:iterator>
+                                    </s:if>
+                                    <s:else>
+                                        <tr value="0">
+                                        </tr>   
+                                    </s:else>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-default" onclick="showRowAdditionalItem('../soil/showRowAdditional?action=<%=actionOpt%>&rowNew=<%=rowNew%>', 'tableAdit')"><i class="icon-plus"></i> <s:property value="getText('button.addhorizon.soil')" /></button>
+                        </fieldset>
                     </div> 
                     <div class="control-group">
                         <s:label for="formRasta_rasta_phRas" cssClass="control-label req" value="%{getText('text.amountph.soil')}:"></s:label>
@@ -534,7 +538,7 @@
                 generateDegrees('formRasta_rasta_latitudRas', 'formRasta_rasta_latitude_degrees', 'formRasta_rasta_latitude_minutes', 'formRasta_rasta_latitude_seconds');
                 generateDegrees('formRasta_rasta_longitudRas', 'formRasta_rasta_length_degrees', 'formRasta_rasta_length_minutes', 'formRasta_rasta_length_seconds');
                     
-                $("#formRasta_rasta_fechaRas").datepicker({dateFormat: 'dd/mm/yy'});
+                $("#formRasta_rasta_fechaRas").datepicker({dateFormat: 'mm/dd/yy'});
                 $("#formRasta_rasta_fechaRas").mask("99/99/9999", {placeholder: ""});
                 
                 $("#formRasta_rasta_latitudRas").numeric();
@@ -591,7 +595,7 @@
                     }
                     completeFormGetting('dialog-form', 'formRasta', 'divRasta', event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        showInfo("searchSoil.action?page=" + page, "divConListRasta");
+                        showInfo("/searchSoil.action?page=" + page, "divConListRasta");
                     }, 2000);
                 });
                 if($('.pop-over').length) {

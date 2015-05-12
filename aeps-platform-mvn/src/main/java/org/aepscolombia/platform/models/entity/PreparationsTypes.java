@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +27,7 @@ public class PreparationsTypes  implements java.io.Serializable {
      private Integer idPreTyp;
      private String namePreTyp;
      private boolean statusPreTyp;
+     private IdiomCountry countryPreTyp;
 
     public PreparationsTypes() {
     }
@@ -63,6 +65,16 @@ public class PreparationsTypes  implements java.io.Serializable {
     
     public void setStatusPreTyp(boolean statusPreTyp) {
         this.statusPreTyp = statusPreTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_pre_typ")
+    public IdiomCountry getCountryPreTyp() {
+        return this.countryPreTyp;
+    }
+    
+    public void setCountryPreTyp(IdiomCountry countryPreTyp) {
+        this.countryPreTyp = countryPreTyp;
     }
 
 }

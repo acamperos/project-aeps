@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +23,7 @@ public class PersonType  implements java.io.Serializable {
 
      private Integer idPerTyp;
      private String namePerTyp;
+     private IdiomCountry countryPerTyp;
 
     public PersonType() {
     }
@@ -48,6 +51,16 @@ public class PersonType  implements java.io.Serializable {
     
     public void setNamePerTyp(String namePerTyp) {
         this.namePerTyp = namePerTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_per_typ")
+    public IdiomCountry getCountryPerTyp() {
+        return this.countryPerTyp;
+    }
+    
+    public void setCountryPerTyp(IdiomCountry countryPerTyp) {
+        this.countryPerTyp = countryPerTyp;
     }
 
 }

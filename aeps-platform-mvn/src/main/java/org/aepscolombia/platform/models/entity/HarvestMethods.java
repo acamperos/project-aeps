@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ public class HarvestMethods  implements java.io.Serializable {
      private int idHarMet;
      private String nameHarMet;
      private Boolean statusHarMet;
+     private IdiomCountry countryHarMet;
 
     public HarvestMethods() {
     }
@@ -62,6 +65,16 @@ public class HarvestMethods  implements java.io.Serializable {
     
     public void setStatusHarMet(Boolean statusHarMet) {
         this.statusHarMet = statusHarMet;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_har_met")
+    public IdiomCountry getCountryHarMet() {
+        return this.countryHarMet;
+    }
+    
+    public void setCountryHarMet(IdiomCountry countryHarMet) {
+        this.countryHarMet = countryHarMet;
     }
 
 }

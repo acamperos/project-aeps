@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,7 @@ public class FieldTypes  implements java.io.Serializable {
      private Integer idFieTyp;
      private String nameFieTyp;
      private boolean statusFieTyp;
+     private IdiomCountry countryFieTyp;
 
     public FieldTypes() {
     }
@@ -62,6 +65,16 @@ public class FieldTypes  implements java.io.Serializable {
     
     public void setStatusFieTyp(boolean statusFieTyp) {
         this.statusFieTyp = statusFieTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_fie_typ")
+    public IdiomCountry getCountryFieTyp() {
+        return this.countryFieTyp;
+    }
+    
+    public void setCountryFieTyp(IdiomCountry countryFieTyp) {
+        this.countryFieTyp = countryFieTyp;
     }
 
 }

@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ public class TreatmentTypes  implements java.io.Serializable {
      private Integer idTreTyp;
      private String nameTreTyp;
      private boolean statusTreTyp;
+     private IdiomCountry countryTreTyp;
 
     public TreatmentTypes() {
     }
@@ -60,6 +63,16 @@ public class TreatmentTypes  implements java.io.Serializable {
     
     public void setStatusTreTyp(boolean statusTreTyp) {
         this.statusTreTyp = statusTreTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_tre_typ")
+    public IdiomCountry getCountryTreTyp() {
+        return this.countryTreTyp;
+    }
+    
+    public void setCountryTreTyp(IdiomCountry countryTreTyp) {
+        this.countryTreTyp = countryTreTyp;
     }
 
 }

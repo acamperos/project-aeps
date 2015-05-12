@@ -27,6 +27,7 @@ import org.aepscolombia.platform.models.entity.Profiles;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.EntitiesTypes;
 import org.aepscolombia.platform.models.entity.ExtensionAgents;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.models.entity.UserEntity;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entity.UsersProfiles;
@@ -272,11 +273,12 @@ public class ActionLogin extends BaseAction {
             Users loggedUser = userDao.login(userUsr, passRes);
             if (loggedUser != null) {
                 this.setUsername("");
-                this.setPassword("");
+                this.setPassword("");                
 //              this.setLastLogin(loggedUser.getLastInUsr());
-                Map<String, Object> userSession=ActionContext.getContext().getSession();
-                userSession.put(APConstants.SESSION_USER, loggedUser);
-                this.setSession(userSession);
+                String countryCode = (String)this.getSession().get(APConstants.COUNTRY_CODE);
+//                loggedUser.setCountryUsr(new IdiomCountry(countryCode));          
+                userDao.save(loggedUser);
+                this.getSession().put(APConstants.SESSION_USER, loggedUser);
                 
 //              this.getSession().put(APConstants.SESSION_USER, loggedUser);
 //              LOG.info("User " + user.getEmail() + " logged in successfully.");
@@ -307,9 +309,10 @@ public class ActionLogin extends BaseAction {
         String passRes   = GlobalFunctions.generateSHA1(saltUsr+passUsr);
         Users loggedUser = userDao.login(userUsr, passRes);
         if (loggedUser != null) {
-            Map<String, Object> userSession=ActionContext.getContext().getSession();
-            userSession.put(APConstants.SESSION_USER, loggedUser);
-            this.setSession(userSession);
+            String countryCode = (String)this.getSession().get(APConstants.COUNTRY_CODE);
+//            loggedUser.setCountryUsr(new IdiomCountry(countryCode));        
+            userDao.save(loggedUser);
+            this.getSession().put(APConstants.SESSION_USER, loggedUser);
             return SUCCESS;
         } else {
             return INPUT;
@@ -329,6 +332,8 @@ public class ActionLogin extends BaseAction {
             if (loggedUser != null) {
                 loggedUser.setCodValidationUsr("");
                 loggedUser.setStatus(1);
+                String countryCode = (String)this.getSession().get(APConstants.COUNTRY_CODE);
+//                loggedUser.setCountryUsr(new IdiomCountry(countryCode));            
                 userDao.save(loggedUser);
                 this.getSession().put(APConstants.SESSION_USER, loggedUser);
 //          LOG.info("User " + user.getEmail() + " logged in successfully.");
@@ -356,6 +361,8 @@ public class ActionLogin extends BaseAction {
         if (loggedUser != null) {
             loggedUser.setCodValidationUsr("");
             loggedUser.setStatus(1);
+            String countryCode = (String)this.getSession().get(APConstants.COUNTRY_CODE);
+//            loggedUser.setCountryUsr(new IdiomCountry(countryCode));            
             userDao.save(loggedUser);
             this.getSession().put(APConstants.SESSION_USER, loggedUser);
 //          LOG.info("User " + user.getEmail() + " logged in successfully.");

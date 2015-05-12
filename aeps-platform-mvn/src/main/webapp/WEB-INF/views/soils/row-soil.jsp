@@ -16,7 +16,7 @@
     <% } %>
     
 </td>
-<s:date name="date" format="dd/MM/yyyy" var="dateTransformDateRas"/>
+<s:date name="date" format="MM/dd/yyyy" var="dateTransformDateRas"/>
 <td><s:property value="%{#dateTransformDateRas}" /></td>
 <td><s:property value="pendant" /></td>
 <td><s:property value="getText('td.latitude.soil')" />: <s:property value="latitude" /><br /><s:property value="getText('td.longitude.soil')" />: <s:property value="length" /><br /><s:property value="getText('td.altitude.soil')" />: <s:property value="altitude" /></td>
@@ -25,7 +25,7 @@
 <td><s:property value="num_layer" /></td>
 <td><s:property value="ph" /></td>
 <td><s:property value="carbonates" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/modify") || (usrSoilDao.getPrivilegeUser(userSoil.getIdUsr(), "soil/delete"))) { %>
     <% if (value == "rasta" || value.equals("rasta")) {%>

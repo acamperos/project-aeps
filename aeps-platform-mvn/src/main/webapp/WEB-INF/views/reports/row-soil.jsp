@@ -6,13 +6,13 @@
     <% } %>
     
 </td>
-<s:date name="date" format="dd/MM/yyyy" var="dateTransformDateRas"/>
+<s:date name="date" format="MM/dd/yyyy" var="dateTransformDateRas"/>
 <td><s:property value="%{#dateTransformDateRas}" /></td>
 <td><s:property value="getText('td.latitude.report')" />: <s:property value="latitude" /><br /><s:property value="getText('td.longitude.report')" />: <s:property value="length" /><br /><s:property value="getText('td.altitude.report')" />: <s:property value="altitude" /></td>
 <td><s:property value="ground" /></td>
 <td><s:property value="position" /></td>
 <td><s:property value="num_layer" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/modify") || (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/delete"))) { %>
     <td>

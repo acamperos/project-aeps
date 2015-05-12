@@ -278,14 +278,18 @@ public class ActionIssues extends BaseAction {
             
             session.saveOrUpdate(issRep);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(issRep.getIdIss());
-            log.setTableLogEnt("issues");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, issRep.getIdIss(), "issues", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(issRep.getIdIss());
+                log.setTableLogEnt("issues");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }
             tx.commit();           
             state = "success";            
 //            if (action.equals("C")) {

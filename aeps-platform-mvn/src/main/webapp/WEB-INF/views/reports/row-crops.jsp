@@ -14,12 +14,12 @@
 <td>
     #<s:property value="num_crop" />
 </td>
-<s:date name="date_sowing" format="dd/MM/yyyy" var="dateTransformSow"/>
+<s:date name="date_sowing" format="MM/dd/yyyy" var="dateTransformSow"/>
 <td><s:property value="%{#dateTransformSow}" /></td>
-<s:date name="date_harvest" format="dd/MM/yyyy" var="dateTransHar"/>
+<s:date name="date_harvest" format="MM/dd/yyyy" var="dateTransHar"/>
 <td><s:property value="%{#dateTransHar}" /></td>
 <td><s:property value="name_genotype" /></td>
-<s:date name="dateLog" format="dd/MM/yyyy" var="dateLog"/>
+<s:date name="dateLog" format="MM/dd/yyyy" var="dateLog"/>
 <td><s:property value="%{#dateLog}" /></td>
 <td>
     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify")) { %>

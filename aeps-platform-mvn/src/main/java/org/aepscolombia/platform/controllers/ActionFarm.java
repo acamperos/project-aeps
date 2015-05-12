@@ -97,6 +97,7 @@ public class ActionFarm extends BaseAction {
     private UsersDao usrDao;
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -397,6 +398,12 @@ public class ActionFarm extends BaseAction {
     public void setTypeEnt(Integer typeEnt) {
         this.typeEnt = typeEnt;
     }   
+
+    public String getCoCode() {
+        return coCode;
+    }
+    
+    
     
     
     @Override
@@ -404,6 +411,8 @@ public class ActionFarm extends BaseAction {
         user = (Users) ActionContext.getContext().getSession().get(APConstants.SESSION_USER);
 //        user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) ActionContext.getContext().getSession().get(APConstants.COUNTRY_CODE);
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
@@ -416,13 +425,14 @@ public class ActionFarm extends BaseAction {
                 name_producer = entTemp.getNameEnt();
             }
         }
-        this.setDepartment_property(new DepartmentsDao().findAll());
+        this.setDepartment_property(new DepartmentsDao().findAll(coCode));
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
         List<Municipalities> mun = new ArrayList<Municipalities>();
         mun.add(new Municipalities());           
         this.setCity_property(mun);
         assDao = new AssociationDao();
+//        user.setCountryUsr(null);
 //        HashMap route = new HashMap();
 //        route.put("getting", getText("email.from"));
 //        listRoute.add(route);
@@ -458,8 +468,13 @@ public class ActionFarm extends BaseAction {
 //        position = this.getRequest().getParameter("position");
 //        if (position.equals("in")) {   
         info = "";
+        String lang = (String) ActionContext.getContext().getSession().get(APConstants.SESSION_LANG);
+        Double minlat = Double.parseDouble(getText("min.lat"));
+        Double maxlat = Double.parseDouble(getText("max.lat"));
+        Double minlon = Double.parseDouble(getText("min.lon"));
+        Double maxlon = Double.parseDouble(getText("max.lon"));
             if (latPro!=0) {
-                if (latPro < (-4.3) || latPro > (13.5)) {
+                if (latPro < (minlat) || latPro > (maxlat)) {
                     addFieldError("latitude_property", getText("message.invalidranklatitude.farm"));
                     state = "failure";
                     info  += getText("desc.invalidranklatitude.farm");
@@ -471,7 +486,7 @@ public class ActionFarm extends BaseAction {
             }
             
             if (lonPro!=0) {
-                if (lonPro < (-81.8) || lonPro > (-66)) {
+                if (lonPro < (minlon) || lonPro > (maxlon)) {
                     addFieldError("length_property", getText("message.invalidranklongitude.farm"));
                     state = "failure";
                     info  += getText("desc.invalidranklongitude.farm");
@@ -555,8 +570,14 @@ public class ActionFarm extends BaseAction {
             Double latPro = (latitude_property==null || latitude_property.isEmpty() || latitude_property.equals("")) ? 0.0 : Double.parseDouble(latitude_property.replace(',','.'));
             Double lonPro = (length_property==null || length_property.isEmpty() || length_property.equals("")) ? 0.0 : Double.parseDouble(length_property.replace(',','.'));
             
+            Double minlat = Double.parseDouble(getText("min.lat"));
+            Double maxlat = Double.parseDouble(getText("max.lat"));
+            Double minlon = Double.parseDouble(getText("min.lon"));
+            Double maxlon = Double.parseDouble(getText("max.lon"));
+            Double minalt = Double.parseDouble(getText("min.alt"));
+            Double maxalt = Double.parseDouble(getText("max.alt"));
 //            if (altitude_property) {    
-            if (altPro < 0 || altPro > 9000) {
+            if (altPro < minalt || altPro > maxalt) {
                 addFieldError("altitude_property", getText("message.datainvalidaltitude.farm"));
                 addActionError(getText("desc.datainvalidaltitude.farm"));
             }
@@ -582,7 +603,7 @@ public class ActionFarm extends BaseAction {
 //            if (!latitude_property.equals("") || latitude_property!=null) {
             if (latPro!=0) {
 //                if (latPro!=null) { 
-                if (latPro < (-4.3) || latPro > (13.5)) {
+                if (latPro < (minlat) || latPro > (maxlat)) {
                     addFieldError("latitude_property", getText("message.invalidvalueranklatitude.farm"));
                     addActionError(getText("desc.invalidvalueranklatitude.farm"));
                 }
@@ -609,7 +630,7 @@ public class ActionFarm extends BaseAction {
             if (lonPro!=0) {
 //            if (lonPro!=0 && (!length_property.equals("") || length_property!=null)) {
 //                if (length_property) {    
-                if (lonPro < (-81.8) || lonPro > (-66)) {
+                if (lonPro < (minlon) || lonPro > (maxlon)) {
                     addFieldError("length_property", getText("message.invalidvalueranklongitude.farm"));
                     addActionError(getText("desc.invalidvalueranklongitude.farm"));
                 }
@@ -647,7 +668,7 @@ public class ActionFarm extends BaseAction {
      */
     public String comboDepartments() {
         DepartmentsDao eventoDao = new DepartmentsDao();
-        department_property = eventoDao.findAll();
+        department_property = eventoDao.findAll(coCode);
         return "combo";
     }
 
@@ -658,7 +679,12 @@ public class ActionFarm extends BaseAction {
      * @return lista de municipios
      */
     public String comboMunicipalities() {
-        int depId = Integer.parseInt(this.getRequest().getParameter("depId"));
+        int depId = 0;
+        try {
+            depId = Integer.parseInt(this.getRequest().getParameter("depId"));
+        } catch (NumberFormatException e) {
+//            return;
+        }
         MunicipalitiesDao eventoDao = new MunicipalitiesDao();
         city_property = eventoDao.findAll(depId);
         String cadena = "<option value=\"\">---</option>";
@@ -805,6 +831,7 @@ public class ActionFarm extends BaseAction {
   
         File f = new File(fileName);  
         inputStream = new FileInputStream(f);  
+        f.delete();
         return "OUTPUTCSV"; 
     }
 
@@ -831,7 +858,7 @@ public class ActionFarm extends BaseAction {
 //            return;
         }
 
-        this.setDepartment_property(new DepartmentsDao().findAll());
+        this.setDepartment_property(new DepartmentsDao().findAll(coCode));
 //        System.out.println("id farm->"+this.getIdFarm());
         if (this.getIdFarm() != -1) {
             FarmsDao eventoDao = new FarmsDao();
@@ -1009,19 +1036,20 @@ public class ActionFarm extends BaseAction {
 
             DBCursor cursor    = col.find(query);
             WriteResult result = null;
-            BasicDBObject jsonField = GlobalFunctions.generateJSONFarm(valInfo);
+            BasicDBObject jsonField = null;
+//            jsonField = GlobalFunctions.generateJSONFarm(valInfo);
             
             if (cursor.count()>0) {
                 System.out.println("actualizo mongo");
-                result = col.update(query, jsonField);
+//                result = col.update(query, jsonField);
             } else {
                 System.out.println("inserto mongo");
-                result = col.insert(jsonField);
+//                result = col.insert(jsonField);
             }
             
-            if (result.getError()!=null) {
-                throw new HibernateException("");
-            }
+//            if (result.getError()!=null) {
+//                throw new HibernateException("");
+//            }
             
             mongo.close();
             tx.commit();

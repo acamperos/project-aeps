@@ -53,6 +53,7 @@ public class ActionHarvest extends BaseAction {
     private Harvests harv  = new Harvests();
     private Sowing sowing = new Sowing();
     private UsersDao usrDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -140,6 +141,7 @@ public class ActionHarvest extends BaseAction {
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
     }
     
     
@@ -319,6 +321,13 @@ public class ActionHarvest extends BaseAction {
                 }
             }           
             
+            if (coCode.equals("NI")) {
+                Double yieldHar = harv.getYieldHar()*65.71;
+                Integer proHar  = harv.getProductionHar()*46;
+                harv.setYieldHar(yieldHar);            
+                harv.setProductionHar(proHar);
+            }
+            
             harv.setProductionEvents(new ProductionEvents(idCrop));
 //            harv.setDateHar(new Date());
 //            harv.setProductionHar(14);
@@ -327,14 +336,18 @@ public class ActionHarvest extends BaseAction {
             harv.setStatus(true);
             session.saveOrUpdate(harv);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(harv.getIdHar());
-            log.setTableLogEnt("harvests");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);            
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, harv.getIdHar(), "harvests", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(harv.getIdHar());
+                log.setTableLogEnt("harvests");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }                        
             
             tx.commit();           
             state = "success";            
@@ -349,7 +362,7 @@ public class ActionHarvest extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
             
         } catch (HibernateException e) {
             if (tx != null) {

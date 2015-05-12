@@ -48,9 +48,9 @@
                                     <s:property value="getText('text.datepreparation.preparation')" />:
                                 </label>
                                 <div class="date controls">
-                                    <s:date name="prep.datePrep" format="dd/MM/yyyy" var="dateTransformPrep"/>
+                                    <s:date name="prep.datePrep" format="MM/dd/yyyy" var="dateTransformPrep"/>
                                     <s:textfield name="prep.datePrep" value="%{#dateTransformPrep}" readonly="true"/>
-                                    <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                                    <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
@@ -96,7 +96,7 @@
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
                         showOtherElementPrep($("#formCropPrep_prep_preparationsTypes_idPreTyp").val(), 'divNewPasses', 'divNewTypePrep');
-                        $("#formCropPrep_prep_datePrep").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropPrep_prep_datePrep").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropPrep_prep_datePrep").mask("99/99/9999", {placeholder: " "});
                         $("#formCropPrep_prep_depthPrep").numeric({decimal: false, negative: false});
                         $("#formCropPrep_prep_passingsNumberPrep").numeric({decimal: false, negative: false});

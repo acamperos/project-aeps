@@ -69,9 +69,9 @@ public class ResidualsManagementDao
         if (args.containsKey("idEvent")) {
             sql += " and p.id_production_event_res_man="+args.get("idEvent");
         }
-		if (args.containsKey("idEntUser")) {
-			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
-		}
+//		if (args.containsKey("idEntUser")) {
+//			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
+//		}
 		sqlAdd += " order by p.id_res_man ASC";
 		sql += sqlAdd;
 //        args.get("countTotal");

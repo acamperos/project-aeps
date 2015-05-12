@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +27,7 @@ public class SeedsColors  implements java.io.Serializable {
      private Integer idSeeCol;
      private String colorSeeCol;
      private Boolean statusSeeCol;
+     private IdiomCountry countrySeeCol;
 
     public SeedsColors() {
     }
@@ -62,6 +64,16 @@ public class SeedsColors  implements java.io.Serializable {
     
     public void setStatusSeeCol(Boolean statusSeeCol) {
         this.statusSeeCol = statusSeeCol;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_see_col")
+    public IdiomCountry getCountrySeeCol() {
+        return this.countrySeeCol;
+    }
+    
+    public void setCountrySeeCol(IdiomCountry countrySeeCol) {
+        this.countrySeeCol = countrySeeCol;
     }
 
 }

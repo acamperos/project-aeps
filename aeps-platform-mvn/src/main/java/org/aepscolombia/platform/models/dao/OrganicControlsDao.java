@@ -49,7 +49,7 @@ public class OrganicControlsDao
         List<OrganicControls> event = null;
         Transaction tx = null;
 		
-            sql += "select ms.id_org_con, ms.name_org_con, ms.target_type_org_con from organic_controls ms";
+            sql += "select ms.id_org_con, ms.name_org_con, ms.target_type_org_con, ms.country_org_con from organic_controls ms";
             sql += " inner join organic_controls_crops_types t on t.id_org_control_cro_typ=ms.id_org_con";
             if (idTypeCrop!=null) {
                 sql += " where t.id_crop_type_cro_typ="+idTypeCrop;

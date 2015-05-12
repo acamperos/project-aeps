@@ -30,9 +30,9 @@
                                     <s:property value="getText('text.dateresidual.residual')" />:
                                 </label>
                                 <div class="date controls">
-                                    <s:date name="resMan.dateResMan" format="dd/MM/yyyy" var="dateTransformRes"/>
+                                    <s:date name="resMan.dateResMan" format="MM/dd/yyyy" var="dateTransformRes"/>
                                     <s:textfield name="resMan.dateResMan" value="%{#dateTransformRes}" readonly="true"/>
-                                    <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                                    <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
@@ -75,7 +75,7 @@
                     </div>	
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
-                        $("#formCropRes_resMan_dateResMan").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropRes_resMan_dateResMan").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropRes_resMan_dateResMan").mask("99/99/9999", {placeholder: " "});
                     </script>
                     <div id="divBtRes">

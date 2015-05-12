@@ -4,7 +4,6 @@ package org.aepscolombia.platform.controllers;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import java.io.File;
@@ -28,6 +27,7 @@ import org.aepscolombia.platform.models.dao.DescriptionsProductionEventDao;
 import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
 import org.aepscolombia.platform.models.dao.DoseUnitsDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
+import org.aepscolombia.platform.models.dao.ExtensionAgentsDao;
 import org.aepscolombia.platform.models.dao.FertilizationsDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
@@ -45,6 +45,8 @@ import org.aepscolombia.platform.models.dao.PreparationsDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
 import org.aepscolombia.platform.models.dao.ResidualsManagementDao;
 import org.aepscolombia.platform.models.dao.ResultingProductsDao;
+import org.aepscolombia.platform.models.dao.RiceDao;
+import org.aepscolombia.platform.models.dao.RiceSystemDao;
 import org.aepscolombia.platform.models.dao.SeedsColorsDao;
 import org.aepscolombia.platform.models.dao.SeedsInoculationsDao;
 import org.aepscolombia.platform.models.dao.SeedsOriginsDao;
@@ -73,6 +75,8 @@ import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.PhysiologicalMonitoring;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.ResultingProducts;
+import org.aepscolombia.platform.models.entity.Rice;
+import org.aepscolombia.platform.models.entity.RiceSystem;
 import org.aepscolombia.platform.models.entity.SeedsColors;
 import org.aepscolombia.platform.models.entity.SeedsInoculations;
 import org.aepscolombia.platform.models.entity.SeedsOrigins;
@@ -82,7 +86,6 @@ import org.aepscolombia.platform.models.entity.SowingTypes;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
-import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -147,6 +150,7 @@ public class ActionCrop extends BaseAction {
     private List<HarvestMethods> type_harv_meth;
     private List<ResultingProducts> type_res_pro;
     private List<SeedsColors> type_seed_color;
+    private List<RiceSystem> type_rice_system;
     private List<SeedsOrigins> type_seed_org;
     private List<SeedsTypes> type_seed_type;   
     private List<SowingTypes> type_sow_types;   
@@ -163,12 +167,14 @@ public class ActionCrop extends BaseAction {
     private Cassavas cass = new Cassavas();
     private Harvests harv = new Harvests();
     private Maize maize   = new Maize();
+    private Rice rice     = new Rice();
     private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
     private Sowing sowing = new Sowing();
     private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -212,6 +218,14 @@ public class ActionCrop extends BaseAction {
     public void setMaize(Maize maize) {
         this.maize = maize;
     }
+
+    public Rice getRice() {
+        return rice;
+    }
+
+    public void setRice(Rice rice) {
+        this.rice = rice;
+    }    
 
     public PhysiologicalMonitoring getPhys() {
         return phys;
@@ -421,6 +435,14 @@ public class ActionCrop extends BaseAction {
         this.type_res_pro = type_res_pro;
     }
 
+    public List<RiceSystem> getType_rice_system() {
+        return type_rice_system;
+    }
+
+    public void setType_rice_system(List<RiceSystem> type_rice_system) {
+        this.type_rice_system = type_rice_system;
+    }
+        
     public List<SeedsColors> getType_seed_color() {
         return type_seed_color;
     }
@@ -576,6 +598,7 @@ public class ActionCrop extends BaseAction {
     private HarvestsDao harDao    = new HarvestsDao();
     private IrrigationDao irrDao  = new IrrigationDao();
     private MaizeDao maizeDao     = new MaizeDao();
+    private RiceDao riceDao       = new RiceDao();
     private MonitoringDao monDao     = new MonitoringDao();
     private PhysiologicalMonitoringDao physDao     = new PhysiologicalMonitoringDao();
     private PreparationsDao prepDao     = new PreparationsDao();
@@ -679,14 +702,17 @@ public class ActionCrop extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setList_departments(new DepartmentsDao().findAll());
+//        coCode = user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
+        this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
+        this.setList_departments(new DepartmentsDao().findAll(coCode));
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
         EntitiesDao entDao = new EntitiesDao();
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
         assDao = new AssociationDao();
+//        user.setCountryUsr(null);
 //        if (user.getIdUsr()!=null) idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());
     }
     
@@ -812,68 +838,95 @@ public class ActionCrop extends BaseAction {
         }
 //        System.out.println("idCropReq->"+this.getRequest().);
 //        System.out.println("idCrop->"+idCrop);
-//        System.out.println("page->"+this.getRequest().getParameterNames().toString());
+//        System.out.println("page->"+this.getRequest().getParameterNames().toString());        
         if (this.getIdCrop()!= -1) {
+            
+            LogEntities log = LogEntitiesDao.getData(null, this.getIdCrop(), "production_events", "C");
+            boolean verify  = ExtensionAgentsDao.verifyAssociation(idEntSystem, log.getIdEntityLogEnt());
+            if (!verify) {
+                return BaseAction.NOT_AUTHORIZED;
+            }           
+            
             setValuesCrop(this.getIdCrop());
             
             HashMap findParams = new HashMap();       
             findParams.put("idEvent", this.getIdCrop());       
-            findParams.put("idEntUser", idEntSystem);       
+            findParams.put("idEntUser", log.getIdEntityLogEnt());       
+            findParams.put("coCode", coCode);       
             listDesPro = desDao.findByParams(findParams);
             listResMan = resDao.findByParams(findParams);
             listPrep = prepDao.findByParams(findParams);
             listIrr  = irrDao.findByParams(findParams);
             listFert = fertDao.findByParams(findParams);
             listCont = conDao.findByParams(findParams);
-            listMont = monDao.findByParams(findParams);
-            
+            listMont = monDao.findByParams(findParams);            
+                        
             beans  = beansDao.objectById(this.getIdCrop());
             cass   = cassDao.objectById(this.getIdCrop());
             harv   = harDao.objectById(this.getIdCrop());
             maize  = maizeDao.objectById(this.getIdCrop());
+            rice   = riceDao.objectById(this.getIdCrop());
             phys   = physDao.objectById(this.getIdCrop());
             sowing = sowDao.objectById(this.getIdCrop());
             event  = cropDao.objectById(this.getIdCrop());
             typeCrop = event.getCropsTypes().getIdCroTyp();
-//            List<Genotypes> event = null;
-//            System.out.println("values=>"+typeCrop);
-//            System.out.println("values12=>"+beans.getGrowingEnvironment().getIdGroEnv());
-            this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0));
+            
+            if (coCode.equals("NI")) {
+                if (sowing!=null && sowing.getSeedsNumberSow()!=null) {
+                    Double seedNum = sowing.getSeedsNumberSow()*0.01522;
+                    sowing.setSeedsNumberSow(seedNum.intValue());
+                }
+                
+                if (event!=null && event.getExpectedProductionProEve()!=null) {
+                    Double expPro  = event.getExpectedProductionProEve()*0.01522;                            
+                    event.setExpectedProductionProEve(expPro);
+                }
+                
+                if (harv!=null && harv.getYieldHar()!=null) {
+                    Double yieldHar = harv.getYieldHar()*0.01522;
+                    harv.setYieldHar(yieldHar);
+                }
+                
+                if (harv!=null && harv.getProductionHar()!=null) {
+                    Double proHar   = harv.getProductionHar()*0.02174;                            
+                    harv.setProductionHar(proHar.intValue());
+                }
+            }
+            
+            this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0, coCode));
             if(sowing!=null && sowing.getIdSow()!=0) {
                 if(typeCrop==1 && maize!=null && maize.getSeedsColors()!=null) {
-                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, maize.getSeedsColors().getIdSeeCol()));
+                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, maize.getSeedsColors().getIdSeeCol(), coCode));
                 } else if(typeCrop==2 && beans!=null && beans.getGrowingEnvironment()!=null) {
-                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, beans.getGrowingEnvironment().getIdGroEnv()));
+                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, beans.getGrowingEnvironment().getIdGroEnv(), coCode));
                 } else if(typeCrop==3) {
-                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0));
-                }       
+                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0, coCode));
+                } else if(typeCrop==4) {
+                    this.setType_genotypes(new GenotypesDao().findAllByTypeCrop(typeCrop, 0, coCode));
+                }  
                  
             }
             
             HashMap fieldInfo = lotDao.findById(this.getIdField());
-            
-//            Nombre del Productor: Juan Felipe Rodriguez nameProducer
-//            Cedula del Productor: 1130668332 docProducer
-//            Nombre de la finca: La Poderosa typeDocProducer
-//            Nombre del Lote: Esto es lo mio nameField
-            
+                        
             this.setName_producer(String.valueOf(fieldInfo.get("name_producer")));
             String numDocTemp = String.valueOf(fieldInfo.get("no_doc_pro"));
             if (!numDocTemp.equals("null")) this.setNum_doc(numDocTemp);
             this.setType_doc(String.valueOf(fieldInfo.get("type_doc_pro")));
             this.setName_farm(String.valueOf(fieldInfo.get("name_farm")));
             
-            this.setType_chem_sow(new ChemicalsSowingDao().findAllByTypeCrop(typeCrop));
-            this.setType_dose_units(new DoseUnitsDao().findAll());            
-            this.setType_genotypes_sow(new GenotypesSowingDao().findAllByTypeCrop(typeCrop));
+            this.setType_chem_sow(new ChemicalsSowingDao().findAllByTypeCrop(typeCrop, coCode));
+            this.setType_dose_units(new DoseUnitsDao().findAll(coCode));            
+            this.setType_genotypes_sow(new GenotypesSowingDao().findAllByTypeCrop(typeCrop, coCode));
             this.setType_grow_env(new GrowingEnvironmentDao().findAll());
-            this.setType_seed_in(new SeedsInoculationsDao().findAll());            
-            this.setType_harv_meth(new HarvestMethodsDao().findAll());
-            this.setType_res_pro(new ResultingProductsDao().findAllByTypeCrop(typeCrop));
-            this.setType_seed_color(new SeedsColorsDao().findAll());
+            this.setType_seed_in(new SeedsInoculationsDao().findAll(coCode));            
+            this.setType_harv_meth(new HarvestMethodsDao().findAll(coCode));
+            this.setType_res_pro(new ResultingProductsDao().findAllByTypeCrop(typeCrop, coCode));
+            this.setType_seed_color(new SeedsColorsDao().findAll(coCode));
+            this.setType_rice_system(new RiceSystemDao().findAll(coCode));
             this.setType_seed_org(new SeedsOriginsDao().findAllByTypeCrop(typeCrop));
-            this.setType_seed_type(new SeedsTypesDao().findAll());           
-            this.setType_sow_types(new SowingTypesDao().findAll());           
+            this.setType_seed_type(new SeedsTypesDao().findAll(coCode));           
+            this.setType_sow_types(new SowingTypesDao().findAll(coCode));           
             
         }       
         return SUCCESS;
@@ -890,7 +943,7 @@ public class ActionCrop extends BaseAction {
             int idColor    = Integer.parseInt(this.getRequest().getParameter("idColor"));
             int typeCropId = Integer.parseInt(this.getRequest().getParameter("typeCrop"));
             
-            type_genotypes = new GenotypesDao().findAllByTypeCrop(typeCropId, idColor);
+            type_genotypes = new GenotypesDao().findAllByTypeCrop(typeCropId, idColor, coCode);
             for (Genotypes data : type_genotypes) {
     //            System.out.println(data.toString());
                 chain += "<option value=\"" + data.getIdGen()+ "\">" + data.getNameGen()+ "</option>";
@@ -913,7 +966,7 @@ public class ActionCrop extends BaseAction {
             int idGrow     = Integer.parseInt(this.getRequest().getParameter("idGrow"));
             int typeCropId = Integer.parseInt(this.getRequest().getParameter("typeCrop"));
             
-            type_genotypes = new GenotypesDao().findAllByTypeCrop(typeCropId, idGrow);
+            type_genotypes = new GenotypesDao().findAllByTypeCrop(typeCropId, idGrow, coCode);
             for (Genotypes data : type_genotypes) {
     //            System.out.println(data.toString());
                 chain += "<option value=\"" + data.getIdGen()+ "\">" + data.getNameGen()+ "</option>";
@@ -1034,6 +1087,12 @@ public class ActionCrop extends BaseAction {
         this.inputStream = inputStream;  
     }
     
+    private String fileName;
+
+    public String getFileName() {
+        return fileName;
+    }   
+    
     public String getReport() throws Exception {
         if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
             return BaseAction.NOT_AUTHORIZED;
@@ -1047,6 +1106,9 @@ public class ActionCrop extends BaseAction {
         HashMap findParams = new HashMap();
         findParams.put("selAll", selAll);
         findParams.put("selItem", selectItemname_agronomist);
+//        System.out.println("selAll=>"+selAll);
+//        System.out.println("selectAllname_agronomist=>"+selectAllname_agronomist);
+//        System.out.println("selectItemname_agronomist=>"+selectItemname_agronomist);
         Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr());
         findParams.put("entType", entTypeId);
         findParams.put("idEntUser", idEntSystem);
@@ -1055,7 +1117,8 @@ public class ActionCrop extends BaseAction {
         cropDao.getProductionEvents(findParams, fileName);
   
         File f = new File(fileName);  
-        inputStream = new FileInputStream(f);  
+        inputStream = new FileInputStream(f);
+        f.delete();
         return "OUTPUTCSV"; 
     }
     
@@ -1084,8 +1147,8 @@ public class ActionCrop extends BaseAction {
             this.setIdCrop(-1);
         }
 
-        this.setType_ident_producer(new DocumentsTypesDao().findAll());
-        this.setType_crops(new CropsTypesDao().findAll());
+        this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
+        this.setType_crops(new CropsTypesDao().findAll(coCode));
         if (this.getIdCrop()!= -1) {
             setValuesCrop(this.getIdCrop());
                 
@@ -1150,59 +1213,77 @@ public class ActionCrop extends BaseAction {
 //            entDao.save(ent);          
 //            System.out.println("pruebaCrea");      
                         
+            beans  = beansDao.objectById(idCrop);
+            cass   = cassDao.objectById(idCrop);
+            maize  = maizeDao.objectById(idCrop);
+            rice   = riceDao.objectById(idCrop);
             if (action.equals("M")) {
-                if (idCrop>0) {
-                    beans  = beansDao.objectById(idCrop);
-                    cass   = cassDao.objectById(idCrop);
-                    maize  = maizeDao.objectById(idCrop);
+                if (idCrop>0) {                    
                     if (typeCrop==1) {
                         if (beans!=null) session.delete(beans);
                         if (cass!=null) session.delete(cass);                    
+                        if (rice!=null) session.delete(rice);                    
                     } else if (typeCrop==2) {
                         if (cass!=null) session.delete(cass);
                         if (maize!=null) session.delete(maize);
+                        if (rice!=null) session.delete(rice);
                     } else if (typeCrop==3) {
                         if (maize!=null) session.delete(maize);
                         if (beans!=null) session.delete(beans);
+                        if (rice!=null) session.delete(rice);
+                    } else if (typeCrop==4) {
+                        if (maize!=null) session.delete(maize);
+                        if (beans!=null) session.delete(beans);
+                        if (cass!=null) session.delete(cass);
                     }
                 }
-            }
+            } 
             
-            if (typeCrop==1) {
+            if (typeCrop==1 && maize==null) {
                 Maize ma = new Maize();
                 ma.setIdMai(null);
                 ma.setProductionEvents(pro);
                 session.saveOrUpdate(ma);            
-            } else if (typeCrop==2) {
+            } else if (typeCrop==2 && beans==null) {
                 Beans be = new Beans();
                 be.setIdBea(null);
                 be.setProductionEvents(pro);
                 session.saveOrUpdate(be);
-            } else if (typeCrop==3) {
+            } else if (typeCrop==3 && cass==null) {
                 Cassavas ca = new Cassavas();
                 ca.setIdCas(null);
                 ca.setProductionEvents(pro);
                 session.saveOrUpdate(ca);
+            } else if (typeCrop==4 && rice==null) {
+                Rice ri = new Rice();
+                ri.setIdRi(null);
+                ri.setProductionEvents(pro);
+                session.saveOrUpdate(ri);            
             }
             
             beans = null;
             cass  = null;
             maize = null;
+            rice  = null;
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(pro.getIdProEve());
-            log.setTableLogEnt("production_events");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, pro.getIdProEve(), "production_events", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(pro.getIdProEve());
+                log.setTableLogEnt("production_events");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }
             idCrop = pro.getIdProEve();            
             tx.commit();           
             
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, typeCrop, sfUser.getId());
             
             state = "success";            
             if (action.equals("C")) {

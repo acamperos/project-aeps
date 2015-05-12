@@ -120,7 +120,7 @@ public class ChemicalFertilizationsDao
         return events;
     }
     
-    public List<ChemicalFertilizationsObj> getListChemFert(Integer idFert) {
+    public List<ChemicalFertilizationsObj> getListChemFert(Integer idFert, String coCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<ChemicalFertilizations> eventsTemp = null;
@@ -150,6 +150,9 @@ public class ChemicalFertilizationsDao
                 Integer idCheFer = data.getIdCheFer();
                 String otherTemp = data.getOtherProductCheFer();
                 
+                if (coCode.equals("NI")) {
+                    if(data.getUnitCheFer()==12) data.setAmountProductUsedCheFer(data.getAmountProductUsedCheFer()*0.01522);
+                }
                 cheFer.setAdditionalsElem(new ChemicalElementsDao().findByParams(idCheFer));
                 cheFer.setIdCheFer(idCheFer);
                 cheFer.setFertilizations(data.getFertilizations());

@@ -8,6 +8,7 @@
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrDao = new UsersDao(); %>
+<% String coCode   = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -32,14 +33,35 @@
                                     <s:property value="getText('text.appdate.crop')" />:
                                 </label>
                                 <div class="date controls">
-                                    <s:date name="fer.dateFer" format="dd/MM/yyyy" var="dateTransformFer"/>
+                                    <s:date name="fer.dateFer" format="MM/dd/yyyy" var="dateTransformFer"/>
                                     <s:textfield name="fer.dateFer" value="%{#dateTransformFer}" readonly="true" onchange="seeDate(this.value, 'lblDateApp')"/>
-                                    <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                                    <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
                         </div>       
                     </div>
+                    <% if (coCode.equals("NI")) { %>
+                        <div class="row">
+                            <div class="span5">
+                                <div class="control-group">
+                                    <label for="formCropFer_fer_wetSoils_idWeSo" class="control-label req">
+                                        <s:property value="getText('select.wetsoilsfert.fertilization')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:select
+                                            name="fer.wetSoils.idWeSo"
+                                            list="type_wet_soils" 
+                                            listKey="idWeSo" 
+                                            listValue="nameWeSo"            
+                                            headerKey="-1" 
+                                            headerValue="---"
+                                        />
+                                    </div>                                
+                                </div>                          
+                            </div>       
+                        </div>
+                    <% } %>
                     <div style="margin-bottom: 30px">
                         <label class="textFloat">
                             <s:property value="getText('label.nextlist.crop')" />                            
@@ -112,7 +134,7 @@
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
                         showTypeFertilizerSel('formCropFer_fer_fertilizationsTypes_idFerTyp', 'divQuimicoFer', 'divOrganicoFer', 'divEnmiendasFer');
-                        $("#formCropFer_fer_dateFer").datepicker({dateFormat: 'dd/mm/yy'});
+                        $("#formCropFer_fer_dateFer").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropFer_fer_dateFer").mask("99/99/9999", {placeholder: " "});
                         
                         $("#formCropFer_amountProductUsedOrg").numeric({ negative: false });

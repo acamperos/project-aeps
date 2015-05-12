@@ -7,6 +7,7 @@
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
 <% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% UsersDao usrDao = new UsersDao(); %>
+<% String coCode   = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -263,6 +264,15 @@
                 <button class="btn btn-large bt_cancel_producer" onclick="resetForm('formProducer'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
             </div>
         </s:form>
+        <% if (coCode.equals("NI")) { %>
+            <script>
+                $.mask.definitions['h'] = "[8]";
+            </script>
+        <% } else if (coCode.equals("CO")) { %>
+            <script>
+                $.mask.definitions['h'] = "[3]";
+            </script>
+        <% } %>
         <script>           
             var idPro  = $("#formProducer_idProducer").val();
             var action = $("#formProducer_actExe").val();
@@ -285,7 +295,7 @@
 //                jQuery.struts2_jquery.bind(jQuery('#submit_492662557'),options_submit_492662557);
 //            }); 
 //            var requestSent = false;
-            $.mask.definitions['h'] = "[3]";
+            
             $("#formProducer_dig_ver_producer").mask("9",{placeholder:""});
             $("#formProducer_telephone_producer").mask("9999999",{placeholder:""});
             $("#formProducer_celphone_producer").mask("h999999999",{placeholder:""});
@@ -308,7 +318,7 @@
 //                    requestSent = true;
                     completeFormGetting('dialog-form', 'formProducer', 'divProducers', event.originalEvent.request.responseText);
                     setTimeout( function() {
-                        showInfo("searchProducer.action?page="+$("#formProducer_page").val(), "divConListProducers");
+                        showInfo("/searchProducer.action?page="+$("#formProducer_page").val(), "divConListProducers");
     //                        if(requestSent) $.ajax().abort();
                     }, 2000);
 //                }

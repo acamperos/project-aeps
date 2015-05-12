@@ -91,6 +91,7 @@ public class ActionCon extends BaseAction {
     
     private Double dosisConMan=null;
     private Integer doseUnitsMan;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -318,7 +319,10 @@ public class ActionCon extends BaseAction {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
         idUsrSystem = user.getIdUsr();
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) ActionContext.getContext().getSession().get(APConstants.COUNTRY_CODE);
         usrDao = new UsersDao();
+//        user.setCountryUsr(null);
     }
     
     
@@ -466,8 +470,8 @@ public class ActionCon extends BaseAction {
             if (idTarget != 0) {
                 if (typeCon==1) {
                     type_prod_org_con = new OrganicControlsDao().findAllByTargetType(idTarget, typeCropId);
-                } else if (typeCon==2) {
-                    type_prod_che_con = new ChemicalsControlsDao().findAllByTargetType(idTarget, typeCropId);
+                } else if (typeCon==2 || typeCon==6) {
+                    type_prod_che_con = new ChemicalsControlsDao().findAllByTargetType(idTarget, typeCropId, coCode);
                 }
             }
             
@@ -514,6 +518,7 @@ public class ActionCon extends BaseAction {
         HashMap findParams = new HashMap();        
         findParams.put("idEntUser", idEntSystem);
         findParams.put("idEvent", this.getIdCrop());
+        findParams.put("coCode", coCode);
         listCont = conDao.findByParams(findParams);
         return SUCCESS;
     }
@@ -549,20 +554,21 @@ public class ActionCon extends BaseAction {
         }
 
         type_prod_org_con = new OrganicControlsDao().findAllByTargetType(0, tyCro);
-        type_prod_che_con = new ChemicalsControlsDao().findAllByTargetType(0, tyCro);
-        this.setType_tar_typ(new TargetsTypesDao().findAll());
-        this.setType_dose_units(new DoseUnitsDao().findByParams("2,3,5"));
-        this.setType_con_typ(new ControlsTypesDao().findAllByTypeCrop(tyCro));
-        this.setType_dis_con(new DiseasesDao().findAllByTypeCrop(tyCro));
-        this.setType_pest_con(new PestsDao().findAllByTypeCrop(tyCro));
-        this.setType_weeds_con(new WeedsDao().findAllByTypeCrop(tyCro));
+        type_prod_che_con = new ChemicalsControlsDao().findAllByTargetType(0, tyCro, coCode);
+        this.setType_tar_typ(new TargetsTypesDao().findAll(coCode));
+        this.setType_dose_units(new DoseUnitsDao().findByParams("2,3,5", coCode));
+        System.out.println("coCode=>"+coCode);
+        this.setType_con_typ(new ControlsTypesDao().findAllByTypeCrop(tyCro, coCode));
+        this.setType_dis_con(new DiseasesDao().findAllByTypeCrop(tyCro, coCode));
+        this.setType_pest_con(new PestsDao().findAllByTypeCrop(tyCro, coCode));
+        this.setType_weeds_con(new WeedsDao().findAllByTypeCrop(tyCro, coCode));
         if (this.getIdCon()!= -1) {
             con    = conDao.objectById(this.getIdCon());     
             if (con.getDosisCon()!=null) {
                 dosisConChe  = con.getDosisCon();
                 dosisConOrg  = con.getDosisCon(); 
                 dosisConMec  = con.getDosisCon(); 
-                dosisConMan  = con.getDosisCon(); 
+                dosisConMan  = con.getDosisCon();                
             }
             
             if (con.getDoseUnits()!=null) {
@@ -572,10 +578,17 @@ public class ActionCon extends BaseAction {
                 doseUnitsMan = con.getDoseUnits().getIdDosUni();
             }            
             
+            if (coCode.equals("NI")) {
+                if(doseUnitsOrg==12) dosisConOrg = dosisConOrg*0.01522;
+                if(doseUnitsChe==12) dosisConChe = dosisConChe*0.01522;
+                if(doseUnitsMec==12) dosisConMec = dosisConMec*0.01522;
+                if(doseUnitsMan==12) dosisConMan = dosisConMan*0.01522;
+            } 
+            
             if (con.getControlsTypes().getIdConTyp()==1) {
                 this.setType_prod_org_con(new OrganicControlsDao().findAllByTargetType(con.getTargetsTypes().getIdTarTyp(), tyCro));
             } else if (con.getControlsTypes().getIdConTyp()==2) {
-                this.setType_prod_che_con(new ChemicalsControlsDao().findAllByTargetType(con.getTargetsTypes().getIdTarTyp(), tyCro));
+                this.setType_prod_che_con(new ChemicalsControlsDao().findAllByTargetType(con.getTargetsTypes().getIdTarTyp(), tyCro, coCode));
             }
             if (con.getOtherPestCon()!=null && !con.getOtherPestCon().equals("")) con.setPests(new Pests(1000000, "Otro"));
             if (con.getOtherDiseaseCon()!=null && !con.getOtherDiseaseCon().equals("")) con.setDiseases(new Diseases(1000000, "Otro"));
@@ -619,6 +632,12 @@ public class ActionCon extends BaseAction {
             String dmy   = new SimpleDateFormat("yyyy-MM-dd").format(con.getDateCon());
             Date dateCon = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
             
+            if (coCode.equals("NI")) {                
+                if(doseUnitsOrg==12) dosisConOrg = dosisConOrg*65.7143;
+                if(doseUnitsChe==12) dosisConChe = dosisConChe*65.7143;
+                if(doseUnitsMec==12) dosisConMec = dosisConMec*65.7143;
+                if(doseUnitsMan==12) dosisConMan = dosisConMan*65.7143;
+            } 
             con.setProductionEvents(new ProductionEvents(idCrop));
             con.setDateCon(dateCon);    
             if (con.getControlsTypes().getIdConTyp()==1) {
@@ -629,7 +648,7 @@ public class ActionCon extends BaseAction {
                     con.setDoseUnits(null);
                 }
                 if (dosisConOrg!=null) con.setDosisCon(dosisConOrg);                
-            } else if (con.getControlsTypes().getIdConTyp()==2) {
+            } else if (con.getControlsTypes().getIdConTyp()==2 || con.getControlsTypes().getIdConTyp()==6) {
                 con.setOrganicControls(null);
                 if (doseUnitsChe!=null && doseUnitsChe!=-1) { 
                     con.setDoseUnits(new DoseUnits(doseUnitsChe));
@@ -637,7 +656,7 @@ public class ActionCon extends BaseAction {
                     con.setDoseUnits(null);
                 }
                 if (dosisConChe!=null) con.setDosisCon(dosisConChe);                
-            } else if (con.getControlsTypes().getIdConTyp()==4) {
+            } else if (con.getControlsTypes().getIdConTyp()==4 || con.getControlsTypes().getIdConTyp()==8) {
                 con.setChemicalsControls(null);
                 con.setOrganicControls(null);
                 if (doseUnitsMec!=null && doseUnitsMec!=-1) { 
@@ -646,7 +665,7 @@ public class ActionCon extends BaseAction {
                     con.setDoseUnits(null);
                 }
                 if (dosisConMec!=null) con.setDosisCon(dosisConMec);                
-            } else if (con.getControlsTypes().getIdConTyp()==5) {
+            } else if (con.getControlsTypes().getIdConTyp()==5 || con.getControlsTypes().getIdConTyp()==9) {
                 con.setChemicalsControls(null);
                 con.setOrganicControls(null);
                 if (doseUnitsMan!=null && doseUnitsMan!=-1) { 
@@ -714,14 +733,18 @@ public class ActionCon extends BaseAction {
             con.setStatus(true);
             session.saveOrUpdate(con);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(con.getIdCon());
-            log.setTableLogEnt("controls");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);            
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, con.getIdCon(), "controls", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(con.getIdCon());
+                log.setTableLogEnt("controls");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }            
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -735,7 +758,7 @@ public class ActionCon extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), ""); 
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

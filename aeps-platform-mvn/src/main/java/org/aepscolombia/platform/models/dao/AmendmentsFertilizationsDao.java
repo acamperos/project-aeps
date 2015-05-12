@@ -97,7 +97,7 @@ public class AmendmentsFertilizationsDao
         return event;
     }
     
-    public List<AmendmentsFertilizations> getListAmeFert(Integer idFert) {
+    public List<AmendmentsFertilizations> getListAmeFert(Integer idFert, String coCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<AmendmentsFertilizations> eventsTemp = null;
@@ -112,6 +112,9 @@ public class AmendmentsFertilizationsDao
             Query query = session.createSQLQuery(sql).addEntity("p", AmendmentsFertilizations.class);
             eventsTemp = query.list();
             for (AmendmentsFertilizations data : eventsTemp) {
+                if (coCode.equals("NI")) {
+                    data.setAmountProductUsedAmeFer(data.getAmountProductUsedAmeFer()*0.01522);
+                }
                 if (data!=null && data.getOtherProductAmeFer()!=null && !data.getOtherProductAmeFer().equals("")) data.setAmendmentsFertilizers(new AmendmentsFertilizers(1000000, "Otro"));
                 result.add(data);
             }

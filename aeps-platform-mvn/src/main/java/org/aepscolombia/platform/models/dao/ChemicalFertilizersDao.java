@@ -41,7 +41,7 @@ public class ChemicalFertilizersDao
         return events;
     }
     
-    public List<ChemicalFertilizers> findAllByStatus() {
+    public List<ChemicalFertilizers> findAllByStatus(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -50,10 +50,16 @@ public class ChemicalFertilizersDao
         Transaction tx = null;
         
         sql += "select cr.id_che_fer, cr.name_che_fer, cr.status_che_fer from chemical_fertilizers cr";
-		sql += " where cr.status_che_fer=1";
+        sql += " inner join chemical_fertilizers_country cheCon on cheCon.id_selfer_che_fer_co=cr.id_che_fer";
+        sql += " where cr.status_che_fer=1";
+        
+        if (countryCode!=null && !countryCode.equals("")) {
+            sql += " and cheCon.country_che_fer_co='"+countryCode+"'";
+        } 
+        
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery(sql).addEntity("p", ChemicalFertilizers.class);
+            Query query = session.createSQLQuery(sql).addEntity("cr", ChemicalFertilizers.class);
             event = query.list();
             ChemicalFertilizers temp = new ChemicalFertilizers();
             temp.setIdCheFer(1000000);

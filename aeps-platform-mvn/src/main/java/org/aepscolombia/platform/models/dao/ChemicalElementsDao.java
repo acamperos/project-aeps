@@ -88,6 +88,8 @@ public class ChemicalElementsDao
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from ChemicalElements");
+//            Query query = session.createQuery("from ChemicalElements WHERE countryCheEle.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -165,9 +167,10 @@ public class ChemicalElementsDao
         
         if (idFert!=null && idFert>0) {
             sql += "select p.id_che_ele, p.name_che_ele, eq.percentage_che_fer_com";
-            sql += " from chemical_elements p"; 
+            sql += " from chemical_elements p";                  
             sql += " left join chemical_fertilizer_composition eq on eq.id_elements_che_fer_com=p.id_che_ele";    
             sql += " left join chemical_fertilizers fq on fq.id_che_fer=eq.id_chemical_fertilizer_che_fer_com";
+            sql += " left join chemical_fertilizers_country ferCo on ferCo.id_selfer_che_fer_co=fq.id_che_fer";   
             sql += " left join chemical_fertilizations ep on ep.id_product_che_fer=fq.id_che_fer";    
             sql += " where p.status_che_ele=1 and ep.status=1";     
             sql += " and ep.id_che_fer="+idFert;                

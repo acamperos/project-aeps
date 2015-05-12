@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +25,7 @@ public class ResidualsClasification  implements java.io.Serializable {
      private int idResCla;
      private String nameResCla;
      private boolean statusResCla;
+     private IdiomCountry countryResCla;
 
     public ResidualsClasification() {
     }
@@ -63,6 +65,16 @@ public class ResidualsClasification  implements java.io.Serializable {
     public void setStatusResCla(boolean statusResCla) {
         this.statusResCla = statusResCla;
     }
+    
+    @ManyToOne
+    @JoinColumn(name="country_res_cla")
+    public IdiomCountry getCountryResCla() {
+        return this.countryResCla;
+    }
+    
+    public void setCountryResCla(IdiomCountry countryResCla) {
+        this.countryResCla = countryResCla;
+    }    
 
 }
 

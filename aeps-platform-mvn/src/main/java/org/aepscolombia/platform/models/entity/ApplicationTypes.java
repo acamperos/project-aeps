@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +23,7 @@ public class ApplicationTypes  implements java.io.Serializable {
 
     private Integer idAppTyp;
     private String nameAppTyp;
+    private IdiomCountry countryAppTyp;
 
     public ApplicationTypes() {
     }
@@ -51,6 +54,16 @@ public class ApplicationTypes  implements java.io.Serializable {
     
     public void setNameAppTyp(String nameAppTyp) {
         this.nameAppTyp = nameAppTyp;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_app_typ")
+    public IdiomCountry getCountryAppTyp() {
+        return this.countryAppTyp;
+    }
+    
+    public void setCountryAppTyp(IdiomCountry countryAppTyp) {
+        this.countryAppTyp = countryAppTyp;
     }
 
 }

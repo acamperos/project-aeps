@@ -1,5 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<% Integer entTypeHarId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
 <div id="divMessHarvest"></div>
 <s:form id="formCropHar" action="saveHarvest" cssClass="form-horizontal">
     <fieldset>
@@ -15,9 +17,9 @@
                         <s:property value="getText('text.harvestdate.harvest')" />:
                     </label>
                     <div class="date controls">
-                        <s:date name="harv.dateHar" format="dd/MM/yyyy" var="dateTransform"/>
+                        <s:date name="harv.dateHar" format="MM/dd/yyyy" var="dateTransform"/>
                         <s:textfield name="harv.dateHar" value="%{#dateTransform}" readonly="true"/>
-                        <span class="prefix sec">&nbsp;[dd/mm/yyyy]</span>
+                        <span class="prefix sec">&nbsp;[mm/dd/yyyy]</span>
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>                          
                 </div>                          
@@ -53,7 +55,7 @@
                             listValue="nameResPro"            
                             headerKey="-1" 
                             headerValue="---"
-                            onchange="showElementRate(this.value, 'divRateWet');
+                            onchange="
                             changeOptionsHarvest('formCropHar_harv_resultingProducts_idResPro', 'divYield', 'divHumidity', 'divNumberSacks', 'harvNumberSacks', 'Numero de bulto (ha):', 'Numero de bolsas:', 'harvWeightAvg', 'Peso promedio de un bulto (kg/bulto):', 'Peso promedio de la bolsa:');
                             "
                         />
@@ -65,7 +67,7 @@
             <div class="span5">
                 <div class="control-group">
                     <label for="formCropHar_harv_yieldHar" class="control-label req">
-                        <s:property value="getText('text.yieldhar.harvest')" /> (kg/ha):
+                        <s:property value="getText('text.yieldhar.harvest')" />:
                     </label>
                     <div class="controls">
                         <s:textfield name="harv.yieldHar"/>
@@ -75,7 +77,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropHar_harv_productionHar" class="control-label">
-                        <s:property value="getText('text.productionhar.harvest')" /> (Kg):
+                        <s:property value="getText('text.productionhar.harvest')" />:
                     </label>
                     <div class="controls">
                         <s:textfield name="harv.productionHar"/>
@@ -109,7 +111,7 @@
             <div class="span5">
                 <div class="control-group">
                     <label for="formCropHar_harv_numberSacksSow" id="harvNumberSacks" class="control-label req">
-                         <s:property value="getText('text.numbersacks.harvest')" /> (ha):
+                         <s:property value="getText('text.numbersacks.harvest')" />:
                     </label>
                     <div class="controls">
                         <s:textfield name="harv.numberSacksSow" />
@@ -119,7 +121,7 @@
             <div class="span4" style="padding-left: 28px">
                 <div class="control-group">
                     <label for="formCropHar_harv_weightAvgSacksSow" id="harvWeightAvg" class="control-label">
-                        <s:property value="getText('text.weightavgsacks.harvest')" /> (kg/bulto):
+                        <s:property value="getText('text.weightavgsacks.harvest')" />:
                     </label>
                     <div class="controls radioSelect">
                         <s:textfield name="harv.weightAvgSacksSow" />
@@ -145,10 +147,12 @@
                 <s:textarea rows="5" cssClass="span6" name="harv.commentHar"></s:textarea>
             </div>					 
         </div>	
-        <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
+        <% if (entTypeHarId!=3) { %>    
+            <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
+        <% } %>
         <script>
             changeOptionsHarvest('formCropHar_harv_resultingProducts_idResPro', 'divYield', 'divHumidity', 'divNumberSacks', 'harvNumberSacks', 'Numero de bulto (ha):', 'Numero de bolsas:', 'harvWeightAvg', 'Peso promedio de un bulto (kg/bulto):', 'Peso promedio de la bolsa:');
-            $("#formCropHar_harv_dateHar").datepicker({dateFormat: 'dd/mm/yy'});
+            $("#formCropHar_harv_dateHar").datepicker({dateFormat: 'mm/dd/yy'});
             $("#formCropHar_harv_dateHar").mask("99/99/9999", {placeholder: " "});
             $("#formCropHar_harv_productionHar").numeric({decimal: false, negative: false});            
             $("#formCropHar_harv_yieldHar").numeric({negative: false});
@@ -165,7 +169,9 @@
     <div style="margin-bottom: 15px" id="divBtHarvest">
         <% String actExeHar   = String.valueOf(request.getAttribute("actExe")); %>
         <% if ((actExeHar=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeHar=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropHar'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeHarvest" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.saveharvest.harvest')" /></sj:submit>
+            <% if (entTypeHarId!=3) { %>
+                <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropHar'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeHarvest" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.saveharvest.harvest')" /></sj:submit>
+            <% } %>
         <% } %>
     </div>
 </s:form>	

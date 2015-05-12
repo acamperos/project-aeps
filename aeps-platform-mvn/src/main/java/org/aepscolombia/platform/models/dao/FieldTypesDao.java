@@ -42,7 +42,7 @@ public class FieldTypesDao {
         return event;
     }
 
-    public List<FieldTypes> findAll() {
+    public List<FieldTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<FieldTypes> events = null;
@@ -50,6 +50,8 @@ public class FieldTypesDao {
         try {
             tx = session.beginTransaction();
             Query query = session.createQuery("from FieldTypes");
+//            Query query = session.createQuery("from FieldTypes WHERE countryFieTyp.acronymIdCo = :country_code");
+//            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

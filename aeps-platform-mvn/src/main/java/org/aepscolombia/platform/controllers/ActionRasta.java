@@ -90,6 +90,7 @@ public class ActionRasta extends BaseAction {
     private UsersDao usrDao;
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
+    private String coCode;
 
     
 
@@ -269,6 +270,10 @@ public class ActionRasta extends BaseAction {
         return listSoils;
     }
     
+    public String getCoCode() {
+        return coCode;
+    }
+    
     
     
     
@@ -410,6 +415,7 @@ public class ActionRasta extends BaseAction {
         Entities entTemp = entDao.findById(idEntSystem);
         typeEnt = entTemp.getEntitiesTypes().getIdEntTyp();
         assDao = new AssociationDao();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
 //        rowNew = (String)(this.getRequest().getParameter("rowNew"));
 //        if (rowNew!=null && rowNew.equals("true")) {
 //            System.out.println("entreeeee");
@@ -430,7 +436,11 @@ public class ActionRasta extends BaseAction {
     
     public String viewPosition() {
         info = "";
-        if (rasta.getLatitudRas()!=null && (rasta.getLatitudRas()<(-4.3) || rasta.getLatitudRas()>(13.5))) {
+        Double minlat = Double.parseDouble(getText("min.lat"));
+        Double maxlat = Double.parseDouble(getText("max.lat"));
+        Double minlon = Double.parseDouble(getText("min.lon"));
+        Double maxlon = Double.parseDouble(getText("max.lon"));        
+        if (rasta.getLatitudRas()!=null && (rasta.getLatitudRas()<(minlat) || rasta.getLatitudRas()>(maxlat))) {
             addFieldError("rasta.latitudRas", getText("message.invalidranklatitude.soil"));
             state = "failure";
             info += getText("desc.invalidranklatitude.soil");
@@ -440,7 +450,7 @@ public class ActionRasta extends BaseAction {
             info += getText("desc.invalidranklatitude.soil");
         }
 
-        if (rasta.getLongitudRas()!=null && (rasta.getLongitudRas()<(-81.8) || rasta.getLongitudRas()>(-66))) {
+        if (rasta.getLongitudRas()!=null && (rasta.getLongitudRas()<(minlon) || rasta.getLongitudRas()>(maxlon))) {
             addFieldError("rasta.longitudRas", getText("message.invalidranklongitude.soil"));
             state = "failure";
             info += getText("desc.invalidranklongitude.soil");
@@ -669,6 +679,13 @@ public class ActionRasta extends BaseAction {
                 addActionError(getText("message.missingfields.soil"));
             }
             
+            Double minlat = Double.parseDouble(getText("min.lat"));
+            Double maxlat = Double.parseDouble(getText("max.lat"));
+            Double minlon = Double.parseDouble(getText("min.lon"));
+            Double maxlon = Double.parseDouble(getText("max.lon"));
+            Double minalt = Double.parseDouble(getText("min.alt"));
+            Double maxalt = Double.parseDouble(getText("max.alt"));
+            
             if (rasta.getLatitudRas()==null) {
                 addFieldError("rasta.latitudRas", getText("message.putsomedatalatitude.soil"));
                 addFieldError("latitude_degrees", " ");
@@ -684,18 +701,18 @@ public class ActionRasta extends BaseAction {
                 addFieldError("length_seconds", " ");
                 addActionError(getText("desc.putsomedatalongitude.soil"));
             }
-
-            if (rasta.getAltitudRas()!=null && (rasta.getAltitudRas()<0 || rasta.getAltitudRas()>9000)) {
+            
+            if (rasta.getAltitudRas()!=null && (rasta.getAltitudRas()<minalt || rasta.getAltitudRas()>maxalt)) {
                 addFieldError("rasta.altitudRas", getText("message.datainvalidaltitude.soil"));
                 addActionError(getText("desc.datainvalidaltitude.soil"));
             }
 
-            if (rasta.getLatitudRas()!=null && (rasta.getLatitudRas()<(-4.3) || rasta.getLatitudRas()>(13.5))) {
+            if (rasta.getLatitudRas()!=null && (rasta.getLatitudRas()<(minlat) || rasta.getLatitudRas()>(maxlat))) {
                 addFieldError("rasta.latitudRas", getText("message.invalidvalueranklatitude.soil"));
                 addActionError(getText("desc.invalidvalueranklatitude.soil"));
             }
 
-            if (rasta.getLongitudRas()!=null && (rasta.getLongitudRas()<(-81.8) || rasta.getLongitudRas()>(-66))) {
+            if (rasta.getLongitudRas()!=null && (rasta.getLongitudRas()<(minlon) || rasta.getLongitudRas()>(maxlon))) {
                 addFieldError("rasta.longitudRas", getText("message.invalidvalueranklongitude.soil"));
                 addActionError(getText("desc.invalidvalueranklongitude.soil"));
             }
@@ -1029,6 +1046,7 @@ public class ActionRasta extends BaseAction {
   
         File f = new File(fileName);  
         inputStream = new FileInputStream(f);  
+        f.delete();
         return "OUTPUTCSV"; 
     }    
 
@@ -1125,6 +1143,7 @@ public class ActionRasta extends BaseAction {
         List<HorizontesRasta> additionalsAtribTemp = new ArrayList<HorizontesRasta>();
         for (int i=0; i<additionalsAtrib.size(); i++) {
             HorizontesRasta horizon = additionalsAtrib.get(i);
+            horizon.setIdHorRas(null);
             if (horizon != null) {
                 additionalsAtribTemp.add(horizon);
             }
@@ -1214,14 +1233,18 @@ public class ActionRasta extends BaseAction {
             rasta.setNumeroCapasRas(numCaj);
             session.saveOrUpdate(rasta);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem); 
-            log.setIdObjectLogEnt(rasta.getIdRas());
-            log.setTableLogEnt("rastas");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, rasta.getIdRas(), "rastas", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(rasta.getIdRas());
+                log.setTableLogEnt("rastas");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }
 //            logDao.save(log);   
             
             /*
@@ -1334,19 +1357,19 @@ public class ActionRasta extends BaseAction {
             DBCursor cursor    = col.find(query);
             WriteResult result = null;
             BasicDBObject jsonField = null;
-            jsonField          = GlobalFunctions.generateJSONSoil(valInfo);
+//            jsonField          = GlobalFunctions.generateJSONSoil(valInfo);
             
             if (cursor.count()>0) {
                 System.out.println("actualizo mongo");
-                result = col.update(query, jsonField);
+//                result = col.update(query, jsonField);
             } else {
                 System.out.println("inserto mongo");
-                result = col.insert(jsonField);
+//                result = col.insert(jsonField);
             }
             
-            if (result.getError()!=null) {
-                throw new HibernateException("");
-            }            
+//            if (result.getError()!=null) {
+//                throw new HibernateException("");
+//            }            
             
             mongo.close();
             tx.commit();           

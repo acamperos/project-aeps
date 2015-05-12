@@ -28,6 +28,7 @@ public class PhysiologicalMonitoring  implements java.io.Serializable {
      private Monitoring monitoring;
      private Date emergencePhyMon;
      private Integer daysPopulationMonFis;
+     private Date iniPrimorPhyMon;
      private Date floweringDatePhyMon;
      private Boolean status;
      private Integer createdBy;
@@ -129,8 +130,16 @@ public class PhysiologicalMonitoring  implements java.io.Serializable {
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
-
-
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="ini_primor_phy_mon", length=19)
+    public Date getIniPrimorPhyMon() {
+        return this.iniPrimorPhyMon;
+    }
+    
+    public void setIniPrimorPhyMon(Date iniPrimorPhyMon) {
+        this.iniPrimorPhyMon = iniPrimorPhyMon;
+    }
 
 
 }

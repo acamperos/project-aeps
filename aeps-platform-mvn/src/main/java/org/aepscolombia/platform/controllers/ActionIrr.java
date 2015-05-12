@@ -1,7 +1,6 @@
 
 package org.aepscolombia.platform.controllers;
 
-import com.opensymphony.xwork2.ActionContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,14 +14,15 @@ import org.aepscolombia.platform.models.dao.ProductionEventsDao;
 import org.aepscolombia.platform.models.dao.IrrigationsTypesDao;
 import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
+import org.aepscolombia.platform.models.dao.UseIrrigationDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Irrigation;
 
 import org.aepscolombia.platform.models.entity.LogEntities;
-import org.aepscolombia.platform.models.entity.Preparations;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
 import org.aepscolombia.platform.models.entity.IrrigationsTypes;
 import org.aepscolombia.platform.models.entity.Sowing;
+import org.aepscolombia.platform.models.entity.UseIrrigation;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
@@ -59,7 +59,9 @@ public class ActionIrr extends BaseAction {
     private Irrigation irr = new Irrigation();
     private Sowing sowing = new Sowing();
     private List<IrrigationsTypes> type_irr_typ;
+    private List<UseIrrigation> type_uses_irr;
     private UsersDao usrDao;
+    private String coCode;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -102,7 +104,15 @@ public class ActionIrr extends BaseAction {
 
     public void setType_irr_typ(List<IrrigationsTypes> type_irr_typ) {
         this.type_irr_typ = type_irr_typ;
-    }     
+    }
+
+    public List<UseIrrigation> getType_uses_irr() {
+        return type_uses_irr;
+    }
+
+    public void setType_uses_irr(List<UseIrrigation> type_uses_irr) {
+        this.type_uses_irr = type_uses_irr;
+    }    
     
     public int getTypeCrop() {
         return typeCrop;
@@ -166,8 +176,11 @@ public class ActionIrr extends BaseAction {
     public void prepare() throws Exception {
         user = (Users) this.getSession().get(APConstants.SESSION_USER);
         idEntSystem = UsersDao.getEntitySystem(user.getIdUsr());  
+//        coCode = (String) user.getCountryUsr().getAcronymIdCo();
+        coCode = (String) this.getSession().get(APConstants.COUNTRY_CODE);
         usrDao = new UsersDao();
         idUsrSystem = user.getIdUsr();
+//        user.setCountryUsr(null);
     }
     
     
@@ -191,10 +204,21 @@ public class ActionIrr extends BaseAction {
 //            required.put("irr.useIrrigationIrr", irr.getUseIrrigationIrr());           
             
 //            if (irr.getUseIrrigationIrr()!=null && irr.getUseIrrigationIrr()) {
+//                required.put("irr.amountIrr", irr.getAmountIrr());                
+//            }           ﻿  ﻿  ﻿         ﻿              
+            if (coCode.equals("NI")) {
+                required.put("irr.whatDoYouUseIrr.idUseIrr", irr.getWhatDoYouUseIrr().getIdUseIrr());
+                if (irr.getWhatDoYouUseIrr().getIdUseIrr()==1) {
+                    required.put("irr.dateIrr", irr.getDateIrr());
+                    required.put("irr.thicknessSheetIrr", irr.getThicknessSheetIrr());
+                } else if (irr.getWhatDoYouUseIrr().getIdUseIrr()==2) {
+                    required.put("irr.dateWetIrr", irr.getDateWetIrr());
+                    required.put("irr.durationIrr", irr.getDurationIrr());
+                }
+            } else if (coCode.equals("CO")) {
                 required.put("irr.dateIrr", irr.getDateIrr());
-//                required.put("irr.amountIrr", irr.getAmountIrr());
                 required.put("irr.irrigationsTypes.idIrrTyp", irr.getIrrigationsTypes().getIdIrrTyp());
-//            }           ﻿  ﻿  ﻿         ﻿                 
+            }
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -234,6 +258,21 @@ public class ActionIrr extends BaseAction {
                     }
 
                 }
+                
+                if (!dmySow.equals("") && irr.getDateWetIrr()!=null) {
+                    Integer valDiffAff = GlobalFunctions.compareDateAfterSowingByAction(irr.getDateWetIrr(), sowing.getDateSow(), tyCro, 1);
+                    if (valDiffAff==2) {
+                        addFieldError("irr.dateWetIrr", getText("message.irrigationwetdateinvalidrank.irrigation"));
+                        if (tyCro==1) {
+                            addActionError(getText("desc.irrigationwetdateinvalidrank.irrigation")+" ("+dmySow+")");
+                        } else if (tyCro==2) {
+                            addActionError(getText("desc.irrigationwetdateinvalidrank.irrigation")+" ("+dmySow+")");
+                        } else if (tyCro==4) {
+                            addActionError(getText("desc.irrigationwetdateinvalidrank.irrigation")+" ("+dmySow+")");
+                        }
+                    }
+
+                }
             }
 
             if (irr.getAmountIrr()!=null) {
@@ -241,7 +280,14 @@ public class ActionIrr extends BaseAction {
                     addFieldError("irr.amountIrr", getText("message.invaliddataamount.irrigation"));
                     addActionError(getText("desc.invaliddataamount.irrigation"));
                 }
-            }
+            }  
+            
+            if (irr.getDurationIrr()!=null) {
+                if (irr.getDurationIrr()<1 || irr.getDurationIrr()>5) {
+                    addFieldError("irr.durationIrr", getText("message.invaliddataduration.irrigation"));
+                    addActionError(getText("desc.invaliddataduration.irrigation"));
+                }
+            } 
             sowing=null;            
         }
     }     
@@ -301,7 +347,8 @@ public class ActionIrr extends BaseAction {
             this.setIdIrr(-1);
         }
 
-        this.setType_irr_typ(new IrrigationsTypesDao().findAllByTypeCrop(tyCro));
+        this.setType_irr_typ(new IrrigationsTypesDao().findAllByTypeCrop(tyCro,coCode));
+        this.setType_uses_irr(new UseIrrigationDao().findAll());
         if (this.getIdIrr()!= -1) {
             irr = irrDao.objectById(this.getIdIrr());
         } 
@@ -336,13 +383,29 @@ public class ActionIrr extends BaseAction {
 
         try {
             tx = session.beginTransaction();           
-            
-            String dmy    = new SimpleDateFormat("yyyy-MM-dd").format(irr.getDateIrr());
-            Date dateIrr = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
-            
+                        
+            Date dateIrr    = null;
+            Date dateWetIrr = null;
+            String dmy      = new SimpleDateFormat("yyyy-MM-dd").format(irr.getDateIrr());
+            if (irr.getWhatDoYouUseIrr()!=null) {
+                if (irr.getWhatDoYouUseIrr().getIdUseIrr()==1) {
+                    dateIrr = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
+                } else if (irr.getWhatDoYouUseIrr().getIdUseIrr()==2) {
+                    String dmyWet = new SimpleDateFormat("yyyy-MM-dd").format(irr.getDateWetIrr());
+                    dateWetIrr = new SimpleDateFormat("yyyy-MM-dd").parse(dmyWet);
+                }
+            } else {
+                dateIrr = new SimpleDateFormat("yyyy-MM-dd").parse(dmy);
+            }
+                
             irr.setUseIrrigationIrr(true);
             irr.setProductionEvents(new ProductionEvents(idCrop));
-            irr.setDateIrr(dateIrr);          
+            irr.setDateIrr(dateIrr);      
+            irr.setDateWetIrr(null);
+            if (dateWetIrr!=null) {
+                irr.setDateIrr(dateWetIrr);          
+                irr.setDateWetIrr(dateWetIrr);
+            }
 //            if (sowing.getChemicalsSowing().getIdCheSow()==-1) {
 //                sowing.setChemicalsSowing(null);
 //            }
@@ -353,14 +416,18 @@ public class ActionIrr extends BaseAction {
             irr.setStatus(true);
             session.saveOrUpdate(irr);
             
-            LogEntities log = new LogEntities();
-            log.setIdLogEnt(null);
-            log.setIdEntityLogEnt(idEntSystem);
-            log.setIdObjectLogEnt(irr.getIdIrr());
-            log.setTableLogEnt("irrigation");
-            log.setDateLogEnt(new Date());
-            log.setActionTypeLogEnt(action);
-            session.saveOrUpdate(log);           
+            LogEntities log = null;            
+            log = LogEntitiesDao.getData(idEntSystem, irr.getIdIrr(), "irrigation", action);
+            if (log==null && !action.equals("M")) {
+                log = new LogEntities();
+                log.setIdLogEnt(null);
+                log.setIdEntityLogEnt(idEntSystem);
+                log.setIdObjectLogEnt(irr.getIdIrr());
+                log.setTableLogEnt("irrigation");
+                log.setDateLogEnt(new Date());
+                log.setActionTypeLogEnt(action);
+                session.saveOrUpdate(log);
+            }       
             tx.commit();           
             state = "success";            
             if (action.equals("C")) {
@@ -374,7 +441,7 @@ public class ActionIrr extends BaseAction {
             Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
             SfGuardUserDao sfDao = new SfGuardUserDao();
             SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
-            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

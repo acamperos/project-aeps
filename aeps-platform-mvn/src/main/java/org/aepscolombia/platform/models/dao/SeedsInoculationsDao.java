@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 //import org.aepscolombia.plataforma.models.dao.IEventoDao;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -54,7 +55,7 @@ public class SeedsInoculationsDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createSQLQuery("select acronym_doc_typ, name_doc_typ from growing_environment");
+            Query query = session.createSQLQuery("select id_see_ino, name_see_ino from seeds_inoculations");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -68,14 +69,16 @@ public class SeedsInoculationsDao {
         return events;
     }
 
-    public List<SeedsInoculations> findAll() {
+    public List<SeedsInoculations> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<SeedsInoculations> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from SeedsInoculations");
+//            Query query = session.createQuery("from SeedsInoculations");
+            Query query = session.createQuery("from SeedsInoculations WHERE countrySeeIno.acronymIdCo = :country_code");
+            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

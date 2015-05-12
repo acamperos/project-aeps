@@ -29,6 +29,7 @@ public class Genotypes  implements java.io.Serializable {
      private String nameGen;
      private String codeGen;
      private Boolean statusGen;
+     private IdiomCountry countryGen;
 
     public Genotypes() {
     }
@@ -85,6 +86,16 @@ public class Genotypes  implements java.io.Serializable {
     
     public void setStatusGen(Boolean statusGen) {
         this.statusGen = statusGen;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name="country_gen")
+    public IdiomCountry getCountryGen() {
+        return this.countryGen;
+    }
+    
+    public void setCountryGen(IdiomCountry countryGen) {
+        this.countryGen = countryGen;
     }
 
 }

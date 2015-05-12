@@ -40,8 +40,8 @@
                     <% request.setAttribute("dateLast", user.getLastInUsr()); %>
                     <% request.setAttribute("dateIngress", dateIngress); %>
                     <!-- <p>Reportes Generales</p> -->
-                    <s:date name="%{#attr.dateLast}" format="dd/MM/yyyy" var="dateTransformLastlogin"/>
-                    <s:date name="%{#attr.dateIngress}" format="dd/MM/yyyy" var="dateTransformIngress"/>
+                    <s:date name="%{#attr.dateLast}" format="MM/dd/yyyy" var="dateTransformLastlogin"/>
+                    <s:date name="%{#attr.dateIngress}" format="MM/dd/yyyy" var="dateTransformIngress"/>
                     <h4><s:property value="getText('title.lastdate.general')" />: <s:property value="%{#dateTransformLastlogin}" /></h4>
                     <h4><s:property value="getText('title.registerdate.general')" />: <s:property value="%{#dateTransformIngress}" /></h4>
                 </div>

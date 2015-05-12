@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.aepscolombia.platform.models.entity.ControlsTypes;
+import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.util.HibernateUtil;
 
 /**
@@ -20,14 +21,15 @@ import org.aepscolombia.platform.util.HibernateUtil;
  */
 public class ControlsTypesDao 
 {        
-    public List<ControlsTypes> findAll() {
+    public List<ControlsTypes> findAll(String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         List<ControlsTypes> events = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from ControlsTypes");
+            Query query = session.createQuery("from ControlsTypes WHERE countryConTyp.acronymIdCo = :country_code");
+            query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {
@@ -41,7 +43,7 @@ public class ControlsTypesDao
         return events;
     }
     
-    public List<ControlsTypes> findAllByTypeCrop(Integer idTypeCrop) {
+    public List<ControlsTypes> findAllByTypeCrop(Integer idTypeCrop, String countryCode) {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
 
@@ -49,13 +51,16 @@ public class ControlsTypesDao
         List<ControlsTypes> event = null;
         Transaction tx = null;
 				
-        sql += "select ms.id_con_typ, ms.name_con_type, ms.status_con_typ from controls_types ms";
+        sql += "select ms.id_con_typ, ms.name_con_type, ms.status_con_typ, ms.country_con_typ from controls_types ms";
         sql += " inner join controls_types_crops_types t on t.id_control_type_con_typ_cro=ms.id_con_typ";
         sql += " where ms.status_con_typ=1";
         if (idTypeCrop!=null) {
             sql += " and t.id_crop_type_con_typ_cro="+idTypeCrop;
         }
-				
+	if (countryCode!=null && !countryCode.equals("")) {
+            sql += " and ms.country_con_typ='"+countryCode+"'";
+        } 	
+        
         try {
             tx = session.beginTransaction();
             Query query = session.createSQLQuery(sql).addEntity("ms", ControlsTypes.class);
