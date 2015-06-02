@@ -45,7 +45,7 @@
                     <input type="checkbox" class="chkSelectAll textFloat" />
                     <label class="textFloat" style="padding-left: 7px; margin-bottom: 0;"><s:property value="getText('label.selectall.farm')" /></label>
                 </div>
-                <button type="button" id="btnDelFar" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_property', 'deleteAllFarm.action', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');">
+                <button type="button" id="btnDelFar" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_property', '/deleteAllFarm.action', '/searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>');">
                     <i class="icon-trash"></i> <s:property value="getText('button.deletesel.farm')" />
                 </button>
                 <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showFarm.action?action=create&viewInfo=${viewInfo}', 'idFar', '', '<s:property value="getText('title.createfarm.farm')" />', 1050, 550)">

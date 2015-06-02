@@ -7,8 +7,16 @@
         <%@page import="org.aepscolombia.platform.models.entity.Users"%>
         <%@page import="org.aepscolombia.platform.models.entity.Entities"%>
         <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+        <%@page import="org.aepscolombia.platform.models.entity.IdiomCountry"%>
+        <%@page import="org.aepscolombia.platform.models.dao.IdiomCountryDao"%>
         <% Users user = (Users) session.getAttribute(APConstants.SESSION_USER); %>
         <% String entType = new EntitiesDao().getEntityType(user.getIdUsr()); %>
+        <% String coCode = (String) session.getAttribute(APConstants.COUNTRY_CODE); %>
+        <% IdiomCountry idiom = new IdiomCountryDao().objectById(coCode); %>
+        <% String nameCountry = ""; %>
+        <% if (idiom != null) {%>
+            <% nameCountry = idiom.getCountryIdCo(); %>
+        <% }%>
         <% //request.setAttribute("entType", entType); %>
         <div class="container">
             <div class="masthead">
@@ -17,7 +25,10 @@
                         <img src="<%= request.getContextPath() %>/img/logoAEPS.png" style="margin-top: 10px;">
                     </div>
                     <div class="span3">	
-                        <label class="titlePrin"><s:property value="getText('title.aepsmeans.header')" /></label>
+                        <label class="titlePrin">
+                            <s:property value="getText('title.aepsmeans.header')" />
+                            <br /><label style="top: 10px; position: relative;"><%=nameCountry %></label>
+                        </label>                        
                     </div>
                     <div class="span6">
                         <img src="<%= request.getContextPath() %>/img/header.png" style="height: 130px;">

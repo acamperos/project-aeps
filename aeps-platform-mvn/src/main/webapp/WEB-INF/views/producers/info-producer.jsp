@@ -50,7 +50,7 @@
                     <input type="checkbox" class="chkSelectAll textFloat" />
                     <label class="textFloat" style="padding-left: 7px; margin-bottom: 0;"><s:property value="getText('label.selectall.producer')" /></label>
                 </div>
-                <button type="button" id="btnDelPro" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_producer', 'deleteAllProducer.action', 'searchProducer.action?page=<%=pageNow%>', 'divProducers', '<%=divHide%>');">
+                <button type="button" id="btnDelPro" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_producer', '/deleteAllProducer.action', '/searchProducer.action?page=<%=pageNow%>', 'divProducers', '<%=divHide%>');">
                     <i class="icon-trash"></i> <s:property value="getText('button.deletesel.producer')" />
                 </button>
                 <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/showProducer.action?action=create&viewInfo=${viewInfo}', 'idPro', '', '<s:property value="getText('title.createproducer.producer')" />', 1050, 550)">

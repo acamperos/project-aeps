@@ -29,7 +29,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('link.monitoringedit.monitoring')" />" onclick="viewForm('/crop/showMon.action?action=modify&idCrop=${idCrop}', 'idMon', ${idMon}, '<s:property value="getText('title.monitoringedit.monitoring')" />', 1050, 550);"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrMonDao.getPrivilegeUser(userMon.getIdUsr(), "crop/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.monitoringdelete.monitoring')" />" onclick="showDialogDelete(this, 'confirm_dialog_mon', 'deleteMon.action?idMon=<s:property value="idMon" />', 'searchMon.action?idCrop=${idCrop}', 'divMon', 'divListMonGen');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.monitoringdelete.monitoring')" />" onclick="showDialogDelete(this, 'confirm_dialog_mon', '/crop/deleteMon.action?idMon=<s:property value="idMon" />', '/crop/searchMon.action?idCrop=${idCrop}', 'divMon', 'divListMonGen');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         <% } %>

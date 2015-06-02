@@ -76,7 +76,7 @@
     </div>   
     <div id="searchAdvanceProducer" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasicProducer', 'searchAdvanceProducer', 'formProducerSearch_searchFromProducer', 1)" class="radioSelect"><s:property value="getText('link.simplesearch.producer')" /> </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicProducer', 'searchAdvanceProducer', 'formProducerSearch_searchFromProducer', 1); clearForm('formProducerSearch');" class="radioSelect"><s:property value="getText('link.simplesearch.producer')" /> </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">
@@ -141,7 +141,7 @@
                     listValue="nameDep"          
                     headerKey=" " 
                     headerValue="---"
-                    onchange="chargeValues('/comboMunicipalities.action', 'depId', this.value, 'formProducerSearch_cityPro', 'formFarm')"
+                    onchange="chargeValues('/comboMunicipalities.action', 'depId', this.value, 'formProducerSearch_cityPro', 'formProducerSearch')"
                     />
             </div>
             <div class="span4" style="padding-left: 28px">

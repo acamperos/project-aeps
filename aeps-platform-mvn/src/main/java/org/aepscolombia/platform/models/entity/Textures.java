@@ -52,7 +52,7 @@ public class Textures  implements java.io.Serializable {
     public void setNameTex(String nameTex) {
         this.nameTex = nameTex;
     }
-
+    
 }
-
+    
 

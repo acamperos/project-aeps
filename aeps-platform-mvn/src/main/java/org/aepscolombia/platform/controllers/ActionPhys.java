@@ -198,7 +198,7 @@ public class ActionPhys extends BaseAction {
                     
     //                $fechaSiembra = date('m-d-Y', strtotime($params['fecha_siembra']));
     //                try {
-    //                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(fechaSiembra));
+    //                    String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(fechaSiembra));
     //                } catch (IllegalArgumentException ex) {
     //                }
 //                    System.out.println("dates->"+dateEme);

@@ -40,7 +40,7 @@
                 <input type="checkbox" class="chkSelectAll textFloat" />
                 <label class="textFloat" style="padding-left: 7px; margin-bottom: 0;"><s:property value="getText('label.selectall.soil')" /></label>
             </div>
-            <button type="button" id="btnDelSoil" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_lot', 'deleteAllSoil.action', 'searchSoil.action?page=<%=pageNow%>', 'divRasta', '<%=divHide%>');">
+            <button type="button" id="btnDelSoil" disabled="disabled" class="btn btn-initial btn-space btnGetAll disabled" onclick="showDialogDeleteAll(this, 'chkNumber', 'confirm_dialog_lot', '/soil/deleteAllSoil.action', '/soil/searchSoil.action?page=<%=pageNow%>', 'divRasta', '<%=divHide%>');">
                 <i class="icon-trash"></i> <s:property value="getText('button.deletesel.soil')" />
             </button>
             <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/soil/showSoil.action?action=create', 'idRasta', '', '<s:property value="getText('title.createsoil.soil')" />', 1050, 700)">

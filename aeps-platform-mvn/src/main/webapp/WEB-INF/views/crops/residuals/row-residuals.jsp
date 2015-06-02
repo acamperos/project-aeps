@@ -10,7 +10,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('link.residualedit.residual')" />" onclick="viewForm('/crop/showResidual.action?action=modify&idCrop=${idCrop}', 'idResMan', ${idResMan}, '<s:property value="getText('title.residualedit.residual')" />', 1050, 550);"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrResDao.getPrivilegeUser(userRes.getIdUsr(), "crop/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.residualdelete.residual')" />" onclick="showDialogDelete(this, 'confirm_dialog_prep', 'deleteResidual.action?idResMan=${idResMan}', 'searchResidual.action?idCrop=${idCrop}', 'divRes', 'divListRes');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.residualdelete.residual')" />" onclick="showDialogDelete(this, 'confirm_dialog_prep', '/crop/deleteResidual.action?idResMan=${idResMan}', '/crop/searchResidual.action?idCrop=${idCrop}', 'divRes', 'divListRes');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         <% } %>

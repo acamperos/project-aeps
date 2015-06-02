@@ -10,6 +10,7 @@
     <!--<constant name="struts.convention.action.packages" value="org.aepscolombia.platform.controllers"/>-->     
     <constant name="struts.i18n.reload" value="false"/>
     <constant name="struts.configuration.xml.reload" value="false"/>
+    <constant name="struts.multipart.maxSize" value="10485760" />
     <package name="principal" extends="struts-default,json-default" namespace="/">
         <interceptors>
             <interceptor name="requireUser" class="org.aepscolombia.platform.interceptors.RequireUserInterceptor"/>
@@ -155,12 +156,19 @@
             <result>/WEB-INF/views/generals/sendIssue.jsp</result>
         </action>
         <action name="sendIssue" method="saveData" class="org.aepscolombia.platform.controllers.ActionIssues">
+            <interceptor-ref name="fileUpload"/>
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
-            <interceptor-ref name="defaultStackAeps"/>            
+            <interceptor-ref name="defaultStackAeps"/>        
             <result name="states" type="json"></result>
         </action>
-        
+        <action name="loadImage" method="loadImage" class="org.aepscolombia.platform.controllers.ActionIssues">
+            <result name="states" type="json"></result>
+<!--            <result type="stream">
+                <param name="inputName">imagenDinamica</param>
+                <param name="contentType">image/jpg</param>
+            </result>-->
+        </action>
         <action name="chargeValues" method="chargeValues" class="org.aepscolombia.platform.controllers.ActionContact">
             <interceptor-ref name="jsonValidationWorkflowStack"/>           
             <result name="states" type="json"></result>
@@ -506,7 +514,14 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name="states" type="json"></result>      
             <result>/WEB-INF/views/reports/rasta_report.jsp</result>
-        </action>        
+        </action> 
+        <action name="soilsType" method="getValues" class="org.aepscolombia.platform.controllers.ActionProfile">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>            
+            <interceptor-ref name="viewAction"/>            
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/generals/soilsType.jsp</result>
+        </action>
     </package>
     <package name="croppackage" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="comboGetCol" method="comboGetListGenByCol" class="org.aepscolombia.platform.controllers.ActionCrop">
@@ -813,5 +828,55 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name="states" type="json"></result>
         </action>     
+    </package>
+    <package name="soilchemical" extends="principal,struts-default,json-default" namespace="/soilchemical">
+        <action name="listSoilChemical" method="search" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/soilsanalysis/list-soil.jsp</result>
+        </action>
+        <action name="viewSoilChemical" method="search" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/soilsanalysis/view-soil.jsp</result>
+        </action> 
+        <action name="searchSoilChemical" method="search" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/soilsanalysis/info-soil.jsp</result>
+        </action>   
+        <action name="showSoilChemical" method="show" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="defaultStackAeps"/>            
+            <interceptor-ref name="validateI18n"/>
+            <result>/WEB-INF/views/soilsanalysis/form-soil.jsp</result>
+        </action>        
+        <action name="saveSoilChemical" method="saveData" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
+        </action>
+        <action name="deleteSoilChemical" method="delete" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name="states" type="json"></result>
+        </action>
+        <action name="deleteAllSoilChemical" method="deleteAll" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="defaultStackAeps"/>
+            <result name="states" type="json"></result>
+        </action> 
+        <action name="getReportSoilChemical" method="getReport" class="org.aepscolombia.platform.controllers.ActionSoil">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <result name="OUTPUTCSV" type="stream">  
+                <param name="inputName">inputStream</param>  
+                <param name="contentType">application/vnd.ms-excel</param>  
+                <param name="contentDisposition">attachment;filename="%{fileName}"</param>
+                <param name="bufferSize">1024</param>
+            </result>  
+        </action>        
     </package>
 </struts>

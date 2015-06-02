@@ -12,7 +12,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('link.preparationedit.preparation')" />" onclick="viewForm('/crop/showPrep.action?action=modify&idCrop=${idCrop}', 'idPrep', ${idPrep}, '<s:property value="getText('title.preparationedit.preparation')" />', 1050, 550);"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.deletepreparation.preparation')" />" onclick="showDialogDelete(this, 'confirm_dialog_prep', 'deletePrep.action?idPrep=<s:property value="idPrep" />', 'searchPrep.action?idCrop=${idCrop}', 'divPrep', 'divListPrep');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.deletepreparation.preparation')" />" onclick="showDialogDelete(this, 'confirm_dialog_prep', '/crop/deletePrep.action?idPrep=<s:property value="idPrep" />', '/crop/searchPrep.action?idCrop=${idCrop}', 'divPrep', 'divListPrep');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         <% } %>

@@ -71,7 +71,7 @@
     </div> 
     <div id="searchAdvanceSoil" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 1)" class="radioSelect"><s:property value="getText('link.simplesearch.soil')" /> </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 1); clearForm('formRastaSearch');" class="radioSelect"><s:property value="getText('link.simplesearch.soil')" /> </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">

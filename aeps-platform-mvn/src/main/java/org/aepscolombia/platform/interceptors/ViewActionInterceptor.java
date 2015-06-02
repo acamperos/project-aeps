@@ -27,9 +27,9 @@ public class ViewActionInterceptor extends AbstractInterceptor
   public String intercept(ActionInvocation invocation) throws Exception {    
     Map<String, Object> session = invocation.getInvocationContext().getSession();
     String actionActual = (String)invocation.getInvocationContext().getContext().get(invocation.getInvocationContext().ACTION_NAME);
-    String namespace = (String)invocation.getProxy().getNamespace();
+    String namespace = (String)invocation.getProxy().toString();
     
-//    System.out.println("values->"+invocation.getInvocationContext().);
+    System.out.println("values->"+namespace);
     
     Map params = invocation.getInvocationContext().getParameters();
     String addValues = "";

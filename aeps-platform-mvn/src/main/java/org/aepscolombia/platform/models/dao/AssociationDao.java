@@ -81,7 +81,8 @@ public class AssociationDao {
             sql += "usr.first_name_2_ent, usr.last_name_1_ent, usr.last_name_2_ent, usr.agent_name_ent, usr.page_link_ent, usr.created_by";
             sql += " from entities usr";
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=usr.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
             sql += " where ass.id_entity_asc="+idAssociation;
             sql += " order by usr.name_ent asc"; 
             Query query = session.createSQLQuery(sql).addEntity("usr", Entities.class);

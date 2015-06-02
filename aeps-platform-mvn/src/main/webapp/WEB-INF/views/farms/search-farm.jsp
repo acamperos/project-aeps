@@ -74,7 +74,7 @@
     </div>   
     <div id="searchAdvanceFarm" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasicFarm', 'searchAdvanceFarm', 'formFarmSearch_searchFromFarm', 1)" class="radioSelect"><s:property value="getText('link.simplesearch.farm')" /> </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicFarm', 'searchAdvanceFarm', 'formFarmSearch_searchFromFarm', 1); clearForm('formFarmSearch');" class="radioSelect"><s:property value="getText('link.simplesearch.farm')" /> </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">

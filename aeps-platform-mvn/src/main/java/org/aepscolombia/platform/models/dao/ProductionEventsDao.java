@@ -64,10 +64,11 @@ public class ProductionEventsDao
         String sqlAdd = "";    
         
         sql += "select pe.id_pro_eve, l.id_fie, l.name_fie, pe.id_crop_type_pro_eve, pe.expected_production_pro_eve,";
-        sql += " pe.former_crop_pro_eve, pe.draining_pro_eve, pe.status, pe.other_former_crop_pro_eve";
+        sql += " pe.former_crop_pro_eve, pe.draining_pro_eve, pe.status, pe.other_former_crop_pro_eve, ct.name_cro_typ";
         sql += " from production_events pe";
         sql += " inner join log_entities le on le.id_object_log_ent=pe.id_pro_eve and le.table_log_ent='production_events' and le.action_type_log_ent='C'";   
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
+        sql += " inner join crops_types ct on ct.id_cro_typ=pe.id_crop_type_pro_eve";
         sql += " where l.status=1 and pe.status=1";
         if (id!=null) {
             sql += " and pe.id_pro_eve="+id;
@@ -89,6 +90,7 @@ public class ProductionEventsDao
                 temp.put("performObj", data[4]);                
                 temp.put("drainPlot", data[6]);                
                 temp.put("status", data[7]);
+                temp.put("nameCrop", data[9]);
                 if (data[8]!=null) {                    
                     temp.put("lastCrop", 1000000);
                     temp.put("otherCrop", data[8]);
@@ -166,7 +168,8 @@ public class ProductionEventsDao
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
         sql += " inner join farms f on f.id_far=l.id_farm_fie";
@@ -191,7 +194,7 @@ public class ProductionEventsDao
             if(!valIdent.equals(" ") && !valIdent.equals("-1") && !valIdent.equals("") && !valIdent.equals("null")) { 
                 sql += " and ((e.name_ent like '%"+valIdent+"%')";
                 try {
-                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+                    String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(valIdent));
                     sql += " or (s.date_sow like '%"+dateAsign+"%')";
                     sql += " or (har.date_har like '%"+dateAsign+"%')";
                 } catch (IllegalArgumentException ex) {
@@ -211,7 +214,7 @@ public class ProductionEventsDao
         if (args.containsKey("date_sowing")) {
             String valIdent = String.valueOf(args.get("date_sowing"));            
             if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) {
-                String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+                String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(valIdent));
                 sql += " and s.date_sow like '%"+dateAsign+"%'";
             }
         }
@@ -219,7 +222,7 @@ public class ProductionEventsDao
         if (args.containsKey("date_harvest")) {
             String valIdent = String.valueOf(args.get("date_harvest"));            
             if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) {
-                String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+                String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(valIdent));
                 sql += " and har.date_har like '%"+dateAsign+"%'";
             }
         }
@@ -565,7 +568,8 @@ public class ProductionEventsDao
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " inner join fields l on l.id_fie=pe.id_field_pro_eve";
         sql += " inner join farms f on f.id_far=l.id_farm_fie";        
@@ -679,7 +683,8 @@ public class ProductionEventsDao
         sql += "DATE_FORMAT(mf.emergence_phy_mon,'%Y-%m-%d') as FECHA_EMERGENCIA, mf.20_days_population_mon_fis as POBLACION_20DIAS, DATE_FORMAT(mf.flowering_date_phy_mon,'%Y-%m-%d') as FECHA_FLORACION, ";
         sql += "DATE_FORMAT(cs.date_har,'%Y-%m-%d') as FECHA_COSECHA, cs.method_har as METODO_COSECHA, cs.yield_har as RDT, pres.name_res_pro as PROD_COSECHADO, ";
         sql += "l.name_fie as NOMBRE_LOTE, so.name_see_ori as ORIGEN_SEMILLA, si.name_see_ino, fr.otro_inoculation_bea, cheSo.name_che_sow, geSo.name_gen_sow, sie.other_genotype_sow, ep.other_former_crop_pro_eve, ";
-        sql += "mf.percentage_reseeding_phy_mon, cs.production_har, cs.humidity_percentage_har, IF(cs.storage_har=true,'SI','NO') as ALMACENAMIENTO_FINCA, cs.comment_har";
+        sql += "mf.percentage_reseeding_phy_mon, cs.production_har, cs.humidity_percentage_har, IF(cs.storage_har=true,'SI','NO') as ALMACENAMIENTO_FINCA, cs.comment_har, ";
+        sql += "d.name_dep, m.name_mun";
         sql += " from production_events ep";
         sql += " inner join fields l on ep.id_field_pro_eve = l.id_fie";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro = l.id_fie";
@@ -709,7 +714,8 @@ public class ProductionEventsDao
         sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
         if (entType.equals("3")) {
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=e.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " where le.action_type_log_ent = 'C'";
         sql += " and ep.status=1 and l.status=1 and f.status=1 and ent.status=1";
@@ -729,7 +735,8 @@ public class ProductionEventsDao
         if (entType.equals("3")) {
             sql += "	inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
             sql += "	inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += "	inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += "	where le.action_type_log_ent = 'D' AND le.table_log_ent = 'production_events'";
         if (!entType.equals("3") && args.containsKey("idEntUser")) {
@@ -778,6 +785,8 @@ public class ProductionEventsDao
                 "ID_LOTE",
                 "ID_FINCA",
                 "ID_PROD",
+                "DEPARTAMENTO",
+                "CIUDAD",
                 "USUARIO",
                 "PRODUCTOR",
                 "CEDULA",
@@ -830,6 +839,8 @@ public class ProductionEventsDao
                     data[1],
                     data[2],
                     data[3],
+                    data[45],
+                    data[46],
                     data[4],
                     data[5],
                     data[6],

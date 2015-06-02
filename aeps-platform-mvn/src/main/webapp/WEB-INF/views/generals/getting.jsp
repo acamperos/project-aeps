@@ -84,12 +84,12 @@
                 <div class="row">      
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/view")) { %>
                         <div class="span6 thumbnail custom-thumb">
-                            <s:a href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout"><img class="sprite sprite-soils" /></s:a>
+                            <s:a href="%{contextPath}/soil/soilsType.action" role="button" targets="divBodyLayout"><img class="sprite sprite-soils" /></s:a>
                             <div class="caption">
-                                <h3><s:property value="getText('title.soil.getting')" /><span class="badge badge-success"><s:property value="numRas" /></span></h3>
+                                <h3><s:property value="getText('title.soil.getting')" /></h3>
                                 <p><s:property value="getText('area.soilinfo.getting')" /></p>
                                 <p>
-                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout"><s:property value="getText('link.soilgo.getting')" /> <i class="icon-double-angle-right"></i></s:a>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/soilsType.action" role="button" targets="divBodyLayout"><s:property value="getText('link.soilgo.getting')" /> <i class="icon-double-angle-right"></i></s:a>
                                 </p>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                 <div class="row">          
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "farm/view")) { %>
                         <div class="span6 thumbnail custom-thumb">
-                            <img class="sprite sprite-farms"/>
+                            <s:a href="%{contextPath}/listFarm.action" role="button" targets="divBodyLayout"><img class="sprite sprite-farms" /></s:a>
                             <div class="caption">
                                 <h3><s:property value="getText('title.farms.getting')" /><span class="badge badge-success"><s:property value="numFar" /></span></h3>
                                 <p><s:property value="getText('area.farmsinfo.getting')" /></p>
@@ -125,7 +125,7 @@
                         <div class="span6 thumbnail custom-thumb"> 
                     <% } %>
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "field/view")) { %>
-                            <img class="sprite sprite-fields"/>
+                            <s:a href="%{contextPath}/listField.action" role="button" targets="divBodyLayout"><img class="sprite sprite-fields" /></s:a>
                             <div class="caption">
                                 <h3><s:property value="getText('title.field.getting')" /><span class="badge badge-success"><s:property value="numFie" /></span></h3>
                                 <p><s:property value="getText('area.fieldinfo.getting')" /></p>
@@ -139,7 +139,7 @@
                 <div class="row"> 
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "crop/view")) { %>
                         <div class="span6 thumbnail custom-thumb">
-                            <img class="sprite sprite-crops"/>
+                            <s:a href="%{contextPath}/crop/listCrop.action" role="button" targets="divBodyLayout"><img class="sprite sprite-crops" /></s:a>
                             <div class="caption">
                                 <h3><s:property value="getText('title.crop.getting')" /><span class="badge badge-success"><s:property value="numEve" /></span></h3>
                                 <p><s:property value="getText('area.cropinfo.getting')" /></p>                        
@@ -153,12 +153,12 @@
                         <div class="span6 thumbnail custom-thumb">
                     <% } %>   
                     <% if (usrDao.getPrivilegeUser(user.getIdUsr(), "soil/view")) { %>
-                            <img class="sprite sprite-soils"/>
+                            <s:a href="%{contextPath}/soil/soilsType.action" role="button" targets="divBodyLayout"><img class="sprite sprite-soils" /></s:a>
                             <div class="caption">
-                                <h3><s:property value="getText('title.soil.getting')" /><span class="badge badge-success"><s:property value="numRas" /></span></h3>
+                                <h3><s:property value="getText('title.soil.getting')" /></h3>
                                 <p><s:property value="getText('area.soilinfo.getting')" /></p>
                                 <p>
-                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/listSoil.action" role="button" targets="divBodyLayout"><s:property value="getText('link.soilgo.getting')" /> <i class="icon-double-angle-right"></i></s:a>
+                                    <s:a cssClass="btn btn-initial" href="%{contextPath}/soil/soilsType.action" role="button" targets="divBodyLayout"><s:property value="getText('link.soilgo.getting')" /> <i class="icon-double-angle-right"></i></s:a>
                                 </p>
                             </div>
                         </div>

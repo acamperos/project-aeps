@@ -761,6 +761,10 @@ body {
     transition: box-shadow .1s linear;
 }
 
+.links {
+    margin-bottom: 20px;
+}
+
 #clients .bigclient .img:hover {
     cursor: pointer;
     border-radius: 5px;
@@ -877,18 +881,18 @@ body {
 
 .slide-apps-mobile {
 	width:  940px;
-	height: 400px;
+	height: 321px;
 	background-position: 0 0;
 }
 
 .slide-platform {
 	width:  940px;
-	height: 400px;
+	height: 321px;
 	background-position: -940px 0;
 }
 
 .slide-usuario-prueba {
 	width:  940px;
-	height: 400px;
+	height: 321px;
 	background-position: -1880px 0;
 }

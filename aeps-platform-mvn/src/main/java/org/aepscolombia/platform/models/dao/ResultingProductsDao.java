@@ -36,7 +36,7 @@ public class ResultingProductsDao
         try {
             tx = session.beginTransaction();
 //            Query query = session.createQuery("from ResultingProducts");
-            Query query = session.createQuery("from ResultingProducts WHERE countryResPro.acronymIdCo = :country_code");
+            Query query = session.createQuery("from ResultingProducts WHERE countryResPro.acronymIdCo = :country_code and statusResPro=1");
             query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();

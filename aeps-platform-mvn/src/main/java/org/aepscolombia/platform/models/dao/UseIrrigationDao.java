@@ -75,7 +75,7 @@ public class UseIrrigationDao {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from UseIrrigation");
+            Query query = session.createQuery("from UseIrrigation order by idUseIrr desc");
             events = query.list();
             tx.commit();
         } catch (HibernateException e) {

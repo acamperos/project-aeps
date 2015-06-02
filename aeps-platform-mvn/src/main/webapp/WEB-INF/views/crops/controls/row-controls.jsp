@@ -27,7 +27,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('link.controledit.control')" />" onclick="viewForm('/crop/showCon.action?action=modify&idCrop=${idCrop}', 'idCon', ${idCon}, '<s:property value="getText('title.controledit.control')" />', 1050, 550);"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "crop/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.controldelete.control')" />" onclick="showDialogDelete(this, 'confirm_dialog_con', 'deleteCon.action?idCon=${idCon}', 'searchCon.action?idCrop=${idCrop}', 'divPro', 'divListPro');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.controldelete.control')" />" onclick="showDialogDelete(this, 'confirm_dialog_con', '/crop/deleteCon.action?idCon=${idCon}', '/crop/searchCon.action?idCrop=${idCrop}', 'divPro', 'divListPro');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         <% } %>

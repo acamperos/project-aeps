@@ -36,7 +36,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('button.produceredit.producer')" />" onclick="viewForm('/showProducer.action?action=modify&page=<%=pageNow%>', 'idPro', <s:property value ="id_producer" />, '<s:property value="getText('title.produceredit.producer')" />', 1050, 550)"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrProDao.getPrivilegeUser(userPro.getIdUsr(), "producer/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('button.producerdelete.producer')" />" onclick="showDialogDelete(this, 'confirm_dialog_producer', 'deleteProducer.action?idPro=<s:property value ="id_producer" />', 'searchProducer.action?page=<%=pageNow%>', 'divProducers', '<%=divHide%>'); ga('send', 'event', 'Producers', 'click', 'Delete');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('button.producerdelete.producer')" />" onclick="showDialogDelete(this, 'confirm_dialog_producer', '/deleteProducer.action?idPro=<s:property value ="id_producer" />', '/searchProducer.action?page=<%=pageNow%>', 'divProducers', '<%=divHide%>'); ga('send', 'event', 'Producers', 'click', 'Delete');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         </td>

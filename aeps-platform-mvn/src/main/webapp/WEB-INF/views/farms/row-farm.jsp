@@ -42,7 +42,7 @@
                     <a class="btn btn-small btn-edit" title="<s:property value="getText('button.farmedit.farm')" />" onclick="viewForm('/showFarm.action?action=modify&page=<%=pageNow%>', 'idFar', <s:property value ="id_farm" />, '<s:property value="getText('title.farmedit.farm')" />', 1050, 550)"><i class="icon-pencil"></i></a>
                 <% } %>
                 <% if (usrFarDao.getPrivilegeUser(userFar.getIdUsr(), "farm/delete")) { %>
-                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('button.farmdel.farm')" />" onclick="showDialogDelete(this, 'confirm_dialog_property', 'deleteFarm.action?idFar=<s:property value ="id_farm" />', 'searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>'); ga('send', 'event', 'Farms', 'click', 'Delete');"><i class="icon-trash"></i></a>
+                    <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('button.farmdel.farm')" />" onclick="showDialogDelete(this, 'confirm_dialog_property', '/deleteFarm.action?idFar=<s:property value ="id_farm" />', '/searchFarm.action?page=<%=pageNow%>', 'divFarms', '<%=divHide%>'); ga('send', 'event', 'Farms', 'click', 'Delete');"><i class="icon-trash"></i></a>
                 <% } %>
             </div>
         </td>

@@ -25,19 +25,21 @@ public class ExtensionAgents  implements java.io.Serializable {
      private Boolean status;
      private Integer createdBy;
      private WorkTypeExtAgent workTypeExtAge;
-     private Association idAssoExtAge;
 
     public ExtensionAgents() {
+    }
+    
+    public ExtensionAgents(Integer idExtAge) {
+        this.idExtAge = idExtAge;
     }
 
 	
     public ExtensionAgents(Entities entities) {
         this.entities = entities;
     }
-    public ExtensionAgents(Entities entities, WorkTypeExtAgent workTypeExtAge, Association idAssoExtAge, Boolean status, Integer createdBy) {
+    public ExtensionAgents(Entities entities, WorkTypeExtAgent workTypeExtAge, Boolean status, Integer createdBy) {
        this.entities = entities;
        this.workTypeExtAge = workTypeExtAge;
-       this.idAssoExtAge = idAssoExtAge;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -70,17 +72,6 @@ public class ExtensionAgents  implements java.io.Serializable {
     
     public void setWorkTypeExtAge(WorkTypeExtAgent workTypeExtAge) {
         this.workTypeExtAge = workTypeExtAge;
-    }
-    
-    
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_asso_ext_age")
-    public Association getIdAssoExtAge() {
-        return this.idAssoExtAge;
-    }
-    
-    public void setIdAssoExtAge(Association idAssoExtAge) {
-        this.idAssoExtAge = idAssoExtAge;
     }
     
     @Column(name="status")

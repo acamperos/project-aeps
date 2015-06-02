@@ -752,7 +752,7 @@ public class ActionCrop extends BaseAction {
             }
             
             if (enter) {
-                addActionError(getText("message.missingfields.control"));
+                addActionError(getText("message.missingfields.crop"));
             }
             
         }
@@ -841,17 +841,17 @@ public class ActionCrop extends BaseAction {
 //        System.out.println("page->"+this.getRequest().getParameterNames().toString());        
         if (this.getIdCrop()!= -1) {
             
-            LogEntities log = LogEntitiesDao.getData(null, this.getIdCrop(), "production_events", "C");
-            boolean verify  = ExtensionAgentsDao.verifyAssociation(idEntSystem, log.getIdEntityLogEnt());
-            if (!verify) {
-                return BaseAction.NOT_AUTHORIZED;
-            }           
+//            LogEntities log = LogEntitiesDao.getData(null, this.getIdCrop(), "production_events", "C");
+//            boolean verify  = ExtensionAgentsDao.verifyAssociation(idEntSystem, log.getIdEntityLogEnt());
+//            if (!verify) {
+//                return BaseAction.NOT_AUTHORIZED;
+//            }           
             
             setValuesCrop(this.getIdCrop());
             
             HashMap findParams = new HashMap();       
             findParams.put("idEvent", this.getIdCrop());       
-            findParams.put("idEntUser", log.getIdEntityLogEnt());       
+            findParams.put("idEntUser", idEntSystem);       
             findParams.put("coCode", coCode);       
             listDesPro = desDao.findByParams(findParams);
             listResMan = resDao.findByParams(findParams);

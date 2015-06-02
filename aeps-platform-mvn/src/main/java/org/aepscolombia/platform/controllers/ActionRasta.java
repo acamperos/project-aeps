@@ -979,7 +979,7 @@ public class ActionRasta extends BaseAction {
 //        } else if(searchFromSoil!=null && searchFromSoil==1) {
         if(searchFromSoil!=null && searchFromSoil==2) {
             search_soil = "";
-        }
+        } 
         
         findParams.put("idEntUser", idEntSystem);
         findParams.put("search_soil", search_soil);
@@ -1469,14 +1469,14 @@ public class ActionRasta extends BaseAction {
             
             tx.commit();         
             state = "success";
-            info  = getText("message.successdelete.farm");
+            info  = getText("message.successdelete.soil");
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
             }
             e.printStackTrace();
             state = "failure";
-            info  = getText("message.faildelete.farm");
+            info  = getText("message.faildelete.soil");
         } finally {
             session.close();
         }      

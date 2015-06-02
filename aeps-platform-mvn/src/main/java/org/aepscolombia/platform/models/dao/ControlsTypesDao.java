@@ -28,7 +28,7 @@ public class ControlsTypesDao
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("from ControlsTypes WHERE countryConTyp.acronymIdCo = :country_code");
+            Query query = session.createQuery("from ControlsTypes WHERE countryConTyp.acronymIdCo = :country_code and statusConTyp=1");
             query.setParameter("country_code", countryCode);
             events = query.list();
             tx.commit();

@@ -11,6 +11,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import com.mongodb.util.JSON;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -246,7 +247,7 @@ public class GlobalFunctions {
      * @param subject Asunto del correo
      * @param subjectMsg Descripcion general del correo
      */
-    public static void sendEmail(String toAdress, String fromAdress, String fromAdressPass, String subject, String subjectMsg) 
+    public static void sendEmail(String toAdress, String fromAdress, String fromAdressPass, String subject, String subjectMsg, File archivo) 
     {
 //        String host = "localhost";
         Properties props = new Properties();
@@ -276,11 +277,16 @@ public class GlobalFunctions {
 //            BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText(msgBody, "UTF-8", "html");
             multipart.addBodyPart(messageBodyPart);
+            if (archivo!=null) {
+                MimeBodyPart attachPart = new MimeBodyPart();
+                attachPart.attachFile(archivo);            
+                multipart.addBodyPart(attachPart);
+            }            
 
             MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(fromAdress, ""));
             msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(toAdress, ""));
+                    new InternetAddress(toAdress, ""));            
             msg.setSubject(subject);
 //            msg.setContent(multipart, "text/html; charset=utf-8"); 
 //            msg.setContent(multipart, "text/html"); 
@@ -300,6 +306,8 @@ public class GlobalFunctions {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -420,7 +428,7 @@ public class GlobalFunctions {
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Bienvenido a la plataforma AEPS.</p> \n"
                 + "<p>Para validar su registro por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://" + host + ":8080/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
+                + "<a href='http://" + host + ":8080/aeps/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/aeps/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
                 //                + "http://"+host+":8083/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
                 + "<p>Si usted no se ha registrado a este sistema por favor ignorar este mensaje</p> "
                 + "</body> \n"
@@ -446,7 +454,7 @@ public class GlobalFunctions {
                 + "<body> \n"
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://" + host + ":8080/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
+                + "<a href='http://" + host + ":8080/aeps/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/aeps/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;
@@ -490,7 +498,7 @@ public class GlobalFunctions {
                 + "<h3>El usuario: <b>" + nameUser + "</b></h3> \n"
                 + "<p>Que cuenta con el correo: " + emailUser + "</p> \n"
                 + "<p>Tiene el asunto: <b> " + subMessageUser + "</b></p> \n"
-                + "<p>Con lo siguiente: <br /> " + textMessageUser + "</p> \n"
+                + "<p>Con lo siguiente: <br /> <b>" + textMessageUser + "</b></p> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;

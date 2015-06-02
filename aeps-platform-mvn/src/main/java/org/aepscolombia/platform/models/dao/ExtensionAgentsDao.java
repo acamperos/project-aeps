@@ -82,7 +82,8 @@ public class ExtensionAgentsDao {
         String sql = "";        
         sql  = "select ue.id_ext_age, ue.id_entity_ext_age, ue.work_type_ext_age, ue.id_asso_ext_age, ue.status, ue.created_by";
         sql += " from extension_agents ue";            
-        sql += " inner join association asso on ue.id_asso_ext_age=asso.id_asc";            
+        sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+        sql += " inner join association asso on agAsc.id_asso_age_asc=asso.id_asc";            
         sql += " where asso.id_entity_asc="+idAsso;	        
         if (idExt!=null) sql += " and ue.id_entity_ext_age="+idExt;
         sql += " and ue.status=1";

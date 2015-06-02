@@ -1,14 +1,18 @@
 
 package org.aepscolombia.platform.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 
 import org.aepscolombia.platform.models.dao.LogEntitiesDao;
-import org.aepscolombia.platform.models.dao.ProductionEventsDao;
-import org.aepscolombia.platform.models.dao.SowingDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Entities;
 
@@ -19,6 +23,8 @@ import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.util.APConstants;
 import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
@@ -50,6 +56,39 @@ public class ActionIssues extends BaseAction {
     private TmpIssueReports issRep = new TmpIssueReports();
     private Sowing sowing = new Sowing();
     private UsersDao usrDao;
+    private File archivo;
+    private String archivoFileName;
+    private String archivoContentType;
+
+    public String getArchivoContentType()
+    {
+        return archivoContentType;
+    }
+    
+    public void setArchivoContentType(String archivoContentType)
+    {
+        this.archivoContentType = archivoContentType;
+    }
+
+    public void setArchivoFileName(String archivoFileName)
+    {
+        this.archivoFileName = archivoFileName;
+    }
+
+    public String getNombre()
+    {
+        return archivoFileName;
+    }
+    
+    public String getRuta()
+    {
+        return archivo.getAbsolutePath();
+    }
+    
+    public void setArchivo(File archivo)
+    {
+        this.archivo = archivo;
+    }
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -168,6 +207,7 @@ public class ActionIssues extends BaseAction {
             HashMap required = new HashMap();
             required.put("issRep.nameIss", issRep.getNameIss());
             required.put("issRep.descriptionIss", issRep.getDescriptionIss());
+            required.put("archivo", archivo);
             
             for (Iterator it = required.keySet().iterator(); it.hasNext();) {
                 String sK = (String) it.next();
@@ -181,8 +221,20 @@ public class ActionIssues extends BaseAction {
             
             if (enter) {
                 addActionError(getText("message.missingfields.issue"));
+            }                
+            
+            sowing=null; 
+            if (archivo!=null) {
+                if (archivo.length()>2097152) {
+                    addFieldError("archivo", "Dato invalido");
+                    addActionError("El archivo proporcionado supera el tamaño máximo permitido (2MB)");
+                }
+
+                if (!archivoContentType.equals("image/jpeg") && !archivoContentType.equals("image/jpg") && !archivoContentType.equals("image/png")) {
+                    addFieldError("archivo", "Dato invalido");
+                    addActionError("El archivo presenta un formato inapropidado. Se deben adjuntar formatos *.jpg, *.jpeg ó *.png");
+                }
             }
-            sowing=null;            
         }
     }     
     
@@ -256,7 +308,7 @@ public class ActionIssues extends BaseAction {
         if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
             return BaseAction.NOT_AUTHORIZED;
         }
-        String action = "";
+        String action = "";        
         /*
          * Se evalua dependiendo a la accion realizada:
          * 1) create: Al momento de guardar un registro por primera ves
@@ -272,49 +324,56 @@ public class ActionIssues extends BaseAction {
         SessionFactory sessions = HibernateUtil.getSessionFactory();
         Session session = sessions.openSession();
         Transaction tx = null;        
-
-        try {
-            tx = session.beginTransaction();                       
-            
-            session.saveOrUpdate(issRep);
-            
-            LogEntities log = null;            
-            log = LogEntitiesDao.getData(idEntSystem, issRep.getIdIss(), "issues", action);
-            if (log==null && !action.equals("M")) {
-                log = new LogEntities();
-                log.setIdLogEnt(null);
-                log.setIdEntityLogEnt(idEntSystem);
-                log.setIdObjectLogEnt(issRep.getIdIss());
-                log.setTableLogEnt("issues");
-                log.setDateLogEnt(new Date());
-                log.setActionTypeLogEnt(action);
-                session.saveOrUpdate(log);
-            }
-            tx.commit();           
-            state = "success";            
-//            if (action.equals("C")) {
-//                info  = "El reporte ha sido agregado con exito";
-////                return "list";
-//            } else if (action.equals("M")) {
-//                info  = "El reporte ha sido modificado con exito";
-////                return "list";
-//            }
-            info  = getText("message.successsendreport.issue")+".";
-            EntitiesDao entDao = new EntitiesDao();
-            Entities entTemp   = entDao.findById(idEntSystem);
-            GlobalFunctions.sendEmail(getText("email.fromContact"), getText("email.from"), getText("email.fromPass"), getText("email.subjectContact"), GlobalFunctions.reportToSend(entTemp.getNameEnt(), entTemp.getEmailEnt(), issRep.getNameIss(), issRep.getDescriptionIss()));
         
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-//            System.out.println("error->"+e.getMessage());
-            state = "failure";
-            info  = getText("message.failsendreport.issue");
-        } finally {
-            session.close();
-        }  
+        if (!action.equals("")) {
+            try {
+                tx = session.beginTransaction();                       
+    //            System.out.println("archivo.getParent()=>"+archivo.getParent());
+                File newFile = new File("D:/ImagesUsers/"+archivoFileName);
+                if(!newFile.exists()) Files.move(archivo.toPath(), newFile.toPath());
+                session.saveOrUpdate(issRep);
+            
+                LogEntities log = null;            
+                log = LogEntitiesDao.getData(idEntSystem, issRep.getIdIss(), "issues", action);
+                if (log==null && !action.equals("M")) {
+                    log = new LogEntities();
+                    log.setIdLogEnt(null);
+                    log.setIdEntityLogEnt(idEntSystem);
+                    log.setIdObjectLogEnt(issRep.getIdIss());
+                    log.setTableLogEnt("issues");
+                    log.setDateLogEnt(new Date());
+                    log.setActionTypeLogEnt(action);
+                    session.saveOrUpdate(log);
+                }
+                tx.commit();           
+                state = "success";            
+    //            if (action.equals("C")) {
+    //                info  = "El reporte ha sido agregado con exito";
+    ////                return "list";
+    //            } else if (action.equals("M")) {
+    //                info  = "El reporte ha sido modificado con exito";
+    ////                return "list";
+    //            }
+                info  = getText("message.successsendreport.issue")+".";
+                EntitiesDao entDao = new EntitiesDao();
+                Entities entTemp   = entDao.findById(idEntSystem);
+                GlobalFunctions.sendEmail(getText("email.fromContact"), getText("email.from"), getText("email.fromPass"), getText("email.subjectContact"), GlobalFunctions.reportToSend(entTemp.getNameEnt(), entTemp.getEmailEnt(), issRep.getNameIss(), issRep.getDescriptionIss()), newFile);
+                this.getSession().put("routeImage", "D:/ImagesUsers/"+archivoFileName);
+                archivo.delete();
+            } catch (HibernateException e) {
+                if (tx != null) {
+                    tx.rollback();
+                }
+                e.printStackTrace();
+    //            System.out.println("error->"+e.getMessage());
+                state = "failure";
+                info  = getText("message.failsendreport.issue");
+            } catch (Exception ex) {
+                Logger.getLogger(ActionIssues.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                session.close();
+            }  
+        }
         
 //        return ERROR;
         return "states";
@@ -378,5 +437,40 @@ public class ActionIssues extends BaseAction {
         
         return "states";
     }
+    
+    private InputStream imagenDinamica;    
+    
+    private String resultImage;
+
+    public String getResultImage() {
+        return resultImage;
+    }
+
+    public void setResultImage(String resultImage) {
+        this.resultImage = resultImage;
+    }   
+    
+    public String loadImage() throws Exception
+    {
+        File newFile = new File("D:/ImagesUsers/"+archivoFileName);
+        if(!newFile.exists()) Files.move(archivo.toPath(), newFile.toPath());
+//        String route = (String) this.getSession().get("routeImage");       
+//        System.out.println("route=>"+archivoFileName);
+        imagenDinamica = new FileInputStream(newFile);
+        byte[] imageData = IOUtils.toByteArray(imagenDinamica);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("data:image/jpeg;base64,");
+        sb.append(Base64.encodeBase64String(imageData));
+        resultImage = sb.toString();
+        
+        imagenDinamica.close();
+        return "states";
+    }
+
+    public InputStream getImagenDinamica()
+    {
+        return imagenDinamica;
+    }  
     
 }

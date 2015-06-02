@@ -16,6 +16,7 @@ import org.aepscolombia.platform.models.dao.MunicipalitiesDao;
 import org.aepscolombia.platform.models.dao.ProducersDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
 import org.aepscolombia.platform.models.dao.RastasDao;
+import org.aepscolombia.platform.models.dao.SoilAnalysisDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.dao.UserEntityDao;
 import org.aepscolombia.platform.models.dao.UsersProfilesDao;
@@ -86,6 +87,7 @@ public class ActionProfile extends BaseAction {
     private Integer numPro;
     private Integer numFar;
     private Integer numRas;
+    private Integer numSoils;
     private Integer numFie;
     private Integer numEve;
     private String coCode="";
@@ -129,6 +131,14 @@ public class ActionProfile extends BaseAction {
     public void setNumFar(Integer numFar) {
         this.numFar = numFar;
     }
+
+    public Integer getNumSoils() {
+        return numSoils;
+    }
+
+    public void setNumSoils(Integer numSoils) {
+        this.numSoils = numSoils;
+    }    
 
     public Integer getNumRas() {
         return numRas;
@@ -466,6 +476,7 @@ public class ActionProfile extends BaseAction {
         numPro = new ProducersDao().countData(findParams);
         numFar = new FarmsDao().countData(findParams);
         numRas = new RastasDao().countData(findParams);        
+        numSoils = new SoilAnalysisDao().countData(findParams);        
         numFie = new FieldsDao().countData(findParams);
         numEve = new ProductionEventsDao().countData(findParams);
         return SUCCESS;

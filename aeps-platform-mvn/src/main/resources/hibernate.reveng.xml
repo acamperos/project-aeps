@@ -123,4 +123,5 @@
   <table-filter match-name="rice_system"/>
   <table-filter match-name="wet_soils"/>
   <table-filter match-name="use_irrigation"/>
+  <table-filter match-name="soil_analysis"/>
 </hibernate-reverse-engineering>

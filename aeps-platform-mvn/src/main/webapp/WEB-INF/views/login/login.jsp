@@ -358,7 +358,7 @@
 //                                alert(json.info);
                                 var host = window.location.host;
                                 var protocol = window.location.protocol;
-                                document.location = protocol+'//'+host+'/'+json.info;
+                                document.location = protocol+'//'+host+'/aeps/'+json.info;
                             }
                         });
                     </script>

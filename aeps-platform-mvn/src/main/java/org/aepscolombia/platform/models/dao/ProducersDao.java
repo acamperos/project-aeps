@@ -191,7 +191,8 @@ public class ProducersDao
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " where e.status=1 and e.entity_type_ent=2";        
         
@@ -215,7 +216,7 @@ public class ProducersDao
 //                Date asign = new Date(valIdent);
 //                sql += " or (r.fecha_ras like '%"+asign+"%')";
                 try {
-                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+                    String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(valIdent));
 //                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
                 } catch (IllegalArgumentException ex) {
 //                    Logger.getLogger(RastasDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -295,7 +296,7 @@ public class ProducersDao
             tx = session.beginTransaction();
 //            Query query = session.createSQLQuery(sql);
             Query query  = session.createSQLQuery(sql);
-//            System.out.println("sql->"+query.list().size());
+            System.out.println("sql->"+query.list().size());
             HashMap tempTotal = new HashMap();
             tempTotal.put("countTotal", query.list().size());
             result.add(tempTotal);
@@ -374,7 +375,8 @@ public class ProducersDao
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " where e.status=1 and e.entity_type_ent=2";       
         if (!entType.equals("3") && args.containsKey("idEntUser")) {
@@ -511,7 +513,8 @@ public class ProducersDao
         sql += " inner join entities e on le.id_entity_log_ent = e.ID_ENT";
         if (entType.equals("3")) {
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=e.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " inner join municipalities m on m.id_mun = ent.id_municipality_ent";
         sql += " inner join departments dep on dep.id_dep=m.id_department_mun";
@@ -532,7 +535,8 @@ public class ProducersDao
         if (entType.equals("3")) {
             sql += "  inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
             sql += "  inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += "  inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += "  where le.action_type_log_ent = 'D' AND le.table_log_ent = 'producers'";
         if (!entType.equals("3") && args.containsKey("idEntUser")) {

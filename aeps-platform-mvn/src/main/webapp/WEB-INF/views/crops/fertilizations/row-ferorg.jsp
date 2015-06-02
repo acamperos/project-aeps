@@ -15,7 +15,7 @@
                 <a class="btn btn-small btn-edit" title="<s:property value="getText('link.ferorgedit.fertilization')" />" onclick="viewForm('/crop/showFer.action?action=modify&idCrop=${idCrop}', 'idFer', ${idFer}, '<s:property value="getText('title.ferorgedit.fertilization')" />', 1050, 550);"><i class="icon-pencil"></i></a>
             <% } %>
             <% if (usrFerDao.getPrivilegeUser(userFer.getIdUsr(), "crop/delete")) { %>
-                <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.ferorgdel.fertilization')" />" onclick="showDialogDelete(this, 'confirm_dialog_ferche', 'deleteFer.action?idFer=${idFer}', 'searchFer.action?idCrop=${idCrop}', 'divFerOrg', 'divListFer');"><i class="icon-trash"></i></a>
+                <a class="btn btn-small delete_rows_dt btn-delete" title="<s:property value="getText('link.ferorgdel.fertilization')" />" onclick="showDialogDelete(this, 'confirm_dialog_ferche', '/crop/deleteFer.action?idFer=${idFer}', '/crop/searchFer.action?idCrop=${idCrop}', 'divFerOrg', 'divListFer');"><i class="icon-trash"></i></a>
             <% } %>
         </div>
     <% } %>

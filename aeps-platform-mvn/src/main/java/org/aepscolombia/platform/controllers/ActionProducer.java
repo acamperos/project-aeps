@@ -40,7 +40,6 @@ import org.aepscolombia.platform.models.entity.Municipalities;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
-import org.aepscolombia.platform.util.GlobalFunctions;
 import org.aepscolombia.platform.util.HibernateUtil;
 import org.aepscolombia.platform.util.ValidatorUtil;
 import org.apache.commons.lang.StringUtils;
@@ -754,7 +753,7 @@ public class ActionProducer extends BaseAction {
         } catch (Exception ex) {
 //            actExe = ("");
         }
-//        System.out.println("action->"+actExe);
+//        System.out.println("coCode->"+coCode);
         this.setType_ident_producer(new DocumentsTypesDao().findAll(coCode));
         this.setDepartment_producer(new DepartmentsDao().findAll(coCode));
 

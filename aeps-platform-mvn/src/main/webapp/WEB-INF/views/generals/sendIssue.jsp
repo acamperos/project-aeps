@@ -24,7 +24,7 @@
                     <h4><s:property value="getText('title.sendissue.issue')" /></h4>
                 </div>
                 <div class="panel-body">
-                    <s:form id="formReport" action="sendIssue.action">
+                    <s:form id="formReport" action="sendIssue.action" enctype="multipart/form-data">
                         <s:hidden name="actExe" />
                         <div class="control-group">
                             <label for="formReport_issRep_nameIss" class="control-label req"><s:property value="getText('text.subject.issue')" />:</label>
@@ -37,10 +37,19 @@
                             <div class="controls">
                                 <s:textarea rows="5" cssClass="span6" name="issRep.descriptionIss"></s:textarea>
                             </div>					 
-                        </div>					 
+                        </div>	
+                        <div class="control-group">
+                            <label for="formReport_archivo" class="control-label req<s:property value="getText('file.descissue.issue')" />Cargar Imagen del problema:</label>
+                            <div class="controls">
+                                <s:file name="archivo" accept="image/jpeg,image/jpg,image/png" onchange="showImageToSend('loadImage.action', 'formReport_archivo', 'imagenDinamica')"/>
+                            </div>                            
+                        </div> 
+                        <div class="control-group" id="divImages">
+                            <img id="imagenDinamica" />
+                        </div>
                         <div class="row">
                             <div class="span6">
-                                <sj:submit type="button" cssClass="btn btn-large btn-initial" onclick="addMessageProcess(); ga('send', 'event', 'Errors', 'click', 'Report');" targets="divMessage" onCompleteTopics="completeReport" validate="true" validateFunction="validationForm">
+                                <sj:submit type="button" id="btSendIssue" cssClass="btn btn-large btn-initial" onclick="addMessageProcess(); ga('send', 'event', 'Errors', 'click', 'Report');" targets="divMessage" onCompleteTopics="completeReport" validate="true" validateFunction="validationForm">
                                     <s:property value="getText('button.sendissue.issue')" />
                                 </sj:submit> 
                             </div>  
@@ -48,6 +57,7 @@
                         <script>
                             $.subscribe('completeReport', function(event, data) {
                                 completeFormChange('', 'formReport', event.originalEvent.request.responseText);
+                                document.getElementById('imagenDinamica').setAttribute('src','');
                             });
                         </script>
                     </s:form>

@@ -1,7 +1,6 @@
 
 package org.aepscolombia.platform.controllers;
 
-import com.opensymphony.xwork2.ActionContext;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Date;
@@ -20,18 +19,14 @@ import org.aepscolombia.platform.models.dao.SfGuardUserDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.dao.UserEntityDao;
 import org.aepscolombia.platform.models.dao.UsersProfilesDao;
+import org.aepscolombia.platform.models.entity.AgentsAssociation;
 import org.aepscolombia.platform.models.entity.Association;
 import org.aepscolombia.platform.models.entity.Entities;
-import org.aepscolombia.platform.models.entity.LogEntities;
-import org.aepscolombia.platform.models.entity.Profiles;
 import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.EntitiesTypes;
 import org.aepscolombia.platform.models.entity.ExtensionAgents;
-import org.aepscolombia.platform.models.entity.IdiomCountry;
 import org.aepscolombia.platform.models.entity.UserEntity;
 import org.aepscolombia.platform.models.entity.Users;
-import org.aepscolombia.platform.models.entity.UsersProfiles;
-import org.aepscolombia.platform.models.entity.UsersProfilesId;
 import org.aepscolombia.platform.models.entity.WorkTypeExtAgent;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
@@ -461,7 +456,7 @@ public class ActionLogin extends BaseAction {
                 GlobalFunctions.sendSms(loggedUser.getNameUserUsr(), messageSms);
             } else {
                 loggedUser.setCodValidationUsr(codValidation);
-                GlobalFunctions.sendEmail(loggedUser.getNameUserUsr(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToRestoreUser(this.getRequest().getLocalAddr(), loggedUser.getNameUserUsr(), codValidation));
+                GlobalFunctions.sendEmail(loggedUser.getNameUserUsr(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToRestoreUser(this.getRequest().getLocalAddr(), loggedUser.getNameUserUsr(), codValidation), null);
             }
             userDao.save(loggedUser);            
             state = "success";
@@ -533,7 +528,7 @@ public class ActionLogin extends BaseAction {
     public String sendInformation() {
         state = "success";
         info  = getText("message.sendissuetoadmin.login")+".";
-        GlobalFunctions.sendEmail(getText("email.from"), getText("email.from"), getText("email.fromPass"), getText("email.subjectContact"), GlobalFunctions.messageToSendContact(this.getNameUser(), this.getEmailUser(), this.getWhatneed()));
+        GlobalFunctions.sendEmail(getText("email.from"), getText("email.from"), getText("email.fromPass"), getText("email.subjectContact"), GlobalFunctions.messageToSendContact(this.getNameUser(), this.getEmailUser(), this.getWhatneed()), null);
         return "states";
     } 
     
@@ -943,17 +938,21 @@ public class ActionLogin extends BaseAction {
                 ExtensionAgents ext = new ExtensionAgents();
                 ext.setIdExtAge(null);
                 ext.setEntities(ent);
-                ext.setWorkTypeExtAge(new WorkTypeExtAgent(this.getWorkType()));
-                if (this.getIdAssoExt()!=null && !this.getIdAssoExt().equals(" ")) {
-                    Integer idAss = Integer.parseInt(this.getIdAssoExt());
-                    ext.setIdAssoExtAge(new Association(idAss));
-                }
+                ext.setWorkTypeExtAge(new WorkTypeExtAgent(this.getWorkType()));                
                 if (workType==3 || workType==4 || workType==5) {
                     ext.setStatus(false);
                 } else {
                     ext.setStatus(true);
                 }
-                session.saveOrUpdate(ext);                
+                session.saveOrUpdate(ext);  
+                if (this.getIdAssoExt()!=null && !this.getIdAssoExt().equals(" ")) {
+                    Integer idAss = Integer.parseInt(this.getIdAssoExt());
+                    AgentsAssociation agAsc = new AgentsAssociation();
+                    agAsc.setAssociation(new Association(idAss));
+                    agAsc.setExtensionAgents(new ExtensionAgents(ext.getIdExtAge()));
+                    session.saveOrUpdate(agAsc);
+//                    ext.setIdAssoExtAge(new Association(idAss));
+                }
 
                 /*LogEntities logPro = new LogEntities();
                 logPro.setIdLogEnt(null);
@@ -970,7 +969,7 @@ public class ActionLogin extends BaseAction {
                 asc.setIdAsc(null);
                 asc.setEntities(ent);
                 asc.setNameAsc(this.getNameAsso());
-                asc.setStatus(false);
+                asc.setStatus(1);
                 session.saveOrUpdate(asc);
 
                 /*LogEntities logPro = new LogEntities();
@@ -1088,20 +1087,20 @@ public class ActionLogin extends BaseAction {
             String host = "www.open-aeps.org";            
             String messageSms = getText("message.codeofactivation.login")+" "+randomCode;
             if (this.getTypeUser() == 3) {
-                GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()));
+                GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()), null);
                 info  = getText("message.successaddassociation.login");
             } else if (this.getTypeUser() == 1) {
                 if (this.getWorkType()== 1 || this.getWorkType()== 2) {
-                    if (!isNum) GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation));
+                    if (!isNum) GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation), null);
                     if (isNum)  GlobalFunctions.sendSms(userContact, messageSms);
                     info  = getText("message.successaddagronomist.login");//Tener la posibilidad de enviarlo por celular
                 } else {
                     //Enviar correo al representante del gremio o empresa privada encargado (PENDING)
-                    GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()));
+                    GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()), null);
                     info  = getText("message.successaddagronomistindependent.login");//Tener la posibilidad de enviarlo por celular
                 }
             } else if (this.getTypeUser() == 2) {
-                if (!isNum) GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation));
+                if (!isNum) GlobalFunctions.sendEmail(this.getEmailUser(), getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToNewUser(host, user.getNameUserUsr(), codValidation), null);
                 if (isNum)  GlobalFunctions.sendSms(userContact, messageSms);
                 info  = getText("message.successaddproducer.login");//Tener la posibilidad de enviarlo por celular
             }

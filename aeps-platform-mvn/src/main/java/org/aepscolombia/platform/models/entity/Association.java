@@ -22,7 +22,7 @@ public class Association  implements java.io.Serializable {
 
     private Integer idAsc;
     private Entities entities;
-    private Boolean status;
+    private Integer status;
     private Integer createdBy;
     private String nameAsc;
 
@@ -38,7 +38,7 @@ public class Association  implements java.io.Serializable {
         this.entities = entities;
     }
     
-    public Association(Entities entities, String nameAsc, Boolean status, Integer createdBy) {
+    public Association(Entities entities, String nameAsc, Integer status, Integer createdBy) {
        this.entities = entities;
        this.status = status;
        this.nameAsc = nameAsc;
@@ -76,11 +76,11 @@ public class Association  implements java.io.Serializable {
     }
     
     @Column(name="status")
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return this.status;
     }
     
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
     

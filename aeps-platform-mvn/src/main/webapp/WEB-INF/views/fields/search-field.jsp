@@ -77,7 +77,7 @@
     </div>   
     <div id="searchAdvanceField" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasicField', 'searchAdvanceField', 'formFieldSearch_searchFromField', 1)" class="radioSelect"><s:property value="getText('link.simplesearch.field')" /> </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicField', 'searchAdvanceField', 'formFieldSearch_searchFromField', 1); clearForm('formFieldSearch');" class="radioSelect"><s:property value="getText('link.simplesearch.field')" /> </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row-fluid">
             <div class="span5">

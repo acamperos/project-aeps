@@ -6,8 +6,11 @@
 <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <%@page import="org.aepscolombia.platform.models.entity.Users"%>
 <%@page import="org.aepscolombia.platform.util.APConstants"%>
+<%@page import="java.util.HashMap"%>
 <% Users user  = (Users) session.getAttribute(APConstants.SESSION_USER); %>
 <% Integer entTypeId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+<% HashMap addCrop    = (HashMap) request.getAttribute("additionals");%>
+<% String valueCrop   = (String) addCrop.get("selected");%>
 <s:form id="formCropSearch" action="searchCrop.action?selected=%{selected}" cssClass="form-horizontal formClassLot" label="%{getText('title.searchcrop.crop')}">
     <% if (entTypeId==3) { %>
         <div class="row">
@@ -28,9 +31,11 @@
                     <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" theme="simple" targets="divConListCrop" onCompleteTopics="completeSearchCrop"><i class="icon-search"></i></sj:submit>
                 </div> 
             </div> 
-            <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportCrop.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
-            </div>    
+            <% if (valueCrop.equals("crop")) {%>
+                <div class="span2">
+                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportCrop.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
+                </div>  
+            <% } %>
         </div>
         <script>          
             
@@ -64,16 +69,21 @@
         <s:textfield cssClass="form-control" name="search_crop" placeholder="%{getText('text.searchcrop.crop')}" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListCrop" onCompleteTopics="completeSearchCrop"><i class="icon-search"></i></sj:submit>
         <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.crop')" /> </a><i class="icon-chevron-down"></i>
-        <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.crop')" /></s:a>
+        <s:set name="valSel" value="selected"/> 
+        <s:if test="%{#valSel.equals('crop')}">
+            <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.crop')" /></s:a>
+        </s:if>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportCrop.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
-            <%--<s:submit type="button" formIds="formCropSearch" action="getReportCrop.action" cssClass="btn btn-default" onclick="addMessageProcess();"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>--%>
-            <!--<a href="/crop/getReportCrop.action" style="float: left;text-align: center;">Export To Excel</a>-->
+            <% if (valueCrop.equals("crop")) {%>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportCrop.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>
+                <%--<s:submit type="button" formIds="formCropSearch" action="getReportCrop.action" cssClass="btn btn-default" onclick="addMessageProcess();"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.crop')" /></s:submit>--%>
+                <!--<a href="/crop/getReportCrop.action" style="float: left;text-align: center;">Export To Excel</a>-->
+            <% } %>
         <% } %>
     </div> 
     <div id="searchAdvanceCrop" class="hide">
         <div class="control-group">
-            <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 1)" class="radioSelect"><s:property value="getText('link.simplesearch.crop')" /> </a><i class="icon-chevron-up"></i>
+            <a onclick="showSearchAdvance('searchBasicCrop', 'searchAdvanceCrop', 'formCropSearch_searchFromCrop', 1); clearForm('formCropSearch');" class="radioSelect"><s:property value="getText('link.simplesearch.crop')" /> </a><i class="icon-chevron-up"></i>
         </div>
         <div class="row">
             <div class="span5">
@@ -168,7 +178,9 @@
         </div>
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListCrop" onCompleteTopics="completeSearchCrop"><s:property value="getText('button.searchcrop.crop')" /> <i class="icon-search"></i></sj:submit>
-            <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.crop')" /></s:a>
+            <s:if test="%{#valSel.equals('crop')}">
+                <s:a cssClass="btn btn-initial" href="listCrop.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.crop')" /></s:a>
+            </s:if>
         </div>
     </div>       
 </s:form>        

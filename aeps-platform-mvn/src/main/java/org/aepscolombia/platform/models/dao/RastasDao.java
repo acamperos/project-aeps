@@ -44,7 +44,7 @@ import org.apache.poi.ss.usermodel.Row;
 /**
  * Clase RastasDao
  *
- * Contiene los metodos para interactuar con la tabla Lots de la base de datos (BD)
+ * Contiene los metodos para interactuar con la tabla Rastas de la base de datos (BD)
  *
  * @author Juan Felipe Rodriguez
  * @version 1.0
@@ -180,7 +180,8 @@ public class RastasDao
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " inner join fields l on r.id_lote_ras=l.id_fie";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
@@ -209,7 +210,7 @@ public class RastasDao
 //                Date asign = new Date(valIdent);
 //                sql += " or (r.fecha_ras like '%"+asign+"%')";
                 try {
-                    String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+                    String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(valIdent));
                     sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
 //                    sql += " or (r.fecha_ras like '%"+dateAsign+"%')";
                 } catch (IllegalArgumentException ex) {
@@ -234,7 +235,7 @@ public class RastasDao
             String valIdent = String.valueOf(args.get("date"));            
 //            SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");            
             if(!valIdent.equals(" ") && !valIdent.equals("") && !valIdent.equals("null")) {
-                String dateAsign = new SimpleDateFormat("yyyy-dd-MM").format(new Date(valIdent));
+                String dateAsign = new SimpleDateFormat("yyyy-MM-dd").format(new Date(valIdent));
                 sql += " and r.fecha_ras like '%"+dateAsign+"%'";
 //                try {
                     //                Date myDate = (Date)args.get("date");
@@ -384,7 +385,8 @@ public class RastasDao
         if (entType.equals("3")) {
             sql += " inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)"; 
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " inner join fields l on r.id_lote_ras=l.id_fie";
         sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
@@ -576,8 +578,6 @@ public class RastasDao
 //        args.get("countTotal");
 //        events.toArray();
 //        System.out.println("sql->"+sql);        
-//        try {
-//            tx = session.beginTransaction();
             Query query  = session.createSQLQuery(sql);            
             events = query.list();         
             
@@ -784,7 +784,8 @@ public class RastasDao
         sql += " inner join entities e on le.id_entity_log_ent = e.id_ent";
         if (entType.equals("3")) {
             sql += " inner join extension_agents ext on (ext.id_entity_ext_age=e.id_ent)";
-            sql += " inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += " where le.action_type_log_ent = 'C'";
         sql += " and r.status=1 and l.status=1 and f.status=1 and ent.status=1";
@@ -803,7 +804,8 @@ public class RastasDao
         if (entType.equals("3")) {
             sql += "	inner join entities entLe on (le.id_entity_log_ent=entLe.id_ent)";
             sql += "	inner join extension_agents ext on (ext.id_entity_ext_age=entLe.id_ent)";
-            sql += "	inner join association ass on (ass.id_asc=ext.id_asso_ext_age)";
+            sql += " inner join agents_association agAsc on (agAsc.id_agent_age_asc=ext.id_ext_age)";
+            sql += " inner join association ass on (ass.id_asc=agAsc.id_asso_age_asc)";
         }
         sql += "	where le.action_type_log_ent = 'D' AND le.table_log_ent = 'rastas'";
         if (!entType.equals("3") && args.containsKey("idEntUser")) {
