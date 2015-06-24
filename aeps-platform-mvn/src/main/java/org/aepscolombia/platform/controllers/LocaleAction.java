@@ -46,7 +46,7 @@ public class LocaleAction extends BaseAction
         String langTemp    = (String)userSession.get(APConstants.SESSION_LANG);
 //        System.out.println("langAssign=>"+langTemp);
 //        System.out.println("lang=>"+lang);
-        countryCode = "NI";
+        countryCode = "CO";
         userSession.put(APConstants.COUNTRY_CODE, countryCode);
         Locale locale=null;
         if (langTemp!=null) locale = new Locale(langTemp);

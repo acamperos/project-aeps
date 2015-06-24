@@ -220,7 +220,7 @@ function changeTitleWindow(title) {
 
 function viewForm(url, nameData, valData, title, width, height) {
 //    showWindow(title, width, height, '<label>Entreee</label>');
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $.ajax({
         type: "GET",
         url: url,
@@ -239,7 +239,7 @@ function viewForm(url, nameData, valData, title, width, height) {
 }
 
 function listInfo(url, valName, valId, divShow, divHide) {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $.ajax({
         type: "GET",
         url: url,
@@ -264,7 +264,7 @@ function setPropertyGeneral(url, nameData, valData, valName, valId, divShow, div
 //    if (valAdd == "") {
 //        alert("Debe tener un productor seleccionado previamente");
 //    } else {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
         $.ajax({
             type: "POST",
             url: url,
@@ -297,7 +297,7 @@ function deleteItem(url, urlAction, divTable, divShow)
     $('#'+divTable).find("div.error").removeClass("error");
     $('#'+divTable).find("span.s2_help_inline").remove();
     $('#'+divTable).find("div.s2_validation_errors").remove();
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     if(!requestSent) {
         requestSent = true;
         $.ajax({
@@ -375,7 +375,7 @@ function showMessError(idLoc, info)
 
 function showInfo(url, divShow)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     if(!requestSent) {
         requestSent = true;
         $.ajax({
@@ -393,7 +393,7 @@ function showInfo(url, divShow)
 
 function viewInfo(url, title, divShow, divHide)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $.ajax({
         type: "GET",
         url: url,
@@ -429,7 +429,7 @@ function showInfoPage(url, valFill)
 
 function chargeValues(url, valName, valSend, valFill, formId)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var data;
     data = '&' + valName + '=' + valSend;
     $('#' + valFill).html('');
@@ -505,7 +505,7 @@ function showDialogDelete(divDialog, hRef, url, urlAction, divTable, divShow) {
 function chargeValuesControls(url, valName, valSendId, valNameCon, valSenIdCon, valFillChe, valFillOrg, message)
 {
     var data;    
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
 //    var valSend    = $('#' + valSendId).val();
     var valSend    = $( "input[name='"+valSendId+"']:checked").val();
     var valSendCon = $('#' + valSenIdCon).val();
@@ -895,7 +895,7 @@ function restoreDecimalNumber(formId) {
 
 function saveData(url, urlAction, formId, divShow)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var data = $('#'+formId).serializeArray();
     $.ajax({
         type: "POST",
@@ -914,7 +914,7 @@ function saveData(url, urlAction, formId, divShow)
 
 function sendFormRasta(url, formId, divTable, message)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $('#' + message).html('');
     // $('#'+formId).toggleClass('error');
 
@@ -954,7 +954,7 @@ function sendFormRasta(url, formId, divTable, message)
 
 function sendFormProtection(url, formId, divHide, message)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $('#' + message).html('');
     // $('#'+formId).toggleClass('error');
 
@@ -1003,7 +1003,7 @@ function toggleAndClean(divShow, divHide)
 
 function sendFormCrop(url, formId, divHide, message)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $('#' + message).html('');
     // $('#'+formId).toggleClass('error');
 
@@ -1044,7 +1044,7 @@ function sendFormCrop(url, formId, divHide, message)
 
 function sendFormHarvest(url, formId, divShow, divHide, message)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $('#' + message).html('');
     // $('#'+formId).toggleClass('error');
 
@@ -1121,7 +1121,7 @@ function showSearchAdvance(divSearchBasic, divSearchAdvance, valAsig, valSel)
 
 function showRowAdditionalItem(url, divUpdate)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var rows  = $('#'+divUpdate).children("tr");
     var child = $(rows)[rows.length-1];
 //    alert($(child).attr("value"));
@@ -1153,7 +1153,7 @@ function showRowAdditionalFert(url, idTypeApp, divUpdateChe, divUpdateOrg, divUp
         rows  = $('#'+divUpdateAme).children("tr");
     }
         
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var child = $(rows)[rows.length-1];
 //    var data  = $('#'+formId).serialize();
     var data;
@@ -1367,7 +1367,7 @@ function viewPositionRasta(url, formId, valNameLat, valLatId, valNameLon, valLon
     strValLon = strValLon.replace(',','.');
 //    alert(strValLat)
 //    alert(strValLon)
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     $("#"+valLatId).val(strValLat);
     $("#"+valLonId).val(strValLon);
     var valLat  = $('#'+valLatId).val();
@@ -1409,7 +1409,7 @@ function viewPositionRasta(url, formId, valNameLat, valLatId, valNameLon, valLon
 
 function viewPosition(url, formId, valNameLat, valLatId, valNameLon, valLonId, divHide, divShow)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var valLat  = $('#'+valLatId).val();
     var valLon  = $('#'+valLonId).val();    
     var data    = '';
@@ -1491,7 +1491,7 @@ function optSel(idCheck, div)
 
 function getReportCsv(url, formId, filename)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var data = $('#'+formId).serializeArray();
     var xmlRequest = $.ajax({
         type: "POST",
@@ -1514,7 +1514,7 @@ function getReportCsv(url, formId, filename)
 
 function getReportXls(url, selectAll, selectItem)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
 //    var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
 //    var checkboxes = document.getElementsByName(''+selectAll);
 //    var vals = "";
@@ -1699,7 +1699,7 @@ function getCountry () {
     var deferred = $.Deferred();
 //    $.getJSON("http://freegeoip.net/json/", function(result){
 //        countryCode = result.country_code;
-        countryCode = "NI";
+        countryCode = "CO";
 //                    alert('Country: ' + result.country_name + '\n' + 'Code: ' + result.country_code);
         deferred.resolve();
 //                    doAction();
@@ -1731,7 +1731,7 @@ function showInfoPageCountry(url, countryCode, valFill)
 
 function changePage(url, valName, valSend, valFill, formId, message)
 {
-    url = "/aeps"+url;
+    //url = "/aeps"+url;
     var data = '&' + valName + '=' + valSend;
     var dataForm = $('#'+formId).serializeArray();
     $('#' + valFill).html('');

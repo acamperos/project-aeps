@@ -1,6 +1,5 @@
 package org.aepscolombia.platform.models.dao;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -10,7 +9,6 @@ import com.mongodb.WriteResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
@@ -43,6 +41,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * Clase FarmsDao
@@ -304,6 +304,11 @@ public class FarmsDao
             }
             events = query.list();     
             
+            JSONObject objPrin = new JSONObject();
+            objPrin.put("type", "FeatureCollection");     
+            
+            JSONArray features = new JSONArray();
+            
             for (Object[] data : events) {
                 HashMap temp = new HashMap();
                 temp.put("id_producer", data[0]);
@@ -325,7 +330,42 @@ public class FarmsDao
                     temp.put("nameAgro", data[19]);
                 }
                 result.add(temp);
+                
+                JSONObject objRow = new JSONObject();
+                objRow.put("type", "Feature");
+
+                JSONObject objRowCont = new JSONObject();
+                objRowCont.put("type", "Point");
+                JSONArray listCoor = new JSONArray();
+                listCoor.add(data[9]);
+                listCoor.add(data[8]);
+
+                objRowCont.put("coordinates", listCoor);
+                objRow.put("geometry", objRowCont);
+
+                JSONObject objRowProperties = new JSONObject();
+                objRowProperties.put("idPro", ""+data[0]);
+                objRowProperties.put("idFarm", ""+data[1]);
+                objRowProperties.put("namePro", ""+data[2]);
+                objRowProperties.put("nameFarm", ""+data[3]);
+                objRowProperties.put("dirFarm", ""+data[4]);
+                objRowProperties.put("latFarm", ""+data[8]);
+                objRowProperties.put("lonFarm", ""+data[9]);
+                objRowProperties.put("altFarm", ""+data[10]);
+                objRowProperties.put("nameMun", ""+data[13]);
+                objRowProperties.put("nameDep", ""+data[15]);
+                objRowProperties.put("status", ""+data[16]);
+                objRowProperties.put("typeEnt", ""+data[17]);
+                objRow.put("properties", objRowProperties);      
+                
+                features.add(objRow);
             }
+            
+            objPrin.put("features", features);
+//            System.out.println("JSONObject=>"+objPrin);
+            HashMap jsonRes = new HashMap();
+            jsonRes.put("points", objPrin.toString());
+            result.add(jsonRes);
 //            System.out.println(result);
 //            for (HashMap datos : result) {
 //                System.out.println(datos.get("id_productor")+" "+datos.get("id_entidad")+" "+datos.get("cedula"));

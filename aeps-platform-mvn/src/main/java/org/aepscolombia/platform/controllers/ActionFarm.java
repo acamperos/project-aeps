@@ -44,14 +44,16 @@ import org.aepscolombia.platform.models.entity.Producers;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.models.entityservices.SfGuardUser;
 import org.aepscolombia.platform.util.APConstants;
-import org.aepscolombia.platform.util.GlobalFunctions;
 
 import org.aepscolombia.platform.util.HibernateUtil;
+import org.aepscolombia.platform.util.RepositoryGoogle;
+import org.aepscolombia.platform.util.RepositoryWaterBody;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.json.simple.JSONObject;
 
 /**
  * Clase ActionFarm
@@ -98,6 +100,8 @@ public class ActionFarm extends BaseAction {
     private List<Entities> list_agronomist;
     private AssociationDao assDao;
     private String coCode;
+    private String points;
+    private String location;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -233,6 +237,14 @@ public class ActionFarm extends BaseAction {
     public void setAltitude_property(String altitude_property) {
         this.altitude_property = altitude_property;
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }    
 
     public String getDirection_property() {
         return direction_property;
@@ -402,8 +414,10 @@ public class ActionFarm extends BaseAction {
     public String getCoCode() {
         return coCode;
     }
-    
-    
+
+    public String getPoints() {
+        return points;
+    }   
     
     
     @Override
@@ -473,6 +487,22 @@ public class ActionFarm extends BaseAction {
         Double maxlat = Double.parseDouble(getText("max.lat"));
         Double minlon = Double.parseDouble(getText("min.lon"));
         Double maxlon = Double.parseDouble(getText("max.lon"));
+        
+            if (latPro!=0 && lonPro!=0) {
+                HashMap results=RepositoryGoogle.reverse(latPro, lonPro);
+                HashMap resultsEle=RepositoryGoogle.getElevation(latPro, lonPro);
+//                System.out.println(results.get("country"));
+//                System.out.println(resultsEle.get("elevation"));
+                altitude_property = resultsEle.get("elevation").toString();
+
+                RepositoryWaterBody rWater=new RepositoryWaterBody(RepositoryWaterBody.geocoding_database_world);
+                location = rWater.getDataFromLatLon(latPro, lonPro);
+//                System.out.println(water);
+//                if (water.equals("0")) {
+//                
+//                }
+            }
+        
             if (latPro!=0) {
                 if (latPro < (minlat) || latPro > (maxlat)) {
                     addFieldError("latitude_property", getText("message.invalidranklatitude.farm"));
@@ -790,7 +820,9 @@ public class ActionFarm extends BaseAction {
 //        System.out.println("entreeee->"+listProperties.get(0).get("countTotal"));
         this.setCountTotal(Integer.parseInt(String.valueOf(listProperties.get(0).get("countTotal"))));
         this.setPage(page);
-        listProperties.remove(0);
+        points = String.valueOf(listProperties.get(listProperties.size()-1).get("points"));
+        listProperties.remove(0);       
+        listProperties.remove(listProperties.size()-1);       
 //        System.out.println("countTotal->"+this.getCountTotal());
         return SUCCESS;
     }

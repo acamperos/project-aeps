@@ -9,7 +9,7 @@
 /*Clase del titulo principal del sistema*/
 .titlePrin {
     position: absolute; 
-    font-size: 38px; 
+    font-size: 35px; 
     color: #68AF23; 
     padding-top: 55px; 
 }
@@ -140,32 +140,32 @@ hr {
 }
 
 .arrow_box {
-	position: relative;
-	background: #FFF;
-	border: 1px solid #ddd;
+    position: relative;
+    background: #FFF;
+    border: 1px solid #ddd;
 }
 .arrow_box:after, .arrow_box:before {
-	bottom: 100%;
-	left: 7%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
 }
 
 .arrow_box:after {
-	border-color: rgba(255, 255, 255, 0);
-	border-bottom-color: #FFF;
-	border-width: 10px;
-	margin-left: -10px;
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #FFF;
+    border-width: 10px;
+    margin-left: -10px;
 }
 .arrow_box:before {
-	border-color: rgba(194, 225, 245, 0);
-	border-bottom-color: #ddd;
-	border-width: 11px;
-	margin-left: -11px;
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: #ddd;
+    border-width: 11px;
+    margin-left: -11px;
 }
 
 .warnField {
@@ -374,19 +374,19 @@ form {
 
 .datepicker,.autocomplete,.autocomplete_large,.write_free,.write,.write_large,.write_medium,.write_tiny,.write_pico
 {
-	border: 1px solid #999999;
-	padding: 1px 0 1px 3px;
-	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
-	height: 18px;
+    border: 1px solid #999999;
+    padding: 1px 0 1px 3px;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    height: 18px;
 }
 
 .write_tiny {
-	width: 38px;
+    width: 38px;
 }
 
 .select,.select_large,.select_small,.select_tiny {
-	height: 30px;
-	width: 170px;
+    height: 30px;
+    width: 170px;
 }
 
 
@@ -743,7 +743,7 @@ body {
 } 
 
 #clients .bigclient .client7 {
-    background: url("../../../img/logo-anar.jpg") no-repeat;
+    background: url("../../../img/logo-anar.png") no-repeat;
     background-size: 100%;
 } 
 
@@ -752,7 +752,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 5px 0 #A4C300;
 }
-			
+
 #clients .client .img {
     height: 50px;
     cursor: pointer;
@@ -835,64 +835,73 @@ body {
 } 
 
 .sprite {
-	background-image: url('../../../img/mixed.png');
+    background-image: url('../../../img/mixed.png');
 }
 
 .sprite-fields {
-	width: 230px;
-	height: 200px;
-	background-position: 0 0;
+    width: 230px;
+    height: 200px;
+    background-position: 0 0;
 }
 
 .sprite-farms {
-	width: 230px;
-	height: 200px;
-	background-position: 0 -200px;
+    width: 230px;
+    height: 200px;
+    background-position: 0 -200px;
 }
 
 .sprite-climate {
-	width: 230px;
-	height: 200px;
-	background-position: 0 -400px;
+    width: 230px;
+    height: 200px;
+    background-position: 0 -400px;
 }
 
 .sprite-crops {
-	width: 230px;
-	height: 200px;
-	background-position: 0 -600px;
+    width: 230px;
+    height: 200px;
+    background-position: 0 -600px;
 }
 
 .sprite-soils {
-	width: 230px;
-	height: 200px;
-	background-position: 0 -800px;
+    width: 230px;
+    height: 200px;
+    background-position: 0 -800px;
 }
 
 .sprite-producers {
-	width: 230px;
-	height: 200px;
-	background-position: 0 -1000px;
+    width: 230px;
+    height: 200px;
+    background-position: 0 -1000px;
 }
 
 .slide {
-	background-image: url('../../../img/optionsPublic.png');
+    background-image: url('../../../img/optionsPublic.png');
 }
 
 
 .slide-apps-mobile {
-	width:  940px;
-	height: 321px;
-	background-position: 0 0;
+    width:  940px;
+    height: 321px;
+    background-position: 0 0;
 }
 
 .slide-platform {
-	width:  940px;
-	height: 321px;
-	background-position: -940px 0;
+    width:  940px;
+    height: 321px;
+    background-position: -940px 0;
 }
 
 .slide-usuario-prueba {
-	width:  940px;
-	height: 321px;
-	background-position: -1880px 0;
+    width:  940px;
+    height: 321px;
+    background-position: -1880px 0;
+}
+
+.table th, .table td {
+    padding: 3px;
+    background-color: white;
+}
+
+img {
+  max-width: 100%;
 }

@@ -185,15 +185,20 @@
             <artifactId>hibernate-c3p0</artifactId>
             <version>4.2.7.Final</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.1.2</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.19.0-GA</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.8.7</version>
         </dependency>
     </dependencies>
     

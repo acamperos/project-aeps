@@ -428,7 +428,8 @@ public class GlobalFunctions {
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Bienvenido a la plataforma AEPS.</p> \n"
                 + "<p>Para validar su registro por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://" + host + ":8080/aeps/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/aeps/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
+                + "<a href='http://" + host + ":8080/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
+//                + "<a href='http://" + host + ":8080/aeps/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/aeps/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a>\n"
                 //                + "http://"+host+":8083/verifyUser.action?codVal=" + codValidation + "&nameUser=" + nameUser + " \n"
                 + "<p>Si usted no se ha registrado a este sistema por favor ignorar este mensaje</p> "
                 + "</body> \n"
@@ -454,7 +455,8 @@ public class GlobalFunctions {
                 + "<body> \n"
                 + "<h3>Hola Usuario: " + nameUser + "</h3> \n"
                 + "<p>Para poder realizar el cambio de contraseña por favor dar click en el siguiente enlace:</p> "
-                + "<a href='http://" + host + ":8080/aeps/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/aeps/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
+                + "<a href='http://" + host + ":8080/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
+//                + "<a href='http://" + host + ":8080/aeps/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "'>http://" + host + ":8080/aeps/verifyUserToRestore.action?codVal=" + codValidation + "&nameUser=" + nameUser + "</a> \n"
                 + "</body> \n"
                 + "</html>";
         return msg;

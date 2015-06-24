@@ -29,7 +29,7 @@ public class ViewActionInterceptor extends AbstractInterceptor
     String actionActual = (String)invocation.getInvocationContext().getContext().get(invocation.getInvocationContext().ACTION_NAME);
     String namespace = (String)invocation.getProxy().toString();
     
-    System.out.println("values->"+namespace);
+//    System.out.println("values->"+namespace);
     
     Map params = invocation.getInvocationContext().getParameters();
     String addValues = "";

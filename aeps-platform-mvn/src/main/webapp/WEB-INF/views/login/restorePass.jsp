@@ -98,8 +98,8 @@
                             $.unblockUI();
                             completeFormChange('', 'formRestCon', event.originalEvent.request.responseText);
                             setTimeout( function() {
-//                                document.location = "signin.action";
-                                document.location = "aeps/signin.action";
+                                document.location = "/signin.action";
+//                                document.location = "aeps/signin.action";
                             }, 3000);
                         });
                     </script>

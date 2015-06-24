@@ -5,7 +5,7 @@
 <div id="clients">
     <div class="container">
         <div class="section_header">
-            <h3>Socios</h3>
+            <h3><s:property value="getText('title.partners.footer')" /></h3>
         </div>
         <div class="row">
             <div class="span2 client">

@@ -16,7 +16,7 @@
         <sb:head includeScripts="true" includeScriptsValidation="true"/>        
         <link rel="stylesheet" href="scripts/css/generals/main.css">
         <link rel="stylesheet" href="scripts/css/font-awesome/css/font-awesome.min.css">   
-        <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>        
+        <link href='http://fonts.googleapis.com/css?family=Istok+Web:500,700' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div id="divMessage"></div>

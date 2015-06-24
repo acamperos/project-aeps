@@ -114,8 +114,8 @@
                     completeFormGetting('dialog-form', 'formCrop', 'divCrops', event.originalEvent.request.responseText);
                     var json = jQuery.parseJSON(event.originalEvent.request.responseText);
                     setTimeout(function() {
-//                        document.location = "/crop/dataCrop.action?idCrop="+json.idCrop;     
-                        document.location = "/aeps/crop/dataCrop.action?idCrop="+json.idCrop;     
+                        document.location = "/crop/dataCrop.action?idCrop="+json.idCrop;     
+//                        document.location = "/aeps/crop/dataCrop.action?idCrop="+json.idCrop;     
                     }, 2000);
                 });
                 if($('.pop-over').length) {

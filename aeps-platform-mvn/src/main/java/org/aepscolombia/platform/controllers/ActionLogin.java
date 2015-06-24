@@ -1084,7 +1084,7 @@ public class ActionLogin extends BaseAction {
             tx.commit();
             state = "success";
 //            String host = this.getRequest().getRemoteHost();
-            String host = "www.open-aeps.org";            
+            String host = "gisweb.ciat.cgiar.org";            
             String messageSms = getText("message.codeofactivation.login")+" "+randomCode;
             if (this.getTypeUser() == 3) {
                 GlobalFunctions.sendEmail("contact@open-aeps.org", getText("email.from"), getText("email.fromPass"), getText("email.subjectNewUser"), GlobalFunctions.messageToValidateUser(host, user.getNameUserUsr()), null);

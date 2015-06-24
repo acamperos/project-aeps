@@ -725,9 +725,9 @@ public class ProductionEventsDao
         } else {
             String selAll  = String.valueOf(args.get("selAll"));
             if (selAll.equals("true")) {
-                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+                sql += " and ass.status=1 and ass.id_entity_asc="+args.get("idEntUser");
             } else {
-                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+                sql += " and ass.status=1 and le.id_entity_log_ent in ("+args.get("selItem")+")";
             }
         }
         sql += " and le.id_object_log_ent not in (";
@@ -744,9 +744,9 @@ public class ProductionEventsDao
         } else {
             String selAll  = String.valueOf(args.get("selAll"));
             if (selAll.equals("true")) {
-                sql += " and ass.id_entity_asc="+args.get("idEntUser");
+                sql += " and ass.status=1 and ass.id_entity_asc="+args.get("idEntUser");
             } else {
-                sql += " and le.id_entity_log_ent in ("+args.get("selItem")+")";
+                sql += " and ass.status=1 and le.id_entity_log_ent in ("+args.get("selItem")+")";
             }
         }
         sql += ")";

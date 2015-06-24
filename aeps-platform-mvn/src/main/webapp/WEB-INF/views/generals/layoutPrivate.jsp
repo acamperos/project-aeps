@@ -15,9 +15,9 @@
         <sj:head jqueryui="true"/>
         <sb:head includeScripts="true" includeScriptsValidation="true"/>
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/colorbox/colorbox.css"/>
-        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/main.min.css">        
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/main.css">        
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/font-awesome/css/font-awesome.min.css">               
-        <link href = 'http://fonts.googleapis.com/css?family=Istok+Web:400700400cursiva,700italicysubconjunto=latin,latin-ext' rel='stylesheet' type='text/css'>                  
+        <link href='http://fonts.googleapis.com/css?family=Istok+Web:500,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/geoxml/gmap.css"/>
         <link rel="stylesheet" href="<%= request.getContextPath() %>/scripts/css/generals/multiple-select.css"/>        
     </head>
@@ -45,6 +45,7 @@
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/generals/responsiveslides.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/geoxml/geoxml3.js"></script>    
+        <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/generals/jquery.multiple.select.js"></script>
         <script>
             var actionName   = '<%= session.getAttribute("action") %>';

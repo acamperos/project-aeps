@@ -14,6 +14,8 @@
                 <li><span><s:property value="getText('label.optfarm')" /></span></li>
             </ul>
         </div>
-        <%@ include file="view-farm.jsp" %>                  
+        <div id="divViewFarm">
+            <%@ include file="view-farm.jsp" %>                  
+        </div>
     </body>
 </html>
