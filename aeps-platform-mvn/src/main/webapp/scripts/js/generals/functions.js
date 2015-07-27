@@ -1839,3 +1839,11 @@ function clearForm(formId)
 {
     $("#"+formId).trigger("reset");    
 }
+
+function selectItemCropcheck(namField, idField, valName, valId)
+{
+    $("#" + namField).val(valName);
+    $("#" + namField).focus();
+    $("#" + idField).val(valId);
+    closeWindow();
+}

@@ -21,7 +21,7 @@
             <div class="heading_main" style="font-size: 18px;">
                 <p><s:property value="getText('area.correctvalidation.login')" />. </p> 
                 <p><s:property value="getText('area.access.login')" />.</p> 
-                <a href="signin.action" class="btn btn-initial btn-large"><i class="icon-arrow-right icon-white"></i>  <s:property value="getText('link.signdirect.login')" /></a>
+                <a href="/signin.action" class="btn btn-initial btn-large"><i class="icon-arrow-right icon-white"></i>  <s:property value="getText('link.signdirect.login')" /></a>
             </div>
         </div>
         <script type="text/javascript" src="scripts/js/generals/functions.min.js"></script>	

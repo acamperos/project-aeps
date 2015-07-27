@@ -8,10 +8,8 @@
     <% } %>
 <% } %>
 <% if (value != "property") {%>
-    <% if (value.equals("lot")) {%>
-        <td><img src="/img/check.ico"/></td>
-    <% } else if (value.equals("crop")) {%>
-        <td><img src="/img/check.ico"/></td>
+    <% if (value.equals("lot") || value.equals("crop")) {%>
+        <td><i class="icon-ok main-color"></i></td>
     <% }%>                        
 <% }%>
 <% if (entTypeFarId==3) { %>    

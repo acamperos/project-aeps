@@ -113,10 +113,10 @@ public class FertilizationsDao
         sql += "select p.id_fer, p.date_fer";
         sql += " from fertilizations p"; 
         sql += " inner join log_entities le on le.id_object_log_ent=p.id_fer and le.table_log_ent='fertilizations' and le.action_type_log_ent='C'";   
-		sql += " where p.status=1";
+        sql += " where p.status=1";
         if (args.containsKey("idEvent")) { 
             sql += " and p.id_production_event_fer="+args.get("idEvent");
-        }
+        }        
 //        if (args.containsKey("idEntUser")) {
 //			sql += " and le.id_entity_log_ent="+args.get("idEntUser");
 //		}
@@ -131,7 +131,7 @@ public class FertilizationsDao
             for (Object[] data : events) {
                 HashMap temp = new HashMap();
                 temp.put("idFer", data[0]);
-                temp.put("idEntUser", args.get("idEntUser"));
+//                temp.put("idEntUser", args.get("idEntUser"));
                 temp.put("coCode", args.get("coCode"));
                 resultChe = getChemicals(temp);
                 resultOrg = getOrganics(temp);
@@ -171,14 +171,10 @@ public class FertilizationsDao
         sql += " inner join chemical_fertilizations chfer on p.id_fer=chfer.id_fertilization_che_fer";    
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_fer";    
         sql += " left join fertilizations_types tp on tp.id_fer_typ=p.fertilization_type_fer";    
-        sql += " inner join log_entities le on le.id_object_log_ent=p.id_fer and le.table_log_ent='fertilizations' and le.action_type_log_ent='C'";   
-		sql += " where ep.status=1";
+        sql += " where ep.status=1";
         if (args.containsKey("idFer")) { 
             sql += " and p.id_fer="+args.get("idFer");
         }
-        if (args.containsKey("idEntUser")) {
-			sqlAdd += " and le.id_entity_log_ent="+args.get("idEntUser");
-		}
 		sqlAdd += " order by chfer.id_che_fer ASC";
 		sql += sqlAdd;
         

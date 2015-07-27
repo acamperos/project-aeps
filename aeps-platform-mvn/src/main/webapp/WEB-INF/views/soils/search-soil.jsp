@@ -29,7 +29,7 @@
                 </div> 
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportSoil.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/soil/getReportSoil.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
             </div>   
         </div>
         <script>
@@ -66,7 +66,7 @@
         <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.soil')" /> </a><i class="icon-chevron-down"></i>
         <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soil')" /></s:a>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportSoil.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/soil/getReportSoil.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soil')" /></s:submit>
         <% } %>
     </div> 
     <div id="searchAdvanceSoil" class="hide">
@@ -179,7 +179,7 @@
         </div>      
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><s:property value="getText('button.searchsoil.soil')" /> <i class="icon-search"></i></sj:submit>
-            <s:a cssClass="btn btn-initial" href="listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soil')" /></s:a>
+            <s:a cssClass="btn btn-initial" href="/soil/listSoil.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soil')" /></s:a>
         </div>
     </div>       
 </s:form>        

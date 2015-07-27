@@ -752,7 +752,7 @@ public class ProductionEventsDao
         sql += ")";
         sql += " order by ep.id_pro_eve, e.name_ent, ent.name_ent";
 
-//        System.out.println("sql=>"+sql);
+        System.out.println("sql=>"+sql);
         HSSFWorkbook workbook = null;
         try {
             tx = session.beginTransaction();

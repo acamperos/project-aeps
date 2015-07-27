@@ -32,7 +32,10 @@
 <%  if (value.equals("soil")) {
         divShow = "divSoilForm";
         divHide = "divListSoilForm";
-    }           
+    } else if (value.equals("cropcheck")) {
+        divShow = "divCropForm";
+        divHide = "divListCropForm";
+    }         
 %>
 
 <div class="msgWin" id="messageWin"></div>
@@ -62,7 +65,7 @@
                     <% }%>
                 <% } %>
                 <% if (!value.equals("crop")) {%>
-                    <% if (value.equals("soil")) {%>
+                    <% if (value.equals("soil") || value.equals("cropcheck")) {%>
                         <th></th>
                     <% }%>
                 <% }%>        
@@ -90,6 +93,9 @@
                 <% String action = "";%>
                 <% if (value.equals("soil")) {  %>
                     <% action = "selectItem('formSoil_nameCrop', 'formSoil_idCrop', '" + request.getAttribute("nameCrop") + "', '" + request.getAttribute("idCrop") + "','" + divShow + "', '" + divHide + "');"; %>
+                <% } %>
+                <% if (value.equals("cropcheck")) { %>
+                    <% action = "selectItemCropcheck('formCrop_nameCrop', 'formCrop_idCrop', '" + request.getAttribute("nameCrop") + "', '" + request.getAttribute("idCrop") + "');"; %>
                 <% } %>
                 <tr onclick="<%= action%>" id="trCrop<s:property value="idCrop" />>">
                     <%@ include file="row-crops.jsp" %>                                

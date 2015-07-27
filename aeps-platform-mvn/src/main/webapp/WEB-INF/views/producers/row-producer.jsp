@@ -9,7 +9,7 @@
 <% } %>
 <% if (valAsig != "producer") {%>    
     <% if (valAsig.equals("property") || valAsig.equals("lot") || valAsig.equals("crop")) {%>
-        <td><img src="/img/check.ico"/></td>      
+        <td><i class="icon-ok main-color"></i></td>      
     <% } %>    
 <% } %>
 <% if (entTypeProId==3) { %>    

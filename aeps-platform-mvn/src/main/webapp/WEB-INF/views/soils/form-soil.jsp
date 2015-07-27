@@ -595,7 +595,7 @@
                     }
                     completeFormGetting('dialog-form', 'formRasta', 'divRasta', event.originalEvent.request.responseText);
                     setTimeout(function() {
-                        showInfo("/searchSoil.action?page=" + page, "divConListRasta");
+                        showInfo("/soil/searchSoil.action?page=" + page, "divConListRasta");
                     }, 2000);
                 });
                 if($('.pop-over').length) {

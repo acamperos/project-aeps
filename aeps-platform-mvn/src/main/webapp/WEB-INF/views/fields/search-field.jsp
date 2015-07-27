@@ -29,7 +29,7 @@
             </div> 
             <% if (valueField.equals("lot")) {%>
                 <div class="span2">
-                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportField.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.exportdata.field')" /></s:submit>
+                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/getReportField.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.exportdata.field')" /></s:submit>
                 </div>
             <% } %>
         </div>
@@ -67,11 +67,11 @@
         <a onclick="showSearchAdvance('searchBasicField', 'searchAdvanceField', 'formFieldSearch_searchFromField', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.field')" /> </a><i class="icon-chevron-down"></i>
         <s:set name="valSel" value="selected"/> 
         <s:if test="%{#valSel.equals('lot')}">
-            <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.field')" /></s:a>
+            <s:a cssClass="btn btn-initial" href="/listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.field')" /></s:a>
         </s:if>
         <% if (entTypeId!=3) { %>
             <% if (valueField.equals("lot")) {%>
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportField.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.field')" /></s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/getReportField.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.field')" /></s:submit>
             <% } %>
         <% } %>
     </div>   
@@ -142,7 +142,7 @@
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFields" onCompleteTopics="completeField"><s:property value="getText('button.searchfield.field')" /> <i class="icon-search"></i></sj:submit>
             <s:if test="%{#valSel.equals('lot')}">
-                <s:a cssClass="btn btn-initial" href="listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.field')" /></s:a>
+                <s:a cssClass="btn btn-initial" href="/listField.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.field')" /></s:a>
             </s:if>
         </div>    
     </div>    

@@ -12,7 +12,7 @@
         <s:textfield cssClass="form-control" name="search_soil" placeholder="%{getText('text.searchsoil.report')}" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><i class="icon-search"></i></sj:submit>
         <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formRastaSearch_searchFromSoil', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.report')" /> </a><i class="icon-chevron-down"></i>
-        <s:a cssClass="btn btn-initial" href="listSoilRep.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.report')" /></s:a>
+        <s:a cssClass="btn btn-initial" href="/listSoilRep.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.report')" /></s:a>
     </div> 
     <div id="searchAdvanceSoil" class="hide">
         <div class="control-group">
@@ -102,7 +102,7 @@
         </div>         
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListRasta" onCompleteTopics="completeSearchSoil"><s:property value="getText('button.searchrasta.report')" /> <i class="icon-search"></i></sj:submit>
-            <s:a cssClass="btn btn-initial" href="listSoilRep.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.report')" /></s:a>
+            <s:a cssClass="btn btn-initial" href="/listSoilRep.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.report')" /></s:a>
         </div>
     </div>       
 </s:form>        

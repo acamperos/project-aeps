@@ -27,7 +27,7 @@
             </div> 
             <% if (valueFarm.equals("property")) {%>
                 <div class="span2">
-                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportFarm.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
+                    <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/getReportFarm.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
                 </div>
             <% } %>
         </div>
@@ -64,11 +64,11 @@
         <a onclick="showSearchAdvance('searchBasicFarm', 'searchAdvanceFarm', 'formFarmSearch_searchFromFarm', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.farm')" /> </a><i class="icon-chevron-down"></i>
         <s:set name="valSel" value="selected"/> 
         <s:if test="%{#valSel.equals('property')}">
-            <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.farm')" /></s:a>
+            <s:a cssClass="btn btn-initial" href="/listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.farm')" /></s:a>
         </s:if>     
         <% if (entTypeId!=3) { %>
             <% if (valueFarm.equals("property")) {%>
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportFarm.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/getReportFarm.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.farm')" /></s:submit>
             <% } %>
         <% } %>
     </div>   
@@ -149,7 +149,7 @@
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListFarms" onCompleteTopics="completeFarm"><s:property value="getText('button.searchfarm.farm')" /> <i class="icon-search"></i></sj:submit>
             <s:if test="%{#valSel.equals('property')}">
-                <s:a cssClass="btn btn-initial" href="listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.farm')" /></s:a>
+                <s:a cssClass="btn btn-initial" href="/listFarm.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.farm')" /></s:a>
             </s:if>
         </div>    
     </div>    

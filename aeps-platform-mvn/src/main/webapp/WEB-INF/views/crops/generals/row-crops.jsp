@@ -6,8 +6,8 @@
     <% } %>
 <% } %>
 <% if (value != "crop") {%>
-    <% if (value.equals("soil")) { %>
-        <td><img src="/img/check.ico"/></td>     
+    <% if (value.equals("soil") || value.equals("cropcheck")) { %>
+        <td><i class="icon-ok main-color"></i></td>     
     <% } %>
 <% }%>
 <% if (entTypeCropId==3) { %>    

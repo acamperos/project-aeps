@@ -1,19 +1,12 @@
 
 package org.aepscolombia.platform.controllers;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import org.aepscolombia.platform.models.dao.BeansDao;
-import org.aepscolombia.platform.models.dao.CassavasDao;
-import org.aepscolombia.platform.models.dao.ChemicalsSowingDao;
 import org.aepscolombia.platform.models.dao.ControlsDao;
-import org.aepscolombia.platform.models.dao.CropsTypesDao;
 import org.aepscolombia.platform.models.dao.DepartmentsDao;
-import org.aepscolombia.platform.models.dao.DescriptionsProductionEventDao;
 import org.aepscolombia.platform.models.dao.DocumentsTypesDao;
-import org.aepscolombia.platform.models.dao.DoseUnitsDao;
 import org.aepscolombia.platform.models.dao.EntitiesDao;
 import org.aepscolombia.platform.models.dao.FertilizationsDao;
 
@@ -21,59 +14,29 @@ import org.aepscolombia.platform.models.dao.LogEntitiesDao;
 import org.aepscolombia.platform.models.dao.FieldsDao;
 import org.aepscolombia.platform.models.dao.GenotypesDao;
 import org.aepscolombia.platform.models.dao.GenotypesSowingDao;
-import org.aepscolombia.platform.models.dao.GrowingEnvironmentDao;
-import org.aepscolombia.platform.models.dao.HarvestMethodsDao;
-import org.aepscolombia.platform.models.dao.HarvestsDao;
 import org.aepscolombia.platform.models.dao.IrrigationDao;
 import org.aepscolombia.platform.models.dao.MaizeDao;
-import org.aepscolombia.platform.models.dao.MonitoringDao;
 import org.aepscolombia.platform.models.dao.PhysiologicalMonitoringDao;
 import org.aepscolombia.platform.models.dao.PreparationsDao;
 import org.aepscolombia.platform.models.dao.ProductionEventsDao;
-import org.aepscolombia.platform.models.dao.ResidualsManagementDao;
-import org.aepscolombia.platform.models.dao.ResultingProductsDao;
-import org.aepscolombia.platform.models.dao.SeedsColorsDao;
-import org.aepscolombia.platform.models.dao.SeedsInoculationsDao;
-import org.aepscolombia.platform.models.dao.SeedsOriginsDao;
-import org.aepscolombia.platform.models.dao.SeedsTypesDao;
+import org.aepscolombia.platform.models.dao.RastasDao;
 import org.aepscolombia.platform.models.dao.SowingDao;
-import org.aepscolombia.platform.models.dao.SowingTypesDao;
 import org.aepscolombia.platform.models.dao.UsersDao;
 import org.aepscolombia.platform.models.entity.Beans;
-import org.aepscolombia.platform.models.entity.Cassavas;
-import org.aepscolombia.platform.models.entity.ChemicalsSowing;
-import org.aepscolombia.platform.models.entity.CropsTypes;
 import org.aepscolombia.platform.models.entity.Departments;
 import org.aepscolombia.platform.models.entity.DocumentsTypes;
-import org.aepscolombia.platform.models.entity.DoseUnits;
 import org.aepscolombia.platform.models.entity.Entities;
-import org.aepscolombia.platform.models.entity.Fields;
 import org.aepscolombia.platform.models.entity.Genotypes;
 import org.aepscolombia.platform.models.entity.GenotypesSowing;
-import org.aepscolombia.platform.models.entity.GrowingEnvironment;
-import org.aepscolombia.platform.models.entity.HarvestMethods;
-import org.aepscolombia.platform.models.entity.Harvests;
-
-import org.aepscolombia.platform.models.entity.LogEntities;
+import org.aepscolombia.platform.models.entity.HorizontesRasta;
 import org.aepscolombia.platform.models.entity.Maize;
 import org.aepscolombia.platform.models.entity.PhysiologicalMonitoring;
 import org.aepscolombia.platform.models.entity.ProductionEvents;
-import org.aepscolombia.platform.models.entity.ResultingProducts;
-import org.aepscolombia.platform.models.entity.SeedsColors;
-import org.aepscolombia.platform.models.entity.SeedsInoculations;
-import org.aepscolombia.platform.models.entity.SeedsOrigins;
-import org.aepscolombia.platform.models.entity.SeedsTypes;
+import org.aepscolombia.platform.models.entity.Rastas;
 import org.aepscolombia.platform.models.entity.Sowing;
-import org.aepscolombia.platform.models.entity.SowingTypes;
 import org.aepscolombia.platform.models.entity.Users;
 import org.aepscolombia.platform.util.APConstants;
-import org.aepscolombia.platform.util.HibernateUtil;
 
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 /**
  * Clase ActionCrop
@@ -112,6 +75,17 @@ public class ActionReport extends BaseAction {
     private Integer idUsrSystem;    
     private ProductionEvents event = new ProductionEvents();
     private UsersDao usrDao;
+    private RastasDao rastaDao   = new RastasDao();;
+    private Rastas rasta;
+    private FieldsDao lotDao    = new FieldsDao();
+    private HashMap fieldInfo;
+    private HashMap cropInfo;
+    private List<Genotypes> type_genotypes;
+    private List<GenotypesSowing> type_genotypes_sow;
+    private Sowing sowing = new Sowing();
+    private Maize maize   = new Maize();
+    private Beans beans   = new Beans();
+    private PhysiologicalMonitoring phys = new PhysiologicalMonitoring();
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -236,7 +210,147 @@ public class ActionReport extends BaseAction {
     public void setList_departments(List<Departments> list_departments) {
         this.list_departments = list_departments;
     }
+
+    public Rastas getRasta() {
+        return rasta;
+    }
+
+    public void setRasta(Rastas rasta) {
+        this.rasta = rasta;
+    }
+
+    public HashMap getFieldInfo() {
+        return fieldInfo;
+    }
+
+    public void setFieldInfo(HashMap fieldInfo) {
+        this.fieldInfo = fieldInfo;
+    }   
+
+    public HashMap getCropInfo() {
+        return cropInfo;
+    }
+
+    public void setCropInfo(HashMap cropInfo) {
+        this.cropInfo = cropInfo;
+    }   
     
+    private List<HorizontesRasta> additionalsAtrib; 
+
+    public List<HorizontesRasta> getAdditionalsAtrib() {
+        return additionalsAtrib;
+    }
+
+    public void setAdditionalsAtrib(List<HorizontesRasta> additionalsAtrib) {
+        this.additionalsAtrib = additionalsAtrib;
+    }
+    
+    private List<HashMap> lastCrops;
+
+    public List<HashMap> getLastCrops() {
+        return lastCrops;
+    }
+
+    public void setLastCrops(List<HashMap> lastCrops) {
+        this.lastCrops = lastCrops;
+    }   
+    
+    private List<HashMap> listPrep;
+
+    public List<HashMap> getListPrep() {
+        return listPrep;
+    }
+
+    public void setListPrep(List<HashMap> listPrep) {
+        this.listPrep = listPrep;
+    }   
+    
+    private List<HashMap> listIrr;
+
+    public List<HashMap> getListIrr() {
+        return listIrr;
+    }
+
+    public void setListIrr(List<HashMap> listIrr) {
+        this.listIrr = listIrr;
+    }   
+    
+    private List<HashMap> listFert;
+
+    public List<HashMap> getListFert() {
+        return listFert;
+    }
+
+    public void setListFert(List<HashMap> listFert) {
+        this.listFert = listFert;
+    }   
+    
+    private List<HashMap> listCont;
+
+    public List<HashMap> getListCont() {
+        return listCont;
+    }
+
+    public void setListCont(List<HashMap> listCont) {
+        this.listCont = listCont;
+    }   
+
+    public List<Genotypes> getType_genotypes() {
+        return type_genotypes;
+    }
+
+    public void setType_genotypes(List<Genotypes> type_genotypes) {
+        this.type_genotypes = type_genotypes;
+    }   
+    
+    public List<GenotypesSowing> getType_genotypes_sow() {
+        return type_genotypes_sow;
+    }
+
+    public void setType_genotypes_sow(List<GenotypesSowing> type_genotypes_sow) {
+        this.type_genotypes_sow = type_genotypes_sow;
+    }
+    
+    public Sowing getSowing() {
+        return sowing;
+    }
+
+    public void setSowing(Sowing sowing) {
+        this.sowing = sowing;
+    } 
+
+    public Maize getMaize() {
+        return maize;
+    }
+
+    public void setMaize(Maize maize) {
+        this.maize = maize;
+    }
+
+    public Beans getBeans() {
+        return beans;
+    }
+
+    public void setBeans(Beans beans) {
+        this.beans = beans;
+    }  
+
+    public PhysiologicalMonitoring getPhys() {
+        return phys;
+    }
+
+    public void setPhys(PhysiologicalMonitoring phys) {
+        this.phys = phys;
+    }   
+    
+    private PreparationsDao prepDao = new PreparationsDao();
+    private FertilizationsDao fertDao     = new FertilizationsDao();
+    private ControlsDao conDao    = new ControlsDao();
+    private SowingDao sowDao      = new SowingDao();
+    private BeansDao beansDao     = new BeansDao();
+    private MaizeDao maizeDao     = new MaizeDao();
+    private PhysiologicalMonitoringDao physDao     = new PhysiologicalMonitoringDao();
+    private IrrigationDao irrDao  = new IrrigationDao();
     
     /**
      * Atributos generales de clase
@@ -480,4 +594,54 @@ public class ActionReport extends BaseAction {
         return SUCCESS;
     }    
 
+    /**
+     * Encargado de generar el reporte de cropcheck a partir de un lote determinado
+     * @param idField: Id del Lote seleccionado
+     * @return lista de informacion correspondiente de cropcheck
+     */
+    public String viewCropcheck() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/list")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        
+        Integer idCrop;        
+        try {
+            idCrop = (Integer.parseInt(this.getRequest().getParameter("idCrop")));
+        } catch (NumberFormatException e) {
+            idCrop = (-1);
+        } 
+
+        if (idCrop!=-1) {
+            cropInfo         = cropDao.findById(idCrop);
+            Integer idField  = Integer.parseInt(String.valueOf(cropInfo.get("idField")));
+            Integer typeCrop = Integer.parseInt(String.valueOf(cropInfo.get("typeCrop")));
+            fieldInfo        = lotDao.findById(idField);
+            rasta            = rastaDao.getRastaByField(idField);
+            if (rasta!=null) {
+                additionalsAtrib = rastaDao.getHorizonRasta(rasta.getIdRas());
+                lastCrops        = lotDao.getLastCrops(idField);
+                HashMap findParams = new HashMap();
+                findParams.put("idEvent", idCrop);
+                findParams.put("coCode", coCode);
+                listPrep = prepDao.findByParams(findParams);
+                listFert = fertDao.findByParams(findParams);
+                type_genotypes = new GenotypesDao().findAllByTypeCrop(typeCrop, 0, coCode);
+                type_genotypes_sow = new GenotypesSowingDao().findAllByTypeCrop(typeCrop, coCode);
+                sowing = sowDao.objectById(idCrop);
+                beans  = beansDao.objectById(idCrop);
+                maize  = maizeDao.objectById(idCrop);
+                phys   = physDao.objectById(idCrop);
+                listCont = conDao.findByParams(findParams);
+                listIrr  = irrDao.findByParams(findParams);
+//                System.out.println("listCont=>"+listCont);
+//                System.out.println("listFert=>"+sowing.getGenotypesSowing().getIdGenSow());
+//                for(HashMap h : listFert) {
+//                    System.out.println("infoTex=>"+h);
+//                }
+            }
+        }        
+        
+        return SUCCESS;
+    }    
+    
 }

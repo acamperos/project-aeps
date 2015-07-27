@@ -66,13 +66,14 @@ public class FieldsDao
         
         sql += "select l.id_fie, l.id_farm_fie, l.contract_type_fie, l.name_fie, l.altitude_fie,";
         sql += " l.latitude_fie, l.longitude_fie, l.area_fie, l.status, lp.id_producer_fie_pro,";
-        sql += " e.name_ent, e.document_number_ent, e.document_type_ent, f.name_far";
+        sql += " e.name_ent, e.document_number_ent, e.document_type_ent, f.name_far,";
+        sql += " mun.name_mun, d.name_dep, f.name_commune_far";
         sql += " from fields l";
         sql += " inner join log_entities le on le.id_object_log_ent=l.id_fie and le.table_log_ent='fields' and le.action_type_log_ent='C'";   
-        sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";
+        sql += " inner join fields_producers lp on lp.id_field_fie_pro=l.id_fie";        
         sql += " left join farms f on f.id_far=l.id_farm_fie";
-//        sql += " left join municipios m on (m.id_mun=f.id_municipio_fin)";
-//        sql += " left join fincas_productores fp on fp.id_finca_fin_pro=f.id_fin"; 
+        sql += " left join municipalities mun on mun.id_mun=f.id_municipipality_far";
+        sql += " left join departments d on d.id_dep=mun.id_department_mun";
         sql += " inner join producers p on p.id_pro=lp.id_producer_fie_pro"; 
         sql += " inner join entities e on e.id_ent=p.id_entity_pro"; 
         sql += " where l.status=1 and f.status=1 and e.status=1";
@@ -105,6 +106,9 @@ public class FieldsDao
                 temp.put("no_doc_pro", data[11]);       
                 temp.put("type_doc_pro", data[12]);       
                 temp.put("name_farm", data[13]);       
+                temp.put("name_mun", data[14]);       
+                temp.put("name_dep", data[15]);       
+                temp.put("name_commune", data[16]);       
                 result = (temp);
             }
             tx.commit();
@@ -944,5 +948,49 @@ public class FieldsDao
         } 
         return state;
     }
+    
+    public List getLastCrops(Integer idField) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        List<Object[]> eventsTotal = null;
+        List<Object[]> events = null;
+        Transaction tx = null;
+        List<HashMap> result = new ArrayList<HashMap>();
+        
+        String sql = "";     
+        String sqlAdd = "";     
+        sql += "select l.id_fie, f.name_cro_typ";
+        sql += " from production_events ev";
+        sql += " inner join fields l on ev.id_field_pro_eve=l.id_fie";
+        sql += " inner join crops_types f on f.id_cro_typ=ev.former_crop_pro_eve";       
+        sql += " where l.status=1 and ev.status=1";
+        sql += " and l.id_fie="+idField;
+        sql += " order by l.name_fie ASC";
+        try {
+            tx = session.beginTransaction();
+            Query query  = session.createSQLQuery(sql);
+            events = query.list();     
+            
+            for (Object[] data : events) {
+                HashMap temp = new HashMap();
+                temp.put("id_lot", data[0]);
+                temp.put("crop_name", data[1]);
+                result.add(temp);
+            }
+//            System.out.println(result);
+//            for (HashMap datos : result) {
+//                System.out.println(datos.get("id_productor")+" "+datos.get("id_entidad")+" "+datos.get("cedula"));
+//            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
+    } 
     
 }

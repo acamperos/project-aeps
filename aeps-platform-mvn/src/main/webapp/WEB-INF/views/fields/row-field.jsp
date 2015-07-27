@@ -6,10 +6,8 @@
     <% }%>
 <% } %>
 <% if (value != "lot") {%>
-    <% if (value.equals("crop")) { %>
-        <td><img src="/img/check.ico"/></td>          
-    <% } else if (value.equals("rasta")) { %>
-        <td><img src="/img/check.ico"/></td>
+    <% if (value.equals("crop") || value.equals("rasta") || value.equals("cropcheck")) { %>
+        <td><i class="icon-ok main-color"></i></td>          
     <% } %>
 <% }%>
 <% if (entTypeFieId==3) { %>    

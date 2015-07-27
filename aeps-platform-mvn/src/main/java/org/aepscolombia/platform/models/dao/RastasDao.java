@@ -1,6 +1,5 @@
 package org.aepscolombia.platform.models.dao;
 
-import au.com.bytecode.opencsv.CSVWriter;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -10,7 +9,6 @@ import com.mongodb.WriteResult;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
@@ -40,6 +38,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.hibernate.Criteria;
 
 /**
  * Clase RastasDao
@@ -430,9 +429,12 @@ public class RastasDao
             tx = session.beginTransaction();
             String sql  = "select h.id_hor_ras, h.id_rasta_hor_ras, h.numero_horizonte_hor_ras, h.espesor_hor_ras,";
             sql += " h.color_seco_hor_ras, h.color_humedo_hor_ras, h.textura_hor_ras, h.resistencia_rompimiento_hor_ras,";
-            sql += " h.status, h.created_by";
-            sql += " from horizontes_rasta h where h.id_rasta_hor_ras = "+idRas;
-            Query query = session.createSQLQuery(sql).addEntity("h", HorizontesRasta.class);
+            sql += " h.status, h.created_by, r.id_res_rom, r.nombre_res_rom, t.id_tex, t.name_tex, t.prefix_tex";
+            sql += " from horizontes_rasta h";     
+            sql += " inner join textures t on t.id_tex = h.textura_hor_ras";
+            sql += " inner join resistencias_rompimiento r on r.id_res_rom = h.resistencia_rompimiento_hor_ras";
+            sql += " where h.id_rasta_hor_ras = "+idRas;     
+            Query query = session.createSQLQuery(sql).addEntity("h", HorizontesRasta.class).addJoin("t", "h.textures").addJoin("r", "h.resistenciasRompimiento").addEntity("h", HorizontesRasta.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 //            Query query = session.createQuery("from HorizontesRasta where Rastas = :id_ras");
 //            query.setParameter("id_ras", idRas);
 //            query.setParameter("id_ras", new Rastas(idRas));
@@ -461,6 +463,30 @@ public class RastasDao
             String hql  = "FROM Rastas E WHERE E.idRas = :id_ras";
             Query query = session.createQuery(hql);
             query.setParameter("id_ras", id);
+            event = (Rastas)query.uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return event;
+    }    
+    
+    public Rastas getRastaByField(Integer idField) {
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+
+        Rastas event = null;
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("from Rastas WHERE fields.idFie = :id_field");
+            query.setParameter("id_field", idField);
             event = (Rastas)query.uniqueResult();
             tx.commit();
         } catch (HibernateException e) {

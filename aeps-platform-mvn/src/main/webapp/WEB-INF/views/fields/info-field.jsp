@@ -36,6 +36,9 @@
     } else if (value.equals("rasta")) {
         divShow = "divRastaForm";
         divHide = "divListRastaForm";
+    } else if (value.equals("cropcheck")) {
+        divShow = "divCropForm";
+        divHide = "divListCropForm";
     } else {
         divHide = "divConListFields";
     }            
@@ -68,7 +71,7 @@
                     <% }%>
                 <% } %>
                 <% if (!value.equals("lot")) {%>
-                    <% if (value.equals("crop") || value.equals("rasta")) {%>
+                    <% if (value.equals("crop") || value.equals("rasta") || value.equals("cropcheck")) {%>
                         <th></th>
                     <% }%>
                 <% }%>
@@ -96,6 +99,9 @@
                     if (value.equals("crop")) { 
                         action = "selectItem('formCrop_nameField', 'formCrop_idField', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "','" + divShow + "', '" + divHide + "');";
                     } 
+                    if (value.equals("cropcheck")) { 
+                        action = "selectItemCropcheck('formCrop_nameField', 'formCrop_idField', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "');";
+                    } 
                     if (value.equals("rasta")) {
                         action = "selectItem('formRasta_nameField', 'formRasta_idField', '" + request.getAttribute("name_lot") + "', '" + request.getAttribute("id_lot") + "', '" + divShow + "', '" + divHide + "')";
                     }                 
@@ -118,7 +124,7 @@
     </div>
 </div>
 <div>
-    <% if (!value.equals("lot")) {%>
+    <% if (!value.equals("lot") && !value.equals("cropcheck")) {%>
         <button class="btn btn_per" onclick="toggleAndClean('<%=divShow%>', '<%=divHide%>')"><i class="icon-arrow-left"></i> <s:property value="getText('button.backoption')" /></button>
     <% }%>
 </div>

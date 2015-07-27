@@ -29,7 +29,7 @@
                 </div> 
             </div> 
             <div class="span2">
-                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportSoilChemical.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soilanalysis')" /></s:submit>
+                <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/soilchemical/getReportSoilChemical.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soilanalysis')" /></s:submit>
             </div>   
         </div>
         <script>
@@ -64,9 +64,9 @@
         <s:textfield cssClass="form-control" name="search_soil" placeholder="%{getText('text.searchsoil.soil')}" />
         <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListSoil" onCompleteTopics="completeSearchSoil"><i class="icon-search"></i></sj:submit>
         <a onclick="showSearchAdvance('searchBasicSoil', 'searchAdvanceSoil', 'formSoilSearch_searchFromSoil', 2)" class="radioSelect"><s:property value="getText('link.advancesearch.soilanalysis')" /> </a><i class="icon-chevron-down"></i>
-        <s:a cssClass="btn btn-initial" href="listSoilChemical.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soilanalysis')" /></s:a>
+        <s:a cssClass="btn btn-initial" href="/soilchemical/listSoilChemical.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soilanalysis')" /></s:a>
         <% if (entTypeId!=3) { %>
-            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('getReportSoilChemical.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soilanalysis')" /></s:submit>
+            <s:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess(); getReportXls('/soilchemical/getReportSoilChemical.action', 'selectAllname_agronomist', 'selectItemname_agronomist')"><i class="icon-file-text"></i> <s:property value="getText('button.dataexport.soilanalysis')" /></s:submit>
         <% } %>
     </div> 
     <div id="searchAdvanceSoil" class="hide">
@@ -149,7 +149,7 @@
         </div>    
         <div> 
             <sj:submit type="button" cssClass="btn btn-default" onclick="addMessageProcess()" targets="divConListSoil" onCompleteTopics="completeSearchSoil"><s:property value="getText('button.searchsoil.soilanalysis')" /> <i class="icon-search"></i></sj:submit>
-            <s:a cssClass="btn btn-initial" href="listSoilChemical.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soilanalysis')" /></s:a>
+            <s:a cssClass="btn btn-initial" href="/soilchemical/listSoilChemical.action" role="button" targets="divBodyLayout"><i class="icon-rotate-left"></i> <s:property value="getText('link.returnlist.soilanalysis')" /></s:a>
         </div>
     </div>       
 </s:form>

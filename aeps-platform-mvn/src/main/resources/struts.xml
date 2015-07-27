@@ -629,6 +629,18 @@
             <result name = "reportBox">/WEB-INF/views/reports/production_reportAgro.jsp</result>
             <result name = "reportDet">/WEB-INF/views/reports/production_reportPro.jsp</result>
         </action>
+        <action name="checkList">
+            <interceptor-ref name="defaultStackAeps"/>
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="viewAction"/>
+            <result name="page">/WEB-INF/views/generals/layoutPrivate.jsp</result>
+            <result>/WEB-INF/views/reports/view-check.jsp</result>
+        </action>
+        <action name="viewCropcheck" method="viewCropcheck" class="org.aepscolombia.platform.controllers.ActionReport">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="defaultStackAeps"/>    
+            <result>/WEB-INF/views/reports/data-cropcheck.jsp</result>
+        </action>
     </package>
     <package name="sowing" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="saveSowing" method="saveData" class="org.aepscolombia.platform.controllers.ActionSowing">
