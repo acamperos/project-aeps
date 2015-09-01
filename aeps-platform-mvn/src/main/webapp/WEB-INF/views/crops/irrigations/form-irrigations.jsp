@@ -64,7 +64,33 @@
                                             <span class="add-on"><i class="icon-calendar"></i></span>
                                         </div>                          
                                     </div>                          
-                                </div>       
+                                </div>   
+                                            <% if (coCode.equals("CO")) { %>
+
+                                            <div class="span5">
+                                                <div class="control-group">
+                                                    <label for="formCropIrr_irr_irrigationsTypes_idIrrTyp" class="control-label req">
+                                                        <s:property value="getText('select.irrtypes.irrigation')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:select
+                                                            name="irr.irrigationsTypes.idIrrTyp"
+                                                            list="type_irr_typ" 
+                                                            listKey="idIrrTyp" 
+                                                            listValue="nameIrrTyp"            
+                                                            headerKey="-1" 
+                                                            headerValue="---"
+                                                            onchange="showTypeIrrigations('formCropIrr_irr_irrigationsTypes_idIrrTyp', 'divcostsprinkling', 'divcostgravity', 'divMechanicCon', 'divMechanizedCon', 'divManualCon');
+                                                  chargeValuesIrrigations('/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'con.targetsTypes.idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
+                                                  hideInformationIrrigation('divNewObjControlPes', 'divNewObjControlWee', 'divNewObjControlDis', 'divNewProCheCon', 'divNewProOrgCon');"
+                                                            />
+                                                    </div>                         
+                                                </div>                          
+                                            </div>   
+                                            <% } %>
+                            
+                                
+                                            
                             </div>  
                             <% if (coCode.equals("NI")) { %>
                                 <div class="row">
@@ -111,26 +137,7 @@
                             </div>
                         </div> 
                         <% if (coCode.equals("CO")) { %>
-                            <div class="row">
-                                <div class="span5">
-                                    <div class="control-group">
-                                        <label for="formCropIrr_irr_irrigationsTypes_idIrrTyp" class="control-label req">
-                                            <s:property value="getText('select.irrtypes.irrigation')" />:
-                                        </label>
-                                        <div class="controls">
-                                            <s:select
-                                                name="irr.irrigationsTypes.idIrrTyp"
-                                                list="type_irr_typ" 
-                                                listKey="idIrrTyp" 
-                                                listValue="nameIrrTyp"            
-                                                headerKey="-1" 
-                                                headerValue="---"
-                                            />
-                                        </div>                         
-                                    </div>                          
-                                </div>   
-                            </div>
-                            <div class="row">
+                           <div class="row">
                                 <div class="span5">
                                     <div class="control-group">
                                         <label for="formCropIrr_irr_amountIrr" class="control-label">
@@ -140,9 +147,131 @@
                                             <s:textfield name="irr.amountIrr"/>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                           
+                                        
                             </div>
                         <% } %>
+                        <div id="costirrigation" >
+                        <fieldset>
+                             <legend><s:property value="getText('title.formirrigationcost.irrigation')" /></legend>
+                         <div class="row">
+                                <div class="span5">
+                                    <div class="control-group">
+                                        <label for="formCropIrr_irr_costwaterIrr" class="control-label">
+                                            <s:property value="getText('text.costwaterirr.irrigation')" />:
+                                        </label>
+                                        <div class="controls">
+                                            <s:textfield name="irr.costWaterIrr"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                                        
+                                <div class="span5">
+                                      <div class="control-group">
+                                          <label for="formCropIrr_irr_costworkforceIrr" class="control-label">
+                                              <s:property value="getText('text.costworkforceirr.irrigation')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                              <s:textfield name="irr.costWorkforceIrr"/>
+                                                    </div>
+                                      </div>
+                                </div>  
+                                        
+                        </div>
+                                                    
+                       <div id="divcostgravity" class="row">
+                                <div  class="span5">
+                                    <div class="control-group">
+                                        <label for="formCropIrr_irr_costditchesIrr" class="control-label">
+                                            <s:property value="getText('text.costditchesirr.irrigation')" />:
+                                        </label>
+                                        <div class="controls">
+                                            <s:textfield name="irr.costDitchesIrr"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                                        
+                                 <div  class="span5">
+                                      <div class="control-group">
+                                          <label for="formCropIrr_irr_costdrainageIrr" class="control-label">
+                                              <s:property value="getText('text.costdrainageirr.irrigation')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                              <s:textfield name="irr.costDrainageIrr"/>
+                                                    </div>
+                                      </div>
+                                </div>  
+                                        
+                        </div>
+                                                    
+                        <div id="divcostsprinkling" class="row">
+                                <div  class="span5">
+                                    <div class="control-group">
+                                        <label for="formCropIrr_irr_costfuelIrr" class="control-label">
+                                            <s:property value="getText('text.costfuelirr.irrigation')" />:
+                                        </label>
+                                        <div class="controls">
+                                            <s:textfield name="irr.costFuelIrr"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                                        
+                                 <div  class="span5">
+                                      <div class="control-group">
+                                          <label for="formCropIrr_irr_costelectricpowerIrr" class="control-label">
+                                              <s:property value="getText('text.costelectricpowerirr.irrigation')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:textfield name="irr.costElectricpowerIrr"/>
+                                                    </div>
+                                      </div>
+                                </div>  
+                                        
+                        </div>
+
+                                              <div class="row" >
+                                                  <div  class="span5">
+                                                      <div class="control-group">
+                                                          <label for="formCropIrr_rentedquestionIrr" class="control-label">
+                                                              <s:property value="getText('radio.rentedquestionirr.irrigation')" />:
+                                                          </label>
+                                                          <div class="controls radioSelect">
+                                                              <s:radio
+                                                                       name="irr.costRentedquestionIrr"
+                                                                       list="#{'true':'Alquilado', 'false':'Propio'}" 
+                                                                       onclick="showRentedquestionIrrigations('irr.costRentedquestionIrr', 'divcostown', 'divcostrented');"
+                                                                       />
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                          
+                                                              <div id="divcostown" class="span5">
+                                                                  <div class="control-group">
+                                                                      <label for="formCropIrr_irr_costdepreciationIrr" class="control-label">
+                                                                          <s:property value="getText('text.costdepreciationirr.irrigation')" />:
+                                                                      </label>
+                                                                      <div class="controls">
+                                                                          <s:textfield name="irr.costDepreciationIrr"/>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>  
+                                                              
+                                                              <div id="divcostrented" class="span5">
+                                                                  <div class="control-group">
+                                                                      <label for="formCropIrr_irr_costrentedIrr" class="control-label">
+                                                                          <s:property value="getText('text.costrentedirr.irrigation')" />:
+                                                                      </label>
+                                                                      <div class="controls">
+                                                                          <s:textfield name="irr.costRentedIrr"/>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>  
+
+                                                          
+                                              </div>
+                        </fieldset>                  
+                      </div>
+                        
                     </div>	
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
@@ -157,6 +286,8 @@
                         $("#formCropIrr_irr_durationIrr").val(parsePointSeparated($("#formCropIrr_irr_durationIrr").val())); 
                         $("#formCropIrr_irr_dateWetIrr").datepicker({dateFormat: 'mm/dd/yy', showOn: "focus"});
                         $("#formCropIrr_irr_dateWetIrr").mask("99/99/9999", {placeholder: " "});
+                        showTypeIrrigations('formCropIrr_irr_irrigationsTypes_idIrrTyp', 'divcostsprinkling', 'divcostgravity', 'divMechanicCon', 'divMechanizedCon', 'divManualCon');
+                        showRentedquestionIrrigations('irr.costRentedquestionIrr', 'divcostown', 'divcostrented');
                     </script>
                     <div id="divBtIrr">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>

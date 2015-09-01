@@ -72,6 +72,18 @@
                                 </div>
                             </div>
                         </div>
+                       
+                                <div id="costresiduals" class="control-group">
+
+                                    <label for="formCropRes_resMan_costResMan" class="control-label ">
+                                        <s:property value="getText('text.cost.residual')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="resMan.costResMan"/>
+                                    </div>
+
+                                </div>        
+                                
                     </div>	
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>

@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,7 @@ public class Preparations  implements java.io.Serializable {
     private Boolean useHillsPrep;
     private String otherPreparationTypePrep;
     private Integer passingsNumberPrep;
+    private BigDecimal costPrep;
     private Boolean status;
     private Integer createdBy;
 
@@ -44,7 +46,7 @@ public class Preparations  implements java.io.Serializable {
         this.datePrep = datePrep;
     }
     
-    public Preparations(ProductionEvents productionEvents, PreparationsTypes preparationsTypes, Date datePrep, Double depthPrep, Boolean useHillsPrep, String otherPreparationTypePrep, Integer passingsNumberPrep, Boolean status, Integer createdBy) {
+    public Preparations(ProductionEvents productionEvents, PreparationsTypes preparationsTypes, Date datePrep, Double depthPrep, Boolean useHillsPrep, String otherPreparationTypePrep, Integer passingsNumberPrep,BigDecimal costPrep, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.preparationsTypes = preparationsTypes;
        this.datePrep = datePrep;
@@ -52,6 +54,7 @@ public class Preparations  implements java.io.Serializable {
        this.useHillsPrep = useHillsPrep;
        this.otherPreparationTypePrep = otherPreparationTypePrep;
        this.passingsNumberPrep = passingsNumberPrep;
+       this.costPrep  = costPrep;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -132,6 +135,16 @@ public class Preparations  implements java.io.Serializable {
     public void setPassingsNumberPrep(Integer passingsNumberPrep) {
         this.passingsNumberPrep = passingsNumberPrep;
     }
+    
+    @Column(name="cost_prep")
+    public BigDecimal getCostPrep() {
+        return this.costPrep;
+    }
+    
+    public void setCostPrep(BigDecimal costPrep) {
+        this.costPrep = costPrep;
+    }
+    
     
     @Column(name="status")
     public Boolean getStatus() {

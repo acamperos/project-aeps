@@ -54,8 +54,9 @@
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
-                        </div>       
+                        </div>     
                     </div>
+                                     
                     <div class="row hide" id="divNewPasses">
                         <div class="span5">
                             <div class="control-group">
@@ -93,6 +94,18 @@
                             </div>
                         </div>
                     </div>
+                                    
+                     <div id="costpreparations" class="row ">
+
+                                        <label for="formCropPrep_prep_costPrep" class="control-label ">
+                                            <s:property value="getText('text.costpreparation.preparation')" />:
+                                        </label>
+                                        <div class="controls">
+                                            <s:textfield name="prep.costPrep"/>
+                                        </div>
+
+                    </div>  
+                                    
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
                         showOtherElementPrep($("#formCropPrep_prep_preparationsTypes_idPreTyp").val(), 'divNewPasses', 'divNewTypePrep');

@@ -165,6 +165,48 @@ function showTypeFertilizerControl(valSel, divShowA, divShowB, divShowC, divShow
     }
 }
 
+//function de costos gravedad o aspersion
+
+function showTypeIrrigations(valSel, divShowA, divShowB, divShowC, divShowD, divShowE) {
+    var valIng = $("#"+valSel).val();
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    } else if (valIng == 2 ) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    }  else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+        $("#" + divShowD).hide();
+        $("#" + divShowE).hide();
+    }
+}
+
+//function de costos equipo alquilado o propio
+
+function showRentedquestionIrrigations(valSendId, divShowA, divShowB) {
+    var valSend = $( "input[name='"+valSendId+"']:checked").val();
+    
+    if (valSend!=null) {
+        $('#' + divShowA).addClass("hide");
+        $('#' + divShowB).addClass("hide");
+        
+        if (valSend=='false'){
+            $('#' + divShowA).removeClass("hide");
+        } else if (valSend=='true'){
+            $('#' + divShowB).removeClass("hide");
+        } 
+    }else {$('#' + divShowA).addClass("hide");
+        $('#' + divShowB).addClass("hide");}
+}
 
 function showElementRate(valSel, divShow) {
 //    if (valSel == 1 || valSel == 4) {
@@ -543,7 +585,6 @@ function hideInformationControls(divPes, divWee, divDis, divChe, divOrg) {
 ﻿  $('#'+divChe).removeClass('hide').addClass('hide');
 ﻿  $('#'+divOrg).removeClass('hide').addClass('hide');
 }
-
 
 function changeOptionsHarvest(valSendId, divYield, divHumidity, divNumberSacks, lblNumberId, lblNumTextA, lblNumTextB, lblWeightId, lblWeightTextA, lblWeightTextB)
 {

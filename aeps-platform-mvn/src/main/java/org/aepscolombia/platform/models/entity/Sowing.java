@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +43,7 @@ public class Sowing  implements java.io.Serializable {
      private String freeSeedOriginSow;
      private String otherGenotypeSow;
      private String otherChemicalUsedSow;
+     private BigDecimal costSow;
      private Boolean status;
      private Integer createdBy;
 
@@ -54,7 +56,7 @@ public class Sowing  implements java.io.Serializable {
         this.dateSow = dateSow;
         this.treatedSeedsSow = treatedSeedsSow;
     }
-    public Sowing(Genotypes genotypes, DoseUnits doseUnits, TreatmentTypes treatmentTypes, ChemicalsSowing chemicalsSowing, ProductionEvents productionEvents, SowingTypes sowingTypes, GenotypesSowing genotypesSowing, SeedsOrigins seedsOrigins, Date dateSow, Integer seedsNumberSow, boolean treatedSeedsSow, String reasonTreatmentSow, Double seedTreatmentDosisSow, Double furrowsDistanceSow, Double sitesDistanceSow, String freeSeedOriginSow, String otherGenotypeSow, String otherChemicalUsedSow, Boolean status, Integer createdBy) {
+    public Sowing(Genotypes genotypes, DoseUnits doseUnits, TreatmentTypes treatmentTypes, ChemicalsSowing chemicalsSowing, ProductionEvents productionEvents, SowingTypes sowingTypes, GenotypesSowing genotypesSowing, SeedsOrigins seedsOrigins, Date dateSow, Integer seedsNumberSow, boolean treatedSeedsSow, String reasonTreatmentSow, Double seedTreatmentDosisSow, Double furrowsDistanceSow, Double sitesDistanceSow, String freeSeedOriginSow, String otherGenotypeSow, String otherChemicalUsedSow, BigDecimal costSow , Boolean status, Integer createdBy) {
        this.genotypes = genotypes;
        this.doseUnits = doseUnits;
        this.treatmentTypes = treatmentTypes;
@@ -73,6 +75,7 @@ public class Sowing  implements java.io.Serializable {
        this.freeSeedOriginSow = freeSeedOriginSow;
        this.otherGenotypeSow = otherGenotypeSow;
        this.otherChemicalUsedSow = otherChemicalUsedSow;
+       this.costSow =   costSow;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -249,6 +252,17 @@ public class Sowing  implements java.io.Serializable {
     public void setOtherChemicalUsedSow(String otherChemicalUsedSow) {
         this.otherChemicalUsedSow = otherChemicalUsedSow;
     }   
+    
+    @Column(name="cost_sow")
+    public BigDecimal getCostSow() {
+        return this.costSow;
+    }
+    
+    public void setCostSow(BigDecimal costSow) {
+        this.costSow = costSow;
+    }
+    
+    
     
     @Column(name="status")
     public Boolean getStatus() {

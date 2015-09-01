@@ -383,7 +383,21 @@
                     </div>
                 </div>
             </div>
+                   
         </div>
+                        <div id="costsowing" class="row ">
+                          <div class="span5">
+                           <div class="control-group">
+                            <label for="formCropSow_sowing_costSow" class="control-label ">
+                                <s:property value="getText('text.costsowing.crop')" />:
+                            </label>
+                            <div class="controls">
+                                <s:textfield name="sowing.costSow"/>
+                            </div>
+                          </div>
+                         </div>   
+                        </div>     
+                    
         <% if (entTypeSowId!=3) { %>
             <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
         <% } %>
