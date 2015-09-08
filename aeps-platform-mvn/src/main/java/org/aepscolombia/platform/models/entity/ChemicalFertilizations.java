@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,6 +30,10 @@ public class ChemicalFertilizations  implements java.io.Serializable {
      private Boolean status;
      private Integer createdBy;
      private Double amountProductUsedCheFer;
+     private BigDecimal costProductCheFer;
+     private Integer costFormAppCheFer;
+     private BigDecimal costAppCheFer;
+     
     
     public ChemicalFertilizations() {
     }
@@ -37,13 +42,18 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     public ChemicalFertilizations(Fertilizations fertilizations) {
         this.fertilizations = fertilizations;
     }
-    public ChemicalFertilizations(ChemicalFertilizers chemicalFertilizers, ApplicationTypes applicationTypes, Fertilizations fertilizations, Integer unitCheFer, String otherProductCheFer, Double amountProductUsedCheFer, Boolean status, Integer createdBy) {
+    public ChemicalFertilizations(ChemicalFertilizers chemicalFertilizers, ApplicationTypes applicationTypes, Fertilizations fertilizations, Integer unitCheFer, String otherProductCheFer, Double amountProductUsedCheFer, Boolean status, Integer createdBy, BigDecimal costProductCheFer, Integer costFormAppCheFer, BigDecimal costAppCheFer) {
        this.chemicalFertilizers = chemicalFertilizers;
        this.applicationTypes = applicationTypes;
        this.fertilizations = fertilizations;
        this.unitCheFer = unitCheFer;
        this.otherProductCheFer = otherProductCheFer;
        this.amountProductUsedCheFer = amountProductUsedCheFer;
+       
+       this.costProductCheFer   = costProductCheFer;
+       this.costFormAppCheFer   = costFormAppCheFer;
+       this.costAppCheFer   =   costAppCheFer;
+       
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -115,6 +125,34 @@ public class ChemicalFertilizations  implements java.io.Serializable {
         this.otherProductCheFer = otherProductCheFer;
     }
     
+    
+    @Column(name="cost_product_che_fer")
+    public BigDecimal getCostProductCheFer() {
+        return this.costProductCheFer;
+    }
+    
+    public void setCostProductCheFer(BigDecimal costProductCheFer) {
+        this.costProductCheFer = costProductCheFer;
+    }
+    
+    @Column(name="cost_form_app_che_fer")
+    public Integer getCostFormAppCheFer() {
+        return this.costFormAppCheFer;
+    }
+    
+    public void setCostFormAppCheFer(Integer costFormAppCheFer) {
+        this.costFormAppCheFer = costFormAppCheFer;
+    }
+     
+    @Column(name="cost_app_che_fer")
+    public BigDecimal getCostAppCheFer() {
+        return this.costAppCheFer;
+    }
+    
+    public void setCostAppCheFer(BigDecimal costAppCheFer) {
+        this.costAppCheFer = costAppCheFer;
+    }
+     
     @Column(name="status")
     public Boolean getStatus() {
         return this.status;

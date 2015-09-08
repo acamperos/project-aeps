@@ -45,7 +45,23 @@
                             />
                         </div>                         
                     </div>                          
-                </div>   
+                </div> 
+                        
+                         <div  class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <s:label for="formRowChemical_fer" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
+                                        <div class="controls">
+
+                                        <s:select
+                                            name="product_events_cost"
+                                            list="#{'1':'Manual', '2':'Mecanica','3':'Aerea'}"           
+                                            headerKey="-1" 
+                                            onchange="showOtherElement(this.value, 'prueba2')"
+                                            />
+
+                                    </div>
+                                </div> 
+                            </div>
             </div> 
             <% String classAppTyp="hide"; %>
             <s:set name="idAppTyp" value="%{#attr.applicationTypes.idAppTyp}"/>
@@ -75,6 +91,9 @@
                         </div>                         
                     </div>                          
                 </div> 
+                  
+                           
+                        
             </div> 
             <% String classNewProChe="hide"; %>
             <s:set name="idCheFer" value="%{#attr.chemicalFertilizers.idCheFer}"/>
@@ -162,7 +181,20 @@
                 </div>
             </div>
             <div class="row">
-                <div class="span5">
+                
+                 <div class="span5">
+                    <div class="control-group">
+                        <label for="${formCheId}__costAppCheFer" class="control-label">
+                            <s:property value="getText('text.costapp.fertilization')" />:
+                        </label>
+                        <div class="controls">
+                            <s:textfield name="%{#attr.formChe}.costAppCheFer" id="%{#attr.formCheId}__costAppCheFer" value="%{#attr.costAppCheFer}"/>
+                        </div>                         
+                    </div>                          
+                </div> 
+                
+                
+                <div class="span5" style="padding-left: 28px">
                     <div class="control-group">
                         <label for="${formCheId}__amountProductUsedCheFer" class="control-label req">
                             <s:property value="getText('text.amountproductchem.fertilization')" />:
@@ -172,7 +204,9 @@
                         </div>                         
                     </div>                          
                 </div>   
-                <div class="span5" style="padding-left: 28px">
+                 </div>       
+                  <div class="row">       
+                <div class="span5" >
                     <div class="control-group">
                         <label for="<%= request.getAttribute("formCheId") %>__unitCheFer" class="control-label req">
                             <s:property value="getText('select.unitchem.fertilization')" />:
@@ -200,7 +234,19 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                        
+                            <div class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="${formCheId}__costProductCheFer" class="control-label">
+                                        <s:property value="getText('text.costproduct.fertilization')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+                            </div> 
+                         </div>             
+            
             <script>	
                 var formCheId = '<%= request.getAttribute("formCheId") %>';
                 $("#"+formCheId+"__amountProductUsedCheFer").numeric({ negative: false });
