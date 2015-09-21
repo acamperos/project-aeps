@@ -31,6 +31,22 @@
                         </div>                         
                     </div>                          
                 </div> 
+                             <div   class="span5" style="padding-left: 28px">
+                             <div class="control-group">
+                                    <s:label for="formRowChemical_fer" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
+                                        <div class="controls">
+
+                                        <s:select
+                                            name="product_events_cost"
+                                            list="#{'0':'---','1':'Manual', '2':'Mecánica','3':'Aérea'}"           
+                                            headerKey="-1" 
+                                            
+                                            />
+
+                                    </div>
+                                     
+                                </div> 
+                              </div>
             </div> 
             <% String classNewProAme="hide"; %>
             <s:set name="idCheAme" value="%{#attr.formAmen}.amendmentsFertilizers.idAmeFer"/>
@@ -39,6 +55,8 @@
             </s:if> 
             <div class="<%= classNewProAme %>" id="divNewProAme">
                 <div class="row">
+                    
+                    
                     <div class="span5">
                         <div class="control-group">
                             <label for="${formAmenId}__otherProductAmeFer" class="control-label req">
@@ -52,7 +70,18 @@
                 </div>
             </div>                                        
             <div class="row">
+                
                 <div class="span5">
+                    <div class="control-group">
+                        <label for="${formCheId}__costAppCheFer" class="control-label">
+                            <s:property value="getText('text.costapp.fertilization')" />:
+                        </label>
+                        <div class="controls">
+                            <s:textfield name="%{#attr.formChe}.costAppCheFer" id="%{#attr.formCheId}__costAppCheFer" value="%{#attr.costAppCheFer}"/>
+                        </div>                         
+                    </div>                          
+                </div> 
+                <div class="span5" style="padding-left: 28px">
                     <div class="control-group">
                         <label for="${formAmenId}__amountProductUsedAmeFer" class="control-label req">
                             <s:property value="getText('text.amountproductamend.fertilization')" />:
@@ -62,10 +91,25 @@
                         </div>                         
                     </div>                          
                 </div>   
-                <div class="span2" style="padding-left:10px">
+             
+            </div>     
+                
+                <div class="row">
+                        <div class="span5" >
+                            <div class="control-group">
+                                <label for="${formCheId}__costProductCheFer" class="control-label">
+                                    <s:property value="getText('text.costproduct.fertilization')" />:
+                                </label>
+                                <div class="controls">
+                                    <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                </div>                         
+                            </div>                          
+                        </div> 
+                 <div class="span2" style="padding-left:10px">
                     <a class="btn btn-small delete_rows_dt" title="<s:property value="getText('link.removeamendfert.fertilization')" />" style="margin-bottom:1.2em" onclick="$('#RowAdditAme_<%= numRowsAmen %>').remove();"><i class="icon-trash"></i></a>
                 </div>
-            </div>            
+            </div>  
+                
             <script>	
                 var formAmenId = '<%= request.getAttribute("formAmenId") %>';
                 $("#"+formAmenId+"__amountProductUsedAmeFer").numeric({ negative: false });

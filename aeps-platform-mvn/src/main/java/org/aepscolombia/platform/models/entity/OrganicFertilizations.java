@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,6 +28,10 @@ public class OrganicFertilizations  implements java.io.Serializable {
      private Boolean status;
      private Integer createdBy;
      private Double amountProductUsedOrgFer;
+     private BigDecimal costProductOrgFer;
+     private Integer costFormAppOrgFer;
+     private BigDecimal costAppOrgFer;
+    
 
     public OrganicFertilizations() {
     }
@@ -35,11 +40,14 @@ public class OrganicFertilizations  implements java.io.Serializable {
     public OrganicFertilizations(Fertilizations fertilizations) {
         this.fertilizations = fertilizations;
     }
-    public OrganicFertilizations(OrganicFertilizers organicFertilizers, Fertilizations fertilizations, String otherProductOrgFer, Double amountProductUsedOrgFer, Boolean status, Integer createdBy) {
+    public OrganicFertilizations(OrganicFertilizers organicFertilizers, Fertilizations fertilizations, String otherProductOrgFer, Double amountProductUsedOrgFer, Boolean status, Integer createdBy,BigDecimal costProductOrgFer, Integer costFormAppOrgFer, BigDecimal costAppOrgFer) {
        this.organicFertilizers = organicFertilizers;
        this.fertilizations = fertilizations;
        this.otherProductOrgFer = otherProductOrgFer;
        this.amountProductUsedOrgFer = amountProductUsedOrgFer;
+       this.costProductOrgFer   = costProductOrgFer;
+       this.costFormAppOrgFer   = costFormAppOrgFer;
+       this.costAppOrgFer   =   costAppOrgFer;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -90,6 +98,35 @@ public class OrganicFertilizations  implements java.io.Serializable {
     public void setOtherProductOrgFer(String otherProductOrgFer) {
         this.otherProductOrgFer = otherProductOrgFer;
     }
+    
+    
+    @Column(name="cost_product_org_fer")
+    public BigDecimal getCostProductOrgFer() {
+        return this.costProductOrgFer;
+    }
+    
+    public void setCostProductOrgFer(BigDecimal costProductOrgFer) {
+        this.costProductOrgFer = costProductOrgFer;
+    }
+    
+    @Column(name="cost_form_app_org_fer")
+    public Integer getCostFormAppOrgFer() {
+        return this.costFormAppOrgFer;
+    }
+    
+    public void setCostFormAppOrgFer(Integer costFormAppOrgFer) {
+        this.costFormAppOrgFer = costFormAppOrgFer;
+    }
+     
+    @Column(name="cost_app_org_fer")
+    public BigDecimal getCostAppOrgFer() {
+        return this.costAppOrgFer;
+    }
+    
+    public void setCostAppOrgFer(BigDecimal costAppOrgFer) {
+        this.costAppOrgFer = costAppOrgFer;
+    }
+    
     
     @Column(name="status")
     public Boolean getStatus() {

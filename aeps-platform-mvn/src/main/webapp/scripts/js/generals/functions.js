@@ -8,20 +8,28 @@ function showOtherElement(valSel, divShow) {
     }
 }
 
-function showApplicationProduct(idAppTyp, idSel, divShowApp, divShowOther, divShowPer) {
+function showApplicationProduct(idAppTyp, idSel, divShowApp, divShowOther, divShowPer, divFormApp1, divFormApp2) {
     var valAppTyp = $('#'+idAppTyp).val();
+   
     if (valAppTyp==1) {
         $("#"+divShowApp).show();
+        $("#"+divFormApp1).show();
         $("#"+divShowOther).hide().removeClass("hide");
+        $("#"+divFormApp2).hide().removeClass("hide");
         $("#"+divShowPer).show();
     } else if (valAppTyp==2) {
+        
         $("#"+divShowApp).hide().removeClass("hide");
+         $("#"+divFormApp1).hide().removeClass("hide");
         $("#"+divShowOther).show();
+        $("#"+divFormApp2).show();
         $("#"+divShowPer).hide().removeClass("hide");
         $('#'+idSel).val(1000000);
     } else {
         $("#"+divShowApp).hide().removeClass("hide");
+        $("#"+divFormApp1).hide().removeClass("hide");
         $("#"+divShowOther).hide().removeClass("hide");
+         $("#"+divFormApp2).hide().removeClass("hide");
         $("#"+divShowPer).hide().removeClass("hide");
     }
 }
@@ -29,6 +37,7 @@ function showApplicationProduct(idAppTyp, idSel, divShowApp, divShowOther, divSh
 function showOtherElementChemical(idSel, idAppTyp, divShow) {
     var valSel = $('#'+idSel).val();
     var valAppTyp = $('#'+idAppTyp).val();
+    
     if (valAppTyp==2) {
         
     } else if (valSel == 1000000 && valAppTyp==1) {
@@ -167,7 +176,7 @@ function showTypeFertilizerControl(valSel, divShowA, divShowB, divShowC, divShow
 
 //function de costos gravedad o aspersion
 
-function showTypeIrrigations(valSel, divShowA, divShowB, divShowC, divShowD, divShowE) {
+function showTypeIrrigations(valSel, divShowA, divShowB, divShowC, divShowD, divShowE,divShowF) {
     var valIng = $("#"+valSel).val();
     if (valIng == 1) {
         $("#" + divShowA).show();
@@ -175,24 +184,139 @@ function showTypeIrrigations(valSel, divShowA, divShowB, divShowC, divShowD, div
         $("#" + divShowC).hide();
         $("#" + divShowD).hide();
         $("#" + divShowE).hide();
+        $("#" + divShowF).show();
     } else if (valIng == 2 ) {
         $("#" + divShowA).hide();
         $("#" + divShowB).show();
         $("#" + divShowC).hide();
         $("#" + divShowD).hide();
         $("#" + divShowE).hide();
+        $("#" + divShowF).hide();
+    } else if (valIng == 3 ) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).show();
+       // $("#" + divShowC).hide();
+//        $("#" + divShowD).hide();
+//        $("#" + divShowE).hide();
+//        $("#" + divShowF).hide();
     }  else {
         $("#" + divShowA).hide();
         $("#" + divShowB).hide();
         $("#" + divShowC).hide();
         $("#" + divShowD).hide();
         $("#" + divShowE).hide();
+        
+    }
+}
+
+
+//function de costos en formulario de cosecha (mecaniada o manual)
+         
+function showCostMethodsHarvest(valSel, divShowA, divShowB,divShowC) {
+    var valIng = $("#"+valSel).val();
+    
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        //$("#" + divShowC).hide();
+       
+    } else if (valIng == 2 ) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).hide();
+        
+    }  else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+      //  $("#" + divShowC).hide();
+       
+    }
+}
+
+//function de costos en formulario tipo de cosecha (granel o bulto)
+         
+function showCostTypeHarvest(valSel, divShowA, divShowB,divShowC) {
+    var valIng = $("#"+valSel).val();
+    
+    if (valIng == 1) {
+        $("#" + divShowA).show();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
+       
+    } else if (valIng == 2 ) {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).show();
+        $("#" + divShowC).show();
+        
+    }  else {
+        $("#" + divShowA).hide();
+        $("#" + divShowB).hide();
+        $("#" + divShowC).hide();
     }
 }
 
 //function de costos equipo alquilado o propio
 
 function showRentedquestionIrrigations(valSendId, divShowA, divShowB) {
+    var valSend = $( "input[name='"+valSendId+"']:checked").val();
+    
+    if (valSend!=null) {
+        $('#' + divShowA).addClass("hide");
+        $('#' + divShowB).addClass("hide");
+        
+        if (valSend=='false'){
+            $('#' + divShowA).removeClass("hide");
+        } else if (valSend=='true'){
+            $('#' + divShowB).removeClass("hide");
+        } 
+    }else {$('#' + divShowA).addClass("hide");
+        $('#' + divShowB).addClass("hide");}
+}
+
+//function de costo de almacenamiento en cosecha
+
+function showStorageHar(valSendId, divShowA) {
+    var valSend = $( "input[name='"+valSendId+"']:checked").val();
+    
+    if (valSend!=null) {
+        $('#' + divShowA).addClass("hide");
+       
+        
+        if (valSend=='false'){
+           $('#' + divShowA).addClass("hide");
+        } else if (valSend=='true'){
+            $('#' + divShowA).removeClass("hide");
+        } 
+    }else {$('#' + divShowA).addClass("hide");
+      }
+}
+
+//function de costo de si hubo resiembra? si/no
+
+function showReSowing(valSendId, divShowA,divShowB) {
+    var valSend = $( "input[name='"+valSendId+"']:checked").val();
+    
+    if (valSend!=null) {
+        $('#' + divShowA).addClass("hide");
+       $('#' + divShowB).addClass("hide");
+       
+        if (valSend=='false'){
+            $('#' + divShowA).removeClass("hide");
+            $('#' + divShowB).removeClass("hide");
+             $('#' + divShowA).addClass("hide");
+            
+        } else if (valSend=='true'){
+            $('#' + divShowB).removeClass("hide");
+            $('#' + divShowA).removeClass("hide");
+        } 
+    }else {$('#' + divShowA).addClass("hide");
+        $('#' + divShowB).addClass("hide");}
+}
+
+
+//function de costos en resiembra total/parcial?
+
+function showTypeReSowing(valSendId, divShowA, divShowB) {
     var valSend = $( "input[name='"+valSendId+"']:checked").val();
     
     if (valSend!=null) {

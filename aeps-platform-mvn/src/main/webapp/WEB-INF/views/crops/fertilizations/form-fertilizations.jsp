@@ -39,7 +39,24 @@
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
-                        </div>       
+                        </div>     
+                                    
+                             <div  id = "divQuestionCost"  class="span5" style="padding-left: 28px">
+                             <div class="control-group">
+                                    <s:label for="formCropFer_fer_question_cost" cssClass="control-label " value="%{getText('select.questioncost.fertilization')}:"></s:label>
+                                        <div class="controls">
+
+                                        <s:select
+                                            name="product_events_cost"
+                                            list="#{'0':'---','1':'Si', '2':'No'}"           
+                                            headerKey="-1" 
+                                            
+                                            />
+
+                                    </div>
+                                     
+                                </div> 
+                              </div>             
                     </div>
                     <% if (coCode.equals("NI")) { %>
                         <div class="row">

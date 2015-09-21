@@ -48,12 +48,10 @@ public class ChemicalFertilizations  implements java.io.Serializable {
        this.fertilizations = fertilizations;
        this.unitCheFer = unitCheFer;
        this.otherProductCheFer = otherProductCheFer;
-       this.amountProductUsedCheFer = amountProductUsedCheFer;
-       
+       this.amountProductUsedCheFer = amountProductUsedCheFer;       
        this.costProductCheFer   = costProductCheFer;
        this.costFormAppCheFer   = costFormAppCheFer;
-       this.costAppCheFer   =   costAppCheFer;
-       
+       this.costAppCheFer   =   costAppCheFer;       
        this.status = status;
        this.createdBy = createdBy;
     }

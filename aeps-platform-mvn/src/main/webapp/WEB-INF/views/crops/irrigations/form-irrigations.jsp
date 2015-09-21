@@ -80,7 +80,7 @@
                                                             listValue="nameIrrTyp"            
                                                             headerKey="-1" 
                                                             headerValue="---"
-                                                            onchange="showTypeIrrigations('formCropIrr_irr_irrigationsTypes_idIrrTyp', 'divcostsprinkling', 'divcostgravity', 'divMechanicCon', 'divMechanizedCon', 'divManualCon');
+                                                            onchange="showTypeIrrigations('formCropIrr_irr_irrigationsTypes_idIrrTyp', 'divcostsprinkling', 'divcostgravity', 'divMechanicCon', 'divMechanizedCon', 'divManualCon','divIrrRented');
                                                   chargeValuesIrrigations('/crop/comboControls.action?typeCrop=%{typeCrop}', 'idTarget', 'con.targetsTypes.idTarTyp', 'typeCon', 'formCropCon_con_controlsTypes_idConTyp', 'formCropCon_con_chemicalsControls_idCheCon', 'formCropCon_con_organicControls_idOrgCon', 'divMessage');
                                                   hideInformationIrrigation('divNewObjControlPes', 'divNewObjControlWee', 'divNewObjControlDis', 'divNewProCheCon', 'divNewProOrgCon');"
                                                             />
@@ -229,7 +229,7 @@
                                         
                         </div>
 
-                                              <div class="row" >
+                                              <div id="divIrrRented" class="row" >
                                                   <div  class="span5">
                                                       <div class="control-group">
                                                           <label for="formCropIrr_rentedquestionIrr" class="control-label">
@@ -286,7 +286,7 @@
                         $("#formCropIrr_irr_durationIrr").val(parsePointSeparated($("#formCropIrr_irr_durationIrr").val())); 
                         $("#formCropIrr_irr_dateWetIrr").datepicker({dateFormat: 'mm/dd/yy', showOn: "focus"});
                         $("#formCropIrr_irr_dateWetIrr").mask("99/99/9999", {placeholder: " "});
-                        showTypeIrrigations('formCropIrr_irr_irrigationsTypes_idIrrTyp', 'divcostsprinkling', 'divcostgravity', 'divMechanicCon', 'divMechanizedCon', 'divManualCon');
+                        showTypeIrrigations('formCropIrr_irr_irrigationsTypes_idIrrTyp', 'divcostsprinkling', 'divcostgravity', 'divMechanicCon', 'divMechanizedCon', 'divManualCon','divIrrRented');
                         showRentedquestionIrrigations('irr.costRentedquestionIrr', 'divcostown', 'divcostrented');
                     </script>
                     <div id="divBtIrr">

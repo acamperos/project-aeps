@@ -38,7 +38,9 @@
                             listKey="idHarMet" 
                             listValue="nameHarMet"            
                             headerKey="-1" 
-                            headerValue="---" />
+                            headerValue="---" 
+                            onclick="showCostMethodsHarvest('formCropHar_harv_harvestMethods_idHarMet', 'divcostmechanized', 'divcostmanual', 'divcostmanual3');"
+                            />
                     </div> 
                 </div>                                        
             </div>          
@@ -102,7 +104,11 @@
                         <s:property value="getText('radio.storagehar.harvest')" />:
                     </label>
                     <div class="controls radioSelect">
-                        <s:radio list="#{'true':'Si', 'false':'No'}" name="harv.storageHar" />
+                        <s:radio 
+                            list="#{'true':'Si', 'false':'No'}" 
+                            name="harv.storageHar"
+                            onclick="showStorageHar('harv.storageHar', 'divCostStorage', 'divcostrented');"
+                            />
                     </div>                         
                 </div>
             </div>
@@ -139,6 +145,9 @@
                 </div>					 
             </div>
         </s:if>
+        
+            
+            
         <div class="control-group">
             <label for="formCropHar_harv_commentHar" class="control-label" style="width: 175px">
                 <s:property value="getText('text.commentofyield.harvest')" />: 
@@ -147,9 +156,32 @@
                 <s:textarea rows="5" cssClass="span6" name="harv.commentHar"></s:textarea>
             </div>					 
         </div>	
-        <% if (entTypeHarId!=3) { %>    
-            <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
-        <% } %>
+
+        <div id ="divcosthar" class="row"> 
+                                            <div class="span5" >
+                                                <div class="control-group">
+                                                    <label for="costControlCon" class="control-label">
+                                                        <s:property value="getText('text.hervestpvp.harvest')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                    </div>                         
+                                                </div>                          
+                                            </div> 
+                                            <div class="span5" style="padding-left: 28px">
+                                                <div class="control-group">
+                                                    <label for="costControlCon" class="control-label">
+                                                        <s:property value="getText('text.hervestnamecliente.harvest')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                    </div>                         
+                                                </div>        
+
+                                            </div>
+
+         </div>
+            
         <script>
             changeOptionsHarvest('formCropHar_harv_resultingProducts_idResPro', 'divYield', 'divHumidity', 'divNumberSacks', 'harvNumberSacks', 'Numero de bulto (ha):', 'Numero de bolsas:', 'harvWeightAvg', 'Peso promedio de un bulto (kg/bulto):', 'Peso promedio de la bolsa:');
             $("#formCropHar_harv_dateHar").datepicker({dateFormat: 'mm/dd/yy'});
@@ -164,8 +196,209 @@
             $("#formCropHar_harv_humidityPercentageHar").val(parsePointSeparated($("#formCropHar_harv_humidityPercentageHar").val())); 
 //            $("#formCropHar_harv_weightAvgSacksSow").val(parsePointSeparated($("#formCropHar_harv_weightAvgSacksSow").val())); 
 //            $("#formCropHar_harv_loadHectareSow").val(parsePointSeparated($("#formCropHar_harv_loadHectareSow").val())); 
+            showCostMethodsHarvest('formCropHar_harv_harvestMethods_idHarMet', 'divcostmechanized', 'divcostmanual');
         </script>
     </fieldset>
+        
+   <fieldset>
+        <legend><s:property value="getText('title.formharvestcost.harvest')" /></legend>
+        <div class="row"> 
+             <div class="span5" >
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcostpacking.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+           </div> 
+                                    
+                <div class="span5" style="padding-left: 28px">
+                                    <s:label for="formCropHar_harv_harvestType_idHarTyp" cssClass="control-label " value="%{getText('select.harvesttype.harvest')}:"></s:label>
+                                        <div class="controls">
+
+                                        <s:select
+                                            name="harv.harvestType.idHarTyp"                                           
+                                            list="#{'0':'---','1':'Granel', '2':'Bulto'}"     
+                                           
+                                            onclick="showCostTypeHarvest('formCropHar_harv_harvestType_idHarTyp', 'divcostgranel', 'divcostbulto','divcostmanual3');"
+                                         />
+
+                                    </div>
+                                     
+                    </div> 
+             
+        </div>
+            
+              
+                                        <div id ="divcostgranel" class="row"> 
+                                            <div class="span5" >
+                                                <div class="control-group">
+                                                    <label for="costControlCon" class="control-label">
+                                                        <s:property value="getText('text.hervestcosttractor.harvest')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                    </div>                         
+                                                </div>                          
+                                            </div> 
+                                            <div class="span5" style="padding-left: 28px">
+                                                <div class="control-group">
+                                                    <label for="costControlCon" class="control-label">
+                                                        <s:property value="getText('text.hervestcosttrailer.harvest')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                    </div>                         
+                                                </div>        
+
+                                            </div>
+
+                                        </div>                
+                                                    
+                                      <div id ="divcostbulto" class="row"> 
+                                            <div class="span5" >
+                                                <div class="control-group">
+                                                    <label for="costControlCon" class="control-label">
+                                                        <s:property value="getText('text.hervestcostzorreo.harvest')" />:
+                                                    </label>
+                                                    <div class="controls">
+                                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                    </div>                         
+                                                </div>                          
+                                            </div> 
+                                         
+
+                                        </div> 
+                                        
+            <div id ="divcostmechanized" class="row" >
+                                      <div class="span5" >
+                                            <div class="control-group">
+                                                <label for="costControlCon" class="control-label">
+                                                    <s:property value="getText('text.hervestcost.harvest')" />:
+                                                </label>
+                                                <div class="controls">
+                                                    <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                </div>                         
+                                        </div>  
+                                      </div>
+                                                    <div id="divCostStorage" >      
+                                                        <div class="span5" style="padding-left: 28px">
+                                                            <div class="control-group">
+                                                                <label for="costControlCon" class="control-label">
+                                                                    <s:property value="getText('text.hervestcoststorage.harvest')" />:
+                                                                </label>
+                                                                <div class="controls">
+                                                                    <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                                                </div>                         
+                                                            </div>        
+
+                                                        </div>
+                                                    </div>
+
+            </div> 
+          <div id ="divcostmanual" >                                        
+          <div id ="divcostmanual0" class="row"> 
+             <div class="span5" >
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcostworkforce.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+           </div> 
+             <div class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcosttrasportsd.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>        
+
+            </div> 
+        </div>
+        <div id ="divcostmanual1" class="row"> 
+             <div class="span5" >
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcostdesgranadora.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+           </div> 
+             <div class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcostdesgranadoraworkforce.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>        
+
+            </div> 
+        </div>
+        <div id ="divcostmanual2" class="row"> 
+             <div class="span5" >
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcostcabuya.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+           </div> 
+             <div class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcosttransport.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>        
+
+            </div> 
+        </div>
+                             
+       </div>        
+                                                               
+           <div id ="divcostmanual3" class="row"> 
+             <div class="span5" >
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcostcabuya.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+           </div> 
+             <div class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.hervestcosttransport.harvest')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>        
+
+            </div> 
+        </div>   
+        <% if (entTypeHarId!=3) { %>    
+            <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
+        <% } %>                              
+   </fieldset>      
+        
     <div style="margin-bottom: 15px" id="divBtHarvest">
         <% String actExeHar   = String.valueOf(request.getAttribute("actExe")); %>
         <% if ((actExeHar=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeHar=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
@@ -179,4 +412,7 @@
     $.subscribe('completeHarvest', function(event, data) {
         completeFormCrop('', 'formCropHar', 'divMessHarvest', event.originalEvent.request.responseText);
     });
+    showCostTypeHarvest('formCropHar_harv_harvestType_idHarTyp', 'divcostgranel', 'divcostbulto','divcostmanual3');
+    showCostMethodsHarvest('formCropHar_harv_harvestMethods_idHarMet', 'divcostmechanized', 'divcostmanual','divcostmanual3');
+    showStorageHar('harv.storageHar', 'divCostStorage', 'divcostrented');
 </script>

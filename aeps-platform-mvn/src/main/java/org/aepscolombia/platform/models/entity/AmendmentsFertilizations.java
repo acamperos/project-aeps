@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,9 @@ public class AmendmentsFertilizations  implements java.io.Serializable {
      private AmendmentsFertilizers amendmentsFertilizers;
      private String otherProductAmeFer;
      private Double amountProductUsedAmeFer;
+     private BigDecimal costProductAmeFer;
+     private Integer costFormAppAmeFer;
+     private BigDecimal costAppAmeFer;
      private Boolean status;
      private Integer createdBy;
 
@@ -35,11 +39,14 @@ public class AmendmentsFertilizations  implements java.io.Serializable {
     public AmendmentsFertilizations(Fertilizations fertilizations) {
         this.fertilizations = fertilizations;
     }
-    public AmendmentsFertilizations(Fertilizations fertilizations, AmendmentsFertilizers amendmentsFertilizers, String otherProductAmeFer, Double amountProductUsedAmeFer, Boolean status, Integer createdBy) {
+    public AmendmentsFertilizations(Fertilizations fertilizations, AmendmentsFertilizers amendmentsFertilizers, String otherProductAmeFer, Double amountProductUsedAmeFer, Boolean status, Integer createdBy,BigDecimal costProductAmeFer, Integer costFormAppAmeFer, BigDecimal costAppAmeFer) {
        this.fertilizations = fertilizations;
        this.amendmentsFertilizers = amendmentsFertilizers;
        this.otherProductAmeFer = otherProductAmeFer;
        this.amountProductUsedAmeFer = amountProductUsedAmeFer;
+       this.costProductAmeFer   = costProductAmeFer;
+       this.costFormAppAmeFer   = costFormAppAmeFer;
+       this.costAppAmeFer   =   costAppAmeFer;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -90,6 +97,33 @@ public class AmendmentsFertilizations  implements java.io.Serializable {
     public void setOtherProductAmeFer(String otherProductAmeFer) {
         this.otherProductAmeFer = otherProductAmeFer;
     }
+    
+    @Column(name="cost_product_ame_fer")
+    public BigDecimal getCostProductAmeFer() {
+        return this.costProductAmeFer;
+    }
+    
+    public void setCostProductAmeFer(BigDecimal costProductAmeFer) {
+        this.costProductAmeFer = costProductAmeFer;
+    }
+    
+    @Column(name="cost_form_app_ame_fer")
+    public Integer getCostFormAppAmeFer() {
+        return this.costFormAppAmeFer;
+    }
+    
+    public void setCostFormAppAmeFer(Integer costFormAppAmeFer) {
+        this.costFormAppAmeFer = costFormAppAmeFer;
+    }
+     
+    @Column(name="cost_app_ame_fer")
+    public BigDecimal getCostAppAmeFer() {
+        return this.costAppAmeFer;
+    }
+    
+    public void setCostAppAmeFer(BigDecimal costAppAmeFer) {
+        this.costAppAmeFer = costAppAmeFer;
+    }    
     
     @Column(name="status")
     public Boolean getStatus() {

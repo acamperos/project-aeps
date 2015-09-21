@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="org.aepscolombia.platform.models.entity.ChemicalElements"%>
@@ -39,35 +40,64 @@
                                 headerKey="-1" 
                                 headerValue="---"
                                 onchange="showOtherElementChemical('%{#attr.formCheId}__chemicalFertilizers_idCheFer', '%{#attr.formCheSel}__applicationTypes_idAppTyp', 'divNewProQui%{#counter}')
-                                showApplicationProduct('%{#attr.formCheId}__applicationTypes_idAppTyp', '%{#attr.formCheId}__chemicalFertilizers_idCheFer', 'divAppProduct%{#counter}', 'divNewProQui%{#counter}', 'divPerEda%{#counter}');
+                                showApplicationProduct('%{#attr.formCheId}__applicationTypes_idAppTyp', '%{#attr.formCheId}__chemicalFertilizers_idCheFer', 'divAppProduct%{#counter}', 'divNewProQui%{#counter}', 'divPerEda%{#counter}','divValAppTyp1%{#counter}','divValAppTyp2%{#counter}');
                                 changeChemicalFoliar('%{#attr.formCheId}__applicationTypes_idAppTyp', '%{#attr.formCheId}_otherProductCheFerLbl', 'Cual fue el producto')
                                 "
                             />
                         </div>                         
                     </div>                          
-                </div> 
-                        
-                         <div  class="span5" style="padding-left: 28px">
-                                <div class="control-group">
-                                    <s:label for="formRowChemical_fer" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
-                                        <div class="controls">
-
-                                        <s:select
-                                            name="product_events_cost"
-                                            list="#{'1':'Manual', '2':'Mecanica','3':'Aerea'}"           
-                                            headerKey="-1" 
-                                            onchange="showOtherElement(this.value, 'prueba2')"
-                                            />
-
-                                    </div>
-                                </div> 
-                            </div>
-            </div> 
+                </div>       
+            <% String classNewProChe="hide"; %>
+            <s:set name="idCheFer" value="%{#attr.chemicalFertilizers.idCheFer}"/>
+            <s:if test="%{#idCheFer==1000000 || #idAppTyp==2}">
+                <% classNewProChe = "";%>
+            </s:if> 
+            
             <% String classAppTyp="hide"; %>
             <s:set name="idAppTyp" value="%{#attr.applicationTypes.idAppTyp}"/>
             <s:if test="%{#idAppTyp==1}">
                 <% classAppTyp = "";%>
             </s:if> 
+                     <div class="span5">    
+                           <div  id = "divValAppTyp1<%= (numRowsChe-1) %>"  class="<%= classAppTyp %>" style="padding-left: 28px">
+                             <div class="control-group">
+                                    <s:label for="formRowChemical_fer" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
+                                        <div class="controls">
+
+                                        <s:select
+                                            name="product_events_cost"
+                                            list="#{'0':'---','1':'Manual', '2':'Mecánica'}"           
+                                            headerKey="-1" 
+                                            
+                                            />
+
+                                    </div>
+                                     
+                                </div> 
+                              </div>
+                           
+                           
+                                <div  id = "divValAppTyp2<%= (numRowsChe-1) %>"  class=" <%=classNewProChe%>" style="padding-left: 28px">
+                              
+                                <div class="control-group">
+                                    <s:label for="formRowChemical_fer2" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
+                                        <div class="controls">
+
+                                        <s:select
+                                            name="product_events_cost"
+                                            list="#{'0':'---','3':'Aérea'}"           
+                                            headerKey="-1" 
+                                            
+                                            />
+
+                                    </div>
+                                     
+                                </div> 
+                              </div> 
+                            </div>
+                </div>
+            </div> 
+           
             <div class="row <%= classAppTyp %>" id="divAppProduct<%= (numRowsChe-1) %>">
                 <div class="span5">
                     <s:hidden name="%{#attr.formChe}.idCheFer"/>
@@ -91,15 +121,9 @@
                         </div>                         
                     </div>                          
                 </div> 
-                  
-                           
                         
             </div> 
-            <% String classNewProChe="hide"; %>
-            <s:set name="idCheFer" value="%{#attr.chemicalFertilizers.idCheFer}"/>
-            <s:if test="%{#idCheFer==1000000 || #idAppTyp==2}">
-                <% classNewProChe = "";%>
-            </s:if> 
+           
             <div class="<%= classNewProChe %>" id="divNewProQui<%= (numRowsChe-1) %>">
                 <div class="row">
                     <div class="span5">

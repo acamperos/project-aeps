@@ -36,7 +36,9 @@
                                     <span class="add-on"><i class="icon-calendar"></i></span>
                                 </div>                          
                             </div>                          
-                        </div>       
+                        </div>  
+                                    
+                           
                     </div>
                     <div class="row">
                         <div class="span5">
@@ -404,7 +406,54 @@
                             </div>
                         </div>
                     </div>
-                    <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
+                   
+                    </fieldset>
+                    <fieldset>
+                    <legend><s:property value="getText('title.controlcostform.crop')" /></legend>  
+                    <div class="row">
+                          <div class="span5" >
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.controlcost.crop')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+                            </div> 
+                                    
+                           <div class="span5" style="padding-left: 28px">
+                                <div class="control-group">
+                                    <label for="costControlCon" class="control-label">
+                                        <s:property value="getText('text.controlcostapp.crop')" />:
+                                    </label>
+                                    <div class="controls">
+                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    </div>                         
+                                </div>                          
+                            </div> 
+                        
+                    </div>
+                                        <div class="row">
+                                            <div class="span5" >
+                                                <div class="control-group">
+                                                    <s:label for="formControl_costapptype" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
+                                                        <div class="controls">
+
+                                                        <s:select
+                                                            name="controls_typeapp_cost"
+                                                            list="#{'0':'---','1':'Manual', '2':'Mecánica','3':'Aérea'}"           
+                                                            headerKey="-1" 
+
+                                                            />
+
+                                                    </div>
+
+                                                </div> 
+                                            </div> 
+                                        </div> 
+                    </fieldset>
+                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
                         $("#formCropCon_con_dateCon").datepicker({dateFormat: 'mm/dd/yy'});
                         $("#formCropCon_con_dateCon").mask("99/99/9999", {placeholder: " "});
@@ -421,7 +470,7 @@
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropCon'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
                     </div>
-                </fieldset>
+                
             </s:form>﻿  
             <script>                
                 $.ui.dialog.prototype._focusTabbable = function(){};
