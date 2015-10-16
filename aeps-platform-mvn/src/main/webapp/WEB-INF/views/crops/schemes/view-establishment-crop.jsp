@@ -1,42 +1,43 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
+<% Integer entTypeSowId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+
+<div id="divMessSowing"></div>
+<s:form id="formCropSow" action="saveSowing" cssClass="form-horizontal">
 <% if (coCode.equals("CO")) { %>
     <div id="divListRes">
         <%@ include file="../residuals/info-residuals.jsp" %>            
     </div>
-    <div class="row">
-                        <div class="span5">
+    <%--  <div class="row">
+                        <div class="span5" >
                             <div class="control-group">
-                                <label for="formCropDes_desPro_obsDesPro" class="control">
+                                <label for="formCropSow_event_commentResidualsProEve"  class="control" style="width: 175px">
                                    Observaciones en manejo de rastrojos 
                                 </label>
-                                <div class="controls">
-                                    <s:textarea rows="5" name="desPro.obsDesPro"></s:textarea>
+                                <div class="controls " >
+                                    <s:textarea rows="5" cssClass="span6" name="event.commentResidualsProEve"></s:textarea>
                                 </div> 
                             </div>                          
                         </div>     
-   </div>
+   </div>--%>
 <% } %>
 <div id="divListPrep">
     <%@ include file="../preparations/info-preparations.jsp" %>            
 </div>
-    <div class="row">
+    <%-- <div class="row">
                         <div class="span5">
                             <div class="control-group">
-                                <label for="formCropDes_desPro_obsDesPro" class="control">
+                                <label for="formCropSow_event_commentPreparationsProEve"  class="control">
                                    Observaciones en preparaciones
                                 </label>
                                 <div class="controls">
-                                    <s:textarea rows="5" name="desPro.obsDesPro"></s:textarea>
+                                    <s:textarea rows="5" cssClass="span6" name="event.commentPreparationsProEve"></s:textarea>
                                 </div> 
                             </div>                          
                         </div>     
-   </div>
-<%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
-<% Integer entTypeSowId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
+   </div>--%>
 <hr class="divider-inner-separator">
-<div id="divMessSowing"></div>
-<s:form id="formCropSow" action="saveSowing" cssClass="form-horizontal">
     <fieldset>
         <legend><s:property value="getText('title.formsowing.crop')" /></legend>    
         <div class="row">
@@ -125,11 +126,11 @@
                     
            <div class="span4" style="padding-left: 28px">
                                 <div class="control-group">
-                                    <label for="costControlCon" class="control-label">
+                                    <label for="formCropSow_sowing_costSeedSow" class="control-label">
                                        Costo de la semilla (Ha.):
                                     </label>
                                     <div class="controls">
-                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                       <s:textfield name="sowing.costSeedSow"/>
                                     </div>                         
                                 </div>                          
            </div> 
@@ -439,7 +440,7 @@
                             </div>
                           </div>
                          </div>   
-                                <div class="span4" style="padding-left: 28px">
+                                <%--<div class="span4" style="padding-left: 28px">
                                     <div class="control-group">
                                         <label for="formCropHar_harv_storageHar" class="control-label">
                                             Hubo resiembra?:
@@ -452,11 +453,11 @@
                                                 />
                                         </div>                         
                                     </div>
-                                </div>
+                                </div>--%>
                           
    
                         </div>     
-                  <div  id="divNoReSow">                               
+                 <%-- <div  id="divNoReSow">                               
                   <div   class="row ">                     
                         <div  id="divYesReSow" >
                           <div class="span5">
@@ -481,8 +482,8 @@
                                                         Observaciones de la resiembra total:
                                                     </label>
                                                     <div class="controls">
-                                                        <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
-                                                    </div>                         
+                                                    <s:textarea rows="5" name="desPro.obsDesPro"></s:textarea>
+                                                     </div>                         
                                  </div>  
                                 </div>
                                </div>
@@ -525,27 +526,30 @@
                         </div> 
                      </div>     
                    </div>     
-                   </div>   
+                   </div> --%>
                
                    <div  class="row ">
                           <div class="span5">
                            <div class="control-group">
-                               <label for="formCropDes_desPro_obsDesPro" class="control-label">
+                               <label for="formCropSow_sowing_commentSow" class="control-label">
                                    Observaciones en la simbra
                                 </label>
                                 <div class="controls">
-                                    <s:textarea rows="5" name="desPro.obsDesPro"></s:textarea>
+                                    <s:textarea rows="5" cssClass="span6" name="sowing.commentSow"></s:textarea>
                                 </div> 
                             </div>                          
                         </div>     
                      </div>     
-                    
+                  
         <% if (entTypeSowId!=3) { %>
             <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
         <% } %>
-        <script>
+        <script >
+            
             $("#formCropSow_sowing_dateSow").datepicker({dateFormat: 'mm/dd/yy'});
-            $("#formCropSow_sowing_dateSow").mask("99/99/9999", {placeholder: " "});
+            $("#formCropSow_sowing_dateSow").mask("99/99/9999", {placeholder: " "});           
+            $("#formCropSow_sowing_costSeedSow").maskMoney({suffix: ' $'});              
+            $("#formCropSow_sowing_costSow").maskMoney({suffix: ' $'});
             $("#formCropSow_event_expected_production_pro_eve").numeric({negative: false});
             showReSowing('sow.resow', 'divNoReSow','divYesReSow');
             showTypeReSowing('sow.typeresow', 'divReSowPartial','divReSowTotal');
@@ -565,13 +569,26 @@
 <% if ((actExeSow=="create" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExeSow=="modify" && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
     <% if (entTypeSowId!=3) { %>
         <div style="margin-bottom: 15px" id="divBtSowing">
-            <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropSow'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.sowingsave.crop')" /></sj:submit>
+            <sj:submit type="button" formIds="formCropSow" cssClass="btn btn-initial btn-large" onclick="removeMask(); addMessageProcess()" targets="divMessage" onCompleteTopics="completeSowing" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.sowingsave.crop')" /></sj:submit>
         </div>
     <% } %>
 <% } %>
 <script>
     $.subscribe('completeSowing', function(event, data) {
+        
+         $("#formCropSow_sowing_costSeedSow").maskMoney({suffix: ' $'});   
+         $("#formCropSow_sowing_costSow").maskMoney({suffix: ' $'});
         completeFormCrop('', 'formCropSow', 'divMessSowing', event.originalEvent.request.responseText);
+        
+        
     });
-   
+    
+   function removeMask() {
+       
+            $("#formCropSow_sowing_costSeedSow").maskMoney({thousands:"", decimal:'.'});
+            $("#formCropSow_sowing_costSeedSow").maskMoney('mask');
+            $("#formCropSow_sowing_costSow").maskMoney({thousands:"", decimal:'.'});
+            $("#formCropSow_sowing_costSow").maskMoney('mask');
+  
+    };
 </script>

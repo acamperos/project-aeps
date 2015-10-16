@@ -418,6 +418,7 @@
         <% String logSel = String.valueOf(request.getParameter("logSel"));%>
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.maskMoney.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>
         <script type="text/javascript" src="scripts/js/colorbox/jquery.colorbox.min.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/pwdMeter/jquery.pwdMeter.min.js"></script>

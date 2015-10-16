@@ -44,6 +44,8 @@ public class Sowing  implements java.io.Serializable {
      private String otherGenotypeSow;
      private String otherChemicalUsedSow;
      private BigDecimal costSow;
+     private BigDecimal costSeedSow;
+     private String commentSow;
      private Boolean status;
      private Integer createdBy;
 
@@ -56,7 +58,7 @@ public class Sowing  implements java.io.Serializable {
         this.dateSow = dateSow;
         this.treatedSeedsSow = treatedSeedsSow;
     }
-    public Sowing(Genotypes genotypes, DoseUnits doseUnits, TreatmentTypes treatmentTypes, ChemicalsSowing chemicalsSowing, ProductionEvents productionEvents, SowingTypes sowingTypes, GenotypesSowing genotypesSowing, SeedsOrigins seedsOrigins, Date dateSow, Integer seedsNumberSow, boolean treatedSeedsSow, String reasonTreatmentSow, Double seedTreatmentDosisSow, Double furrowsDistanceSow, Double sitesDistanceSow, String freeSeedOriginSow, String otherGenotypeSow, String otherChemicalUsedSow, BigDecimal costSow , Boolean status, Integer createdBy) {
+    public Sowing(Genotypes genotypes, DoseUnits doseUnits, TreatmentTypes treatmentTypes, ChemicalsSowing chemicalsSowing, ProductionEvents productionEvents, SowingTypes sowingTypes, GenotypesSowing genotypesSowing, SeedsOrigins seedsOrigins, Date dateSow, Integer seedsNumberSow, boolean treatedSeedsSow, String reasonTreatmentSow, Double seedTreatmentDosisSow, Double furrowsDistanceSow, Double sitesDistanceSow, String freeSeedOriginSow, String otherGenotypeSow, String otherChemicalUsedSow, BigDecimal costSow ,BigDecimal costSeedSow,String commentSow, Boolean status, Integer createdBy) {
        this.genotypes = genotypes;
        this.doseUnits = doseUnits;
        this.treatmentTypes = treatmentTypes;
@@ -76,6 +78,8 @@ public class Sowing  implements java.io.Serializable {
        this.otherGenotypeSow = otherGenotypeSow;
        this.otherChemicalUsedSow = otherChemicalUsedSow;
        this.costSow =   costSow;
+       this.costSeedSow=costSeedSow;
+       this.commentSow=commentSow;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -262,7 +266,23 @@ public class Sowing  implements java.io.Serializable {
         this.costSow = costSow;
     }
     
+    @Column(name="cost_seed_sow")
+    public BigDecimal getCostSeedSow() {
+        return this.costSeedSow;
+    }
     
+    public void setCostSeedSow(BigDecimal costSeedSow) {
+        this.costSeedSow = costSeedSow;
+    }
+    
+    @Column(name="comment_sow")
+    public String getCommentSow() {
+        return this.commentSow;
+    }
+    
+    public void setCommentSow(String commentSow) {
+        this.commentSow = commentSow;
+    }
     
     @Column(name="status")
     public Boolean getStatus() {

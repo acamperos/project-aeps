@@ -41,10 +41,9 @@ public class Irrigation  implements java.io.Serializable {
      private Boolean costRentedquestionIrr;
      private BigDecimal costDepreciationIrr;
      private BigDecimal costRentedIrr;
-     
+     private String commentIrr;
      private Boolean status;
-     private Integer createdBy;
-     
+     private Integer createdBy;     
      private Double thicknessSheetIrr;
      private Double durationIrr;
      private UseIrrigation whatDoYouUseIrr;
@@ -58,7 +57,7 @@ public class Irrigation  implements java.io.Serializable {
         this.productionEvents = productionEvents;
         this.dateIrr = dateIrr;
     }
-    public Irrigation(IrrigationsTypes irrigationsTypes, ProductionEvents productionEvents, WaterSourcesTypes waterSourcesTypes, Date dateIrr, Boolean useIrrigationIrr, Double amountIrr, BigDecimal costWaterIrr,BigDecimal costWorkforceIrr ,BigDecimal costDitchesIrr,BigDecimal costDrainageIrr,BigDecimal costFuelIrr,BigDecimal costElectricpowerIrr,Boolean costRentedquestionIrr,BigDecimal costDepreciationIrr,BigDecimal costRentedIrr, Boolean status, Integer createdBy) {
+    public Irrigation(IrrigationsTypes irrigationsTypes, ProductionEvents productionEvents, WaterSourcesTypes waterSourcesTypes, Date dateIrr, Boolean useIrrigationIrr, Double amountIrr, BigDecimal costWaterIrr,BigDecimal costWorkforceIrr ,BigDecimal costDitchesIrr,BigDecimal costDrainageIrr,BigDecimal costFuelIrr,BigDecimal costElectricpowerIrr,Boolean costRentedquestionIrr,BigDecimal costDepreciationIrr,BigDecimal costRentedIrr,String commentIrr, Boolean status, Integer createdBy) {
        this.irrigationsTypes = irrigationsTypes;
        this.productionEvents = productionEvents;
        this.waterSourcesTypes = waterSourcesTypes;
@@ -74,6 +73,7 @@ public class Irrigation  implements java.io.Serializable {
        this.costRentedquestionIrr=costRentedquestionIrr;
        this.costDepreciationIrr=costDepreciationIrr;
        this.costRentedIrr=costRentedIrr;   
+       this.commentIrr=commentIrr;
        this.status = status;
        this.createdBy = createdBy;
        
@@ -252,6 +252,18 @@ public class Irrigation  implements java.io.Serializable {
     
     public void setCostRentedIrr(BigDecimal costRentedIrr) {
         this.costRentedIrr = costRentedIrr;
+    }   
+    
+    /**
+     Observaciones del riego aplicado al evento productivo
+    */
+    @Column(name="comment_irr")
+    public String getCommentIrr() {
+        return this.commentIrr;
+    }
+    
+    public void setCommentIrr(String commentIrr) {
+        this.commentIrr = commentIrr;
     }
     
     @Column(name="status")

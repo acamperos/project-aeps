@@ -15,7 +15,7 @@
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
-        <div class="row-fluid" id="divMonForm">
+        <div  id="divMonForm">
             <s:form id="formCropMonGen" action="saveMon">
                 <fieldset>
                     <legend><s:property value="getText('title.formmonitoring.monitoring')" /></legend>
@@ -102,6 +102,20 @@
                             </tr>
                         </tbody>
                     </table>
+                                                    <fieldset>
+                                                       <legend>Observaciones</legend>                   
+                                                            <div class="row">
+                                                                <div class="span5">
+                                                                    <div  class="control-group">
+
+                                                                        <div class="controls">                                      
+                                                                            <s:textarea rows="5" cssClass="span6" name="mon.commentMon"></s:textarea>
+                                                                        </div>
+
+                                                                    </div>        
+                                                                </div>                     
+                                                            </div>    
+                                                        </fieldset>
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
                         optSel('mon.monitorPestsMon', 'divMonPest');
@@ -118,6 +132,7 @@
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropMonGen'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
                     </div>
                 </fieldset>
+                                                    
             </s:form>	
             <script>       
                 $.ui.dialog.prototype._focusTabbable = function(){};

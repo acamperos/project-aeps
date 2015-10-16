@@ -124,4 +124,5 @@
   <table-filter match-name="wet_soils"/>
   <table-filter match-name="use_irrigation"/>
   <table-filter match-name="soil_analysis"/>
+  <table-filter match-name="cost_indirect_production_event"/>
 </hibernate-reverse-engineering>

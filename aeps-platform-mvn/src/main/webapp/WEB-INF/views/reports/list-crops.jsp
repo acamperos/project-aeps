@@ -17,6 +17,7 @@
             </ul>
         </div>
         <script type="text/javascript" src="scripts/js/spinner/globalize.min.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.maskMoney.js"></script>
         <script type="text/javascript" src="scripts/js/spinner/jqamp-ui-spinner.min.js"></script>
         <script type="text/javascript" src="scripts/js/spinner/jquery-mousewheel-3.0.6.min.js"></script>
         <script type="text/javascript" src="scripts/js/highcharts/highcharts.js"></script>

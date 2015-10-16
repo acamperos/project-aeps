@@ -107,7 +107,7 @@ public class OrganicFertilizationsDao
         try {
             tx = session.beginTransaction();
             String sql = "select p.id_org_fer, p.id_fertilization_org_fer, p.id_product_org_fer,";
-            sql += " p.other_product_org_fer, p.amount_product_used_org_fer, p.status, p.created_by"; 
+            sql += " p.other_product_org_fer, p.amount_product_used_org_fer, p.cost_app_org_fer,p.cost_product_org_fer,p.cost_form_app_org_fer,p.status, p.created_by"; 
             sql += " from organic_fertilizations p";
             sql += " where p.status=1 and p.id_fertilization_org_fer="+idFert;
             Query query = session.createSQLQuery(sql).addEntity("p", OrganicFertilizations.class);

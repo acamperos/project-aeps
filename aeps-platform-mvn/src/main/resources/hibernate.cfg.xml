@@ -126,5 +126,6 @@
     <mapping class="org.aepscolombia.platform.models.entity.WetSoils"/>
     <mapping class="org.aepscolombia.platform.models.entity.UseIrrigation"/>
     <mapping class="org.aepscolombia.platform.models.entity.SoilAnalysis"/>
+    <mapping class="org.aepscolombia.platform.models.entity.CostIndirectProductionEvent"/>
   </session-factory>
 </hibernate-configuration>

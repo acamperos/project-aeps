@@ -113,7 +113,7 @@ public class MonitoringDao
                       
         sql += "select m.id_mon, m.date_mon, m.monitor_pests_mon, m.monitor_diseases_mon, m.monitor_weeds_mon,";    
         sql += "pe.name_pes, de.name_dis, we.name_wee, m.percentage_impact_pest_mon, m.percentage_impact_disease_mon, m.percentage_impact_weed_mon,";    
-        sql += "m.other_pest_mon, m.other_disease_mon,";    
+        sql += "m.other_pest_mon, m.other_disease_mon,m.comment_mon,";    
         sql += "m.otro_weed_mon from monitoring m";    
         sql += " inner join production_events ep on m.id_production_event_mon=ep.id_pro_eve"; 
         sql += " inner join log_entities le on le.id_object_log_ent=m.id_mon and le.table_log_ent='monitoring' and le.action_type_log_ent='C'"; 

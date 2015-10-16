@@ -66,7 +66,7 @@ public class ChemicalFertilizations  implements java.io.Serializable {
     public void setIdCheFer(Integer idCheFer) {
         this.idCheFer = idCheFer;
     }
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_product_che_fer")
     public ChemicalFertilizers getChemicalFertilizers() {
         return this.chemicalFertilizers;

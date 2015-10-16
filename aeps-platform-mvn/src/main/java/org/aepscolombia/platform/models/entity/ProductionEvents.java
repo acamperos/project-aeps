@@ -46,7 +46,9 @@ public class ProductionEvents  implements java.io.Serializable {
      private String otherMainPestProEve;
      private String otherMainDiseaseProEve;
      private String otherMainWeedProEve;
-     private Integer numCyclesBeforeProEve;
+     private Integer numCyclesBeforeProEve;        
+     private Integer performanceProEve;
+     private String commentPerformanceProEve;
      private Integer createdBy;
 
     public ProductionEvents() {
@@ -64,7 +66,7 @@ public class ProductionEvents  implements java.io.Serializable {
         this.status = status;
         this.expectedProductionProEve = expectedProductionProEve;
     }
-    public ProductionEvents(CropMainProblem cropMainProblem, Fields fields, Diseases diseases, CropsTypes cropsTypes, Pests pests, ReasonsSoilAnalysis reasonsSoilAnalysis, Weeds weeds, String commentProEve, Integer idProjectProEve, boolean status, Double expectedProductionProEve, Integer formerCropProEve, Boolean drainingProEve, Date dataCaptureDateProEve, Boolean didSoilAnalysisProEve, Boolean irrigateProEve, String otherFormerCropProEve, String otherMainPestProEve, String otherMainDiseaseProEve, String otherMainWeedProEve, Integer numCyclesBeforeProEve, Integer createdBy) {
+    public ProductionEvents(CropMainProblem cropMainProblem, Fields fields, Diseases diseases, CropsTypes cropsTypes, Pests pests, ReasonsSoilAnalysis reasonsSoilAnalysis, Weeds weeds, String commentProEve, Integer idProjectProEve, boolean status, Double expectedProductionProEve, Integer formerCropProEve, Boolean drainingProEve, Date dataCaptureDateProEve, Boolean didSoilAnalysisProEve, Boolean irrigateProEve, String otherFormerCropProEve, String otherMainPestProEve, String otherMainDiseaseProEve, String otherMainWeedProEve, Integer numCyclesBeforeProEve, Integer performanceProEve,String commentPerformanceProEve,Integer createdBy) {
        this.cropMainProblem = cropMainProblem;
        this.fields = fields;
        this.diseases = diseases;
@@ -86,6 +88,8 @@ public class ProductionEvents  implements java.io.Serializable {
        this.otherMainDiseaseProEve = otherMainDiseaseProEve;
        this.otherMainWeedProEve = otherMainWeedProEve;
        this.numCyclesBeforeProEve = numCyclesBeforeProEve;
+       this.commentPerformanceProEve=commentPerformanceProEve;
+       this.performanceProEve=performanceProEve;
        this.createdBy = createdBy;
     }
    
@@ -287,6 +291,24 @@ public class ProductionEvents  implements java.io.Serializable {
     
     public void setNumCyclesBeforeProEve(Integer numCyclesBeforeProEve) {
         this.numCyclesBeforeProEve = numCyclesBeforeProEve;
+    }    
+     
+    @Column(name="comment_performance_pro_eve")
+    public String getCommentPerformanceProEve() {
+        return this.commentPerformanceProEve;
+    }
+    
+    public void setCommentPerformanceProEve(String commentPerformanceProEve) {
+        this.commentPerformanceProEve = commentPerformanceProEve;
+    }
+    
+     @Column(name="performance_pro_eve")
+    public Integer getPerformanceProEve() {
+        return this.performanceProEve;
+    }
+    
+    public void setPerformanceProEve(Integer performanceProEve) {
+        this.performanceProEve = performanceProEve;
     }
     
     @Column(name="created_by")

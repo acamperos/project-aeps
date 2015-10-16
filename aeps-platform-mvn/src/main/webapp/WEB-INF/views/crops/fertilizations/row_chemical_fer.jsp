@@ -65,9 +65,11 @@
                                         <div class="controls">
 
                                         <s:select
-                                            name="product_events_cost"
-                                            list="#{'0':'---','1':'Manual', '2':'Mecánica'}"           
-                                            headerKey="-1" 
+                                              id="%{#attr.formCheId}__costFormAppCheFer"
+                                              name="%{#attr.formChe}.costFormAppCheFer"
+                                              value="%{#attr.costFormAppCheFer}"             
+                                              list="#{'0':'---','1':'Manual', '2':'Mecánica'}"           
+                                              headerKey="-1" 
                                             
                                             />
 
@@ -75,16 +77,17 @@
                                      
                                 </div> 
                               </div>
-                           
-                           
-                                <div  id = "divValAppTyp2<%= (numRowsChe-1) %>"  class=" <%=classNewProChe%>" style="padding-left: 28px">
+                                                      
+                                        <%-- <div  id = "divValAppTyp2<%= (numRowsChe-1) %>"  class=" <%=classNewProChe%>" style="padding-left: 28px">
                               
                                 <div class="control-group">
                                     <s:label for="formRowChemical_fer2" cssClass="control-label " value="%{getText('select.chemfertilizer.formapp')}:"></s:label>
                                         <div class="controls">
 
                                         <s:select
-                                            name="product_events_cost"
+                                            id="%{#attr.formCheId}__costFormAppCheFer"
+                                              name="%{#attr.formChe}.costFormAppCheFer"
+                                              value="%{#attr.costFormAppCheFer}" 
                                             list="#{'0':'---','3':'Aérea'}"           
                                             headerKey="-1" 
                                             
@@ -93,7 +96,7 @@
                                     </div>
                                      
                                 </div> 
-                              </div> 
+                              </div> --%>
                             </div>
                 </div>
             </div> 
@@ -260,7 +263,7 @@
                 </div>
                         
                             <div class="span5" style="padding-left: 28px">
-                                <div class="control-group">
+                                <div class="control-group"> 
                                     <label for="${formCheId}__costProductCheFer" class="control-label">
                                         <s:property value="getText('text.costproduct.fertilization')" />:
                                     </label>
@@ -273,6 +276,13 @@
             
             <script>	
                 var formCheId = '<%= request.getAttribute("formCheId") %>';
+                
+                $("#__costAppCheFer").maskMoney({suffix: ' $'});
+                $("#"+formCheId+"__costAppCheFer").maskMoney({suffix: ' $'});
+                
+                $("#__costProductCheFer").maskMoney({suffix: ' $'});
+                $("#"+formCheId+"__costProductCheFer").maskMoney({suffix: ' $'});
+                
                 $("#"+formCheId+"__amountProductUsedCheFer").numeric({ negative: false });
                 $("#"+formCheId+"__amountProductUsedCheFer").val(parsePointSeparated($("#"+formCheId+"__amountProductUsedCheFer").val())); 
             </script>

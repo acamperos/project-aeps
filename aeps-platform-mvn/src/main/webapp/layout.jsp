@@ -31,6 +31,7 @@
             <%@ include file="WEB-INF/views/generals/footer.jsp" %>            
         </div>
         <script type="text/javascript" src="scripts/js/jquery/jquery.maskedinput.js"></script>
+        <script type="text/javascript" src="scripts/js/jquery/jquery.maskMoney.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="scripts/js/jquery/jquery.blockUI.js"></script>        
         <script type="text/javascript" src="scripts/js/generals/functions.js"></script>	 

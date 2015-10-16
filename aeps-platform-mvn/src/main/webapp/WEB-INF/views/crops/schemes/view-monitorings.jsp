@@ -4,18 +4,6 @@
 <div id="divListMonGen">
     <%@ include file="../monitorings/info-monitorings.jsp" %>            
 </div>
-    <div class="row">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label for="formCropDes_desPro_obsDesPro" class="control">
-                                   Observaciones en el monitoreo
-                                </label>
-                                <div class="controls">
-                                    <s:textarea rows="5" name="desPro.obsDesPro"></s:textarea>
-                                </div> 
-                            </div>                          
-                        </div>     
-   </div>
 <%@page import="org.aepscolombia.platform.models.dao.EntitiesDao"%>
 <% Integer entTypePhyId = new EntitiesDao().getEntityTypeId(user.getIdUsr()); %>
 <hr class="divider-inner-separator">
@@ -78,6 +66,21 @@
                 <s:textfield name="phys.percentageReseedingPhyMon" />
             </div>                          
         </div>
+        
+                                                <fieldset>
+                                                       <legend>Observaciones</legend>                   
+                                                            <div class="row">
+                                                                <div class="span5">
+                                                                    <div  class="control-group">
+
+                                                                        <div class="controls">                                      
+                                                                            <s:textarea rows="5" cssClass="span6" name="phys.commentPhyMon"></s:textarea>
+                                                                        </div>
+
+                                                                    </div>        
+                                                                </div>                     
+                                                            </div>    
+                                                        </fieldset>    
         <% if (entTypePhyId!=3) { %>
             <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
         <% } %>

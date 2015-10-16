@@ -38,10 +38,12 @@
                                         <div class="controls">
 
                                         <s:select
-                                            name="product_events_cost"
-                                            list="#{'0':'---','1':'Manual', '2':'Mecánica','3':'Aérea'}"           
-                                            headerKey="-1" 
                                             
+                                              id="%{#attr.formOrgId}__costFormAppOrgFer"
+                                              name="%{#attr.formOrg}.costFormAppOrgFer"
+                                              value="%{#attr.costFormAppOrgFer}"             
+                                              list="#{'0':'---','1':'Manual', '2':'Mecánica','3':'Aérea'}"            
+                                              headerKey="-1" 
                                             />
 
                                     </div>
@@ -73,11 +75,11 @@
             <div class="row">
                 <div class="span5">
                     <div class="control-group">
-                        <label for="${formCheId}__costAppCheFer" class="control-label">
+                        <label for="${formOrgId}__costAppCheFer" class="control-label">
                             <s:property value="getText('text.costapp.fertilization')" />:
                         </label>
                         <div class="controls">
-                            <s:textfield name="%{#attr.formChe}.costAppCheFer" id="%{#attr.formCheId}__costAppCheFer" value="%{#attr.costAppCheFer}"/>
+                            <s:textfield name="%{#attr.formOrg}.costAppOrgFer" id="%{#attr.formOrgId}__costAppOrgFer" value="%{#attr.costAppOrgFer}"/>
                         </div>                         
                     </div>                          
                 </div> 
@@ -95,12 +97,12 @@
             </div>     
                     <div class="row">
                         <div class="span5" >
-                            <div class="control-group">
-                                <label for="${formCheId}__costProductCheFer" class="control-label">
+                            <div class="control-group">   
+                                <label for="${formOrgId}__costProductOrgFer" class="control-label">
                                     <s:property value="getText('text.costproduct.fertilization')" />:
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    <s:textfield name="%{#attr.formOrg}.costProductOrgFer" id="%{#attr.formOrgId}__costProductOrgFer" value="%{#attr.costProductOrgFer}"/>
                                 </div>                         
                             </div>                          
                         </div> 
@@ -112,6 +114,14 @@
                 var formOrgId = '<%= request.getAttribute("formOrgId") %>';
                 $("#"+formOrgId+"__amountProductUsedOrgFer").numeric({ negative: false });
                 $("#"+formOrgId+"__amountProductUsedOrgFer").val(parsePointSeparated($("#"+formOrgId+"__amountProductUsedOrgFer").val())); 
+                
+                 $("#__costAppOrgFer").maskMoney({suffix: ' $'});
+                 $("#"+formOrgId+"__costAppOrgFer").maskMoney({suffix: ' $'});
+                 $("#__costProductOrgFer").maskMoney({suffix: ' $'});
+                 $("#"+formOrgId+"__costProductOrgFer").maskMoney({suffix: ' $'});
+                 
+                 
+            
             </script>
         </div>
     </td>

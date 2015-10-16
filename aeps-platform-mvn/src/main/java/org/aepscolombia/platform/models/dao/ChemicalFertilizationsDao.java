@@ -103,7 +103,7 @@ public class ChemicalFertilizationsDao
         try {
             tx = session.beginTransaction();
             String sql = "select p.id_che_fer, p.id_fertilization_che_fer, p.id_product_che_fer,";
-            sql += " p.other_product_che_fer, p.status, p.application_type_che_fer, p.amount_product_used_che_fer, p.unit_che_fer, p.created_by"; 
+            sql += " p.other_product_che_fer, p.status, p.application_type_che_fer,p.cost_app_che_fer,p.cost_product_che_fer,p.cost_form_app_che_fer, p.amount_product_used_che_fer, p.unit_che_fer, p.created_by"; 
             sql += " from chemical_fertilizations p";
             sql += " where p.status=1 and p.id_fertilization_che_fer="+idFert;
             Query query = session.createSQLQuery(sql).addEntity("p", ChemicalFertilizations.class);
@@ -129,7 +129,7 @@ public class ChemicalFertilizationsDao
         try {
             tx = session.beginTransaction();
             String sql = "select p.id_che_fer, p.id_fertilization_che_fer, p.id_product_che_fer,";
-            sql += " p.other_product_che_fer, p.status, p.application_type_che_fer, p.amount_product_used_che_fer, p.unit_che_fer, p.created_by"; 
+            sql += " p.other_product_che_fer, p.status, p.application_type_che_fer,p.cost_app_che_fer,p.cost_product_che_fer,p.cost_form_app_che_fer, p.amount_product_used_che_fer, p.unit_che_fer, p.created_by"; 
             sql += " from chemical_fertilizations p";
             sql += " where p.status=1 and p.id_fertilization_che_fer="+idFert;
 //            System.out.println("sql=>"+sql);
@@ -157,6 +157,9 @@ public class ChemicalFertilizationsDao
                 cheFer.setIdCheFer(idCheFer);
                 cheFer.setFertilizations(data.getFertilizations());
                 cheFer.setStatus(data.getStatus());
+                cheFer.setCostAppCheFer(data.getCostAppCheFer());
+                cheFer.setCostFormAppCheFer(data.getCostFormAppCheFer());
+                cheFer.setCostProductCheFer(data.getCostProductCheFer());
                 cheFer.setChemicalFertilizers(data.getChemicalFertilizers());
                 cheFer.setOtherProductCheFer(otherTemp);
                 cheFer.setApplicationTypes(data.getApplicationTypes());

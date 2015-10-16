@@ -26,7 +26,7 @@
         <legend><s:property value="getText('title.irrigationlist.irrigation')" /></legend>
         <% if (usrIrrDao.getPrivilegeUser(userIrr.getIdUsr(), "crop/create")) { %>
             <% if (entTypeIrrId!=3) { %>
-                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showIrr.action?action=create', 'idCrop', '${idCrop}', '<s:property value="getText('title.addirrigation.irrigation')" />', 1050, 550);">
+                <button type="button" class="btn btn-initial btn-space" onclick="viewForm('/crop/showIrr.action?action=create', 'idCrop', '${idCrop}', '<s:property value="getText('title.addirrigation.irrigation')" />', 1050, 750);">
                     <i class="icon-plus"></i> <s:property value="getText('button.addirrigation.irrigation')" />
                 </button>
             <% } %>

@@ -37,10 +37,12 @@
                                         <div class="controls">
 
                                         <s:select
-                                            name="product_events_cost"
-                                            list="#{'0':'---','1':'Manual', '2':'Mecánica','3':'Aérea'}"           
-                                            headerKey="-1" 
-                                            
+                                           
+                                             id="%{#attr.formAmeId}__costFormAppAmeFer"
+                                              name="%{#attr.formAmen}.costFormAppAmeFer"
+                                              value="%{#attr.costFormAppAmeFer}"             
+                                              list="#{'0':'---','1':'Manual', '2':'Mecánica','3':'Aérea'}"         
+                                              headerKey="-1" 
                                             />
 
                                     </div>
@@ -73,11 +75,11 @@
                 
                 <div class="span5">
                     <div class="control-group">
-                        <label for="${formCheId}__costAppCheFer" class="control-label">
+                        <label for="${formAmenId}__costAppAmeFer" class="control-label">
                             <s:property value="getText('text.costapp.fertilization')" />:
                         </label>
                         <div class="controls">
-                            <s:textfield name="%{#attr.formChe}.costAppCheFer" id="%{#attr.formCheId}__costAppCheFer" value="%{#attr.costAppCheFer}"/>
+                            <s:textfield name="%{#attr.formAmen}.costAppAmeFer" id="%{#attr.formAmeId}__costAppAmeFer" value="%{#attr.costAppAmeFer}"/>
                         </div>                         
                     </div>                          
                 </div> 
@@ -97,11 +99,11 @@
                 <div class="row">
                         <div class="span5" >
                             <div class="control-group">
-                                <label for="${formCheId}__costProductCheFer" class="control-label">
+                                <label for="${formAmenId}__costProductAmeFer" class="control-label">
                                     <s:property value="getText('text.costproduct.fertilization')" />:
                                 </label>
                                 <div class="controls">
-                                    <s:textfield name="%{#attr.formChe}.costProductCheFer" id="%{#attr.formCheId}__costProductCheFer" value="%{#attr.costProductCheFer}"/>
+                                    <s:textfield name="%{#attr.formAmen}.costProductAmeFer" id="%{#attr.formAmeId}__costProductAmeFer" value="%{#attr.costProductAmeFer}"/>
                                 </div>                         
                             </div>                          
                         </div> 
@@ -109,11 +111,18 @@
                     <a class="btn btn-small delete_rows_dt" title="<s:property value="getText('link.removeamendfert.fertilization')" />" style="margin-bottom:1.2em" onclick="$('#RowAdditAme_<%= numRowsAmen %>').remove();"><i class="icon-trash"></i></a>
                 </div>
             </div>  
-                
+               
             <script>	
                 var formAmenId = '<%= request.getAttribute("formAmenId") %>';
+                
                 $("#"+formAmenId+"__amountProductUsedAmeFer").numeric({ negative: false });
                 $("#"+formAmenId+"__amountProductUsedAmeFer").val(parsePointSeparated($("#"+formAmenId+"__amountProductUsedAmeFer").val())); 
+                    
+                $("#"+formAmenId+"__costAppAmeFer").maskMoney({suffix: ' $'});
+                $("#__costAppAmeFer").maskMoney({suffix: ' $'});
+                
+                $("#"+formAmenId+"__costProductAmeFer").maskMoney({suffix: ' $'});
+                 $("#__costProductAmeFer").maskMoney({suffix: ' $'});
             </script>
         </div>
     </td>

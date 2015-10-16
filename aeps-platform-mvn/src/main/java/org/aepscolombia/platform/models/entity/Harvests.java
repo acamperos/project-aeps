@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,7 +38,22 @@ public class Harvests  implements java.io.Serializable {
      private Double productionPerPlantHar;
      private Double humidityPercentageHar;
      private Integer numberSacksSow;
-     private Double weightAvgSacksSow;
+     private Double weightAvgSacksSow;     
+     private BigDecimal costSalepriceHar ;
+     private String costNamebuyerHar ;
+     private BigDecimal costPackingHar;
+     private Integer costTypeHar;
+     private BigDecimal costCombineHar;
+     private BigDecimal costStorageHar;
+     private BigDecimal costTractorHar;
+     private BigDecimal costGranaleroTrailerHar;
+     private BigDecimal costZorreoHar;
+     private BigDecimal costCabuyaHar;
+     private BigDecimal costTransportCollectioncenterHar;
+     private BigDecimal costWorkforceHar;
+     private BigDecimal costTransportWorkforceHar;
+     private BigDecimal costShellerHar;
+     private BigDecimal costWorkforceShellerHar;     
      private Double loadHectareSow;
      private Boolean status;
      private Integer createdBy;
@@ -53,7 +69,9 @@ public class Harvests  implements java.io.Serializable {
         this.yieldHar = yieldHar;
     }
     
-    public Harvests(ResultingProducts resultingProducts, HarvestMethods harvestMethods, ProductionEvents productionEvents, Date dateHar, String commentHar, Integer productionHar, Double yieldHar, Boolean storageHar, Double productionPerPlantHar, Double humidityPercentageHar, Integer numberSacksSow, Double weightAvgSacksSow, Double loadHectareSow, Boolean status, Integer createdBy) {
+    public Harvests(ResultingProducts resultingProducts, HarvestMethods harvestMethods, ProductionEvents productionEvents, Date dateHar, String commentHar, Integer productionHar, Double yieldHar, Boolean storageHar, Double productionPerPlantHar, Double humidityPercentageHar, Integer numberSacksSow, Double weightAvgSacksSow
+           , Double loadHectareSow,BigDecimal costWorkforceShellerHar, Boolean status, Integer createdBy,BigDecimal costSalepriceHar, String costNameBuyerHar,BigDecimal costPackingHar,Integer costTypeHar,BigDecimal costCombineHar,BigDecimal costStorageHar,BigDecimal costTractorHar,BigDecimal costGranaleroTrailerHar,BigDecimal costZorreoHar,BigDecimal costCabuyaHar,BigDecimal costTransportCollectioncenterHar
+           ,BigDecimal costWorkforceHar,BigDecimal costTransportWorkforceHar, BigDecimal costShellerHar) {
        this.resultingProducts = resultingProducts;
        this.harvestMethods = harvestMethods;
        this.productionEvents = productionEvents;
@@ -65,10 +83,25 @@ public class Harvests  implements java.io.Serializable {
        this.productionPerPlantHar = productionPerPlantHar;
        this.humidityPercentageHar = humidityPercentageHar;
        this.numberSacksSow = numberSacksSow;
-       this.weightAvgSacksSow = weightAvgSacksSow;
+       this.weightAvgSacksSow = weightAvgSacksSow;  
        this.loadHectareSow = loadHectareSow;
+       this.costWorkforceShellerHar=costWorkforceShellerHar;  
        this.status = status;
        this.createdBy = createdBy;
+       this.costSalepriceHar =costSalepriceHar;
+       this.costNamebuyerHar =costNameBuyerHar ;
+       this.costPackingHar=costPackingHar;
+       this.costTypeHar=costTypeHar;
+       this.costCombineHar=costCombineHar;
+       this.costStorageHar=costStorageHar;
+       this.costTractorHar=costTractorHar;
+       this.costGranaleroTrailerHar=costGranaleroTrailerHar;
+       this.costZorreoHar=costZorreoHar;
+       this.costCabuyaHar=costCabuyaHar;
+       this.costTransportCollectioncenterHar=costTransportCollectioncenterHar;
+       this.costWorkforceHar=costWorkforceHar;
+       this.costTransportWorkforceHar=costTransportWorkforceHar;
+       this.costShellerHar=costShellerHar;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -197,7 +230,155 @@ public class Harvests  implements java.io.Serializable {
     public void setLoadHectareSow(Double loadHectareSow) {
         this.loadHectareSow = loadHectareSow;
     }
+      
+    @Column(name="cost_saleprice_har")
+    public BigDecimal getCostSalepriceHar(){
+            return this.costSalepriceHar;
+    }
     
+    public void setCostSalepriceHar(BigDecimal costSalepriceHar){
+            this.costSalepriceHar=costSalepriceHar;
+    
+    }
+    
+    @Column(name="cost_namebuyer_har")
+    public String getCostNamebuyerHar(){
+            return this.costNamebuyerHar;
+    }
+    
+    public void setCostNamebuyerHar(String costNamebuyerHar){
+            this.costNamebuyerHar=costNamebuyerHar;
+    
+    }
+    
+    @Column(name="cost_packing_har")
+    public BigDecimal getCostPackingHar(){
+            return this.costPackingHar;
+    }
+    
+    public void setCostPackingHar(BigDecimal costPackingHar){
+            this.costPackingHar=costPackingHar;
+    
+    }
+    
+   @Column(name="cost_type_har")
+    public Integer getCostTypeHar(){
+            return this.costTypeHar;
+    }
+    
+    public void setCostTypeHar(Integer costTypeHar){
+            this.costTypeHar=costTypeHar;
+    
+    }
+    
+    @Column(name="cost_combine_har")
+    public BigDecimal getCostCombineHar(){
+            return this.costCombineHar;
+    }
+    
+    public void setCostCombineHar(BigDecimal costCombineHar){
+            this.costCombineHar=costCombineHar;
+    
+    }
+     @Column(name="cost_storage_har")
+    public BigDecimal getCostStorageHar(){
+            return this.costStorageHar;
+    }
+    
+    public void setCostStorageHar(BigDecimal costStorageHar){
+            this.costStorageHar=costStorageHar;
+    
+    }
+    
+    @Column(name="cost_tractor_har")
+    public BigDecimal getCostTractorHar(){
+            return this.costTractorHar;
+    }
+    
+    public void setCostTractorHar(BigDecimal costTractorHar){
+            this.costTractorHar=costTractorHar;
+    
+    }
+   
+     @Column(name="cost_granalero_trailer_har")
+    public BigDecimal getCostGranaleroTrailerHar(){
+            return this.costGranaleroTrailerHar;
+    }
+    
+    public void setCostGranaleroTrailerHar(BigDecimal costGranaleroTrailerHar){
+            this.costGranaleroTrailerHar=costGranaleroTrailerHar;
+    
+    }
+       @Column(name="cost_zorreo_har")
+    public BigDecimal getCostZorreoHar(){
+            return this.costZorreoHar;
+    }
+    
+    public void setCostZorreoHar(BigDecimal costZorreoHar){
+            this.costZorreoHar=costZorreoHar;
+    
+    }
+    
+     @Column(name="cost_cabuya_har")
+    public BigDecimal getCostCabuyaHar(){
+            return this.costCabuyaHar;
+    }
+    
+    public void setCostCabuyaHar(BigDecimal costCabuyaHar){
+            this.costCabuyaHar=costCabuyaHar;
+    
+    }
+    
+    @Column(name="cost_transport_collectioncenter_har")
+    public BigDecimal getCostTransportCollectioncenterHar(){
+            return this.costTransportCollectioncenterHar;
+    }
+    
+    public void setCostTransportCollectioncenterHar(BigDecimal costTransportCollectioncenterHar){
+            this.costTransportCollectioncenterHar=costTransportCollectioncenterHar;
+    
+    }
+    
+     @Column(name="cost_workforce_har")
+    public BigDecimal getCostWorkforceHar(){
+            return this.costWorkforceHar;
+    }
+    
+    public void setCostWorkforceHar(BigDecimal costWorkforceHar){
+            this.costWorkforceHar=costWorkforceHar;
+    
+    }
+    
+     @Column(name="cost_transport_workforce_har")
+    public BigDecimal getCostTransportWorkforceHar(){
+            return this.costTransportWorkforceHar;
+    }
+    
+    public void setCostTransportWorkforceHar(BigDecimal costTransportWorkforceHar){
+            this.costTransportWorkforceHar=costTransportWorkforceHar;
+    
+    }
+    
+   @Column(name="cost_sheller_har")
+    public BigDecimal getCostShellerHar(){
+            return this.costShellerHar;
+    }
+    
+    public void setCostShellerHar(BigDecimal costShellerHar){
+            this.costShellerHar=costShellerHar;
+    
+    }
+
+      @Column(name="cost_workforce_sheller_har")
+    public BigDecimal getCostWorkforceShellerHar(){
+            return this.costWorkforceShellerHar;
+    }
+    
+    public void setCostWorkforceShellerHar(BigDecimal costWorkforceShellerHar){
+            this.costWorkforceShellerHar=costWorkforceShellerHar;
+    
+    }
+   
     @Column(name="status")
     public Boolean getStatus() {
         return this.status;

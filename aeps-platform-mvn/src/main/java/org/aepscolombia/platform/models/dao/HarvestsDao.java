@@ -79,7 +79,10 @@ public class HarvestsDao
 				
         sql += "select p.id_har, p.id_production_event_har, p.date_har, p.comment_har, p.method_har, p.production_har,";
         sql += " p.yield_har, p.storage_har, p.production_per_plant_har, p.expected_product_type_har,";
-        sql += " p.humidity_percentage_har, p.number_sacks_sow, p.weight_avg_sacks_sow, p.load_hectare_sow,";
+        sql += " p.humidity_percentage_har, p.number_sacks_sow, p.weight_avg_sacks_sow, p.load_hectare_sow, ";
+        sql += " p.cost_saleprice_har, p.cost_namebuyer_har,p.cost_packing_har,p.cost_type_har,p.cost_combine_har,p.cost_storage_har," ;
+        sql += "p.cost_tractor_har,p.cost_granalero_trailer_har,p.cost_zorreo_har,p.cost_cabuya_har,p.cost_transport_collectioncenter_har,";
+        sql += "p.cost_workforce_har,p.cost_transport_workforce_har,p.cost_sheller_har,p.cost_workforce_sheller_har,";
         sql += " p.status, p.created_by";
         sql += " from harvests p";
         sql += " where p.id_production_event_har="+id;

@@ -62,6 +62,7 @@ public class ActionIrr extends BaseAction {
     private List<UseIrrigation> type_uses_irr;
     private UsersDao usrDao;
     private String coCode;
+    private ProductionEvents event = new ProductionEvents();
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -134,7 +135,13 @@ public class ActionIrr extends BaseAction {
         return listIrr;
     }
     
-    
+      public ProductionEvents getEvent() {
+        return event;
+    }
+
+    public void setEvent(ProductionEvents event) {
+        this.event = event;
+    } 
     
     /**
      * Atributos generales de clase
@@ -463,6 +470,75 @@ public class ActionIrr extends BaseAction {
 //        return ERROR;
         return "states";
     }
+    
+    
+    
+    /**
+     * Encargado de guardar la informacion suministrada por el usuario para los comentarios de los riegos
+     * @return Estado del proceso
+     */
+    public String saveIrrComment() {
+        if (!usrDao.getPrivilegeUser(idUsrSystem, "crop/create") || !usrDao.getPrivilegeUser(idUsrSystem, "crop/modify")) {
+            return BaseAction.NOT_AUTHORIZED;
+        }
+        String action = "";
+//        System.out.println("Entre a guardar la info");
+        /*
+         * Se evalua dependiendo a la accion realizada:
+         * 1) create: Al momento de guardar un registro por primera ves
+         * 2) modify: Al momento de modificar un registro
+         * 3) delete: Al momento de borrar un registro
+         */
+        if (actExe.equals("create")) {
+            action = "C";
+        } else if (actExe.equals("modify")) {
+            action = "M";
+        }
+        
+        SessionFactory sessions = HibernateUtil.getSessionFactory();
+        Session session = sessions.openSession();
+        Transaction tx = null;        
+
+        try {
+            tx = session.beginTransaction();           
+                        
+            
+            session.saveOrUpdate(event);
+                             
+            tx.commit();           
+            state = "success";            
+            if (action.equals("C")) {
+                info  = getText("message.successadd.irrigation");
+//                return "list";
+            } else if (action.equals("M")) {
+                info  = getText("message.successedit.irrigation");
+//                return "list";
+            }
+            HashMap prod  = cropDao.findById(idCrop);
+            Integer tyCro = Integer.parseInt(String.valueOf(prod.get("typeCrop")));
+            SfGuardUserDao sfDao = new SfGuardUserDao();
+            SfGuardUser sfUser   = sfDao.getUserByLogin(user.getCreatedBy(), user.getNameUserUsr(), "");            
+//            GlobalFunctions.sendInformationCrop(idCrop, tyCro, sfUser.getId());
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+//            System.out.println("error->"+e.getMessage());
+            state = "failure";
+            if (action.equals("C")) {
+                info  = getText("message.failadd.irrigation");
+            } else if (action.equals("M")) {
+                info  = getText("message.failedit.irrigation");
+            }
+        } finally {
+            session.close();
+        }  
+        
+//        return ERROR;
+        return "states";
+    }
+    
     
     /**
      * Encargado de borrar la informacion de un riego apartir de su identificacion

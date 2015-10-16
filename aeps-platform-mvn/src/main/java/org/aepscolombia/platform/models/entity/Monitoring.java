@@ -40,6 +40,7 @@ public class Monitoring  implements java.io.Serializable {
      private Double perImpactPestMon;
      private Double perImpactDiseaseMon;
      private Double perImpactWeedMon;
+     private String commentMon;
 
     public Monitoring() {
     }
@@ -48,7 +49,7 @@ public class Monitoring  implements java.io.Serializable {
     public Monitoring(ProductionEvents productionEvents) {
         this.productionEvents = productionEvents;
     }
-    public Monitoring(Diseases diseases, Weeds weeds, Pests pests, Double perImpactDiseaseMon, Double perImpactWeedMon, Double perImpactPestMon, ProductionEvents productionEvents, MonitoringTypes monitoringTypes, Date dateMon, Boolean monitorPestsMon, Boolean monitorDiseasesMon, Boolean monitorWeedsMon, Boolean status, Integer createdBy) {
+    public Monitoring(Diseases diseases, Weeds weeds, Pests pests, Double perImpactDiseaseMon, Double perImpactWeedMon, Double perImpactPestMon, ProductionEvents productionEvents, MonitoringTypes monitoringTypes, Date dateMon, Boolean monitorPestsMon, Boolean monitorDiseasesMon, String commentMon,Boolean monitorWeedsMon, Boolean status, Integer createdBy) {
        this.diseases = diseases;
        this.weeds = weeds;
        this.pests = pests;
@@ -61,6 +62,7 @@ public class Monitoring  implements java.io.Serializable {
        this.monitorPestsMon = monitorPestsMon;
        this.monitorDiseasesMon = monitorDiseasesMon;
        this.monitorWeedsMon = monitorWeedsMon;
+       this.commentMon=commentMon;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -185,6 +187,15 @@ public class Monitoring  implements java.io.Serializable {
     
     public void setMonitorWeedsMon(Boolean monitorWeedsMon) {
         this.monitorWeedsMon = monitorWeedsMon;
+    }
+    
+    @Column(name="comment_mon")
+    public String getCommentMon() {
+        return this.commentMon;
+    }
+    
+    public void setCommentMon(String commentMon) {
+        this.commentMon = commentMon;
     }
     
     @Column(name="status")

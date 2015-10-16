@@ -1,6 +1,7 @@
 package org.aepscolombia.platform.controllers;
 
 import com.opensymphony.xwork2.ActionContext;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -92,6 +93,11 @@ public class ActionCon extends BaseAction {
     private Double dosisConMan=null;
     private Integer doseUnitsMan;
     private String coCode;
+    private BigDecimal costInputCon;
+     private Integer costFormAppCon;
+
+   
+     private BigDecimal costAppCon;
 
     /**
      * Metodos getter y setter por cada variable del formulario
@@ -277,6 +283,29 @@ public class ActionCon extends BaseAction {
         return listCont;
     }
 
+     public BigDecimal getCostInputCon() {
+        return costInputCon;
+    }
+
+    public void setCostInputCon(BigDecimal costInputCon) {
+        this.costInputCon = costInputCon;
+    }
+
+    public Integer getCostFormAppCon() {
+        return costFormAppCon;
+    }
+
+    public void setCostFormAppCon(Integer costFormAppCon) {
+        this.costFormAppCon = costFormAppCon;
+    }
+
+    public BigDecimal getCostAppCon() {
+        return costAppCon;
+    }
+
+    public void setCostAppCon(BigDecimal costAppCon) {
+        this.costAppCon = costAppCon;
+    }
     
     
     /**
@@ -571,6 +600,19 @@ public class ActionCon extends BaseAction {
                 dosisConMan  = con.getDosisCon();                
             }
             
+            if (con.getCostAppCon()!=null){
+            
+                costAppCon=con.getCostAppCon();
+            }
+            
+             if (con.getCostFormAppCon() !=null){
+            
+                costFormAppCon=con.getCostFormAppCon();
+            }
+              if (con.getCostInputCon()!=null){
+            
+                costInputCon=con.getCostInputCon();
+            }
             if (con.getDoseUnits()!=null) {
                 doseUnitsChe = con.getDoseUnits().getIdDosUni();            
                 doseUnitsOrg = con.getDoseUnits().getIdDosUni();

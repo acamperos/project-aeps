@@ -15,7 +15,7 @@
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
-        <div class="row-fluid" id="divPrepForm">
+        <div  id="divPrepForm">
             <s:form id="formCropPrep" action="savePrep" cssClass="form-horizontal">
                 <fieldset>
                     <legend><s:property value="getText('title.formpreparation.preparation')" /></legend>
@@ -96,15 +96,30 @@
                     </div>
                                     
                      <div id="costpreparations" class="row ">
-
+                        
+                        <div class="span5">     
                                         <label for="formCropPrep_prep_costPrep" class="control-label ">
                                             <s:property value="getText('text.costpreparation.preparation')" />:
                                         </label>
                                         <div class="controls">
                                             <s:textfield name="prep.costPrep"/>
                                         </div>
-
+                        </div>                        
                     </div>  
+               <fieldset>
+                <legend>Observaciones</legend>                   
+                <div class="row">
+                   <div class="span5">
+                        <div  class="control-group">
+
+                                    <div class="controls">                                      
+                                        <s:textarea rows="5" cssClass="span6" name="prep.commentPrep"></s:textarea>
+                                    </div>
+
+                                </div>        
+               </div>                     
+               </div>    
+                </fieldset>
                                     
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
@@ -114,11 +129,12 @@
                         $("#formCropPrep_prep_depthPrep").numeric({decimal: false, negative: false});
                         $("#formCropPrep_prep_passingsNumberPrep").numeric({decimal: false, negative: false});
                         $("#formCropPrep_prep_depthPrep").val(parsePointSeparated($("#formCropPrep_prep_depthPrep").val())); 
+                        $("#formCropPrep_prep_costPrep").maskMoney({suffix: ' $'});
                     </script>
                     <div id="divBtPrep">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropPrep'); addMessageProcess()" targets="divMessage" onCompleteTopics="completePrep" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.savepreparation.preparation')" /></sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="removeMask();searchDecimalNumber('formCropPrep'); addMessageProcess()" targets="divMessage" onCompleteTopics="completePrep" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.savepreparation.preparation')" /></sj:submit>
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropPrep'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
                     </div>
@@ -132,6 +148,12 @@
                         showInfo("/crop/searchPrep.action?idCrop="+$("#formCropPrep_idCrop").val(), "divListPrep");
                     }, 2000);
                 });
+                
+   function removeMask() {       
+            $("#formCropPrep_prep_costPrep").maskMoney({thousands:"", decimal:'.'});
+            $("#formCropPrep_prep_costPrep").maskMoney('mask'); 
+            alert($("#formCropPrep_prep_costPrep").val());
+    };
             </script>
         </div>
         <div class="row-fluid" id="divListPrepForm"></div>

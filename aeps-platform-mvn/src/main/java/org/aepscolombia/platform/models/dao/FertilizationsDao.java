@@ -166,7 +166,7 @@ public class FertilizationsDao
                       
         sql += "select p.id_fer, p.date_fer, p.fertilization_type_fer, ";
         sql += " tp.name_fer_typ, p.amount_product_used_fer, chfer.id_che_fer, ";
-        sql += " chfer.application_type_che_fer, chfer.amount_product_used_che_fer, chfer.other_product_che_fer, chfer.unit_che_fer";
+        sql += " chfer.application_type_che_fer, chfer.amount_product_used_che_fer, chfer.other_product_che_fer, chfer.unit_che_fer,p.comment_fer";
         sql += " from fertilizations p"; 
         sql += " inner join chemical_fertilizations chfer on p.id_fer=chfer.id_fertilization_che_fer";    
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_fer";    

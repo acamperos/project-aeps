@@ -29,6 +29,7 @@ public class ResidualsManagement  implements java.io.Serializable {
     private Date dateResMan;
     private String otherResidualsManagementResMan;
     private BigDecimal costResMan;
+    private String commentResMan;
     private Boolean status;
     private Integer createdBy;
 
@@ -41,12 +42,13 @@ public class ResidualsManagement  implements java.io.Serializable {
         this.dateResMan = dateResMan;
     }
     
-    public ResidualsManagement(ResidualsClasification residualsClasification, ProductionEvents productionEvents, Date dateResMan, String otherResidualsManagementResMan, Boolean status,BigDecimal costResMan, Integer createdBy) {
+    public ResidualsManagement(ResidualsClasification residualsClasification, ProductionEvents productionEvents, Date dateResMan, String otherResidualsManagementResMan, Boolean status,BigDecimal costResMan,String commentResMan ,Integer createdBy) {
        this.residualsClasification = residualsClasification;
        this.productionEvents = productionEvents;
        this.dateResMan = dateResMan;
        this.otherResidualsManagementResMan = otherResidualsManagementResMan;
        this.costResMan = costResMan;
+       this.commentResMan=commentResMan;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -99,6 +101,15 @@ public class ResidualsManagement  implements java.io.Serializable {
     
     public void setOtherResidualsManagementResMan(String otherResidualsManagementResMan) {
         this.otherResidualsManagementResMan = otherResidualsManagementResMan;
+    }
+    
+    @Column(name="comment_res_man")
+    public String getCommentResMan() {
+        return this.commentResMan;
+    }
+    
+    public void setCommentResMan(String commentResMan) {
+        this.commentResMan = commentResMan;
     }
     
     @Column(name="cost_res_man")

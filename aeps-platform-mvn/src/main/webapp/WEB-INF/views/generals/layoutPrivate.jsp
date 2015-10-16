@@ -35,6 +35,7 @@
         </div>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/generals/functions.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.maskedinput.js"></script>
+        <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.maskMoney.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.base64.min.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.numeric.js"></script>
         <script type="text/javascript" src="<%= request.getContextPath() %>/scripts/js/jquery/jquery.blockUI.js"></script>

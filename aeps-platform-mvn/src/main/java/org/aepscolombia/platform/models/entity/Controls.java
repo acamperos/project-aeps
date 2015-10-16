@@ -2,6 +2,7 @@ package org.aepscolombia.platform.models.entity;
 // Generated Apr 8, 2014 9:37:27 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,9 +43,14 @@ public class Controls  implements java.io.Serializable {
      private String otherOrganicProductCon;
      private Boolean cleaningsCon;
      private Integer cleaningsFrequenceCon;
+     private String commentCon;
+     private BigDecimal costInputCon;
+     private Integer costFormAppCon;
+     private BigDecimal costAppCon;
+
      private Boolean status;
      private Integer createdBy;
-
+    
     public Controls() {
     }
 
@@ -53,7 +59,7 @@ public class Controls  implements java.io.Serializable {
         this.controlsTypes = controlsTypes;
         this.productionEvents = productionEvents;
     }
-    public Controls(Diseases diseases, Weeds weeds, ControlsTypes controlsTypes, ChemicalsControls chemicalsControls, ProductionEvents productionEvents, TargetsTypes targetsTypes, OrganicControls organicControls, DoseUnits doseUnits, Pests pests, Date dateCon, Double dosisCon, String otherPestCon, String otherDiseaseCon, String otroWeedCon, String otherChemicalProductCon, String otherOrganicProductCon, Boolean cleaningsCon, Integer cleaningsFrequenceCon, Boolean status, Integer createdBy) {
+    public Controls(Diseases diseases, Weeds weeds, ControlsTypes controlsTypes, ChemicalsControls chemicalsControls, ProductionEvents productionEvents, TargetsTypes targetsTypes, OrganicControls organicControls, DoseUnits doseUnits, Pests pests, Date dateCon, Double dosisCon, String otherPestCon, String otherDiseaseCon, String otroWeedCon, String otherChemicalProductCon, String otherOrganicProductCon, Boolean cleaningsCon, Integer cleaningsFrequenceCon, String commentCon ,Boolean status, Integer createdBy, BigDecimal costInputCon, Integer costFormAppCon, BigDecimal costAppCon) {
        this.diseases = diseases;
        this.weeds = weeds;
        this.controlsTypes = controlsTypes;
@@ -72,8 +78,12 @@ public class Controls  implements java.io.Serializable {
        this.otherOrganicProductCon = otherOrganicProductCon;
        this.cleaningsCon = cleaningsCon;
        this.cleaningsFrequenceCon = cleaningsFrequenceCon;
+       this.commentCon=commentCon;
        this.status = status;
        this.createdBy = createdBy;
+       this.costInputCon   = costInputCon;
+       this.costFormAppCon   = costFormAppCon;
+       this.costAppCon   =   costAppCon;   
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -247,7 +257,46 @@ public class Controls  implements java.io.Serializable {
     
     public void setCleaningsFrequenceCon(Integer cleaningsFrequenceCon) {
         this.cleaningsFrequenceCon = cleaningsFrequenceCon;
+    }    
+    
+      
+    @Column(name="cost_input_con")
+    public BigDecimal getCostInputCon() {
+        return this.costInputCon;
     }
+    
+    public void setCostInputCon(BigDecimal costInputCon) {
+        this.costInputCon = costInputCon;
+    }
+    
+    @Column(name="cost_form_app_con")
+    public Integer getCostFormAppCon() {
+        return this.costFormAppCon;
+    }
+    
+    public void setCostFormAppCon(Integer costFormAppCon) {
+        this.costFormAppCon = costFormAppCon;
+    }
+     
+    @Column(name="cost_app_con")
+    public BigDecimal getCostAppCon() {
+        return this.costAppCon;
+    }
+    
+    public void setCostAppCon(BigDecimal costAppCon) {
+        this.costAppCon = costAppCon;
+    }
+    
+      
+    @Column(name="comment_con")
+    public String getCommentCon() {
+        return this.commentCon;
+    }
+    
+    public void setCommentCon(String commentCon) {
+        this.commentCon = commentCon;
+    }
+    
     
     @Column(name="status")
     public Boolean getStatus() {

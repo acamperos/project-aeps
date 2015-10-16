@@ -111,7 +111,7 @@ public class PreparationsDao
         String sql = "";     
         String sqlAdd = "";     
                       
-        sql  += "select p.id_prep, p.date_prep, tp.name_pre_typ, p.other_preparation_type_prep, p.depth_prep, p.passings_number_prep";
+        sql  += "select p.id_prep, p.date_prep, tp.name_pre_typ, p.other_preparation_type_prep, p.depth_prep, p.comment_prep,p.cost_prep,p.passings_number_prep";
         sql += " from preparations p"; 
         sql += " inner join production_events ep on ep.id_pro_eve=p.id_production_event_prep";    
         sql += " left join preparations_types tp on tp.id_pre_typ=p.preparation_type_prep and tp.status_pre_typ=1";     
@@ -171,7 +171,7 @@ public class PreparationsDao
 				
         sql += "select p.id_prep, p.id_production_event_prep, p.date_prep, p.preparation_type_prep,";
         sql += " p.depth_prep, p.id_residuals_prep, p.use_hills_prep, p.other_preparation_type_prep,";
-        sql += " p.passings_number_prep, p.status, p.created_by";
+        sql += " p.passings_number_prep, p.comment_prep,p.cost_prep,p.status, p.created_by";
         sql += " from preparations p";
         sql += " where p.status=1 and p.id_production_event_prep="+id;
         try {
@@ -239,7 +239,7 @@ public class PreparationsDao
         String result = "[";
         
         String sql = "";                   
-        sql += "select DATE_FORMAT(p.date_prep,'%Y-%m-%d') as datePrep, p.preparation_type_prep, p.other_preparation_type_prep, FORMAT(p.depth_prep,0),";
+        sql += "select DATE_FORMAT(p.date_prep,'%Y-%m-%d') as datePrep, p.preparation_type_prep, p.comment_prep,p.cost_prep,p.other_preparation_type_prep, FORMAT(p.depth_prep,0),";
         sql += " FORMAT(p.passings_number_prep,0), p.id_prep";
         sql += " from preparations p"; 
         sql += " where p.status=1";
@@ -295,7 +295,7 @@ public class PreparationsDao
         String result = "[";
         
         String sql = "";                   
-        sql += "select DATE_FORMAT(p.date_prep,'%Y-%m-%d') as datePrep, p.preparation_type_prep, p.other_preparation_type_prep, FORMAT(p.depth_prep,0),";
+        sql += "select DATE_FORMAT(p.date_prep,'%Y-%m-%d') as datePrep, p.preparation_type_prep,p.comment_prep,p.cost_prep, p.other_preparation_type_prep, FORMAT(p.depth_prep,0),";
         sql += " FORMAT(p.passings_number_prep,0), p.id_prep";
         sql += " from preparations p"; 
         sql += " where p.status=1";

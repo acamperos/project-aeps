@@ -34,6 +34,7 @@ public class Preparations  implements java.io.Serializable {
     private String otherPreparationTypePrep;
     private Integer passingsNumberPrep;
     private BigDecimal costPrep;
+    private String commentPrep;
     private Boolean status;
     private Integer createdBy;
 
@@ -46,7 +47,7 @@ public class Preparations  implements java.io.Serializable {
         this.datePrep = datePrep;
     }
     
-    public Preparations(ProductionEvents productionEvents, PreparationsTypes preparationsTypes, Date datePrep, Double depthPrep, Boolean useHillsPrep, String otherPreparationTypePrep, Integer passingsNumberPrep,BigDecimal costPrep, Boolean status, Integer createdBy) {
+    public Preparations(ProductionEvents productionEvents, PreparationsTypes preparationsTypes, Date datePrep, Double depthPrep, Boolean useHillsPrep, String otherPreparationTypePrep, Integer passingsNumberPrep,BigDecimal costPrep ,String commentPre, Boolean status, Integer createdBy) {
        this.productionEvents = productionEvents;
        this.preparationsTypes = preparationsTypes;
        this.datePrep = datePrep;
@@ -55,6 +56,7 @@ public class Preparations  implements java.io.Serializable {
        this.otherPreparationTypePrep = otherPreparationTypePrep;
        this.passingsNumberPrep = passingsNumberPrep;
        this.costPrep  = costPrep;
+       this.commentPrep= commentPre;
        this.status = status;
        this.createdBy = createdBy;
     }
@@ -145,6 +147,14 @@ public class Preparations  implements java.io.Serializable {
         this.costPrep = costPrep;
     }
     
+    @Column(name="comment_prep")
+    public String getCommentPrep() {
+        return this.commentPrep;
+    }
+    
+    public void setCommentPrep(String commentPrep) {
+        this.commentPrep = commentPrep;
+    }
     
     @Column(name="status")
     public Boolean getStatus() {

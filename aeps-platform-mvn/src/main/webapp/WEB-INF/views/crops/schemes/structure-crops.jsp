@@ -121,18 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven">
-                            <h4><s:property value="getText('link.observations.crop')" /> <i class="colSeven icon-chevron-down"></i></h4> 
-                        </a>
-                    </div>
-                    <div id="collapseSeven" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                            <%@ include file="view-descriptions.jsp" %>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive">
@@ -157,7 +146,21 @@
                                  <%@ include file="view-cost-indirect.jsp" %>           
                         </div>
                     </div>
-                </div>     
+                </div>   
+              
+             <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven">
+                            <h4><s:property value="getText('link.observations.crop')" /><i class="colSeven icon-chevron-down"></i></h4> 
+                        </a>
+                    </div>
+                    <div id="collapseSeven" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <%@ include file="view-descriptions.jsp" %>
+                        </div>
+                    </div>
+                </div>           
+                        
             </div>               
         </div>   
         <script>

@@ -576,6 +576,7 @@
             <interceptor-ref name="defaultStackAeps"/>            
             <result name="states" type="json"></result>
         </action>
+        
         <action name="deleteCrop" method="delete" class="org.aepscolombia.platform.controllers.ActionCrop">
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="defaultStackAeps"/>
@@ -658,8 +659,25 @@
             <result name="states" type="json"></result>
         </action>    
     </package>
+    
+     <package name="performance" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="saveComment" method="saveDataPerformance" class="org.aepscolombia.platform.controllers.ActionCost">
+            <interceptor-ref name="validateI18n"/>      
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>                  
+            <result name="states" type="json"></result>
+        </action>    
+    </package>
     <package name="harvest" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="saveHarvest" method="saveData" class="org.aepscolombia.platform.controllers.ActionHarvest">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>            
+            <result name="states" type="json"></result>
+        </action>    
+    </package>
+     <package name="cost" extends="principal,struts-default,json-default" namespace="/crop">
+        <action name="saveCost" method="saveData" class="org.aepscolombia.platform.controllers.ActionCost">
             <interceptor-ref name="validateI18n"/>
             <interceptor-ref name="jsonValidationWorkflowStack"/>
             <interceptor-ref name="defaultStackAeps"/>            
@@ -757,6 +775,12 @@
             <interceptor-ref name="defaultStackAeps"/>
             <result name="states" type="json"></result>
         </action>     
+        <action name="saveIrrComment" method="saveData" class="org.aepscolombia.platform.controllers.ActionIrr">
+            <interceptor-ref name="validateI18n"/>
+            <interceptor-ref name="jsonValidationWorkflowStack"/>
+            <interceptor-ref name="defaultStackAeps"/>       
+            <result name="states" type="json"></result>
+        </action>   
     </package>
     <package name="monpackage" extends="principal,struts-default,json-default" namespace="/crop">
         <action name="searchMon" method="search" class="org.aepscolombia.platform.controllers.ActionMon">

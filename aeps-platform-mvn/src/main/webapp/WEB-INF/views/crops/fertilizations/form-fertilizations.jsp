@@ -16,7 +16,7 @@
         <s:actionerror theme="bootstrap"/>
         <s:actionmessage theme="bootstrap"/>
         <s:fielderror theme="bootstrap"/>
-        <div class="row-fluid" id="divFerForm">
+        <div id="divFerForm">
             <s:form id="formCropFer" action="saveFer" cssClass="form-horizontal">
                 <fieldset>
                     <legend><s:property value="getText('title.fertsurvey.crop')" /></legend>  
@@ -41,22 +41,7 @@
                             </div>                          
                         </div>     
                                     
-                             <div  id = "divQuestionCost"  class="span5" style="padding-left: 28px">
-                             <div class="control-group">
-                                    <s:label for="formCropFer_fer_question_cost" cssClass="control-label " value="%{getText('select.questioncost.fertilization')}:"></s:label>
-                                        <div class="controls">
-
-                                        <s:select
-                                            name="product_events_cost"
-                                            list="#{'0':'---','1':'Si', '2':'No'}"           
-                                            headerKey="-1" 
-                                            
-                                            />
-
-                                    </div>
-                                     
-                                </div> 
-                              </div>             
+                                        
                     </div>
                     <% if (coCode.equals("NI")) { %>
                         <div class="row">
@@ -148,6 +133,21 @@
                             </tbody>
                         </table>
                     </fieldset>
+                    
+                            <fieldset>
+                                <legend>Observaciones</legend>                   
+                                <div class="row">
+                                    <div class="span5">
+                                        <div  class="control-group">
+
+                                            <div class="controls">                                      
+                                                <s:textarea rows="5" cssClass="span6" name="fer.commentFer"></s:textarea>
+                                            </div>
+
+                                        </div>        
+                                    </div>                     
+                                </div>    
+                            </fieldset>       
                     <p class="warnField reqBef"><s:property value="getText('label.requirefields')" /></p>
                     <script>
                         showTypeFertilizerSel('formCropFer_fer_fertilizationsTypes_idFerTyp', 'divQuimicoFer', 'divOrganicoFer', 'divEnmiendasFer');
@@ -163,7 +163,7 @@
                     <div id="divBtFer">
                         <% String actExe   = String.valueOf(request.getAttribute("actExe")); %>
                         <% if ((actExe.equals("create") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/create")) || (actExe.equals("modify") && usrDao.getPrivilegeUser(user.getIdUsr(), "crop/modify"))) { %>
-                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="searchDecimalNumber('formCropFer'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeFer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.savefertilization.fertilization')" /></sj:submit>
+                            <sj:submit type="button" cssClass="btn btn-initial btn-large" onclick="removeMask();searchDecimalNumber('formCropFer'); addMessageProcess()" targets="divMessage" onCompleteTopics="completeFer" validate="true" validateFunction="validationForm"><i class="icon-save"></i>  <s:property value="getText('button.savefertilization.fertilization')" /></sj:submit>
                         <% } %>
                         <button class="btn btn_default btn-large" onclick="resetForm('formCropFer'); closeWindow();"><i class="icon-ban-circle"></i>  <s:property value="getText('button.cancel')" /></button>
                     </div>
@@ -177,6 +177,47 @@
                         showInfo("/crop/searchFer.action?idCrop="+$("#formCropFer_idCrop").val(), "divListFer");
                     }, 2000);
                 });
+                
+                function removeMask() {       
+                    
+                         var formAmenId = '<%= request.getAttribute("formAmenId") %>';
+                         
+                        $("#__costAppAmeFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#"+formAmenId+"__costAppAmeFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#__costAppAmeFer").maskMoney('mask');
+                        $("#"+formAmenId+"__costAppAmeFer").maskMoney('mask');
+                        
+                        $("#__costProductAmeFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#"+formAmenId+"__costProductAmeFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#__costProductAmeFer").maskMoney('mask');
+                        $("#"+formAmenId+"__costProductAmeFer").maskMoney('mask');
+
+                         var formCheId = '<%= request.getAttribute("formCheId") %>';
+                
+                        $("#__costAppCheFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#"+formCheId+"__costAppCheFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#__costAppCheFer").maskMoney('mask');
+                        $("#"+formCheId+"__costAppCheFer").maskMoney('mask');
+                        
+                        $("#__costProductCheFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#"+formCheId+"__costProductCheFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#__costProductCheFer").maskMoney('mask');
+                        $("#"+formCheId+"__costProductCheFer").maskMoney('mask');
+                         
+                         var formOrgId = '<%= request.getAttribute("formOrgId") %>';
+
+                        $("#__costAppOrgFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#"+formOrgId+"__costAppOrgFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#__costAppOrgFer").maskMoney('mask');
+                        $("#"+formOrgId+"__costAppOrgFer").maskMoney('mask');
+                        
+                        $("#__costProductOrgFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#"+formOrgId+"__costProductOrgFer").maskMoney({thousands:"", decimal:'.'});
+                        $("#__costProductOrgFer").maskMoney('mask');
+                        $("#"+formOrgId+"__costProductOrgFer").maskMoney('mask');
+                        
+                        
+                }         
             </script>
         </div>
         <div class="row-fluid" id="divListFerForm"></div>

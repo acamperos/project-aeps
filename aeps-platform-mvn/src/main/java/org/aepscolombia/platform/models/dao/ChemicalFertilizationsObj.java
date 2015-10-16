@@ -1,5 +1,6 @@
 package org.aepscolombia.platform.models.dao;
 
+import java.math.BigDecimal;
 import org.aepscolombia.platform.models.entity.*;
 import java.util.List;
 import javax.persistence.Entity;
@@ -17,6 +18,9 @@ public class ChemicalFertilizationsObj {
      private Fertilizations fertilizations;
      private Integer unitCheFer;
      private String otherProductCheFer;
+     private BigDecimal costProductCheFer;
+     private Integer costFormAppCheFer;
+     private BigDecimal costAppCheFer;
      private Boolean status;
      private Integer createdBy;
      private Double amountProductUsedCheFer;
@@ -29,12 +33,15 @@ public class ChemicalFertilizationsObj {
     public ChemicalFertilizationsObj(Fertilizations fertilizations) {
         this.fertilizations = fertilizations;
     }
-    public ChemicalFertilizationsObj(ChemicalFertilizers chemicalFertilizers, ApplicationTypes applicationTypes, Fertilizations fertilizations, Integer unitCheFer, String otherProductCheFer, Double amountProductUsedCheFer, Boolean status, Integer createdBy) {
+    public ChemicalFertilizationsObj(ChemicalFertilizers chemicalFertilizers, ApplicationTypes applicationTypes, Fertilizations fertilizations, Integer unitCheFer, String otherProductCheFer, Double amountProductUsedCheFer, BigDecimal costProductCheFer, Integer costFormAppCheFer, BigDecimal costAppCheFer,Boolean status, Integer createdBy) {
        this.chemicalFertilizers = chemicalFertilizers;
        this.applicationTypes = applicationTypes;
        this.fertilizations = fertilizations;
        this.unitCheFer = unitCheFer;
        this.otherProductCheFer = otherProductCheFer;
+       this.costProductCheFer   = costProductCheFer;
+       this.costFormAppCheFer   = costFormAppCheFer;
+       this.costAppCheFer   =   costAppCheFer;       
        this.amountProductUsedCheFer = amountProductUsedCheFer;
        this.status = status;
        this.createdBy = createdBy;
@@ -118,5 +125,29 @@ public class ChemicalFertilizationsObj {
 
     public void setAdditionalsElem(List<ChemicalElements> additionalsElem) {
         this.additionalsElem = additionalsElem;
+    }
+    
+        public BigDecimal getCostProductCheFer() {
+        return costProductCheFer;
+    }
+
+    public void setCostProductCheFer(BigDecimal costProductCheFer) {
+        this.costProductCheFer = costProductCheFer;
+    }
+
+    public Integer getCostFormAppCheFer() {
+        return costFormAppCheFer;
+    }
+
+    public void setCostFormAppCheFer(Integer costFormAppCheFer) {
+        this.costFormAppCheFer = costFormAppCheFer;
+    }
+
+    public BigDecimal getCostAppCheFer() {
+        return costAppCheFer;
+    }
+
+    public void setCostAppCheFer(BigDecimal costAppCheFer) {
+        this.costAppCheFer = costAppCheFer;
     }
 }
