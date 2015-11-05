@@ -146,7 +146,8 @@ public class PreparationsDao
                 temp.put("namePrep", data[2]);             
                 temp.put("otherNamePrep", data[3]);                
                 temp.put("depthPrep", data[4]);            
-                temp.put("passNum", data[5]);            
+                temp.put("passNum", data[5]);      
+                temp.put("costPrep", data[6]);   
                 result.add(temp);
             }
             tx.commit();

@@ -36,6 +36,7 @@
                     <th><s:property value="getText('tr.residualdate.residual')" /></th>
                     <th><s:property value="getText('tr.residualmanage.residual')" /></th>
                     <th><s:property value="getText('tr.otherresidual.residual')" /></th>
+                    <th><s:property value="getText('tr.costresidual.residual')" /></th>
                     <% if (usrResDao.getPrivilegeUser(userRes.getIdUsr(), "crop/modify") || (usrResDao.getPrivilegeUser(userRes.getIdUsr(), "crop/delete"))) { %>
                         <th><s:property value="getText('tr.action.residual')" /></th>
                     <% } %>

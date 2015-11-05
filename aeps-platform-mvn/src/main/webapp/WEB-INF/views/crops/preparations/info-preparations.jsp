@@ -38,6 +38,7 @@
                     <th><s:property value="getText('tr.preparationtype.preparation')" /></th>
                     <th><s:property value="getText('tr.otherpreparationtype.preparation')" /></th>
                     <th><s:property value="getText('tr.passingnumber.preparation')" /></th>
+                    <th><s:property value="getText('tr.costpreparation.preparation')" /></th>
                     <% if (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/modify") || (usrPrpDao.getPrivilegeUser(userPrp.getIdUsr(), "crop/delete"))) { %>
                         <th><s:property value="getText('tr.action.preparation')" /></th>
                     <% } %>

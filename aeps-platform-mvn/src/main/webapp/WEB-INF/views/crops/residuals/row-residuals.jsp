@@ -1,7 +1,8 @@
 <s:date name="dateResMan" format="MM/dd/yyyy" var="dateTransformRowRes"/>
 <td><s:property value="%{#dateTransformRowRes}" /></td>
 <td><s:property value="residualsResMan" /></td>
-<td><s:property value="otherResidualsResMan" /></td>
+<td><s:property value="otherResidualsResMan"/></td>
+<td><s:property value="costResMan"/></td>
 <td>
     <% if (usrResDao.getPrivilegeUser(userRes.getIdUsr(), "crop/modify") || (usrResDao.getPrivilegeUser(userRes.getIdUsr(), "crop/delete"))) { %>
         <% if (entTypeResId!=3) { %>
@@ -16,3 +17,6 @@
         <% } %>
     <% } %>
 </td>
+<script>
+    //$("#formCropRes_resMan_costResMan").maskMoney({suffix: ' $'});
+</script>

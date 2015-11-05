@@ -9,34 +9,12 @@
     <div id="divListRes">
         <%@ include file="../residuals/info-residuals.jsp" %>            
     </div>
-    <%--  <div class="row">
-                        <div class="span5" >
-                            <div class="control-group">
-                                <label for="formCropSow_event_commentResidualsProEve"  class="control" style="width: 175px">
-                                   Observaciones en manejo de rastrojos 
-                                </label>
-                                <div class="controls " >
-                                    <s:textarea rows="5" cssClass="span6" name="event.commentResidualsProEve"></s:textarea>
-                                </div> 
-                            </div>                          
-                        </div>     
-   </div>--%>
+  
 <% } %>
 <div id="divListPrep">
     <%@ include file="../preparations/info-preparations.jsp" %>            
 </div>
-    <%-- <div class="row">
-                        <div class="span5">
-                            <div class="control-group">
-                                <label for="formCropSow_event_commentPreparationsProEve"  class="control">
-                                   Observaciones en preparaciones
-                                </label>
-                                <div class="controls">
-                                    <s:textarea rows="5" cssClass="span6" name="event.commentPreparationsProEve"></s:textarea>
-                                </div> 
-                            </div>                          
-                        </div>     
-   </div>--%>
+    
 <hr class="divider-inner-separator">
     <fieldset>
         <legend><s:property value="getText('title.formsowing.crop')" /></legend>    

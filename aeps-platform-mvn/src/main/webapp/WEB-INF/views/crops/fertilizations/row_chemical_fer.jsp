@@ -279,7 +279,7 @@
                 
                 $("#__costAppCheFer").maskMoney({suffix: ' $'});
                 $("#"+formCheId+"__costAppCheFer").maskMoney({suffix: ' $'});
-                
+                //formCropFer_chemFert_0__costAppCheFer
                 $("#__costProductCheFer").maskMoney({suffix: ' $'});
                 $("#"+formCheId+"__costProductCheFer").maskMoney({suffix: ' $'});
                 

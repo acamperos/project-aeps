@@ -177,7 +177,7 @@ function showTypeFertilizerControl(valSel, divShowA, divShowB, divShowC, divShow
 //function de costos gravedad o aspersion
 
 function showTypeIrrigations(valSel, divShowA, divShowB, divShowC, divShowD, divShowE,divShowF) {
-    var valIng = $("#"+valSel).val();
+    var valIng = $("#"+valSel).val();  
     if (valIng == 1) {
         $("#" + divShowA).show();
         $("#" + divShowB).hide();
@@ -195,16 +195,17 @@ function showTypeIrrigations(valSel, divShowA, divShowB, divShowC, divShowD, div
     } else if (valIng == 3 ) {
         $("#" + divShowA).show();
         $("#" + divShowB).show();
-       // $("#" + divShowC).hide();
-//        $("#" + divShowD).hide();
-//        $("#" + divShowE).hide();
-//        $("#" + divShowF).hide();
+        $("#" + divShowC).show();
+        $("#" + divShowD).show();
+        $("#" + divShowE).show();
+        $("#" + divShowF).show();
     }  else {
         $("#" + divShowA).hide();
         $("#" + divShowB).hide();
         $("#" + divShowC).hide();
         $("#" + divShowD).hide();
         $("#" + divShowE).hide();
+        $("#" + divShowF).hide();
         
     }
 }

@@ -30,8 +30,7 @@ public class Irrigation  implements java.io.Serializable {
      private WaterSourcesTypes waterSourcesTypes;
      private Date dateIrr;     
      private Boolean useIrrigationIrr;
-     private Double amountIrr;
-     
+     private Double amountIrr;     
      private BigDecimal costWaterIrr;
      private BigDecimal costWorkforceIrr;
      private BigDecimal costDitchesIrr;

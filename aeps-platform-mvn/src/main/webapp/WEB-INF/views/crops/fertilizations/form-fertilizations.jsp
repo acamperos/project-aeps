@@ -192,29 +192,31 @@
                         $("#__costProductAmeFer").maskMoney('mask');
                         $("#"+formAmenId+"__costProductAmeFer").maskMoney('mask');
 
-                         var formCheId = '<%= request.getAttribute("formCheId") %>';
-                
-                        $("#__costAppCheFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#"+formCheId+"__costAppCheFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#__costAppCheFer").maskMoney('mask');
-                        $("#"+formCheId+"__costAppCheFer").maskMoney('mask');
                         
-                        $("#__costProductCheFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#"+formCheId+"__costProductCheFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#__costProductCheFer").maskMoney('mask');
-                        $("#"+formCheId+"__costProductCheFer").maskMoney('mask');
+                        var i=0;
+                        for (i=0;i<20;i++)
+                        {
+                             //Chemical
+                            $("#formCropFer_chemFert_"+i+"__costAppCheFer").maskMoney({thousands:"", decimal:'.'});
+                            $("#formCropFer_chemFert_"+i+"__costAppCheFer").maskMoney('mask');                      
+                            
+                            $("#formCropFer_chemFert_"+i+"__costProductCheFer").maskMoney({thousands:"", decimal:'.'});                       
+                            $("#formCropFer_chemFert_"+i+"__costProductCheFer").maskMoney('mask');
+                            
+                            //OrgFer
+                            $("#formCropFer_orgFert_"+i+"__costAppOrgFer").maskMoney({thousands:"", decimal:'.'});                      
+                            $("#formCropFer_orgFert_"+i+"__costAppOrgFer").maskMoney('mask');               
+                        
+                            $("#formCropFer_orgFert_"+i+"__costProductOrgFer").maskMoney({thousands:"", decimal:'.'});                       
+                            $("#formCropFer_orgFert_"+i+"__costProductOrgFer").maskMoney('mask');
+                            
+                            
+                        }
                          
-                         var formOrgId = '<%= request.getAttribute("formOrgId") %>';
+                         
 
-                        $("#__costAppOrgFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#"+formOrgId+"__costAppOrgFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#__costAppOrgFer").maskMoney('mask');
-                        $("#"+formOrgId+"__costAppOrgFer").maskMoney('mask');
                         
-                        $("#__costProductOrgFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#"+formOrgId+"__costProductOrgFer").maskMoney({thousands:"", decimal:'.'});
-                        $("#__costProductOrgFer").maskMoney('mask');
-                        $("#"+formOrgId+"__costProductOrgFer").maskMoney('mask');
+                       
                         
                         
                 }         

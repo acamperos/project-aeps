@@ -152,7 +152,7 @@
    function removeMask() {       
             $("#formCropPrep_prep_costPrep").maskMoney({thousands:"", decimal:'.'});
             $("#formCropPrep_prep_costPrep").maskMoney('mask'); 
-            alert($("#formCropPrep_prep_costPrep").val());
+           
     };
             </script>
         </div>
